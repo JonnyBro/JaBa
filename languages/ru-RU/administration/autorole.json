@@ -1,0 +1,10 @@
+{
+	"DESCRIPTION": "Включить или отключить автоназначение роли при входе на сервер!",
+	"USAGE": "{{prefix}}autorole [on/off] (@роль)",
+	"EXAMPLES": "{{prefix}}autorole on @новенький\n{{prefix}}autorole off",
+	"MISSING_STATUS": "Пожалуйста, укажите значение `on` или `off`",
+	"MISSING_ROLE": "Пожалуйста, укажите роль (сделайте тег роли)!",
+	"SUCCESS_ENABLED": "Автоназначение роли включено! Новые пользователи будут автоматически получать **{{roleName}}** при входе.",
+	"ALREADY_DISABLED": "**Автоназначение роли уже отключено.**\n\n:arrow_right_hook: *Используйте `{{prefix}}autorole on @роль`, чтобы включить!*",
+	"SUCCESS_DISABLED": "**Автоназначение роли отключено!**\n\n:arrow_right_hook: *Используйте `{{prefix}}configuration`, чтобы увидеть обновлённые настройки!*"
+}

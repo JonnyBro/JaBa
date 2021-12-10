@@ -1,0 +1,10 @@
+{
+	"DESCRIPTION": "Добавить эмодзи на сервер!",
+	"USAGE": "{{prefix}}addemoji [ссылка-на-изображение] [название]",
+	"EXAMPLES": "{{prefix}}addemoji https://via.placeholder.com/150 test-emoji",
+	"MISSING_URL": "Пожалуйста, укажите ссылку на изображение!",
+	"MISSING_NAME": "Пожалуйста, укажите название эмодзи!",
+	"INVALID_NAME": "Название эмодзи должно быть от 2 до 32 символов!",
+	"SUCCESS": ":{{emojiName}}: добавлен!",
+	"ERROR": "{{emojiName}} не был добавлен. Проверьте, есть ли место для добавления эмодзи!"
+}

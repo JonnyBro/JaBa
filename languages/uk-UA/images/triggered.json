@@ -1,0 +1,5 @@
+{
+	"DESCRIPTION": "Создать изображение \"triggered\"",
+	"USAGE": "{{prefix}}triggered (@пользователь)",
+	"EXAMPLES": "{{prefix}}triggered\n{{prefix}}triggered @Jonny_Bro#4226"
+}

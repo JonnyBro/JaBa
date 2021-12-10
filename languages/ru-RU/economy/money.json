@@ -1,0 +1,6 @@
+{
+	"DESCRIPTION": "Показывает ваши(чужие) кредиты",
+	"USAGE": "{{prefix}}money (@пользователь)",
+	"EXAMPLES": "{{prefix}}money\n{{prefix}}money @Jonny_Bro#4226",
+	"TITLE": "Кредиты {{username}}"
+}

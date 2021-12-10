@@ -1,0 +1,21 @@
+{
+	"DESCRIPTION": "Показать статистику игрока в Fortnite!",
+	"USAGE": "{{prefix}}fortnite [PSN/XBL/PC] [ник]",
+	"EXAMPLES": "{{prefix}}fortnite PC Ninja",
+	"MISSING_PLATFORM": "Выберите платформу: `PSN`, `PC` или `XBL`!",
+	"MISSING_USERNAME": "Укажите ник в Epic Games!",
+	"NOT_FOUND": "`{{search}}` не найден на платформе `{{platform}}`!",
+	"TITLE": "Статистика игрока {{username}}",
+	"AVERAGE_KILLS": "Убийства/Матч",
+	"AVERAGE_KILL": "Убийство/Матч",
+	"W_PERCENT": "% Побед",
+	"WIN_PERCENT": "% Побед",
+	"KD": "КД",
+	"WINS": "Побед(а/ы)",
+	"WIN": "Победа",
+	"MATCHES": "Матч(а/ей)",
+	"MATCH": "Матч",
+	"KILLS": "Убийств(о/а)",
+	"KILL": "Убийство",
+	"FOOTER": "JaBA | fortnitetracker.com"
+}

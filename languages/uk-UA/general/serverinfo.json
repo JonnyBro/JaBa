@@ -1,0 +1,13 @@
+{
+	"DESCRIPTION": "Показать информацию о сервере!",
+	"USAGE": "{{prefix}}serverinfo [ID/Название]",
+	"EXAMPLES": "{{prefix}}serverinfo кык\n{{prefix}}serverinfo",
+	"AFK_CHANNEL": "AFK канал",
+	"NO_AFK_CHANNEL": "Нет AFK канала",
+	"MEMBERS": "{{count}} участник(а/ов)",
+	"BOTS": "{{count}} бот(а/ов)",
+	"BOOSTS": "Кол-во бустов",
+	"TEXT_CHANNELS": "{{count}} текстовых каналов",
+	"VOICE_CHANNELS": "{{count}} голосовых каналов",
+	"CAT_CHANNELS": "{{count}} категорий"
+}

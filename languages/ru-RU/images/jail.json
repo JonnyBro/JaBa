@@ -1,0 +1,5 @@
+{
+	"DESCRIPTION": "Создать изображение \"jail\"",
+	"USAGE": "{{prefix}}jail (@пользователь)",
+	"EXAMPLES": "{{prefix}}jail\n{{prefix}}jail @Jonny_Bro#4226"
+}

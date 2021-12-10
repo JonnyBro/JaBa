@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Показать информацию о GitHub репозитории JaBa!",
+	"USAGE": "{{prefix}}github",
+	"EXAMPLES": "{{prefix}}github",
+	"CLICK_HERE": "Нажмите сюда, чтобы открыть ссылку",
+	"LANGUAGE": "Язык",
+	"OWNER": "Владелец репозитория"
+}

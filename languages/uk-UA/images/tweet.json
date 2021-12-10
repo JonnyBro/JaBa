@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Создать изображение \"tweet\"",
+	"USAGE": "{{prefix}}tweet [@пользователь_twitter] [текст]",
+	"EXAMPLES": "{{prefix}}tweet @Jonny_Bro#4226 Люблю спать",
+	"MISSING_USERNAME": "Вы должны упомянуть пользователя!",
+	"MISSING_TEXT": "Укажите текст!",
+	"SUCCESS": "Новый твит от {{user}}:"
+}

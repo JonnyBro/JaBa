@@ -1,0 +1,17 @@
+{
+	"DESCRIPTION": "Показать статистику бота!",
+	"USAGE": "{{prefix}}stats",
+	"EXAMPLES": "{{prefix}}stats",
+	"COUNTS_TITLE": "• __Статистика__",
+	"COUNTS_CONTENT": "`Сервера: {{servers}}`\n`Пользователи: {{users}}`",
+	"VERSIONS_TITLE": "• __Использует__",
+	"RAM_TITLE": "• __ОЗУ__",
+	"ONLINE_TITLE": "• __Онлайн__",
+	"ONLINE_CONTENT": "Работает {{time}}",
+	"MUSIC_TITLE": "• __Музыка__",
+	"MUSIC_CONTENT": "Играет музыку на`{{count}}` серверах",
+	"CREDITS_TITLE": ":heart: • __Доп. информация и ссылки__",
+	"CREDITS_CONTENT": "Спасибо [Icons8](https://icons8.com/) за эмодзи!\n__**Поддержавшие**__:\n{{donators}}\n__**Переводчики**__:\n{{translators}}",
+	"LINKS_TITLE": "• __Ссылки__",
+	"MADE": "Бот создан Jonny_Bro#4226!"
+}
