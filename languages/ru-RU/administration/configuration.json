@@ -18,7 +18,7 @@
 	"MODLOGS": "Логи модерации: *{{channel}}*",
 	"FORTNITESHOP": "Ежедневный магазин Fortnite: *{{channel}}*",
 	"SUGGESTIONS": "Предложения: *{{channel}}*",
-	"REPORTS": "Репорты: *{{channel}}*",
+	"REPORTS": "Жалобы: *{{channel}}*",
 	"AUTOMOD_TITLE": "Автомодерация:",
 	"AUTOMOD_CONTENT": "Автомодерация включена.\n*Игнорируемые каналы: {{channels}}*",
 	"AUTOMOD_DISABLED": "Автомодерация отключена.",

@@ -17,7 +17,8 @@ module.exports.load = async(client) => {
 		settingsRouter = require("./routes/settings"),
 		guildStatsRouter = require("./routes/guild-stats"),
 		guildManagerRouter = require("./routes/guild-manager"),
-		docsMangerRouter = require("./routes/docs");
+		commandsManagerRouter = require("./routes/commands"),
+		updatesManagerRouter = require("./routes/updates");
 
 	/* App configuration */
 	app
@@ -53,7 +54,8 @@ module.exports.load = async(client) => {
 		.use("/stats", guildStatsRouter)
 		.use("/settings", settingsRouter)
 		.use("/", mainRouter)
-		.use("/docs", docsMangerRouter)
+		.use("/commands", commandsManagerRouter)
+		.use("/updates", updatesManagerRouter)
 		.use(CheckAuth, function(req, res){
 			res.status(404).render("404", {
 				user: req.userInfos,
