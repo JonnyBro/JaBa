@@ -3,7 +3,6 @@ const Command = require("../../base/Command.js"),
 	FiltersList = require("../../assets/json/filters.json");
 
 class Filters extends Command {
-
 	constructor (client) {
 		super(client, {
 			name: "filters",
@@ -20,17 +19,11 @@ class Filters extends Command {
 	}
 
 	async run (message, args, data) {
-
 		const queue = this.client.player.getQueue(message);
 
 		const voice = message.member.voice.channel;
-		if (!voice){
-			return message.error("music/play:NO_VOICE_CHANNEL");
-		}
-
-		if(!queue){
-			return message.error("music/play:NOT_PLAYING");
-		}
+		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
+		if (!queue) return message.error("music/play:NOT_PLAYING");
 
 		const filtersStatuses = [ [], [] ];
 
@@ -40,16 +33,13 @@ class Filters extends Command {
 		});
 
 		const list = new Discord.MessageEmbed()
-			.setDescription(message.translate("music/filters:CONTENT", {
-				prefix: data.guild.prefix
-			}))
+			.setDescription(message.translate("music/filters:CONTENT", { prefix: data.guild.prefix }))
 			.addField(message.translate("music/filters:TITLE"), filtersStatuses[0].join("\n"), true)
 			.addField("** **", filtersStatuses[1].join("\n"), true)
 			.setColor(data.config.embed.color);
 
 		message.channel.send(list);
 	}
-
-}
+};
 
 module.exports = Filters;

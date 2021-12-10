@@ -1,7 +1,6 @@
 const Command = require("../../base/Command.js");
 
 class Clear extends Command {
-
 	constructor (client) {
 		super(client, {
 			name: "clear",
@@ -18,8 +17,7 @@ class Clear extends Command {
 	}
 
 	async run (message, args) {
-
-		if(args[0] === "all"){
+		if (args[0] === "all") {
 			message.sendT("moderation/clear:ALL_CONFIRM");
 			await message.channel.awaitMessages((m) => (m.author.id === message.author.id) && (m.content === "confirm"), {
 				max: 1,
@@ -33,12 +31,10 @@ class Clear extends Command {
 			await message.channel.delete();
 			newChannel.setPosition(position);
 			return newChannel.send(message.translate("moderation/clear:CHANNEL_CLEARED"));
-		}
+		};
 
 		let amount = args[0];
-		if(!amount || isNaN(amount) || parseInt(amount) < 1){
-			return message.error("moderation/clear:MISSING_AMOUNT");
-		}
+		if (!amount || isNaN(amount) || parseInt(amount) < 1) return message.error("moderation/clear:MISSING_AMOUNT");
 
 		await message.delete();
 
@@ -46,12 +42,9 @@ class Clear extends Command {
 
 		let messages = await message.channel.messages.fetch({limit:100});
 		messages = messages.array();
-		if(user){
-			messages = messages.filter((m) => m.author.id === user.id);
-		}
-		if(messages.length > amount){
-			messages.length = parseInt(amount, 10);
-		}
+		if (user) messages = messages.filter((m) => m.author.id === user.id);
+		if (messages.length > amount) messages.length = parseInt(amount, 10);
+
 		messages = messages.filter((m) => !m.pinned);
 		amount++;
 
@@ -59,23 +52,16 @@ class Clear extends Command {
 
 		let toDelete = null;
 
-		if(user){
-			toDelete = await message.success("moderation/clear:CLEARED_MEMBER", {
-				amount: --amount,
-				username: user.tag
-			});
+		if (user) {
+			toDelete = await message.success("moderation/clear:CLEARED_MEMBER", { amount: --amount, username: user.tag });
 		} else {
-			toDelete = await message.success("moderation/clear:CLEARED", {
-				amount: --amount
-			});
-		}
+			toDelete = await message.success("moderation/clear:CLEARED", { amount: --amount });
+		};
 
 		setTimeout(function(){
 			toDelete.delete();
 		}, 2000);
-
 	}
-
-}
+};
 
 module.exports = Clear;

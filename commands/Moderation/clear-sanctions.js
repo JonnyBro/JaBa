@@ -1,7 +1,6 @@
 const Command = require("../../base/Command.js");
 
 class Clearsanctions extends Command {
-
 	constructor (client) {
 		super(client, {
 			name: "clear-sanctions",
@@ -18,19 +17,14 @@ class Clearsanctions extends Command {
 	}
 
 	async run (message, args) {
-        
 		const member = await this.client.resolveMember(args[0], message.guild);
-		if(!member){
-			return message.error("moderation/clear-sanctions:MISSING_MEMBER");
-		}
+		if (!member) return message.error("moderation/clear-sanctions:MISSING_MEMBER");
+
 		const memberData = await this.client.findOrCreateMember({ id: member.id, guildID: message.guild.id });
 		memberData.sanctions = [];
 		memberData.save();
-		message.success("moderation/clear-sanctions:SUCCESS", {
-			username: member.user.tag
-		});
+		message.success("moderation/clear-sanctions:SUCCESS", { username: member.user.tag });
 	}
-
-}
+};
 
 module.exports = Clearsanctions;

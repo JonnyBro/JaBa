@@ -19,19 +19,16 @@ class Phcomment extends Command {
 	}
 
 	async run (message, args) {
-
 		let user = await this.client.resolveUser(args[0]);
 		let text = args.join(" ");
 
-		if(user){
+		if (user) {
 			text = args.slice(1).join(" ");
 		} else {
 			user = message.author;
-		}
+		};
 
-		if(!text){
-			return message.error("images/phcomment:MISSING_TEXT");
-		}
+		if (!text) return message.error("images/phcomment:MISSING_TEXT");
 
 		const m = await message.sendT("misc:PLEASE_WAIT", null, {
 			prefixEmoji: "loading"
@@ -47,13 +44,9 @@ class Phcomment extends Command {
 			m.delete();
 		} catch(e){
 			console.log(e);
-			m.error("misc:ERROR_OCCURRED", null, {
-				edit: true
-			});
-		}
-
+			m.error("misc:ERROR_OCCURRED", null, { edit: true });
+		};
 	}
-
-}
+};
 
 module.exports = Phcomment;

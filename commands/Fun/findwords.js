@@ -77,7 +77,7 @@ class FindWords extends Command {
 						message.success("fun/findwords:WORD_FOUND", { winner: `<@${reason}>` });
 						winners.push(reason);
 					}
-					if (i < nbGames-1) {
+					if (i < nbGames - 1) {
 						i++;
 						generateGame.call(this, words[i]);
 					} else {

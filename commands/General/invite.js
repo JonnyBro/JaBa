@@ -6,7 +6,7 @@ class Invite extends Command {
 		super(client, {
 			name: "invite",
 			dirname: __dirname,
-			enabled: true,
+			enabled: false,
 			guildOnly: false,
 			aliases: [ "i", "add", "vote" ],
 			memberPermissions: [],

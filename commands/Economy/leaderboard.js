@@ -28,14 +28,14 @@ class Leaderboard extends Command {
 				membersLeaderboard = members.map((m) => {
 					return {
 						id: m.id,
-						value: m.money+m.bankSold
+						value: m.money + m.bankSold
 					};
 				}).sort((a,b) => b.value - a.value);
 			const table = new AsciiTable("LEADERBOARD");
 			table.setHeading("#", message.translate("common:USER"), message.translate("common:CREDITS"));
 			if (membersLeaderboard.length > 20) membersLeaderboard.length = 20;
 			const newTable = await fetchUsers(membersLeaderboard, table, this.client);
-			message.channel.send("```\n"+newTable.toString()+"```");
+			message.channel.send(`\`\`\`\n${newTable.toString()}\`\`\``);
 		} else if (type === "level") {
 			const members = await this.client.membersData.find({ guildID: message.guild.id }).lean(),
 				membersLeaderboard = members.map((m) => {
@@ -48,7 +48,7 @@ class Leaderboard extends Command {
 			table.setHeading("#", message.translate("common:USER"), message.translate("common:LEVEL"));
 			if (membersLeaderboard.length > 20) membersLeaderboard.length = 20;
 			const newTable = await fetchUsers(membersLeaderboard, table, this.client);
-			message.channel.send("```\n"+newTable.toString()+"```");
+			message.channel.send(`\`\`\`\n${newTable.toString()}\`\`\``);
 		} else if (type === "rep") {
 			const users = await this.client.usersData.find().lean(),
 				usersLeaderboard = users.map((u) => {
@@ -61,7 +61,7 @@ class Leaderboard extends Command {
 			table.setHeading("#", message.translate("common:USER"), message.translate("common:POINTS"));
 			if (usersLeaderboard.length > 20) usersLeaderboard.length = 20;
 			const newTable = await fetchUsers(usersLeaderboard, table, this.client);
-			message.channel.send("```\n"+newTable.toString()+"```");
+			message.channel.send(`\`\`\`\n${newTable.toString()}\`\`\``);
 		};
 
 		if (isOnlyOnMobile) message.sendT("economy/leaderboard:MOBILE");

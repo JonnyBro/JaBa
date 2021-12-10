@@ -18,18 +18,13 @@ class Triggered extends Command {
 	}
 
 	async run (message, args) {
-
 		const user = await this.client.resolveUser(args[0]) || message.author;
-		const m = await message.sendT("misc:PLEASE_WAIT", null, {
-			prefixEmoji: "loading"
-		});
+		const m = await message.sendT("misc:PLEASE_WAIT", null, { prefixEmoji: "loading" });
 		const buffer = await this.client.AmeAPI.generate("triggered", { url: user.displayAvatarURL({ format: "png", size: 512 }), sepia: "true", invert: "true" });
 		const attachment = new Discord.MessageAttachment(buffer, "triggered.gif");
 		m.delete();
 		message.channel.send(attachment);
-
 	}
-
-}
+};
 
 module.exports = Triggered;

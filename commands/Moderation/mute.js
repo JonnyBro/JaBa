@@ -3,7 +3,6 @@ const Command = require("../../base/Command.js"),
 	ms = require("ms");
 
 class Mute extends Command {
-
 	constructor (client) {
 		super(client, {
 			name: "mute",
@@ -20,33 +19,20 @@ class Mute extends Command {
 	}
 
 	async run (message, args, data) {
-        
 		const member = await this.client.resolveMember(args[0], message.guild);
-		if(!member){
-			return message.error("moderation/mute:MISSING_MEMBER");
-		}
-
-		if(member.id === message.author.id){
-			return message.error("moderation/ban:YOURSELF");
-		}
+		if (!member) return message.error("moderation/mute:MISSING_MEMBER");
+		if (member.id === message.author.id) return message.error("moderation/ban:YOURSELF");
 
 		const memberPosition = member.roles.highest.position;
 		const moderationPosition = message.member.roles.highest.position;
-		if(message.member.ownerID !== message.author.id && !(moderationPosition > memberPosition)){
-			return message.error("moderation/ban:SUPERIOR");
-		}
+		if (message.member.ownerID !== message.author.id && !(moderationPosition > memberPosition)) return message.error("moderation/ban:SUPERIOR");
 
 		const memberData = await this.client.findOrCreateMember({ id: member.id, guildID: message.guild.id });
 
 		const time = args[1];
-		if(!time || isNaN(ms(time))){
-			return message.error("misc:INVALID_TIME");
-		}
-
+		if (!time || isNaN(ms(time))) return message.error("misc:INVALID_TIME");
 		let reason = args.slice(2).join(" ");
-		if(!reason){
-			reason = message.translate("misc:NO_REASON_PROVIDED");
-		}
+		if (!reason) reason = message.translate("misc:NO_REASON_PROVIDED");
 
 		message.guild.channels.cache.forEach((channel) => {
 			channel.updateOverwrite(member.id, {
@@ -97,13 +83,11 @@ class Mute extends Command {
 
 		this.client.databaseCache.mutedUsers.set(`${member.id}${message.guild.id}`, memberData);
 
-		if(data.guild.plugins.modlogs){
+		if (data.guild.plugins.modlogs) {
 			const channel = message.guild.channels.cache.get(data.guild.plugins.modlogs);
-			if(!channel) return;
+			if (!channel) return;
 			const embed = new Discord.MessageEmbed()
-				.setAuthor(message.translate("moderation/mute:CASE", {
-					count: data.guild.casesCount
-				}))
+				.setAuthor(message.translate("moderation/mute:CASE", { count: data.guild.casesCount }))
 				.addField(message.translate("common:USER"), `\`${member.user.tag}\` (${member.user.toString()})`, true)
 				.addField(message.translate("common:MODERATOR"), `\`${message.author.tag}\` (${message.author.toString()})`, true)
 				.addField(message.translate("common:REASON"), reason, true)
@@ -112,9 +96,7 @@ class Mute extends Command {
 				.setColor("#f44271");
 			channel.send(embed);
 		}
-
 	}
-
-}
+};
 
 module.exports = Mute;

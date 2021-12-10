@@ -8,7 +8,7 @@
 	"INVALID_TIME": "Укажите действительное время! Доступные единицы: `s`, `m`, `h` or `d`",
 	"INVALID_NUMBER": "Пожалуйста, укажите число!",
 	"INVALID_NUMBER_RANGE": "Укажите число от **{{min}}** до **{{max}}**!",
-	"STATS_FOOTER": "[Панель управления]({{dashboardLink}}) ● [Поддержать]({{donateLink}}) ● [Приглашение]({{inviteLink}}) ● [Сервер поддержки]({{supportLink}}) ● [Github]({{githubLink}})",
+	"STATS_FOOTER": "● [Панель управления]({{dashboardLink}})\n● [Поддержать]({{donateLink}}) (для других способов пишите в ЛС @<{{owner}}>)",
 	"BOT_USER": "Этот пользователь бот!",
 	"NO_REASON_PROVIDED": "Причина не указана",
 	"NO_USER_FOUND_ID": "Пользователя с ID `{{id}}` не существует!",

@@ -1,7 +1,6 @@
 const Command = require("../../base/Command.js");
 
 class Setwarns extends Command {
-
 	constructor (client) {
 		super(client, {
 			name: "setwarns",
@@ -18,64 +17,40 @@ class Setwarns extends Command {
 	}
 
 	async run (message, args, data) {
-        
 		const sanction = args[0];
-		if(!sanction || (sanction !== "kick" && sanction !== "ban")){
-			return message.error("moderation/setwarns:MISSING_TYPE");
-		}
+		if (!sanction || (sanction !== "kick" && sanction !== "ban")) return message.error("moderation/setwarns:MISSING_TYPE");
 
 		const number = args[1];
 
-		if(number === "reset"){
-			if(sanction === "kick"){
+		if (number === "reset") {
+			if (sanction === "kick") {
 				data.guild.plugins.warnsSanctions.kick = false;
 				data.guild.markModified("plugins.warnsSanctions");
 				data.guild.save();
-				return message.success("moderation/setwarns:SUCCESS_KICK_RESET", {
-					prefix: data.guild.prefix,
-					count: number
-				});
-			}
-			if(sanction === "ban"){
+				return message.success("moderation/setwarns:SUCCESS_KICK_RESET", { prefix: data.guild.prefix, count: number });
+			} else if(sanction === "ban") {
 				data.guild.plugins.warnsSanctions.ban = false;
 				data.guild.markModified("plugins.warnsSanctions");
 				data.guild.save();
-				return message.success("moderation/setwarns:SUCCESS_BAN_RESET", {
-					prefix: data.guild.prefix,
-					count: number
-				});
-			}
-		}
+				return message.success("moderation/setwarns:SUCCESS_BAN_RESET", { prefix: data.guild.prefix, count: number });
+			};
+		};
 
-		if(!number || isNaN(number)){
-			return message.error("misc:INVALID_NUMBER");
-		}
-		if(number < 1 || number > 10){
-			return message.error("misc:INVALID_NUMBER_RANGE", 1, 10);
-		}
+		if (!number || isNaN(number)) return message.error("misc:INVALID_NUMBER");
+		if (number < 1 || number > 10) return message.error("misc:INVALID_NUMBER_RANGE", 1, 10);
 
-		if(sanction === "kick"){
+		if (sanction === "kick") {
 			data.guild.plugins.warnsSanctions.kick = number;
 			data.guild.markModified("plugins.warnsSanctions");
 			data.guild.save();
-			return message.success("moderation/setwarns:SUCCESS_KICK", {
-				prefix: data.guild.prefix,
-				count: number
-			});
-		}
-
-		if(sanction === "ban"){
+			return message.success("moderation/setwarns:SUCCESS_KICK", { prefix: data.guild.prefix, count: number });
+		} else if (sanction === "ban") {
 			data.guild.plugins.warnsSanctions.ban = number;
 			data.guild.markModified("plugins.warnsSanctions");
 			data.guild.save();
-			return message.success("moderation/setwarns:SUCCESS_BAN", {
-				prefix: data.guild.prefix,
-				count: number
-			});
-		}
-
+			return message.success("moderation/setwarns:SUCCESS_BAN", { prefix: data.guild.prefix, count: number });
+		};
 	}
-
-}
+};
 
 module.exports = Setwarns;

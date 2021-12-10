@@ -34,7 +34,7 @@ class Birthdate extends Command {
 		const d = new Date(tyear, tmonth, tday);
 		if (!(tday == d.getDate() && tmonth == d.getMonth() && tyear == d.getFullYear())) return message.error("economy/birthdate:INVALID_DATE_FORMAT");
 		if (d.getTime() > Date.now()) return message.error("economy/birthdate:DATE_TOO_HIGH");
-		if (d.getTime() < (Date.now()-2.523e+12))return message.error("economy/birthdate:DATE_TOO_LOW");
+		if (d.getTime() < (Date.now() - 2.523e+12))return message.error("economy/birthdate:DATE_TOO_LOW");
 
 		data.userData.birthdate = d;
 		data.userData.save();

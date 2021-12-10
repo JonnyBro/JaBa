@@ -80,7 +80,7 @@ class Backup extends Command {
 					// Displays the server from which this backup comes
 					.addField(message.translate("administration/backup:TITLE_SERVER_ID"), backupInfos.data.guildID, true)
 					// Display the size (in mb) of the backup
-					.addField(message.translate("administration/backup:TITLE_SIZE"), backupInfos.size+" mb", true)
+					.addField(message.translate("administration/backup:TITLE_SIZE"), `${backupInfos.size}mb`, true)
 					// Display when the backup was created
 					.addField(message.translate("administration/backup:TITLE_CREATED_AT"), message.printDate(new Date(backupInfos.data.createdTimestamp)), true)
 					.setColor(data.config.embed.color)
