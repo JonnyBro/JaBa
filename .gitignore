@@ -22,3 +22,6 @@ report*.json
 
 # IDE
 .vscode
+
+# commands.md
+**/commands.md
