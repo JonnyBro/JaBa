@@ -1,27 +1,24 @@
 <!DOCTYPE html>
 <html>
-
 	<%- include('includes/head') %>
+	<body class="hold-transition skin-red sidebar-mini">
+		<div class="wrapper">
 
-    <body class="hold-transition skin-red sidebar-mini">
+			<!-- The header is the topbar -->
+			<%- include('includes/header') %>
 
-        <div class="wrapper">
+			<!-- The sidebar includes the menu -->
+			<%- include('includes/sidebar') %>
 
-            <!-- The header is the topbar -->
-            <%- include('includes/header') %>
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
 
-            <!-- The sidebar includes the menu -->
-            <%- include('includes/sidebar') %>
-
-            <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <h1>
-                    404 Error Page
-                </h1>
-            </section>
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>
+					404 Error Page
+				</h1>
+			</section>
 
 			<!-- Main content -->
 			<section class="content">
@@ -55,8 +52,7 @@
 		</div>
 		<!-- /.content-wrapper -->
 
-   		<%- include('includes/footer') -%>
-
+		<%- include('includes/footer') -%>
 	</div>
 	<!-- ./wrapper -->
 </body>
