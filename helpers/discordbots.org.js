@@ -6,10 +6,10 @@ module.exports = {
 	 * Starts to post stats to DBL
 	 * @param {object} client The Discord Client instance
 	 */
-	init(client){
+	init(client) {
 		if (client.config.apiKeys.dbl && client.config.apiKeys.dbl !== "") {
 			const stats = new DBL(client.config.apiKeys.dbl, client);
-			setInterval(function(){
+			setInterval(function() {
 				stats.postStats(client.guilds.cache.size);
 			}, 10 * 60000); // every 10 minutes
 			const dbl = new DBL(client.config.apiKeys.dbl, { webhookPort: client.config.votes.port, webhookAuth: client.config.votes.password });

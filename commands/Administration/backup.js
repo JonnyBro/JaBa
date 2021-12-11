@@ -36,7 +36,7 @@ class Backup extends Command {
 				Sentry.captureException(err);
 				return message.error("misc:ERR_OCCURRED");
 			});
-		} else if (status === "load"){
+		} else if (status === "load") {
 			const backupID = args[1];
 			if (!backupID) return message.error("administration/backup:MISSING_BACKUP_ID");
 
@@ -68,7 +68,7 @@ class Backup extends Command {
 					backupID
 				});
 			});
-		} else if (status === "info"){
+		} else if (status === "info") {
 			const backupID = args[1];
 			if (!backupID) return message.error("administration/backup:MISSING_BACKUP_ID");
 

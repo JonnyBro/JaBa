@@ -27,7 +27,7 @@ class Captcha extends Command {
 			const attachment = new Discord.MessageAttachment(json.message, "captcha.png");
 			message.channel.send(attachment);
 			m.delete();
-		} catch(e){
+		} catch(e) {
 			console.log(e);
 			m.error("misc:ERR_OCCURRED", null, {
 				edit: true

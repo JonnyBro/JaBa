@@ -121,7 +121,7 @@ const checks = [
 					}
 				});
 				const result = await res.json();
-				if(result.status && result.status === 401){
+				if (result.status && result.status === 401) {
 					error("should be a valid FNBR key", "get your key here: https://fnbr.co/api/docs");
 				} else {
 					success("should be a valid FNBR key");
@@ -179,7 +179,7 @@ const checks = [
 
 (async () => {
 	console.log(chalk.yellow("This script will check if your config is errored, and some other important things such as whether your database is started, etc..."));
-	for (const check of checks){
+	for (const check of checks) {
 		await check();
 	};
 	console.log(chalk.yellow("\n\nThank you for using Atlanta. If you need more help, join our support server here: https://discord.atlanta-bot.fr"));

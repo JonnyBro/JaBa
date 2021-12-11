@@ -18,7 +18,7 @@ class Quote extends Command {
 	}
 
 	async run (message, args, data) {
-		function embed(m){
+		function embed(m) {
 			const embed = new Discord.MessageEmbed()
 				.setAuthor(m.author.tag, m.author.displayAvatarURL({ size: 512, dynamic: true, format: 'png' }))
 				.setDescription(m.content)

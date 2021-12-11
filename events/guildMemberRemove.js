@@ -5,7 +5,6 @@ const Canvas = require("canvas"),
 
 // Register assets fonts
 Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "Regular" });
-// Canvas.registerFont(resolve("./assets/fonts/RussoOne-Regular.ttf"), { family: "Regular" });
 
 const applyText = (canvas, text, defaultFontSize) => {
 	const ctx = canvas.getContext("2d");

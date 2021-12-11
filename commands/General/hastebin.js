@@ -39,7 +39,7 @@ class Hastebin extends Command {
 				.setDescription(url)
 				.setColor(data.config.embed.color);
 			message.channel.send(embed);
-		} catch(e){
+		} catch(e) {
 			message.error("misc:ERR_OCCURRED");
 		};
 	}

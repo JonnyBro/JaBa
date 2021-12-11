@@ -28,7 +28,7 @@ class Setwarns extends Command {
 				data.guild.markModified("plugins.warnsSanctions");
 				data.guild.save();
 				return message.success("moderation/setwarns:SUCCESS_KICK_RESET", { prefix: data.guild.prefix, count: number });
-			} else if(sanction === "ban") {
+			} else if (sanction === "ban") {
 				data.guild.plugins.warnsSanctions.ban = false;
 				data.guild.markModified("plugins.warnsSanctions");
 				data.guild.save();

@@ -58,7 +58,7 @@ class Clear extends Command {
 			toDelete = await message.success("moderation/clear:CLEARED", { amount: --amount });
 		};
 
-		setTimeout(function(){
+		setTimeout(function() {
 			toDelete.delete();
 		}, 2000);
 	}

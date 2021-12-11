@@ -60,7 +60,7 @@ class Giveaway extends Command {
 			}).then(() => {
 				message.success("moderation/giveaway:GIVEAWAY_CREATED");
 			});
-		} else if(status === "reroll"){
+		} else if (status === "reroll") {
 			const messageID = args[1];
 			if (!messageID)return message.error("moderation/giveaway:MISSING_ID");
 
@@ -72,23 +72,23 @@ class Giveaway extends Command {
 			}).catch(() => {
 				return message.error("moderation/giveaway:NOT_FOUND_ENDED", { messageID });
 			});
-		} else if(status === "delete"){
+		} else if (status === "delete") {
 			const messageID = args[1];
-			if(!messageID) return message.error("moderation/giveaway:MISSING_ID");
+			if (!messageID) return message.error("moderation/giveaway:MISSING_ID");
 
 			this.client.giveawaysManager.delete(messageID).then(() => {
 				return message.success("moderation/giveaway:GIVEAWAY_DELETED");
 			}).catch(() => {
 				return message.error("moderation/giveaway:NOT_FOUND", { messageID });
 			});
-		} else if(status === "end"){
+		} else if (status === "end") {
 			const messageID = args[1];
 			if (!messageID) return message.error("moderation/giveaway:MISSING_ID");
 
 			try {
 				this.client.giveawaysManager.edit(messageID, { setEndTimestamp: Date.now() });
 				return message.success("moderation/giveaway:GIVEAWAY_ENDED");
-			} catch(e){
+			} catch(e) {
 				return message.error("moderation/giveaway:NOT_FOUND", { messageID });
 			};
 		} else {

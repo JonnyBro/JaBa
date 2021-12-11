@@ -46,7 +46,7 @@ class FindWords extends Command {
 		currentGames[message.guild.id] = true; // Update current game variable
 		generateGame.call(this, words[i]); // Generate a new round
 
-		function generateGame(word){
+		function generateGame(word) {
 			word = word.toLowerCase();
 
 			// Launch timer
@@ -107,8 +107,8 @@ class FindWords extends Command {
 			}, delay);
 		};
 
-		async function getWinner(array){
-			return new Promise(function (resolve){
+		async function getWinner(array) {
+			return new Promise(function (resolve) {
 				const counts = {};
 				let compare = 0;
 				let mostFrequent;
@@ -119,7 +119,7 @@ class FindWords extends Command {
 					} else {
 						counts[winner] = counts[winner] + 1;
 					};
-					if (counts[winner] > compare){
+					if (counts[winner] > compare) {
 						compare = counts[winner];
 						mostFrequent = array[i];
 					};

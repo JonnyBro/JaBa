@@ -44,7 +44,7 @@ class Lyrics extends Command {
 			embed.setDescription(lyrics);
 			message.channel.send(embed);
 
-		} catch(e){
+		} catch(e) {
 			console.log(e);
 			message.error("music/lyrics:NO_LYRICS_FOUND", { songName });
 		}

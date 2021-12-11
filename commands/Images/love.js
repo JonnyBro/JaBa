@@ -31,7 +31,7 @@ class Love extends Command {
 			const attachment = new Discord.MessageAttachment(json.message, "love.png");
 			message.channel.send(attachment);
 			m.delete();
-		} catch(e){
+		} catch(e) {
 			console.log(e);
 			m.error("misc:ERROR_OCCURRED", null, { edit: true });
 		};

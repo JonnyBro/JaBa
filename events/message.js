@@ -27,14 +27,9 @@ module.exports = class {
 		// Check if the bot was mentionned
 		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) {
 			if (message.guild) {
-				return message.sendT("misc:HELLO_SERVER", {
-					username: message.author.username,
-					prefix: data.guild.prefix
-				});
+				return message.sendT("misc:HELLO_SERVER", { username: message.author.username, prefix: data.guild.prefix });
 			} else {
-				return message.sendT("misc:HELLO_DM", {
-					username: message.author.username
-				});
+				return message.sendT("misc:HELLO_DM", { username: message.author.username });
 			};
 		};
 
@@ -60,10 +55,7 @@ module.exports = class {
 						if (uSlowmode.time > Date.now()) {
 							message.delete();
 							const delay = message.convertTime(uSlowmode.time, "to", true);
-							return message.author.send(message.translate("administration/slowmode:PLEASE_WAIT", {
-								time: delay,
-								channel: message.channel.toString()
-							}));
+							return message.author.send(message.translate("administration/slowmode:PLEASE_WAIT", { time: delay, channel: message.channel.toString() }));
 						} else {
 							uSlowmode.time = channelSlowmode.time + Date.now();
 						};
@@ -83,9 +75,7 @@ module.exports = class {
 					if (!message.channel.permissionsFor(message.member).has("MANAGE_MESSAGES")) {
 						message.delete();
 						message.author.send("```" + message.content + "```");
-						return message.error("administration/automod:DELETED", {
-							username: message.author.tag
-						});
+						return message.error("administration/automod:DELETED", { username: message.author.tag });
 					};
 				};
 			};
@@ -94,18 +84,13 @@ module.exports = class {
 			if (afkReason) {
 				data.userData.afk = null;
 				await data.userData.save();
-				message.sendT("general/setafk:DELETED", {
-					username: message.author.username
-				});
+				message.sendT("general/setafk:DELETED", { username: message.author.username });
 			};
 
 			message.mentions.users.forEach(async (u) => {
 				const userData = await client.findOrCreateUser({ id: u.id });
 				if (userData.afk) {
-					message.error("general/setafk:IS_AFK", {
-						user: u.tag,
-						reason: userData.afk
-					});
+					message.error("general/setafk:IS_AFK", { user: u.tag, reason: userData.afk });
 				};
 			});
 		};
@@ -122,17 +107,11 @@ module.exports = class {
 		const customCommandAnswer = customCommand ? customCommand.answer : "";
 
 		if (!cmd && !customCommandAnswer && message.guild) return;
-		else if (!cmd && !customCommandAnswer && !message.guild) {
-			return message.sendT("misc:HELLO_DM", {
-				username: message.author.username
-			});
-		};
+		else if (!cmd && !customCommandAnswer && !message.guild) return message.sendT("misc:HELLO_DM", { username: message.author.username });
 
 		if (message.guild && data.guild.ignoredChannels.includes(message.channel.id) && !message.member.hasPermission("MANAGE_MESSAGES")) {
 			message.delete();
-			message.author.send(message.translate("misc:RESTRICTED_CHANNEL", {
-				channel: message.channel.toString()
-			}));
+			message.author.send(message.translate("misc:RESTRICTED_CHANNEL", { channel: message.channel.toString() }));
 			return;
 		};
 
@@ -142,30 +121,21 @@ module.exports = class {
 
 		if (message.guild) {
 			let neededPermissions = [];
-			if (!cmd.conf.botPermissions.includes("EMBED_LINKS")) {
-				cmd.conf.botPermissions.push("EMBED_LINKS");
-			};
+			if (!cmd.conf.botPermissions.includes("EMBED_LINKS")) cmd.conf.botPermissions.push("EMBED_LINKS");
 			cmd.conf.botPermissions.forEach((perm) => {
 				if (!message.channel.permissionsFor(message.guild.me).has(perm)) {
 					neededPermissions.push(perm);
 				};
 			});
-			if (neededPermissions.length > 0) {
-				return message.error("misc:MISSING_BOT_PERMS", {
-					list: neededPermissions.map((p) => `\`${p}\``).join(", ")
-				});
-			};
+			if (neededPermissions.length > 0) return message.error("misc:MISSING_BOT_PERMS", { list: neededPermissions.map((p) => `\`${p}\``).join(", ") });
+
 			neededPermissions = [];
 			cmd.conf.memberPermissions.forEach((perm) => {
 				if (!message.channel.permissionsFor(message.member).has(perm)) {
 					neededPermissions.push(perm);
 				};
 			});
-			if (neededPermissions.length > 0) {
-				return message.error("misc:MISSING_MEMBER_PERMS", {
-					list: neededPermissions.map((p) => `\`${p}\``).join(", ")
-				});
-			};
+			if (neededPermissions.length > 0) return message.error("misc:MISSING_MEMBER_PERMS", { list: neededPermissions.map((p) => `\`${p}\``).join(", ") });
 			if (!message.channel.permissionsFor(message.member).has("MENTION_EVERYONE") && (message.content.includes("@everyone") || message.content.includes("@here"))) return message.error("misc:EVERYONE_MENTION");
 			if (!message.channel.nsfw && cmd.conf.nsfw) return message.error("misc:NSFW_COMMAND");
 		};
@@ -180,11 +150,7 @@ module.exports = class {
 			uCooldown = cmdCooldown[message.author.id];
 		};
 		const time = uCooldown[cmd.help.name] || 0;
-		if (time && (time > Date.now())) {
-			return message.error("misc:COOLDOWNED", {
-				seconds: Math.ceil((time-Date.now())/1000)
-			});
-		};
+		if (time && (time > Date.now())) return message.error("misc:COOLDOWNED", { seconds: Math.ceil((time-Date.now())/1000) });
 		cmdCooldown[message.author.id][cmd.help.name] = Date.now() + cmd.conf.cooldown;
 
 		client.logger.log(`${message.author.username} (${message.author.id}) ran command ${cmd.help.name} on ${message.guild.name}`, "cmd");

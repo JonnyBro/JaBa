@@ -13,7 +13,7 @@ module.exports = {
 				client.databaseCache.usersReminds.set(user.id, user);
 			};
 		});
-		setInterval(async function(){
+		setInterval(async function() {
 			const dateNow = Date.now();
 			client.databaseCache.usersReminds.forEach(async (user) => {
 				const dUser = client.users.cache.get(user.id);

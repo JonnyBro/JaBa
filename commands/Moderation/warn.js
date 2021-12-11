@@ -88,7 +88,7 @@ class Warn extends Command {
 
 		if (data.guild.plugins.modlogs) {
 			const channel = message.guild.channels.cache.get(data.guild.plugins.modlogs);
-			if(!channel) return;
+			if (!channel) return;
 			channel.send(embed);
 		};
 	}

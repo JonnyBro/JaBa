@@ -38,7 +38,7 @@ class Slots extends Command {
 
 		amount = Math.round(amount);
 
-		function getCredits(number, isJackpot){
+		function getCredits(number, isJackpot) {
 			if (!isJackpot) {
 				number = number * 1.5;
 			} else if (isJackpot) {

@@ -30,7 +30,7 @@ class Unban extends Command {
 				// if a user was found
 				user = u;
 			}).catch(() => {});
-		} else if(!isId) {
+		} else if (!isId) {
 			const arr = args[0].split("#");
 			if (arr.length < 2) {
 				return message.error("misc:NO_USER_FOUND_ID", {
