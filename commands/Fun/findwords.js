@@ -23,7 +23,10 @@ class FindWords extends Command {
 		if (currentGames[message.guild.id]) return message.error("fun/number:GAME_RUNNING");
 
 		// Reads words file
-		const wordList = require(`../../assets/json/words/${message.guild.data.language}.json`);
+		let lang = null;
+		if (message.guild.data.language === "uk-UA") return lang = "ru-RU";
+		else lang = message.guild.data.language;
+		const wordList = require(`../../assets/json/words/${lang}.json`);
 
 		// Init some utils variables
 		const participants = [],
