@@ -12,7 +12,7 @@ module.exports = {
 		commands.forEach((cmd) => {
 			if (!categories.includes(cmd.help.category)) categories.push(cmd.help.category);
 		});
-		let text = `# Команды  \nСписок команд JaBa и их описания. JaBa имеет около **${Math.floor(commands.size/10)}0 команд** в **${categories.length} категориях**!  \n\n#### Содержимое таблицы  \n**Название**: Название команды  \n**Описание**: Описание команды  \n**Использование**: Использование команды ([] - обязательно, () - необязательно)  \n**Откат**: Время, через которое команду можно будет использовать повторно\n\n`;
+		let text = `# Команды  \nСписок команд JaBa и их описания. JaBa имеет более **${Math.floor(commands.size/10)}0 команд** в **${categories.length} категориях**!  \n\n#### Содержимое таблицы  \n**Название**: Название команды  \n**Описание**: Описание команды  \n**Использование**: Использование команды ([] - обязательно, () - необязательно)  \n**Откат**: Время, через которое команду можно будет использовать повторно\n\n`;
 
 		categories.sort(function(a, b) {
 			const aCmdsLength = commands.filter((cmd) => cmd.help.category === a).array().length;
