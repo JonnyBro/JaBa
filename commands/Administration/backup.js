@@ -74,7 +74,7 @@ class Backup extends Command {
 
 			backup.fetch(backupID).then(async (backupInfos) => {
 				const embed = new Discord.MessageEmbed()
-					.setAuthor(message.translate("administration/backup:TITLE_INFOS"))
+					.setAuthor(message.translate("administration/backup:TITLE_INFO"))
 					// Display the backup ID
 					.addField(message.translate("administration/backup:TITLE_ID"), backupInfos.id, true)
 					// Displays the server from which this backup comes

@@ -26,7 +26,8 @@ class Profile extends Command {
 	async run (message, args, data) {
 		const client = this.client;
 
-		let member = await client.resolveMember(args[0], message.guild);
+		const arg = args[0] || message.author
+		let member = await client.resolveMember(arg, message.guild);
 		if (!member) member = message.member;
 
 		// Check if the user is a bot
@@ -43,8 +44,8 @@ class Profile extends Command {
 		let globalMoney = 0;
 		await asyncForEach(commonsGuilds.array(), async (guild) => {
 			const memberData = await client.findOrCreateMember({ id: member.id, guildID: guild.id });
-			globalMoney+=memberData.money;
-			globalMoney+=memberData.bankSold;
+			globalMoney += memberData.money;
+			globalMoney += memberData.bankSold;
 		});
 
 		const profileEmbed = new Discord.MessageEmbed()

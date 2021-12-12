@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Кинуть монетку!",
+	"DESCRIPTION": "Подкинуть монетку!",
 	"USAGE": "{{prefix}}flip",
 	"EXAMPLES": "{{prefix}}flip",
 	"HEADS": ":coin: | Орёл!",

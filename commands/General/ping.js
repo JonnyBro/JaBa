@@ -17,8 +17,7 @@ class Ping extends Command {
 	}
 
 	async run (message) {
-		message.sendT("general/ping:CONTENT", { ping: "..."
-		}).then((m) => {
+		message.sendT("general/ping:CONTENT", { ping: "..." }).then((m) => {
 			m.sendT("general/ping:CONTENT", { ping: m.createdTimestamp - message.createdTimestamp }, { edit: true });
 		});
 	}

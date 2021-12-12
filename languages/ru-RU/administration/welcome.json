@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Включить или отключить приветственные сообщения!",
-	"USAGE": "{{prefix}}welcome",
-	"EXAMPLES": "{{prefix}}welcome",
+	"USAGE": "{{prefix}}welcome (test)",
+	"EXAMPLES": "{{prefix}}welcome\n{{prefix}}welcome test",
 	"MISSING_STATUS": "Выберите действие: `edit` или `off`",
 	"DEFAULT_MESSAGE": "Добро пожаловать на сервер {server}, {user}, теперь нас {membercount}! Ваш аккаунт был создан {createdat}.",
 	"TEST_SUCCESS": "Тест выполнен!",
