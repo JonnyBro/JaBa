@@ -45,12 +45,13 @@ module.exports = {
 			text += `${table(arrCat)}\n\n`;
 		});
 
+		if (!fs.existsSync("./dashboard/views/docs")) fs.mkdirSync("./dashboard/views/docs");
 		if (fs.existsSync("./dashboard/views/docs")) {
-			fs.mkdirSync("./dashboard/views/docs");
 			fs.writeFileSync("./dashboard/views/docs/commands.md", text);
 			client.logger.log("Dashboard docs updated!");
 		};
 
+		if (!fs.existsSync("./docs")) fs.mkdirSync("./docs");
 		if (fs.existsSync("./docs")) {
 			fs.mkdirSync("./docs");
 			fs.writeFileSync("./docs/commands.md", text);
