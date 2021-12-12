@@ -53,7 +53,6 @@ module.exports = {
 
 		if (!fs.existsSync("./docs")) fs.mkdirSync("./docs");
 		if (fs.existsSync("./docs")) {
-			fs.mkdirSync("./docs");
 			fs.writeFileSync("./docs/commands.md", text);
 			client.logger.log("Docs updated!");
 		};
