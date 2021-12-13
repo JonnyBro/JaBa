@@ -19,11 +19,12 @@ class Clip extends Command {
 
 	async run (message, args) {
 		const voice = message.member.voice.channel;
+		const queue = this.client.player.getQueue(message);
 
 		if (!args[0]) return message.error("music/clip:NO_ARG");
 		if (!fs.existsSync(`./clips/${args[0]}.mp3`)) return message.error("music/clip:NO_FILE", { file: args[0] });
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
-		if (this.client.player.isPlaying()) return message.error("music/clip:ACTIVE_QUEUE");
+		if (queue) return message.error("music/clip:ACTIVE_QUEUE");
 
 		try {
 			const connection = await voice.join();

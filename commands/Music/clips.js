@@ -29,7 +29,7 @@ class Clips extends Command {
 			});
 
 			const embed = new Discord.MessageEmbed()
-				.setTitle("**Список клипов:**")
+				.setTitle(message.translate("music/clips:EMBED_TITLE"))
 				.setDescription(clips.join("\n"))
 				.setColor(data.config.embed.color)
 				.setFooter(data.config.embed.footer)

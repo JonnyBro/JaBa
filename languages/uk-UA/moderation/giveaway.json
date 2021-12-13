@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Управление раздачами!",
 	"USAGE": "{{prefix}}giveaway [create/reroll/delete/end] (время) (кол-во победителей) (приз)",
-	"EXAMPLES": "{{prefix}}giveaway create 10m 2 100 рублей на QIWI!\n{{prefix}}giveaway reroll 597812898022031374",
+	"EXAMPLES": "{{prefix}}giveaway create 10m 2 100 рублей на карту!\n{{prefix}}giveaway reroll 597812898022031374",
 	"MISSING_STATUS": "Выберите действие: `create`, `reroll`, `end` или `delete`!",
 	"INVALID_CREATE": "Укажите параметры так: \n\n`{{prefix}}giveaway create [время] [кол-во победителей] [приз]`",
 	"MISSING_ID": "Укажите ID сообщения раздачи!",
