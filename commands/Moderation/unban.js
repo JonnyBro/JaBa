@@ -7,7 +7,7 @@ class Unban extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "deban", "déban" ],
+			aliases: [],
 			memberPermissions: [ "BAN_MEMBERS" ],
 			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS", "BAN_MEMBERS" ],
 			nsfw: false,

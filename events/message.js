@@ -33,7 +33,7 @@ module.exports = class {
 			};
 		};
 
-		if (message.content === "@someone" && message.guild) return client.commands.get("someone").run(message, null, data);
+		if (message.includes === "@someone" && message.guild) return client.commands.get("someone").run(message, null, data);
 
 		if (message.guild) {
 			// Gets the data of the member
