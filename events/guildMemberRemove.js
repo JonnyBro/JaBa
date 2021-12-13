@@ -4,12 +4,13 @@ const Canvas = require("canvas"),
 	{ resolve } = require("path");
 
 // Register assets fonts
-Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "Regular" });
+Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "RubikMonoOne" });
+Canvas.registerFont(resolve("./assets/fonts/KeepCalm-Medium.ttf"), { family: "KeepCalm" });
 
 const applyText = (canvas, text, defaultFontSize) => {
 	const ctx = canvas.getContext("2d");
 	do {
-		ctx.font = `${defaultFontSize -= 10}px Regular`;
+		ctx.font = `${defaultFontSize -= 10}px RubikMonoOne`;
 	} while (ctx.measureText(text).width > 600);
 	return ctx.font;
 };
@@ -60,19 +61,19 @@ module.exports = class {
 						server: member.guild.name
 					}), canvas.width - 690, canvas.height - 65);
 					// Draw discriminator
-					ctx.font = "35px Regular";
+					ctx.font = "35px RubikMonoOne";
 					ctx.fillText(member.user.discriminator, canvas.width - 624, canvas.height - 180);
 					// Draw number
-					ctx.font = "22px Regular";
+					ctx.font = "22px RubikMonoOne";
 					ctx.fillText(member.guild.translate("administration/goodbye:IMG_NB", {
 						memberCount: member.guild.memberCount
 					}), 50, canvas.height - 50);
 					// Draw # for discriminator
 					ctx.fillStyle = "#44d14a";
-					ctx.font = "70px Regular";
+					ctx.font = "70px RubikMonoOne";
 					ctx.fillText("#", canvas.width - 690, canvas.height - 165);
 					// Draw Title with gradient
-					ctx.font = "65px Regular";
+					ctx.font = "65px RubikMonoOne";
 					ctx.strokeStyle = "#1d2124";
 					ctx.lineWidth = 15;
 					ctx.strokeText(member.guild.translate("administration/goodbye:TITLE"), canvas.width - 670, canvas.height - 330);
