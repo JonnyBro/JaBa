@@ -36,7 +36,7 @@ module.exports = {
 				};
 			}).forEach((cmd) => {
 				arrCat.push([
-					`**${cmd.help.name}**`,
+					`**${cmd.help.name}** ${cmd.help.aliases.length ? `**(${cmd.help.aliases.join(", ")})**` : ""}`,
 					client.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:DESCRIPTION`),
 					client.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:USAGE`),
 					Math.ceil(cmd.conf.cooldown / 1000)+" секунд(а/ы)"

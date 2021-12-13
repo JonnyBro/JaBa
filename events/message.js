@@ -142,7 +142,7 @@ module.exports = class {
 
 		if (!cmd.conf.enabled) return message.error("misc:COMMAND_DISABLED");
 
-		if (cmd.conf.ownerOnly && message.author.id !== client.config.owner.id)return message.error("misc:OWNER_ONLY");
+		if (cmd.conf.ownerOnly && message.author.id !== client.config.owner.id) return message.error("misc:OWNER_ONLY");
 
 		let uCooldown = cmdCooldown[message.author.id];
 		if (!uCooldown) {
@@ -153,7 +153,7 @@ module.exports = class {
 		if (time && (time > Date.now())) return message.error("misc:COOLDOWNED", { seconds: Math.ceil((time-Date.now())/1000) });
 		cmdCooldown[message.author.id][cmd.help.name] = Date.now() + cmd.conf.cooldown;
 
-		client.logger.log(`${message.author.username} (${message.author.id}) ran command ${cmd.help.name} on ${message.guild.name}`, "cmd");
+		client.logger.log(`${message.author.username} (${message.author.id}) ran command ${cmd.help.name} ${message.guild ? `on ${message.guild.name}` : "in DM"}`, "cmd");
 
 		const log = new this.client.logs({
 			commandName: cmd.help.name,
