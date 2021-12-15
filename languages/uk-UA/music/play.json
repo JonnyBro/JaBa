@@ -5,7 +5,7 @@
 	"NO_VOICE_CHANNEL": "Вы должны находиться в голосовом канале!",
 	"VOICE_CHANNEL_CONNECT": "Я не могу присоедениться к вашему голосовому каналу!",
 	"MISSING_SONG_NAME": "Укажите название трека или ссылку на него!",
-	"RESULTS_FOOTER": "Укажите число от 1 до 10.",
+	"RESULTS_FOOTER": "Укажите число от 1 до 10 (без префикса).",
 	"NO_RESULT": "На YouTube ничего не найдено!",
 	"NOW_PLAYING": "Сейчас играет **{{songName}}** :musical_note:",
 	"PLAYING_PLAYLIST": "Начинается воспроизведение плейлиста **{{playlistTitle}}**. {{playlistEmoji}}\nНачато воспроизведение первого трека, **{{songName}}**! :musical_note:",

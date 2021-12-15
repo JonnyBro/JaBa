@@ -1,7 +1,7 @@
 {
 	"YES": "Да",
 	"NO": "Нет",
-	"NOT_DEFINED": "Не определено",
+	"NOT_DEFINED": "Не установлено",
 	"AND_MORE": "И т.д...",
 	"AUTHOR": "Автор",
 	"DATE": "Дата",
@@ -22,7 +22,7 @@
 	"STATUS": "Статус",
 	"STATUS_ONLINE": "Онлайн",
 	"STATUS_OFFLINE": "Оффлайн",
-	"STATUS_IDLE": "AFK",
+	"STATUS_IDLE": "Неактивен",
 	"STATUS_DND": "Не беспокоить",
 	"ROLE": "Роль",
 	"ROLES": "Роли",

@@ -14,20 +14,6 @@
 		]
 	},
 	{
-		"name": "uk-UA",
-		"nativeName": "Украинский",
-		"moment": "ru",
-		"defaultMomentFormat": "Do MMMM YYYY",
-		"default": false,
-		"aliases": [
-			"Ukrainian",
-			"uk",
-			"uk-ua",
-			"uk_ua",
-			"uk_UA"
-		]
-	},
-	{
 		"name": "en-US",
 		"nativeName": "Английский",
 		"moment": "en",
