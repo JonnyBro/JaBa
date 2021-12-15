@@ -1,6 +1,8 @@
 module.exports = {
 	/* The token of your Discord Bot */
 	token: "XXXXXXXXXXX",
+	/* Youtube token */
+	youtubeToken: "XXXXXXXXXXX",
 	/* For the support server */
 	support: {
 		id: "XXXXXXXXXXX", // The ID of the support server
@@ -26,7 +28,7 @@ module.exports = {
 	/* Bot's owner informations */
 	owner: {
 		id: "XXXXXXXXXXX", // The ID of the bot's owner
-		name: "@Jonny_Bro#4226" // And the name of the bot's owner
+		name: "@XXXXXXXXXXX#1234" // And the name of the bot's owner
 	},
 	/* DBL votes webhook (optional) */
 	votes: {
@@ -51,7 +53,7 @@ module.exports = {
 	},
 	/* The others utils links */
 	others: {
-		github: "https://github.com/JonnyBro", // Founder's github account
+		github: "https://github.com/XXXXXXXXXXX", // Founder's github account
 		donate: "https://patreon.com/XXXXXXXXXXX" // Donate link
 	}
 };
