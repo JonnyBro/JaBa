@@ -55,6 +55,13 @@ class Atlanta extends Client {
 		};
 
 		this.player = new Player(this, {
+			ytdlDownloadOptions: {
+				requestOptions: {
+					headers: {
+						cookie: this.config.youtubeToken
+					}
+				}
+			},
 			leaveOnEmpty: false,
 			enableLive: true
 		});
