@@ -3,7 +3,6 @@
 	<%- include('includes/head') %>
 	<body class="hold-transition skin-red sidebar-mini">
 		<div class="wrapper">
-
 			<!-- The header is the topbar -->
 			<%- include('includes/header') %>
 
@@ -12,7 +11,6 @@
 
 			<!-- Content Wrapper. Contains page content -->
 			<div class="content-wrapper">
-
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<h1> <%= translate("dashboard:SELECTOR") %> <small> Dashboard v1.0 </small> </h1>
@@ -22,13 +20,12 @@
 				</section>
 
 				<section class="content">
-
 					<div class="row">
 					<% if(user.displayedGuilds){ user.displayedGuilds.forEach(function(guild) { %>
 						<!-- Displays 4 servers by line -->
 						<div class="col-md-3">
 							<div class="box box-solid">
-								<div class="box-header with-border text-center">
+								<div class="box-header text-center">
 									<i class="fas fa-crown"></i>
 									<h3 class="box-title server-name"><%= guild.name %></h3>
 								</div>
@@ -69,10 +66,10 @@
 					<% } %>
 					</div>
 				</section>
-                </div>
+				</div>
 
 				<!-- Footer includes credits and version -->
-            <%- include('includes/footer') %>
+			<%- include('includes/footer') %>
 		</div>
 		<!-- ./wrapper -->
 	</body>

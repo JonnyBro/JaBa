@@ -1,6 +1,30 @@
 .server-name {
-    overflow: hidden;
-    width: calc(80%);
-    white-space: nowrap;
-    text-overflow: ellipsis;
+	overflow: hidden;
+	width: calc(80%);
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
+/*
+.content-wrapper {
+	background: #232a2e;
+}
+
+.box {
+	background: #343d42;
+}
+
+.box-title {
+	color: #fafafa;
+}
+
+.box-footer {
+	background: #343d42;
+}
+
+.form-group {
+	color: #fafafa;
+}
+
+h1 {
+	color: #fafafa;
+} */
