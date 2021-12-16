@@ -77,6 +77,7 @@ class Atlanta extends Client {
 			.on("searchInvalidResponse", (message, query, tracks, content, collector) => {
 				if (content === "cancel") {
 					collector.stop();
+
 					return message.success("music/play:RESULTS_CANCEL");
 				};
 
