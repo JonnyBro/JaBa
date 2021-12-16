@@ -36,10 +36,9 @@ module.exports = class {
 		if (client.config.dashboard.enabled) client.dashboard.load(client);
 
 		// Update the game every 20s
-		const prefix = require("../config").prefix;
 		const status = [
 			{ name: `{servers} сервер(а/ов)`, type: "WATCHING" },
-			{ name: `${prefix}help`, type: "WATCHING" }
+			{ name: "help", type: "WATCHING" }
 		];
 		const version = require("../package.json").version;
 		let i = 0;
