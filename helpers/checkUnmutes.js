@@ -24,6 +24,7 @@ module.exports = {
 					};
 					memberData.save();
 					client.logger.log("[unmute] "+memberData.id+" cannot be found.");
+
 					return null;
 				});
 				const guildData = await client.findOrCreateGuild({ id: guild.id });
@@ -44,9 +45,8 @@ module.exports = {
 					.setColor("#f44271")
 					.setFooter(guild.client.config.embed.footer);
 				const channel = guild.channels.cache.get(guildData.plugins.modlogs);
-				if (channel) {
-					channel.send(embed);
-				};
+				if (channel) channel.send(embed);
+
 				memberData.mute = {
 					muted: false,
 					endDate: null,

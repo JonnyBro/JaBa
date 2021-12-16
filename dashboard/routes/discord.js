@@ -7,9 +7,8 @@ const fetch = require("node-fetch"),
 
 // Gets login page
 router.get("/login", async function(req, res) {
-	if (!req.user || !req.user.id || !req.user.guilds) {
-		return res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${req.client.user.id}&scope=identify%20guilds&response_type=code&redirect_uri=${encodeURIComponent(req.client.config.dashboard.baseURL+"/api/callback")}&state=${req.query.state || "no"}`);
-	};
+	if (!req.user || !req.user.id || !req.user.guilds) return res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${req.client.user.id}&scope=identify%20guilds&response_type=code&redirect_uri=${encodeURIComponent(req.client.config.dashboard.baseURL+"/api/callback")}&state=${req.query.state || "no"}`);
+
 	res.redirect("/selector");
 });
 
@@ -19,9 +18,11 @@ router.get("/callback", async (req, res) => {
 		if (req.query.code) {
 			const guildID = req.query.state.substr("invite".length, req.query.state.length);
 			req.client.knownGuilds.push({ id: guildID, user: req.user.id });
+
 			return res.redirect("/manage/"+guildID);
 		};
 	};
+
 	const redirectURL = req.client.states[req.query.state] || "/selector";
 	const params = new URLSearchParams();
 	params.set("grant_type", "authorization_code");
@@ -35,8 +36,10 @@ router.get("/callback", async (req, res) => {
 			"Content-Type": "application/x-www-form-urlencoded"
 		}
 	});
+
 	// Fetch tokens (used to fetch user informations)
 	const tokens = await response.json();
+
 	// If the code isn't valid
 	if (tokens.error || !tokens.access_token) return res.redirect(`/api/login&state=${req.query.state}`);
 	const userData = {
@@ -54,6 +57,7 @@ router.get("/callback", async (req, res) => {
 			if (json.retry_after) await req.client.wait(json.retry_after);
 			else userData.infos = json;
 		};
+
 		/* User guilds */
 		if (!userData.guilds) {
 			response = await fetch("https://discordapp.com/api/users/@me/guilds", {
@@ -65,9 +69,11 @@ router.get("/callback", async (req, res) => {
 			else userData.guilds = json;
 		};
 	};
+
 	/* Change format (from "0": { data }, "1": { data }, etc... to [ { data }, { data } ]) */
 	const guilds = [];
-	for(const guildPos in userData.guilds) guilds.push(userData.guilds[guildPos]);
+	for (const guildPos in userData.guilds) guilds.push(userData.guilds[guildPos]);
+
 	// Update session
 	req.session.user = { ... userData.infos, ... { guilds } };
 	const user = await req.client.users.fetch(req.session.user.id);

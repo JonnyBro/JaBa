@@ -22,12 +22,8 @@ module.exports = {
 					user: dUser.tag
 				})).catch(() => {});
 				const logsChannel = client.channels.cache.get(client.config.votes.channel);
-				if (logsChannel) {
-					logsChannel.send(client.translate("misc:VOTE_LOGS", {
-						userid: dUser.id,
-						usertag: dUser.tag
-					}));
-				};
+
+				if (logsChannel) logsChannel.send(client.translate("misc:VOTE_LOGS", { userid: dUser.id, usertag: dUser.tag }));
 			});
 		};
 	}

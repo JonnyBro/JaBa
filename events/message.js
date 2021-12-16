@@ -9,7 +9,7 @@ module.exports = class {
 	async run (message) {
 		const data = {};
 
-		// If the messagr author is a bot
+		// If the message author is a bot
 		if (message.author.bot) return;
 
 		// If the member on a guild is invisible or not cached, fetch them.
@@ -26,14 +26,11 @@ module.exports = class {
 
 		// Check if the bot was mentionned
 		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) {
-			if (message.guild) {
-				return message.sendT("misc:HELLO_SERVER", { username: message.author.username, prefix: data.guild.prefix });
-			} else {
-				return message.sendT("misc:HELLO_DM", { username: message.author.username });
-			};
+			if (message.guild) return message.sendT("misc:HELLO_SERVER", { username: message.author.username, prefix: data.guild.prefix });
+			else return message.sendT("misc:HELLO_DM", { username: message.author.username });
 		};
 
-		if (message.includes === "@someone" && message.guild) return client.commands.get("someone").run(message, null, data);
+		if (message.content.includes("@someone") && message.guild) return client.commands.get("someone").run(message, null, data);
 
 		if (message.guild) {
 			// Gets the data of the member
@@ -55,6 +52,7 @@ module.exports = class {
 						if (uSlowmode.time > Date.now()) {
 							message.delete();
 							const delay = message.convertTime(uSlowmode.time, "to", true);
+
 							return message.author.send(message.translate("administration/slowmode:PLEASE_WAIT", { time: delay, channel: message.channel.toString() }));
 						} else {
 							uSlowmode.time = channelSlowmode.time + Date.now();
@@ -89,9 +87,7 @@ module.exports = class {
 
 			message.mentions.users.forEach(async (u) => {
 				const userData = await client.findOrCreateUser({ id: u.id });
-				if (userData.afk) {
-					message.error("general/setafk:IS_AFK", { user: u.tag, reason: userData.afk });
-				};
+				if (userData.afk) message.error("general/setafk:IS_AFK", { user: u.tag, reason: userData.afk });
 			});
 		};
 
@@ -112,21 +108,23 @@ module.exports = class {
 		if (message.guild && data.guild.ignoredChannels.includes(message.channel.id) && !message.member.hasPermission("MANAGE_MESSAGES")) {
 			message.delete();
 			message.author.send(message.translate("misc:RESTRICTED_CHANNEL", { channel: message.channel.toString() }));
+
 			return;
 		};
 
 		if (customCommandAnswer) return message.channel.send(customCommandAnswer);
-
 		if (cmd.conf.guildOnly && !message.guild) return message.error("misc:GUILD_ONLY");
 
 		if (message.guild) {
 			let neededPermissions = [];
 			if (!cmd.conf.botPermissions.includes("EMBED_LINKS")) cmd.conf.botPermissions.push("EMBED_LINKS");
+
 			cmd.conf.botPermissions.forEach((perm) => {
 				if (!message.channel.permissionsFor(message.guild.me).has(perm)) {
 					neededPermissions.push(perm);
 				};
 			});
+
 			if (neededPermissions.length > 0) return message.error("misc:MISSING_BOT_PERMS", { list: neededPermissions.map((p) => `\`${p}\``).join(", ") });
 
 			neededPermissions = [];
@@ -135,13 +133,13 @@ module.exports = class {
 					neededPermissions.push(perm);
 				};
 			});
+
 			if (neededPermissions.length > 0) return message.error("misc:MISSING_MEMBER_PERMS", { list: neededPermissions.map((p) => `\`${p}\``).join(", ") });
 			if (!message.channel.permissionsFor(message.member).has("MENTION_EVERYONE") && (message.content.includes("@everyone") || message.content.includes("@here"))) return message.error("misc:EVERYONE_MENTION");
 			if (!message.channel.nsfw && cmd.conf.nsfw) return message.error("misc:NSFW_COMMAND");
 		};
 
 		if (!cmd.conf.enabled) return message.error("misc:COMMAND_DISABLED");
-
 		if (cmd.conf.ownerOnly && message.author.id !== client.config.owner.id) return message.error("misc:OWNER_ONLY");
 
 		let uCooldown = cmdCooldown[message.author.id];
@@ -149,6 +147,7 @@ module.exports = class {
 			cmdCooldown[message.author.id] = {};
 			uCooldown = cmdCooldown[message.author.id];
 		};
+
 		const time = uCooldown[cmd.help.name] || 0;
 		if (time && (time > Date.now())) return message.error("misc:COOLDOWNED", { seconds: Math.ceil((time-Date.now())/1000) });
 		cmdCooldown[message.author.id][cmd.help.name] = Date.now() + cmd.conf.cooldown;
@@ -167,12 +166,10 @@ module.exports = class {
 			data.userData.achievements.firstCommand.achieved = true;
 			data.userData.markModified("achievements.firstCommand");
 			await data.userData.save();
-			await message.channel.send({ files: [
-				{
-					name: "unlocked.png",
-					attachment: "./assets/img/achievements/achievement_unlocked2.png"
-				}
-			]});
+			await message.channel.send({ files: [{
+				name: "unlocked.png",
+				attachment: "./assets/img/achievements/achievement_unlocked2.png"
+			}]});
 		};
 
 		try {

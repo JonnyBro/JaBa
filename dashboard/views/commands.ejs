@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html>
-	<%- include('includes/head') %>
-	<body class="hold-transition skin-red sidebar-mini">
-		<div class="wrapper">
+<%- include('includes/head') %>
 
-			<!-- The header is the topbar -->
-			<%- include('includes/header') %>
+<body class="hold-transition skin-red sidebar-mini">
+	<div class="wrapper">
 
-			<!-- The sidebar includes the menu -->
-			<%- include('includes/sidebar') %>
+		<!-- The header is the topbar -->
+		<%- include('includes/header') %>
 
-			<!-- Content Wrapper. Contains page content -->
-			<div class="content-wrapper">
+		<!-- The sidebar includes the menu -->
+		<%- include('includes/sidebar') %>
 
-				<!-- Content Header (Page header) -->
-				<section class="content-header">
-					<h1> Команды <small> Dashboard v1.0 </small> </h1>
-					<ol class="breadcrumb">
-						<li class="active"><a href="/commands"><i class="fa fa-home"></i> Команды </a></li>
-					</ol>
-				</section>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
 
-				<section class="content">
-					<%- md("commands.md") %>
-				</section>
-				</div>
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1> Команды <small> Dashboard v1.0 </small> </h1>
+				<ol class="breadcrumb">
+					<li class="active"><a href="/commands"><i class="fa fa-home"></i> Команды </a></li>
+				</ol>
+			</section>
 
-				<!-- Footer includes credits and version -->
-			<%- include('includes/footer') %>
+			<section class="content">
+				<%- md("commands.md") %>
+			</section>
 		</div>
-		<!-- ./wrapper -->
-	</body>
+
+		<!-- Footer includes credits and version -->
+		<%- include('includes/footer') %>
+	</div>
+	<!-- ./wrapper -->
+</body>
+
 </html>

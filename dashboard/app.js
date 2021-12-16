@@ -4,7 +4,6 @@ const config = require("../config"),
 
 module.exports.load = async(client) => {
 	/* Init express app */
-
 	const express = require("express"),
 		session = require("express-session"),
 		path = require("path"),
@@ -56,7 +55,7 @@ module.exports.load = async(client) => {
 		.use("/", mainRouter)
 		.use("/commands", commandsManagerRouter)
 		.use("/updates", updatesManagerRouter)
-		.use(CheckAuth, function(req, res){
+		.use(CheckAuth, function(req, res) {
 			res.status(404).render("404", {
 				user: req.userInfos,
 				translate: req.translate,

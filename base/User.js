@@ -107,7 +107,7 @@ userSchema.method("getAchievements", async function() {
 		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.invite.achieved ? "_colored" : ""}7.png`)
 	];
 	let dim = 0;
-	for(let i = 0; i < images.length; i++) {
+	for (let i = 0; i < images.length; i++) {
 		await ctx.drawImage(images[i], dim, 10, 350, 200);
 		dim += 200;
 	};

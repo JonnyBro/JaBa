@@ -1,7 +1,7 @@
-const { MessageEmbed, Util, Client, Collection } = require("discord.js");
-const { GiveawaysManager } = require("discord-giveaways");
-const { Player } = require("discord-player");
-const { Client: Joker } = require("blague.xyz");
+const { MessageEmbed, Util, Client, Collection } = require("discord.js"),
+	{ GiveawaysManager } = require("discord-giveaways"),
+	{ Player } = require("discord-player"),
+	{ Client: Joker } = require("blague.xyz");
 
 const util = require("util"),
 	AmeClient = require("amethyste-api"),
@@ -44,15 +44,8 @@ class Atlanta extends Client {
 		this.databaseCache.usersReminds = new Collection(); // members with active reminds
 		this.databaseCache.mutedUsers = new Collection(); // members who are currently muted
 
-		if (this.config.apiKeys.amethyste) {
-			this.AmeAPI = new AmeClient(this.config.apiKeys.amethyste);
-		};
-
-		if (this.config.apiKeys.blagueXYZ) {
-			this.joker = new Joker(this.config.apiKeys.blagueXYZ, {
-				defaultLanguage: "en"
-			});
-		};
+		if (this.config.apiKeys.amethyste) this.AmeAPI = new AmeClient(this.config.apiKeys.amethyste);
+		if (this.config.apiKeys.blagueXYZ) this.joker = new Joker(this.config.apiKeys.blagueXYZ, { defaultLanguage: "en" });
 
 		this.player = new Player(this, {
 			ytdlDownloadOptions: {
@@ -68,16 +61,10 @@ class Atlanta extends Client {
 
 		this.player
 			.on("trackStart", (message, track) => {
-				message.success("music/play:NOW_PLAYING", {
-					songName: track.title
-				});
+				message.success("music/play:NOW_PLAYING", { songName: track.title });
 			})
 			.on("playlistStart", (message, queue, playlist, track) => {
-				message.channel.send(this.customEmojis.success+" | "+message.translate("music/play:PLAYING_PLAYLIST", {
-					playlistTitle: playlist.title,
-					playlistEmoji: this.customEmojis.playlist,
-					songName: track.title
-				}));
+				message.channel.send(`${this.customEmojis.success} ${message.translate("music/play:PLAYING_PLAYLIST", { playlistTitle: playlist.title, playlistEmoji: this.customEmojis.playlist, songName: track.title })}`);
 			})
 			.on("searchResults", (message, query, tracks) => {
 				if (tracks.length > 10) tracks = tracks.slice(0, 10);
@@ -93,10 +80,7 @@ class Atlanta extends Client {
 					return message.success("music/play:RESULTS_CANCEL");
 				};
 
-				message.error("misc:INVALID_NUMBER_RANGE", {
-					min: 1,
-					max: tracks.length
-				});
+				message.error("misc:INVALID_NUMBER_RANGE", { min: 1, max: tracks.length });
 			})
 			.on("searchCancel", (message) => {
 				message.error("misc:TIMES_UP");
@@ -111,14 +95,10 @@ class Atlanta extends Client {
 				message.success("music/play:QUEUE_ENDED");
 			})
 			.on("playlistAdd", (message, queue, playlist) => {
-				message.success("music/play:ADDED_QUEUE_COUNT", {
-					songCount: playlist.items.length
-				});
+				message.success("music/play:ADDED_QUEUE_COUNT", { songCount: playlist.items.length });
 			})
 			.on("trackAdd", (message, queue, track) => {
-				message.success("music/play:ADDED_QUEUE", {
-					songName: track.title
-				});
+				message.success("music/play:ADDED_QUEUE", { songName: track.title });
 			})
 			.on("channelEmpty", () => {
 				// do nothing, leaveOnEmpty is not enabled
@@ -155,7 +135,7 @@ class Atlanta extends Client {
 			default: {
 				botsCanWin: false,
 				// exemptPermissions: [ "MANAGE_MESSAGES", "ADMINISTRATOR" ],
-				embedColor: "#FF0000",
+				embedColor: this.config.embed.color,
 				reaction: "🎉"
 			}
 		});
@@ -169,6 +149,7 @@ class Atlanta extends Client {
 		if (!locale) locale = this.defaultLanguage;
 		const language = this.translations.get(locale);
 		if (!language) throw "Invalid language set in data.";
+
 		return language(key, args);
 	};
 
@@ -176,6 +157,7 @@ class Atlanta extends Client {
 		if (!locale) locale = this.defaultLanguage;
 		const languageData = this.languages.find((language) => language.name === locale || language.aliases.includes(locale));
 		if (!format) format = languageData.defaultMomentFormat;
+
 		return moment(new Date(date))
 			.locale(languageData.moment)
 			.format(format);
@@ -185,8 +167,8 @@ class Atlanta extends Client {
 		if (!type) time = "to";
 		if (!locale) locale = this.defaultLanguage;
 		const languageData = this.languages.find((language) => language.name === locale || language.aliases.includes(locale));
-		const m = moment(time)
-			.locale(languageData.moment);
+		const m = moment(time).locale(languageData.moment);
+
 		return (type === "to" ? m.toNow(noPrefix) : m.fromNow(noPrefix));
 	};
 
@@ -196,13 +178,13 @@ class Atlanta extends Client {
 			const props = new (require(`.${commandPath}${path.sep}${commandName}`))(this);
 			this.logger.log(`Loading Command: ${props.help.name}. 👌`, "log");
 			props.conf.location = commandPath;
-			if (props.init) {
-				props.init(this);
-			};
+			if (props.init) props.init(this);
+
 			this.commands.set(props.help.name, props);
 			props.help.aliases.forEach((alias) => {
 				this.aliases.set(alias, props.help.name);
 			});
+
 			return false;
 		} catch (e) {
 			return `Unable to load command ${commandName}: ${e}`;
@@ -212,34 +194,31 @@ class Atlanta extends Client {
 	// This function is used to unload a command (you need to load them again)
 	async unloadCommand (commandPath, commandName) {
 		let command;
-		if (this.commands.has(commandName)) {
-			command = this.commands.get(commandName);
-		} else if (this.aliases.has(commandName)) {
-			command = this.commands.get(this.aliases.get(commandName));
-		};
-		if (!command) {
-			return `The command \`${commandName}\` doesn't seem to exist, nor is it an alias. Try again!`;
-		};
-		if (command.shutdown) {
-			await command.shutdown(this);
-		};
+		if (this.commands.has(commandName)) command = this.commands.get(commandName);
+		else if (this.aliases.has(commandName)) command = this.commands.get(this.aliases.get(commandName));
+
+		if (!command) return `The command \`${commandName}\` doesn't seem to exist, nor is it an alias. Try again!`;
+		if (command.shutdown) await command.shutdown(this);
+
 		delete require.cache[require.resolve(`.${commandPath}${path.sep}${commandName}.js`)];
+
 		return false;
 	};
 
 	// This function is used to find a user data or create it
 	async findOrCreateUser({ id: userID }, isLean) {
-		if (this.databaseCache.users.get(userID)) {
-			return isLean ? this.databaseCache.users.get(userID).toJSON() : this.databaseCache.users.get(userID);
-		} else {
+		if (this.databaseCache.users.get(userID)) return isLean ? this.databaseCache.users.get(userID).toJSON() : this.databaseCache.users.get(userID);
+		else {
 			let userData = (isLean ? await this.usersData.findOne({ id: userID }).lean() : await this.usersData.findOne({ id: userID }));
 			if (userData) {
 				if (!isLean) this.databaseCache.users.set(userID, userData);
+
 				return userData;
 			} else {
 				userData = new this.usersData({ id: userID });
 				await userData.save();
 				this.databaseCache.users.set(userID, userData);
+
 				return isLean ? userData.toJSON() : userData;
 			};
 		};
@@ -247,12 +226,12 @@ class Atlanta extends Client {
 
 	// This function is used to find a member data or create it
 	async findOrCreateMember({ id: memberID, guildID }, isLean) {
-		if (this.databaseCache.members.get(`${memberID}${guildID}`)) {
-			return isLean ? this.databaseCache.members.get(`${memberID}${guildID}`).toJSON() : this.databaseCache.members.get(`${memberID}${guildID}`);
-		} else {
+		if (this.databaseCache.members.get(`${memberID}${guildID}`)) return isLean ? this.databaseCache.members.get(`${memberID}${guildID}`).toJSON() : this.databaseCache.members.get(`${memberID}${guildID}`);
+		else {
 			let memberData = (isLean ? await this.membersData.findOne({ guildID, id: memberID }).lean() : await this.membersData.findOne({ guildID, id: memberID }));
 			if (memberData) {
 				if (!isLean) this.databaseCache.members.set(`${memberID}${guildID}`, memberData);
+
 				return memberData;
 			} else {
 				memberData = new this.membersData({ id: memberID, guildID: guildID });
@@ -263,6 +242,7 @@ class Atlanta extends Client {
 					await guild.save();
 				};
 				this.databaseCache.members.set(`${memberID}${guildID}`, memberData);
+
 				return isLean ? memberData.toJSON() : memberData;
 			};
 		};
@@ -270,17 +250,18 @@ class Atlanta extends Client {
 
 	// This function is used to find a guild data or create it
 	async findOrCreateGuild({ id: guildID }, isLean) {
-		if (this.databaseCache.guilds.get(guildID)) {
-			return isLean ? this.databaseCache.guilds.get(guildID).toJSON() : this.databaseCache.guilds.get(guildID);
-		} else {
+		if (this.databaseCache.guilds.get(guildID)) return isLean ? this.databaseCache.guilds.get(guildID).toJSON() : this.databaseCache.guilds.get(guildID);
+		else {
 			let guildData = (isLean ? await this.guildsData.findOne({ id: guildID }).populate("members").lean() : await this.guildsData.findOne({ id: guildID }).populate("members"));
 			if (guildData) {
 				if (!isLean) this.databaseCache.guilds.set(guildID, guildData);
+
 				return guildData;
 			} else {
 				guildData = new this.guildsData({ id: guildID });
 				await guildData.save();
 				this.databaseCache.guilds.set(guildID, guildData);
+
 				return isLean ? guildData.toJSON() : guildData;
 			};
 		};
@@ -290,12 +271,14 @@ class Atlanta extends Client {
 	async resolveUser(search) {
 		let user = null;
 		if (!search || typeof search !== "string") return;
+
 		// Try ID search
 		if (search.match(/^<@!?(\d+)>$/)) {
 			const id = search.match(/^<@!?(\d+)>$/)[1];
 			user = this.users.fetch(id).catch(() => {});
 			if (user) return user;
 		};
+
 		// Try username search
 		if (search.match(/^!?(\w+)#(\d+)$/)) {
 			const username = search.match(/^!?(\w+)#(\d+)$/)[0];
@@ -304,18 +287,21 @@ class Atlanta extends Client {
 			if (user) return user;
 		};
 		user = await this.users.fetch(search).catch(() => {});
+
 		return user;
 	};
 
 	async resolveMember(search, guild) {
 		let member = null;
 		if (!search || typeof search !== "string") return;
+
 		// Try ID search
 		if (search.match(/^<@!?(\d+)>$/)) {
 			const id = search.match(/^<@!?(\d+)>$/)[1];
 			member = await guild.members.fetch(id).catch(() => {});
 			if (member) return member;
 		};
+
 		// Try username search
 		if (search.match(/^!?(\w+)#(\d+)$/)) {
 			guild = await guild.fetch();
@@ -323,22 +309,26 @@ class Atlanta extends Client {
 			if (member) return member;
 		};
 		member = await guild.members.fetch(search).catch(() => {});
+
 		return member;
 	};
 
 	async resolveRole(search, guild) {
 		let role = null;
 		if (!search || typeof search !== "string") return;
+
 		// Try ID search
 		if (search.match(/^<@&!?(\d+)>$/)) {
 			const id = search.match(/^<@&!?(\d+)>$/)[1];
 			role = guild.roles.cache.get(id);
 			if (role) return role;
 		};
+
 		// Try name search
 		role = guild.roles.cache.find((r) => search === r.name);
 		if (role) return role;
 		role = guild.roles.cache.get(search);
+
 		return role;
 	};
 };

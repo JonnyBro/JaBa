@@ -5,6 +5,7 @@ const Canvas = require("discord-canvas"),
 async function init(client) {
 	new CronJob("0 3 12 * * *", async function() {
 		if (!client.config.apiKeys.fortniteFNBR || client.config.apiKeys.fortniteFNBR === "") return;
+
 		client.guilds.cache.forEach(async (guild) => {
 			const guildData = await client.findOrCreateGuild({ id: guild.id });
 			if (guildData.plugins.fortniteshop) {

@@ -25,14 +25,16 @@ router.get("/:serverID", CheckAuth, async(req, res) => {
 		level: sortArrayOfObjects("level", membersData)
 	};
 
-	for(const cat in leaderboards){
+	for (const cat in leaderboards) {
 		const e = leaderboards[cat];
 		if (e.length > 10) e.length = 10;
-	}
+	};
+
 	const stats = {
 		money: await utils.fetchUsers(leaderboards.money, req.client),
 		level: await utils.fetchUsers(leaderboards.level, req.client)
 	};
+
 	res.render("stats/guild", {
 		stats,
 		commands: getCommands(guildInfos.commands.filter((c) => c.date > Date.now()-604800000)),
@@ -49,22 +51,17 @@ function getCommands(commands) {
 	const aDateCommand = {};
 	commands.forEach((cmd) => {
 		const tDate = formatDate(new Date(cmd.date));
-		if (aDateCommand[tDate]) {
-			aDateCommand[tDate]++;
-		} else {
-			aDateCommand[tDate] = 1;
-		};
+		if (aDateCommand[tDate]) aDateCommand[tDate]++;
+		else aDateCommand[tDate] = 1;
 	});
 	return aDateCommand;
 };
 
 function getCommandsUsage(commands) {
 	const objectCount = commands.reduce((acc, curr) => {
-		if (typeof acc[curr.command] == "undefined") {
-			acc[curr.command] = 1;
-		} else {
-			acc[curr.command] += 1;
-		}
+		if (typeof acc[curr.command] == "undefined") acc[curr.command] = 1;
+		else acc[curr.command] += 1;
+
 		return acc;
 	}, {});
 	const percentages = getPercentagePerKey(objectCount); // [ { key: "help", percentage: 20 } ]
@@ -74,6 +71,7 @@ function getCommandsUsage(commands) {
 		p.color = colors[i];
 		i++;
 	});
+
 	return percentages;
 };
 
@@ -85,14 +83,14 @@ function getPercentagePerKey(myArray) {
 		const percentage = Math.round((val / sum) * 100);
 		arrayWithPercentages.push({key, percentage});
 	};
+
 	return arrayWithPercentages;
 };
 
 function getSum(myArray) {
 	let sum = 0;
-	for (const key in myArray) {
-		sum += myArray[key];
-	};
+	for (const key in myArray) sum += myArray[key];
+
 	return sum;
 };
 
@@ -109,5 +107,6 @@ function formatDate(date) {
 	if (dd < 10) dd = `0${dd}`
 	if (mm < 10) mm = `0${mm}`
 	date = `${mm}/${dd}`
+
 	return date;
 };

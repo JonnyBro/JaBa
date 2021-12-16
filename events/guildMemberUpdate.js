@@ -12,7 +12,8 @@ module.exports = class {
 			userData.achievements.tip.achieved = true;
 			userData.markModified("achievements.tip");
 			await userData.save();
-			newMember.send({ files: [ { name: "unlocked.png", attachment: "./assets/img/achievements/achievement_unlocked5.png"} ] });
+
+			newMember.send({ files: [{ name: "unlocked.png", attachment: "./assets/img/achievements/achievement_unlocked5.png"} ]});
 		};
 	}
 };

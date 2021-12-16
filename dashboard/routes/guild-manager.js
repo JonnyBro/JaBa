@@ -42,12 +42,9 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 
 	if (data.language) {
 		const language = req.client.languages.find((language) => language.aliases[0].toLowerCase() === data.language.toLowerCase());
-		if (language) {
-			guildData.language = language.name;
-		};
-		if (data.prefix.length >= 1 && data.prefix.length < 2000) {
-			guildData.prefix = data.prefix;
-		};
+		if (language) guildData.language = language.name;
+		if (data.prefix.length >= 1 && data.prefix.length < 2000) guildData.prefix = data.prefix;
+
 		await guildData.save();
 	};
 
@@ -120,21 +117,15 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 	};
 
 	if (Object.prototype.hasOwnProperty.call(data, "suggestions")) {
-		if (data.suggestions === req.translate("common:NO_CHANNEL")) {
-			guildData.plugins.suggestions = false;
-		} else {
-			guildData.plugins.suggestions = guild.channels.cache.find((ch) => "#"+ch.name === data.suggestions).id;
-		};
-		if (data.modlogs === req.translate("common:NO_CHANNEL")) {
-			guildData.plugins.modlogs = false;
-		} else {
-			guildData.plugins.modlogs = guild.channels.cache.find((ch) => "#"+ch.name === data.modlogs).id;
-		};
-		if (data.fortniteshop === req.translate("common:NO_CHANNEL")) {
-			guildData.plugins.fortniteshop = false;
-		} else {
-			guildData.plugins.fortniteshop = guild.channels.cache.find((ch) => "#"+ch.name === data.fortniteshop).id;
-		};
+		if (data.suggestions === req.translate("common:NO_CHANNEL")) guildData.plugins.suggestions = false;
+		else guildData.plugins.suggestions = guild.channels.cache.find((ch) => "#"+ch.name === data.suggestions).id;
+
+		if (data.modlogs === req.translate("common:NO_CHANNEL")) guildData.plugins.modlogs = false;
+		else guildData.plugins.modlogs = guild.channels.cache.find((ch) => "#"+ch.name === data.modlogs).id;
+
+		if (data.fortniteshop === req.translate("common:NO_CHANNEL")) guildData.plugins.fortniteshop = false;
+		else guildData.plugins.fortniteshop = guild.channels.cache.find((ch) => "#"+ch.name === data.fortniteshop).id;
+
 		guildData.markModified("plugins");
 	};
 

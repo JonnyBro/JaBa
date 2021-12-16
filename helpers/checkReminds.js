@@ -34,9 +34,7 @@ module.exports = {
 						});
 						user.reminds = user.reminds.filter((r) => r.sendAt >= dateNow);
 						user.save();
-						if (user.reminds.length === 0) {
-							client.databaseCache.usersReminds.delete(user.id);
-						};
+						if (user.reminds.length === 0) client.databaseCache.usersReminds.delete(user.id);
 					};
 				};
 			});

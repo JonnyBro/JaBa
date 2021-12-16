@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
-	<%- include('includes/head') %>
-	<body class="hold-transition skin-red sidebar-mini">
-		<div class="wrapper">
+<%- include('includes/head') %>
 
-			<!-- The header is the topbar -->
-			<%- include('includes/header') %>
+<body class="hold-transition skin-red sidebar-mini">
+	<div class="wrapper">
+		<!-- The header is the topbar -->
+		<%- include('includes/header') %>
 
-			<!-- The sidebar includes the menu -->
-			<%- include('includes/sidebar') %>
+		<!-- The sidebar includes the menu -->
+		<%- include('includes/sidebar') %>
 
-			<!-- Content Wrapper. Contains page content -->
-			<div class="content-wrapper">
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
 
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
@@ -34,7 +34,8 @@
 
 						<form class="search-form" action="/selector">
 							<div class="input-group">
-								<input type="text" name="q" class="form-control" placeholder="<%= translate("dashboard:SEARCH") %>">
+								<input type="text" name="q" class="form-control"
+									placeholder="<%= translate("dashboard:SEARCH") %>">
 
 								<div class="input-group-btn">
 									<button type="submit" class="btn btn-warning btn-flat"><i class="fa fa-search"></i>
@@ -56,4 +57,5 @@
 	</div>
 	<!-- ./wrapper -->
 </body>
+
 </html>
