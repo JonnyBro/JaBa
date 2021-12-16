@@ -14,7 +14,7 @@ const checks = [
 		console.log("\n\nEnvironnement");
 		return new Promise((res) => {
 			if (parseInt(process.version.split(".")[0].split("v")[1]) >= 12) {
-				success("node.js version should be equal or higher than v12");
+				success("node.js version equal or higher than v12");
 			} else {
 				error("node.js version should be equal or higher than v12");
 			};
@@ -34,7 +34,7 @@ const checks = [
 				if (!client.guilds.cache.has("568120814776614924")) {
 					error("should be added to the emojis server", "please add your bot on this server: https://emojis.atlanta-bot.fr to make the emojis working");
 				} else {
-					success("should be added to the emojis server");
+					success("added to the emojis server");
 				};
 				res();
 			}).catch(() => {
@@ -54,7 +54,7 @@ const checks = [
 				useUnifiedTopology: true
 			});
 			client.connect().then(async () => {
-				success("should be able to connect to Mongo database");
+				success("Connection to Mongo database success");
 				res();
 			}).catch(() => {
 				error("should be able to connect to Mongo database", "please verify if the MongoDB server is started");
@@ -78,7 +78,7 @@ const checks = [
 				if (result.status === 401) {
 					error("should be a valid Amethyste API key", "get your key here: https://api.amethyste.moe/");
 				} else {
-					success("should be a valid Amethyste API key");
+					success("valid Amethyste API key");
 				};
 			}
 			if (!config.apiKeys.blagueXYZ) {
@@ -93,7 +93,7 @@ const checks = [
 				if (result.status === 401) {
 					error("should be a valid blague.xyz key", "get your key here: https://blague.xyz/");
 				} else {
-					success("should be a valid blague.xyz key");
+					success("valid blague.xyz key");
 				};
 			};
 			if (!config.apiKeys.dbl) {
@@ -109,7 +109,7 @@ const checks = [
 				if (result.error && result.error === "Unauthorized") {
 					error("should be a valid DBL key", "get your key here: https://top.gg/ OR delete the key from the config if you don't have a key");
 				} else {
-					success("should be a valid DBL key");
+					success("valid DBL key");
 				};
 			};
 			if (!config.apiKeys.fortniteFNBR) {
@@ -124,7 +124,7 @@ const checks = [
 				if (result.status && result.status === 401) {
 					error("should be a valid FNBR key", "get your key here: https://fnbr.co/api/docs");
 				} else {
-					success("should be a valid FNBR key");
+					success("valid FNBR key");
 				};
 			};
 			if (!config.apiKeys.sentryDSN) {
@@ -136,7 +136,7 @@ const checks = [
 					await delay(1000);
 					success("should be a valid Sentry DSN key");
 				} catch (e) {
-					error("should be a valid Sentry DSN key", "Sentry is not recommended, delete the key from the config");
+					error("valid Sentry DSN key", "Sentry is not recommended, delete the key from the config");
 				};
 			};
 			resolve();
@@ -169,7 +169,7 @@ const checks = [
 				if (isPortTaken) {
 					error("dashboard port should be available", "you have probably another process using this port");
 				} else {
-					success("dashboard port should be available");
+					success("dashboard port is available");
 				};
 			};
 			resolve();
@@ -182,6 +182,5 @@ const checks = [
 	for (const check of checks) {
 		await check();
 	};
-	console.log(chalk.yellow("\n\nThank you for using Atlanta. If you need more help, join our support server here: https://discord.atlanta-bot.fr"));
 	process.exit(0);
 })();

@@ -1,5 +1,5 @@
 const chalk = require("chalk");
-console.log(chalk.blue("Migrating database from v4.6.4 to v4.7.0...\n\n"));
+console.log(chalk.blue("Creating database indexes...\n\n"));
 
 let MongoClient;
 
