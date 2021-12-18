@@ -75,7 +75,8 @@ class Help extends Command {
 
 		embed.addField("\u200B", message.translate("misc:STATS_FOOTER", {
 			dashboardLink: "https://jaba.pp.ua",
-			donateLink: "https://qiwi.com/n/JONNYBRO"
+			donateLink: "https://qiwi.com/n/JONNYBRO",
+			owner: this.config.owner.id
 		}));
 		embed.setAuthor(message.translate("general/help:TITLE", { name: this.client.user.username }), this.client.user.displayAvatarURL({ size: 512, dynamic: true, format: 'png' }));
 		return message.channel.send(embed);
