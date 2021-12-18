@@ -36,18 +36,32 @@ module.exports = class {
 		if (client.config.dashboard.enabled) client.dashboard.load(client);
 
 		// Update status every 20s
+		let servers = client.guilds.cache.filter(guild => guild.id != "568120814776614924" && guild.id != "892727526911258654").size;
 		const status = [
-			{ name: `{servers} сервер(а/ов)`, type: "WATCHING" },
+			{ name: `${servers} ${getNoun(`${servers}`, "сервер", "сервера", "серверов")}`, type: "WATCHING" },
 			{ name: "help", type: "WATCHING" }
 		];
 		const version = require("../package.json").version;
 		let i = 0;
 		setInterval(function() {
+			servers = client.guilds.cache.filter(guild => guild.id != "568120814776614924" && guild.id != "892727526911258654").size;
 			const random = status[parseInt(i, 10)];
-			const toDisplay = random.name.replace("{servers}", client.guilds.cache.filter(guild => guild.id != "568120814776614924" && guild.id != "892727526911258654").size) + " | v" + version;
+			const toDisplay = `${random.name} | v${version}`
 			client.user.setActivity(toDisplay, { type: random.type });
+
 			if (status[parseInt(i + 1, 10)]) i++;
 			else i = 0;
 		}, 20000); // Every 20 seconds
 	}
+};
+
+function getNoun(number, one, two, five) {
+	let n = Math.abs(number);
+	n %= 100;
+	if (n >= 5 && n <= 20) return five;
+	n %= 10;
+	if (n === 1) return one;
+	if (n >= 2 && n <= 4) return two;
+
+	return five;
 };
