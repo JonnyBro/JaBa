@@ -31,7 +31,7 @@ class Divorce extends Command {
 		oldLover.save();
 
 		// Send success message
-		message.success("economy/divorce:SUCCESS", { username: user.username });
+		message.success("economy/divorce:DIVORCED", { username: user.username });
 	}
 };
 
