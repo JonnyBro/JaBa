@@ -2,7 +2,7 @@
 	"DESCRIPTION": "Показать статистику игрока в Fortnite!",
 	"USAGE": "{{prefix}}fortnite [PSN/XBL/PC] [ник]",
 	"EXAMPLES": "{{prefix}}fortnite PC Ninja",
-	"MISSING_PLATFORM": "Выберите платформу: `PSN`, `PC` или `XBL`!",
+	"MISSING_PLATFORM": "Выберите платформу: `PSN`, `PC` или `XBL` (без учёта регистра)!",
 	"MISSING_USERNAME": "Укажите ник в Epic Games!",
 	"NOT_FOUND": "`{{search}}` не найден на платформе `{{platform}}`!",
 	"TITLE": "Статистика игрока {{username}}",

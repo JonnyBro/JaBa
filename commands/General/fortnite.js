@@ -23,8 +23,8 @@ class Fortnite extends Command {
 
 		const stats = new Canvas.FortniteStats();
 
-		const platform = args[0];
-		if (!platform || (platform !== "PC" && platform !== "XBL" && platform !== "PSN")) return message.error("general/fortnite:MISSING_PLATFORM");
+		const platform = args[0].toLowerCase();
+		if (!platform || (platform !== "pc" && platform !== "xbl" && platform !== "psn")) return message.error("general/fortnite:MISSING_PLATFORM");
 
 		const user = args.slice(1).join(" ");
 		if (!user) return message.error("general/fortnite:MISSING_USERNAME");
