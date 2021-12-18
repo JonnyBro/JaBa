@@ -18,7 +18,7 @@ class Joke extends Command {
 	}
 
 	async run (message, args, data) {
-		// if (!this.client.config.apiKeys.blagueXYZ) return message.error("misc:COMMAND_DISABLED");
+		if (!this.client.config.apiKeys.blagueXYZ) return message.error("misc:COMMAND_DISABLED");
 
 		// const joke = await this.client.joker.randomJoke(data.guild.language.substr(0, 2));
 		const  joke = await this.client.joker.randomJoke("en");
