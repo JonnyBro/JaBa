@@ -31,7 +31,7 @@ class Leaderboard extends Command {
 						value: m.money + m.bankSold
 					};
 				}).sort((a,b) => b.value - a.value);
-			const table = new AsciiTable("LEADERBOARD");
+			const table = new AsciiTable("Таблица лидеров");
 			table.setHeading("#", message.translate("common:USER"), message.translate("common:CREDITS"));
 			if (membersLeaderboard.length > 20) membersLeaderboard.length = 20;
 			const newTable = await fetchUsers(membersLeaderboard, table, this.client);
@@ -44,7 +44,7 @@ class Leaderboard extends Command {
 						value: m.level
 					};
 				}).sort((a,b) => b.value - a.value);
-			const table = new AsciiTable("LEADERBOARD");
+			const table = new AsciiTable("Таблица лидеров");
 			table.setHeading("#", message.translate("common:USER"), message.translate("common:LEVEL"));
 			if (membersLeaderboard.length > 20) membersLeaderboard.length = 20;
 			const newTable = await fetchUsers(membersLeaderboard, table, this.client);
@@ -57,7 +57,7 @@ class Leaderboard extends Command {
 						value: u.rep
 					};
 				}).sort((a,b) => b.value - a.value);
-			const table = new AsciiTable("LEADERBOARD");
+			const table = new AsciiTable("Таблица лидеров");
 			table.setHeading("#", message.translate("common:USER"), message.translate("common:POINTS"));
 			if (usersLeaderboard.length > 20) usersLeaderboard.length = 20;
 			const newTable = await fetchUsers(usersLeaderboard, table, this.client);
