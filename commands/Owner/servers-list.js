@@ -18,7 +18,7 @@ class ServersList extends Command {
 	}
 
 	async run (message, args, data) {
-		await message.delete();
+		if (!message.channel.type != "dm") await message.delete();
 
 		let i0 = 0;
 		let i1 = 10;
