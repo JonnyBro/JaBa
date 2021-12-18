@@ -12,7 +12,7 @@ module.exports = {
 		commands.forEach((cmd) => {
 			if (!categories.includes(cmd.help.category)) categories.push(cmd.help.category);
 		});
-		let text = `# Команды  \nСписок команд JaBa и их описания. JaBa имеет свыше **${Math.floor(commands.size/10)}0 команд** в **${categories.length} категориях**!  \n\n#### Содержимое таблицы  \n**Название**: Название команды  \n**Описание**: Описание команды  \n**Использование**: Использование команды ([] - обязательно, () - необязательно)  \n**Откат**: Время, через которое команду можно будет использовать повторно\n\n`;
+		let text = `# Команды  \nСписок команд JaBa и их описания. JaBa имеет свыше **${Math.floor(commands.size / 10)}0 команд** в **${categories.length} категориях**!  \n\n#### Содержимое таблицы  \n**Название**: Название команды  \n**Описание**: Описание команды  \n**Использование**: Использование команды ([] - обязательно, () - необязательно)  \n**Откат**: Время, через которое команду можно будет использовать повторно\n\n`;
 
 		categories.sort(function(a, b) {
 			const aCmdsLength = commands.filter((cmd) => cmd.help.category === a).array().length;
@@ -24,7 +24,7 @@ module.exports = {
 				[ "Название", "Описание", "Использование", "Откат" ]
 			];
 			const cmds = commands.filter((cmd) => cmd.help.category === cat).array();
-			text += `### ${cat} (${cmds.length} ${getNoun(cmds.length, "команда", "команды", "команд")}команд(а/ы))\n\n`;
+			text += `### ${cat} (${cmds.length} ${getNoun(cmds.length, "команда", "команды", "команд")}\n\n`;
 			cmds.sort(function(a, b) {
 				if (a.help.name < b.help.name) return -1;
 				else return 1;
@@ -33,7 +33,7 @@ module.exports = {
 					`**${cmd.help.name}** ${cmd.help.aliases.length ? `**(${cmd.help.aliases.join(", ")})**` : ""}`,
 					client.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:DESCRIPTION`),
 					client.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:USAGE`),
-					`${Math.ceil(cmd.conf.cooldown / 1000)} ${getNoun(cmds.length, "секунда", "секунды", "секунд")}`
+					`${Math.ceil(cmd.conf.cooldown / 1000)} ${getNoun(Math.ceil(cmd.conf.cooldown / 1000), "секунда", "секунды", "секунд")}`
 				]);
 			});
 			text += `${table(arrCat)}\n\n`;
