@@ -38,7 +38,7 @@ module.exports = class {
 		// Update status every 20s
 		let servers = client.guilds.cache.filter(guild => guild.id != "568120814776614924" && guild.id != "892727526911258654").size;
 		const status = [
-			{ name: `${servers} ${getNoun(`${servers}`, "сервер", "сервера", "серверов")}`, type: "WATCHING" },
+			{ name: `${servers} ${getNoun(servers, "сервер", "сервера", "серверов")}`, type: "WATCHING" },
 			{ name: "help", type: "WATCHING" }
 		];
 		const version = require("../package.json").version;

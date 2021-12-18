@@ -30,7 +30,7 @@ class Work extends Command {
 		if (Date.now() > data.memberData.cooldowns.work + (24 * 3600000)) data.memberData.workStreak = 0;
 
 		// Records in the database the time when the member will be able to execute the command again (in 12 hours)
-		const toWait = Date.now() + 21600000;
+		const toWait = Date.now() + 43200000;
 		data.memberData.cooldowns.work = toWait;
 		data.memberData.markModified("cooldowns");
 
