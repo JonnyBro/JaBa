@@ -27,7 +27,7 @@ class Leaderboard extends Command {
 			const members = await this.client.membersData.find({ guildID: message.guild.id }).lean(),
 				membersLeaderboard = members.map((m) => {
 					return {
-						id: m.id,
+						id: m.id + 1,
 						value: m.money + m.bankSold
 					};
 				}).sort((a,b) => b.value - a.value);
@@ -40,7 +40,7 @@ class Leaderboard extends Command {
 			const members = await this.client.membersData.find({ guildID: message.guild.id }).lean(),
 				membersLeaderboard = members.map((m) => {
 					return {
-						id: m.id,
+						id: m.id + 1,
 						value: m.level
 					};
 				}).sort((a,b) => b.value - a.value);
@@ -53,7 +53,7 @@ class Leaderboard extends Command {
 			const users = await this.client.usersData.find().lean(),
 				usersLeaderboard = users.map((u) => {
 					return {
-						id: u.id,
+						id: u.id + 1,
 						value: u.rep
 					};
 				}).sort((a,b) => b.value - a.value);
