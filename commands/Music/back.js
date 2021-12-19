@@ -40,7 +40,7 @@ class Back extends Command {
 				this.client.player.back(message);
 				embed.setDescription(message.translate("music/back:SUCCESS"));
 				m.edit(embed);
-			} else message.error("music/back:NO_PERMS");
+			} else message.error("misc:NO_PERMS");
 		} else if (members.size > 1) {
 			m.react("👍");
 
@@ -75,7 +75,6 @@ class Back extends Command {
 			collector.on("end", (collected, isDone) => {
 				if (!isDone) return message.error("misc:TIMES_UP");
 			});
-
 		} else {
 			this.client.player.back(message);
 			embed.setDescription(message.translate("music/back:SUCCESS"));

@@ -33,7 +33,13 @@ class Stop extends Command {
 
 		const m = await message.channel.send(embed);
 
-		if (members.size > 1) {
+		if (args[0] && (args[0] === "force" || args[0] === "f")) {
+			if (message.member.hasPermission("ADMINISTRATOR") || message.member.hasPermission("MANAGE_MESSAGES")) {
+				this.client.player.stop(message);
+				embed.setDescription(message.translate("music/stop:SUCCESS"));
+				m.edit(embed);
+			} else message.error("misc:NO_PERMS");
+		} else if (members.size > 1) {
 			m.react("👍");
 
 			const mustVote = Math.floor(members.size / 2);
