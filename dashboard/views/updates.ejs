@@ -1,36 +1,8 @@
 <!DOCTYPE html>
 <html>
-<%- include('includes/head') %>
 
-<body class="hold-transition skin-red sidebar-mini">
-	<div class="wrapper">
-
-		<!-- The header is the topbar -->
-		<%- include('includes/header') %>
-
-		<!-- The sidebar includes the menu -->
-		<%- include('includes/sidebar') %>
-
-		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
-
-			<!-- Content Header (Page header) -->
-			<section class="content-header">
-				<h1> Обновления <small> Dashboard v1.0 </small> </h1>
-				<ol class="breadcrumb">
-					<li class="active"><a href="/updates"><i class="fa fa-home"></i> Обновления </a></li>
-				</ol>
-			</section>
-
-			<section class="content">
-				<%- md("updates.md") %>
-			</section>
-		</div>
-
-		<!-- Footer includes credits and version -->
-		<%- include('includes/footer') %>
-	</div>
-	<!-- ./wrapper -->
+<body>
+	<%- md("updates.md") %>
 </body>
 
 </html>
