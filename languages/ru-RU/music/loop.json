@@ -4,5 +4,5 @@
 	"EXAMPLES": "{{prefix}}loop queue\n{{prefix}}loop song",
 	"NO_ARG": "Выберите: `queue` или `song`!",
 	"QUEUE": "Повтор очереди **{{loop}}**!",
-	"SONG": "Повтор очереди **{{loop}}**!"
+	"SONG": "Повтор текущего трека **{{loop}}**!"
 }
