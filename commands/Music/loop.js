@@ -26,6 +26,8 @@ class Loop extends Command {
 
 		if (args[0].toLowerCase() === "queue") {
 			if (!queue.loopMode) {
+				if (queue.repeatMode) this.client.player.setRepeatMode(message, false);
+				
 				this.client.player.setLoopMode(message, true);
 				message.success("music/loop:QUEUE", { loop: "включён" });
 			} else {
@@ -34,6 +36,8 @@ class Loop extends Command {
 			};
 		} else if (args[0].toLowerCase() === "song") {
 			if (!queue.repeatMode) {
+				if (queue.loopMode) this.client.player.setLoopMode(message, false);
+
 				this.client.player.setRepeatMode(message, true);
 				message.success("music/loop:QUEUE", { loop: "включён" });
 			} else {
