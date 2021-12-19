@@ -20,14 +20,14 @@ class Loop extends Command {
 		const voice = message.member.voice.channel;
 		const queue = this.client.player.getQueue(message);
 
-		if (!args[0]) return message.error("music/loop:NO_ARG");
+		if (!args[0] || !["queue", "song"].includes(args[0])) return message.error("music/loop:NO_ARG");
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 
 		if (args[0].toLowerCase() === "queue") {
 			if (!queue.loopMode) {
 				if (queue.repeatMode) this.client.player.setRepeatMode(message, false);
-				
+
 				this.client.player.setLoopMode(message, true);
 				message.success("music/loop:QUEUE", { loop: "включён" });
 			} else {

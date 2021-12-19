@@ -2,6 +2,7 @@
 	"DESCRIPTION": "Включить или отключить прощальные сообщения!",
 	"USAGE": "{{prefix}}goodbye (test)",
 	"EXAMPLES": "{{prefix}}goodbye\n{{prefix}}goodbye test",
+	"MISSING_STATUS": "Выберите действие: `edit` или `off`",
 	"DEFAULT_MESSAGE": "Пока, {user}! Нас теперь {membercount} без тебя :'(",
 	"TEST_SUCCESS": "Тест выполнен!",
 	"FORM_1": "**В какой канал будут отправляться прощальные сообщения?**\n\n:arrow_right_hook: *Отправьте упоминание канала!*",
