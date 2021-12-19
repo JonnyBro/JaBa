@@ -36,7 +36,7 @@ class Back extends Command {
 		const m = await message.channel.send(embed);
 
 		if (args[0] && (args[0] === "force" || args[0] === "f")) {
-			if (message.author.hasPermission("ADMINISTRATOR") || message.author.hasPermission("MANAGE_MESSAGES")) {
+			if (message.member.hasPermission("ADMINISTRATOR") || message.member.hasPermission("MANAGE_MESSAGES")) {
 				this.client.player.back(message);
 				embed.setDescription(message.translate("music/back:SUCCESS"));
 				m.edit(embed);
