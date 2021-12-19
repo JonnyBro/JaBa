@@ -19,8 +19,8 @@ class Stop extends Command {
 
 	async run (message, args, data) {
 		const queue = await this.client.player.getQueue(message);
-
 		const voice = message.member.voice.channel;
+
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 
@@ -36,7 +36,7 @@ class Stop extends Command {
 		if (members.size > 1) {
 			m.react("👍");
 
-			const mustVote = Math.floor(members.size/2+1);
+			const mustVote = Math.floor(members.size / 2);
 
 			embed.setDescription(message.translate("music/stop:VOTE_CONTENT", { voteCount: 0, requiredCount: mustVote }));
 			m.edit(embed);

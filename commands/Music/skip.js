@@ -19,8 +19,8 @@ class Skip extends Command {
 
 	async run (message, args, data) {
 		const queue = this.client.player.getQueue(message);
-
 		const voice = message.member.voice.channel;
+
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 		if (!queue.tracks[0]) return message.error("music/skip:NO_NEXT_SONG");
@@ -38,7 +38,7 @@ class Skip extends Command {
 		if (members.size > 1) {
 			m.react("👍");
 
-			const mustVote = Math.floor(members.size/2+1);
+			const mustVote = Math.floor(members.size / 2);
 
 			embed.setDescription(message.translate("music/skip:VOTE_CONTENT", { songName: queue.tracks[0].name, voteCount: 0, requiredCount: mustVote }));
 			m.edit(embed);
