@@ -35,7 +35,13 @@ class Back extends Command {
 
 		const m = await message.channel.send(embed);
 
-		if (members.size > 1) {
+		if (args[0] && (args[0] === "force" || args[0] === "f")) {
+			if (message.author.hasPermission("ADMINISTRATOR") || message.author.hasPermission("MANAGE_MESSAGES")) {
+				this.client.player.back(message);
+				embed.setDescription(message.translate("music/back:SUCCESS"));
+				m.edit(embed);
+			} else message.error("music/back:NO_PERMS");
+		} else if (members.size > 1) {
 			m.react("👍");
 
 			const mustVote = Math.floor(members.size / 2);
