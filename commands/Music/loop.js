@@ -36,7 +36,7 @@ class Loop extends Command {
 			if (!queue.repeatMode) {
 				this.client.player.setRepeatMode(message, true);
 				message.success("music/loop:QUEUE", { loop: "включён" });
-			} else if (args[1].toLowerCase() == "off") {
+			} else {
 				this.client.player.setRepeatMode(message, false);
 				message.success("music/loop:QUEUE", { loop: "отключён" });
 			};
