@@ -26,18 +26,18 @@ class Loop extends Command {
 
 		if (args[0].toLowerCase() === "queue") {
 			if (!queue.loopMode) {
-				client.player.setLoopMode(message, true);
+				this.client.player.setLoopMode(message, true);
 				message.success("music:/loop:QUEUE", { loop: "включён" });
 			} else {
-				client.player.setLoopMode(message, false);
+				this.client.player.setLoopMode(message, false);
 				message.success("music:/loop:QUEUE", { loop: "отключён" });
 			};
 		} else if (args[0].toLowerCase() === "song") {
 			if (!queue.repeatMode) {
-				client.player.setRepeatMode(message, true);
+				this.client.player.setRepeatMode(message, true);
 				message.success("music:/loop:QUEUE", { loop: "включён" });
 			} else if (args[1].toLowerCase() == "off") {
-				client.player.setRepeatMode(message, false);
+				this.client.player.setRepeatMode(message, false);
 				message.success("music:/loop:QUEUE", { loop: "отключён" });
 			};
 		};
