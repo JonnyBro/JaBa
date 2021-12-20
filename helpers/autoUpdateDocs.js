@@ -14,12 +14,13 @@ module.exports = {
 		});
 		let text = `# Команды  \nСписок команд JaBa и их описания. JaBa имеет свыше **${Math.floor(commands.size / 10)}0 команд** в **${categories.length} категориях**!  \n\n#### Содержимое таблицы  \n**Название**: Название команды  \n**Описание**: Описание команды  \n**Использование**: Использование команды ([] - обязательно, () - необязательно)  \n**Откат**: Время, через которое команду можно будет использовать повторно\n\n`;
 
-		categories.sort(function(a, b) {
-			const aCmdsLength = commands.filter((cmd) => cmd.help.category === a).array().length;
-			const bCmdsLength = commands.filter((cmd) => cmd.help.category === b).array().length;
-			if (aCmdsLength > bCmdsLength) return -1;
-			else return 1;
-		}).forEach((cat) => {
+		// categories.sort(function(a, b) {
+		// 	const aCmdsLength = commands.filter((cmd) => cmd.help.category === a).array().length;
+		// 	const bCmdsLength = commands.filter((cmd) => cmd.help.category === b).array().length;
+		// 	if (aCmdsLength > bCmdsLength) return -1;
+		// 	else return 1;
+		// })
+		categories.sort().forEach((cat) => {
 			const arrCat = [
 				[ "Название", "Описание", "Использование", "Откат" ]
 			];
