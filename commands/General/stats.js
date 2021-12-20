@@ -35,7 +35,8 @@ class Stats extends Command {
 
 		statsEmbed.addField(this.client.customEmojis.link+" "+message.translate("general/stats:LINKS_TITLE"), message.translate("misc:STATS_FOOTER", {
 			dashboardLink: "https://jaba.pp.ua",
-			donateLink: "https://qiwi.com/n/JONNYBRO"
+			donateLink: "https://qiwi.com/n/JONNYBRO",
+			owner: this.client.config.owner.id
 		}));
 		message.channel.send(statsEmbed);
 	}
