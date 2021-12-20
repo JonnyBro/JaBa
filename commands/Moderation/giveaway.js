@@ -19,7 +19,7 @@ class Giveaway extends Command {
 
 	async run (message, args, data) {
 		const status = args[0];
-		if (!status)return message.error("moderation/giveaway:MISSING_STATUS");
+		if (!status) return message.error("moderation/giveaway:MISSING_STATUS");
 
 		if (status === "create") {
 			const currentGiveaways = this.client.giveawaysManager.giveaways.filter((g) => g.guildID === message.guild.id && !g.ended).length;
