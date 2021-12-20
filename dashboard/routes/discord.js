@@ -82,10 +82,8 @@ router.get("/callback", async (req, res) => {
 	if (!userDB.logged && logsChannel && user) {
 		const embed = new Discord.MessageEmbed()
 			.setAuthor(user.username, user.displayAvatarURL())
-			.setColor("#DA70D6")
-			.setDescription(req.client.translate("dashboard:FIRST_LOGIN", {
-				user: user.tag
-			}));
+			.setColor(req.client.config.embed.color)
+			.setDescription(req.client.translate("dashboard:FIRST_LOGIN", { user: user.tag }));
 		logsChannel.send(embed);
 		userDB.logged = true;
 		userDB.save();

@@ -25,8 +25,8 @@ module.exports = class {
 		};
 
 		const thanksEmbed = new Discord.MessageEmbed()
-			.setAuthor("Спасибо что добавили меня на свой сервер!\nThank you for adding me to your guild!")
-			.setDescription(`Для настроек используйте \`${this.client.config.prefix}help\` и посмотрите на административные команды!\nЧтобы изменить язык используйте \`${this.client.config.prefix}setlang [язык]\`.\n\nTo configure me, type \`${this.client.config.prefix}help\` and look at the administration commands!\nTo change the language, type \`${this.client.config.prefix}setlang [language]\`.`)
+			.setAuthor("Спасибо что добавили меня на свой сервер!")
+			.setDescription(`Для настроек используйте \`${this.client.config.prefix}help\` и посмотрите на административные команды!\nЧтобы изменить язык используйте \`${this.client.config.prefix}setlang [язык]\`.`)
 			.setColor(this.client.config.embed.color)
 			.setFooter(this.client.config.embed.footer)
 			.setTimestamp();

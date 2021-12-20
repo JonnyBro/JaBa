@@ -12,19 +12,5 @@
 			"ru_ru",
 			"ru_RU"
 		]
-	},
-	{
-		"name": "en-US",
-		"nativeName": "Английский",
-		"moment": "en",
-		"defaultMomentFormat": "MMMM Do YYYY",
-		"default": false,
-		"aliases": [
-			"English",
-			"en",
-			"en-us",
-			"en_us",
-			"en_US"
-		]
 	}
 ]
