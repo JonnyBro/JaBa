@@ -49,10 +49,12 @@ class Atlanta extends Client {
 
 		this.player = new Player(this, {
 			ytdlDownloadOptions: {
-				filter: "audio",
+				// filter: "audio",
 				requestOptions: {
 					headers: {
-						cookie: this.config.youtubeToken
+						cookie: this.config.youtubeToken,
+						quality: "highestaudio",
+						highWaterMark: 1 << 25
 					}
 				}
 			},
