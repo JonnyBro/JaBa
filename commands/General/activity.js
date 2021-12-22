@@ -167,7 +167,7 @@ class Activity extends Command {
 					.setColor(data.config.embed.color)
 					.setFooter(message.translate("general/activity:FOOTER"))
 					.setTimestamp()
-				essage.channel.send(embed);
+				message.channel.send(embed);
 			break;
 		}
 	}
