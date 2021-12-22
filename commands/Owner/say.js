@@ -17,13 +17,14 @@ class Say extends Command {
 	}
 
 	async run (message, args, data) {
+		if (!args[0]) return message.delete();
+
 		// Arguments split
 		let split = "++";
 		args = args.join(" ").split(split);
 		for (var i = 0; i < args.length; i++) args[i] = args[i].trim();
 
-		if (!args[0]) return message.delete();
-		if (message.attachments.size > 0) attachment = message.attachments.array()[0].url
+		if (message.attachments.size > 0) var attachment = message.attachments.array()[0].url;
 
 		if (args[1] && !args[2]) {
 			message.delete();
@@ -31,7 +32,8 @@ class Say extends Command {
 			saychannel.startTyping();
 
 			setTimeout(function() {
-				saychannel.send(args[0], { files: [ attachment ] });
+				if (attachment) saychannel.send(args[0], { files: [ attachment ] });
+				else saychannel.send(args[0]);
 				saychannel.stopTyping();
 			}, 2000);
 		} else if (args[2]) {
@@ -39,7 +41,8 @@ class Say extends Command {
 			saychannel.startTyping();
 
 			setTimeout(function() {
-				saychannel.send(args[0], { files: [ attachment ] });
+				if (attachment) saychannel.send(args[0], { files: [ attachment ] });
+				else saychannel.send(args[0]);
 				saychannel.stopTyping();
 			}, 2000);
 		} else {
@@ -48,7 +51,8 @@ class Say extends Command {
 			saychannel.startTyping();
 
 			setTimeout(function() {
-				saychannel.send(args[0], { files: [ attachment ] });
+				if (attachment) saychannel.send(args[0], { files: [ attachment ] });
+				else saychannel.send(args[0]);
 				saychannel.stopTyping();
 			}, 2000);
 		};
