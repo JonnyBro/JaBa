@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Превратить текст в ASCII!",
-	"USAGE": "{{prefix}}ascii [текст]",
-	"EXAMPLES": "{{prefix}}ascii Hello world!",
-	"TEXT_MISSING": "Введите текст (не больше 20 символов)!"
-}

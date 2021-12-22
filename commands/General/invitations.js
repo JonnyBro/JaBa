@@ -13,7 +13,7 @@ class Invitations extends Command {
 			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS", "MANAGE_GUILD" ],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 3000
+			cooldown: 2000
 		});
 	}
 

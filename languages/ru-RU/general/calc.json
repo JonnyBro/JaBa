@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Калькулятор может считать, вау!",
+	"DESCRIPTION": "Вычислить данное выражени!",
 	"USAGE": "{{prefix}}calc [выражение]",
 	"EXAMPLES": "{{prefix}}10*5+sin(3)\n{{prefix}}calc 10cm в m",
 	"MISSING_CALC": "Введите выражение!",

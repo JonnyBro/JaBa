@@ -1,8 +1,0 @@
-{
-	"DESCRIPTION": "Удалить свою команду!",
-	"USAGE": "{{prefix}}delcommand [название]",
-	"EXAMPLES": "{{prefix}}delcommand hello",
-	"MISSING_NAME": "Пожалуйста, введите название команды!",
-	"UNKNOWN_COMMAND": "Команда {{commandName}} не существует!",
-	"SUCCESS": "Команда {{commandName}} была удалена с сервера!"
-}

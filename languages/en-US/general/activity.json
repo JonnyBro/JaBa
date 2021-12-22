@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Start activity in voice channel!",
+	"USAGE": "{{prefix}}activity (activity)",
+	"EXAMPLES": "{{prefix}}activity\n{{prefix}}activity chess",
+	"TITLE": "All available activities",
+	"FOOTER": "JaBa | Discord Together"
+}

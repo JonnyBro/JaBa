@@ -12,7 +12,7 @@ class Pay extends Command {
 			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 10000
+			cooldown: 5000
 		});
 	}
 

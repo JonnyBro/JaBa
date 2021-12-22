@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Создать изображение \"mission\"",
-	"USAGE": "{{prefix}}mission (@пользователь)",
-	"EXAMPLES": "{{prefix}}mission\n{{prefix}}mission @Jonny_Bro#4226"
-}

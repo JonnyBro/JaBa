@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Показать список нарушений пользователя!",
-	"USAGE": "{{prefix}}sanctions [@пользователь]",
-	"EXAMPLES": "{{prefix}}sanctions @Jonny_Bro#4226",
-	"MISSING_MEMBER": "Вы должны упомянуть пользователя!",
-	"NO_SANCTION": "У **{{username}}** нет нарушений."
-}

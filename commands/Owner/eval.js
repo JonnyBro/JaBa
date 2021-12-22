@@ -12,7 +12,7 @@ class Eval extends Command {
 			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
 			nsfw: false,
 			ownerOnly: true,
-			cooldown: 3000
+			cooldown: 2000
 		});
 	}
 

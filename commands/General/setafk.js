@@ -11,7 +11,8 @@ class Setafk extends Command {
 			memberPermissions: [],
 			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
 			nsfw: false,
-			ownerOnly: false
+			ownerOnly: false,
+			cooldown: 3000
 		});
 	}
 

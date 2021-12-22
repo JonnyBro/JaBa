@@ -9,10 +9,10 @@ class Say extends Command {
 			guildOnly: false,
 			aliases: [],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: [ "SEND_MESSAGES" ],
 			nsfw: false,
 			ownerOnly: true,
-			cooldown: 3000
+			cooldown: 2000
 		});
 	}
 
@@ -23,6 +23,7 @@ class Say extends Command {
 		for (var i = 0; i < args.length; i++) args[i] = args[i].trim();
 
 		if (!args[0]) return message.delete();
+		if (message.attachments.size > 0) attachment = message.attachments.array()[0].url
 
 		if (args[1] && !args[2]) {
 			message.delete();
@@ -30,7 +31,7 @@ class Say extends Command {
 			saychannel.startTyping();
 
 			setTimeout(function() {
-				saychannel.send(args[0]);
+				saychannel.send(args[0], { files: [ attachment ] });
 				saychannel.stopTyping();
 			}, 2000);
 		} else if (args[2]) {
@@ -38,7 +39,7 @@ class Say extends Command {
 			saychannel.startTyping();
 
 			setTimeout(function() {
-				saychannel.send(args[0]);
+				saychannel.send(args[0], { files: [ attachment ] });
 				saychannel.stopTyping();
 			}, 2000);
 		} else {
@@ -47,7 +48,7 @@ class Say extends Command {
 			saychannel.startTyping();
 
 			setTimeout(function() {
-				saychannel.send(args[0]);
+				saychannel.send(args[0], { files: [ attachment ] });
 				saychannel.stopTyping();
 			}, 2000);
 		};

@@ -19,13 +19,14 @@ class Hentai extends Command {
 	}
 
 	async run (message, args, data) {
+		const category = args[0];
 		var gif = null;
 		const embed = new Discord.MessageEmbed()
 			.setColor(data.config.embed.color)
 			.setFooter(data.config.embed.footer)
 			.setTimestamp()
 
-		switch(args[0]) {
+		switch(category) {
 			case "neko":
 				gif = await fetch("https://nekos.life/api/v2/img/nsfw_neko_gif").then(response => response.json());
 				embed.setImage(gif.url)

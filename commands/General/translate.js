@@ -16,7 +16,7 @@ class Translate extends Command {
 			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 8000
+			cooldown: 5000
 		});
 	}
 

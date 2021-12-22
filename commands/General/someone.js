@@ -13,7 +13,7 @@ class Someone extends Command {
 			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 500
+			cooldown: 1000
 		});
 	}
 

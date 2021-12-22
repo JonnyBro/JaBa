@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Показать топ пользователей по кредитам, уровню или очкам репутации!",
-	"USAGE": "{{prefix}}leaderboard [rep/levels/credits]",
-	"EXAMPLES": "{{prefix}}leaderboard credits\n{{prefix}}leaderboard levels",
-	"MISSING_TYPE": "Пожалуйста, выберите таблицу `credits`, `level` или `rep`",
-	"MOBILE": ":confused: Я заметил, что вы онлайн с телефона.... Таблица лидеров может отображаться некорректно на маленьких экранах. Попробуйте переключиться на ландшафтный режим или используйте панель управления!"
-}

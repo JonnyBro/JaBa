@@ -13,12 +13,12 @@ class Fml extends Command {
 			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 3000
+			cooldown: 2000
 		});
 	}
 
 	async run (message, args, data) {
-		// if (!this.client.config.apiKeys.blagueXYZ) return message.error("misc:COMMAND_DISABLED");
+		if (!this.client.config.apiKeys.blagueXYZ) return message.error("misc:COMMAND_DISABLED");
 
 		// const fml = await this.client.joker.randomVDM(null, data.guild.language.substr(0, 2));
 		const fml = await this.client.joker.randomVDM(null, "en");

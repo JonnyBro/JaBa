@@ -13,7 +13,7 @@ class ServersList extends Command {
 			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
 			nsfw: false,
 			ownerOnly: true,
-			cooldown: 5000
+			cooldown: 3000
 		});
 	}
 
@@ -25,7 +25,7 @@ class ServersList extends Command {
 		let page = 1;
 
 		let description = `${message.translate("common:SERVERS")}: ${this.client.guilds.cache.size}\n\n` +
-		this.client.guilds.cache.sort((a,b) => b.memberCount-a.memberCount).map((r) => r)
+		this.client.guilds.cache.sort((a,b) => b.memberCount - a.memberCount).map((r) => r)
 			.map((r, i) => `**${i + 1}** - ${r.name} | ${r.memberCount} ${message.translate("common:MEMBERS").toLowerCase()}`)
 			.slice(0, 10)
 			.join("\n");

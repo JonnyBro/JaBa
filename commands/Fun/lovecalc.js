@@ -22,9 +22,9 @@ class Lovecalc extends Command {
 		const firstMember = message.mentions.members.filter(m => m.id !== message.author.id).first();
 		if (!firstMember) return message.error("fun/lovecalc:MISSING");
 		const secondMember = message.mentions.members
-				.filter(m => m.id !== firstMember.id)
-				.filter(m => m.id !== message.author.id)
-				.first() || message.member;
+			.filter(m => m.id !== firstMember.id)
+			.filter(m => m.id !== message.author.id)
+			.first() || message.member;
 		if (!secondMember) return message.error("fun/lovecalc:MISSING");
 
 		const members = [firstMember, secondMember].sort((a, b) => parseInt(a.id, 10) - parseInt(b.id, 10));

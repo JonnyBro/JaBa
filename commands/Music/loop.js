@@ -12,7 +12,7 @@ class Loop extends Command {
 			botPermissions: [ "SEND_MESSAGES" ],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 1000
+			cooldown: 3000
 		});
 	}
 
