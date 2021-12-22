@@ -21,7 +21,7 @@ class AutoPlay extends Command {
 		const voice = message.member.voice.channel;
 
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
-		if (!queue) return message.error("music:play:NOT_PLAYING");
+		if (!queue) return message.error("music/play:NOT_PLAYING");
 
 		// Gets the current song
 		await this.client.player.setAutoPlay(message, !queue.autoPlay);
