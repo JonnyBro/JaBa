@@ -49,7 +49,7 @@ class JaBa extends Client {
 
 		this.player = new Player(this, {
 			ytdlDownloadOptions: {
-				// filter: "audio",
+				filter: "audio",
 				requestOptions: {
 					headers: {
 						cookie: this.config.youtubeToken,

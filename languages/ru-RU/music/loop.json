@@ -3,6 +3,8 @@
 	"USAGE": "{{prefix}}loop [queue/song]",
 	"EXAMPLES": "{{prefix}}loop queue\n{{prefix}}loop song",
 	"NO_ARG": "Выберите: `queue` или `song`!",
-	"QUEUE": "Повтор очереди **{{loop}}**!",
-	"SONG": "Повтор текущего трека **{{loop}}**!"
+	"QUEUE_SUCCESS_ENABLED": "{{success}} Повтор очереди включён!",
+	"QUEUE_SUCCESS_DISABLED": "{{success}} Повтор очереди отключён!",
+	"SONG_SUCCESS_ENABLED" : "{{success}} Повтор текущего трека включён!",
+	"SONG_SUCCESS_DISABLED" : "{{success}} Повтор текущего трека отключён!"
 }

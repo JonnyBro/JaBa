@@ -25,25 +25,15 @@ class Loop extends Command {
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 
 		if (args[0].toLowerCase() === "queue") {
-			if (!queue.loopMode) {
-				if (queue.repeatMode) this.client.player.setRepeatMode(message, false);
+			if (queue.repeatMode) this.client.player.setRepeatMode(message, false);
 
-				this.client.player.setLoopMode(message, true);
-				message.success("music/loop:QUEUE", { loop: "включён" });
-			} else {
-				this.client.player.setLoopMode(message, false);
-				message.success("music/loop:QUEUE", { loop: "отключён" });
-			};
+			this.client.player.setLoopMode(message, !queue.loopMode);
+			message.success(`music/loop:QUEUE_SUCCESS_${queue.loopMode ? "ENABLED" : "DISABLED"}`)
 		} else if (args[0].toLowerCase() === "song") {
-			if (!queue.repeatMode) {
-				if (queue.loopMode) this.client.player.setLoopMode(message, false);
+			if (queue.loopMode) this.client.player.setLoopMode(message, false);
 
-				this.client.player.setRepeatMode(message, true);
-				message.success("music/loop:QUEUE", { loop: "включён" });
-			} else {
-				this.client.player.setRepeatMode(message, false);
-				message.success("music/loop:QUEUE", { loop: "отключён" });
-			};
+			this.client.player.setRepeatMode(message, !queue.repeatMode);
+			message.success(`music/loop:SONG_SUCCESS_${queue.repeatMode ? "ENABLED" : "DISABLED"}`);
 		};
 	}
 };

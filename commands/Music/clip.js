@@ -30,8 +30,7 @@ class Clip extends Command {
 			const connection = await voice.join();
 			await connection.voice.setSelfDeaf(true);
 
-			connection
-				.play(`./clips/${args[0]}.mp3`)
+			connection.play(`./clips/${args[0]}.mp3`)
 				.on("finish", () => {
 					voice.leave();
 				})
