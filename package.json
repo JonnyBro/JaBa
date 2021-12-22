@@ -7,7 +7,8 @@
     "scripts": {
         "start": "node .",
         "lint": "eslint . --ext .js",
-        "testcfg": "node scripts/verify-config.js"
+        "testcfg": "node scripts/verify-config.js",
+        "migratedb": "node scripts/migrate-db-from-v4.6-to-v4.7.js"
     },
     "author": "Jonny_Bro",
     "license": "ISC",

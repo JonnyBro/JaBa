@@ -29,16 +29,16 @@ const checks = [
 			let readyResolve;
 			new Promise((resolve) => readyResolve = resolve);
 			client.login(config.token).then(async () => {
-				success("valid bot token");
+				success("Valid bot token");
 				await readyResolve();
 				if (!client.guilds.cache.has("568120814776614924")) {
-					error("should be added to the emojis server", "please add your bot on this server: https://emojis.atlanta-bot.fr to make the emojis working");
+					error("Should be added to the emojis server", "please add your bot on this server: https://discord.gg/5wrBEwE4bc to make the emojis working");
 				} else {
-					success("added to the emojis server");
+					success("Added to the emojis server");
 				};
 				res();
 			}).catch(() => {
-				error("should be a valid bot token");
+				error("Should be a valid bot token");
 				res();
 			});
 			client.on("ready", readyResolve);
@@ -57,7 +57,7 @@ const checks = [
 				success("Connection to Mongo database success");
 				res();
 			}).catch(() => {
-				error("should be able to connect to Mongo database", "please verify if the MongoDB server is started");
+				error("Should be able to connect to Mongo database", "please verify if the MongoDB server is started");
 				res();
 			});
 		});
@@ -66,7 +66,7 @@ const checks = [
 		console.log("\n\nAPI keys");
 		return new Promise(async (resolve) => {
 			if (!config.apiKeys.amethyste) {
-				ignore("amethyste API is not configured, key should not be checked.");
+				ignore("Amethyste API is not configured, key should not be checked.");
 			} else {
 				const res = await fetch("https://v1.api.amethyste.moe/generate/blurple", {
 					method: "POST",
@@ -76,9 +76,9 @@ const checks = [
 				});
 				const result = await res.json();
 				if (result.status === 401) {
-					error("should be a valid Amethyste API key", "get your key here: https://api.amethyste.moe/");
+					error("Should be a valid Amethyste API key", "get your key here: https://api.amethyste.moe/");
 				} else {
-					success("valid Amethyste API key");
+					success("Valid Amethyste API key");
 				};
 			}
 			if (!config.apiKeys.blagueXYZ) {
@@ -91,9 +91,9 @@ const checks = [
 				});
 				const result = await res.json();
 				if (result.status === 401) {
-					error("should be a valid blague.xyz key", "get your key here: https://blague.xyz/");
+					error("Should be a valid blague.xyz key", "get your key here: https://blague.xyz/");
 				} else {
-					success("valid blague.xyz key");
+					success("Valid blague.xyz key");
 				};
 			};
 			if (!config.apiKeys.dbl) {
@@ -107,9 +107,9 @@ const checks = [
 				});
 				const result = await res.json();
 				if (result.error && result.error === "Unauthorized") {
-					error("should be a valid DBL key", "get your key here: https://top.gg/ OR delete the key from the config if you don't have a key");
+					error("Should be a valid DBL key", "get your key here: https://top.gg/ OR delete the key from the config if you don't have a key");
 				} else {
-					success("valid DBL key");
+					success("Valid DBL key");
 				};
 			};
 			if (!config.apiKeys.fortniteFNBR) {
@@ -122,9 +122,9 @@ const checks = [
 				});
 				const result = await res.json();
 				if (result.status && result.status === 401) {
-					error("should be a valid FNBR key", "get your key here: https://fnbr.co/api/docs");
+					error("Should be a valid FNBR key", "get your key here: https://fnbr.co/api/docs");
 				} else {
-					success("valid FNBR key");
+					success("Valid FNBR key");
 				};
 			};
 			if (!config.apiKeys.sentryDSN) {
@@ -167,9 +167,9 @@ const checks = [
 				};
 				const isPortTaken = await checkPortTaken(config.dashboard.port);
 				if (isPortTaken) {
-					error("dashboard port should be available", "you have probably another process using this port");
+					error("Dashboard port should be available", "you have probably another process using this port");
 				} else {
-					success("dashboard port is available");
+					success("Dashboard port is available");
 				};
 			};
 			resolve();

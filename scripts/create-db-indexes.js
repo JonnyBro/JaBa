@@ -6,7 +6,7 @@ let MongoClient;
 try {
 	MongoClient = require("mongodb").MongoClient;
 } catch (e) {
-	console.log(chalk.red("Cannot find module mongodb. Please install it using \"npm install mongodb\" before executing migration scripts."));
+	console.log(chalk.red("Cannot find module mongodb. Please install it using \"npm install mongodb\" before executing script."));
 	process.exit(1);
 };
 
