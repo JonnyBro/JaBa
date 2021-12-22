@@ -14,7 +14,7 @@
 		]
 	},
 	{
-		"name": "eu-US",
+		"name": "en-US",
 		"nativeName": "Английский",
 		"moment": "en",
 		"defaultMomentFormat": "MMMM Do YYYY",
