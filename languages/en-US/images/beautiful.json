@@ -1,5 +1,5 @@
 {
-    "DESCRIPTION": "Generates a \"beautiful\" image",
-    "USAGE": "{{prefix}}beautiful (@member)",
-    "EXAMPLES": "{{prefix}}beautiful\n{{prefix}}beautiful @Jonny_Bro#4226"
+	"DESCRIPTION": "Generates a \"beautiful\" image",
+	"USAGE": "{{prefix}}beautiful (@member)",
+	"EXAMPLES": "{{prefix}}beautiful\n{{prefix}}beautiful @Jonny_Bro#4226"
 }

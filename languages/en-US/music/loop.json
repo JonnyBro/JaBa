@@ -1,0 +1,8 @@
+﻿{
+	"DESCRIPTION": "Turn on/off loop of queue/single track!",
+	"USAGE": "{{prefix}}loop [queue/song]",
+	"EXAMPLES": "{{prefix}}loop queue\n{{prefix}}loop song",
+	"NO_ARG": "Select: `queue` or `song`!",
+	"QUEUE": "Repeating queue is **{{loop}}**!",
+	"SONG": "Repeating current track is **{{loop}}**!"
+}

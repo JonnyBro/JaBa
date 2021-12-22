@@ -17,9 +17,9 @@ if (config.apiKeys.sentryDSN) {
 	};
 };
 
-// Load Atlanta class
-const Atlanta = require("./base/Atlanta"),
-	client = new Atlanta();
+// Load JaBa class
+const JaBa = require("./base/JaBa"),
+	client = new JaBa();
 
 const init = async () => {
 	// Search for all commands

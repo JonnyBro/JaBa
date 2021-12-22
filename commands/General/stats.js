@@ -30,7 +30,7 @@ class Stats extends Command {
 			.addField(this.client.customEmojis.voice+" "+message.translate("general/stats:MUSIC_TITLE"), message.translate("general/stats:MUSIC_CONTENT", { count: this.client.voice.connections.size }))
 			.addField(message.translate("general/stats:CREDITS_TITLE"), message.translate("general/stats:CREDITS_CONTENT", {
 				donators: [ ":(" ].join("\n"),
-				translators: [ "`Jonny_Bro#4226` (:flag_ru:)", "`[ДАННЫЕ УДАЛЕНЫ]#2789` (:flag_ua:)" ].join("\n")
+				translators: [ "`Jonny_Bro#4226` (:flag_ru:)", "`[ДАННЫЕ УДАЛЕНЫ]#2789` (:flag_ua:)", "`FaxoNfuckyou#9398` и `Jonny_Bro#4226` (:flag_us:)" ].join("\n")
 			}));
 
 		statsEmbed.addField(this.client.customEmojis.link+" "+message.translate("general/stats:LINKS_TITLE"), message.translate("misc:STATS_FOOTER", {

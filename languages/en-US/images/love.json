@@ -1,5 +1,5 @@
 {
-    "DESCRIPTION": "Generates a \"bed\" image",
-    "USAGE": "{{prefix}}bed [@member1] (@member2)",
-    "EXAMPLES": "{{prefix}}bed @Jonny_Bro#4226\n{{prefix}}bed @Jonny_Bro#4226 @Marty#0303"
+	"DESCRIPTION": "Generates a \"bed\" image",
+	"USAGE": "{{prefix}}bed [@member1] (@member2)",
+	"EXAMPLES": "{{prefix}}bed @Jonny_Bro#4226\n{{prefix}}bed @Jonny_Bro#4226 @Marty#0303"
 }

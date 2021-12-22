@@ -15,8 +15,8 @@ moment.relativeTimeThreshold("h", 60);
 moment.relativeTimeThreshold("d", 24);
 moment.relativeTimeThreshold("M", 12);
 
-// Creates Atlanta class
-class Atlanta extends Client {
+// Creates JaBa class
+class JaBa extends Client {
 	constructor (options) {
 		super(options);
 		this.config = require("../config"); // Load the config file
@@ -337,4 +337,4 @@ class Atlanta extends Client {
 	};
 };
 
-module.exports = Atlanta;
+module.exports = JaBa;
