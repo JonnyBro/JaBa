@@ -12,7 +12,7 @@ module.exports = {
 		commands.forEach((cmd) => {
 			if (!categories.includes(cmd.help.category)) categories.push(cmd.help.category);
 		});
-		let text = `# Команды  \nСписок команд JaBa и их описания. JaBa имеет свыше **${Math.floor(commands.size / 10)}0 команд** в **${categories.length} категориях**!  \n\n#### Содержимое таблицы  \n**Название**: Название команды  \n**Описание**: Описание команды  \n**Использование**: Использование команды ([] - обязательно, () - необязательно)  \n**Откат**: Время, через которое команду можно будет использовать повторно\n\n`;
+		let text = `# JaBa имеет свыше **${Math.floor(commands.size / 10)}0 команд** в **${categories.length} категориях**!  \n\n#### Содержимое таблицы  \n**Название**: Название команды  \n**Описание**: Описание команды  \n**Использование**: Использование команды ([] - обязательно, () - необязательно)  \n**Откат**: Время, через которое команду можно будет использовать повторно\n\n`;
 
 		// categories.sort(function(a, b) {
 		// 	const aCmdsLength = commands.filter((cmd) => cmd.help.category === a).array().length;
@@ -40,22 +40,13 @@ module.exports = {
 			text += `${table(arrCat)}\n\n`;
 		});
 
-		if (!fs.existsSync("./dashboard/views/docs")) {
-			fs.mkdirSync("./dashboard/views/docs");
-			fs.writeFileSync("./dashboard/views/docs/commands.md", text);
+		if (!fs.existsSync("./dashboard/public/docs")) {
+			fs.mkdirSync("./dashboard/public/docs");
+			fs.writeFileSync("./dashboard/public/docs/commands.md", text);
 			client.logger.log("Dashboard docs updated!");
-		} else if (fs.existsSync("./dashboard/views/docs")) {
-			fs.writeFileSync("./dashboard/views/docs/commands.md", text);
+		} else {
+			fs.writeFileSync("./dashboard/public/docs/commands.md", text);
 			client.logger.log("Dashboard docs updated!");
-		};
-
-		if (!fs.existsSync("./docs")) {
-			fs.mkdirSync("./docs");
-			fs.writeFileSync("./docs/commands.md", text);
-			client.logger.log("Docs updated!");
-		} else if (fs.existsSync("./docs")) {
-			fs.writeFileSync("./docs/commands.md", text);
-			client.logger.log("Docs updated!");
 		};
 	}
 };
