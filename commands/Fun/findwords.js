@@ -94,7 +94,7 @@ class FindWords extends Command {
 							winner: user.username,
 							duration: time,
 							participantCount: participants.length,
-							participantList: participants.map((p) => "<@"+p+">").join("\n")
+							participantList: participants.map((p) => `<@${p}>`).join("\n")
 						});
 						if (participants.length > 1 && data.guild.disabledCategories && !data.guild.disabledCategories.includes("Economy")) {
 							message.sendT("fun/findwords:CREDITS", { winner: user.username });

@@ -52,7 +52,7 @@ const init = async () => {
 	mongoose.connect(client.config.mongoDB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
 		client.logger.log("Connected to the Mongodb database.", "log");
 	}).catch((err) => {
-		client.logger.log("Unable to connect to the Mongodb database. Error:"+err, "error");
+		client.logger.log(`Unable to connect to the Mongodb database. Error: ${err}`, "error");
 	});
 
 	const languages = require("./helpers/languages");

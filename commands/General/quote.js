@@ -20,10 +20,10 @@ class Quote extends Command {
 	async run (message, args, data) {
 		function embed(m) {
 			const embed = new Discord.MessageEmbed()
-				.setAuthor(m.author.tag, m.author.displayAvatarURL({ size: 512, dynamic: true, format: 'png' }))
+				.setAuthor(m.author.tag, m.author.displayAvatarURL({ size: 512, dynamic: true, format: "png" }))
 				.setDescription(m.content)
 				.setColor(m.member ? m.member.roles.highest ? m.member.roles.highest.color : data.config.embed.color : data.config.embed.color)
-				.setFooter(m.guild.name+" | #"+m.channel.name)
+				.setFooter(m.guild.name + " | #" + m.channel.name)
 				.setTimestamp(m.createdTimestamp);
 			if (m.attachments.size > 0) embed.setImage(m.attachments.first().url);
 			return embed;

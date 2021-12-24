@@ -10,8 +10,8 @@
 			<div class="pull-left info">
 				<p><%= user.username %></p>
 				<a href="#"><i
-						class="fa fa-circle text-<%= user.status === 'dnd' ? 'danger' : user.status === 'idle' ? 'warning' : user.status === 'online' ? 'success' : ''%>"></i>
-					<%= translate("common:STATUS_"+user.status.toUpperCase()) %></a>
+						class="fa fa-circle text-<%= user.status === "dnd" ? "danger" : user.status === "idle" ? "warning" : user.status === "online" ? "success" : ""%>"></i>
+					<%= translate("common:STATUS_" + user.status.toUpperCase()) %></a>
 			</div>
 		</div>
 		<!-- search form -->
@@ -47,7 +47,7 @@
 				<ul class="treeview-menu">
 					<% user.displayedGuilds.forEach((guild) => { %>
 					<li><a href="<%= guild.settingsUrl %>"><i
-								class="fa fa-circle-o text-<%= guild.owner ? 'blue' : 'grey' %>"></i>
+								class="fa fa-circle-o text-<%= guild.owner ? "blue" : "grey" %>"></i>
 							<%= guild.name %></a></li>
 					<% }); %>
 				</ul>
@@ -68,7 +68,7 @@
 
 <script>
 	$(document).ready(function () {
-		// get current URL path and assign 'active' class
+		// get current URL path and assign "active" class
 		let pathname = window.location.pathname;
 		$(`.sidebar-menu > li > a[href="${pathname}"]`).parent().addClass("active");
 		$(`.sidebar-menu > li > ul > li > a[href="${window.location.pathname}"]`).parent().addClass("active");

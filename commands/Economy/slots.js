@@ -68,15 +68,15 @@ class Slots extends Command {
 			k2 = (k2 < fruits.length - 1) ? k2 + 1 : 0;
 			k3 = (k3 < fruits.length - 1) ? k3 + 1 : 0;
 
-			msg += colonnes[0][i1] + " : " + colonnes[1][j1] + " : "+ colonnes[2][k1] + "\n";
-			msg += colonnes[0][i2] + " : " + colonnes[1][j2] + " : "+ colonnes[2][k2] + " **<**\n";
-			msg += colonnes[0][i3] + " : " + colonnes[1][j3] + " : "+ colonnes[2][k3] + "\n------------------\n";
+			msg += colonnes[0][i1] + " : " + colonnes[1][j1] + " : " + colonnes[2][k1] + "\n";
+			msg += colonnes[0][i2] + " : " + colonnes[1][j2] + " : " + colonnes[2][k2] + " **<**\n";
+			msg += colonnes[0][i3] + " : " + colonnes[1][j3] + " : " + colonnes[2][k3] + "\n------------------\n";
 
 			if ((colonnes[0][i2] == colonnes[1][j2]) && (colonnes[1][j2] == colonnes[2][k2])) {
-				msg += "| : : :  **"+(message.translate("common:VICTORY").toUpperCase())+"**  : : : |";
+				msg += "| : : :  **" + (message.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
 				tmsg.edit(msg);
 				const credits = getCredits(amount, true);
-				message.channel.send("**!! ДЖЕКПОТ !!**\n"+message.translate("economy/slots:VICTORY", { money: amount, won: credits, username: message.author.username }));
+				message.channel.send("**!! ДЖЕКПОТ !!**\n" + message.translate("economy/slots:VICTORY", { money: amount, won: credits, username: message.author.username }));
 				const toAdd = credits - amount;
 				data.memberData.money = data.memberData.money + toAdd;
 				if (!data.userData.achievements.slots.achieved) {
@@ -93,7 +93,7 @@ class Slots extends Command {
 			};
 
 			if (colonnes[0][i2] == colonnes[1][j2] || colonnes[1][j2] == colonnes[2][k2] || colonnes[0][i2] == colonnes[2][k2]) {
-				msg += "| : : :  **"+(message.translate("common:VICTORY").toUpperCase())+"**  : : : |";
+				msg += "| : : :  **" + (message.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
 				tmsg.edit(msg);
 				const credits = getCredits(amount, false);
 				message.channel.send(message.translate("economy/slots:VICTORY", {
@@ -116,7 +116,7 @@ class Slots extends Command {
 				return;
 			};
 
-			msg += "| : : :  **"+(message.translate("common:DEFEAT").toUpperCase())+"**  : : : |";
+			msg += "| : : :  **" + (message.translate("common:DEFEAT").toUpperCase()) + "**  : : : |";
 			message.channel.send(message.translate("economy/slots:DEFEAT", {
 				money: amount,
 				username: message.author.username

@@ -60,7 +60,7 @@ class Minecraft extends Command {
 
 		if (!json) return m.error("general/minecraft:FAILED", null, { edit: true });
 
-		const imgRes = await fetch("https://www.minecraftskinstealer.com/achievement/a.php?i=2&h=Success&t="+ip);
+		const imgRes = await fetch(`https://www.minecraftskinstealer.com/achievement/a.php?i=2&h=Success&t=${ip}`);
 		const imgAttachment = new Discord.MessageAttachment(await imgRes.buffer(), "success.png");
 
 		const mcEmbed = new Discord.MessageEmbed()

@@ -35,7 +35,7 @@ class Np extends Command {
 			.addField(message.translate("music/np:T_TITLE"), track.title, true)
 			.addField(message.translate("music/np:T_CHANNEL"), track.author, true)
 			.addField(message.translate("music/np:T_DURATION"), message.convertTime(Date.now()+track.durationMS, "to", true), true)
-			.addField(message.translate("music/np:T_DESCRIPTION"), track.description ? (track.description.substring(0, 150)+"\n"+(message.translate("common:AND_MORE").toLowerCase())) : message.translate("music/np:NO_DESCRIPTION"), true)
+			.addField(message.translate("music/np:T_DESCRIPTION"), track.description ? (track.description.substring(0, 150) + "\n" + (message.translate("common:AND_MORE").toLowerCase())) : message.translate("music/np:NO_DESCRIPTION"), true)
 			.addField("\u200B", this.client.player.createProgressBar(message, { timecodes: true }))
 			.setTimestamp()
 			.setColor(data.config.embed.color)

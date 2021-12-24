@@ -28,12 +28,12 @@ class Checkinvites extends Command {
 				withInvite.push({
 					id: m.user.id,
 					tag: Discord.Util.escapeMarkdown(m.user.tag),
-					links: "**"+Discord.Util.escapeMarkdown(inviteLinks.join(", "))+"**"
+					links: "**" + Discord.Util.escapeMarkdown(inviteLinks.join(", ")) + "**"
 				});
 			};
 		});
 
-		const text = (withInvite.length > 0 ? withInvite.map((m) => "`"+m.id+"` ("+m.tag+") : "+m.links).join("\n") : message.translate("moderation/checkinvites:NOBODY"));
+		const text = (withInvite.length > 0 ? withInvite.map((m) => "`" + m.id + "` (" + m.tag + ") : " + m.links).join("\n") : message.translate("moderation/checkinvites:NOBODY"));
 
 		const embed = new Discord.MessageEmbed()
 			.setDescription(text)

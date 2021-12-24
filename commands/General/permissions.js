@@ -20,7 +20,7 @@ class Permissions extends Command {
 
 	async run (message) {
 		const member = message.mentions.members.first() || message.member;
-		let text = "```\n"+message.translate("general/permissions:TITLE", { user: member.user.username, channel: message.channel.name })+"\n\n";
+		let text = "```\n" + `${message.translate("general/permissions:TITLE", { user: member.user.username, channel: message.channel.name })}\n\n`;
 		const mPermissions = message.channel.permissionsFor(member);
 		const total = {
 			denied: 0,
@@ -35,7 +35,7 @@ class Permissions extends Command {
 				total.allowed++;
 			};
 		});
-		text += `\n${total.allowed} ✅ | ${total.denied} ❌`+"\n```";
+		text += `\n${total.allowed} ✅ | ${total.denied} ❌` + "\n```";
 		message.channel.send(text);
 	}
 };

@@ -22,7 +22,7 @@ class Translate extends Command {
 
 	async run (message, args, data) {
 		if (args[0] === "langs-list") {
-			const langsList = "```css\n"+(langs.map((l, i) => `#${i+1} - ${l}`).join("\n"))+"```";
+			const langsList = "```css\n" + (langs.map((l, i) => `#${i+1} - ${l}`).join("\n")) + "```";
 			message.author.send(langsList).then(() => {
 				message.success("general/translate:LIST_SENT");
 			}).catch(() => {
@@ -47,9 +47,9 @@ class Translate extends Command {
 		const translated = await translate(toTranslate, { to: language });
 
 		const resEmbed = new Discord.MessageEmbed()
-			.setAuthor("Translator", this.client.user.displayAvatarURL({ size: 512, dynamic: true, format: 'png' }))
-			.addField(translated.from.language.iso, "```"+toTranslate+"```")
-			.addField(language, "```"+translated.text+"```")
+			.setAuthor("Translator", this.client.user.displayAvatarURL({ size: 512, dynamic: true, format: "png" }))
+			.addField(translated.from.language.iso, "```" + toTranslate + "```")
+			.addField(language, "```" + translated.text + "```")
 			.setColor(data.config.embed.color)
 			.setFooter(data.config.embed.footer);
 

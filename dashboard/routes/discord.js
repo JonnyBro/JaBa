@@ -7,7 +7,7 @@ const fetch = require("node-fetch"),
 
 // Gets login page
 router.get("/login", async function(req, res) {
-	if (!req.user || !req.user.id || !req.user.guilds) return res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${req.client.user.id}&scope=identify%20guilds&response_type=code&redirect_uri=${encodeURIComponent(req.client.config.dashboard.baseURL+"/api/callback")}&state=${req.query.state || "no"}`);
+	if (!req.user || !req.user.id || !req.user.guilds) return res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${req.client.user.id}&scope=identify%20guilds&response_type=code&redirect_uri=${encodeURIComponent(`${req.client.config.dashboard.baseURL}/api/callback`)}&state=${req.query.state || "no"}`);
 
 	res.redirect("/selector");
 });
@@ -19,7 +19,7 @@ router.get("/callback", async (req, res) => {
 			const guildID = req.query.state.substr("invite".length, req.query.state.length);
 			req.client.knownGuilds.push({ id: guildID, user: req.user.id });
 
-			return res.redirect("/manage/"+guildID);
+			return res.redirect(`/manage/${guildID}`);
 		};
 	};
 

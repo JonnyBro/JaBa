@@ -52,7 +52,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		const welcome = {
 			enabled: true,
 			message: data.message,
-			channel: guild.channels.cache.find((ch) => "#"+ch.name === data.channel).id,
+			channel: guild.channels.cache.find((ch) => "#" + ch.name === data.channel).id,
 			withImage: data.withImage === "on"
 		};
 		guildData.plugins.welcome = welcome;
@@ -76,7 +76,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		const goodbye = {
 			enabled: true,
 			message: data.message,
-			channel: guild.channels.cache.find((ch) => "#"+ch.name === data.channel).id,
+			channel: guild.channels.cache.find((ch) => "#" + ch.name === data.channel).id,
 			withImage: data.withImage === "on"
 		};
 		guildData.plugins.goodbye = goodbye;
@@ -99,7 +99,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 	if (Object.prototype.hasOwnProperty.call(data, "autoroleEnable") || Object.prototype.hasOwnProperty.call(data, "autoroleUpdate")) {
 		const autorole = {
 			enabled: true,
-			role: guild.roles.cache.find((r) => "@"+r.name === data.role).id
+			role: guild.roles.cache.find((r) => "@" + r.name === data.role).id
 		};
 		guildData.plugins.autorole = autorole;
 		guildData.markModified("plugins.autorole");
@@ -118,20 +118,20 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 
 	if (Object.prototype.hasOwnProperty.call(data, "suggestions")) {
 		if (data.suggestions === req.translate("common:NO_CHANNEL")) guildData.plugins.suggestions = false;
-		else guildData.plugins.suggestions = guild.channels.cache.find((ch) => "#"+ch.name === data.suggestions).id;
+		else guildData.plugins.suggestions = guild.channels.cache.find((ch) => "#" + ch.name === data.suggestions).id;
 
 		if (data.modlogs === req.translate("common:NO_CHANNEL")) guildData.plugins.modlogs = false;
-		else guildData.plugins.modlogs = guild.channels.cache.find((ch) => "#"+ch.name === data.modlogs).id;
+		else guildData.plugins.modlogs = guild.channels.cache.find((ch) => "#" + ch.name === data.modlogs).id;
 
 		if (data.fortniteshop === req.translate("common:NO_CHANNEL")) guildData.plugins.fortniteshop = false;
-		else guildData.plugins.fortniteshop = guild.channels.cache.find((ch) => "#"+ch.name === data.fortniteshop).id;
+		else guildData.plugins.fortniteshop = guild.channels.cache.find((ch) => "#" + ch.name === data.fortniteshop).id;
 
 		guildData.markModified("plugins");
 	};
 
 	await guildData.save();
 
-	res.redirect(303, "/manage/"+guild.id);
+	res.redirect(303, `/manage/${guild.id}`);
 });
 
 module.exports = router;

@@ -20,9 +20,10 @@ class Avatar extends Command {
 	async run (message, args) {
 		let user = await this.client.resolveUser(args[0]);
 		if (!user) user = message.author;
-		const avatarURL = user.displayAvatarURL({ size: 512, dynamic: true, format: 'png' });
-		if (message.content.includes("-v")) message.channel.send("<"+avatarURL+">");
+		const avatarURL = user.displayAvatarURL({ size: 512, dynamic: true, format: "png" });
+		if (message.content.includes("-v")) message.channel.send(`<${avatarURL}>`);
 		const attachment = new Discord.MessageAttachment(avatarURL, `avatar.${avatarURL.split(".").pop().split("?")[0]}`);
+
 		message.channel.send(attachment);
 	}
 };

@@ -25,10 +25,10 @@ class Suggest extends Command {
 		if (!sugg) return message.error("general/suggest:MISSING_CONTENT");
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(message.translate("general/suggest:TITLE", { user: message.author.username }), message.author.displayAvatarURL({ size: 512, dynamic: true, format: 'png' }))
+			.setAuthor(message.translate("general/suggest:TITLE", { user: message.author.username }), message.author.displayAvatarURL({ size: 512, dynamic: true, format: "png" }))
 			.addField(message.translate("common:AUTHOR"), `\`${message.author.username}#${message.author.discriminator}\``, true)
 			.addField(message.translate("common:DATE"), message.printDate(new Date(Date.now())), true)
-			.addField(message.translate("common:CONTENT"), "**"+sugg+"**")
+			.addField(message.translate("common:CONTENT"), sugg)
 			.setColor(data.config.embed.color)
 			.setFooter(data.config.embed.footer);
 

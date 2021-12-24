@@ -23,7 +23,7 @@ module.exports = {
 						case: null
 					};
 					memberData.save();
-					client.logger.log("[unmute] "+memberData.id+" cannot be found.");
+					client.logger.log("[unmute] " + memberData.id + " cannot be found.");
 
 					return null;
 				});

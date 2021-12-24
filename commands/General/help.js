@@ -41,7 +41,7 @@ class Help extends Command {
 				.addField(message.translate("general/help:FIELD_USAGE"), usage)
 				.addField(message.translate("general/help:FIELD_EXAMPLES"), examples)
 				.addField(message.translate("general/help:FIELD_ALIASES"), cmd.help.aliases.length > 0 ? cmd.help.aliases.map(a => "`" + a + "`").join("\n") : message.translate("general/help:NO_ALIAS"))
-				.addField(message.translate("general/help:FIELD_PERMISSIONS"), cmd.conf.memberPermissions.length > 0 ? cmd.conf.memberPermissions.map((p) => "`"+p+"`").join("\n") : message.translate("general/help:NO_REQUIRED_PERMISSION"))
+				.addField(message.translate("general/help:FIELD_PERMISSIONS"), cmd.conf.memberPermissions.length > 0 ? cmd.conf.memberPermissions.map((p) => `\`${p}\``).join("\n") : message.translate("general/help:NO_REQUIRED_PERMISSION"))
 				.setColor(this.client.config.embed.color)
 				.setFooter(this.client.config.embed.footer);
 
@@ -70,7 +70,7 @@ class Help extends Command {
 			embed.addField(`${emojis.categories[cat.toLowerCase()]} ${cat} - (${tCommands.size})`, `${tCommands.map((cmd) => `${cmd.help.name}`).join(", ")}`);
 		});
 		if (message.guild) {
-			if (data.guild.customCommands.length > 0) embed.addField(emojis.categories.custom+" "+message.guild.name+" | "+message.translate("general/help:CUSTOM_COMMANDS")+" - ("+data.guild.customCommands.length+")", data.guild.customCommands.map((cmd) => "`"+cmd.name+"`").join(", "));
+			if (data.guild.customCommands.length > 0) embed.addField(`${emojis.categories.custom} ${message.guild.name} | ${message.translate("general/help:CUSTOM_COMMANDS")} - (${data.guild.customCommands.length})`, data.guild.customCommands.map((cmd) => `\`${cmd.name}\``).join(", "));
 		};
 
 		embed.addField("\u200B", message.translate("misc:STATS_FOOTER", {
@@ -78,7 +78,7 @@ class Help extends Command {
 			donateLink: "https://qiwi.com/n/JONNYBRO",
 			owner: this.client.config.owner.id
 		}));
-		embed.setAuthor(message.translate("general/help:TITLE", { name: this.client.user.username }), this.client.user.displayAvatarURL({ size: 512, dynamic: true, format: 'png' }));
+		embed.setAuthor(message.translate("general/help:TITLE", { name: this.client.user.username }), this.client.user.displayAvatarURL({ size: 512, dynamic: true, format: "png" }));
 		return message.channel.send(embed);
 	}
 };
