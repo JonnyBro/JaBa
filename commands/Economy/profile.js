@@ -54,10 +54,11 @@ class Profile extends Command {
 			}), member.user.displayAvatarURL({ size: 512, dynamic: true, format: "png" }))
 			.attachFiles([{ attachment: await userData.getAchievements(), name: "achievements.png" }])
 			.setImage("attachment://achievements.png")
-			.setDescription(userData.bio ? userData.bio : message.translate("economy/profile:NO_BIO"))
+			// .setDescription(userData.bio ? userData.bio : message.translate("economy/profile:NO_BIO"))
 			.addField(message.translate("economy/profile:CASH"), message.translate("economy/profile:MONEY", {
 				money: memberData.money
 			}), true)
+			.addField(message.translate("economy/profile:BIO"), userData.bio ? userData.bio : message.translate("economy/profile:NO_BIO"), true)
 			.addField(message.translate("economy/profile:BANK"), message.translate("economy/profile:MONEY", {
 				money: memberData.bankSold
 			}), true)
