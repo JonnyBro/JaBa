@@ -1,6 +1,5 @@
 const Command = require("../../base/Command.js"),
-	Discord = require("discord.js"),
-	FiltersList = require("../../assets/json/filters.json");
+	Discord = require("discord.js");
 
 class Filters extends Command {
 	constructor (client) {
@@ -19,17 +18,17 @@ class Filters extends Command {
 	}
 
 	async run (message, args, data) {
-		const queue = this.client.player.getQueue(message);
 		const voice = message.member.voice.channel;
+		const queue = this.client.player.getQueue(message);
 
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 
 		const filtersStatuses = [ [], [] ];
 
-		Object.keys(FiltersList).forEach((filterName) => {
+		Object.keys(this.client.player.filters).forEach((filterName) => {
 			const array = filtersStatuses[0].length > filtersStatuses[1].length ? filtersStatuses[1] : filtersStatuses[0];
-			array.push(FiltersList[filterName] + " : " + (this.client.player.getQueue(message).filters[filterName] ? this.client.customEmojis.success : this.client.customEmojis.error));
+			array.push(FiltersList[filterName] + " : " + (queue.filters[filterName] ? this.client.customEmojis.success : this.client.customEmojis.error));
 		});
 
 		const list = new Discord.MessageEmbed()

@@ -12,7 +12,7 @@ class Loop extends Command {
 			botPermissions: [ "SEND_MESSAGES" ],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 3000
+			cooldown: 1000
 		});
 	}
 
@@ -20,21 +20,12 @@ class Loop extends Command {
 		const voice = message.member.voice.channel;
 		const queue = this.client.player.getQueue(message);
 
-		if (!args[0] || !["queue", "song"].includes(args[0])) return message.error("music/loop:NO_ARG");
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 
-		if (args[0].toLowerCase() === "queue") {
-			if (queue.repeatMode) this.client.player.setRepeatMode(message, false);
+		const mode = this.client.player.setRepeatMode(message);
 
-			this.client.player.setLoopMode(message, !queue.loopMode);
-			message.success(`music/loop:QUEUE_SUCCESS_${queue.loopMode ? "ENABLED" : "DISABLED"}`)
-		} else if (args[0].toLowerCase() === "song") {
-			if (queue.loopMode) this.client.player.setLoopMode(message, false);
-
-			this.client.player.setRepeatMode(message, !queue.repeatMode);
-			message.success(`music/loop:SONG_SUCCESS_${queue.repeatMode ? "ENABLED" : "DISABLED"}`);
-		};
+		message.success(`music/loop:${mode ? mode === 2 ? "QUEUE" : "SONG" : "DISABLED"}`)
 	}
 };
 

@@ -1,11 +1,13 @@
 const { MessageEmbed, Util, Client, Collection } = require("discord.js"),
 	{ GiveawaysManager } = require("discord-giveaways"),
-	{ Player } = require("discord-player"),
+	{ SoundCloudPlugin } = require("@distube/soundcloud"),
+	{ SpotifyPlugin } = require("@distube/spotify"),
 	{ Client: Joker } = require("blague.xyz");
 
 const util = require("util"),
 	AmeClient = require("amethyste-api"),
 	path = require("path"),
+	DisTube = require("distube"),
 	moment = require("moment");
 
 moment.relativeTimeThreshold("s", 60);
@@ -47,91 +49,47 @@ class JaBa extends Client {
 		if (this.config.apiKeys.amethyste) this.AmeAPI = new AmeClient(this.config.apiKeys.amethyste);
 		if (this.config.apiKeys.blagueXYZ) this.joker = new Joker(this.config.apiKeys.blagueXYZ, { defaultLanguage: "en" });
 
-		this.player = new Player(this, {
-			ytdlDownloadOptions: {
-				filter: "audio",
-				requestOptions: {
-					headers: {
-						cookie: this.config.youtubeToken,
-						quality: "highestaudio",
-						highWaterMark: 1 << 25
-					}
-				}
-			},
-			leaveOnEmpty: false,
-			enableLive: true
+		this.player = new DisTube.default(this, {
+			searchSongs: 10,
+			searchCooldown: 30,
+			leaveOnEmpty: true,
+			emptyCooldown: 0,
+			leaveOnFinish: true,
+			leaveOnStop: true,
+			nsfw: true,
+			plugins: [ new SoundCloudPlugin(), new SpotifyPlugin() ],
 		});
 
 		this.player
-			.on("trackStart", (message, track) => {
-				message.success("music/play:NOW_PLAYING", { songName: track.title });
-			})
-			.on("playlistStart", (message, queue, playlist, track) => {
-				message.channel.send(`${this.customEmojis.success} ${message.translate("music/play:PLAYING_PLAYLIST", { playlistTitle: playlist.title, playlistEmoji: this.customEmojis.playlist, songName: track.title })}`);
-			})
-			.on("searchResults", (message, query, tracks) => {
-				if (tracks.length > 10) tracks = tracks.slice(0, 10);
+			.on("playSong", (queue, song) => queue.textChannel.send(this.translate("music/play:NOW_PLAYING", { songName: song.name })))
+			.on("addSong", (queue, song) => queue.textChannel.send(this.translate("music/play:ADDED_QUEUE", { songName: song.name })))
+			.on("addList", (queue, playlist) => queue.textChannel.send(this.translate("music/play:ADDED_QUEUE_COUNT", { songCount: playlist.songs.length })))
+			.on("searchResult", (message, result) => {
+				let i = 0
 				const embed = new MessageEmbed()
-					.setDescription(Util.escapeSpoiler(tracks.map((t, i) => `**${++i} -** ${t.title}`).join("\n")))
-					.setFooter(message.translate("music/play:RESULTS_FOOTER"))
+					.setDescription(Util.escapeSpoiler(result.map(song => `**${++i} -** ${song.name}`).join("\n")))
+					.setFooter(this.translate("music/play:RESULTS_FOOTER"))
 					.setColor(this.config.embed.color);
 				message.channel.send(embed);
 			})
-			.on("searchInvalidResponse", (message, query, tracks, content, collector) => {
-				if (content === "cancel") {
+			.on("searchDone", () => {})
+			.on("searchCancel", message => message.error("misc:TIMES_UP"))
+			.on("searchInvalidAnswer", message => {
+				if (message.content === "cancel") {
 					collector.stop();
-
 					return message.success("music/play:RESULTS_CANCEL");
 				};
 
 				message.error("misc:INVALID_NUMBER_RANGE", { min: 1, max: tracks.length });
 			})
-			.on("searchCancel", (message) => {
-				message.error("misc:TIMES_UP");
+			.on("searchNoResult", message => message.error("music/play:NO_RESULT"))
+			.on("error", (textChannel, e) => {
+				console.error(e);
+				textChannel.send(this.translate("music/play:ERR_OCCURRED", { error: e.slice(0, 1900)}));
 			})
-			.on("botDisconnect", (message) => {
-				message.error("music/play:STOP_DISCONNECTED");
-			})
-			.on("noResults", (message) => {
-				message.error("music/play:NO_RESULT");
-			})
-			.on("queueEnd", (message) => {
-				message.success("music/play:QUEUE_ENDED");
-			})
-			.on("playlistAdd", (message, queue, playlist) => {
-				message.success("music/play:ADDED_QUEUE_COUNT", { songCount: playlist.items.length });
-			})
-			.on("trackAdd", (message, queue, track) => {
-				message.success("music/play:ADDED_QUEUE", { songName: track.title });
-			})
-			.on("channelEmpty", () => {
-				// do nothing, leaveOnEmpty is not enabled
-			})
-			.on("error", (error, message) => {
-				switch (error) {
-					case "NotConnected":
-						message.error("music/play:NO_VOICE_CHANNEL");
-					break;
-
-					case "UnableToJoin":
-						message.error("music/play:VOICE_CHANNEL_CONNECT");
-					break;
-
-					case "NotPlaying":
-						message.error("music/play:NOT_PLAYING");
-					break;
-
-					case "LiveVideo":
-						message.error("music/play:LIVE_VIDEO");
-					break;
-
-					default:
-						message.error("music/play:ERR_OCCURRED", {
-							error
-						});
-					break;
-				};
-			});
+			.on("finish", queue => queue.textChannel.send(this.translate("music/play:QUEUE_ENDED")))
+			.on("disconnect", queue => queue.textChannel.send(this.translate("music/play:STOP_DISCONNECTED")))
+			.on("empty", queue => queue.textChannel.send(this.translate("music/play:STOP_EMPTY")));
 
 		this.giveawaysManager = new GiveawaysManager(this, {
 			storage: "./giveaways.json",
@@ -146,7 +104,7 @@ class JaBa extends Client {
 	};
 
 	get defaultLanguage() {
-		return this.languages.find((language) => language.default).name;
+		return this.languages.find(language => language.default).name;
 	};
 
 	translate(key, args, locale) {

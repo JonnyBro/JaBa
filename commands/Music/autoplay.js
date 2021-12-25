@@ -17,17 +17,15 @@ class AutoPlay extends Command {
 	}
 
 	async run (message) {
-		const queue = this.client.player.getQueue(message);
 		const voice = message.member.voice.channel;
+		const queue = this.client.player.getQueue(message);
 
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 
-		// Gets the current song
-		await this.client.player.setAutoPlay(message, !queue.autoPlay);
+		const autoplay = queue.toggleAutoplay()
 
-		// Send the embed in the current channel
-		message.success(`music/autoplay:SUCCESS_${queue.autoPlay ? "ENABLED" : "DISABLED"}`);
+		message.success(`music/autoplay:SUCCESS_${autoplay ? "ENABLED" : "DISABLED"}`);
 	}
 };
 
