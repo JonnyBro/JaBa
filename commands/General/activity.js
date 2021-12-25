@@ -179,7 +179,7 @@ class Activity extends Command {
 					.setColor(data.config.embed.color)
 					.setFooter(message.translate("general/activity:FOOTER"))
 					.setTimestamp()
-				message.channel.send(embed);
+				return message.channel.send(embed);
 			break;
 
 			default:
@@ -189,7 +189,7 @@ class Activity extends Command {
 					.setColor(data.config.embed.color)
 					.setFooter(message.translate("general/activity:FOOTER"))
 					.setTimestamp()
-				message.channel.send(embed);
+				return message.channel.send(embed);
 			break;
 		};
 	}
