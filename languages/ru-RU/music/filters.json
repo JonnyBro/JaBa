@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Получить список фильтров и их статусов",
+	"DESCRIPTION": "Получить список фильтров и их статусы",
 	"USAGE": "{{prefix}}filters",
 	"EXAMPLES": "{{prefix}}filters",
 	"TITLE": "**Фильтры**",
