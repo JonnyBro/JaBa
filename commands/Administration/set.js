@@ -3,7 +3,7 @@ const Command = require("../../base/Command.js");
 class Set extends Command {
 	constructor (client) {
 		super(client, {
-			name: "debug",
+			name: "set",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
