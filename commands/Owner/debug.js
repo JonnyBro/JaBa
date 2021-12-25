@@ -18,7 +18,7 @@ class Debug extends Command {
 
 	async run (message, args, data) {
 		const action = args[0];
-		if (!action || !["set", "add"].includes(status)) return message.error("owner/debug:NO_ACTION");
+		if (!action || !["set", "add"].includes(action)) return message.error("owner/debug:NO_ACTION");
 
 		const status = args[1];
 		if (!status || !["level", "xp", "credits", "bank", "rep"].includes(status)) return message.error("owner/debug:NO_STATUS");
