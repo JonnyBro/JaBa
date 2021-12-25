@@ -172,16 +172,6 @@ class Activity extends Command {
 				});
 			break;
 
-			case "list":
-				const embed = new Discord.MessageEmbed()
-					.setTitle(message.translate("general/activity:TITLE"))
-					.setDescription(activities.join("\n"))
-					.setColor(data.config.embed.color)
-					.setFooter(message.translate("general/activity:FOOTER"))
-					.setTimestamp()
-				return message.channel.send(embed);
-			break;
-
 			default:
 				const embed = new Discord.MessageEmbed()
 					.setTitle(message.translate("general/activity:TITLE"))
@@ -189,7 +179,7 @@ class Activity extends Command {
 					.setColor(data.config.embed.color)
 					.setFooter(message.translate("general/activity:FOOTER"))
 					.setTimestamp()
-				return message.channel.send(embed);
+				message.channel.send(embed);
 			break;
 		};
 	}
