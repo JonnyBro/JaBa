@@ -25,7 +25,7 @@ class Activity extends Command {
 		if (!perms.has("CONNECT") || !perms.has("SPEAK")) return message.error("music/play:VOICE_CHANNEL_CONNECT");
 
 		const activities = ["awkword", "betrayal", "checkers", "chess", "doodlecrew", "fishing", "lettertile", "poker", "spellcast", "wordsnack", "puttparty", "youtube"];
-		const activity = args[0].toLowerCase();
+		const activity = args[0] ? args[0].toLowerCase() : "";
 
 		switch (activity) {
 			case "awkword":
@@ -170,6 +170,16 @@ class Activity extends Command {
 						.setTimestamp()
 					return message.channel.send(embed);
 				});
+			break;
+
+			case "list":
+				const embed = new Discord.MessageEmbed()
+					.setTitle(message.translate("general/activity:TITLE"))
+					.setDescription(activities.join("\n"))
+					.setColor(data.config.embed.color)
+					.setFooter(message.translate("general/activity:FOOTER"))
+					.setTimestamp()
+				message.channel.send(embed);
 			break;
 
 			default:
