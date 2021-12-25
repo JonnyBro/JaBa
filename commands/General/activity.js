@@ -25,7 +25,7 @@ class Activity extends Command {
 		if (!perms.has("CONNECT") || !perms.has("SPEAK")) return message.error("music/play:VOICE_CHANNEL_CONNECT");
 
 		const activities = ["awkword", "betrayal", "checkers", "chess", "doodlecrew", "fishing", "lettertile", "poker", "spellcast", "wordsnack", "puttparty", "youtube"];
-		const activity = args[0];
+		const activity = args[0].toLowerCase();
 
 		switch (activity) {
 			case "awkword":
