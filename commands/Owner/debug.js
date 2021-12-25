@@ -33,43 +33,53 @@ class Debug extends Command {
 
 		const memberData = await this.client.findOrCreateMember({ id: member.id, guildID: message.guild.id });
 
+		var newValue = 0;
+
 		if (action === "set") {
+			newValue = parseInt(amount, 10);
 			if (status === "level") {
-				memberData.level = parseInt(amount, 10);
+				memberData.level = newValue;
 				memberData.save();
 			} else if (status === "xp") {
-				memberData.exp = parseInt(amount, 10);
+				memberData.exp = newValue;
 				memberData.save();
 			} else if (status === "rep") {
-				memberData.rep = parseInt(amount, 10);
+				memberData.rep = newValue;
 				memberData.save();
 			} else if (status === "credits") {
-				memberData.money = parseInt(amount, 10);
+				memberData.money = newValue;
 				memberData.save();
 			} else if (status === "bank") {
-				memberData.bankSold = parseInt(amount, 10);
+				memberData.bankSold = newValue;
 				memberData.save();
-			}
+			};
+
+			message.success("owner/debug:SET_" + status.toUpperCase() , { username: member.user.tag, amount });
 		} else if (action === "add") {
 			if (status === "level") {
-				memberData.level = memberData.level + parseInt(amount, 10);
+				newValue = memberData.level + parseInt(amount, 10);
+				memberData.level = newValue;
 				memberData.save();
 			} else if (status === "xp") {
-				memberData.exp = memberData.exp + parseInt(amount, 10);
+				newValue = memberData.exp + parseInt(amount, 10);
+				memberData.exp = newValue;
 				memberData.save();
 			} else if (status === "rep") {
-				memberData.rep = memberData.rep + parseInt(amount, 10);
+				newValue = memberData.rep + parseInt(amount, 10);
+				memberData.rep = newValue;
 				memberData.save();
 			} else if (status === "credits") {
-				memberData.money = memberData.money + parseInt(amount, 10);
+				newValue = memberData.money + parseInt(amount, 10);
+				memberData.money = newValue;
 				memberData.save();
 			} else if (status === "bank") {
-				memberData.bankSold = memberData.bankSold + parseInt(amount, 10);
+				newValue = memberData.bankSold + parseInt(amount, 10);
+				memberData.bankSold = newValue;
 				memberData.save();
-			}
-		}
+			};
 
-		message.success("owner/debug:SUCCESS_" + status.toUpperCase() , { username: member.user.tag, amount });
+			message.success("owner/debug:SUCCESS_" + status.toUpperCase() , { username: member.user.tag, amount: newValue});
+		};
 	}
 };
 
