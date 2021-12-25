@@ -17,6 +17,6 @@
 	"STOP_DISCONNECTED": "I've just stopped the music as I have been disconnected from the channel.",
 	"STOP_EMPTY": "I've just stopped the music as everyone disconnected from the channel.",
 	"RESULTS_CANCEL": "Search cancelled!",
-	"LIVE": "◉ LIVE",
+	"LIVE": "Live",
 	"ERR_OCCURRED": "An error occurred... Code: `{{error}}`"
 }
