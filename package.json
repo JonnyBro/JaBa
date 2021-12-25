@@ -1,6 +1,6 @@
 {
     "name": "jaba",
-    "version": "3.0.4",
+    "version": "3.0.5",
     "description": "A very complete Discord bot (more than 130 commands) that uses the Discord.js",
     "main": "index.js",
     "private": true,
