@@ -196,14 +196,15 @@ async function updateXp(msg, data) {
 	if (isInCooldown) {
 		if (isInCooldown > Date.now()) return;
 	};
+
 	// Records in the database the time when the member will be able to win xp again (1min)
 	const toWait = Date.now() + 60000;
 	xpCooldown[msg.author.id] = toWait;
 
 	// Gets a random number between 10 and 5
-	const won = Math.floor(Math.random() * ( Math.floor(10) - Math.ceil(5))) + Math.ceil(5);
+	const won = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5))) + Math.ceil(5);
 
-	const newXp = parseInt(points+won, 10);
+	const newXp = parseInt(points + won, 10);
 
 	// calculation how many xp it takes for the next new one
 	const neededXp = 5 * (level * level) + 80 * level + 100;

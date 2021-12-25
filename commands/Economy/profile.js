@@ -69,7 +69,7 @@ class Profile extends Command {
 				points: userData.rep
 			}), true)
 			.addField(message.translate("economy/profile:LEVEL"), `**${memberData.level}**`, true)
-			.addField(message.translate("economy/profile:EXP"), `**${memberData.exp}** xp`, true)
+			.addField(message.translate("economy/profile:EXP"), `**${memberData.exp}/${5 * (memberData.level * memberData.level) + 80 * memberData.level + 100}** xp`, true)
 			.addField(message.translate("economy/profile:REGISTERED"), message.printDate(new Date(memberData.registeredAt)), true)
 			.addField(message.translate("economy/profile:BIRTHDATE"), (!userData.birthdate ? message.translate("economy/profile:NO_BIRTHDATE"): message.printDate(new Date(userData.birthdate))), true)
 			.addField(message.translate("economy/profile:LOVER"), (!userData.lover ? message.translate("economy/profile:NO_LOVER") : this.client.users.cache.get(userData.lover).tag), true)
