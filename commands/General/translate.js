@@ -22,7 +22,7 @@ class Translate extends Command {
 
 	async run (message, args, data) {
 		if (args[0] === "langs-list") {
-			const langsList = "```css\n" + (langs.map((l, i) => `#${i+1} - ${l}`).join("\n")) + "```";
+			const langsList = "```css\n" + (langs.map((lang, i) => `${i + 1} - ${lang}`).join("\n")) + "```";
 			message.author.send(langsList).then(() => {
 				message.success("general/translate:LIST_SENT");
 			}).catch(() => {
@@ -34,8 +34,6 @@ class Translate extends Command {
 		const pWait = await message.sendT("misc:PLEASE_WAIT", null, { prefixEmoji: "loading" });
 
 		if (!args[0]) return pWait.error("general/translate:MISSING_LANGUAGE", { prefix: data.guild.prefix }, { edit: true });
-
-
 		if (!args[1]) return pWait.error("general/translate:MISSING_CONTENT", null, { edit: true });
 
 		// Gets different args
