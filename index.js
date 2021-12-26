@@ -24,7 +24,7 @@ const JaBa = require("./base/JaBa"),
 const init = async () => {
 	// Search for all commands
 	const directories = await readdir("./commands/");
-	client.logger.log(`Loading a total of ${directories.length} categories.`, "log");
+	client.logger.log(`\nLoading a total of ${directories.length} categories.`, "log");
 	directories.forEach(async (dir) => {
 		const commands = await readdir(`./commands/${dir}/`);
 		commands.filter((cmd) => cmd.split(".").pop() === "js").forEach((cmd) => {
@@ -37,7 +37,7 @@ const init = async () => {
 
 	// Then we load events, which will include our message and ready event.
 	const evtFiles = await readdir("./events/");
-	client.logger.log(`Loading a total of ${evtFiles.length} events.`, "log");
+	client.logger.log(`\nLoading a total of ${evtFiles.length} events.`, "log");
 	evtFiles.forEach((file) => {
 		const eventName = file.split(".")[0];
 		client.logger.log(`Loading Event: ${eventName}`);
