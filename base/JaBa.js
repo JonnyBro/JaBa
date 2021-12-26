@@ -56,7 +56,6 @@ class JaBa extends Client {
 			emptyCooldown: 0,
 			leaveOnFinish: true,
 			leaveOnStop: true,
-			nsfw: true,
 			plugins: [ new SoundCloudPlugin(), new SpotifyPlugin() ],
 		});
 
