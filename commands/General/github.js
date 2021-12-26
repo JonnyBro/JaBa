@@ -19,12 +19,7 @@ class Github extends Command {
 	}
 
 	async run(message, args, data) {
-		const res = await fetch("https://api.github.com/repos/JonnyBro/JaBa-new", {
-			headers: {
-				Authorization: data.config.githubToken
-			}
-		});
-		console.log(res)
+		const res = await fetch("https://api.github.com/repos/JonnyBro/jaba-v2");
 		const json = await res.json();
 
 		const embed = new Discord.MessageEmbed()
@@ -33,7 +28,7 @@ class Github extends Command {
 				dynamic: true,
 				format: "png"
 			}))
-			.setDescription(`[${message.translate("general/github:CLICK_HERE")}](https://github.com/JonnyBro/JaBa-new)`)
+			.setDescription(`[${message.translate("general/github:CLICK_HERE")}](${json.html_url})`)
 			.addField("Stars", json.stargazers_count, true)
 			.addField("Forks", json.forks_count, true)
 			.addField(message.translate("general/github:LANGUAGE"), json.language, true)
