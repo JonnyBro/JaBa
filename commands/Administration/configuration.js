@@ -44,7 +44,7 @@ class Configuration extends Command {
 
 		// Goodbye plugin
 		embed.addField(message.translate("administration/configuration:GOODBYE_TITLE"), (guildData.plugins.goodbye.enabled) ? message.translate("administration/configuration:GOODBYE_CONTENT", {
-			channel: `<#${guildData.plugins.goodbye.channelID}>`,
+			channel: `<#${guildData.plugins.goodbye.channel}>`,
 			withImage: guildData.plugins.goodbye.withImage ? message.translate("common:YES") : message.translate("common:NO")
 		}) : message.translate("administration/configuration:GOODBYE_DISABLED"));
 
