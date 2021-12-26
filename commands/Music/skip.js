@@ -23,7 +23,7 @@ class Skip extends Command {
 
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
 		if (!queue) return message.error("music/play:NOT_PLAYING");
-		if (!queue.songs[1] || !queue.autoplay) return message.error("music/skip:NO_NEXT_SONG");
+		// if (!queue.songs[1] || !queue.autoplay) return message.error("music/skip:NO_NEXT_SONG");
 
 		const embed = new Discord.MessageEmbed()
 			.setAuthor(message.translate("music/skip:SUCCESS"))
