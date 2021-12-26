@@ -3,11 +3,11 @@ const Command = require("../../base/Command.js");
 class Clearsanctions extends Command {
 	constructor (client) {
 		super(client, {
-			name: "clear-sanctions",
+			name: "clearsanctions",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [],
+			aliases: [ "clearwarns" ],
 			memberPermissions: [ "MANAGE_MESSAGES" ],
 			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
 			nsfw: false,
