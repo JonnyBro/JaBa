@@ -20,7 +20,7 @@ class Github extends Command {
 
 	async run(message, args, data) {
 		const res = await fetch("https://api.github.com/repos/JonnyBro/JaBa-new", {
-			headers: `Authorization: ${this.config.githubToken}`
+			headers: `Authorization: ${data.config.githubToken}`
 		});
 		const json = await res.json();
 
