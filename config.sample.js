@@ -1,10 +1,6 @@
 module.exports = {
 	/* The token of your Discord Bot */
 	token: "XXXXXXXXXXX",
-	/* Youtube token */
-	youtubeToken: "XXXXXXXXXXX",
-	/* Your Github API token for private repos */
-	githubToken: "XXXXXXXXXXX",
 	/* For the support server */
 	support: {
 		id: "XXXXXXXXXXX", // The ID of the support server
@@ -20,7 +16,7 @@ module.exports = {
 		expressSessionPassword: "XXXXXXXXXXX", // Express session password (it can be what you want)
 		failureURL: "https://dashboard.example.com" // url on which users will be redirected if they click the cancel button (discord authentication)
 	},
-	mongoDB: "mongodb://localhost:27017/AtlantaBot", // The URl of the mongodb database
+	mongoDB: "mongodb://localhost:27017/discordbot", // The URl of the mongodb database
 	prefix: "*", // The default prefix for the bot
 	/* For the embeds (embeded messages) */
 	embed: {
