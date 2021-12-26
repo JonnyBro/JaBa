@@ -5,7 +5,7 @@ class Pause extends Command {
 		super(client, {
 			name: "pause",
 			dirname: __dirname,
-			enabled: true,
+			enabled: false,
 			guildOnly: true,
 			aliases: [],
 			memberPermissions: [],

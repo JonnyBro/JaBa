@@ -5,7 +5,7 @@ class Resume extends Command {
 		super(client, {
 			name: "resume",
 			dirname: __dirname,
-			enabled: true,
+			enabled: false,
 			guildOnly: true,
 			aliases: [],
 			memberPermissions: [],
