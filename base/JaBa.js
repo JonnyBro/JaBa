@@ -66,7 +66,7 @@ class JaBa extends Client {
 				const m = await queue.textChannel.send(this.translate("music/play:NOW_PLAYING", { songName: song.name }))
 				setTimeout(() => {
 					m.delete();
-				}, 5000);
+				}, song.duration * 1000);
 			})
 			.on("addSong", (queue, song) => queue.textChannel.send(this.translate("music/play:ADDED_QUEUE", { songName: song.name })))
 			.on("addList", (queue, playlist) => queue.textChannel.send(this.translate("music/play:ADDED_QUEUE_COUNT", { songCount: playlist.songs.length })))
