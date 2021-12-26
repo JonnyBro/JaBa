@@ -62,7 +62,12 @@ class JaBa extends Client {
 		});
 
 		this.player
-			.on("playSong", (queue, song) => queue.textChannel.send(this.translate("music/play:NOW_PLAYING", { songName: song.name })))
+			.on("playSong", (queue, song) => {
+				const m = await queue.textChannel.send(this.translate("music/play:NOW_PLAYING", { songName: song.name }))
+				setTimeout(() => {
+					m.delete();
+				}, 5000);
+			})
 			.on("addSong", (queue, song) => queue.textChannel.send(this.translate("music/play:ADDED_QUEUE", { songName: song.name })))
 			.on("addList", (queue, playlist) => queue.textChannel.send(this.translate("music/play:ADDED_QUEUE_COUNT", { songCount: playlist.songs.length })))
 			.on("searchResult", (message, result) => {
