@@ -28,7 +28,7 @@ class Filters extends Command {
 
 		Object.keys(this.client.player.filters).forEach((filterName) => {
 			const array = filtersStatuses[0].length > filtersStatuses[1].length ? filtersStatuses[1] : filtersStatuses[0];
-			array.push(FiltersList[filterName] + " : " + (queue.filters[filterName] ? this.client.customEmojis.success : this.client.customEmojis.error));
+			array.push(this.client.player.filters[filterName] + " : " + (queue.filters[filterName] ? this.client.customEmojis.success : this.client.customEmojis.error));
 		});
 
 		const list = new Discord.MessageEmbed()
