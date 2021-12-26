@@ -44,6 +44,7 @@ class Queue extends Command {
 			.setAuthorizedUsers([message.author.id])
 			.setChannel(message.channel)
 			.setElementsPerPage(5)
+			.setDeleteOnTimeout(true)
 			.setPageIndicator(true)
 			.formatField("Очередь", (track) => `[${track.name}](${track.url})\n*Добавил ${track.member}*\n`);
 
