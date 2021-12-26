@@ -21,7 +21,10 @@ async function walkDirectory(dir, namespaces = [], folderName = "") {
 		};
 	};
 
-	return { namespaces: [...new Set(namespaces)], languages };
+	return {
+		namespaces: [...new Set(namespaces)],
+		languages
+	};
 };
 
 module.exports = async () => {

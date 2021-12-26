@@ -3,7 +3,7 @@ const Command = require("../../base/Command.js"),
 	canvacord = require("canvacord");
 
 class Phcomment extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "phcomment",
 			dirname: __dirname,
@@ -11,14 +11,14 @@ class Phcomment extends Command {
 			guildOnly: false,
 			aliases: [],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 5000
 		});
 	}
 
-	async run (message, args) {
+	async run(message, args) {
 		let user = await this.client.resolveUser(args[0]);
 		let text = args.join(" ");
 
@@ -36,15 +36,19 @@ class Phcomment extends Command {
 		try {
 			const buffer = await canvacord.Canvas.phub({
 				username: user.username,
-				image: user.displayAvatarURL({ format: "png" }),
+				image: user.displayAvatarURL({
+					format: "png"
+				}),
 				message: text
 			});
 			const attachment = new Discord.MessageAttachment(buffer, "phcomment.png");
 			message.channel.send(attachment);
 			m.delete();
-		} catch(e) {
+		} catch (e) {
 			console.log(e);
-			m.error("misc:ERROR_OCCURRED", null, { edit: true });
+			m.error("misc:ERROR_OCCURRED", null, {
+				edit: true
+			});
 		};
 	}
 };

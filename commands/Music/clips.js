@@ -3,7 +3,7 @@ const Command = require("../../base/Command.js"),
 	fs = require("fs");
 
 class Clips extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "clips",
 			dirname: __dirname,
@@ -11,20 +11,20 @@ class Clips extends Command {
 			guildOnly: true,
 			aliases: [],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
-		fs.readdir("./clips", function(err, files) {
+	async run(message, args, data) {
+		fs.readdir("./clips", function (err, files) {
 			if (err) return console.log("Unable to read directory: " + err);
 
 			let clips = [];
 
-			files.forEach(function(file) {
+			files.forEach(function (file) {
 				clips.push(file.substring(0, file.length - 4));
 			});
 

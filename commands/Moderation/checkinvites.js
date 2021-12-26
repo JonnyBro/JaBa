@@ -2,27 +2,27 @@ const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
 class Checkinvites extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "checkinvites",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "checkinvite", "checki" ],
+			aliases: ["checkinvite", "checki"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const members = message.guild.members;
 
 		const withInvite = [];
 		members.cache.forEach((m) => {
-			const possibleLinks = m.user.presence.activities.map((a) => [ a.state, a.details, a.name ]).flat();
+			const possibleLinks = m.user.presence.activities.map((a) => [a.state, a.details, a.name]).flat();
 			const inviteLinks = possibleLinks.filter((l) => /(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(l));
 			if (inviteLinks.length > 0) {
 				withInvite.push({
@@ -40,7 +40,11 @@ class Checkinvites extends Command {
 			.setColor(data.config.embed.color)
 			.setFooter(data.config.embed.footer);
 
-		message.channel.send(embed);
+		const m = await message.channel.send(embed);
+
+		setTimeout(function () {
+			m.delete();
+		}, 3000);
 	}
 };
 

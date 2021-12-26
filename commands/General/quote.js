@@ -2,25 +2,29 @@ const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
 class Quote extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "quote",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "quoter" ],
+			aliases: ["quoter"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		function embed(m) {
 			const embed = new Discord.MessageEmbed()
-				.setAuthor(m.author.tag, m.author.displayAvatarURL({ size: 512, dynamic: true, format: "png" }))
+				.setAuthor(m.author.tag, m.author.displayAvatarURL({
+					size: 512,
+					dynamic: true,
+					format: "png"
+				}))
 				.setDescription(m.content)
 				.setColor(m.member ? m.member.roles.highest ? m.member.roles.highest.color : data.config.embed.color : data.config.embed.color)
 				.setFooter(m.guild.name + " | #" + m.channel.name)
@@ -45,7 +49,9 @@ class Quote extends Command {
 			if (!channel) {
 				message.author.send(message.translate("general/quote:NO_MESSAGE_ID")).then(() => {
 					message.delete();
-				}).catch(() => { message.error("misc:CANNOT_DM") });
+				}).catch(() => {
+					message.error("misc:CANNOT_DM")
+				});
 				return;
 			};
 		};
@@ -54,7 +60,9 @@ class Quote extends Command {
 			message.channel.messages.fetch(msgID).catch(() => {
 				message.author.send((message.translate("general/quote:NO_MESSAGE_ID"))).then(() => {
 					message.delete();
-				}).catch(() => { message.error("misc:CANNOT_DM") });
+				}).catch(() => {
+					message.error("misc:CANNOT_DM")
+				});
 				return;
 			}).then((msg) => {
 				message.delete();
@@ -64,7 +72,9 @@ class Quote extends Command {
 			channel.messages.fetch(msgID).catch(() => {
 				message.author.send(message.translate("general/quote:NO_MESSAGE_ID")).then(() => {
 					message.delete();
-				}).catch(() => { message.error("misc:CANNOT_DM") });
+				}).catch(() => {
+					message.error("misc:CANNOT_DM")
+				});
 				return;
 			}).then((msg) => {
 				message.delete();

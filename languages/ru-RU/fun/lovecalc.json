@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Как сильно они любят друг друга?",
+	"DESCRIPTION": "Калькулятор любви",
 	"USAGE": "{{prefix}}lovecalc [@пользователь1] (@пользователь2)",
 	"EXAMPLES": "{{prefix}}lovecalc @Jonny_Bro#4226\n{{prefix}}lovecalc @Jonny_Bro#4226 @JaBa#9042",
 	"MISSING": "Вы должны упомянуть одного или двух пользователей!",

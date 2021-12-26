@@ -1,22 +1,22 @@
 const Command = require("../../base/Command.js");
 
 class Deposit extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "deposit",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "bank", "banque", "dep" ],
+			aliases: ["bank", "banque", "dep"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 1000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		let amount = args[0];
 
 		if (!(parseInt(data.memberData.money, 10) > 0)) return message.error("economy/deposit:NO_CREDIT");
@@ -34,7 +34,9 @@ class Deposit extends Command {
 		data.memberData.bankSold = data.memberData.bankSold + amount;
 		data.memberData.save();
 
-		message.success("economy/deposit:SUCCESS", { money: amount });
+		message.success("economy/deposit:SUCCESS", {
+			money: amount
+		});
 	}
 };
 

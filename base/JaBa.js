@@ -19,7 +19,7 @@ moment.relativeTimeThreshold("M", 12);
 
 // Creates JaBa class
 class JaBa extends Client {
-	constructor (options) {
+	constructor(options) {
 		super(options);
 		this.config = require("../config"); // Load the config file
 		this.customEmojis = require("../emojis.json"); // load the bot's emojis
@@ -47,7 +47,9 @@ class JaBa extends Client {
 		this.databaseCache.mutedUsers = new Collection(); // members who are currently muted
 
 		if (this.config.apiKeys.amethyste) this.AmeAPI = new AmeClient(this.config.apiKeys.amethyste);
-		if (this.config.apiKeys.blagueXYZ) this.joker = new Joker(this.config.apiKeys.blagueXYZ, { defaultLanguage: "en" });
+		if (this.config.apiKeys.blagueXYZ) this.joker = new Joker(this.config.apiKeys.blagueXYZ, {
+			defaultLanguage: "en"
+		});
 
 		this.player = new DisTube.default(this, {
 			searchSongs: 10,
@@ -56,7 +58,7 @@ class JaBa extends Client {
 			emptyCooldown: 0,
 			leaveOnFinish: true,
 			leaveOnStop: true,
-			plugins: [ new SoundCloudPlugin(), new SpotifyPlugin() ],
+			plugins: [new SoundCloudPlugin(), new SpotifyPlugin()],
 		});
 
 		this.player
@@ -73,11 +75,13 @@ class JaBa extends Client {
 			})
 			.on("searchDone", () => {})
 			.on("searchCancel", message => message.error("misc:TIMES_UP"))
-			.on("searchInvalidAnswer", message => message.error("misc:INVALID_NUMBER_RANGE", { min: 1, max: tracks.length }))
+			.on("searchInvalidAnswer", message => message.error("misc:INVALID_NUMBER_RANGE", { min: 1, max: 10 }))
 			.on("searchNoResult", message => message.error("music/play:NO_RESULT"))
 			.on("error", (textChannel, e) => {
 				console.error(e);
-				textChannel.send(this.translate("music/play:ERR_OCCURRED", { error: e }));
+				textChannel.send(this.translate("music/play:ERR_OCCURRED", {
+					error: e
+				}));
 			})
 			.on("finish", queue => queue.textChannel.send(this.translate("music/play:QUEUE_ENDED")))
 			.on("disconnect", queue => queue.textChannel.send(this.translate("music/play:STOP_DISCONNECTED")))
@@ -129,7 +133,7 @@ class JaBa extends Client {
 	// This function is used to load a command and add it to the collection
 	loadCommand(commandPath, commandName) {
 		try {
-			const props = new (require(`.${commandPath}${path.sep}${commandName}`))(this);
+			const props = new(require(`.${commandPath}${path.sep}${commandName}`))(this);
 			this.logger.log(`Loading Command: ${props.help.name}. 👌`, "log");
 			props.conf.location = commandPath;
 			if (props.init) props.init(this);
@@ -146,7 +150,7 @@ class JaBa extends Client {
 	};
 
 	// This function is used to unload a command (you need to load them again)
-	async unloadCommand (commandPath, commandName) {
+	async unloadCommand(commandPath, commandName) {
 		let command;
 		if (this.commands.has(commandName)) command = this.commands.get(commandName);
 		else if (this.aliases.has(commandName)) command = this.commands.get(this.aliases.get(commandName));
@@ -163,13 +167,19 @@ class JaBa extends Client {
 	async findOrCreateUser({ id: userID }, isLean) {
 		if (this.databaseCache.users.get(userID)) return isLean ? this.databaseCache.users.get(userID).toJSON() : this.databaseCache.users.get(userID);
 		else {
-			let userData = (isLean ? await this.usersData.findOne({ id: userID }).lean() : await this.usersData.findOne({ id: userID }));
+			let userData = (isLean ? await this.usersData.findOne({
+				id: userID
+			}).lean() : await this.usersData.findOne({
+				id: userID
+			}));
 			if (userData) {
 				if (!isLean) this.databaseCache.users.set(userID, userData);
 
 				return userData;
 			} else {
-				userData = new this.usersData({ id: userID });
+				userData = new this.usersData({
+					id: userID
+				});
 				await userData.save();
 				this.databaseCache.users.set(userID, userData);
 
@@ -182,15 +192,26 @@ class JaBa extends Client {
 	async findOrCreateMember({ id: memberID, guildID }, isLean) {
 		if (this.databaseCache.members.get(`${memberID}${guildID}`)) return isLean ? this.databaseCache.members.get(`${memberID}${guildID}`).toJSON() : this.databaseCache.members.get(`${memberID}${guildID}`);
 		else {
-			let memberData = (isLean ? await this.membersData.findOne({ guildID, id: memberID }).lean() : await this.membersData.findOne({ guildID, id: memberID }));
+			let memberData = (isLean ? await this.membersData.findOne({
+				guildID,
+				id: memberID
+			}).lean() : await this.membersData.findOne({
+				guildID,
+				id: memberID
+			}));
 			if (memberData) {
 				if (!isLean) this.databaseCache.members.set(`${memberID}${guildID}`, memberData);
 
 				return memberData;
 			} else {
-				memberData = new this.membersData({ id: memberID, guildID: guildID });
+				memberData = new this.membersData({
+					id: memberID,
+					guildID: guildID
+				});
 				await memberData.save();
-				const guild = await this.findOrCreateGuild({ id: guildID });
+				const guild = await this.findOrCreateGuild({
+					id: guildID
+				});
 				if (guild) {
 					guild.members.push(memberData._id);
 					await guild.save();
@@ -206,13 +227,19 @@ class JaBa extends Client {
 	async findOrCreateGuild({ id: guildID }, isLean) {
 		if (this.databaseCache.guilds.get(guildID)) return isLean ? this.databaseCache.guilds.get(guildID).toJSON() : this.databaseCache.guilds.get(guildID);
 		else {
-			let guildData = (isLean ? await this.guildsData.findOne({ id: guildID }).populate("members").lean() : await this.guildsData.findOne({ id: guildID }).populate("members"));
+			let guildData = (isLean ? await this.guildsData.findOne({
+				id: guildID
+			}).populate("members").lean() : await this.guildsData.findOne({
+				id: guildID
+			}).populate("members"));
 			if (guildData) {
 				if (!isLean) this.databaseCache.guilds.set(guildID, guildData);
 
 				return guildData;
 			} else {
-				guildData = new this.guildsData({ id: guildID });
+				guildData = new this.guildsData({
+					id: guildID
+				});
 				await guildData.save();
 				this.databaseCache.guilds.set(guildID, guildData);
 

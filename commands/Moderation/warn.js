@@ -2,27 +2,30 @@ const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
 class Warn extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "warn",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
 			aliases: [],
-			memberPermissions: [ "MANAGE_MESSAGES" ],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			memberPermissions: ["MANAGE_MESSAGES"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const member = await this.client.resolveMember(args[0], message.guild);
-		if (!member)  return message.error("moderation/warn:MISSING_MEMBER");
+		if (!member) return message.error("moderation/warn:MISSING_MEMBER");
 		if (member.user.bot) return message.error("misc:BOT_USER");
 
-		const memberData = await this.client.findOrCreateMember({ id: member.id, guildID: message.guild.id });
+		const memberData = await this.client.findOrCreateMember({
+			id: member.id,
+			guildID: message.guild.id
+		});
 
 		if (member.id === message.author.id) return message.error("moderation/warn:YOURSELF");
 
@@ -57,31 +60,61 @@ class Warn extends Command {
 
 		if (banCount) {
 			if (sanctions >= banCount) {
-				member.send(message.translate("moderation/ban:BANNED_DM", { username: member.user, moderator: message.author.tag, server: message.guild.name, reason }));
+				member.send(message.translate("moderation/ban:BANNED_DM", {
+					username: member.user,
+					moderator: message.author.tag,
+					server: message.guild.name,
+					reason
+				}));
 				caseInfo.type = "ban";
-				embed.setAuthor(message.translate("moderation/ban:CASE", { count: data.guild.casesCount }))
+				embed.setAuthor(message.translate("moderation/ban:CASE", {
+						count: data.guild.casesCount
+					}))
 					.setColor("#e02316");
 				message.guild.members.ban(member).catch(() => {});
-				message.success("moderation/setwarns:AUTO_BAN", { username: member.user.tag, count: banCount });
+				message.success("moderation/setwarns:AUTO_BAN", {
+					username: member.user.tag,
+					count: banCount
+				});
 			};
 		};
 
 		if (kickCount) {
 			if (sanctions >= kickCount) {
-				member.send(message.translate("moderation/kick:KICKED_DM", { username: member.user, moderator: message.author.tag, server: message.guild.name, reason }));
+				member.send(message.translate("moderation/kick:KICKED_DM", {
+					username: member.user,
+					moderator: message.author.tag,
+					server: message.guild.name,
+					reason
+				}));
 				caseInfo.type = "kick";
-				embed.setAuthor(message.translate("moderation/kick:CASE", { count: data.guild.casesCount }))
+				embed.setAuthor(message.translate("moderation/kick:CASE", {
+						count: data.guild.casesCount
+					}))
 					.setColor("#e88709");
 				member.kick().catch(() => {});
-				message.success("moderation/setwarns:AUTO_KICK", { username: member.user.tag, count: kickCount });
+				message.success("moderation/setwarns:AUTO_KICK", {
+					username: member.user.tag,
+					count: kickCount
+				});
 			};
 		};
 
-		member.send(message.translate("moderation/warn:WARNED_DM", { username: member.user.tag, server: message.guild.name, moderator: message.author.tag, reason }));
+		member.send(message.translate("moderation/warn:WARNED_DM", {
+			username: member.user.tag,
+			server: message.guild.name,
+			moderator: message.author.tag,
+			reason
+		}));
 		caseInfo.type = "warn";
-		embed.setAuthor(message.translate("moderation/warn:CASE", { caseNumber: data.guild.casesCount }))
+		embed.setAuthor(message.translate("moderation/warn:CASE", {
+				caseNumber: data.guild.casesCount
+			}))
 			.setColor("#8c14e2");
-		message.success("moderation/warn:WARNED", { username: member.user.tag, reason });
+		message.success("moderation/warn:WARNED", {
+			username: member.user.tag,
+			reason
+		});
 
 		memberData.sanctions.push(caseInfo);
 		memberData.save();

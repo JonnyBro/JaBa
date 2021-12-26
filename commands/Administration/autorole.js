@@ -2,22 +2,22 @@ const Command = require("../../base/Command.js"),
 	Resolvers = require("../../helpers/resolvers");
 
 class Autorole extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "autorole",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "ar" ],
-			memberPermissions: [ "MANAGE_GUILD" ],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			aliases: ["ar"],
+			memberPermissions: ["MANAGE_GUILD"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const status = args[0];
 		if (status !== "on" && status !== "off") return message.error("administration/autorole:MISSING_STATUS");
 
@@ -39,7 +39,9 @@ class Autorole extends Command {
 				roleName: role.name
 			});
 		} else if (status === "off") {
-			if (!data.guild.plugins.autorole.enabled) return message.success("administration/autorole:ALREADY_DISABLED", { prefix: data.guild.prefix });
+			if (!data.guild.plugins.autorole.enabled) return message.success("administration/autorole:ALREADY_DISABLED", {
+				prefix: data.guild.prefix
+			});
 
 			data.guild.plugins.autorole = {
 				enabled: false,
@@ -48,7 +50,9 @@ class Autorole extends Command {
 			data.guild.markModified("plugins.autorole");
 			await data.guild.save();
 
-			message.success("administration/autorole:SUCCESS_DISABLED", { prefix: data.guild.prefix });
+			message.success("administration/autorole:SUCCESS_DISABLED", {
+				prefix: data.guild.prefix
+			});
 		};
 	}
 };

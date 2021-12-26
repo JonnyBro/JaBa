@@ -2,48 +2,52 @@ const Command = require("../../base/Command.js"),
 	AsciiTable = require("ascii-table");
 
 class Leaderboard extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "leaderboard",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "lb" ],
+			aliases: ["lb"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args) {
-		const isOnlyOnMobile = (message.author.presence.clientStatus ? JSON.stringify(Object.keys(message.author.presence.clientStatus)) === JSON.stringify([ "mobile" ]) : false);
+	async run(message, args) {
+		const isOnlyOnMobile = (message.author.presence.clientStatus ? JSON.stringify(Object.keys(message.author.presence.clientStatus)) === JSON.stringify(["mobile"]) : false);
 
 		const type = args[0];
 		if (!type || (type !== "credits" && type !== "level" && type !== "rep")) return message.error("economy/leaderboard:MISSING_TYPE");
 
 		if (type === "credits") {
-			const members = await this.client.membersData.find({ guildID: message.guild.id }).lean(),
+			const members = await this.client.membersData.find({
+					guildID: message.guild.id
+				}).lean(),
 				membersLeaderboard = members.map((m) => {
 					return {
 						id: m.id,
 						value: m.money + m.bankSold
 					};
-				}).sort((a,b) => b.value - a.value);
+				}).sort((a, b) => b.value - a.value);
 			const table = new AsciiTable("Таблица лидеров");
 			table.setHeading("#", message.translate("common:USER"), message.translate("common:CREDITS"));
 			if (membersLeaderboard.length > 20) membersLeaderboard.length = 20;
 			const newTable = await fetchUsers(membersLeaderboard, table, this.client);
 			message.channel.send(`\`\`\`\n${newTable.toString()}\`\`\``);
 		} else if (type === "level") {
-			const members = await this.client.membersData.find({ guildID: message.guild.id }).lean(),
+			const members = await this.client.membersData.find({
+					guildID: message.guild.id
+				}).lean(),
 				membersLeaderboard = members.map((m) => {
 					return {
 						id: m.id,
 						value: m.level
 					};
-				}).sort((a,b) => b.value - a.value);
+				}).sort((a, b) => b.value - a.value);
 			const table = new AsciiTable("Таблица лидеров");
 			table.setHeading("#", message.translate("common:USER"), message.translate("common:LEVEL"));
 			if (membersLeaderboard.length > 20) membersLeaderboard.length = 20;
@@ -56,7 +60,7 @@ class Leaderboard extends Command {
 						id: u.id,
 						value: u.rep
 					};
-				}).sort((a,b) => b.value - a.value);
+				}).sort((a, b) => b.value - a.value);
 			const table = new AsciiTable("Таблица лидеров");
 			table.setHeading("#", message.translate("common:USER"), message.translate("common:POINTS"));
 			if (usersLeaderboard.length > 20) usersLeaderboard.length = 20;

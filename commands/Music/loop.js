@@ -1,22 +1,22 @@
 const Command = require("../../base/Command.js");
 
 class Loop extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "loop",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "repeat" ],
+			aliases: ["repeat"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES" ],
+			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 1000
 		});
 	}
 
-	async run (message, args) {
+	async run(message, args) {
 		const voice = message.member.voice.channel;
 		const queue = this.client.player.getQueue(message);
 

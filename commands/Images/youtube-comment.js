@@ -3,22 +3,22 @@ const Command = require("../../base/Command.js"),
 	canvacord = require("canvacord");
 
 class YouTubeComment extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "youtube-comment",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: [ "ytcomment" ],
+			aliases: ["ytcomment"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 5000
 		});
 	}
 
-	async run (message, args) {
+	async run(message, args) {
 		let user = await this.client.resolveUser(args[0]);
 		let text = args.join(" ");
 
@@ -30,14 +30,19 @@ class YouTubeComment extends Command {
 
 		if (!text) return message.error("images/phcomment:MISSING_TEXT"); // same text as phcomment
 
-		const m = await message.sendT("misc:PLEASE_WAIT", null, { prefixEmoji: "loading" });
+		const m = await message.sendT("misc:PLEASE_WAIT", null, {
+			prefixEmoji: "loading"
+		});
 		const image = await canvacord.Canvas.youtube({
 			username: user.username,
-			avatar: user.displayAvatarURL({ format: "png" }),
+			avatar: user.displayAvatarURL({
+				format: "png"
+			}),
 			content: text
 		});
 		const attachment = new Discord.MessageAttachment(image, "ytb-comment.png");
 		m.delete();
+
 		message.channel.send(attachment);
 	}
 };

@@ -3,22 +3,22 @@ const Command = require("../../base/Command.js"),
 	ms = require("ms");
 
 class Mute extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "mute",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
 			aliases: [],
-			memberPermissions: [ "MANAGE_MESSAGES" ],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS", "MANAGE_CHANNELS" ],
+			memberPermissions: ["MANAGE_MESSAGES"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "MANAGE_CHANNELS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const member = await this.client.resolveMember(args[0], message.guild);
 		if (!member) return message.error("moderation/mute:MISSING_MEMBER");
 		if (member.id === message.author.id) return message.error("moderation/ban:YOURSELF");
@@ -27,7 +27,10 @@ class Mute extends Command {
 		const moderationPosition = message.member.roles.highest.position;
 		if (message.member.ownerID !== message.author.id && !(moderationPosition > memberPosition)) return message.error("moderation/ban:SUPERIOR");
 
-		const memberData = await this.client.findOrCreateMember({ id: member.id, guildID: message.guild.id });
+		const memberData = await this.client.findOrCreateMember({
+			id: member.id,
+			guildID: message.guild.id
+		});
 
 		const time = args[1];
 		if (!time || isNaN(ms(time))) return message.error("misc:INVALID_TIME");
@@ -71,7 +74,7 @@ class Mute extends Command {
 		};
 
 		memberData.mute.muted = true;
-		memberData.mute.endDate = Date.now()+ms(time);
+		memberData.mute.endDate = Date.now() + ms(time);
 		memberData.mute.case = data.guild.casesCount;
 		memberData.sanctions.push(caseInfo);
 
@@ -87,12 +90,14 @@ class Mute extends Command {
 			const channel = message.guild.channels.cache.get(data.guild.plugins.modlogs);
 			if (!channel) return;
 			const embed = new Discord.MessageEmbed()
-				.setAuthor(message.translate("moderation/mute:CASE", { count: data.guild.casesCount }))
+				.setAuthor(message.translate("moderation/mute:CASE", {
+					count: data.guild.casesCount
+				}))
 				.addField(message.translate("common:USER"), `\`${member.user.tag}\` (${member.user.toString()})`, true)
 				.addField(message.translate("common:MODERATOR"), `\`${message.author.tag}\` (${message.author.toString()})`, true)
 				.addField(message.translate("common:REASON"), reason, true)
 				.addField(message.translate("common:DURATION"), time, true)
-				.addField(message.translate("common:EXPIRY"), message.printDate(new Date(Date.now()+ms(time))), true)
+				.addField(message.translate("common:EXPIRY"), message.printDate(new Date(Date.now() + ms(time))), true)
 				.setColor("#f44271");
 			channel.send(embed);
 		}

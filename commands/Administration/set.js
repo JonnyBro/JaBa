@@ -1,22 +1,22 @@
 const Command = require("../../base/Command.js");
 
 class Set extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "set",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
 			aliases: [],
-			memberPermissions: [ "MANAGE_GUILD" ],
-			botPermissions: [ "SEND_MESSAGES" ],
+			memberPermissions: ["MANAGE_GUILD"],
+			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const status = args[0];
 		if (!status || !["level", "xp", "credits", "bank"].includes(status)) return message.error("administration/set:NO_STATUS");
 
@@ -28,7 +28,10 @@ class Set extends Command {
 		if (!number || isNaN(number) || parseInt(number, 10) <= 0) return message.error("administration/set:INVALID_AMOUNT");
 		const amount = Math.ceil(parseInt(number, 10));
 
-		const memberData = await this.client.findOrCreateMember({ id: member.id, guildID: message.guild.id });
+		const memberData = await this.client.findOrCreateMember({
+			id: member.id,
+			guildID: message.guild.id
+		});
 
 		if (status === "level") {
 			memberData.level = parseInt(amount, 10);
@@ -44,7 +47,10 @@ class Set extends Command {
 			memberData.save();
 		}
 
-		message.success("administration/set:SUCCESS_" + status.toUpperCase() , { username: member.user.tag, amount });
+		message.success("administration/set:SUCCESS_" + status.toUpperCase(), {
+			username: member.user.tag,
+			amount
+		});
 	}
 };
 

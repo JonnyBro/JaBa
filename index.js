@@ -10,7 +10,9 @@ const Sentry = require("@sentry/node"),
 const config = require("./config");
 if (config.apiKeys.sentryDSN) {
 	try {
-		Sentry.init({ dsn: config.apiKeys.sentryDSN });
+		Sentry.init({
+			dsn: config.apiKeys.sentryDSN
+		});
 	} catch (e) {
 		console.log(e);
 		console.log(chalk.yellow("Looks like your Sentry DSN key is invalid. If you do not intend to use Sentry, please remove the key from the configuration file."));
@@ -41,7 +43,7 @@ const init = async () => {
 	evtFiles.forEach((file) => {
 		const eventName = file.split(".")[0];
 		client.logger.log(`Loading Event: ${eventName}`);
-		const event = new (require(`./events/${file}`))(client);
+		const event = new(require(`./events/${file}`))(client);
 		client.on(eventName, (...args) => event.run(...args));
 		delete require.cache[require.resolve(`./events/${file}`)];
 	});
@@ -49,7 +51,10 @@ const init = async () => {
 	client.login(client.config.token); // Log in to the discord api
 
 	// connect to mongoose database
-	mongoose.connect(client.config.mongoDB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+	mongoose.connect(client.config.mongoDB, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true
+	}).then(() => {
 		client.logger.log("Connected to the Mongodb database.", "log");
 	}).catch((err) => {
 		client.logger.log(`Unable to connect to the Mongodb database. Error: ${err}`, "error");

@@ -2,22 +2,22 @@ const Command = require("../../base/Command.js"),
 	ms = require("ms");
 
 class Remindme extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "remindme",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: [ "reminder" ],
+			aliases: ["reminder"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const time = args[0];
 		if (!time || isNaN(ms(time))) return message.error("misc:INVALID_TIME");
 
@@ -27,7 +27,7 @@ class Remindme extends Command {
 		const rData = {
 			message: msg,
 			createdAt: Date.now(),
-			sendAt: Date.now()+ms(time)
+			sendAt: Date.now() + ms(time)
 		};
 
 		if (!data.userData.reminds) data.userData.reminds = [];
@@ -38,7 +38,6 @@ class Remindme extends Command {
 		data.userData.save();
 		this.client.databaseCache.usersReminds.set(message.author.id, data.userData);
 
-		// Send success message
 		message.success("general/remindme:SAVED");
 	}
 };

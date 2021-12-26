@@ -23,11 +23,11 @@ client.connect().then(async () => {
 	const db = client.db(dbName);
 	const guilds = db.collection("guilds");
 
-	const count = await guilds.countDocuments({ $or: [ { language: "english" }, { language: "russian" } ] });
+	const count = await guilds.countDocuments({ $or: [{ language: "english" }, { language: "russian" }] });
 	console.log(chalk.yellow(`${count} guilds need to be migrated. Migrating...`));
 
-	await guilds.updateMany({ language: "english" }, { $set: { language: "en-US"} });
-	await guilds.updateMany({ language: "russian" }, { $set: { language: "ru-RU"} });
+	await guilds.updateMany({ language: "english" }, { $set: { language: "en-US" } });
+	await guilds.updateMany({ language: "russian" }, { $set: { language: "ru-RU" } });
 
 	console.log(chalk.green(`${count} guilds migrated.`));
 	console.log(chalk.blue("\n\nDatabase migrated from v4.6.4 to v4.7.0..."));

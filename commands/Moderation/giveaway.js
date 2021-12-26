@@ -2,22 +2,22 @@ const Command = require("../../base/Command.js"),
 	ms = require("ms");
 
 class Giveaway extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "giveaway",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "gway" ],
-			memberPermissions: [ "MENTION_EVERYONE" ],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			aliases: ["gway"],
+			memberPermissions: ["MENTION_EVERYONE"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const status = args[0];
 		if (!status) return message.error("moderation/giveaway:MISSING_STATUS");
 
@@ -36,6 +36,7 @@ class Giveaway extends Command {
 
 			const prize = args.slice(3).join(" ");
 			if (!prize) return message.error("moderation/giveaway:INVALID_CREATE", { prefix: data.guild.prefix });
+
 			this.client.giveawaysManager.start(message.channel, {
 				time: ms(time),
 				prize: prize,
@@ -51,10 +52,18 @@ class Giveaway extends Command {
 					winners: message.translate("moderation/giveaway:WINNERS"),
 					endedAt: message.translate("moderation/giveaway:END_AT"),
 					units: {
-						seconds: message.translate("time:SECONDS", { amount: "" }).trim(),
-						minutes: message.translate("time:MINUTES", { amount: "" }).trim(),
-						hours: message.translate("time:HOURS", { amount: "" }).trim(),
-						days: message.translate("time:DAYS", { amount: "" }).trim()
+						seconds: message.translate("time:SECONDS", {
+							amount: ""
+						}).trim(),
+						minutes: message.translate("time:MINUTES", {
+							amount: ""
+						}).trim(),
+						hours: message.translate("time:HOURS", {
+							amount: ""
+						}).trim(),
+						days: message.translate("time:DAYS", {
+							amount: ""
+						}).trim()
 					}
 				}
 			}).then(() => {
@@ -62,7 +71,7 @@ class Giveaway extends Command {
 			});
 		} else if (status === "reroll") {
 			const messageID = args[1];
-			if (!messageID)return message.error("moderation/giveaway:MISSING_ID");
+			if (!messageID) return message.error("moderation/giveaway:MISSING_ID");
 
 			this.client.giveawaysManager.reroll(messageID, {
 				congrat: message.translate("moderation/giveaway:REROLL_CONGRAT"),
@@ -70,7 +79,9 @@ class Giveaway extends Command {
 			}).then(() => {
 				return message.success("moderation/giveaway:GIVEAWAY_REROLLED");
 			}).catch(() => {
-				return message.error("moderation/giveaway:NOT_FOUND_ENDED", { messageID });
+				return message.error("moderation/giveaway:NOT_FOUND_ENDED", {
+					messageID
+				});
 			});
 		} else if (status === "delete") {
 			const messageID = args[1];
@@ -79,17 +90,23 @@ class Giveaway extends Command {
 			this.client.giveawaysManager.delete(messageID).then(() => {
 				return message.success("moderation/giveaway:GIVEAWAY_DELETED");
 			}).catch(() => {
-				return message.error("moderation/giveaway:NOT_FOUND", { messageID });
+				return message.error("moderation/giveaway:NOT_FOUND", {
+					messageID
+				});
 			});
 		} else if (status === "end") {
 			const messageID = args[1];
 			if (!messageID) return message.error("moderation/giveaway:MISSING_ID");
 
 			try {
-				this.client.giveawaysManager.edit(messageID, { setEndTimestamp: Date.now() });
+				this.client.giveawaysManager.edit(messageID, {
+					setEndTimestamp: Date.now()
+				});
 				return message.success("moderation/giveaway:GIVEAWAY_ENDED");
-			} catch(e) {
-				return message.error("moderation/giveaway:NOT_FOUND", { messageID });
+			} catch (e) {
+				return message.error("moderation/giveaway:NOT_FOUND", {
+					messageID
+				});
 			};
 		} else {
 			return message.error("moderation/giveaway:MISSING_STATUS");

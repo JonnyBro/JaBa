@@ -33,7 +33,9 @@ class Setfortniteshop extends Command {
 		data.guild.markModified("plugins.fortniteshop");
 		data.guild.save();
 
-		message.success("administration/setfortniteshop:ENABLED", { channel: channel.toString() });
+		message.success("administration/setfortniteshop:ENABLED", {
+			channel: channel.toString()
+		});
 
 		const momentName = this.client.languages.find((language) => language.name === data.guild.language || language.aliases.includes(data.guild.language)).moment;
 		const shop = new Canvas.FortniteShop();
@@ -51,7 +53,13 @@ class Setfortniteshop extends Command {
 		const attachment = new Discord.MessageAttachment(image, "shop.png");
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(this.client.translate("general/fortniteshop:DATE", { date: this.client.printDate(new Date(Date.now()), null, message.guild.data.language) }, message.guild.data.language), this.client.user.displayAvatarURL({ size: 512, dynamic: true, format: "png" }))
+			.setAuthor(this.client.translate("general/fortniteshop:DATE", {
+				date: this.client.printDate(new Date(Date.now()), null, message.guild.data.language)
+			}, message.guild.data.language), this.client.user.displayAvatarURL({
+				size: 512,
+				dynamic: true,
+				format: "png"
+			}))
 			.attachFiles(attachment)
 			.setImage("attachment://shop.png")
 			.setColor(this.client.config.embed.color)

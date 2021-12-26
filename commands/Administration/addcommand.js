@@ -1,22 +1,22 @@
 const Command = require("../../base/Command.js");
 
 class Addcommand extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "addcommand",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "custom-command" ],
-			memberPermissions: [ "MANAGE_GUILD" ],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			aliases: ["custom-command"],
+			memberPermissions: ["MANAGE_GUILD"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		if (!args[0]) return message.error("administration/addcommand:MISSING_NAME");
 
 		const name = args[0].split("\n")[0];
@@ -32,7 +32,10 @@ class Addcommand extends Command {
 		});
 		data.guild.save();
 
-		message.success("administration/addcommand:SUCCESS", { commandName: name, prefix: data.guild.prefix });
+		message.success("administration/addcommand:SUCCESS", {
+			commandName: name,
+			prefix: data.guild.prefix
+		});
 	}
 };
 

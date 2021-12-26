@@ -3,11 +3,13 @@ const Canvas = require("discord-canvas"),
 	Discord = require("discord.js");
 
 async function init(client) {
-	new CronJob("0 3 12 * * *", async function() {
+	new CronJob("0 0 12 * * *", async function () {
 		if (!client.config.apiKeys.fortniteFNBR || client.config.apiKeys.fortniteFNBR === "") return;
 
 		client.guilds.cache.forEach(async (guild) => {
-			const guildData = await client.findOrCreateGuild({ id: guild.id });
+			const guildData = await client.findOrCreateGuild({
+				id: guild.id
+			});
 			if (guildData.plugins.fortniteshop) {
 				const fnChannel = client.channels.cache.get(guildData.plugins.fortniteshop);
 				if (fnChannel) {

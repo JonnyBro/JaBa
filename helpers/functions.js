@@ -34,7 +34,9 @@ module.exports = {
 		const member = guild.me;
 		const channel = guild.channels.cache.find((ch) => ch.permissionsFor(member.id).has("CREATE_INSTANT_INVITE") && ch.type === "text" || ch.type === "voice");
 		if (channel) {
-			const invite = await channel.createInvite({ maxAge: 0 }).catch(() => {});
+			const invite = await channel.createInvite({
+				maxAge: 0
+			}).catch(() => {});
 
 			return invite ? invite.url : null;
 		} else {
@@ -44,7 +46,7 @@ module.exports = {
 
 	// This function sort an array
 	sortByKey(array, key) {
-		return array.sort(function(a, b) {
+		return array.sort(function (a, b) {
 			const x = a[key];
 			const y = b[key];
 			return ((x < y) ? 1 : ((x > y) ? -1 : 0));
@@ -55,7 +57,8 @@ module.exports = {
 	shuffle(pArray) {
 		const array = [];
 		pArray.forEach(element => array.push(element));
-		let currentIndex = array.length, temporaryValue, randomIndex;
+		let currentIndex = array.length,
+			temporaryValue, randomIndex;
 
 		// While there remain elements to shuffle...
 		while (0 !== currentIndex) {
@@ -82,26 +85,34 @@ module.exports = {
 		const absoluteHours = Math.floor((time / (1000 * 60 * 60)) % 24);
 		const absoluteDays = Math.floor(time / (1000 * 60 * 60 * 24));
 
-		const d = absoluteDays
-			? absoluteDays === 1
-				? guild.translate("time:ONE_DAY")
-				: guild.translate("time:DAYS", { amount: absoluteDays })
-			: null;
-		const h = absoluteHours
-			? absoluteHours === 1
-				? guild.translate("time:ONE_HOUR")
-				: guild.translate("time:HOURS", { amount: absoluteHours })
-			: null;
-		const m = absoluteMinutes
-			? absoluteMinutes === 1
-				? guild.translate("time:ONE_MINUTE")
-				: guild.translate("time:MINUTES", { amount: absoluteMinutes })
-			: null;
-		const s = absoluteSeconds
-			? absoluteSeconds === 1
-				? guild.translate("time:ONE_SECOND")
-				: guild.translate("time:SECONDS", { amount: absoluteSeconds })
-			: null;
+		const d = absoluteDays ?
+			absoluteDays === 1 ?
+			guild.translate("time:ONE_DAY") :
+			guild.translate("time:DAYS", {
+				amount: absoluteDays
+			}) :
+			null;
+		const h = absoluteHours ?
+			absoluteHours === 1 ?
+			guild.translate("time:ONE_HOUR") :
+			guild.translate("time:HOURS", {
+				amount: absoluteHours
+			}) :
+			null;
+		const m = absoluteMinutes ?
+			absoluteMinutes === 1 ?
+			guild.translate("time:ONE_MINUTE") :
+			guild.translate("time:MINUTES", {
+				amount: absoluteMinutes
+			}) :
+			null;
+		const s = absoluteSeconds ?
+			absoluteSeconds === 1 ?
+			guild.translate("time:ONE_SECOND") :
+			guild.translate("time:SECONDS", {
+				amount: absoluteSeconds
+			}) :
+			null;
 
 		const absoluteTime = [];
 		if (d) absoluteTime.push(d);

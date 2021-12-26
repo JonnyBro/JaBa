@@ -2,7 +2,7 @@ const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
 class Filters extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "filters",
 			dirname: __dirname,
@@ -10,14 +10,14 @@ class Filters extends Command {
 			guildOnly: true,
 			aliases: [],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const voice = message.member.voice.channel;
 		const queue = this.client.player.getQueue(message);
 
@@ -32,7 +32,9 @@ class Filters extends Command {
 		});
 
 		const list = new Discord.MessageEmbed()
-			.setDescription(message.translate("music/filters:CONTENT", { prefix: data.guild.prefix }))
+			.setDescription(message.translate("music/filters:CONTENT", {
+				prefix: data.guild.prefix
+			}))
 			.addField(message.translate("music/filters:TITLE"), filtersStatuses[0].join("\n"), true)
 			.addField("** **", filtersStatuses[1].join("\n"), true)
 			.setColor(data.config.embed.color);

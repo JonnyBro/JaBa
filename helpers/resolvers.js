@@ -42,7 +42,9 @@ const resolveMember = async ({ message, search, useMessageContent = true }) => {
 	};
 
 	// Try with name with @
-	await message.guild.members.fetch({ query: search });
+	await message.guild.members.fetch({
+		query: search
+	});
 
 	if (message.guild.members.cache.some(member => member.user.tag === search || member.user.username === search)) {
 		const memberFound = message.guild.members.cache.find(member => member.user.tag === search || member.user.username === search);

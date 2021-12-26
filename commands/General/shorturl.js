@@ -3,22 +3,22 @@ const Command = require("../../base/Command.js"),
 	fetch = require("node-fetch");
 
 class ShortURL extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "shorturl",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: [ "minimize" ],
+			aliases: ["minimize"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const url = args[0];
 		if (!url) return message.error("general/shorturl:MISSING_URL");
 

@@ -1,7 +1,7 @@
 const Command = require("../../base/Command.js");
 
 class Say extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "say",
 			dirname: __dirname,
@@ -9,14 +9,14 @@ class Say extends Command {
 			guildOnly: false,
 			aliases: [],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES" ],
+			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,
 			ownerOnly: true,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		if (!args[0]) return message.delete();
 
 		// Arguments split
@@ -31,8 +31,10 @@ class Say extends Command {
 			const saychannel = message.guild.channels.cache.find(channel => channel.name == args[1] || channel.id == args[1]);
 			saychannel.startTyping();
 
-			setTimeout(function() {
-				if (attachment) saychannel.send(args[0], { files: [ attachment ] });
+			setTimeout(function () {
+				if (attachment) saychannel.send(args[0], {
+					files: [attachment]
+				});
 				else saychannel.send(args[0]);
 				saychannel.stopTyping();
 			}, 2000);
@@ -40,8 +42,10 @@ class Say extends Command {
 			const saychannel = this.client.guilds.cache.find(guild => guild.name == args[2] || guild.id == args[2]).channels.cache.find(channel => channel.name == args[1] || channel.id == args[1]);
 			saychannel.startTyping();
 
-			setTimeout(function() {
-				if (attachment) saychannel.send(args[0], { files: [ attachment ] });
+			setTimeout(function () {
+				if (attachment) saychannel.send(args[0], {
+					files: [attachment]
+				});
 				else saychannel.send(args[0]);
 				saychannel.stopTyping();
 			}, 2000);
@@ -50,8 +54,10 @@ class Say extends Command {
 			const saychannel = message.channel;
 			saychannel.startTyping();
 
-			setTimeout(function() {
-				if (attachment) saychannel.send(args[0], { files: [ attachment ] });
+			setTimeout(function () {
+				if (attachment) saychannel.send(args[0], {
+					files: [attachment]
+				});
 				else saychannel.send(args[0]);
 				saychannel.stopTyping();
 			}, 2000);

@@ -132,7 +132,9 @@ const checks = [
 			} else {
 				const Sentry = require("@sentry/node");
 				try {
-					Sentry.init({ dsn: config.apiKeys.sentryDSN });
+					Sentry.init({
+						dsn: config.apiKeys.sentryDSN
+					});
 					await delay(1000);
 					success("should be a valid Sentry DSN key");
 				} catch (e) {
@@ -155,9 +157,9 @@ const checks = [
 							.once("error", () => {
 								resolve(true);
 							})
-							.once("listening", function() {
+							.once("listening", function () {
 								tester
-									.once("close", function() {
+									.once("close", function () {
 										resolve(false);
 									})
 									.close();

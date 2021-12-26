@@ -3,15 +3,15 @@ const Command = require("../../base/Command.js"),
 	Canvas = require("discord-canvas");
 
 class Fortniteshop extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "fortniteshop",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: [ "fnshop" ],
+			aliases: ["fnshop"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
@@ -21,7 +21,9 @@ class Fortniteshop extends Command {
 	async run(message, args, data) {
 		if (!data.config.apiKeys.fortniteFNBR || data.config.apiKeys.fortniteFNBR.length === "") return message.error("misc:COMMAND_DISABLED");
 
-		const m = await message.sendT("misc:PLEASE_WAIT", null, { prefixEmoji: "loading" });
+		const m = await message.sendT("misc:PLEASE_WAIT", null, {
+			prefixEmoji: "loading"
+		});
 
 		const momentName = this.client.languages.find((language) => language.name === data.guild.language || language.aliases.includes(data.guild.language)).moment;
 		const shop = new Canvas.FortniteShop();
@@ -30,14 +32,22 @@ class Fortniteshop extends Command {
 			.setText("header", message.translate("general/fortniteshop:HEADER"))
 			.setText("daily", message.translate("general/fortniteshop:DAILY"))
 			.setText("featured", message.translate("general/fortniteshop:FEATURED"))
-			.setText("date", message.translate("general/fortniteshop:DATE", { skipInterpolation: true }).replace("{{date}}", "{date}"))
+			.setText("date", message.translate("general/fortniteshop:DATE", {
+				skipInterpolation: true
+			}).replace("{{date}}", "{date}"))
 			.setText("footer", message.translate("general/fortniteshop:FOOTER"))
 			.lang(momentName)
 			.toAttachment();
 		const attachment = new Discord.MessageAttachment(image, "shop.png");
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(message.translate("general/fortniteshop:HEADER", { date: message.printDate(new Date(Date.now())) }), this.client.user.displayAvatarURL({ size: 512, dynamic: true, format: "png" }))
+			.setAuthor(message.translate("general/fortniteshop:HEADER", {
+				date: message.printDate(new Date(Date.now()))
+			}), this.client.user.displayAvatarURL({
+				size: 512,
+				dynamic: true,
+				format: "png"
+			}))
 			.attachFiles(attachment)
 			.setImage("attachment://shop.png")
 			.setColor(this.client.config.embed.color)

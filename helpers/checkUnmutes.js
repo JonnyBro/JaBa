@@ -7,11 +7,13 @@ module.exports = {
 	 * @param {object} client The Discord Client instance
 	 */
 	async init(client) {
-		client.membersData.find({ "mute.muted": true }).then((members) => {
-			members.forEach((member) => {
-				client.databaseCache.mutedUsers.set(`${member.id}${member.guildID}`, member);
+		client.membersData
+			.find({ "mute.muted": true })
+			.then((members) => {
+				members.forEach((member) => {
+					client.databaseCache.mutedUsers.set(`${member.id}${member.guildID}`, member);
+				});
 			});
-		});
 		setInterval(async () => {
 			client.databaseCache.mutedUsers.array().filter((m) => m.mute.endDate <= Date.now()).forEach(async (memberData) => {
 				const guild = client.guilds.cache.get(memberData.guildID);
@@ -27,7 +29,9 @@ module.exports = {
 
 					return null;
 				});
-				const guildData = await client.findOrCreateGuild({ id: guild.id });
+				const guildData = await client.findOrCreateGuild({
+					id: guild.id
+				});
 				guild.data = guildData;
 				if (member) {
 					guild.channels.cache.forEach((channel) => {

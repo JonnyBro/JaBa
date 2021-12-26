@@ -2,22 +2,22 @@ const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
 class Stop extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "stop",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "leave" ],
+			aliases: ["leave"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const voice = message.member.voice.channel;
 		const queue = await this.client.player.getQueue(message);
 

@@ -2,22 +2,22 @@ const Command = require("../../base/Command.js"),
 	Resolvers = require("../../helpers/resolvers");
 
 class Welcome extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "welcome",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "bienvenue" ],
-			memberPermissions: [ "MANAGE_GUILD" ],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			aliases: ["bienvenue"],
+			memberPermissions: ["MANAGE_GUILD"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		if (args[0] === "test" && data.guild.plugins.welcome.enabled) {
 			this.client.emit("guildMemberAdd", message.member);
 			return message.success("administration/welcome:TEST_SUCCESS");
@@ -34,7 +34,9 @@ class Welcome extends Command {
 			};
 			data.guild.markModified("plugins.welcome");
 			data.guild.save();
-			return message.error("administration/welcome:DISABLED", { prefix: data.guild.prefix });
+			return message.error("administration/welcome:DISABLED", {
+				prefix: data.guild.prefix
+			});
 		} else {
 			const welcome = {
 				enabled: true,
@@ -43,7 +45,9 @@ class Welcome extends Command {
 				withImage: null,
 			};
 
-			message.sendT("administration/welcome:FORM_1", { author: message.author.toString() });
+			message.sendT("administration/welcome:FORM_1", {
+				author: message.author.toString()
+			});
 			const collector = message.channel.createMessageCollector(m => m.author.id === message.author.id, {
 				time: 120000 // 2 minutes
 			});
@@ -61,7 +65,10 @@ class Welcome extends Command {
 					data.guild.plugins.welcome = welcome;
 					data.guild.markModified("plugins.welcome");
 					await data.guild.save();
-					message.sendT("administration/welcome:FORM_SUCCESS", { prefix: data.guild.prefix, channel: `<#${welcome.channel}>` });
+					message.sendT("administration/welcome:FORM_SUCCESS", {
+						prefix: data.guild.prefix,
+						channel: `<#${welcome.channel}>`
+					});
 					return collector.stop();
 				};
 
@@ -76,7 +83,10 @@ class Welcome extends Command {
 
 				// If the channel is not filled, it means the user sent it
 				if (!welcome.channel) {
-					const channel = await Resolvers.resolveChannel({ message: msg, channelType: "text" });
+					const channel = await Resolvers.resolveChannel({
+						message: msg,
+						channelType: "text"
+					});
 					if (!channel) return message.error("misc:INVALID_CHANNEL");
 
 					welcome.channel = channel.id;

@@ -1,22 +1,22 @@
 const Command = require("../../base/Command.js");
 
 class Play extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "play",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "p" ],
+			aliases: ["p"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args) {
+	async run(message, args) {
 		const name = args.join(" ");
 		if (!name) return message.error("music/play:MISSING_SONG_NAME");
 
@@ -30,7 +30,9 @@ class Play extends Command {
 		try {
 			this.client.player.play(message, args.join(" "));
 		} catch (e) {
-			message.error("music/play:ERR_OCCURRED", { error: e });
+			message.error("music/play:ERR_OCCURRED", {
+				error: e
+			});
 			console.error(e);
 		}
 	}

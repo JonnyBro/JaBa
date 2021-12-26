@@ -2,7 +2,7 @@ const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
 class Invitations extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "invitations",
 			dirname: __dirname,
@@ -10,18 +10,17 @@ class Invitations extends Command {
 			guildOnly: true,
 			aliases: [],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS", "MANAGE_GUILD" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "MANAGE_GUILD"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		let member = await this.client.resolveMember(args[0], message.guild);
 		if (!member) member = message.member;
 
-		// Gets the invites
 		const invites = await message.guild.fetchInvites().catch(() => {});
 		if (!invites) return message.error("misc:ERR_OCCURRED");
 
@@ -31,12 +30,18 @@ class Invitations extends Command {
 			if (member === message.member) {
 				return message.error("general/invitations:NOBODY_AUTHOR");
 			} else {
-				return message.error("general/invitations:NOBODY_MEMBER", { member: member.user.tag });
+				return message.error("general/invitations:NOBODY_MEMBER", {
+					member: member.user.tag
+				});
 			};
 		};
 
 		const content = memberInvites.map((i) => {
-			return message.translate("general/invitations:CODE", { uses: i.uses, code: i.code, channel: i.channel.toString() });
+			return message.translate("general/invitations:CODE", {
+				uses: i.uses,
+				code: i.code,
+				channel: i.channel.toString()
+			});
 		}).join("\n");
 		let index = 0;
 		memberInvites.forEach((invite) => index += invite.uses);

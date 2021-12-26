@@ -3,22 +3,22 @@ const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
 class Fortnite extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "fortnite",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: [ "fn" ],
+			aliases: ["fn"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		if (!data.config.apiKeys.fortniteTRN || data.config.apiKeys.fortniteTRN.length === "") return message.success("misc:COMMAND_DISABLED");
 
 		const stats = new Canvas.FortniteStats();
@@ -29,7 +29,9 @@ class Fortnite extends Command {
 		const user = args.slice(1).join(" ");
 		if (!user) return message.error("general/fortnite:MISSING_USERNAME");
 
-		const m = await message.sendT("misc:PLEASE_WAIT", null, { prefixEmoji: "loading" });
+		const m = await message.sendT("misc:PLEASE_WAIT", null, {
+			prefixEmoji: "loading"
+		});
 
 		const statsImage = await stats
 			.setToken(data.config.apiKeys.fortniteTRN)
@@ -51,17 +53,22 @@ class Fortnite extends Command {
 
 		if (!statsImage) {
 			m.delete();
-			return message.error("general/fortnite:NOT_FOUND", { platform, search: user });
+			return message.error("general/fortnite:NOT_FOUND", {
+				platform,
+				search: user
+			});
 		};
 
 		// Send embed
 		const attachment = new Discord.MessageAttachment(statsImage.toBuffer(), "fortnite-stats-image.png"),
 			embed = new Discord.MessageEmbed()
-				.setDescription(message.translate("general/fortnite:TITLE", { username: `[${stats.data.username}](${stats.data.url.replace(new RegExp(" ", "g"), "%20")})` }))
-				.attachFiles(attachment)
-				.setImage("attachment://fortnite-stats-image.png")
-				.setColor(data.config.embed.color)
-				.setFooter(data.config.embed.footer);
+			.setDescription(message.translate("general/fortnite:TITLE", {
+				username: `[${stats.data.username}](${stats.data.url.replace(new RegExp(" ", "g"), "%20")})`
+			}))
+			.attachFiles(attachment)
+			.setImage("attachment://fortnite-stats-image.png")
+			.setColor(data.config.embed.color)
+			.setFooter(data.config.embed.footer);
 		message.channel.send(embed);
 		m.delete();
 	}

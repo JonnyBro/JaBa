@@ -7,13 +7,15 @@ module.exports = {
 	 * @param {object} client The Discord Client instance
 	 */
 	init(client) {
-		client.usersData.find({ reminds: { $gt : [] } }).then((users) => {
-			for (const user of users) {
-				if (!client.users.cache.has(user.id)) client.users.fetch(user.id);
-				client.databaseCache.usersReminds.set(user.id, user);
-			};
-		});
-		setInterval(async function() {
+		client.usersData
+			.find({ reminds: { $gt: [] } })
+			.then((users) => {
+				for (const user of users) {
+					if (!client.users.cache.has(user.id)) client.users.fetch(user.id);
+					client.databaseCache.usersReminds.set(user.id, user);
+				};
+			});
+		setInterval(async function () {
 			const dateNow = Date.now();
 			client.databaseCache.usersReminds.forEach(async (user) => {
 				const dUser = client.users.cache.get(user.id);

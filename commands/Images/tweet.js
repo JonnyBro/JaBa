@@ -2,22 +2,22 @@ const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
 class Tweet extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "tweet",
 			dirname: __dirname,
 			enabled: false,
 			guildOnly: false,
-			aliases: [ "twitter" ],
+			aliases: ["twitter"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 5000
 		});
 	}
 
-	async run (message, args) {
+	async run(message, args) {
 		const user = message.mentions.users.first() || message.author;
 		const text = args.slice(1).join(" ");
 
@@ -25,7 +25,9 @@ class Tweet extends Command {
 
 		if (!text) return message.error("images/tweet:MISSING_TEXT");
 
-		const m = await message.sendT("misc:PLEASE_WAIT", null, { prefixEmoji: "loading" });
+		const m = await message.sendT("misc:PLEASE_WAIT", null, {
+			prefixEmoji: "loading"
+		});
 
 		await message.guild.members.fetch();
 		const randomMembers = message.guild.members.cache.random(3);
@@ -39,6 +41,7 @@ class Tweet extends Command {
 		});
 		const attachment = new Discord.MessageAttachment(buffer, "twitter.png");
 		m.delete();
+
 		message.channel.send(attachment);
 	}
 };

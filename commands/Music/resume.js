@@ -1,7 +1,7 @@
 const Command = require("../../base/Command.js");
 
 class Resume extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "resume",
 			dirname: __dirname,
@@ -9,14 +9,14 @@ class Resume extends Command {
 			guildOnly: true,
 			aliases: [],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message) {
+	async run(message) {
 		const voice = message.member.voice.channel;
 		const queue = this.client.player.getQueue(message);
 

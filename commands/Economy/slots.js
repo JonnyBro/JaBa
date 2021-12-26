@@ -1,27 +1,27 @@
 const Command = require("../../base/Command.js");
 
 class Slots extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "slots",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "casino", "slot" ],
+			aliases: ["casino", "slot"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
-		const fruits = [ "🍎", "🍐", "🍌", "🍇", "🍉", "🍒", "🍓" ];
+	async run(message, args, data) {
+		const fruits = ["🍎", "🍐", "🍌", "🍇", "🍉", "🍒", "🍓"];
 
-		let i1=0, j1=0, k1=0,
-			i2=1, j2=1, k2=1,
-			i3=2, j3=2, k3=2;
+		let i1 = 0, j1 = 0, k1 = 0,
+			i2 = 1, j2 = 1, k2 = 1,
+			i3 = 2, j3 = 2, k3 = 2;
 
 		// Gets three random fruits array
 		const colonnes = [
@@ -33,7 +33,6 @@ class Slots extends Command {
 		// Gets the amount provided
 		let amount = args[0];
 		if (!amount || isNaN(amount) || amount < 1) amount = 1;
-
 		if (amount > data.memberData.money) return message.error("economy/slots:NOT_ENOUGH", { money: amount });
 
 		amount = Math.round(amount);
@@ -47,7 +46,9 @@ class Slots extends Command {
 			return Math.round(number);
 		};
 
-		const tmsg = await message.sendT("misc:loading", null, { prefixEmoji: "loading" });
+		const tmsg = await message.sendT("misc:loading", null, {
+			prefixEmoji: "loading"
+		});
 		editMsg();
 		const interval = setInterval(editMsg, 1000);
 		setTimeout(() => {
@@ -56,7 +57,7 @@ class Slots extends Command {
 		}, 4000);
 
 		async function end() {
-			let msg = "[  :slot_machine: | **СЛОТЫ** ]\n------------------\n";
+			let msg = "[ :slot_machine: | **СЛОТЫ** ]\n------------------\n";
 
 			i1 = (i1 < fruits.length - 1) ? i1 + 1 : 0;
 			i2 = (i2 < fruits.length - 1) ? i2 + 1 : 0;
@@ -76,14 +77,23 @@ class Slots extends Command {
 				msg += "| : : :  **" + (message.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
 				tmsg.edit(msg);
 				const credits = getCredits(amount, true);
-				message.channel.send("**!! ДЖЕКПОТ !!**\n" + message.translate("economy/slots:VICTORY", { money: amount, won: credits, username: message.author.username }));
+				message.channel.send("**!! ДЖЕКПОТ !!**\n" + message.translate("economy/slots:VICTORY", {
+					money: amount,
+					won: credits,
+					username: message.author.username
+				}));
 				const toAdd = credits - amount;
 				data.memberData.money = data.memberData.money + toAdd;
 				if (!data.userData.achievements.slots.achieved) {
 					data.userData.achievements.slots.progress.now += 1;
 					if (data.userData.achievements.slots.progress.now === data.userData.achievements.slots.progress.total) {
 						data.userData.achievements.slots.achieved = true;
-						message.channel.send({ files: [ { name: "unlocked.png", attachment: "./assets/img/achievements/achievement_unlocked4.png" } ] });
+						message.channel.send({
+							files: [{
+								name: "unlocked.png",
+								attachment: "./assets/img/achievements/achievement_unlocked4.png"
+							}]
+						});
 					};
 					data.userData.markModified("achievements.slots");
 					await data.userData.save();
@@ -107,7 +117,12 @@ class Slots extends Command {
 					data.userData.achievements.slots.progress.now += 1;
 					if (data.userData.achievements.slots.progress.now === data.userData.achievements.slots.progress.total) {
 						data.userData.achievements.slots.achieved = true;
-						message.channel.send({ files: [ { name: "unlocked.png", attachment: "./assets/img/achievements/achievement_unlocked4.png" } ] });
+						message.channel.send({
+							files: [{
+								name: "unlocked.png",
+								attachment: "./assets/img/achievements/achievement_unlocked4.png"
+							}]
+						});
 					};
 					data.userData.markModified("achievements.slots");
 					await data.userData.save();
@@ -132,7 +147,7 @@ class Slots extends Command {
 		};
 
 		function editMsg() {
-			let msg = "[  :slot_machine: l SLOTS ]\n------------------\n";
+			let msg = "[ :slot_machine: l SLOTS ]\n------------------\n";
 
 			i1 = (i1 < fruits.length - 1) ? i1 + 1 : 0;
 			i2 = (i2 < fruits.length - 1) ? i2 + 1 : 0;
@@ -144,9 +159,9 @@ class Slots extends Command {
 			k2 = (k2 < fruits.length - 1) ? k2 + 1 : 0;
 			k3 = (k3 < fruits.length - 1) ? k3 + 1 : 0;
 
-			msg += colonnes[0][i1] + " : " + colonnes[1][j1] + " : "+ colonnes[2][k1] + "\n";
-			msg += colonnes[0][i2] + " : " + colonnes[1][j2] + " : "+ colonnes[2][k2] + " **<**\n";
-			msg += colonnes[0][i3] + " : " + colonnes[1][j3] + " : "+ colonnes[2][k3] + "\n";
+			msg += colonnes[0][i1] + " : " + colonnes[1][j1] + " : " + colonnes[2][k1] + "\n";
+			msg += colonnes[0][i2] + " : " + colonnes[1][j2] + " : " + colonnes[2][k2] + " **<**\n";
+			msg += colonnes[0][i3] + " : " + colonnes[1][j3] + " : " + colonnes[2][k3] + "\n";
 
 			tmsg.edit(msg);
 		};

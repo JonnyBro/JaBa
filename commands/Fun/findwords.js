@@ -4,7 +4,7 @@ const Command = require("../../base/Command.js"),
 const currentGames = {};
 
 class FindWords extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "findwords",
 			dirname: __dirname,
@@ -12,14 +12,14 @@ class FindWords extends Command {
 			guildOnly: true,
 			aliases: [],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		if (currentGames[message.guild.id]) return message.error("fun/number:GAME_RUNNING");
 
 		// Reads words file
@@ -55,7 +55,9 @@ class FindWords extends Command {
 
 			setTimeout(() => {
 				// Send announcment message
-				message.sendT("fun/findwords:FIND_WORD", { word }, false, false, "warn");
+				message.sendT("fun/findwords:FIND_WORD", {
+					word
+				}, false, false, "warn");
 
 				// init a collector to receive the answers
 				const collector = new Discord.MessageCollector(message.channel, (m) => !m.author.bot, {
@@ -69,7 +71,9 @@ class FindWords extends Command {
 					if (msg.content.toLowerCase().indexOf(word) >= 0 && wordList.map((word) => word.toLowerCase()).indexOf(msg.content.toLowerCase()) >= 0) {
 						collector.stop(msg.author.id); // Stop the collector
 					} else {
-						msg.error("fun/findwords:INVALID_WORD", { member: msg.author.toString() });
+						msg.error("fun/findwords:INVALID_WORD", {
+							member: msg.author.toString()
+						});
 					};
 				});
 
@@ -77,7 +81,9 @@ class FindWords extends Command {
 					if (reason === "time") {
 						message.error("fun/findwords:NO_WINNER");
 					} else {
-						message.success("fun/findwords:WORD_FOUND", { winner: `<@${reason}>` });
+						message.success("fun/findwords:WORD_FOUND", {
+							winner: `<@${reason}>`
+						});
 						winners.push(reason);
 					}
 					if (i < nbGames - 1) {
@@ -97,8 +103,13 @@ class FindWords extends Command {
 							participantList: participants.map((p) => `<@${p}>`).join("\n")
 						});
 						if (participants.length > 1 && data.guild.disabledCategories && !data.guild.disabledCategories.includes("Economy")) {
-							message.sendT("fun/findwords:CREDITS", { winner: user.username });
-							const userdata = await this.client.findOrCreateMember({ id: user.id, guildID: message.guild.id });
+							message.sendT("fun/findwords:CREDITS", {
+								winner: user.username
+							});
+							const userdata = await this.client.findOrCreateMember({
+								id: user.id,
+								guildID: message.guild.id
+							});
 							userdata.money = userdata.money + 15;
 							userdata.save();
 						};

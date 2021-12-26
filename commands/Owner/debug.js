@@ -1,7 +1,7 @@
 const Command = require("../../base/Command.js");
 
 class Debug extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "debug",
 			dirname: __dirname,
@@ -9,14 +9,14 @@ class Debug extends Command {
 			guildOnly: true,
 			aliases: [],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES" ],
+			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,
 			ownerOnly: true,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const action = args[0];
 		if (!action || !["set", "add"].includes(action)) return message.error("owner/debug:NO_ACTION");
 
@@ -31,7 +31,10 @@ class Debug extends Command {
 		if (!number || isNaN(number)) return message.error("owner/debug:INVALID_AMOUNT");
 		const amount = Math.ceil(parseInt(number, 10));
 
-		const memberData = await this.client.findOrCreateMember({ id: member.id, guildID: message.guild.id });
+		const memberData = await this.client.findOrCreateMember({
+			id: member.id,
+			guildID: message.guild.id
+		});
 
 		var newValue = 0;
 
@@ -54,7 +57,10 @@ class Debug extends Command {
 				memberData.save();
 			};
 
-			message.success("owner/debug:SET_" + status.toUpperCase() , { username: member.user.tag, amount });
+			message.success("owner/debug:SET_" + status.toUpperCase(), {
+				username: member.user.tag,
+				amount
+			});
 		} else if (action === "add") {
 			if (status === "level") {
 				newValue = memberData.level + parseInt(amount, 10);
@@ -78,7 +84,10 @@ class Debug extends Command {
 				memberData.save();
 			};
 
-			message.success("owner/debug:SUCCESS_" + status.toUpperCase() , { username: member.user.tag, amount: newValue});
+			message.success("owner/debug:SUCCESS_" + status.toUpperCase(), {
+				username: member.user.tag,
+				amount: newValue
+			});
 		};
 	}
 };

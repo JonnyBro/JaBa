@@ -1,29 +1,33 @@
 const Command = require("../../base/Command.js");
 
 class Rep extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "rep",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "reputation" ],
+			aliases: ["reputation"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		// if the member is already in the cooldown db
-		const isInCooldown = (data.userData.cooldowns || { rep: 0 }).rep;
+		const isInCooldown = (data.userData.cooldowns || {
+			rep: 0
+		}).rep;
 		if (isInCooldown) {
 			/*if the timestamp recorded in the database indicating
 			when the member will be able to execute the order again
 			is greater than the current date, display an error message */
-			if (isInCooldown > Date.now()) return message.error("economy/rep:COOLDOWN", { time: message.convertTime(isInCooldown, "to", true) });
+			if (isInCooldown > Date.now()) return message.error("economy/rep:COOLDOWN", {
+				time: message.convertTime(isInCooldown, "to", true)
+			});
 		};
 
 		const user = await this.client.resolveUser(args[0]);
@@ -38,19 +42,28 @@ class Rep extends Command {
 		data.userData.markModified("cooldowns");
 		data.userData.save();
 
-		const userData = await this.client.findOrCreateUser({ id: user.id });
+		const userData = await this.client.findOrCreateUser({
+			id: user.id
+		});
 		userData.rep++;
 		if (!userData.achievements.rep.achieved) {
 			userData.achievements.rep.progress.now = (userData.rep > userData.achievements.rep.progress.total ? userData.achievements.rep.progress.total : userData.rep);
 			if (userData.achievements.rep.progress.now >= userData.achievements.rep.progress.total) {
 				userData.achievements.rep.achieved = true;
-				message.channel.send({ files: [ { name: "unlocked.png", attachment: "./assets/img/achievements/achievement_unlocked6.png"}]});
+				message.channel.send({
+					files: [{
+						name: "unlocked.png",
+						attachment: "./assets/img/achievements/achievement_unlocked6.png"
+					}]
+				});
 			};
 			userData.markModified("achievements.rep");
 		};
 		await userData.save();
 
-		message.success("economy/rep:SUCCESS", { username: user.username });
+		message.success("economy/rep:SUCCESS", {
+			username: user.username
+		});
 	}
 };
 

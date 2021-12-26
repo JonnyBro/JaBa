@@ -3,27 +3,33 @@ const Command = require("../../base/Command.js"),
 	fetch = require("node-fetch");
 
 class Github extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "github",
 			dirname: __dirname,
 			enabled: false,
 			guildOnly: false,
-			aliases: [ "git", "code" ],
+			aliases: ["git", "code"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
-		const res = await fetch("https://api.github.com/repos/JonnyBro/JaBa-new");
+	async run(message, args, data) {
+		const res = await fetch("https://api.github.com/repos/JonnyBro/JaBa-new", {
+			headers: `Authorization: ${this.config.githubToken}`
+		});
 		const json = await res.json();
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(this.client.user.tag, this.client.user.displayAvatarURL({ size: 512, dynamic: true, format: "png" }))
+			.setAuthor(this.client.user.tag, this.client.user.displayAvatarURL({
+				size: 512,
+				dynamic: true,
+				format: "png"
+			}))
 			.setDescription(`[${message.translate("general/github:CLICK_HERE")}](https://github.com/JonnyBro/JaBa-new)`)
 			.addField("Stars", json.stargazers_count, true)
 			.addField("Forks", json.forks_count, true)

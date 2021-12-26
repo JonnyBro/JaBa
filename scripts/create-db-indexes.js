@@ -26,15 +26,22 @@ client.connect().then(async () => {
 	const users = db.collection("users");
 
 	console.log(chalk.yellow("Creating guilds index..."));
-	await guilds.createIndex({ id: 1 });
+	await guilds.createIndex({
+		id: 1
+	});
 	console.log(chalk.green("Guilds index created."));
 
 	console.log(chalk.yellow("Creating members index..."));
-	await members.createIndex({ guildID: 1, id: -1 });
+	await members.createIndex({
+		guildID: 1,
+		id: -1
+	});
 	console.log(chalk.green("Members index created."));
 
 	console.log(chalk.yellow("Creating users index..."));
-	await users.createIndex({ id: 1 });
+	await users.createIndex({
+		id: 1
+	});
 	console.log(chalk.green("Users index created."));
 
 	console.log(chalk.blue("\n\nIndexes created."));

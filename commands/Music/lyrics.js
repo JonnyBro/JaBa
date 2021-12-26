@@ -3,7 +3,7 @@ const Command = require("../../base/Command.js"),
 	lyricsParse = require("lyrics-finder");
 
 class Lyrics extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "lyrics",
 			dirname: __dirname,
@@ -11,19 +11,21 @@ class Lyrics extends Command {
 			guildOnly: false,
 			aliases: [],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const [songName, artistName] = args.join(" ").split("|");
 		if (!songName) return message.error("music/lyrics:MISSING_SONG_NAME");
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(message.translate("music/lyrics:LYRICS_OF", { songName }))
+			.setAuthor(message.translate("music/lyrics:LYRICS_OF", {
+				songName
+			}))
 			.setColor(data.config.embed.color)
 			.setFooter(data.config.embed.footer);
 
@@ -38,15 +40,19 @@ class Lyrics extends Command {
 			if (lyrics.length > 2040) {
 				lyrics = lyrics.substr(0, 2000) + message.translate("music/lyrics:AND_MORE") + "\n[" + message.translate("music/lyrics:CLICK_HERE") + "]" + `(https://www.musixmatch.com/search/${songName.replace(" ", "+")})`;
 			} else if (!lyrics.length) {
-				return message.error("music/lyrics:NO_LYRICS_FOUND", { songName });
+				return message.error("music/lyrics:NO_LYRICS_FOUND", {
+					songName
+				});
 			};
 
 			embed.setDescription(lyrics);
 			message.channel.send(embed);
 
-		} catch(e) {
+		} catch (e) {
 			console.log(e);
-			message.error("music/lyrics:NO_LYRICS_FOUND", { songName });
+			message.error("music/lyrics:NO_LYRICS_FOUND", {
+				songName
+			});
 		}
 	}
 };

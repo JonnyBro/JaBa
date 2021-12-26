@@ -1,16 +1,17 @@
 const chalk = require("chalk");
 
 module.exports = class {
-	constructor (client) {
+	constructor(client) {
 		this.client = client;
 	}
 
-	async run () {
+	async run() {
 		const client = this.client;
 
 		// Logs some informations using logger
 		client.logger.log(`Loading a total of ${client.commands.size} command(s).`, "log");
 		client.logger.log(`${client.user.tag}, ready to serve ${client.users.cache.size} users in ${client.guilds.cache.filter(guild => guild.id != "568120814776614924" && guild.id != "892727526911258654").size} servers.`, "ready");
+		client.logger.log(`Invite Link: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=8`);
 
 		// Discord Together
 		const discordtogether = require("../helpers/discordTogether");
@@ -37,17 +38,20 @@ module.exports = class {
 
 		// Update status every 20s
 		let servers = client.guilds.cache.filter(guild => guild.id != "568120814776614924" && guild.id != "892727526911258654").size;
+		const version = require("../package.json").version;
 		const status = [
 			{ name: `${servers} ${getNoun(servers, "сервер", "сервера", "серверов")}`, type: "WATCHING" },
 			{ name: "help", type: "WATCHING" }
 		];
-		const version = require("../package.json").version;
+
 		let i = 0;
-		setInterval(function() {
+		setInterval(function () {
 			servers = client.guilds.cache.filter(guild => guild.id != "568120814776614924" && guild.id != "892727526911258654").size;
 			const random = status[parseInt(i, 10)];
-			const toDisplay = `${random.name} | v${version}`
-			client.user.setActivity(toDisplay, { type: random.type });
+
+			client.user.setActivity(`${random.name} | v${version}`, {
+				type: random.type
+			});
 
 			if (status[parseInt(i + 1, 10)]) i++;
 			else i = 0;

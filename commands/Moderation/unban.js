@@ -1,22 +1,22 @@
 const Command = require("../../base/Command.js");
 
 class Unban extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "unban",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
 			aliases: [],
-			memberPermissions: [ "BAN_MEMBERS" ],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS", "BAN_MEMBERS" ],
+			memberPermissions: ["BAN_MEMBERS"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "BAN_MEMBERS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args) {
+	async run(message, args) {
 		let user = null;
 
 		if (!args[0]) return message.error("moderation/unban:MISSING_ID");
@@ -50,7 +50,10 @@ class Unban extends Command {
 		message.guild.members.unban(user).catch(() => {});
 
 		// Send a success message in the current channel
-		message.success("moderation/unban:UNBANNED", { username: user.tag, server: message.guild.name });
+		message.success("moderation/unban:UNBANNED", {
+			username: user.tag,
+			server: message.guild.name
+		});
 	}
 };
 

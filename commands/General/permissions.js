@@ -1,24 +1,25 @@
 const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
+
 const permissions = Object.keys(Discord.Permissions.FLAGS);
 
 class Permissions extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "permissions",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "perms" ],
+			aliases: ["perms"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message) {
+	async run(message) {
 		const member = message.mentions.members.first() || message.member;
 		let text = "```\n" + `${message.translate("general/permissions:TITLE", { user: member.user.username, channel: message.channel.name })}\n\n`;
 		const mPermissions = message.channel.permissionsFor(member);

@@ -3,6 +3,8 @@ module.exports = {
 	token: "XXXXXXXXXXX",
 	/* Youtube token */
 	youtubeToken: "XXXXXXXXXXX",
+	/* Your Github API token for private repos */
+	githubToken: "XXXXXXXXXXX",
 	/* For the support server */
 	support: {
 		id: "XXXXXXXXXXX", // The ID of the support server

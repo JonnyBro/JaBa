@@ -2,22 +2,22 @@ const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
 class Suggest extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "suggest",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "suggestion", "sugg" ],
+			aliases: ["suggestion", "sugg"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const suggChannel = message.guild.channels.cache.get(data.guild.plugins.suggestions);
 		if (!suggChannel) return message.error("general/suggest:MISSING_CHANNEL");
 
@@ -25,7 +25,13 @@ class Suggest extends Command {
 		if (!sugg) return message.error("general/suggest:MISSING_CONTENT");
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(message.translate("general/suggest:TITLE", { user: message.author.username }), message.author.displayAvatarURL({ size: 512, dynamic: true, format: "png" }))
+			.setAuthor(message.translate("general/suggest:TITLE", {
+				user: message.author.username
+			}), message.author.displayAvatarURL({
+				size: 512,
+				dynamic: true,
+				format: "png"
+			}))
 			.addField(message.translate("common:AUTHOR"), `\`${message.author.username}#${message.author.discriminator}\``, true)
 			.addField(message.translate("common:DATE"), message.printDate(new Date(Date.now())), true)
 			.addField(message.translate("common:CONTENT"), sugg)
@@ -40,7 +46,9 @@ class Suggest extends Command {
 			await m.react(error);
 		});
 
-		message.success("general/suggest:SUCCESS", { channel: suggChannel.toString() });
+		message.success("general/suggest:SUCCESS", {
+			channel: suggChannel.toString()
+		});
 	}
 };
 

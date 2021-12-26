@@ -2,36 +2,40 @@ const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
 class ServersList extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "servers-list",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: [ "slist" ],
+			aliases: ["slist"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: true,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		if (!message.channel.type != "dm") message.delete();
 
-		let i0 = 0;
-		let i1 = 10;
-		let page = 1;
+		let i0 = 0,
+			i1 = 10,
+			page = 1;
 
 		let description = `${message.translate("common:SERVERS")}: ${this.client.guilds.cache.size}\n\n` +
-		this.client.guilds.cache.sort((a,b) => b.memberCount - a.memberCount).map((r) => r)
+			this.client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount).map((r) => r)
 			.map((r, i) => `**${i + 1}** - ${r.name} | ${r.memberCount} ${message.translate("common:MEMBERS").toLowerCase()}`)
 			.slice(0, 10)
 			.join("\n");
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(message.author.tag, message.author.displayAvatarURL({ size: 512, dynamic: true, format: "png" }))
+			.setAuthor(message.author.tag, message.author.displayAvatarURL({
+				size: 512,
+				dynamic: true,
+				format: "png"
+			}))
 			.setColor(data.config.embed.color)
 			.setFooter(this.client.user.username)
 			.setTitle(`${message.translate("common:PAGE")}: ${page}/${Math.ceil(this.client.guilds.cache.size/10)}`)
@@ -45,7 +49,7 @@ class ServersList extends Command {
 
 		const collector = msg.createReactionCollector((reaction, user) => user.id === message.author.id);
 
-		collector.on("collect", async(reaction) => {
+		collector.on("collect", async (reaction) => {
 			if (reaction._emoji.name === "⬅") {
 				// Updates variables
 				i0 = i0 - 10;
@@ -57,7 +61,7 @@ class ServersList extends Command {
 				if (!i0 || !i1) return msg.delete();
 
 				description = `${message.translate("common:SERVERS")}: ${this.client.guilds.cache.size}\n\n` +
-				this.client.guilds.cache.sort((a,b) => b.memberCount-a.memberCount).map((r) => r)
+					this.client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount).map((r) => r)
 					.map((r, i) => `**${i + 1}** - ${r.name} | ${r.memberCount} ${message.translate("common:MEMBERS")}`)
 					.slice(i0, i1)
 					.join("\n");
@@ -81,7 +85,7 @@ class ServersList extends Command {
 				if (!i0 || !i1) return msg.delete();
 
 				description = `${message.translate("common:SERVERS")}: ${this.client.guilds.cache.size}\n\n` +
-				this.client.guilds.cache.sort((a,b) => b.memberCount-a.memberCount).map((r) => r)
+					this.client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount).map((r) => r)
 					.map((r, i) => `**${i + 1}** - ${r.name} | ${r.memberCount} ${message.translate("common:MEMBERS").toLowerCase()}`)
 					.slice(i0, i1)
 					.join("\n");

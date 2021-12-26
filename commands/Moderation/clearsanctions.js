@@ -1,29 +1,34 @@
 const Command = require("../../base/Command.js");
 
 class Clearsanctions extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "clearsanctions",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "clearwarns" ],
-			memberPermissions: [ "MANAGE_MESSAGES" ],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			aliases: ["clearwarns"],
+			memberPermissions: ["MANAGE_MESSAGES"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args) {
+	async run(message, args) {
 		const member = await this.client.resolveMember(args[0], message.guild);
 		if (!member) return message.error("moderation/clear-sanctions:MISSING_MEMBER");
 
-		const memberData = await this.client.findOrCreateMember({ id: member.id, guildID: message.guild.id });
+		const memberData = await this.client.findOrCreateMember({
+			id: member.id,
+			guildID: message.guild.id
+		});
 		memberData.sanctions = [];
 		memberData.save();
-		message.success("moderation/clear-sanctions:SUCCESS", { username: member.user.tag });
+		message.success("moderation/clear-sanctions:SUCCESS", {
+			username: member.user.tag
+		});
 	}
 };
 

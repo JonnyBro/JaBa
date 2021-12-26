@@ -3,22 +3,22 @@ const Command = require("../../base/Command.js"),
 	fetch = require("node-fetch");
 
 class Userinfo extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "userinfo",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: [ "ui" ],
+			aliases: ["ui"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		let displayPresence = true;
 
 		const isID = !isNaN(args[0]);
@@ -41,13 +41,23 @@ class Userinfo extends Command {
 		if (message.guild) member = await message.guild.members.fetch(user).catch(() => {});
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(user.tag, user.displayAvatarURL({ size: 512, dynamic: true, format: "png" }))
-			.setThumbnail(user.displayAvatarURL({ dynamic: true }))
+			.setAuthor(user.tag, user.displayAvatarURL({
+				size: 512,
+				dynamic: true,
+				format: "png"
+			}))
+			.setThumbnail(user.displayAvatarURL({
+				dynamic: true
+			}))
 			.addField(":man: " + message.translate("common:USERNAME"), user.username, true)
 			.addField(this.client.customEmojis.discriminator + " " + message.translate("common:DISCRIMINATOR"), user.discriminator, true)
 			.addField(this.client.customEmojis.bot + " " + message.translate("common:ROBOT"), (user.bot ? message.translate("common:YES") : message.translate("common:NO")), true)
 			.addField(this.client.customEmojis.calendar + " " + message.translate("common:CREATION"), message.printDate(user.createdAt), true)
-			.addField(this.client.customEmojis.avatar + " " + message.translate("common:AVATAR"), user.displayAvatarURL({ size: 512, dynamic: true, format: "png" }))
+			.addField(this.client.customEmojis.avatar + " " + message.translate("common:AVATAR"), user.displayAvatarURL({
+				size: 512,
+				dynamic: true,
+				format: "png"
+			}))
 			.setColor(data.config.embed.color)
 			.setFooter(data.config.embed.footer);
 
@@ -58,15 +68,19 @@ class Userinfo extends Command {
 
 		if (member) {
 			embed.addField(this.client.customEmojis.up + " " + message.translate("general/userinfo:ROLE"), (member.roles.highest ? member.roles.highest : message.translate("general/userinfo:NO_ROLE")), true)
-			embed.addField(this.client.customEmojis.calendar2 + " " + message.translate("common:JOIN"), message.printDate(member.joinedAt),true)
+			embed.addField(this.client.customEmojis.calendar2 + " " + message.translate("common:JOIN"), message.printDate(member.joinedAt), true)
 			embed.addField(this.client.customEmojis.color + " " + message.translate("common:COLOR"), member.displayHexColor, true)
 			embed.addField(this.client.customEmojis.pencil + " " + message.translate("common:NICKNAME"), (member.nickname ? member.nickname : message.translate("general/userinfo:NO_NICKNAME")), true)
-			embed.addField(this.client.customEmojis.roles + " " + message.translate("common:ROLES"), (member.roles.size > 10 ? member.roles.cache.map((r) => r).slice(0, 9).join(", ") + " " + message.translate("general/userinfo:MORE_ROLES", { count: member.roles.cache.size - 10 }) : (member.roles.cache.size < 1) ? message.translate("general/userinfo:NO_ROLE") : member.roles.cache.map((r) => r).join(", ")));
+			embed.addField(this.client.customEmojis.roles + " " + message.translate("common:ROLES"), (member.roles.size > 10 ? member.roles.cache.map((r) => r).slice(0, 9).join(", ") + " " + message.translate("general/userinfo:MORE_ROLES", {
+				count: member.roles.cache.size - 10
+			}) : (member.roles.cache.size < 1) ? message.translate("general/userinfo:NO_ROLE") : member.roles.cache.map((r) => r).join(", ")));
 		};
 
 		if (user.bot && this.client.config.apiKeys.dbl && (this.client.config.apiKeys.dbl !== "")) {
 			const res = await fetch("https://discordbots.org/api/bots/" + user.id, {
-				headers: { "Authorization": this.client.config.apiKeys.dbl }
+				headers: {
+					"Authorization": this.client.config.apiKeys.dbl
+				}
 			});
 			const data = await res.json();
 			if (!data.error) {

@@ -2,22 +2,22 @@ const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
 class Poll extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "poll",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
 			aliases: [],
-			memberPermissions: [ "MENTION_EVERYONE" ],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			memberPermissions: ["MENTION_EVERYONE"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const question = args.join(" ");
 		if (!question) return message.error("moderation/poll:MISSING_QUESTION");
 
@@ -25,7 +25,10 @@ class Poll extends Command {
 
 		let mention = "";
 		const msg = await message.sendT("moderation/announcement:MENTION_PROMPT");
-		const collector = new Discord.MessageCollector(message.channel, (m) => m.author.id === message.author.id, { time: 240000 });
+		const collector = new Discord.MessageCollector(message.channel, (m) => m.author.id === message.author.id, {
+			time: 240000
+		});
+
 		collector.on("collect", async (tmsg) => {
 			if (tmsg.content.toLowerCase() === message.translate("common:NO").toLowerCase()) {
 				tmsg.delete();
@@ -37,7 +40,10 @@ class Poll extends Command {
 				tmsg.delete();
 				msg.delete();
 				const tmsg1 = await message.sendT("moderation/announcement:MENTION_TYPE_PROMPT");
-				const c = new Discord.MessageCollector(message.channel, (m) => m.author.id === message.author.id, { time: 60000 });
+				const c = new Discord.MessageCollector(message.channel, (m) => m.author.id === message.author.id, {
+					time: 60000
+				});
+
 				c.on("collect", (m) => {
 					if (m.content.toLowerCase() === "here") {
 						mention = "@here";
@@ -54,17 +60,13 @@ class Poll extends Command {
 					};
 				});
 				c.on("end", (collected, reason) => {
-					if (reason === "time") {
-						return message.error("misc:TIMES_UP");
-					};
+					if (reason === "time") return message.error("misc:TIMES_UP");
 				});
 			};
 		});
 
 		collector.on("end", (collected, reason) => {
-			if (reason === "time") {
-				return message.error("misc:TIMES_UP");
-			};
+			if (reason === "time") return message.error("misc:TIMES_UP");
 
 			const success = this.client.customEmojis.success.split(":")[1];
 			const error = this.client.customEmojis.error.split(":")[1];
@@ -77,7 +79,10 @@ class Poll extends Command {
 			const embed = new Discord.MessageEmbed()
 				.setAuthor(message.translate("moderation/poll:TITLE"))
 				.setColor(data.config.embed.color)
-				.addField(question, message.translate("moderation/poll:REACT", { success: emojis[0].toString(), error: emojis[1].toString() }));
+				.addField(question, message.translate("moderation/poll:REACT", {
+					success: emojis[0].toString(),
+					error: emojis[1].toString()
+				}));
 
 			message.channel.send(mention, embed).then(async (m) => {
 				await m.react(emojis[0]);

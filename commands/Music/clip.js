@@ -2,7 +2,7 @@ const Command = require("../../base/Command.js"),
 	fs = require("fs");
 
 class Clip extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "clip",
 			dirname: __dirname,
@@ -10,14 +10,14 @@ class Clip extends Command {
 			guildOnly: true,
 			aliases: [],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args) {
+	async run(message, args) {
 		const voice = message.member.voice.channel;
 		const queue = this.client.player.getQueue(message);
 		const clip = args[0];

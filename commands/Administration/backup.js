@@ -4,31 +4,35 @@ const Command = require("../../base/Command.js"),
 	Sentry = require("@sentry/node");
 
 class Backup extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "backup",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
 			aliases: [],
-			memberPermissions: [ "MANAGE_GUILD" ],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS", "ADMINISTRATOR" ],
+			memberPermissions: ["MANAGE_GUILD"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ADMINISTRATOR"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 30000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const status = args[0];
 		if (!status) return message.error("administration/backup:MISSING_STATUS");
 
 		if (status === "create") {
-			const m = await message.sendT("misc:PLEASE_WAIT", null, { prefixEmoji: "loading" });
+			const m = await message.sendT("misc:PLEASE_WAIT", null, {
+				prefixEmoji: "loading"
+			});
 			backup.create(message.guild).then((backup) => {
 				m.delete();
 				message.success("administration/backup:SUCCESS_PUBLIC");
-				message.author.send(message.translate("administration/backup:SUCCESS_PRIVATE", { backupID: backup.id })).catch(() => {
+				message.author.send(message.translate("administration/backup:SUCCESS_PRIVATE", {
+					backupID: backup.id
+				})).catch(() => {
 					backup.remove(backup.id);
 					message.error("misc:CANNOT_DM");
 				});
@@ -88,7 +92,9 @@ class Backup extends Command {
 				message.channel.send(embed);
 			}).catch(() => {
 				// if the backup wasn't found
-				return message.error("administration/backup:NO_BACKUP_FOUND", { backupID });
+				return message.error("administration/backup:NO_BACKUP_FOUND", {
+					backupID
+				});
 			});
 		} else {
 			return message.error("administration/backup:MISSING_STATUS");

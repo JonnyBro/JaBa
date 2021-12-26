@@ -2,22 +2,22 @@ const Command = require("../../base/Command.js"),
 	Resolvers = require("../../helpers/resolvers");
 
 class Goodbye extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "goodbye",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [ "au-revoir" ],
-			memberPermissions: [ "MANAGE_GUILD" ],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			aliases: ["au-revoir"],
+			memberPermissions: ["MANAGE_GUILD"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		if (args[0] === "test" && data.guild.plugins.goodbye.enabled) {
 			this.client.emit("guildMemberRemove", message.member);
 			return message.success("administration/goodbye:TEST_SUCCESS");
@@ -34,7 +34,9 @@ class Goodbye extends Command {
 			};
 			data.guild.markModified("plugins.goodbye");
 			data.guild.save();
-			return message.error("administration/goodbye:DISABLED", { prefix: data.guild.prefix });
+			return message.error("administration/goodbye:DISABLED", {
+				prefix: data.guild.prefix
+			});
 		} else {
 			const goodbye = {
 				enabled: true,
@@ -43,7 +45,10 @@ class Goodbye extends Command {
 				withImage: null,
 			};
 
-			message.sendT("administration/goodbye:FORM_1", { author: message.author.toString() });
+			message.sendT("administration/goodbye:FORM_1", {
+				author: message.author.toString()
+			});
+
 			const collector = message.channel.createMessageCollector(m => m.author.id === message.author.id, {
 				time: 120000 // 2 minutes
 			});
@@ -61,7 +66,10 @@ class Goodbye extends Command {
 					data.guild.plugins.goodbye = goodbye;
 					data.guild.markModified("plugins.goodbye");
 					await data.guild.save();
-					message.sendT("administration/goodbye:FORM_SUCCESS", { prefix: data.guild.prefix, channel: `<#${goodbye.channel}>` });
+					message.sendT("administration/goodbye:FORM_SUCCESS", {
+						prefix: data.guild.prefix,
+						channel: `<#${goodbye.channel}>`
+					});
 					return collector.stop();
 				};
 

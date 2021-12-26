@@ -2,11 +2,11 @@ const xpCooldown = {},
 	cmdCooldown = {};
 
 module.exports = class {
-	constructor (client) {
+	constructor(client) {
 		this.client = client;
 	}
 
-	async run (message) {
+	async run(message) {
 		const data = {};
 
 		// If the message author is a bot
@@ -20,7 +20,9 @@ module.exports = class {
 
 		if (message.guild) {
 			// Gets guild data
-			const guild = await client.findOrCreateGuild({ id: message.guild.id });
+			const guild = await client.findOrCreateGuild({
+				id: message.guild.id
+			});
 			message.guild.data = data.guild = guild;
 		};
 
@@ -34,11 +36,16 @@ module.exports = class {
 
 		if (message.guild) {
 			// Gets the data of the member
-			const memberData = await client.findOrCreateMember({ id: message.author.id, guildID: message.guild.id });
+			const memberData = await client.findOrCreateMember({
+				id: message.author.id,
+				guildID: message.guild.id
+			});
 			data.memberData = memberData;
 		};
 
-		const userData = await client.findOrCreateUser({ id: message.author.id });
+		const userData = await client.findOrCreateUser({
+			id: message.author.id
+		});
 		data.userData = userData;
 
 		if (message.guild) {
@@ -53,7 +60,10 @@ module.exports = class {
 							message.delete();
 							const delay = message.convertTime(uSlowmode.time, "to", true);
 
-							return message.author.send(message.translate("administration/slowmode:PLEASE_WAIT", { time: delay, channel: message.channel.toString() }));
+							return message.author.send(message.translate("administration/slowmode:PLEASE_WAIT", {
+								time: delay,
+								channel: message.channel.toString()
+							}));
 						} else {
 							uSlowmode.time = channelSlowmode.time + Date.now();
 						};
@@ -73,7 +83,9 @@ module.exports = class {
 					if (!message.channel.permissionsFor(message.member).has("MANAGE_MESSAGES")) {
 						message.delete();
 						message.author.send("```" + message.content + "```");
-						return message.error("administration/automod:DELETED", { username: message.author.tag });
+						return message.error("administration/automod:DELETED", {
+							username: message.author.tag
+						});
 					};
 				};
 			};
@@ -82,12 +94,19 @@ module.exports = class {
 			if (afkReason) {
 				data.userData.afk = null;
 				await data.userData.save();
-				message.sendT("general/setafk:DELETED", { username: message.author.username });
+				message.sendT("general/setafk:DELETED", {
+					username: message.author.username
+				});
 			};
 
 			message.mentions.users.forEach(async (u) => {
-				const userData = await client.findOrCreateUser({ id: u.id });
-				if (userData.afk) message.error("general/setafk:IS_AFK", { user: u.tag, reason: userData.afk });
+				const userData = await client.findOrCreateUser({
+					id: u.id
+				});
+				if (userData.afk) message.error("general/setafk:IS_AFK", {
+					user: u.tag,
+					reason: userData.afk
+				});
 			});
 		};
 
@@ -107,9 +126,9 @@ module.exports = class {
 
 		if (message.guild && data.guild.ignoredChannels.includes(message.channel.id) && !message.member.hasPermission("MANAGE_MESSAGES")) {
 			message.delete();
-			message.author.send(message.translate("misc:RESTRICTED_CHANNEL", { channel: message.channel.toString() }));
-
-			return;
+			return message.author.send(message.translate("misc:RESTRICTED_CHANNEL", {
+				channel: message.channel.toString()
+			}));
 		};
 
 		if (customCommandAnswer) return message.channel.send(customCommandAnswer);
@@ -125,7 +144,9 @@ module.exports = class {
 				};
 			});
 
-			if (neededPermissions.length > 0) return message.error("misc:MISSING_BOT_PERMS", { list: neededPermissions.map((p) => `\`${p}\``).join(", ") });
+			if (neededPermissions.length > 0) return message.error("misc:MISSING_BOT_PERMS", {
+				list: neededPermissions.map((p) => `\`${p}\``).join(", ")
+			});
 
 			neededPermissions = [];
 			cmd.conf.memberPermissions.forEach((perm) => {
@@ -149,15 +170,22 @@ module.exports = class {
 		};
 
 		const time = uCooldown[cmd.help.name] || 0;
-		if (time && (time > Date.now())) return message.error("misc:COOLDOWNED", { seconds: Math.ceil((time-Date.now())/1000) });
+		if (time && (time > Date.now())) return message.error("misc:COOLDOWNED", { seconds: Math.ceil((time - Date.now()) / 1000) });
 		cmdCooldown[message.author.id][cmd.help.name] = Date.now() + cmd.conf.cooldown;
 
 		client.logger.log(`${message.author.username} (${message.author.id}) ran command ${cmd.help.name} ${message.guild ? `on ${message.guild.name}` : "in DM"}`, "cmd");
 
 		const log = new this.client.logs({
 			commandName: cmd.help.name,
-			author: { username: message.author.username, discriminator: message.author.discriminator, id: message.author.id },
-			guild: { name: message.guild ? message.guild.name : "dm", id: message.guild ? message.guild.id : "dm" }
+			author: {
+				username: message.author.username,
+				discriminator: message.author.discriminator,
+				id: message.author.id
+			},
+			guild: {
+				name: message.guild ? message.guild.name : "dm",
+				id: message.guild ? message.guild.id : "dm"
+			}
 		});
 		log.save();
 
@@ -166,16 +194,18 @@ module.exports = class {
 			data.userData.achievements.firstCommand.achieved = true;
 			data.userData.markModified("achievements.firstCommand");
 			await data.userData.save();
-			await message.channel.send({ files: [{
-				name: "unlocked.png",
-				attachment: "./assets/img/achievements/achievement_unlocked2.png"
-			}]});
+			await message.channel.send({
+				files: [{
+					name: "unlocked.png",
+					attachment: "./assets/img/achievements/achievement_unlocked2.png"
+				}]
+			});
 		};
 
 		try {
 			cmd.run(message, args, data);
 			if (cmd.help.category === "Moderation" && data.guild.autoDeleteModCommands) message.delete();
-		} catch(e) {
+		} catch (e) {
 			console.error(e);
 			return message.error("misc:ERR_OCCURRED");
 		};
@@ -185,7 +215,7 @@ module.exports = class {
 /**
  * updateXp
  * This function update userdata by adding xp
-*/
+ */
 async function updateXp(msg, data) {
 	// Gets the user informations
 	const points = parseInt(data.memberData.exp);

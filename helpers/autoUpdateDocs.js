@@ -22,11 +22,11 @@ module.exports = {
 		// })
 		categories.sort().forEach((cat) => {
 			const arrCat = [
-				[ "Название", "Описание", "Использование", "Откат" ]
+				["Название", "Описание", "Использование", "Откат"]
 			];
 			const cmds = commands.filter((cmd) => cmd.help.category === cat).array();
 			text += `### ${cat} (${cmds.length} ${getNoun(cmds.length, "команда", "команды", "команд")})\n\n`;
-			cmds.sort(function(a, b) {
+			cmds.sort(function (a, b) {
 				if (a.help.name < b.help.name) return -1;
 				else return 1;
 			}).forEach((cmd) => {

@@ -1,11 +1,11 @@
 const Discord = require("discord.js");
 
 module.exports = class {
-	constructor (client) {
+	constructor(client) {
 		this.client = client;
 	}
 
-	async run (guild) {
+	async run(guild) {
 		if (this.client.config.proMode) {
 			if ((!this.client.config.proUsers.includes(guild.ownerID) || this.guilds.filter((g) => g.ownerID === guild.ownerID) > 1) && guild.ownerID !== this.client.config.owner.id) {
 				this.client.logger.log(`${guild.ownerID} tried to invite JaBa on its server.`);
@@ -15,11 +15,16 @@ module.exports = class {
 
 		const messageOptions = {};
 
-		const userData = await this.client.findOrCreateUser({ id: guild.ownerID });
+		const userData = await this.client.findOrCreateUser({
+			id: guild.ownerID
+		});
 		if (!userData.achievements.invite.achieved) {
 			userData.achievements.invite.progress.now += 1;
 			userData.achievements.invite.achieved = true;
-			messageOptions.files = [{ name: "unlocked.png", attachment: "./assets/img/achievements/achievement_unlocked7.png" }];
+			messageOptions.files = [{
+				name: "unlocked.png",
+				attachment: "./assets/img/achievements/achievement_unlocked7.png"
+			}];
 			userData.markModified("achievements.invite");
 			await userData.save();
 		};

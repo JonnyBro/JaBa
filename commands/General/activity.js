@@ -2,7 +2,7 @@ const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
 class Activity extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "activity",
 			dirname: __dirname,
@@ -10,14 +10,14 @@ class Activity extends Command {
 			guildOnly: true,
 			aliases: [],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 3000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const voice = message.member.voice.channel;
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
 
@@ -38,7 +38,7 @@ class Activity extends Command {
 						.setTimestamp()
 					return message.channel.send(embed);
 				});
-			break;
+				break;
 
 			case "betrayal":
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelID, "betrayal").then(async invite => {
@@ -50,7 +50,7 @@ class Activity extends Command {
 						.setTimestamp()
 					return message.channel.send(embed);
 				});
-			break;
+				break;
 
 			case "checkers":
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelID, "checkers").then(async invite => {
@@ -62,7 +62,7 @@ class Activity extends Command {
 						.setTimestamp()
 					return message.channel.send(embed);
 				});
-			break;
+				break;
 
 			case "chess":
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelID, "chess").then(async invite => {
@@ -74,7 +74,7 @@ class Activity extends Command {
 						.setTimestamp()
 					return message.channel.send(embed);
 				});
-			break;
+				break;
 
 			case "doodlecrew":
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelID, "doodlecrew").then(async invite => {
@@ -86,7 +86,7 @@ class Activity extends Command {
 						.setTimestamp()
 					return message.channel.send(embed);
 				});
-			break;
+				break;
 
 			case "fishing":
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelID, "fishing").then(async invite => {
@@ -98,7 +98,7 @@ class Activity extends Command {
 						.setTimestamp()
 					return message.channel.send(embed);
 				});
-			break;
+				break;
 
 			case "lettertile":
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelID, "lettertile").then(async invite => {
@@ -110,7 +110,7 @@ class Activity extends Command {
 						.setTimestamp()
 					return message.channel.send(embed);
 				});
-			break;
+				break;
 
 			case "poker":
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelID, "poker").then(async invite => {
@@ -122,7 +122,7 @@ class Activity extends Command {
 						.setTimestamp()
 					return message.channel.send(embed);
 				});
-			break;
+				break;
 
 			case "spellcast":
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelID, "spellcast").then(async invite => {
@@ -134,7 +134,7 @@ class Activity extends Command {
 						.setTimestamp()
 					return message.channel.send(embed);
 				});
-			break;
+				break;
 
 			case "wordsnack":
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelID, "wordsnack").then(async invite => {
@@ -146,7 +146,7 @@ class Activity extends Command {
 						.setTimestamp()
 					return message.channel.send(embed);
 				});
-			break;
+				break;
 
 			case "puttparty":
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelID, "puttparty").then(async invite => {
@@ -158,7 +158,7 @@ class Activity extends Command {
 						.setTimestamp()
 					return message.channel.send(embed);
 				});
-			break;
+				break;
 
 			case "youtube":
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelID, "youtube").then(async invite => {
@@ -170,7 +170,7 @@ class Activity extends Command {
 						.setTimestamp()
 					return message.channel.send(embed);
 				});
-			break;
+				break;
 
 			default:
 				const embed = new Discord.MessageEmbed()
@@ -180,7 +180,7 @@ class Activity extends Command {
 					.setFooter(message.translate("general/activity:FOOTER"))
 					.setTimestamp()
 				message.channel.send(embed);
-			break;
+				break;
 		};
 	}
 };

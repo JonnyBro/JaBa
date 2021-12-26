@@ -5,22 +5,22 @@ const Command = require("../../base/Command.js"),
 	Sentry = require("@sentry/node");
 
 class Minecraft extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "minecraft",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: [ "mc" ],
+			aliases: ["mc"],
 			memberPermissions: [],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS" ],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const ip = args[0];
 		if (!ip) return message.error("general/minecraft:MISSING_IP");
 
@@ -31,7 +31,7 @@ class Minecraft extends Command {
 		};
 
 		if (ip.split(":").length > 1) {
-			const ip = ip.split(":")
+			const ip = ip.split(":");
 			options = {
 				type: "minecraft",
 				host: ip[0],
@@ -39,7 +39,9 @@ class Minecraft extends Command {
 			};
 		};
 
-		const m = await message.sendT("misc:PLEASE_WAIT", null, { prefixEmoji: "loading" });
+		const m = await message.sendT("misc:PLEASE_WAIT", null, {
+			prefixEmoji: "loading"
+		});
 
 		let json = null;
 
@@ -64,17 +66,23 @@ class Minecraft extends Command {
 		const imgAttachment = new Discord.MessageAttachment(await imgRes.buffer(), "success.png");
 
 		const mcEmbed = new Discord.MessageEmbed()
-			.setAuthor(message.translate("general/minecraft:FIELD_NAME", { ip: json.name }))
+			.setAuthor(message.translate("general/minecraft:FIELD_NAME", {
+				ip: json.name
+			}))
 			.addField(message.translate("general/minecraft:FIELD_VERSION"), json.raw.vanilla.raw.version.name)
-			.addField(message.translate("general/minecraft:FIELD_CONNECTED"), message.translate("general/minecraft:PLAYERS", { count: (json.raw.players ? json.raw.players.online : json.players.length) }))
-			.addField(message.translate("general/minecraft:FIELD_MAX"), message.translate("general/minecraft:PLAYERS", { count: (json.raw.players ? json.raw.players.max : json.maxplayers) }))
+			.addField(message.translate("general/minecraft:FIELD_CONNECTED"), message.translate("general/minecraft:PLAYERS", {
+				count: (json.raw.players ? json.raw.players.online : json.players.length)
+			}))
+			.addField(message.translate("general/minecraft:FIELD_MAX"), message.translate("general/minecraft:PLAYERS", {
+				count: (json.raw.players ? json.raw.players.max : json.maxplayers)
+			}))
 			.addField(message.translate("general/minecraft:FIELD_STATUS"), message.translate("general/minecraft:ONLINE"))
 			.addField(message.translate("general/minecraft:FIELD_IP"), json.connect)
 			.setColor(data.config.embed.color)
 			.setThumbnail(favicon)
 			.setFooter(data.config.embed.footer);
 
-		m.edit(null, [ mcEmbed, imgAttachment ]);
+		m.edit(null, [mcEmbed, imgAttachment]);
 	}
 };
 

@@ -1,22 +1,22 @@
 const Command = require("../../base/Command.js");
 
 class Setwarns extends Command {
-	constructor (client) {
+	constructor(client) {
 		super(client, {
 			name: "setwarns",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
 			aliases: [],
-			memberPermissions: [ "MANAGE_GUILD" ],
-			botPermissions: [ "SEND_MESSAGES", "EMBED_LINKS", "BAN_MEMBERS", "KICK_MEMBERS" ],
+			memberPermissions: ["MANAGE_GUILD"],
+			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "BAN_MEMBERS", "KICK_MEMBERS"],
 			nsfw: false,
 			ownerOnly: false,
 			cooldown: 2000
 		});
 	}
 
-	async run (message, args, data) {
+	async run(message, args, data) {
 		const sanction = args[0];
 		if (!sanction || (sanction !== "kick" && sanction !== "ban")) return message.error("moderation/setwarns:MISSING_TYPE");
 
@@ -27,12 +27,18 @@ class Setwarns extends Command {
 				data.guild.plugins.warnsSanctions.kick = false;
 				data.guild.markModified("plugins.warnsSanctions");
 				data.guild.save();
-				return message.success("moderation/setwarns:SUCCESS_KICK_RESET", { prefix: data.guild.prefix, count: number });
+				return message.success("moderation/setwarns:SUCCESS_KICK_RESET", {
+					prefix: data.guild.prefix,
+					count: number
+				});
 			} else if (sanction === "ban") {
 				data.guild.plugins.warnsSanctions.ban = false;
 				data.guild.markModified("plugins.warnsSanctions");
 				data.guild.save();
-				return message.success("moderation/setwarns:SUCCESS_BAN_RESET", { prefix: data.guild.prefix, count: number });
+				return message.success("moderation/setwarns:SUCCESS_BAN_RESET", {
+					prefix: data.guild.prefix,
+					count: number
+				});
 			};
 		};
 
@@ -43,12 +49,18 @@ class Setwarns extends Command {
 			data.guild.plugins.warnsSanctions.kick = number;
 			data.guild.markModified("plugins.warnsSanctions");
 			data.guild.save();
-			return message.success("moderation/setwarns:SUCCESS_KICK", { prefix: data.guild.prefix, count: number });
+			return message.success("moderation/setwarns:SUCCESS_KICK", {
+				prefix: data.guild.prefix,
+				count: number
+			});
 		} else if (sanction === "ban") {
 			data.guild.plugins.warnsSanctions.ban = number;
 			data.guild.markModified("plugins.warnsSanctions");
 			data.guild.save();
-			return message.success("moderation/setwarns:SUCCESS_BAN", { prefix: data.guild.prefix, count: number });
+			return message.success("moderation/setwarns:SUCCESS_BAN", {
+				prefix: data.guild.prefix,
+				count: number
+			});
 		};
 	}
 };
