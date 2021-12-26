@@ -27,7 +27,12 @@ class Play extends Command {
 		const perms = voice.permissionsFor(this.client.user);
 		if (!perms.has("CONNECT") || !perms.has("SPEAK")) return message.error("music/play:VOICE_CHANNEL_CONNECT");
 
-		await this.client.player.play(message, args.join(" "));
+		try {
+			await this.client.player.play(message, args.join(" "));
+		} catch (e) {
+			message.error("music/play:ERR_OCCURRED", { error: e });
+			console.error(e);
+		}
 	}
 };
 
