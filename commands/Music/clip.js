@@ -20,17 +20,18 @@ class Clip extends Command {
 	async run (message, args) {
 		const voice = message.member.voice.channel;
 		const queue = this.client.player.getQueue(message);
+		const clip = args[0];
 
-		if (!args[0]) return message.error("music/clip:NO_ARG");
-		if (!fs.existsSync(`./clips/${args[0]}.mp3`)) return message.error("music/clip:NO_FILE", { file: args[0] });
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
 		if (queue) return message.error("music/clip:ACTIVE_QUEUE");
+		if (!clip) return message.error("music/clip:NO_ARG");
+		if (!fs.existsSync(`./clips/${clip}.mp3`)) return message.error("music/clip:NO_FILE", { file: clip });
 
 		try {
 			const connection = await voice.join();
 			await connection.voice.setSelfDeaf(true);
 
-			connection.play(`./clips/${args[0]}.mp3`)
+			connection.play(`./clips/${clip}.mp3`)
 				.on("finish", () => {
 					voice.leave();
 				})
