@@ -62,7 +62,7 @@ class JaBa extends Client {
 		});
 
 		this.player
-			.on("playSong", (queue, song) => {
+			.on("playSong", async (queue, song) => {
 				const m = await queue.textChannel.send(this.translate("music/play:NOW_PLAYING", { songName: song.name }))
 				setTimeout(() => {
 					m.delete();
