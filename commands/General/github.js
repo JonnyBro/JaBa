@@ -29,8 +29,9 @@ class Github extends Command {
 				format: "png"
 			}))
 			.setDescription(`[${message.translate("general/github:CLICK_HERE")}](${json.html_url})`)
-			.addField("Stars", json.stargazers_count, true)
-			.addField("Forks", json.forks_count, true)
+			.addField("Название", json.name, true)
+			.addField("Звёзды", json.stargazers_count, true)
+			.addField("Форки", json.forks_count, true)
 			.addField(message.translate("general/github:LANGUAGE"), json.language, true)
 			.addField(message.translate("general/github:OWNER"), `[${json.owner.login}](${json.owner.html_url})`)
 			.setImage(json.owner.avatar_url)
