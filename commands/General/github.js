@@ -7,9 +7,9 @@ class Github extends Command {
 		super(client, {
 			name: "github",
 			dirname: __dirname,
-			enabled: false,
+			enabled: true,
 			guildOnly: false,
-			aliases: ["git", "code"],
+			aliases: ["git"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
