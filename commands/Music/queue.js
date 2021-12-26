@@ -33,8 +33,6 @@ class Queue extends Command {
 			return message.channel.send(embed);
 		};
 
-		let i = 0;
-
 		const FieldsEmbed = new Pagination.FieldsEmbed();
 
 		FieldsEmbed.embed
@@ -47,7 +45,7 @@ class Queue extends Command {
 			.setChannel(message.channel)
 			.setElementsPerPage(5)
 			.setPageIndicator(true)
-			.formatField("Очередь", (track) => `${++i}. [${track.name}](${track.url})\n*Добавил ${track.member}*\n`);
+			.formatField("Очередь", (track) => `[${track.name}](${track.url})\n*Добавил ${track.member}*\n`);
 
 		FieldsEmbed.build();
 	}

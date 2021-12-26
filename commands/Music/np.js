@@ -33,7 +33,7 @@ class Np extends Command {
 			.setThumbnail(track.thumbnail)
 			.addField(message.translate("music/np:T_TITLE"), track.name + `\n${track.url}`)
 			.addField(message.translate("music/np:T_CHANNEL"), track.uploader.name ? track.uploader.name : "Отсутствует")
-			.addField(message.translate("music/np:T_DURATION"), track.formattedDuration)
+			.addField(message.translate("music/np:T_DURATION"), `${queue.formattedCurrentTime} / ${track.formattedDuration}`)
 			.setColor(data.config.embed.color)
 			.setFooter(data.config.embed.footer)
 			.setTimestamp();
