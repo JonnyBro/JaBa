@@ -89,8 +89,8 @@ class JaBa extends Client {
 				}));
 			})
 			.on("finish", queue => queue.textChannel.send(this.translate("music/play:QUEUE_ENDED")))
-			.on("disconnect", queue => queue.textChannel.send(this.translate("music/play:STOP_DISCONNECTED")))
 			.on("empty", queue => queue.textChannel.send(this.translate("music/play:STOP_EMPTY")));
+			// .on("disconnect", queue => queue.textChannel.send(this.translate("music/play:STOP_DISCONNECTED")))
 
 		this.giveawaysManager = new GiveawaysManager(this, {
 			storage: "./giveaways.json",
