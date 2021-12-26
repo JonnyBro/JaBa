@@ -3,7 +3,7 @@
 	"USAGE": "{{prefix}}ban [@user] (reason)",
 	"EXAMPLES": "{{prefix}}ban @Jonny_Bro#4226 Spam",
 	"MISSING_MEMBER": "Please specify a valid member to ban!",
-	"YOURSELF": "You can't sanction yourself!",
+	"YOURSELF": "You can't ban yourself!",
 	"SUPERIOR": "You can't sanction or update a sanction for a member who has an higher or equal role hierarchy to yours!",
 	"ALREADY_BANNED": "**{{username}}** is already banned!",
 	"MISSING_PERM": "An error has occurred... Please check that I have the permission to ban this specific member and try again!",

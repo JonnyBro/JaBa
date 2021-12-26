@@ -21,7 +21,7 @@ class Kick extends Command {
 		const member = await this.client.resolveMember(args[0], message.guild);
 		if (!member) return message.error("moderation/kick:MISSING_MEMBER");
 
-		if (member.id === message.author.id) return message.error("moderation/ban:YOURSELF");
+		if (member.id === message.author.id) return message.error("moderation/kick:YOURSELF");
 
 		const memberData = await this.client.findOrCreateMember({ id: member.id, guildID: message.guild.id });
 

@@ -24,7 +24,7 @@ class Warn extends Command {
 
 		const memberData = await this.client.findOrCreateMember({ id: member.id, guildID: message.guild.id });
 
-		if (member.id === message.author.id) return message.error("moderation/ban:YOURSELF");
+		if (member.id === message.author.id) return message.error("moderation/warn:YOURSELF");
 
 		const memberPosition = member.roles.highest.position;
 		const moderationPosition = message.member.roles.highest.position;
