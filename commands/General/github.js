@@ -24,6 +24,7 @@ class Github extends Command {
 				Authorization: data.config.githubToken
 			}
 		});
+		console.log(res)
 		const json = await res.json();
 
 		const embed = new Discord.MessageEmbed()
