@@ -26,7 +26,7 @@ class Filter extends Command {
 		const filter = args[0];
 		if (!filter) return message.error("music/filter:MISSING_FILTER", { prefix: data.guild.prefix });
 
-		if (filter === "off" && queue.filters?.length) {
+		if (filter === "off" && queue.filters.length) {
 			queue.setFilter(false);
 			message.success("music/filter:REMOVING_FILTER");
 		} else if (Object.keys(this.client.player.filters).includes(args[0])) {

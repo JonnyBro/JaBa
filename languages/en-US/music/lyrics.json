@@ -4,7 +4,7 @@
 	"EXAMPLES": "{{prefix}}lyrics Skyfall",
 	"LYRICS_OF": "🎤 {{songName}} lyrics",
 	"AND_MORE": "\n**And more...**",
-	"REST": "Expand",
+	"CLICK_HERE": "Click here for full lyrics",
 	"MISSING_SONG_NAME": "Please specify a song name!",
 	"NO_LYRICS_FOUND": "No lyrics found for `{{songName}}`!"
 }
