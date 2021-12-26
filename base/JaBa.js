@@ -74,18 +74,11 @@ class JaBa extends Client {
 			})
 			.on("searchDone", () => {})
 			.on("searchCancel", message => message.error("misc:TIMES_UP"))
-			.on("searchInvalidAnswer", message => {
-				if (message.content === "cancel") {
-					collector.stop();
-					return message.success("music/play:RESULTS_CANCEL");
-				};
-
-				message.error("misc:INVALID_NUMBER_RANGE", { min: 1, max: tracks.length });
-			})
+			.on("searchInvalidAnswer", message => message.error("misc:INVALID_NUMBER_RANGE", { min: 1, max: tracks.length }))
 			.on("searchNoResult", message => message.error("music/play:NO_RESULT"))
 			.on("error", (textChannel, e) => {
 				console.error(e);
-				textChannel.send(this.translate("music/play:ERR_OCCURRED", { error: e.slice(0, 1900)}));
+				textChannel.send(this.translate("music/play:ERR_OCCURRED", { error: e }));
 			})
 			.on("finish", queue => queue.textChannel.send(this.translate("music/play:QUEUE_ENDED")))
 			.on("disconnect", queue => queue.textChannel.send(this.translate("music/play:STOP_DISCONNECTED")))
