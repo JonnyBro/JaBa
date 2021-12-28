@@ -57,7 +57,7 @@ class Debug extends Command {
 				memberData.save();
 			};
 
-			message.success("owner/debug:SET_" + status.toUpperCase(), {
+			message.success("owner/debug:SUCCESS_" + status.toUpperCase(), {
 				username: member.user.tag,
 				amount
 			});
