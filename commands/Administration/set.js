@@ -25,7 +25,7 @@ class Set extends Command {
 		if (member.user.bot) return message.error("administration/set:BOT_USER");
 
 		const number = args[2];
-		if (!number || isNaN(number) || parseInt(number, 10) <= 0) return message.error("administration/set:INVALID_AMOUNT");
+		if (!number || isNaN(number) || parseInt(number, 10) < 0) return message.error("administration/set:INVALID_AMOUNT");
 		const amount = Math.ceil(parseInt(number, 10));
 
 		const memberData = await this.client.findOrCreateMember({
