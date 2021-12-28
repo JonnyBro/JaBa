@@ -38,7 +38,7 @@ class Report extends Command {
 			}))
 			.addField(message.translate("common:AUTHOR"), message.author.tag, true)
 			.addField(message.translate("common:DATE"), message.printDate(new Date(Date.now())), true)
-			.addField(message.translate("common:REASON"), `**${rep}**`, true)
+			.addField(message.translate("common:REASON"), rep, true)
 			.addField(message.translate("common:USER"), `\`${member.user.tag}\` (${member.user.toString()})`, true)
 			.setColor(data.config.embed.color)
 			.setFooter(data.config.embed.footer);
