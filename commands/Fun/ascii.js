@@ -24,7 +24,6 @@ class Ascii extends Command {
 		if (!text || text.length > 20) return message.error("fun/ascii:TEXT_MISSING");
 
 		const rendered = await figletAsync(text);
-		if (!rendered) rendered = await figletAsync("Nothing");
 
 		message.channel.send("```" + rendered + "```");
 	}
