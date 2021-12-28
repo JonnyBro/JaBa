@@ -40,6 +40,7 @@ class Debug extends Command {
 
 		if (action === "set") {
 			newValue = parseInt(amount, 10);
+
 			if (status === "level") {
 				memberData.level = newValue;
 				memberData.save();
