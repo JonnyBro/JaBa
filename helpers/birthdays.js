@@ -16,7 +16,7 @@ async function init(client) {
 				if (channel) {
 					client.usersData
 						.find({ birthdate: { $gt: 1 } })
-						.then((users) => {
+						.then(async (users) => {
 							for (const user of users) {
 								const month = user.birthdate.getUTCMonth() + 1;
 								const day = user.birthdate.getUTCDate();
