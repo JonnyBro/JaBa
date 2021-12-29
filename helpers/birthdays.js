@@ -2,11 +2,12 @@ const CronJob = require("cron").CronJob,
 	Discord = require("discord.js");
 
 async function init(client) {
-	new CronJob("0 14 23 * * *", async function () {
+	new CronJob("0 8 * * *", async function () {
 		client.guilds.cache.forEach(async (guild) => {
 			const date = new Date();
-			const currentMonth = date.getMonth() + 1;
 			const currentDay = date.getDate();
+			const currentMonth = date.getMonth();
+			const currentYear = date.getFullYear();
 			const guildData = await client.findOrCreateGuild({
 				id: guild.id
 			});
@@ -18,18 +19,25 @@ async function init(client) {
 						.find({ birthdate: { $gt: 1 } })
 						.then(async (users) => {
 							for (const user of users) {
-								console.log(new Date(user.birthdate))
-								const month = user.birthdate.getUTCMonth() + 1;
-								const day = user.birthdate.getUTCDate();
+								const userDate = new Date(user.birthdate);
+								const day = userDate.getDate();
+								const month = userDate.getMonth();
+								const year = userDate.getFullYear();
+
 								if (currentMonth === month && currentDay === day) {
 									const embed = new Discord.MessageEmbed()
-										.setAuthor(message.guild.name, message.guild.iconURL())
+										.setAuthor(client.user.username, client.user.displayAvatarURL({
+											size: 512,
+											dynamic: true,
+											format: "png"
+										}))
 										.setColor(client.config.embed.color)
 										.setFooter(client.config.embed.footer)
-										.addField(message.translate("economy/birthdate:HAPPY_BIRTHDAY"), message.translate("economy/birthdate:HAPPY_BIRTDAY_MESSAGE", {
-											user: user.id
+										.addField(client.translate("economy/birthdate:HAPPY_BIRTHDAY"), client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
+											user: user.id,
+											age: currentYear - year
 										}));
-									const msg = await channel.send(embed);
+									const msg = await channel.send("@everyone", { embed });
 									await msg.react("🎉");
 								};
 							};
@@ -40,6 +48,4 @@ async function init(client) {
 	}, null, true, "Europe/Moscow");
 };
 
-module.exports = {
-	init
-};
+module.exports = { init };
