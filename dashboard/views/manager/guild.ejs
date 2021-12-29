@@ -96,12 +96,12 @@
 								<div class="box-body">
 									<!-- select -->
 									<div class="form-group">
-										<label><%= translate("common:REPORTS") %></label>
-										<select class="form-control" name="reports">
-											<% if(guild.plugins.reports && bot.channels.cache.has(guild.plugins.reports)) { %>
+										<label><%= translate("common:SUGGESTIONS") %></label>
+										<select class="form-control" name="suggestions">
+											<% if(guild.plugins.suggestions && bot.channels.cache.has(guild.plugins.suggestions)) { %>
 											<option selected="selected">
-												#<%= bot.channels.cache.get(guild.plugins.reports).name %></option>
-											<% guild.channels.cache.filter((ch) => ch.type === "text" && ch.id !== guild.plugins.reports).forEach((ch) => { %>
+												#<%= bot.channels.cache.get(guild.plugins.suggestions).name %></option>
+											<% guild.channels.cache.filter((ch) => ch.type === "text" && ch.id !== guild.plugins.suggestions).forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<option><%= translate("common:NO_CHANNEL") %></option>
@@ -114,12 +114,12 @@
 										</select>
 									</div>
 									<div class="form-group">
-										<label><%= translate("common:SUGGESTIONS") %></label>
-										<select class="form-control" name="suggestions">
-											<% if(guild.plugins.suggestions && bot.channels.cache.has(guild.plugins.suggestions)) { %>
+										<label><%= translate("common:REPORTS") %></label>
+										<select class="form-control" name="reports">
+											<% if(guild.plugins.reports && bot.channels.cache.has(guild.plugins.reports)) { %>
 											<option selected="selected">
-												#<%= bot.channels.cache.get(guild.plugins.suggestions).name %></option>
-											<% guild.channels.cache.filter((ch) => ch.type === "text" && ch.id !== guild.plugins.suggestions).forEach((ch) => { %>
+												#<%= bot.channels.cache.get(guild.plugins.reports).name %></option>
+											<% guild.channels.cache.filter((ch) => ch.type === "text" && ch.id !== guild.plugins.reports).forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<option><%= translate("common:NO_CHANNEL") %></option>
