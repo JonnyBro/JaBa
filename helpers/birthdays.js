@@ -2,7 +2,7 @@ const CronJob = require("cron").CronJob,
 	Discord = require("discord.js");
 
 async function init(client) {
-	new CronJob("0 12 23 * * *", async function () {
+	new CronJob("0 13 23 * * *", async function () {
 		client.guilds.cache.forEach(async (guild) => {
 			const date = new Date();
 			const currentMonth = date.getMonth() + 1;
@@ -18,7 +18,7 @@ async function init(client) {
 						.find({ birthdate: { $gt: 1 } })
 						.then(async (users) => {
 							for (const user of users) {
-								console.log(user.birthdate)
+								console.log(new Date(user.birthdate))
 								const month = user.birthdate.getUTCMonth() + 1;
 								const day = user.birthdate.getUTCDate();
 								if (currentMonth === month && currentDay === day) {
