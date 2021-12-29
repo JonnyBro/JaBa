@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Запретить пользователю писать сообщения и заходить в голосовые каналы!",
-	"USAGE": "{{prefix}}mute [@пользователь] [время]",
-	"EXAMPLES": "{{prefix}}mute @Jonny_Bro#4226 Спам",
+	"USAGE": "{{prefix}}mute [@пользователь] [время] (причина)",
+	"EXAMPLES": "{{prefix}}mute @Jonny_Bro#4226 24h Спам",
 	"MISSING_MEMBER": "Вы должны упомянуть пользователя!",
 	"MUTED_DM": "Привет {{username}},\nвы были замучены на сервере **{{server}}** пользователем **{{moderator}}** на **{{time}}** по причине **{{reason}}**!",
 	"MUTED": "**{{username}}** замучен на **{{time}}** по причине **{{reason}}**!",
