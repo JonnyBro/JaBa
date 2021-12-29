@@ -63,7 +63,7 @@ class Userinfo extends Command {
 
 		if (displayPresence) {
 			embed.addField(this.client.customEmojis.games + " " + message.translate("common:GAME"), (user.presence.activity ? user.presence.activity.name : message.translate("general/userinfo:NO_GAME")), true)
-			embed.addField(`${this.client.customEmojis.status}.${user.presence.status}` + " " + message.translate("common:STATUS"), message.translate("common:STATUS_" + (user.presence.status.toUpperCase())), true);
+			embed.addField(this.client.customEmojis.status[user.presence.status] + " " + message.translate("common:STATUS"), message.translate("common:STATUS_" + (user.presence.status.toUpperCase())), true);
 		};
 
 		if (member) {
