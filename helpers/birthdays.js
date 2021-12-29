@@ -2,7 +2,7 @@ const CronJob = require("cron").CronJob,
 	Discord = require("discord.js");
 
 async function init(client) {
-	new CronJob("0 0 8 * * *", async function () {
+	new CronJob("0 8 23 * * *", async function () {
 		client.guilds.cache.forEach(async (guild) => {
 			const date = new Date();
 			const currentMonth = date.getMonth() + 1;
