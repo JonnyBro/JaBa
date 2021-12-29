@@ -232,7 +232,7 @@ async function updateXp(msg, data) {
 	xpCooldown[msg.author.id] = toWait;
 
 	// Gets a random number between 10 and 5
-	const won = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5))) + Math.ceil(5);
+	const won = this.client.functions.randomNum(5, 10);
 
 	const newXp = parseInt(points + won, 10);
 

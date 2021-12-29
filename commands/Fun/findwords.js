@@ -100,7 +100,7 @@ class FindWords extends Command {
 							winner: user.username,
 							duration: time,
 							participantCount: participants.length,
-							participantList: participants.map((p) => `<@${p}>`).join("\n")
+							participants: participants.map((p) => `<@${p}>`).join(", ")
 						});
 						if (participants.length > 1 && data.guild.disabledCategories && !data.guild.disabledCategories.includes("Economy")) {
 							message.sendT("fun/findwords:CREDITS", {
@@ -110,7 +110,7 @@ class FindWords extends Command {
 								id: user.id,
 								guildID: message.guild.id
 							});
-							userdata.money = userdata.money + 15;
+							userdata.money = userdata.money + 150;
 							userdata.save();
 						};
 					};

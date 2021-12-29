@@ -64,7 +64,6 @@ class Profile extends Command {
 				name: "achievements.png"
 			}])
 			.setImage("attachment://achievements.png")
-			// .setDescription(userData.bio ? userData.bio : message.translate("economy/profile:NO_BIO"))
 			.addField(message.translate("economy/profile:BIO"), userData.bio ? userData.bio : message.translate("economy/profile:NO_BIO"))
 			.addField(message.translate("economy/profile:CASH"), message.translate("economy/profile:MONEY", {
 				money: memberData.money

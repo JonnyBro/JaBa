@@ -49,7 +49,7 @@ class Number extends Command {
 					number,
 					time,
 					participantCount: participants.length,
-					participants: participants.map(p => `<@${p}>`).join("\n")
+					participants: participants.map(p => `<@${p}>`).join(", ")
 				});
 				message.sendT("fun/number:WON", {
 					winner: msg.author.toString()
@@ -58,7 +58,7 @@ class Number extends Command {
 					id: msg.author.id,
 					guildID: message.guild.id
 				});
-				userdata.money = userdata.money + 10;
+				userdata.money = userdata.money + 100;
 				userdata.save();
 				collector.stop(msg.author.username);
 			};
