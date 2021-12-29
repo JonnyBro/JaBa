@@ -49,7 +49,7 @@ class Translate extends Command {
 		});
 
 		const resEmbed = new Discord.MessageEmbed()
-			.setAuthor("Translator", this.client.user.displayAvatarURL({
+			.setAuthor("Переводчик", this.client.user.displayAvatarURL({
 				size: 512,
 				dynamic: true,
 				format: "png"

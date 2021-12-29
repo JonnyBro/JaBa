@@ -17,6 +17,10 @@ module.exports = class {
 		const discordtogether = require("../helpers/discordTogether");
 		discordtogether.init(client);
 
+		// Birthday Announce
+		const birthdays = require("../helpers/birthdays");
+		birthdays.init(client);
+
 		// DiscordBots.org STATS
 		const discordbotsorg = require("../helpers/discordbots.org");
 		discordbotsorg.init(client);

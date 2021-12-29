@@ -28,8 +28,8 @@
 	"DASHBOARD_TITLE": "Edit your configuration:",
 	"DASHBOARD_CONTENT": "Click here to go on the dashboard!",
 	"AUTO_SANCTIONS": "Automatic sanctions",
-	"KICK_CONTENT": "__Kick:__ After **{{count}}** warnings.",
-	"KICK_NOT_DEFINED": "__Kick:__ Not defined.",
-	"BAN_CONTENT": "__Ban:__ After **{{count}}** warnings.",
-	"BAN_NOT_DEFINED": "__Ban:__ Not defined."
+	"KICK_CONTENT": "Kick: After **{{count}}** warnings.",
+	"KICK_NOT_DEFINED": "Kick: Not defined.",
+	"BAN_CONTENT": "Ban: After **{{count}}** warnings.",
+	"BAN_NOT_DEFINED": "Ban: Not defined."
 }
