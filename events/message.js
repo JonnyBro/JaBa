@@ -49,7 +49,7 @@ module.exports = class {
 		data.userData = userData;
 
 		if (message.guild) {
-			await updateXp(message, data);
+			await updateXp(client, message, data);
 
 			if (!message.channel.permissionsFor(message.member).has("MANAGE_MESSAGES") && !message.editedAt) {
 				const channelSlowmode = data.guild.slowmode.channels.find((ch) => ch.id === message.channel.id);
@@ -216,7 +216,7 @@ module.exports = class {
  * updateXp
  * This function update userdata by adding xp
  */
-async function updateXp(msg, data) {
+async function updateXp(client, msg, data) {
 	// Gets the user informations
 	const points = parseInt(data.memberData.exp);
 	const level = parseInt(data.memberData.level);
@@ -232,7 +232,7 @@ async function updateXp(msg, data) {
 	xpCooldown[msg.author.id] = toWait;
 
 	// Gets a random number between 10 and 5
-	const won = this.client.functions.randomNum(5, 10);
+	const won = client.functions.randomNum(5, 10);
 
 	const newXp = parseInt(points + won, 10);
 
