@@ -59,7 +59,7 @@ class Work extends Command {
 		if (data.memberData.workStreak >= 5) {
 			won += 200;
 			embed.addField(message.translate("economy/work:SALARY"), message.translate("economy/work:SALARY_CONTENT", {
-					won
+					won: `${won} ${this.client.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 				}))
 				.addField(message.translate("economy/work:STREAK"), message.translate("economy/work:STREAK_CONTENT"));
 			data.memberData.workStreak = 0;
@@ -71,7 +71,7 @@ class Work extends Command {
 				};
 			};
 			embed.addField(message.translate("economy/work:SALARY"), message.translate("economy/work:SALARY_CONTENT", {
-					won
+					won: `${won} ${this.client.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 				}))
 				.addField(message.translate("economy/work:STREAK"), award.join(""));
 		};

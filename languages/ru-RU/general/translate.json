@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Перевести текст!",
-	"USAGE": "{{prefix}}translate [язык] [текс]",
+	"USAGE": "{{prefix}}translate [язык] [текст]",
 	"EXAMPLES": "{{prefix}}translate english Как дела?",
 	"LIST_SENT": "Список языков отправлен вам в ЛС!",
 	"MISSING_LANGUAGE": "Укажите язык! Чтобы получить список языков, введите `{{prefix}}translate langs-list`!",

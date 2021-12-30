@@ -33,7 +33,7 @@ class Stats extends Command {
 				time: message.convertTime(Date.now() + this.client.uptime, "from", true)
 			}))
 			.addField(this.client.customEmojis.voice + " " + message.translate("general/stats:MUSIC_TITLE"), message.translate("general/stats:MUSIC_CONTENT", {
-				count: this.client.voice.connections.size
+				count: this.client.player.voices.collection.size
 			}))
 			.addField(message.translate("general/stats:CREDITS_TITLE"), message.translate("general/stats:CREDITS_CONTENT", {
 				donators: [":("].join("\n"),

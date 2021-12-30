@@ -29,13 +29,13 @@ class Setbirthdays extends Command {
 			data.guild.plugins.birthdays = null;
 			data.guild.markModified("plugins.birthdays");
 			await data.guild.save();
-			return message.success("administration/setbirthdays:SUCCESS_DISABLED");
+			return message.success("administration/setbirthdays:DISABLED");
 		} else {
 			const channel = sentChannel || message.channel;
 			data.guild.plugins.birthdays = channel.id;
 			data.guild.markModified("plugins.birthdays");
 			await data.guild.save();
-			return message.success("administration/setbirthdays:SUCCESS_ENABLED", {
+			return message.success("administration/setbirthdays:ENABLED", {
 				channel: channel.toString()
 			});
 		};

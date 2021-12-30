@@ -29,13 +29,13 @@ class Setreports extends Command {
 			data.guild.plugins.reports = null;
 			data.guild.markModified("plugins.reports");
 			await data.guild.save();
-			return message.success("administration/setreports:SUCCESS_DISABLED");
+			return message.success("administration/setreports:DISABLED");
 		} else {
 			const channel = sentChannel || message.channel;
 			data.guild.plugins.reports = channel.id;
 			data.guild.markModified("plugins.reports");
 			await data.guild.save();
-			return message.success("administration/setreports:SUCCESS_ENABLED", {
+			return message.success("administration/setreports:ENABLED", {
 				channel: channel.toString()
 			});
 		};

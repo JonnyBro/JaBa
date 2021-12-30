@@ -26,14 +26,14 @@ class Birthdate extends Command {
 
 		// Gets the string of the date
 		const match = date.match(/\d+/g);
-		if (!match) return message.error("economy/birthdate:INVALID_DATE_FORMAT");
+		if (!match) return message.error("economy/birthdate:INVALID_DATE");
 
 		const tday = +match[0],
 			tmonth = +match[1] - 1;
 		let tyear = +match[2];
 		if (tyear < 100) tyear += tyear < 50 ? 2000 : 1900;
 		const d = new Date(tyear, tmonth, tday);
-		if (!(tday == d.getDate() && tmonth == d.getMonth() && tyear == d.getFullYear())) return message.error("economy/birthdate:INVALID_DATE_FORMAT");
+		if (!(tday == d.getDate() && tmonth == d.getMonth() && tyear == d.getFullYear())) return message.error("economy/birthdate:INVALID_DATE");
 		if (d.getTime() > Date.now()) return message.error("economy/birthdate:DATE_TOO_HIGH");
 		if (d.getTime() < (Date.now() - 2.523e+12)) return message.error("economy/birthdate:DATE_TOO_LOW");
 

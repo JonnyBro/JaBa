@@ -51,7 +51,7 @@ class Announcement extends Command {
 						m.delete();
 						collector.stop(true);
 						c.stop(true);
-					} else if (m.content.toLowerCase() === "every") {
+					} else if (m.content.toLowerCase() === "everyone") {
 						mention = "@everyone";
 						tmsg1.delete();
 						m.delete();

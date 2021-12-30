@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Показать статистику игрока в Fortnite!",
+	"DESCRIPTION": "Показать статистику игрока Fortnite!",
 	"USAGE": "{{prefix}}fortnite [PSN/XBL/PC] [ник]",
 	"EXAMPLES": "{{prefix}}fortnite PC Ninja",
 	"MISSING_PLATFORM": "Выберите платформу: `PSN`, `PC` или `XBL` (без учёта регистра)!",

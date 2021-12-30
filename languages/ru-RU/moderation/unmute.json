@@ -5,5 +5,5 @@
 	"MISSING_MEMBER": "Вы должны упомянуть пользователя!",
 	"NOT_MUTED": "**{{username}}** не замучен на данном сервере!",
 	"SUCCESS": "**{{username}}** был размучен на данном сервере!",
-	"SUCCESS_CASE": "{{user}} (`{{usertag}}`) размучен! (случай мута: #{{count}})"
+	"SUCCESS_CASE": "{{user}} (`{{usertag}}`) размучен! (Номер #{{count}})"
 }

@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Угадай загаданное число!",
+	"DESCRIPTION": "Угадай загаданное мною число!",
 	"USAGE": "{{prefix}}number",
 	"EXAMPLES": "{{prefix}}number",
 	"GAME_START": "Я загадал число, начинайте!",

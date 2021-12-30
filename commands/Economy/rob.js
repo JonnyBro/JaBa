@@ -41,14 +41,13 @@ class Rob extends Command {
 		amountToRob = Math.floor(parseInt(amountToRob, 10));
 
 		if (amountToRob > memberData.money) return message.error("economy/rob:NOT_ENOUGH_MEMBER", {
-			username: member.user.username,
-			money: amountToRob
+			username: member.user.username
 		});
 
 		const potentiallyLose = Math.floor(amountToRob * 1.5);
 		if (potentiallyLose > data.memberData.money) return message.error("economy/rob:NOT_ENOUGH_AUTHOR", {
-			moneyMin: potentiallyLose,
-			moneyCurrent: data.memberData.money
+			moneyMin: `${potentiallyLose} ${this.client.getNoun(potentiallyLose, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+			moneyCurrent: `${data.memberData.money} ${this.client.getNoun(data.memberData.money, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 		});
 
 		const itsAWon = Math.floor(this.client.functions.randomNum(0, 100) < 25);
@@ -60,7 +59,7 @@ class Rob extends Command {
 			await memberData.save();
 			const randomNum = Math.floor(this.client.functions.randomNum(1, 3));
 			message.sendT("economy/rob:ROB_WON_" + randomNum, {
-				money: amountToRob,
+				money: `${amountToRob} ${this.client.getNoun(amountToRob, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
 				username: member.user.username
 			});
 			data.memberData.money += amountToRob;
@@ -71,8 +70,8 @@ class Rob extends Command {
 			const won = Math.floor(0.9 * amountToRob);
 			const randomNum = Math.floor(this.client.functions.randomNum(1, 3));
 			message.sendT("economy/rob:ROB_LOSE_" + randomNum, {
-				fine: potentiallyLose,
-				offset: won,
+				fine: `${potentiallyLose} ${this.client.getNoun(potentiallyLose, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+				offset: `${won} ${this.client.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
 				username: member.user.username
 			});
 			data.memberData.money -= potentiallyLose;

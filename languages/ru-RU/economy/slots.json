@@ -1,8 +1,8 @@
 {
-	"DESCRIPTION": "Казино \"JaBa Casino\"",
-	"USAGE": "{{prefix}}slots [сумма]",
+	"DESCRIPTION": "JaBa Casino",
+	"USAGE": "{{prefix}}slots (сумма)",
 	"EXAMPLES": "{{prefix}}slots\n{{prefix}}slots 100",
-	"DEFEAT": "**{{username}}** поставил {{money}} кредит(а/ов) и всё проиграл.",
-	"VICTORY": "**{{username}}** поставил {{money}} кредит(а/ов) и выиграл {{won}} кредит(а/ов)!",
-	"NOT_ENOUGH": "У вас должно быть хотя бы **{{money}}** кредит(а/ов)."
+	"DEFEAT": "**{{username}}** поставил {{money}} и всё проиграл.",
+	"VICTORY": "**{{username}}** поставил {{money}}и выиграл {{won}}!",
+	"NOT_ENOUGH": "У вас должно быть хотя бы **{{money}}**."
 }

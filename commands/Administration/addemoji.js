@@ -26,7 +26,7 @@ class Addemoji extends Command {
 
 		message.guild.emojis
 			.create(URL, name)
-			.then(emoji => message.success("administration/addemoji:SUCCESS", { emojiName: emoji.name }))
+			.then(emoji => message.success("administration/addemoji:SUCCESS", { emojiName: `<:${emoji.name}:${emoji.id}>` }))
 			.catch(() => message.error("administration/addemoji:ERROR", { emojiName: name }));
 	}
 };

@@ -65,18 +65,10 @@ class Profile extends Command {
 			}])
 			.setImage("attachment://achievements.png")
 			.addField(message.translate("economy/profile:BIO"), userData.bio ? userData.bio : message.translate("economy/profile:NO_BIO"))
-			.addField(message.translate("economy/profile:CASH"), message.translate("economy/profile:MONEY", {
-				money: memberData.money
-			}), true)
-			.addField(message.translate("economy/profile:BANK"), message.translate("economy/profile:MONEY", {
-				money: memberData.bankSold
-			}), true)
-			.addField(message.translate("economy/profile:GLOBAL"), message.translate("economy/profile:MONEY", {
-				money: globalMoney
-			}), true)
-			.addField(message.translate("economy/profile:REPUTATION"), message.translate("economy/profile:REP_POINTS", {
-				points: userData.rep
-			}), true)
+			.addField(message.translate("economy/profile:CASH"), `**${memberData.money}** ${this.client.getNoun(memberData.money, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
+			.addField(message.translate("economy/profile:BANK"), `**${memberData.bankSold}** ${this.client.getNoun(memberData.bankSold, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
+			.addField(message.translate("economy/profile:GLOBAL"), `**${globalMoney}** ${this.client.getNoun(globalMoney, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
+			.addField(message.translate("economy/profile:REPUTATION"), `**${userData.rep}** ${this.client.getNoun(userData.rep, message.translate("misc:NOUNS:POINTS:1"), message.translate("misc:NOUNS:POINTS:2"), message.translate("misc:NOUNS:POINTS:5"))}`, true)
 			.addField(message.translate("economy/profile:LEVEL"), `**${memberData.level}**`, true)
 			.addField(message.translate("economy/profile:EXP"), `**${memberData.exp}/${5 * (memberData.level * memberData.level) + 80 * memberData.level + 100}** xp`, true)
 			.addField(message.translate("economy/profile:REGISTERED"), message.printDate(new Date(memberData.registeredAt)), true)

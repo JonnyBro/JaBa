@@ -18,10 +18,8 @@ class Checkinvites extends Command {
 	}
 
 	async run(message, args, data) {
-		const members = message.guild.members;
-
 		const withInvite = [];
-		members.cache.forEach((m) => {
+		message.guild.members.cache.forEach((m) => {
 			const possibleLinks = m.user.presence.activities.map((a) => [a.state, a.details, a.name]).flat();
 			const inviteLinks = possibleLinks.filter((l) => /(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(l));
 			if (inviteLinks.length > 0) {

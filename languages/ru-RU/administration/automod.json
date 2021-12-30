@@ -2,7 +2,7 @@
 	"DESCRIPTION": "Включить или отключить автоудаление Discord приглашений",
 	"USAGE": "{{prefix}}automod [on/off] (#канал)",
 	"EXAMPLES": "{{prefix}}automod on\n{{prefix}}automod off #general\n{{prefix}}automod off",
-	"MISSING_STATUS": "Пожалуйста, укажите значение `on` или `off`",
+	"MISSING_STATUS": "Укажите значение `on` или `off`",
 	"ENABLED": "**Discord приглашения будут автоматически удаляться!**\n\n:arrow_right_hook: *Используйте `{{prefix}}automod off #channel`, чтобы игнорировать канал!*",
 	"DISABLED_CHANNEL": "Автомодерация не будет выполняться в {{channel}}!",
 	"DISABLED": "Автомодерация отключена на данном сервере!",

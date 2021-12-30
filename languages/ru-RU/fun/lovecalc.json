@@ -3,5 +3,5 @@
 	"USAGE": "{{prefix}}lovecalc [@пользователь1] (@пользователь2)",
 	"EXAMPLES": "{{prefix}}lovecalc @Jonny_Bro#4226\n{{prefix}}lovecalc @Jonny_Bro#4226 @JaBa#9042",
 	"MISSING": "Вы должны упомянуть одного или двух пользователей!",
-	"CONTENT": "Я думаю, что **{{firstUsername}}** на **{{percent}}%** любит **{{secondUsername}}**!\n**Поздравляю!**"
+	"CONTENT": "Я думаю, что **{{firstUsername}}** на **{{percent}}%** любит **{{secondUsername}}**!"
 }

@@ -29,13 +29,13 @@ class Setsuggests extends Command {
 			data.guild.plugins.suggestions = null;
 			data.guild.markModified("plugins.suggestions");
 			await data.guild.save();
-			return message.success("administration/setsuggests:SUCCESS_DISABLED");
+			return message.success("administration/setsuggests:DISABLED");
 		} else {
 			const channel = sentChannel || message.channel;
 			data.guild.plugins.suggestions = channel.id;
 			data.guild.markModified("plugins.suggestions");
 			await data.guild.save();
-			return message.success("administration/setsuggests:SUCCESS_ENABLED", {
+			return message.success("administration/setsuggests:ENABLED", {
 				channel: channel.toString()
 			});
 		};

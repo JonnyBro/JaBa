@@ -26,7 +26,9 @@ class Pay extends Command {
 		if (!sentAmount || isNaN(sentAmount) || parseInt(sentAmount, 10) <= 0) return message.error("economy/pay:INVALID_AMOUNT", { username: member.user.tag });
 
 		const amount = Math.ceil(parseInt(sentAmount, 10));
-		if (amount > data.memberData.money) return message.error("economy/pay:ENOUGH_MONEY", { amount, username: member.user.tag });
+		if (amount > data.memberData.money) return message.error("economy/pay:ENOUGH_MONEY", {
+			amount: `${amount} ${this.client.getNoun(amount, message.translate("misc:NOUNS:CREDITS:1"), message.translate("misc:NOUNS:CREDITS:2"), message.translate("misc:NOUNS:CREDITS:5"))}`
+		});
 
 		const memberData = await this.client.findOrCreateMember({
 			id: member.id,
@@ -40,7 +42,7 @@ class Pay extends Command {
 		memberData.save();
 
 		message.success("economy/pay:SUCCESS", {
-			amount,
+			amount: `${amount} ${this.client.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
 			username: member.user.tag
 		});
 	}

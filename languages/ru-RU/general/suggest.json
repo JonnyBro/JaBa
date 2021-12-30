@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Отправить предложение в спец. канал!",
+	"DESCRIPTION": "Отправить предложение в специальный канал!",
 	"USAGE": "{{prefix}}suggest [предложение]",
 	"EXAMPLES": "{{prefix}}suggest Новый канал #nsfw :smiling_imp:",
 	"MISSING_CHANNEL": "Канал для предложений не настроен!",

@@ -141,6 +141,17 @@ class JaBa extends Client {
 		return (type === "to" ? m.toNow(noPrefix) : m.fromNow(noPrefix));
 	};
 
+	getNoun(number, one, two, five) {
+		let n = Math.abs(number);
+		n %= 100;
+		if (n >= 5 && n <= 20) return five;
+		n %= 10;
+		if (n === 1) return one;
+		if (n >= 2 && n <= 4) return two;
+
+		return five;
+	};
+
 	// This function is used to load a command and add it to the collection
 	loadCommand(commandPath, commandName) {
 		try {

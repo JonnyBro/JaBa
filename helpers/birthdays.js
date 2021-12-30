@@ -23,6 +23,7 @@ async function init(client) {
 								const day = userDate.getDate();
 								const month = userDate.getMonth();
 								const year = userDate.getFullYear();
+								const age = currentYear - year;
 
 								if (currentMonth === month && currentDay === day) {
 									const embed = new Discord.MessageEmbed()
@@ -35,7 +36,7 @@ async function init(client) {
 										.setFooter(client.config.embed.footer)
 										.addField(client.translate("economy/birthdate:HAPPY_BIRTHDAY"), client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
 											user: user.id,
-											age: currentYear - year
+											age: `${age} ${client.getNoun(age, message.translate("misc:NOUNS:AGE:1"), message.translate("misc:NOUNS:AGE:2"), message.translate("misc:NOUNS:AGE:5"))}`
 										}));
 									const msg = await channel.send("@everyone", { embed });
 									await msg.react("🎉");

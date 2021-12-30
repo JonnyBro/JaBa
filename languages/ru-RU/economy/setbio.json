@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Изменить вашу биографию!",
+	"DESCRIPTION": "Установить биографию!",
 	"USAGE": "{{prefix}}setbio [текст]",
 	"EXAMPLES": "{{prefix}}setbio Меня зовут Жоня, мне 18 и я создатель JaBa :)",
 	"MISSING": "Укажите биографию!",

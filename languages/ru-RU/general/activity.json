@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Создать активность в канале!",
+	"DESCRIPTION": "Создать активность в голосовом канале!",
 	"USAGE": "{{prefix}}activity (активность)",
 	"EXAMPLES": "{{prefix}}activity\n{{prefix}}activity chess",
 	"TITLE": "Список доступных активностей",

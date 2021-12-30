@@ -22,7 +22,7 @@ module.exports = {
 					id: vote.user,
 					guildID: client.config.support.id
 				});
-				member.money = member.money + 40;
+				member.money = member.money + 50;
 				member.save();
 				dUser.send(client.translate("misc:VOTE_DM", {
 					user: dUser.tag

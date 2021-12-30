@@ -1,6 +1,6 @@
 {
-	"DESCRIPTION": "Отправить жалобу в спец. канал!",
-	"USAGE": "{{prefix}}report [@пользователь] [причина]",
+	"DESCRIPTION": "Отправить жалобу в специальный канал!",
+	"USAGE": "{{prefix}}report [@пользователь] (причина)",
 	"EXAMPLES": "{{prefix}}report @Jonny_Bro#4226 Нарушение правил",
 	"MISSING_CHANNEL": "Канал для жалоб не настроен!",
 	"MISSING_REASON": "Введите причину!",

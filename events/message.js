@@ -1,3 +1,5 @@
+const { string } = require("mathjs");
+
 const xpCooldown = {},
 	cmdCooldown = {};
 
@@ -29,7 +31,7 @@ module.exports = class {
 		// Check if the bot was mentionned
 		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) {
 			if (message.guild) return message.sendT("misc:HELLO_SERVER", { username: message.author.username, prefix: data.guild.prefix });
-			else return message.sendT("misc:HELLO_DM", { username: message.author.username });
+			else return message.sendT("misc:HELLO_DM");
 		};
 
 		if (message.content.includes("@someone") && message.guild) return client.commands.get("someone").run(message, null, data);
@@ -122,7 +124,7 @@ module.exports = class {
 		const customCommandAnswer = customCommand ? customCommand.answer : "";
 
 		if (!cmd && !customCommandAnswer && message.guild) return;
-		else if (!cmd && !customCommandAnswer && !message.guild) return message.sendT("misc:HELLO_DM", { username: message.author.username });
+		else if (!cmd && !customCommandAnswer && !message.guild) return message.sendT("misc:HELLO_DM");
 
 		if (message.guild && data.guild.ignoredChannels.includes(message.channel.id) && !message.member.hasPermission("MANAGE_MESSAGES")) {
 			message.delete();
@@ -170,7 +172,11 @@ module.exports = class {
 		};
 
 		const time = uCooldown[cmd.help.name] || 0;
-		if (time && (time > Date.now())) return message.error("misc:COOLDOWNED", { seconds: Math.ceil((time - Date.now()) / 1000) });
+		if (time && (time > Date.now())) {
+			const seconds = Math.ceil((time - Date.now()) / 1000);
+			return message.error("misc:COOLDOWNED", { seconds: `${seconds} ${client.getNoun(seconds, message.translate("misc:NOUNS:SECONDS:1"), message.translate("misc:NOUNS:SECONDS:2"), message.translate("misc:NOUNS:SECONDS:5"))}` });
+		};
+
 		cmdCooldown[message.author.id][cmd.help.name] = Date.now() + cmd.conf.cooldown;
 
 		client.logger.log(`${message.author.username} (${message.author.id}) ran command ${cmd.help.name} ${message.guild ? `on ${message.guild.name}` : "in DM"}`, "cmd");

@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Показать список персонала сервера!",
+	"DESCRIPTION": "Показать список администрации сервера!",
 	"USAGE": "{{prefix}}staff",
 	"EXAMPLES": "{{prefix}}staff",
 	"TITLE": "Персонал {{guild}}",

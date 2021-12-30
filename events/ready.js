@@ -44,7 +44,7 @@ module.exports = class {
 		let servers = client.guilds.cache.filter(guild => guild.id != "568120814776614924" && guild.id != "892727526911258654").size;
 		const version = require("../package.json").version;
 		const status = [
-			{ name: `${servers} ${getNoun(servers, "сервер", "сервера", "серверов")}`, type: "WATCHING" },
+			{ name: `${servers} ${client.getNoun(servers, message.translate("misc:NOUNS:SERVERS:1"), message.translate("misc:NOUNS:SERVERS:2"), message.translate("misc:NOUNS:SERVERS:5"))}`, type: "WATCHING" },
 			{ name: "help", type: "WATCHING" }
 		];
 
@@ -61,15 +61,4 @@ module.exports = class {
 			else i = 0;
 		}, 20000); // Every 20 seconds
 	}
-};
-
-function getNoun(number, one, two, five) {
-	let n = Math.abs(number);
-	n %= 100;
-	if (n >= 5 && n <= 20) return five;
-	n %= 10;
-	if (n === 1) return one;
-	if (n >= 2 && n <= 4) return two;
-
-	return five;
 };

@@ -43,8 +43,8 @@ class Quote extends Command {
 			return;
 		};
 
-		let channel = message.mentions.channels.first();
-		if (args[1] && !channel) {
+		let channel = args[1];
+		if (args[1]) {
 			channel = this.client.channels.cache.get(args[1]);
 			if (!channel) {
 				message.author.send(message.translate("general/quote:NO_MESSAGE_ID")).then(() => {

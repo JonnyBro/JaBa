@@ -1,10 +1,10 @@
 {
-	"DESCRIPTION": "Показать ежедневный Fortnite магазин!",
+	"DESCRIPTION": "Показать ежедневный магазин Fortnite!",
 	"USAGE": "{{prefix}}fortniteshop",
 	"EXAMPLES": "{{prefix}}fortniteshop",
 	"HEADER": "Магазин предметов FORTNITE",
 	"DAILY": "Ежедневное",
 	"FEATURED": "Предлагаемые",
 	"DATE": "Магазин от {{date}}",
-	"FOOTER": "Fortnite магазин | JaBa"
+	"FOOTER": "JaBa | Магазин Fortnite"
 }

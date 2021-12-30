@@ -25,7 +25,7 @@ module.exports = {
 				["Название", "Описание", "Использование", "Откат"]
 			];
 			const cmds = commands.filter((cmd) => cmd.help.category === cat).array();
-			text += `### ${cat} (${cmds.length} ${getNoun(cmds.length, "команда", "команды", "команд")})\n\n`;
+			text += `### ${cat} (${cmds.length} ${client.getNoun(cmds.length, "команда", "команды", "команд")})\n\n`;
 			cmds.sort(function (a, b) {
 				if (a.help.name < b.help.name) return -1;
 				else return 1;
@@ -34,7 +34,7 @@ module.exports = {
 					`**${cmd.help.name}** ${cmd.help.aliases.length ? `**(${cmd.help.aliases.join(", ")})**` : ""}`,
 					client.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:DESCRIPTION`),
 					client.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:USAGE`),
-					`${Math.ceil(cmd.conf.cooldown / 1000)} ${getNoun(Math.ceil(cmd.conf.cooldown / 1000), "секунда", "секунды", "секунд")}`
+					`${Math.ceil(cmd.conf.cooldown / 1000)} ${client.getNoun(Math.ceil(cmd.conf.cooldown / 1000), "секунда", "секунды", "секунд")}`
 				]);
 			});
 			text += `${table(arrCat)}\n\n`;
@@ -49,15 +49,4 @@ module.exports = {
 			client.logger.log("Dashboard docs updated!");
 		};
 	}
-};
-
-function getNoun(number, one, two, five) {
-	let n = Math.abs(number);
-	n %= 100;
-	if (n >= 5 && n <= 20) return five;
-	n %= 10;
-	if (n === 1) return one;
-	if (n >= 2 && n <= 4) return two;
-
-	return five;
 };

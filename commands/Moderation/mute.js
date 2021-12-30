@@ -80,8 +80,8 @@ class Mute extends Command {
 
 		memberData.markModified("sanctions");
 		memberData.markModified("mute");
-		await memberData.save();
 
+		await memberData.save();
 		await data.guild.save();
 
 		this.client.databaseCache.mutedUsers.set(`${member.id}${message.guild.id}`, memberData);
