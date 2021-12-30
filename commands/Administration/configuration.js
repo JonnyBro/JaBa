@@ -50,6 +50,12 @@ class Configuration extends Command {
 
 		// Special channels
 		embed.addField(message.translate("administration/configuration:SPECIAL_CHANNELS"),
+			message.translate("administration/configuration:SUGGESTIONS", {
+				channel: guildData.plugins.suggestions ? `<#${guildData.plugins.suggestions}>` : message.translate("common:NOT_DEFINED")
+			}) + "\n" +
+			message.translate("administration/configuration:REPORTS", {
+				channel: guildData.plugins.reports ? `<#${guildData.plugins.reports}>` : message.translate("common:NOT_DEFINED")
+			}) + "\n" +
 			message.translate("administration/configuration:MODLOGS", {
 				channel: guildData.plugins.modlogs ? `<#${guildData.plugins.modlogs}>` : message.translate("common:NOT_DEFINED")
 			}) + "\n" +
@@ -58,12 +64,6 @@ class Configuration extends Command {
 			}) + "\n" +
 			message.translate("administration/configuration:FORTNITESHOP", {
 				channel: guildData.plugins.fortniteshop ? `<#${guildData.plugins.fortniteshop}>` : message.translate("common:NOT_DEFINED")
-			}) + "\n" +
-			message.translate("administration/configuration:SUGGESTIONS", {
-				channel: guildData.plugins.suggestions ? `<#${guildData.plugins.suggestions}>` : message.translate("common:NOT_DEFINED")
-			}) + "\n" +
-			message.translate("administration/configuration:REPORTS", {
-				channel: guildData.plugins.reports ? `<#${guildData.plugins.reports}>` : message.translate("common:NOT_DEFINED")
 			})
 		);
 
