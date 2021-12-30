@@ -54,15 +54,9 @@ class Credits extends Command {
 				dynamic: true,
 				format: "png"
 			}))
-			.addField(message.translate("economy/profile:CASH"), message.translate("economy/profile:MONEY", {
-				money: `**${memberData.money}** ${this.client.getNoun(memberData.money, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
-			}), true)
-			.addField(message.translate("economy/profile:BANK"), message.translate("economy/profile:MONEY", {
-				money: `**${memberData.bankSold}** ${this.client.getNoun(memberData.bankSold, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
-			}), true)
-			.addField(message.translate("economy/profile:GLOBAL"), message.translate("economy/profile:MONEY", {
-				money: `**${globalMoney}** ${this.client.getNoun(globalMoney, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
-			}), true)
+			.addField(message.translate("economy/profile:CASH"), `**${memberData.money}** ${this.client.getNoun(memberData.money, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
+			.addField(message.translate("economy/profile:BANK"), `**${memberData.bankSold}** ${this.client.getNoun(memberData.bankSold, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
+			.addField(message.translate("economy/profile:GLOBAL"), `**${globalMoney}** ${this.client.getNoun(globalMoney, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
 			.setColor(this.client.config.embed.color)
 			.setFooter(this.client.config.embed.footer);
 		message.channel.send(embed);
