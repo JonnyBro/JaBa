@@ -50,7 +50,7 @@ class Serverinfo extends Command {
 			.addField(this.client.customEmojis.channels + message.translate("common:CHANNELS"),
 				`${guild.channels.cache.filter(c => c.type === "text").size} ${this.client.getNoun(guild.channels.cache.filter(c => c.type === "text").size, message.translate("misc:NOUNS:TEXT:1"), message.translate("misc:NOUNS:TEXT:2"), message.translate("misc:NOUNS:TEXT:5"))}` +
 				"\n" + `${guild.channels.cache.filter(c => c.type === "voice").size} ${this.client.getNoun(guild.channels.cache.filter(c => c.type === "voice").size, message.translate("misc:NOUNS:VOICE:1"), message.translate("misc:NOUNS:VOICE:2"), message.translate("misc:NOUNS:VOICE:5"))}` +
-				"\n" + `${guild.channels.cache.filter(c => c.type === "voice").size} ${this.client.getNoun(guild.channels.cache.filter(c => c.type === "category").size, message.translate("misc:NOUNS:CATEGORY:1"), message.translate("misc:NOUNS:CATEGORY:2"), message.translate("misc:NOUNS:CATEGORY:5"))}`, true
+				"\n" + `${guild.channels.cache.filter(c => c.type === "category").size} ${this.client.getNoun(guild.channels.cache.filter(c => c.type === "category").size, message.translate("misc:NOUNS:CATEGORY:1"), message.translate("misc:NOUNS:CATEGORY:2"), message.translate("misc:NOUNS:CATEGORY:5"))}`, true
 			)
 			.setColor(data.config.embed.color)
 			.setFooter(data.config.embed.footer);
