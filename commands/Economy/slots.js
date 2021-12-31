@@ -107,8 +107,8 @@ class Slots extends Command {
 				tmsg.edit(msg);
 				const credits = getCredits(amount, false);
 				message.channel.send(message.translate("economy/slots:VICTORY", {
-					money: amount,
-					won: credits,
+					money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+					won: `${credits} ${message.getNoun(credits, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
 					username: message.author.username
 				}));
 				const toAdd = credits - amount;
