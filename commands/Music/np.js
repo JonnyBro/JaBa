@@ -31,7 +31,7 @@ class Np extends Command {
 		const embed = new Discord.MessageEmbed()
 			.setAuthor(message.translate("music/queue:TITLE"))
 			.setThumbnail(track.thumbnail)
-			.addField(message.translate("music/np:T_TITLE"), track.name + `\n${track.url}`)
+			.addField(message.translate("music/np:T_TITLE"), `[${track.name}](${track.url})`)
 			.addField(message.translate("music/np:T_CHANNEL"), track.uploader.name ? track.uploader.name : "Отсутствует")
 			.addField(message.translate("music/np:T_DURATION"), `${queue.formattedCurrentTime} / ${track.formattedDuration}`)
 			.setColor(data.config.embed.color)

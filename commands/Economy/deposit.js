@@ -29,7 +29,7 @@ class Deposit extends Command {
 		};
 
 		if (data.memberData.money < amount) return message.error("economy/deposit:NOT_ENOUGH_CREDIT", {
-			money: `${amount} ${this.client.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
+			money: `**${amount}** ${this.client.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 		});
 
 		data.memberData.money = data.memberData.money - amount;
@@ -37,7 +37,7 @@ class Deposit extends Command {
 		data.memberData.save();
 
 		message.success("economy/deposit:SUCCESS", {
-			money: amount
+			money: `**${amount}** ${this.client.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 		});
 	}
 };
