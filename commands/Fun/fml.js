@@ -8,7 +8,7 @@ class Fml extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: ["vdm"],
+			aliases: [],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,

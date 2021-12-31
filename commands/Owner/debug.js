@@ -7,7 +7,7 @@ class Debug extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [],
+			aliases: ["deb"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,

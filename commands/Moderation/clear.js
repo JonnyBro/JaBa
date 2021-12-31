@@ -12,7 +12,7 @@ class Clear extends Command {
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "MANAGE_MESSAGES"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 2000
+			cooldown: 1000
 		});
 	}
 

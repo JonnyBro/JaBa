@@ -12,7 +12,7 @@ class Rep extends Command {
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 2000
+			cooldown: 1000
 		});
 	}
 

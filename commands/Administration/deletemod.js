@@ -7,12 +7,12 @@ class Deletemod extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["autodeletemodcommands"],
+			aliases: ["delm"],
 			memberPermissions: ["MANAGE_MESSAGES"],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 2000
+			cooldown: 1000
 		});
 	}
 

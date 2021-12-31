@@ -10,12 +10,12 @@ class Backup extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [],
+			aliases: ["ba"],
 			memberPermissions: ["MANAGE_GUILD"],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ADMINISTRATOR"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 30000
+			cooldown: 10000
 		});
 	}
 

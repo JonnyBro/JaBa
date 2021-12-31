@@ -10,12 +10,12 @@ class Marry extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["mariage"],
+			aliases: [],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 5000
+			cooldown: 2000
 		});
 	}
 

@@ -8,12 +8,12 @@ class Setreports extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["setreport"],
+			aliases: ["setr"],
 			memberPermissions: ["MANAGE_GUILD"],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 2000
+			cooldown: 1000
 		});
 	}
 

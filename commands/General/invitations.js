@@ -8,12 +8,12 @@ class Invitations extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [],
+			aliases: ["invs"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "MANAGE_GUILD"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 2000
+			cooldown: 1000
 		});
 	}
 

@@ -8,12 +8,12 @@ class Ban extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [],
+			aliases: ["b"],
 			memberPermissions: ["BAN_MEMBERS"],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "BAN_MEMBERS"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 2000
+			cooldown: 1000
 		});
 	}
 

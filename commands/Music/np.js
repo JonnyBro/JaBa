@@ -8,7 +8,7 @@ class Np extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["nowplaying", "now-playing"],
+			aliases: ["nowplaying"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,

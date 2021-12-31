@@ -7,7 +7,7 @@ class Deposit extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["bank", "banque", "dep"],
+			aliases: ["bank", "dep"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,

@@ -8,12 +8,12 @@ class Kick extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [],
+			aliases: ["k"],
 			memberPermissions: ["KICK_MEMBERS"],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "KICK_MEMBERS"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 2000
+			cooldown: 1000
 		});
 	}
 

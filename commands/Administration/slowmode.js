@@ -8,12 +8,12 @@ class Slowmode extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["slowmotion"],
+			aliases: ["sl"],
 			memberPermissions: ["MANAGE_GUILD"],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 3000
+			cooldown: 2000
 		});
 	}
 

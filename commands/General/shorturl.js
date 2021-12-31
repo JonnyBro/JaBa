@@ -14,7 +14,7 @@ class ShortURL extends Command {
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 3000
+			cooldown: 1000
 		});
 	}
 

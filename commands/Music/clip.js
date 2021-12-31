@@ -13,7 +13,7 @@ class Clip extends Command {
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 3000
+			cooldown: 2000
 		});
 	}
 
@@ -23,6 +23,7 @@ class Clip extends Command {
 		const clip = args[0];
 
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
+		if (voice.members.find(user => user.id === this.client.user.id)) return message.error("music/clip:ACTIVE_CLIP");
 		if (queue) return message.error("music/clip:ACTIVE_QUEUE");
 		if (!clip) return message.error("music/clip:NO_ARG");
 		if (!fs.existsSync(`./clips/${clip}.mp3`)) return message.error("music/clip:NO_FILE", { file: clip });

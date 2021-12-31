@@ -14,6 +14,8 @@ module.exports = {
 			const prefixes = [
 				`<@!${message.client.user.id}> `,
 				`<@${message.client.user.id}> `,
+				`<@!${message.client.user.id}>`,
+				`<@${message.client.user.id}>`,
 				message.client.user.username.toLowerCase(),
 				data.guild.prefix
 			];

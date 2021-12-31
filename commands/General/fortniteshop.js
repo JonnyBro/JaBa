@@ -9,12 +9,12 @@ class Fortniteshop extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: ["fnshop"],
+			aliases: ["fns"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 3000
+			cooldown: 2000
 		});
 	}
 

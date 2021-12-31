@@ -7,7 +7,7 @@ class Loop extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["repeat"],
+			aliases: ["repeat", "l"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,

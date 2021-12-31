@@ -12,7 +12,7 @@ class Set extends Command {
 			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 3000
+			cooldown: 2000
 		});
 	}
 

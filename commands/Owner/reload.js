@@ -7,7 +7,7 @@ class Reload extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: [],
+			aliases: ["rel"],
 			memberPermissions: [],
 			botPermissions: [],
 			nsfw: false,

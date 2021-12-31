@@ -7,7 +7,7 @@ class Eightball extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: ["eight-ball", "eightball"],
+			aliases: ["8b"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
