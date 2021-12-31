@@ -26,7 +26,7 @@ const JaBa = require("./base/JaBa"),
 const init = async () => {
 	// Search for all commands
 	const directories = await readdir("./commands/");
-	client.logger.log(`\nLoading a total of ${directories.length} categories.`, "log");
+	client.logger.log(`Loading a total of ${directories.length} categories.`, "log");
 	directories.forEach(async (dir) => {
 		const commands = await readdir(`./commands/${dir}/`);
 		commands.filter((cmd) => cmd.split(".").pop() === "js").forEach((cmd) => {
