@@ -42,7 +42,6 @@ class Help extends Command {
 
 			const groupEmbed = new Discord.MessageEmbed()
 				.setAuthor(message.translate("general/help:CMD_TITLE", {
-					prefix: message.guild ? data.guild.prefix : "",
 					cmd: cmd.help.name
 				}))
 				.addField(message.translate("general/help:FIELD_DESCRIPTION"), description)
