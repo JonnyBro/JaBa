@@ -48,6 +48,10 @@ Message.prototype.convertTime = function (time, type, noPrefix) {
 	return this.client.convertTime(time, type, noPrefix, (this.guild && this.guild.data) ? this.guild.data.language : null);
 };
 
+Message.prototype.getNoun = function(number, one, two, five) {
+	return this.client.getNoun(number, one, two, five);
+};
+
 MessageEmbed.prototype.errorColor = function () {
 	this.setColor("#FF0000");
 
