@@ -31,7 +31,7 @@ class Filter extends Command {
 			message.success("music/filter:REMOVING_FILTER");
 		} else if (Object.keys(this.client.player.filters).includes(args[0])) {
 			queue.setFilter(args[0]);
-			message.success("music/filter:ADDING_FILTER");
+			message.success("music/filter:CHANGING_FILTER");
 		} else if (args[0]) return message.error("music/filter:UNKNOWN_FILTER", {
 			prefix: data.guild.prefix
 		});
