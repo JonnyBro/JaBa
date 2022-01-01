@@ -22,8 +22,8 @@ class Number extends Command {
 	async run(message, args, data) {
 		if (currentGames[message.guild.id]) return message.error("fun/number:GAME_RUNNING");
 
-		const participants = [];
-		const number = Math.floor(Math.random() * 3000);
+		const participants = [],
+			number = Math.floor(Math.random() * 3000);
 
 		await message.sendT("fun/number:GAME_START");
 
@@ -51,16 +51,20 @@ class Number extends Command {
 					participantCount: participants.length,
 					participants: participants.map(p => `<@${p}>`).join(", ")
 				});
-				message.sendT("fun/number:WON", {
-					winner: msg.author.toString()
-				});
-				const userdata = await this.client.findOrCreateMember({
-					id: msg.author.id,
-					guildID: message.guild.id
-				});
-				userdata.money = userdata.money + 100;
-				userdata.save();
-				collector.stop(msg.author.username);
+
+				if (participants.length > 1 && data.guild.disabledCategories && !data.guild.disabledCategories.includes("Economy")) {
+					message.sendT("fun/number:WON", {
+						winner: msg.author.username
+					});
+
+					const userdata = await this.client.findOrCreateMember({
+						id: msg.author.id,
+						guildID: message.guild.id
+					});
+					userdata.money = userdata.money + (100 * (participants.length * 0.5));
+					userdata.save();
+					collector.stop(msg.author.username);
+				};
 			};
 			if (parseInt(msg.content) < number) message.error("fun/number:BIG", {
 				user: msg.author.toString(),

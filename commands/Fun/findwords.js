@@ -26,6 +26,7 @@ class FindWords extends Command {
 		let lang = null;
 		if (message.guild.data.language === "uk-UA") return lang = "ru-RU";
 		else lang = message.guild.data.language;
+
 		const wordList = require(`../../assets/json/words/${lang}.json`);
 
 		// Init some utils variables
@@ -105,7 +106,7 @@ class FindWords extends Command {
 								id: user.id,
 								guildID: message.guild.id
 							});
-							userdata.money = userdata.money + 150;
+							userdata.money = userdata.money + (150 * (participants.length * 0.5));
 							userdata.save();
 						};
 					};
@@ -116,15 +117,14 @@ class FindWords extends Command {
 		async function getWinner(array) {
 			return new Promise(function (resolve) {
 				const counts = {};
-				let compare = 0;
-				let mostFrequent;
+				let compare = 0,
+					mostFrequent;
+
 				for (let i = 0, len = array.length; i < len; i++) {
 					const winner = array[i];
-					if (!counts[winner]) {
-						counts[winner] = 1;
-					} else {
-						counts[winner] = counts[winner] + 1;
-					};
+					if (!counts[winner]) counts[winner] = 1;
+					else counts[winner] = counts[winner] + 1;
+
 					if (counts[winner] > compare) {
 						compare = counts[winner];
 						mostFrequent = array[i];

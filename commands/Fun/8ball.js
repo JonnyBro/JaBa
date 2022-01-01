@@ -19,7 +19,7 @@ class Eightball extends Command {
 	async run(message, args) {
 		if (!args[0] || !message.content.endsWith("?")) return message.error("fun/8ball:ERR_QUESTION");
 
-		const answerN = this.client.functions.randomNum(1, 20);
+		const answerN = this.client.functions.randomNum(1, 19);
 		const answer = message.translate(`fun/8ball:RESPONSE_${answerN + 1}`);
 
 		message.channel.send(answer);
