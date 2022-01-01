@@ -17,7 +17,7 @@ class Reload extends Command {
 		});
 	}
 
-	async run(message, args) {
+	async run(message, args, data) {
 		const command = args[0];
 		const cmd = this.client.commands.get(command) || this.client.commands.get(this.client.aliases.get(command));
 		if (!cmd) message.error("owner/reload:NOT_FOUND", { search: command });
@@ -25,7 +25,7 @@ class Reload extends Command {
 		await this.client.unloadCommand(cmd.conf.location, cmd.help.name);
 		await this.client.loadCommand(cmd.conf.location, cmd.help.name);
 
-		i18next.reloadResources();
+		i18next.reloadResources(data.guild.language);
 		message.success("owner/reload:SUCCESS", {
 			command: cmd.help.name
 		});
