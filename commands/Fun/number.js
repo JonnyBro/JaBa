@@ -36,8 +36,8 @@ class Number extends Command {
 		currentGames[message.guild.id] = true;
 
 		collector.on("collect", async msg => {
+			if (this.client.functions.getPrefix(msg, data)) return;
 			if (!participants.includes(msg.author.id)) participants.push(msg.author.id);
-
 			if (isNaN(msg.content)) return;
 
 			const parsedNumber = parseInt(msg.content, 10);

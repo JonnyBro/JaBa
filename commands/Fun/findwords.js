@@ -65,16 +65,11 @@ class FindWords extends Command {
 				});
 
 				collector.on("collect", (msg) => {
-					if (!participants.includes(msg.author.id)) {
-						participants.push(msg.author.id);
-					};
+					if (this.client.functions.getPrefix(msg, data)) return;
+					if (!participants.includes(msg.author.id)) participants.push(msg.author.id);
 					if (msg.content.toLowerCase().indexOf(word) >= 0 && wordList.map((word) => word.toLowerCase()).indexOf(msg.content.toLowerCase()) >= 0) {
 						collector.stop(msg.author.id); // Stop the collector
-					} else {
-						msg.error("fun/findwords:INVALID_WORD", {
-							member: msg.author.toString()
-						});
-					};
+					} else msg.error("fun/findwords:INVALID_WORD", { member: msg.author.toString() });
 				});
 
 				collector.on("end", async (collected, reason) => {
