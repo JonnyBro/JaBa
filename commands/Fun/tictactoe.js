@@ -20,6 +20,11 @@ class TicTacToe extends Command {
 	async run(message, args) {
 		const game = new TTT({ language: "ru" })
 		game.handleMessage(message);
+
+		this.client.once("win", data => {
+			console.log(data.winner + " wins the TicTacToe game!");
+			console.log(data.loser + " loses the TicTacToe game!");
+		});
 	}
 };
 
