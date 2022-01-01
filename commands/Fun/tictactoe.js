@@ -21,7 +21,7 @@ class TicTacToe extends Command {
 		const game = new TTT({ language: "ru" })
 		game.handleMessage(message);
 
-		game.once("win", data => {
+		game.on("win", data => {
 			console.log(data.winner + " wins the TicTacToe game!");
 			console.log(data.loser + " loses the TicTacToe game!");
 		});
