@@ -22,8 +22,17 @@ class TicTacToe extends Command {
 		game.handleMessage(message);
 
 		game.on("win", data => {
-			console.log(data.winner + " wins the TicTacToe game!");
-			console.log(data.loser + " loses the TicTacToe game!");
+			message.sendT("fun/number:WON", {
+				winner: data.winner.displayName
+			});
+
+			const userdata = await this.client.findOrCreateMember({
+				id: data.winner.id,
+				guildID: message.guild.id
+			});
+
+			userdata.money = userdata.money + 100;
+			userdata.save();
 		});
 	}
 };
