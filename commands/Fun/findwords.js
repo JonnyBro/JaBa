@@ -56,7 +56,7 @@ class FindWords extends Command {
 			setTimeout(() => {
 				// Send announcment message
 				message.sendT("fun/findwords:FIND_WORD", {
-					word
+					word: word.toUpperCase()
 				}, false, false, "warn");
 
 				// init a collector to receive the answers
