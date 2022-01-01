@@ -46,7 +46,7 @@ class Slots extends Command {
 			return Math.round(number);
 		};
 
-		const tmsg = await message.sendT("misc:loading", null, {
+		const tmsg = await message.sendT("misc:PLEASE_WAIT", null, {
 			prefixEmoji: "loading"
 		});
 		editMsg();
@@ -147,7 +147,7 @@ class Slots extends Command {
 		};
 
 		function editMsg() {
-			let msg = "[ :slot_machine: l SLOTS ]\n------------------\n";
+			let msg = "[ :slot_machine: | **СЛОТЫ** ]\n------------------\n";
 
 			i1 = (i1 < fruits.length - 1) ? i1 + 1 : 0;
 			i2 = (i2 < fruits.length - 1) ? i2 + 1 : 0;
