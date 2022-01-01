@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Я говорю!",
+	"DESCRIPTION": "Я говорю правду!",
 	"USAGE": "{{prefix}}8ball [вопрос?]",
 	"EXAMPLES": "{{prefix}}8ball JaBa крутой?",
 	"ERR_QUESTION": "Введите вопрос!",
