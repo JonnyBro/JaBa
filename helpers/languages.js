@@ -40,7 +40,7 @@ module.exports = async () => {
 	await i18next.init({
 		backend: options,
 		debug: false,
-		fallbackLng: "en-US",
+		fallbackLng: "ru-RU",
 		initImmediate: false,
 		interpolation: { escapeValue: false },
 		load: "all",

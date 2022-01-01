@@ -1,4 +1,5 @@
-const Command = require("../../base/Command.js");
+const Command = require("../../base/Command.js"),
+	i18next = require("i18next");
 
 class Reload extends Command {
 	constructor(client) {
@@ -23,6 +24,8 @@ class Reload extends Command {
 
 		await this.client.unloadCommand(cmd.conf.location, cmd.help.name);
 		await this.client.loadCommand(cmd.conf.location, cmd.help.name);
+
+		i18next.reloadResources();
 		message.success("owner/reload:SUCCESS", {
 			command: cmd.help.name
 		});
