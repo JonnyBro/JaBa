@@ -23,7 +23,7 @@ class Number extends Command {
 		if (currentGames[message.guild.id]) return message.error("fun/number:GAME_RUNNING");
 
 		const participants = [],
-			number = ath.floor(this.client.functions.randomNum(100, 10000));
+			number = Math.floor(this.client.functions.randomNum(100, 10000));
 
 		await message.sendT("fun/number:GAME_START");
 
