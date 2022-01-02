@@ -22,6 +22,8 @@ class TicTacToe extends Command {
 		game.handleMessage(message);
 
 		game.on("win", async (data) => {
+			if (data.winner.id === "AI") return;
+
 			message.sendT("fun/number:WON", {
 				winner: data.winner.displayName
 			});
