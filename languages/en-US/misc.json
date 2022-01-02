@@ -9,7 +9,7 @@
 	"INVALID_TIME": "You must enter a valid time! Available units: `s`, `m`, `h` or `d`",
 	"INVALID_NUMBER": "Please specify a valid number!",
 	"INVALID_NUMBER_RANGE": "Please specify a valid number between **{{min}}** and **{{max}}**!",
-	"STATS_FOOTER": "[Dashboard]({{dashboardLink}}) ● [Donate]({{donateLink}}) ● [Invite]({{inviteLink}}) ● [Server]({{supportLink}}) ● [Github]({{githubLink}})",
+	"STATS_FOOTER": "● [Dashboard]({{dashboardLink}})\n● [Docs]({{docsLink}})\n● [Support]({{donateLink}}) (for other payment methods send DM to <@{{owner}}>)",
 	"BOT_USER": "This user is a bot!",
 	"NO_PERMS": "You must have an administration rights to perform this action!",
 	"NO_REASON_PROVIDED": "No reason provided",

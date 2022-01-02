@@ -82,8 +82,9 @@ class Help extends Command {
 		};
 
 		embed.addField("\u200B", message.translate("misc:STATS_FOOTER", {
-			dashboardLink: "https://jaba.pp.ua",
-			donateLink: "https://qiwi.com/n/JONNYBRO",
+			dashboardLink: "https://jaba.pp.ua/",
+			docsLink: "https://jaba.pp.ua/docs/",
+			donateLink: "https://qiwi.com/n/JONNYBRO/",
 			owner: this.client.config.owner.id
 		}));
 		embed.setAuthor(message.translate("general/help:TITLE", {
