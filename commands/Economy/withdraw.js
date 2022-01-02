@@ -29,7 +29,7 @@ class Withdraw extends Command {
 		};
 
 		if (data.memberData.bankSold < amount) return message.error("economy/withdraw:NOT_ENOUGH", {
-			money: `**${amount}** ${this.client.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
+			money: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 		});
 
 		data.memberData.money = data.memberData.money + amount;
@@ -37,7 +37,7 @@ class Withdraw extends Command {
 		data.memberData.save();
 
 		message.success("economy/withdraw:SUCCESS", {
-			money: `**${amount}** ${this.client.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
+			money: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 		});
 	}
 };

@@ -46,8 +46,8 @@ class Rob extends Command {
 
 		const potentiallyLose = Math.floor(amountToRob * 1.5);
 		if (potentiallyLose > data.memberData.money) return message.error("economy/rob:NOT_ENOUGH_AUTHOR", {
-			moneyMin: `${potentiallyLose} ${this.client.getNoun(potentiallyLose, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-			moneyCurrent: `${data.memberData.money} ${this.client.getNoun(data.memberData.money, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
+			moneyMin: `${potentiallyLose} ${message.getNoun(potentiallyLose, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+			moneyCurrent: `${data.memberData.money} ${message.getNoun(data.memberData.money, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 		});
 
 		const itsAWon = Math.floor(this.client.functions.randomNum(0, 100) < 25);
@@ -59,7 +59,7 @@ class Rob extends Command {
 			await memberData.save();
 			const randomNum = Math.floor(this.client.functions.randomNum(1, 3));
 			message.sendT("economy/rob:ROB_WON_" + randomNum, {
-				money: `${amountToRob} ${this.client.getNoun(amountToRob, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+				money: `${amountToRob} ${message.getNoun(amountToRob, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
 				username: member.user.username
 			});
 			data.memberData.money += amountToRob;
@@ -70,8 +70,8 @@ class Rob extends Command {
 			const won = Math.floor(0.9 * amountToRob);
 			const randomNum = Math.floor(this.client.functions.randomNum(1, 3));
 			message.sendT("economy/rob:ROB_LOSE_" + randomNum, {
-				fine: `${potentiallyLose} ${this.client.getNoun(potentiallyLose, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-				offset: `${won} ${this.client.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+				fine: `${potentiallyLose} ${message.getNoun(potentiallyLose, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+				offset: `${won} ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
 				username: member.user.username
 			});
 			data.memberData.money -= potentiallyLose;

@@ -99,14 +99,18 @@ class FindWords extends Command {
 							participants: participants.map((p) => `<@${p}>`).join(", ")
 						});
 						if (participants.length > 1 && data.guild.disabledCategories && !data.guild.disabledCategories.includes("Economy")) {
+							const won = 150 * (participants.length * 0.5);
+
 							message.sendT("fun/findwords:CREDITS", {
-								winner: user.username
+								winner: user.username,
+								credits: `**${won}** ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 							});
+
 							const userdata = await this.client.findOrCreateMember({
 								id: user.id,
 								guildID: message.guild.id
 							});
-							userdata.money = userdata.money + (150 * (participants.length * 0.5));
+							userdata.money = userdata.money + won;
 							userdata.save();
 						};
 					};

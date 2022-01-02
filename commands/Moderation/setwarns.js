@@ -29,7 +29,7 @@ class Setwarns extends Command {
 				data.guild.save();
 				return message.success("moderation/setwarns:SUCCESS_KICK_RESET", {
 					prefix: data.guild.prefix,
-					count: `${number} ${this.client.getNoun(number, message.translate("misc:NOUNS:WARNS:1"), message.translate("misc:NOUNS:WARNS:2"), message.translate("misc:NOUNS:WARNS:5"))}`
+					count: `${number} ${message.getNoun(number, message.translate("misc:NOUNS:WARNS:1"), message.translate("misc:NOUNS:WARNS:2"), message.translate("misc:NOUNS:WARNS:5"))}`
 				});
 			} else if (sanction === "ban") {
 				data.guild.plugins.warnsSanctions.ban = false;
@@ -37,7 +37,7 @@ class Setwarns extends Command {
 				data.guild.save();
 				return message.success("moderation/setwarns:SUCCESS_BAN_RESET", {
 					prefix: data.guild.prefix,
-					count: `${number} ${this.client.getNoun(number, message.translate("misc:NOUNS:WARNS:1"), message.translate("misc:NOUNS:WARNS:2"), message.translate("misc:NOUNS:WARNS:5"))}`
+					count: `${number} ${message.getNoun(number, message.translate("misc:NOUNS:WARNS:1"), message.translate("misc:NOUNS:WARNS:2"), message.translate("misc:NOUNS:WARNS:5"))}`
 				});
 			};
 		};
@@ -51,7 +51,7 @@ class Setwarns extends Command {
 			data.guild.save();
 			return message.success("moderation/setwarns:SUCCESS_KICK", {
 				prefix: data.guild.prefix,
-				count: `${number} ${this.client.getNoun(number, message.translate("misc:NOUNS:WARNS:1"), message.translate("misc:NOUNS:WARNS:2"), message.translate("misc:NOUNS:WARNS:5"))}`
+				count: `${number} ${message.getNoun(number, message.translate("misc:NOUNS:WARNS:1"), message.translate("misc:NOUNS:WARNS:2"), message.translate("misc:NOUNS:WARNS:5"))}`
 			});
 		} else if (sanction === "ban") {
 			data.guild.plugins.warnsSanctions.ban = number;
@@ -59,7 +59,7 @@ class Setwarns extends Command {
 			data.guild.save();
 			return message.success("moderation/setwarns:SUCCESS_BAN", {
 				prefix: data.guild.prefix,
-				count: `${number} ${this.client.getNoun(number, message.translate("misc:NOUNS:WARNS:1"), message.translate("misc:NOUNS:WARNS:2"), message.translate("misc:NOUNS:WARNS:5"))}`
+				count: `${number} ${message.getNoun(number, message.translate("misc:NOUNS:WARNS:1"), message.translate("misc:NOUNS:WARNS:2"), message.translate("misc:NOUNS:WARNS:5"))}`
 			});
 		};
 	}

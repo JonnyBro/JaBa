@@ -53,15 +53,18 @@ class Number extends Command {
 				});
 
 				if (participants.length > 1 && data.guild.disabledCategories && !data.guild.disabledCategories.includes("Economy")) {
+					const won = 100 * (participants.length * 0.5);
+
 					message.sendT("fun/number:WON", {
-						winner: msg.author.username
+						winner: msg.author.username,
+						credits: `**${won}** ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 					});
 
 					const userdata = await this.client.findOrCreateMember({
 						id: msg.author.id,
 						guildID: message.guild.id
 					});
-					userdata.money = userdata.money + (100 * (participants.length * 0.5));
+					userdata.money = userdata.money + won;
 					userdata.save();
 					collector.stop(msg.author.username);
 				};

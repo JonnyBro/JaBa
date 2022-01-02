@@ -56,12 +56,12 @@ class Clear extends Command {
 
 		if (user) {
 			toDelete = await message.success("moderation/clear:CLEARED_MEMBER", {
-				amount: `${--amount} ${this.client.getNoun(--amount, message.translate("misc:NOUNS:MESSAGES:1"), message.translate("misc:NOUNS:MESSAGES:2"), message.translate("misc:NOUNS:MESSAGES:5"))}`,
+				amount: `${--amount} ${message.getNoun(--amount, message.translate("misc:NOUNS:MESSAGES:1"), message.translate("misc:NOUNS:MESSAGES:2"), message.translate("misc:NOUNS:MESSAGES:5"))}`,
 				username: user.tag
 			});
 		} else {
 			toDelete = await message.success("moderation/clear:CLEARED", {
-				amount: `${--amount} ${this.client.getNoun(--amount, message.translate("misc:NOUNS:MESSAGES:1"), message.translate("misc:NOUNS:MESSAGES:2"), message.translate("misc:NOUNS:MESSAGES:5"))}`
+				amount: `${--amount} ${message.getNoun(--amount, message.translate("misc:NOUNS:MESSAGES:1"), message.translate("misc:NOUNS:MESSAGES:2"), message.translate("misc:NOUNS:MESSAGES:5"))}`
 			});
 		};
 
