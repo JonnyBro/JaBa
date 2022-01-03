@@ -32,9 +32,13 @@ class Clips extends Command {
 				.setTitle(message.translate("music/clips:EMBED_TITLE"))
 				.setDescription(clips.join("\n"))
 				.setColor(data.config.embed.color)
-				.setFooter(data.config.embed.footer)
-				.setTimestamp()
-			message.channel.send(embed);
+				.setFooter({
+					text: data.config.embed.footer
+				})
+				.setTimestamp();
+			message.channel.send({
+				embeds: [embed]
+			});
 		});
 	}
 };

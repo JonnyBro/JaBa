@@ -27,7 +27,9 @@ class Lyrics extends Command {
 				songName
 			}))
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer);
+			.setFooter({
+				text: data.config.embed.footer
+			});
 
 		try {
 			const songNameFormated = songName
@@ -46,7 +48,9 @@ class Lyrics extends Command {
 			};
 
 			embed.setDescription(lyrics);
-			message.channel.send(embed);
+			message.channel.send({
+				embeds: [embed]
+			});
 
 		} catch (e) {
 			console.log(e);

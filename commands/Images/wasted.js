@@ -28,10 +28,13 @@ class Wasted extends Command {
 				size: 512
 			})
 		});
-		const attachment = new Discord.MessageAttachment(buffer, "wasted.png");
 		m.delete();
 
-		message.channel.send(attachment);
+		message.channel.send({
+			files: [{
+				attachment: buffer
+			}]
+		});
 	}
 };
 

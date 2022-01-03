@@ -39,10 +39,13 @@ class Tweet extends Command {
 			avatar3: randomMembers[2].user.displayAvatarURL(),
 			text
 		});
-		const attachment = new Discord.MessageAttachment(buffer, "twitter.png");
 		m.delete();
 
-		message.channel.send(attachment);
+		message.channel.send({
+			files: [{
+				attachment: buffer
+			}]
+		});
 	}
 };
 

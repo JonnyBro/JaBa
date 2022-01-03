@@ -7,8 +7,8 @@ module.exports = class {
 
 	async run(guild) {
 		if (this.client.config.proMode) {
-			if ((!this.client.config.proUsers.includes(guild.ownerID) || this.guilds.filter((g) => g.ownerID === guild.ownerID) > 1) && guild.ownerID !== this.client.config.owner.id) {
-				this.client.logger.log(`${guild.ownerID} tried to invite JaBa on its server.`);
+			if ((!this.client.config.proUsers.includes(guild.ownerId) || this.guilds.filter((g) => g.ownerId === guild.ownerId) > 1) && guild.ownerId !== this.client.config.owner.id) {
+				this.client.logger.log(`${guild.ownerId} tried to invite JaBa on its server.`);
 				return guild.leave();
 			};
 		};
@@ -16,7 +16,7 @@ module.exports = class {
 		const messageOptions = {};
 
 		const userData = await this.client.findOrCreateUser({
-			id: guild.ownerID
+			id: guild.ownerId
 		});
 		if (!userData.achievements.invite.achieved) {
 			userData.achievements.invite.progress.now += 1;
@@ -30,10 +30,10 @@ module.exports = class {
 		};
 
 		const thanksEmbed = new Discord.MessageEmbed()
-			.setAuthor("Спасибо что добавили меня на свой сервер!")
-			.setDescription(`Для настроек используйте \`${this.client.config.prefix}help\` и посмотрите на административные команды!\nЧтобы изменить язык используйте \`${this.client.config.prefix}setlang [язык]\`.`)
-			.setColor(this.client.config.embed.color)
-			.setFooter(this.client.config.embed.footer)
+			.setAuthor({ name: "Спасибо что добавили меня на свой сервер!" })
+			.setDescription(`Для настроек используйте \`${data.config.prefix}help\` и посмотрите на административные команды!\nЧтобы изменить язык используйте \`${this.client.config.prefix}setlang [язык]\`.`)
+			.setColor(data.config.embed.color)
+			.setFooter({ text: data.config.embed.footer })
 			.setTimestamp();
 		messageOptions.embed = thanksEmbed;
 
@@ -43,9 +43,9 @@ module.exports = class {
 
 		// Sends log embed in the logs channel
 		const logsEmbed = new Discord.MessageEmbed()
-			.setAuthor(guild.name, guild.iconURL())
+			.setAuthor({ name: guild.name, iconURL: guild.iconURL()})
 			.setColor("#32CD32")
 			.setDescription(text);
-		this.client.channels.cache.get(this.client.config.support.logs).send(logsEmbed);
+		this.client.channels.cache.get(data.config.support.logs).send(logsEmbed);
 	}
 };

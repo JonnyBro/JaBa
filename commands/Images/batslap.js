@@ -35,10 +35,13 @@ class BatSlap extends Command {
 				size: 512
 			})
 		});
-		const attachment = new Discord.MessageAttachment(buffer, "batslap.png");
 		m.delete();
 
-		message.channel.send(attachment);
+		message.channel.send({
+			files: [{
+				attachment: buffer
+			}]
+		});
 	}
 };
 

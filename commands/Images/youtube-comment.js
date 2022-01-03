@@ -40,10 +40,13 @@ class YouTubeComment extends Command {
 			}),
 			content: text
 		});
-		const attachment = new Discord.MessageAttachment(image, "ytb-comment.png");
 		m.delete();
 
-		message.channel.send(attachment);
+		message.channel.send({
+			files: [{
+				attachment: image
+			}]
+		});
 	}
 };
 

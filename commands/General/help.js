@@ -41,18 +41,24 @@ class Help extends Command {
 			});
 
 			const groupEmbed = new Discord.MessageEmbed()
-				.setAuthor(message.translate("general/help:CMD_TITLE", {
-					cmd: cmd.help.name
-				}))
+				.setAuthor({
+					name: message.translate("general/help:CMD_TITLE", {
+						cmd: cmd.help.name
+					})
+				})
 				.addField(message.translate("general/help:FIELD_DESCRIPTION"), description)
 				.addField(message.translate("general/help:FIELD_USAGE"), usage)
 				.addField(message.translate("general/help:FIELD_EXAMPLES"), examples)
 				.addField(message.translate("general/help:FIELD_ALIASES"), cmd.help.aliases.length > 0 ? cmd.help.aliases.map(a => "`" + a + "`").join("\n") : message.translate("general/help:NO_ALIAS"))
 				.addField(message.translate("general/help:FIELD_PERMISSIONS"), cmd.conf.memberPermissions.length > 0 ? cmd.conf.memberPermissions.map((p) => `\`${p}\``).join("\n") : message.translate("general/help:NO_REQUIRED_PERMISSION"))
 				.setColor(this.client.config.embed.color)
-				.setFooter(this.client.config.embed.footer);
+				.setFooter({
+					text: this.client.config.embed.footer
+				});
 
-			return message.channel.send(groupEmbed);
+			return message.channel.send({
+				embeds: [groupEmbed]
+			});
 		};
 
 		const categories = [];
@@ -72,11 +78,14 @@ class Help extends Command {
 				prefix: message.guild ? data.guild.prefix : ""
 			}))
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer);
+			.setFooter({
+				text: data.config.embed.footer
+			});
 		categories.sort().forEach((cat) => {
 			const tCommands = commands.filter((cmd) => cmd.help.category === cat);
 			embed.addField(`${emojis.categories[cat.toLowerCase()]} ${cat} - (${tCommands.size})`, `${tCommands.map((cmd) => `${cmd.help.name}`).join(", ")}`);
 		});
+
 		if (message.guild) {
 			if (data.guild.customCommands.length > 0) embed.addField(`${emojis.categories.custom} ${message.guild.name} | ${message.translate("general/help:CUSTOM_COMMANDS")} - (${data.guild.customCommands.length})`, data.guild.customCommands.map((cmd) => `\`${cmd.name}\``).join(", "));
 		};
@@ -87,14 +96,20 @@ class Help extends Command {
 			donateLink: "https://qiwi.com/n/JONNYBRO/",
 			owner: this.client.config.owner.id
 		}));
-		embed.setAuthor(message.translate("general/help:TITLE", {
-			name: this.client.user.username
-		}), this.client.user.displayAvatarURL({
-			size: 512,
-			dynamic: true,
-			format: "png"
-		}));
-		return message.channel.send(embed);
+		embed.setAuthor({
+			name: message.translate("general/help:TITLE", {
+				name: this.client.user.username
+			}),
+			iconURL: this.client.user.displayAvatarURL({
+				size: 512,
+				dynamic: true,
+				format: "png"
+			})
+		});
+
+		return message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

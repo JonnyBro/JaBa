@@ -19,7 +19,6 @@ class Rob extends Command {
 	async run(message, args, data) {
 		const member = await this.client.resolveMember(args[0], message.guild);
 		if (!member) return message.error("economy/rob:MISSING_MEMBER");
-
 		if (member.id === message.author.id) return message.error("economy/rob:YOURSELF");
 
 		const memberData = await this.client.findOrCreateMember({
@@ -28,21 +27,15 @@ class Rob extends Command {
 		});
 		const isInCooldown = memberData.cooldowns.rob || 0;
 		if (isInCooldown) {
-			if (isInCooldown > Date.now()) return message.error("economy/rob:COOLDOWN", {
-				username: member.user.tag
-			});
+			if (isInCooldown > Date.now()) return message.error("economy/rob:COOLDOWN", { username: member.user.tag });
 		};
 
 		let amountToRob = args[1];
-		if (!amountToRob || isNaN(amountToRob) || parseInt(amountToRob, 10) <= 0) return message.error("economy/rob:MISSING_AMOUNT", {
-			username: member.user.username
-		});
+		if (!amountToRob || isNaN(amountToRob) || parseInt(amountToRob, 10) <= 0) return message.error("economy/rob:MISSING_AMOUNT", { username: member.user.username });
 
 		amountToRob = Math.floor(parseInt(amountToRob, 10));
 
-		if (amountToRob > memberData.money) return message.error("economy/rob:NOT_ENOUGH_MEMBER", {
-			username: member.user.username
-		});
+		if (amountToRob > memberData.money) return message.error("economy/rob:NOT_ENOUGH_MEMBER", { username: member.user.username });
 
 		const potentiallyLose = Math.floor(amountToRob * 1.5);
 		if (potentiallyLose > data.memberData.money) return message.error("economy/rob:NOT_ENOUGH_AUTHOR", {

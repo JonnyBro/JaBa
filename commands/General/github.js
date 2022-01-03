@@ -23,11 +23,14 @@ class Github extends Command {
 		const json = await res.json();
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(this.client.user.tag, this.client.user.displayAvatarURL({
-				size: 512,
-				dynamic: true,
-				format: "png"
-			}))
+			.setAuthor({
+				name: this.client.user.tag,
+				iconURL: this.client.user.displayAvatarURL({
+					size: 512,
+					dynamic: true,
+					format: "png"
+				})
+			})
 			.setDescription(`[${message.translate("general/github:CLICK_HERE")}](${json.html_url})`)
 			.addField("Название", json.name, true)
 			.addField("Звёзды", json.stargazers_count, true)
@@ -36,9 +39,13 @@ class Github extends Command {
 			.addField(message.translate("general/github:OWNER"), `[${json.owner.login}](${json.owner.html_url})`)
 			.setImage(json.owner.avatar_url)
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer);
+			.setFooter({
+				text: data.config.embed.footer
+			});
 
-		message.channel.send(embed);
+		message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

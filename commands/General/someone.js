@@ -30,7 +30,9 @@ class Someone extends Command {
 				format: "png"
 			}))
 			.setColor(data.config.embed.color);
-		message.channel.send(embed);
+		message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

@@ -27,18 +27,26 @@ class Jump extends Command {
 		if (number < 0) return message.error("music/jump:NO_PREV_SONG", { prefix: data.guild.prefix });
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(message.translate("music/jump:SUCCESS"))
+			.setAuthor({
+				name: message.translate("music/jump:SUCCESS")
+			})
 			.setThumbnail(queue.songs[number].thumbnail)
-			.setFooter(data.config.embed.footer)
+			.setFooter({
+				text: data.config.embed.footer
+			})
 			.setColor(data.config.embed.color);
 
-		const m = await message.channel.send(embed);
+		const m = await message.channel.send({
+			embeds: [embed]
+		});
 
 		this.client.player.jump(message, number);
 		embed.setDescription(message.translate("music/play:NOW_PLAYING", {
 			songName: queue.songs[number].name
 		}));
-		m.edit(embed);
+		m.edit({
+			embeds: [embed]
+		});
 	}
 };
 

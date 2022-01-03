@@ -25,7 +25,7 @@ class Mute extends Command {
 
 		const memberPosition = member.roles.highest.position;
 		const moderationPosition = message.member.roles.highest.position;
-		if (message.member.ownerID !== message.author.id && !(moderationPosition > memberPosition)) return message.error("moderation/ban:SUPERIOR");
+		if (message.member.ownerId !== message.author.id && !(moderationPosition > memberPosition)) return message.error("moderation/ban:SUPERIOR");
 
 		const memberData = await this.client.findOrCreateMember({
 			id: member.id,
@@ -38,7 +38,7 @@ class Mute extends Command {
 		if (!reason) reason = message.translate("misc:NO_REASON_PROVIDED");
 
 		message.guild.channels.cache.forEach((channel) => {
-			channel.updateOverwrite(member.id, {
+			channel.permissionOverwrites.edit(member.id, {
 				SEND_MESSAGES: false,
 				ADD_REACTIONS: false,
 				CONNECT: false
@@ -90,16 +90,20 @@ class Mute extends Command {
 			const channel = message.guild.channels.cache.get(data.guild.plugins.modlogs);
 			if (!channel) return;
 			const embed = new Discord.MessageEmbed()
-				.setAuthor(message.translate("moderation/mute:CASE", {
-					count: data.guild.casesCount
-				}))
+				.setAuthor({
+					name: message.translate("moderation/mute:CASE", {
+						count: data.guild.casesCount
+					})
+				})
 				.addField(message.translate("common:USER"), `\`${member.user.tag}\` (${member.user.toString()})`, true)
 				.addField(message.translate("common:MODERATOR"), `\`${message.author.tag}\` (${message.author.toString()})`, true)
 				.addField(message.translate("common:REASON"), reason, true)
 				.addField(message.translate("common:DURATION"), time, true)
 				.addField(message.translate("common:EXPIRY"), message.printDate(new Date(Date.now() + ms(time))), true)
 				.setColor("#f44271");
-			channel.send(embed);
+			channel.send({
+				embeds: [embed]
+			});
 		}
 	}
 };

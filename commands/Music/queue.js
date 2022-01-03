@@ -27,21 +27,29 @@ class Queue extends Command {
 
 		if (queue.songs.length === 1) {
 			const embed = new Discord.MessageEmbed()
-				.setAuthor(message.translate("music/queue:TITLE"), message.guild.iconURL({
-					dynamic: true
-				}))
+				.setAuthor({
+					name: message.translate("music/queue:TITLE"),
+					iconURL: message.guild.iconURL({
+						dynamic: true
+					})
+				})
 				.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*Добавил ${queue.songs[0].member}*\n`)
 				.setColor(data.config.embed.color);
-			return message.channel.send(embed);
+			return message.channel.send({
+				embeds: [embed]
+			});
 		};
 
 		const FieldsEmbed = new Pagination.FieldsEmbed();
 
 		FieldsEmbed.embed
 			.setColor(data.config.embed.color)
-			.setAuthor(message.translate("music/queue:TITLE"), message.guild.iconURL({
-				dynamic: true
-			}))
+			.setAuthor({
+				name: message.translate("music/queue:TITLE"),
+				iconURL: message.guild.iconURL({
+					dynamic: true
+				})
+			})
 			.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*Добавил ${queue.songs[0].member}*\n`);
 
 		FieldsEmbed.setArray(queue.songs[1] ? queue.songs.slice(1, queue.songs.length) : [])

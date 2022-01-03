@@ -65,11 +65,15 @@ class Fortnite extends Command {
 			.setDescription(message.translate("general/fortnite:TITLE", {
 				username: `[${stats.data.username}](${stats.data.url.replace(new RegExp(" ", "g"), "%20")})`
 			}))
-			.attachFiles(attachment)
 			.setImage("attachment://fortnite-stats-image.png")
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer);
-		message.channel.send(embed);
+			.setFooter({
+				text: data.config.embed.footer
+			});
+		message.channel.send({
+			embeds: [embed],
+			files: [attachment]
+		});
 		m.delete();
 	}
 };

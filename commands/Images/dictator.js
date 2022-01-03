@@ -28,10 +28,13 @@ class Dictator extends Command {
 				size: 512
 			})
 		});
-		const attachment = new Discord.MessageAttachment(buffer, "dictator.png");
 		m.delete();
 
-		message.channel.send(attachment);
+		message.channel.send({
+			files: [{
+				attachment: buffer
+			}]
+		});
 	}
 };
 

@@ -44,23 +44,27 @@ class Translate extends Command {
 
 		if (!langs.includes(language)) return pWait.error("general/translate:INVALID_LANGUAGE", { prefix: data.guild.prefix, search: language }, { edit: true });
 
-		const translated = await translate(toTranslate, {
-			to: language
-		});
+		const translated = await translate(toTranslate, { to: language });
 
 		const resEmbed = new Discord.MessageEmbed()
-			.setAuthor("Переводчик", this.client.user.displayAvatarURL({
-				size: 512,
-				dynamic: true,
-				format: "png"
-			}))
+			.setAuthor({
+				name: "Переводчик",
+				iconURL: this.client.user.displayAvatarURL({
+					size: 512,
+					dynamic: true,
+					format: "png"
+				})
+			})
 			.addField(translated.from.language.iso, "```" + toTranslate + "```")
 			.addField(language, "```" + translated.text + "```")
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer);
+			.setFooter({
+				text: data.config.embed.footer
+			});
 
-		return pWait.edit("", {
-			embed: resEmbed
+		return pWait.edit({
+			content: null,
+			embeds: [resEmbed]
 		});
 	}
 };

@@ -1,3 +1,4 @@
+const { Permissions } = require("discord.js");
 const languages = require("../languages/language-meta.json").map((l) => l.moment).filter((l) => l !== "en");
 languages.forEach((lang) => {
 	require(`moment/locale/${lang}.js`);
@@ -10,7 +11,7 @@ module.exports = {
 	 * @returns The prefix
 	 */
 	getPrefix(message, data) {
-		if (message.channel.type !== "dm") {
+		if (message.channel.type !== "DM") {
 			const prefixes = [
 				`<@!${message.client.user.id}> `,
 				`<@${message.client.user.id}> `,
@@ -34,7 +35,7 @@ module.exports = {
 	async supportLink(client) {
 		const guild = client.guilds.cache.get(client.config.support.id);
 		const member = guild.me;
-		const channel = guild.channels.cache.find((ch) => ch.permissionsFor(member.id).has("CREATE_INSTANT_INVITE") && ch.type === "text" || ch.type === "voice");
+		const channel = guild.channels.cache.find((ch) => ch.permissionsFor(member.id).has(Permissions.FLAGS.CREATE_INSTANT_INVITE) && ch.type === "GUILD_TEXT" || ch.type === "GUILD_VOICE");
 		if (channel) {
 			const invite = await channel.createInvite({
 				maxAge: 0

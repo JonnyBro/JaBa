@@ -78,18 +78,47 @@ class Backup extends Command {
 
 			backup.fetch(backupID).then(async (backupInfos) => {
 				const embed = new Discord.MessageEmbed()
-					.setAuthor(message.translate("administration/backup:TITLE_INFO"))
+					.setAuthor({
+						name: message.translate("administration/backup:TITLE_INFO")
+					})
 					// Display the backup ID
 					.addField(message.translate("administration/backup:TITLE_ID"), backupInfos.id, true)
 					// Displays the server from which this backup comes
-					.addField(message.translate("administration/backup:TITLE_SERVER_ID"), backupInfos.data.guildID, true)
+					.addField(message.translate("administration/backup:TITLE_SERVER_ID"), backupInfos.data.guildId, true)
 					// Display the size (in mb) of the backup
 					.addField(message.translate("administration/backup:TITLE_SIZE"), `${backupInfos.size}mb`, true)
 					// Display when the backup was created
 					.addField(message.translate("administration/backup:TITLE_CREATED_AT"), message.printDate(new Date(backupInfos.data.createdTimestamp)), true)
 					.setColor(data.config.embed.color)
-					.setFooter(data.config.embed.footer);
-				message.channel.send(embed);
+					.setFooter({
+						text: data.config.embed.footer
+					});
+				message.channel.send({
+					embeds: [embed]
+				});
+			}).catch(() => {
+				// if the backup wasn't found
+				return message.error("administration/backup:NO_BACKUP_FOUND", {
+					backupID
+				});
+			});
+		} else if (status === "remove") {
+			const backupID = args[1];
+			if (!backupID) return message.error("administration/backup:MISSING_BACKUP_ID");
+
+			backup.fetch(backupID).then(async () => {
+				message.sendT("administration/backup:CONFIRMATION");
+				await message.channel.awaitMessages(m => (m.author.id === message.author.id) && (m.content === "confirm"), {
+					max: 1,
+					time: 20000,
+					errors: ["time"]
+				}).catch(() => {
+					// if the author of the commands does not confirm the backup loading
+					return message.error("administration/backup:TIMES_UP");
+				});
+
+				backup.remove(backupID);
+				message.success("administration/backup:SUCCESS_REMOVED");
 			}).catch(() => {
 				// if the backup wasn't found
 				return message.error("administration/backup:NO_BACKUP_FOUND", {

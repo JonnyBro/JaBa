@@ -22,9 +22,7 @@ class Ping extends Command {
 		}).then((m) => {
 			m.sendT("general/ping:CONTENT", {
 				ping: m.createdTimestamp - message.createdTimestamp
-			}, {
-				edit: true
-			});
+			}, { edit: true });
 		});
 	}
 };

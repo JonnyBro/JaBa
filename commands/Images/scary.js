@@ -28,10 +28,13 @@ class Scary extends Command {
 				size: 512
 			})
 		});
-		const attachment = new Discord.MessageAttachment(buffer, "scary.png");
 		m.delete();
 
-		message.channel.send(attachment);
+		message.channel.send({
+			files: [{
+				attachment: buffer
+			}]
+		});
 	}
 };
 
