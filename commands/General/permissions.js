@@ -37,7 +37,9 @@ class Permissions extends Command {
 			};
 		});
 		text += `\n${total.allowed} ✅ | ${total.denied} ❌` + "\n```";
-		message.channel.send({ content: text });
+		message.channel.send({
+			content: text
+		});
 	}
 };
 

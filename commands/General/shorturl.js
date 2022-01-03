@@ -29,9 +29,13 @@ class ShortURL extends Command {
 
 		const embed = new Discord.MessageEmbed()
 			.setColor(data.config.embed.color)
-			.setFooter({ text: data.config.embed.footer })
+			.setFooter({
+				text: data.config.embed.footer
+			})
 			.setDescription(body);
-		message.channel.send({ embeds: [embed] });
+		message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

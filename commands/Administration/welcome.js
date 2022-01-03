@@ -50,7 +50,8 @@ class Welcome extends Command {
 			});
 
 			const filter = m => m.author.id === message.author.id;
-			const collector = message.channel.createMessageCollector({ filter,
+			const collector = message.channel.createMessageCollector({
+				filter,
 				time: 120000 // 2 minutes
 			});
 

@@ -67,9 +67,11 @@ class Warn extends Command {
 					reason
 				}));
 				caseInfo.type = "ban";
-				embed.setAuthor({ name: message.translate("moderation/ban:CASE", {
-						count: data.guild.casesCount
-					})})
+				embed.setAuthor({
+						name: message.translate("moderation/ban:CASE", {
+							count: data.guild.casesCount
+						})
+					})
 					.setColor("#e02316");
 				message.guild.members.ban(member).catch(() => {});
 				message.success("moderation/setwarns:AUTO_BAN", {
@@ -88,9 +90,11 @@ class Warn extends Command {
 					reason
 				}));
 				caseInfo.type = "kick";
-				embed.setAuthor({ name: message.translate("moderation/kick:CASE", {
-						count: data.guild.casesCount
-					})})
+				embed.setAuthor({
+						name: message.translate("moderation/kick:CASE", {
+							count: data.guild.casesCount
+						})
+					})
 					.setColor("#e88709");
 				member.kick().catch(() => {});
 				message.success("moderation/setwarns:AUTO_KICK", {
@@ -107,9 +111,11 @@ class Warn extends Command {
 			reason
 		}));
 		caseInfo.type = "warn";
-		embed.setAuthor({ name: message.translate("moderation/warn:CASE", {
-				caseNumber: data.guild.casesCount
-			})})
+		embed.setAuthor({
+				name: message.translate("moderation/warn:CASE", {
+					caseNumber: data.guild.casesCount
+				})
+			})
 			.setColor("#8c14e2");
 		message.success("moderation/warn:WARNED", {
 			username: member.user.tag,
@@ -122,7 +128,9 @@ class Warn extends Command {
 		if (data.guild.plugins.modlogs) {
 			const channel = message.guild.channels.cache.get(data.guild.plugins.modlogs);
 			if (!channel) return;
-			channel.send({ embeds: [embed] });
+			channel.send({
+				embeds: [embed]
+			});
 		};
 	}
 };

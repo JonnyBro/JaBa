@@ -28,9 +28,7 @@ class Deposit extends Command {
 			amount = parseInt(amount, 10);
 		};
 
-		if (data.memberData.money < amount) return message.error("economy/deposit:NOT_ENOUGH_CREDIT", {
-			money: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
-		});
+		if (data.memberData.money < amount) return message.error("economy/deposit:NOT_ENOUGH_CREDIT", { money: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}` });
 
 		data.memberData.money = data.memberData.money - amount;
 		data.memberData.bankSold = data.memberData.bankSold + amount;

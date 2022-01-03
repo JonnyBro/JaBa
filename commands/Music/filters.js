@@ -39,7 +39,9 @@ class Filters extends Command {
 			.addField("** **", filtersStatuses[1].join("\n"), true)
 			.setColor(data.config.embed.color);
 
-		message.channel.send({ embeds: [list] });
+		message.channel.send({
+			embeds: [list]
+		});
 	}
 };
 

@@ -21,9 +21,14 @@ class Configuration extends Command {
 		const guildData = data.guild;
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor({ name: message.guild.name, iconURL: message.guild.iconURL() })
+			.setAuthor({
+				name: message.guild.name,
+				iconURL: message.guild.iconURL()
+			})
 			.setColor(data.config.embed.color)
-			.setFooter({ text: data.config.embed.footer });
+			.setFooter({
+				text: data.config.embed.footer
+			});
 
 		// Guild prefix
 		embed.addField(message.translate("administration/configuration:PREFIX_TITLE"), guildData.prefix);
@@ -85,7 +90,9 @@ class Configuration extends Command {
 		// Dashboard link
 		embed.addField(message.translate("administration/configuration:DASHBOARD_TITLE"), `[${message.translate("administration/configuration:DASHBOARD_CONTENT")}](${this.client.config.dashboard.baseURL})`);
 
-		message.channel.send({ embeds: [embed] });
+		message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

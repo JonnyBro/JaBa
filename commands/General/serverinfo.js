@@ -31,9 +31,12 @@ class Serverinfo extends Command {
 		await guild.members.fetch();
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor({ name: guild.name, iconURL: guild.iconURL({
-				dynamic: true
-			})})
+			.setAuthor({
+				name: guild.name,
+				iconURL: guild.iconURL({
+					dynamic: true
+				})
+			})
 			.setThumbnail(guild.iconURL({
 				dynamic: true
 			}))
@@ -53,9 +56,13 @@ class Serverinfo extends Command {
 				"\n" + `${guild.channels.cache.filter(c => c.type === "GUILD_CATEGORY").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_CATEGORY").size, message.translate("misc:NOUNS:CATEGORY:1"), message.translate("misc:NOUNS:CATEGORY:2"), message.translate("misc:NOUNS:CATEGORY:5"))}`, true
 			)
 			.setColor(data.config.embed.color)
-			.setFooter({ text: data.config.embed.footer });
+			.setFooter({
+				text: data.config.embed.footer
+			});
 
-		message.channel.send({ embeds: [embed] });
+		message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

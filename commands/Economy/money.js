@@ -61,7 +61,9 @@ class Credits extends Command {
 			.addField(message.translate("economy/profile:BANK"), `**${memberData.bankSold}** ${message.getNoun(memberData.bankSold, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
 			.addField(message.translate("economy/profile:GLOBAL"), `**${globalMoney}** ${message.getNoun(globalMoney, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
 			.setColor(data.config.embed.color)
-			.setFooter({ text: data.config.embed.footer });
+			.setFooter({
+				text: data.config.embed.footer
+			});
 		message.channel.send({
 			embeds: [embed]
 		});

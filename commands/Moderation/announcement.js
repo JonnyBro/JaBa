@@ -75,13 +75,20 @@ class Announcement extends Command {
 			if (reason === "time") return message.error("misc:TIMES_UP");
 
 			const embed = new Discord.MessageEmbed()
-				.setAuthor({ name: message.translate("moderation/announcement:TITLE") })
+				.setAuthor({
+					name: message.translate("moderation/announcement:TITLE")
+				})
 				.setColor(data.config.embed.color)
-				.setFooter({ text: message.author.tag })
+				.setFooter({
+					text: message.author.tag
+				})
 				.setTimestamp()
 				.setDescription(text);
 
-			message.channel.send({ content: mention, embeds: [embed] });
+			message.channel.send({
+				content: mention,
+				embeds: [embed]
+			});
 		});
 	}
 };

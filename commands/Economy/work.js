@@ -40,11 +40,14 @@ class Work extends Command {
 		await data.memberData.save();
 
 		const embed = new Discord.MessageEmbed()
-			.setFooter({ text: message.translate("economy/work:AWARD"), iconURL: message.author.displayAvatarURL({
-				size: 512,
-				dynamic: true,
-				format: "png"
-			})})
+			.setFooter({
+				text: message.translate("economy/work:AWARD"),
+				iconURL: message.author.displayAvatarURL({
+					size: 512,
+					dynamic: true,
+					format: "png"
+				})
+			})
 			.setColor(data.config.embed.color);
 
 		const award = [

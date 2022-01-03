@@ -20,7 +20,7 @@ class Checkinvites extends Command {
 	async run(message, args, data) {
 		const withInvite = [];
 		message.guild.members.cache.forEach((m) => {
-			const possibleLinks = m.user.presence.activities.map((a) => [a.state, a.details, a.name]).flat();
+			const possibleLinks = m.presence.activities.map((a) => [a.state, a.details, a.name]).flat();
 			const inviteLinks = possibleLinks.filter((l) => /(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(l));
 			if (inviteLinks.length > 0) {
 				withInvite.push({
@@ -36,9 +36,13 @@ class Checkinvites extends Command {
 		const embed = new Discord.MessageEmbed()
 			.setDescription(text)
 			.setColor(data.config.embed.color)
-			.setFooter({ text: data.config.embed.footer });
+			.setFooter({
+				text: data.config.embed.footer
+			});
 
-		const m = await message.channel.send({ embeds: [embed] });
+		const m = await message.channel.send({
+			embeds: [embed]
+		});
 
 		setTimeout(function () {
 			m.delete();

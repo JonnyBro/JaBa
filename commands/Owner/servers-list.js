@@ -31,24 +31,32 @@ class ServersList extends Command {
 			.join("\n");
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({
-				size: 512,
-				dynamic: true,
-				format: "png"
-			})})
+			.setAuthor({
+				name: message.author.tag,
+				iconURL: message.author.displayAvatarURL({
+					size: 512,
+					dynamic: true,
+					format: "png"
+				})
+			})
 			.setColor(data.config.embed.color)
-			.setFooter({ text: this.client.user.username })
+			.setFooter({
+				text: this.client.user.username
+			})
 			.setTitle(`${message.translate("common:PAGE")}: ${page}/${Math.ceil(this.client.guilds.cache.size/10)}`)
 			.setDescription(description);
 
-		const msg = await message.channel.send({ embeds: [embed] });
+		const msg = await message.channel.send({
+			embeds: [embed]
+		});
 
 		await msg.react("⬅");
 		await msg.react("➡");
 		await msg.react("❌");
 
 		const filter = (reaction, user) => user.id === message.author.id;
-		const collector = msg.createReactionCollector({ filter,
+		const collector = msg.createReactionCollector({
+			filter,
 			time: 30000
 		});
 
@@ -74,7 +82,9 @@ class ServersList extends Command {
 					.setDescription(description);
 
 				// Edit the message
-				msg.edit({ embeds: [embed] });
+				msg.edit({
+					embeds: [embed]
+				});
 			};
 
 			if (reaction._emoji.name === "➡") {
@@ -98,7 +108,9 @@ class ServersList extends Command {
 					.setDescription(description);
 
 				// Edit the message
-				msg.edit({ embeds: [embed] });
+				msg.edit({
+					embeds: [embed]
+				});
 			};
 
 			if (reaction._emoji.name === "❌") return msg.delete();

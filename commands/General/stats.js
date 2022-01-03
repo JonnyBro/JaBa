@@ -20,8 +20,12 @@ class Stats extends Command {
 	async run(message, args, data) {
 		const statsEmbed = new Discord.MessageEmbed()
 			.setColor(data.config.embed.color)
-			.setFooter({ text: data.config.embed.footer })
-			.setAuthor({ name: message.translate("common:STATS") })
+			.setFooter({
+				text: data.config.embed.footer
+			})
+			.setAuthor({
+				name: message.translate("common:STATS")
+			})
 			.setDescription(message.translate("general/stats:MADE"))
 			.addField(this.client.customEmojis.stats + " " + message.translate("general/stats:COUNTS_TITLE"), message.translate("general/stats:COUNTS_CONTENT", {
 				servers: this.client.guilds.cache.size,
@@ -46,7 +50,9 @@ class Stats extends Command {
 			donateLink: "https://qiwi.com/n/JONNYBRO/",
 			owner: this.client.config.owner.id
 		}));
-		message.channel.send({ embeds: [statsEmbed] });
+		message.channel.send({
+			embeds: [statsEmbed]
+		});
 	}
 };
 

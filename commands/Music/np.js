@@ -29,17 +29,23 @@ class Np extends Command {
 
 		// Generate discord embed to display song informations
 		const embed = new Discord.MessageEmbed()
-			.setAuthor({ name: message.translate("music/queue:TITLE") })
+			.setAuthor({
+				name: message.translate("music/queue:TITLE")
+			})
 			.setThumbnail(track.thumbnail)
 			.addField(message.translate("music/np:T_TITLE"), `[${track.name}](${track.url})`)
 			.addField(message.translate("music/np:T_CHANNEL"), track.uploader.name ? track.uploader.name : "Отсутствует")
 			.addField(message.translate("music/np:T_DURATION"), `${queue.formattedCurrentTime} / ${track.formattedDuration}`)
 			.setColor(data.config.embed.color)
-			.setFooter({ text: data.config.embed.footer })
+			.setFooter({
+				text: data.config.embed.footer
+			})
 			.setTimestamp();
 
 		// Send the embed in the current channel
-		message.channel.send({ embeds: [embed] });
+		message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

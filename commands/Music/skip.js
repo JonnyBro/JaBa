@@ -26,18 +26,26 @@ class Skip extends Command {
 		if (!queue.songs[1]) return message.error("music/skip:NO_NEXT_SONG");
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor({ name: message.translate("music/skip:SUCCESS") })
+			.setAuthor({
+				name: message.translate("music/skip:SUCCESS")
+			})
 			.setThumbnail(queue.songs[1].thumbnail)
-			.setFooter({ text: data.config.embed.footer })
+			.setFooter({
+				text: data.config.embed.footer
+			})
 			.setColor(data.config.embed.color);
 
-		const m = await message.channel.send({ embeds: [embed] });
+		const m = await message.channel.send({
+			embeds: [embed]
+		});
 
 		this.client.player.skip(message);
 		embed.setDescription(message.translate("music/play:NOW_PLAYING", {
 			songName: queue.songs[1].name
 		}));
-		m.edit({ embeds: [embed] });
+		m.edit({
+			embeds: [embed]
+		});
 	}
 };
 

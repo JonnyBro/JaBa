@@ -48,8 +48,12 @@ class Invitations extends Command {
 
 		const embed = new Discord.MessageEmbed()
 			.setColor(data.config.embed.color)
-			.setFooter({ text: data.config.embed.footer })
-			.setAuthor({ name: message.translate("general/invitations:TRACKER") })
+			.setFooter({
+				text: data.config.embed.footer
+			})
+			.setAuthor({
+				name: message.translate("general/invitations:TRACKER")
+			})
 			.setDescription(message.translate("general/invitations:TITLE", {
 				member: member.user.tag,
 				guild: message.guild.name
@@ -59,7 +63,9 @@ class Invitations extends Command {
 			}))
 			.addField(message.translate("general/invitations:FIELD_CODES"), content);
 
-		message.channel.send({ embeds: [embed] });
+		message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

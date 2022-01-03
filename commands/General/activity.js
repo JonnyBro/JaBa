@@ -34,9 +34,13 @@ class Activity extends Command {
 						.setTitle("Awkword")
 						.setColor(data.config.embed.color)
 						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Awkword", channel: voice.name })}](${invite.code})**`)
-						.setFooter({ text: message.translate("general/activity:FOOTER") })
+						.setFooter({
+							text: message.translate("general/activity:FOOTER")
+						})
 						.setTimestamp()
-					return message.channel.send({ embeds: [embed] });
+					return message.channel.send({
+						embeds: [embed]
+					});
 				});
 				break;
 
@@ -46,9 +50,13 @@ class Activity extends Command {
 						.setTitle("Betrayal.io")
 						.setColor(data.config.embed.color)
 						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Betrayal.io", channel: voice.name })}](${invite.code})**`)
-						.setFooter({ text: message.translate("general/activity:FOOTER") })
+						.setFooter({
+							text: message.translate("general/activity:FOOTER")
+						})
 						.setTimestamp()
-					return message.channel.send({ embeds: [embed] });
+					return message.channel.send({
+						embeds: [embed]
+					});
 				});
 				break;
 
@@ -58,9 +66,13 @@ class Activity extends Command {
 						.setTitle("Checkers In The Park")
 						.setColor(data.config.embed.color)
 						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Checkers In The Park", channel: voice.name })}](${invite.code})**`)
-						.setFooter({ text: message.translate("general/activity:FOOTER") })
+						.setFooter({
+							text: message.translate("general/activity:FOOTER")
+						})
 						.setTimestamp()
-					return message.channel.send({ embeds: [embed] });
+					return message.channel.send({
+						embeds: [embed]
+					});
 				});
 				break;
 
@@ -70,9 +82,13 @@ class Activity extends Command {
 						.setTitle("Chess In The Park")
 						.setColor(data.config.embed.color)
 						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Chess In The Park", channel: voice.name })}](${invite.code})**`)
-						.setFooter({ text: message.translate("general/activity:FOOTER") })
+						.setFooter({
+							text: message.translate("general/activity:FOOTER")
+						})
 						.setTimestamp()
-					return message.channel.send({ embeds: [embed] });
+					return message.channel.send({
+						embeds: [embed]
+					});
 				});
 				break;
 
@@ -82,9 +98,13 @@ class Activity extends Command {
 						.setTitle("Doodle Crew")
 						.setColor(data.config.embed.color)
 						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Doodle Crew", channel: voice.name })}](${invite.code})**`)
-						.setFooter({ text: message.translate("general/activity:FOOTER") })
+						.setFooter({
+							text: message.translate("general/activity:FOOTER")
+						})
 						.setTimestamp()
-					return message.channel.send({ embeds: [embed] });
+					return message.channel.send({
+						embeds: [embed]
+					});
 				});
 				break;
 
@@ -94,9 +114,13 @@ class Activity extends Command {
 						.setTitle("Fishington.io")
 						.setColor(data.config.embed.color)
 						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Fishington.io", channel: voice.name })}](${invite.code})**`)
-						.setFooter({ text: message.translate("general/activity:FOOTER") })
+						.setFooter({
+							text: message.translate("general/activity:FOOTER")
+						})
 						.setTimestamp()
-					return message.channel.send({ embeds: [embed] });
+					return message.channel.send({
+						embeds: [embed]
+					});
 				});
 				break;
 
@@ -106,9 +130,13 @@ class Activity extends Command {
 						.setTitle("Letter Tile")
 						.setColor(data.config.embed.color)
 						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Letter Tile", channel: voice.name })}](${invite.code})**`)
-						.setFooter({ text: message.translate("general/activity:FOOTER") })
+						.setFooter({
+							text: message.translate("general/activity:FOOTER")
+						})
 						.setTimestamp()
-					return message.channel.send({ embeds: [embed] });
+					return message.channel.send({
+						embeds: [embed]
+					});
 				});
 				break;
 
@@ -118,9 +146,13 @@ class Activity extends Command {
 						.setTitle("Poker Night")
 						.setColor(data.config.embed.color)
 						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Poker Night", channel: voice.name })}](${invite.code})**`)
-						.setFooter({ text: message.translate("general/activity:FOOTER") })
+						.setFooter({
+							text: message.translate("general/activity:FOOTER")
+						})
 						.setTimestamp()
-					return message.channel.send({ embeds: [embed] });
+					return message.channel.send({
+						embeds: [embed]
+					});
 				});
 				break;
 
@@ -130,9 +162,13 @@ class Activity extends Command {
 						.setTitle("Spell Cast")
 						.setColor(data.config.embed.color)
 						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Spell Cast", channel: voice.name })}](${invite.code})**`)
-						.setFooter({ text: message.translate("general/activity:FOOTER") })
+						.setFooter({
+							text: message.translate("general/activity:FOOTER")
+						})
 						.setTimestamp()
-					return message.channel.send({ embeds: [embed] });
+					return message.channel.send({
+						embeds: [embed]
+					});
 				});
 				break;
 
@@ -142,9 +178,13 @@ class Activity extends Command {
 						.setTitle("Words Snack")
 						.setColor(data.config.embed.color)
 						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Words Snack", channel: voice.name })}](${invite.code})**`)
-						.setFooter({ text: message.translate("general/activity:FOOTER") })
+						.setFooter({
+							text: message.translate("general/activity:FOOTER")
+						})
 						.setTimestamp()
-					return message.channel.send({ embeds: [embed] });
+					return message.channel.send({
+						embeds: [embed]
+					});
 				});
 				break;
 
@@ -154,9 +194,13 @@ class Activity extends Command {
 						.setTitle("Puttparty")
 						.setColor(data.config.embed.color)
 						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Puttparty", channel: voice.name })}](${invite.code})**`)
-						.setFooter({ text: message.translate("general/activity:FOOTER") })
+						.setFooter({
+							text: message.translate("general/activity:FOOTER")
+						})
 						.setTimestamp()
-					return message.channel.send({ embeds: [embed] });
+					return message.channel.send({
+						embeds: [embed]
+					});
 				});
 				break;
 
@@ -166,9 +210,13 @@ class Activity extends Command {
 						.setTitle("Youtube Together")
 						.setColor(data.config.embed.color)
 						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Youtube Together", channel: voice.name })}](${invite.code})**`)
-						.setFooter({ text: message.translate("general/activity:FOOTER") })
+						.setFooter({
+							text: message.translate("general/activity:FOOTER")
+						})
 						.setTimestamp()
-					return message.channel.send({ embeds: [embed] });
+					return message.channel.send({
+						embeds: [embed]
+					});
 				});
 				break;
 
@@ -177,9 +225,13 @@ class Activity extends Command {
 					.setTitle(message.translate("general/activity:TITLE"))
 					.setDescription(activities.join("\n"))
 					.setColor(data.config.embed.color)
-					.setFooter({ text: message.translate("general/activity:FOOTER") })
+					.setFooter({
+						text: message.translate("general/activity:FOOTER")
+					})
 					.setTimestamp()
-				message.channel.send({ embeds: [embed] });
+				message.channel.send({
+					embeds: [embed]
+				});
 				break;
 		};
 	}

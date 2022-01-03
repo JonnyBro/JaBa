@@ -36,7 +36,9 @@ class Say extends Command {
 					content: args[0],
 					files: [attachment]
 				});
-				else saychannel.send({ content: args[0] });
+				else saychannel.send({
+					content: args[0]
+				});
 			}, 2000);
 		} else if (args[2]) {
 			const saychannel = this.client.guilds.cache.find(guild => guild.name == args[2] || guild.id == args[2]).channels.cache.find(channel => channel.name == args[1] || channel.id == args[1]);
@@ -47,7 +49,9 @@ class Say extends Command {
 					content: args[0],
 					files: [attachment]
 				});
-				else saychannel.send({ content: args[0] });
+				else saychannel.send({
+					content: args[0]
+				});
 			}, 2000);
 		} else {
 			message.delete();
@@ -59,7 +63,9 @@ class Say extends Command {
 					content: args[0],
 					files: [attachment]
 				});
-				else saychannel.send({ content: args[0] });
+				else saychannel.send({
+					content: args[0]
+				});
 			}, 2000);
 		};
 	}

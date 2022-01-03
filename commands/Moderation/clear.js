@@ -30,7 +30,9 @@ class Clear extends Command {
 			const newChannel = await message.channel.clone();
 			await message.channel.delete();
 			newChannel.setPosition(position);
-			return newChannel.send({ content: message.translate("moderation/clear:CHANNEL_CLEARED") });
+			return newChannel.send({
+				content: message.translate("moderation/clear:CHANNEL_CLEARED")
+			});
 		};
 
 		let amount = args[0];

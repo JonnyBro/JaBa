@@ -25,15 +25,23 @@ class Stop extends Command {
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor({ name: message.translate("music/stop:DESCRIPTION") })
-			.setFooter({ text: data.config.embed.footer })
+			.setAuthor({
+				name: message.translate("music/stop:DESCRIPTION")
+			})
+			.setFooter({
+				text: data.config.embed.footer
+			})
 			.setColor(data.config.embed.color);
 
-		const m = await message.channel.send({ embeds: [embed] });
+		const m = await message.channel.send({
+			embeds: [embed]
+		});
 
 		this.client.player.stop(message);
 		embed.setDescription(message.translate("music/stop:SUCCESS"));
-		m.edit({ embeds: [embed] });
+		m.edit({
+			embeds: [embed]
+		});
 	}
 };
 

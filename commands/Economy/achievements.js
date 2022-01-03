@@ -19,9 +19,13 @@ class Achievements extends Command {
 
 	async run(message, args, data) {
 		const embed = new Discord.MessageEmbed()
-			.setAuthor({ name: message.translate("economy/achievements:TITLE") })
+			.setAuthor({
+				name: message.translate("economy/achievements:TITLE")
+			})
 			.setColor(data.config.embed.color)
-			.setFooter({ text: data.config.embed.footer });
+			.setFooter({
+				text: data.config.embed.footer
+			});
 
 		embed.addField(message.translate("economy/achievements:SEND_CMD"), message.translate("economy/achievements:PROGRESS", {
 			now: data.userData.achievements.firstCommand.progress.now,
@@ -59,7 +63,9 @@ class Achievements extends Command {
 			percent: Math.round(100 * (data.userData.achievements.invite.progress.now / data.userData.achievements.invite.progress.total))
 		}));
 
-		message.channel.send({ embeds: [embed] });
+		message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

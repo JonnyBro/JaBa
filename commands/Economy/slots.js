@@ -19,15 +19,9 @@ class Slots extends Command {
 	async run(message, args, data) {
 		const fruits = ["🍎", "🍐", "🍌", "🍇", "🍉", "🍒", "🍓"];
 
-		let i1 = 0,
-			j1 = 0,
-			k1 = 0,
-			i2 = 1,
-			j2 = 1,
-			k2 = 1,
-			i3 = 2,
-			j3 = 2,
-			k3 = 2;
+		let i1 = 0, j1 = 0, k1 = 0,
+			i2 = 1, j2 = 1, k2 = 1,
+			i3 = 2, j3 = 2, k3 = 2;
 
 		// Gets three random fruits array
 		const colonnes = [
@@ -39,9 +33,7 @@ class Slots extends Command {
 		// Gets the amount provided
 		let amount = args[0];
 		if (!amount || isNaN(amount) || amount < 1) amount = 50;
-		if (amount > data.memberData.money) return message.error("economy/slots:NOT_ENOUGH", {
-			money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
-		});
+		if (amount > data.memberData.money) return message.error("economy/slots:NOT_ENOUGH", { money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}` });
 
 		amount = Math.round(amount);
 

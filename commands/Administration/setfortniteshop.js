@@ -65,7 +65,9 @@ class Setfortniteshop extends Command {
 			})
 			.setImage("attachment://shop.png")
 			.setColor(data.config.embed.color)
-			.setFooter({ text: data.config.embed.footer });
+			.setFooter({
+				text: data.config.embed.footer
+			});
 		const msg = await channel.send({
 			embeds: [embed],
 			files: [attachment]

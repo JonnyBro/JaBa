@@ -90,16 +90,20 @@ class Mute extends Command {
 			const channel = message.guild.channels.cache.get(data.guild.plugins.modlogs);
 			if (!channel) return;
 			const embed = new Discord.MessageEmbed()
-				.setAuthor({ name: message.translate("moderation/mute:CASE", {
-					count: data.guild.casesCount
-				})})
+				.setAuthor({
+					name: message.translate("moderation/mute:CASE", {
+						count: data.guild.casesCount
+					})
+				})
 				.addField(message.translate("common:USER"), `\`${member.user.tag}\` (${member.user.toString()})`, true)
 				.addField(message.translate("common:MODERATOR"), `\`${message.author.tag}\` (${message.author.toString()})`, true)
 				.addField(message.translate("common:REASON"), reason, true)
 				.addField(message.translate("common:DURATION"), time, true)
 				.addField(message.translate("common:EXPIRY"), message.printDate(new Date(Date.now() + ms(time))), true)
 				.setColor("#f44271");
-			channel.send({ embeds: [embed] });
+			channel.send({
+				embeds: [embed]
+			});
 		}
 	}
 };
