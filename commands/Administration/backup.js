@@ -107,7 +107,7 @@ class Backup extends Command {
 			if (!backupID) return message.error("administration/backup:MISSING_BACKUP_ID");
 
 			backup.fetch(backupID).then(async () => {
-				message.sendT("administration/backup:CONFIRMATION");
+				message.sendT("administration/backup:REMOVE_CONFIRMATION");
 				await message.channel.awaitMessages(m => (m.author.id === message.author.id) && (m.content === "confirm"), {
 					max: 1,
 					time: 20000,
@@ -117,8 +117,9 @@ class Backup extends Command {
 					return message.error("administration/backup:TIMES_UP");
 				});
 
-				backup.remove(backupID);
-				message.success("administration/backup:SUCCESS_REMOVED");
+				backup.remove(backupID).then(async () => {
+					message.success("administration/backup:SUCCESS_REMOVED");
+				});
 			}).catch(() => {
 				// if the backup wasn't found
 				return message.error("administration/backup:NO_BACKUP_FOUND", {
