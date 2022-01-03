@@ -4,7 +4,7 @@
 	"EXAMPLES": "{{prefix}}backup create\n{{prefix}}backup load 123456789098765432\n{{prefix}}backup info 123456789098765432",
 	"MISSING_STATUS": "Выберите действие: `create`, `load`, `info` или `remove`!",
 	"MISSING_BACKUP_ID": "Укажите ID резервной копии!",
-	"NO_BACKUP_FOUND": "Резервных копий для `{{backupID}} не найдено`",
+	"NO_BACKUP_FOUND": "Резервных копий с ID `{{backupID}}` не найдено",
 	"TIMES_UP": "Время вышло! Используйте команду снова!",
 	"SUCCESS_PUBLIC": "Резервная копия успешно создана! ID резервной копии был отправлен вам в ЛС!",
 	"SUCCESS_PRIVATE": "Вот ID вашей резервной копии: `{{backupID}}`, используйте его для восстановления на другом сервере!",

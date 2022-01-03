@@ -1,7 +1,6 @@
 const Command = require("../../base/Command.js"),
 	Discord = require("discord.js"),
-	backup = require("discord-backup"),
-	Sentry = require("@sentry/node");
+	backup = require("discord-backup");
 
 class Backup extends Command {
 	constructor(client) {
@@ -37,7 +36,7 @@ class Backup extends Command {
 					message.error("misc:CANNOT_DM");
 				});
 			}).catch((err) => {
-				Sentry.captureException(err);
+				console.error(err);
 				return message.error("misc:ERR_OCCURRED");
 			});
 		} else if (status === "load") {
@@ -62,7 +61,7 @@ class Backup extends Command {
 					backup.remove(backupID);
 					message.author.send(message.translate("administration/backup:LOAD_SUCCESS"));
 				}).catch((err) => {
-					Sentry.captureException(err);
+					console.error(err);
 					// If an error occurenced
 					return message.error("misc:ERR_OCCURRED");
 				});
@@ -96,7 +95,8 @@ class Backup extends Command {
 				message.channel.send({
 					embeds: [embed]
 				});
-			}).catch(() => {
+			}).catch((err) => {
+				console.error(err);
 				// if the backup wasn't found
 				return message.error("administration/backup:NO_BACKUP_FOUND", {
 					backupID
