@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Снять все предупреждения с пользователя!",
+	"USAGE": "{{prefix}}clearsanctions [@пользователь]",
+	"EXAMPLES": "{{prefix}}clearsanctions @Jonny_Bro#4226",
+	"MISSING_MEMBER": "Вы должны упомянуть пользователя!",
+	"SUCCESS": "Предупреждения пользователя **{{username}}** удалены!"
+}

@@ -1,0 +1,9 @@
+{
+	"DESCRIPTION": "Внести кредиты в банк",
+	"USAGE": "{{prefix}}deposit [сумма]",
+	"EXAMPLES": "{{prefix}}deposit 1000",
+	"MISSING_AMOUNT": "Укажите сумму!",
+	"NO_CREDIT": "У вас нет кредитов!",
+	"NO_ENOUGH_CREDIT": "У вас нет `{{money}}`!",
+	"SUCCESS": "{{money}} внесено на ваш банковский счёт!"
+}

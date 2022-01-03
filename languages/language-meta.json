@@ -1,0 +1,16 @@
+[
+	{
+		"name": "ru-RU",
+		"nativeName": "Русский",
+		"moment": "ru",
+		"defaultMomentFormat": "Do MMMM YYYY",
+		"default": true,
+		"aliases": [
+			"Russian",
+			"ru",
+			"ru-ru",
+			"ru_ru",
+			"ru_RU"
+		]
+	}
+]

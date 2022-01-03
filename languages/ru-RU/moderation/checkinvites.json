@@ -1,0 +1,6 @@
+{
+	"DESCRIPTION": "Проверить пользователей на наличие ссылок-приглашений в статусе!",
+	"USAGE": "{{prefix}}checkinvites",
+	"EXAMPLES": "{{prefix}}checkinvites",
+	"NOBODY": "Ни у кого нет ссылок-приглашений в статусе!"
+}

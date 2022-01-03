@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Recipes</title>
+
+  <script>
+    /* global dataLayer */
+    document.write(`<base href="${location.protocol === 'http:' ? 'http://127.0.0.1:5000/docs/' : 'https://zerodevx.github.io/zero-md/'}">`)
+    window.dataLayer = window.dataLayer || []
+    function gtag () { dataLayer.push(arguments) }
+    gtag('js', new Date())
+    gtag('config', 'G-LJS2EY950X', { send_page_view: false })
+    location.protocol === 'https:' && (function () {
+      const el = document.createElement('script')
+      el.src = 'https://www.googletagmanager.com/gtag/js?id=G-LJS2EY950X'
+      el.async = true
+      document.head.appendChild(el)
+    }())
+  </script>
+  <script>
+    window.ZeroMdConfig = {
+      prismUrl: [
+        ['https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js', 'data-manual'],
+        'https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js',
+        'https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/toolbar/prism-toolbar.min.js',
+        'https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js'
+      ],
+      cssUrls: [
+        'https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css@4/github-markdown.min.css',
+        'https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css',
+        'https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/toolbar/prism-toolbar.min.css'
+      ]
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
+  <style>
+    .pace .pace-progress {
+      background: #1C75BC;
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Seaweed+Script&display=swap">
+  <link rel="stylesheet" href="styles.css">
+
+  <script defer src="https://cdn.jsdelivr.net/npm/navaid@1/dist/navaid.min.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
+  <script type="module" src="app.js"></script>
+</head>
+
+<body>
+
+  <header class="header container">
+    <h1 style="font-family:'Seaweed Script',sans-serif">&lt;zero-md&gt;</h1>
+    <div>
+      <a href="https://github.com/zerodevx/zero-md" title="Fork me on Github">
+        <img
+          src="https://img.shields.io/github/package-json/v/zerodevx/zero-md?style=for-the-badge&logo=github&label=fork+me+on+github"
+          alt="version">
+      </a>
+    </div>
+  </header>
+
+  <div class="nav-wrap container">
+    <div>
+      <nav class="nav"></nav>
+    </div>
+  </div>
+
+  <main class="offset container">
+    <zero-md class="app" manual-render>
+      <template data-merge="append">
+        <style>
+          .markdown-body pre>code {
+            font-size: 0.875rem;
+          }
+          @media (max-width: 640px) {
+            .markdown-body ul {
+              margin-left: 1.125rem;
+            }
+          }
+        </style>
+      </template>
+      <script type="text/markdown"># 404
+>Oops
+
+A **rose** by any other name would smell as sweet.</script>
+    </zero-md>
+  </main>
+
+  <footer>ISC LICENSE</footer>
+</body>
+</html>

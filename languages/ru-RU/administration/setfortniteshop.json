@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Установить канал для ежедневного Fortnite магазина!",
+	"USAGE": "{{prefix}}setfortniteshop (#канал)",
+	"EXAMPLES": "{{prefix}}setfortniteshop #магазин\n{{prefix}}setfortniteshop",
+	"ENABLED": "Ежедневный Fortnite магазин включён в {{channel}}!",
+	"DISABLED": "Ежедневный Fortnite магазин отключён!"
+}

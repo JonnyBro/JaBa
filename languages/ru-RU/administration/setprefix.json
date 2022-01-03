@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Установить префикс на сервере!",
+	"USAGE": "{{prefix}}setprefix [префикс]",
+	"EXAMPLES": "{{prefix}}setprefix $",
+	"MISSING_PREFIX": "Укажите префикс!",
+	"TOO_LONG": "Префикс не может быть длиннее 5 символов!",
+	"SUCCESS": "Префикс бота изменён на `{{prefix}}`!"
+}
