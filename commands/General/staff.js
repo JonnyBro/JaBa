@@ -20,7 +20,6 @@ class Staff extends Command {
 	async run(message, args, data) {
 		await message.guild.members.fetch();
 		const administrators = message.guild.members.cache.filter((m) => m.permissions.has(Discord.Permissions.FLAGS.ADMINISTRATOR) && !m.user.bot);
-		console.log(administrators[0])
 		const moderators = message.guild.members.cache.filter((m) => !administrators.has(m.id) && m.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES) && !m.user.bot);
 		const embed = new Discord.MessageEmbed()
 			.setAuthor({
