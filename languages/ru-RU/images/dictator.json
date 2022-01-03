@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Создать изображение \"dictator\"",
-	"USAGE": "{{prefix}}dictator (@пользователь)",
-	"EXAMPLES": "{{prefix}}dictator\n{{prefix}}dictator @Jonny_Bro#4226"
-}

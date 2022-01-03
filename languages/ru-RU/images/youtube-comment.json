@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Создать изображение \"youtube-comment\"",
-	"USAGE": "{{prefix}}youtube-comment (@пользователь) [текст]",
-	"EXAMPLES": "{{prefix}}youtube-comment Привет!\n{{prefix}}youtube-comment @Jonny_Bro#4226 Привет!"
-}

@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Продолжает воспроизведение очереди!",
-	"USAGE": "{{prefix}}resume",
-	"EXAMPLES": "{{prefix}}resume",
-	"SUCCESS": "▶️ Воспроизведение очереди продолжается!"
-}

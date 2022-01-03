@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Создать изображение \"rip\"",
-	"USAGE": "{{prefix}}rip (@пользователь)",
-	"EXAMPLES": "{{prefix}}rip\n{{prefix}}rip @Jonny_Bro#4226"
-}

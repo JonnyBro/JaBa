@@ -1,8 +1,0 @@
-{
-	"DESCRIPTION": "Shows JaBa's v2 Github repository information!",
-	"USAGE": "{{prefix}}github",
-	"EXAMPLES": "{{prefix}}github",
-	"CLICK_HERE": "Click here to access the github of JaBa",
-	"LANGUAGE": "Programming language",
-	"OWNER": "JaBa's repository owner"
-}
