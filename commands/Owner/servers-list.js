@@ -18,7 +18,7 @@ class ServersList extends Command {
 	}
 
 	async run(message, args, data) {
-		if (!message.channel.type != "DM") message.delete();
+		if (!message.channel.type !== "DM") message.delete();
 
 		let i0 = 0,
 			i1 = 10,
@@ -113,7 +113,7 @@ class ServersList extends Command {
 				});
 			};
 
-			if (reaction._emoji.name === "❌") return msg.delete();
+			if (reaction._emoji.name === "❌" && !message.channel.type !== "DM") return msg.delete();
 
 			// Remove the reaction when the user react to the message
 			await reaction.users.remove(message.author.id);
