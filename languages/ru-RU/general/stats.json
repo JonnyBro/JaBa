@@ -9,7 +9,7 @@
 	"ONLINE_TITLE": "• __Онлайн__",
 	"ONLINE_CONTENT": "Работает {{time}}",
 	"MUSIC_TITLE": "• __Музыка__",
-	"MUSIC_CONTENT": "Играет музыку на `{{count}}` серверах",
+	"MUSIC_CONTENT": "Играет музыку на {{count}}",
 	"CREDITS_TITLE": ":heart: • __Доп. информация и ссылки__",
 	"CREDITS_CONTENT": "Спасибо [Icons8](https://icons8.com/) за эмодзи!\n__**Поддержавшие**__:\n{{donators}}\n__**Переводчики**__:\n{{translators}}",
 	"LINKS_TITLE": "• __Ссылки__",
