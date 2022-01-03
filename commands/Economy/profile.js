@@ -84,7 +84,9 @@ class Profile extends Command {
 
 		message.channel.send({
 			embeds: [profileEmbed],
-			files: [userData.getAchievements()]
+			files: [{
+				attachment: userData.getAchievements()
+			}]
 		}); // Send the embed in the current channel
 	}
 };

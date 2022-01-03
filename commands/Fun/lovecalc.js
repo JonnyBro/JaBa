@@ -18,7 +18,7 @@ class Lovecalc extends Command {
 		});
 	}
 
-	async run(message) {
+	async run(message, args, data) {
 		const firstMember = message.mentions.members.filter(m => m.id !== message.author.id).first();
 		if (!firstMember) return message.error("fun/lovecalc:MISSING");
 		const secondMember = message.mentions.members
