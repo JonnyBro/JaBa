@@ -16,13 +16,7 @@ class Eval extends Command {
 		});
 	}
 
-	// eslint-disable-next-line no-unused-vars
 	async run(message, args, data) {
-		// eslint-disable-next-line no-unused-vars
-		const usersData = this.client.usersData;
-		// eslint-disable-next-line no-unused-vars
-		const guildsData = this.client.guildsData;
-
 		const content = message.content.split(" ").slice(1).join(" ");
 		const result = new Promise((resolve) => resolve(eval(content)));
 
@@ -31,16 +25,12 @@ class Eval extends Command {
 				depth: 0
 			});
 			if (output.includes(this.client.token)) output = output.replace(this.client.token, "T0K3N");
-			message.channel.send(output, {
-				code: "js"
-			});
+			message.channel.send({ content: "```js\n" + output + "```" });
 		}).catch((err) => {
 			console.error(err);
 			err = err.toString();
 			if (err.includes(this.client.token)) err = err.replace(this.client.token, "T0K3N");
-			message.channel.send(err, {
-				code: "js"
-			});
+			message.channel.send({ content: "```js\n" + err + "```" });
 		});
 	}
 };

@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const { Permissions } = require("discord.js");
 
 /**
  * Fetch guild informations
@@ -24,8 +24,8 @@ async function fetchUser(userData, client, query) {
 	if (userData.guilds) {
 		userData.guilds.forEach((guild) => {
 			if (!client.guilds.cache.get(guild.id)) return;
-			const perms = new Discord.Permissions(guild.permissions);
-			if (perms.has("MANAGE_GUILD")) guild.admin = true;
+			const perms = new Permissions(BigInt(guild.permissions));
+			if (perms.has(Permissions.FLAGS.MANAGE_GUILD)) guild.admin = true;
 
 			guild.settingsUrl = (client.guilds.cache.get(guild.id) ? `/manage/${guild.id}/` : `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8&guild_id=${guild.id}`);
 			guild.statsUrl = (client.guilds.cache.get(guild.id) ? `/stats/${guild.id}/` : `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8&guild_id=${guild.id}`);

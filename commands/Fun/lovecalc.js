@@ -37,16 +37,16 @@ class Lovecalc extends Command {
 		const percent = parseInt(string.substr(0, 2), 10);
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(`❤️ ${message.translate("fun/lovecalc:DESCRIPTION")}`)
+			.setAuthor({ name: `❤️ ${message.translate("fun/lovecalc:DESCRIPTION")}` })
 			.setDescription(message.translate("fun/lovecalc:CONTENT", {
 				percent,
 				firstUsername: firstMember.user.username,
 				secondUsername: secondMember.user.username
 			}))
-			.setColor(this.client.config.embed.color)
-			.setFooter(this.client.config.embed.footer);
+			.setColor(data.config.embed.color)
+			.setFooter({ text: data.config.embed.footer });
 
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 	}
 };
 

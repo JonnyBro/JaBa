@@ -22,7 +22,7 @@ class Eightball extends Command {
 		const answerN = this.client.functions.randomNum(1, 19);
 		const answer = message.translate(`fun/8ball:RESPONSE_${answerN + 1}`);
 
-		message.channel.send(answer);
+		message.channel.send({ content: answer });
 	}
 };
 

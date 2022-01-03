@@ -30,7 +30,9 @@ class Number extends Command {
 		// Store the date wich the game has started
 		const gameCreatedAt = Date.now();
 
-		const collector = new Discord.MessageCollector(message.channel, m => !m.author.bot, {
+		const filter = m => !m.author.bot;
+		const collector = new Discord.MessageCollector(message.channel, {
+			filter,
 			time: 480000 // 8 minutes
 		});
 		currentGames[message.guild.id] = true;

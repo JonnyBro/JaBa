@@ -22,7 +22,7 @@ class Giveaway extends Command {
 		if (!status) return message.error("moderation/giveaway:MISSING_STATUS");
 
 		if (status === "create") {
-			const currentGiveaways = this.client.giveawaysManager.giveaways.filter((g) => g.guildID === message.guild.id && !g.ended).length;
+			const currentGiveaways = this.client.giveawaysManager.giveaways.filter((g) => g.guildId === message.guild.id && !g.ended).length;
 			if (currentGiveaways > 3) return message.error("moderation/giveaway:MAX_COUNT");
 
 			const time = args[1];

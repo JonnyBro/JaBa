@@ -43,7 +43,7 @@ class Unban extends Command {
 		if (!user) return message.error("misc:NO_USER_FOUND_ID", { id: args[0] });
 
 		// check if the user is banned
-		const banned = await message.guild.fetchBans();
+		const banned = await message.guild.bans.fetch();
 		if (!banned.some((e) => e.user.id === user.id)) return message.success("moderation/unban:NOT_BANNED", { username: user.tag });
 
 		// Unban user

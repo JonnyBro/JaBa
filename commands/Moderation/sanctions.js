@@ -27,25 +27,25 @@ class Sanctions extends Command {
 		});
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(user.tag, user.displayAvatarURL({
+			.setAuthor({ name: user.tag, iconURL: user.displayAvatarURL({
 				size: 512,
 				dynamic: true,
 				format: "png"
-			}))
+			})})
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer);
+			.setFooter({ text: data.config.embed.footer });
 
 		if (memberData.sanctions.length < 1) {
 			embed.setDescription(message.translate("moderation/sanctions:NO_SANCTION", {
 				username: user.tag
 			}));
-			return message.channel.send(embed);
+			return message.channel.send({ embeds: [embed] });
 		} else {
 			memberData.sanctions.forEach((s) => {
 				embed.addField(s.type + " | #" + s.case, `${message.translate("common:MODERATOR")}: <@${s.moderator}>\n${message.translate("common:REASON")}: ${s.reason}`, true);
 			});
 		};
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 	}
 };
 

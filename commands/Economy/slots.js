@@ -19,9 +19,15 @@ class Slots extends Command {
 	async run(message, args, data) {
 		const fruits = ["🍎", "🍐", "🍌", "🍇", "🍉", "🍒", "🍓"];
 
-		let i1 = 0, j1 = 0, k1 = 0,
-			i2 = 1, j2 = 1, k2 = 1,
-			i3 = 2, j3 = 2, k3 = 2;
+		let i1 = 0,
+			j1 = 0,
+			k1 = 0,
+			i2 = 1,
+			j2 = 1,
+			k2 = 1,
+			i3 = 2,
+			j3 = 2,
+			k3 = 2;
 
 		// Gets three random fruits array
 		const colonnes = [
@@ -77,11 +83,13 @@ class Slots extends Command {
 				msg += "| : : :  **" + (message.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
 				tmsg.edit(msg);
 				const credits = getCredits(amount, true);
-				message.channel.send("**!! ДЖЕКПОТ !!**\n" + message.translate("economy/slots:VICTORY", {
-					money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-					won: `${credits} ${message.getNoun(credits, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-					username: message.author.username
-				}));
+				message.channel.send({
+					content: "**!! ДЖЕКПОТ !!**\n" + message.translate("economy/slots:VICTORY", {
+						money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+						won: `${credits} ${message.getNoun(credits, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+						username: message.author.username
+					})
+				});
 				const toAdd = credits - amount;
 				data.memberData.money = data.memberData.money + toAdd;
 				if (!data.userData.achievements.slots.achieved) {
@@ -106,11 +114,13 @@ class Slots extends Command {
 				msg += "| : : :  **" + (message.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
 				tmsg.edit(msg);
 				const credits = getCredits(amount, false);
-				message.channel.send(message.translate("economy/slots:VICTORY", {
-					money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-					won: `${credits} ${message.getNoun(credits, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-					username: message.author.username
-				}));
+				message.channel.send({
+					content: message.translate("economy/slots:VICTORY", {
+						money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+						won: `${credits} ${message.getNoun(credits, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+						username: message.author.username
+					})
+				});
 				const toAdd = credits - amount;
 				data.memberData.money = data.memberData.money + toAdd;
 				if (!data.userData.achievements.slots.achieved) {
@@ -132,10 +142,12 @@ class Slots extends Command {
 			};
 
 			msg += "| : : :  **" + (message.translate("common:DEFEAT").toUpperCase()) + "**  : : : |";
-			message.channel.send(message.translate("economy/slots:DEFEAT", {
-				money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-				username: message.author.username
-			}));
+			message.channel.send({
+				content: message.translate("economy/slots:DEFEAT", {
+					money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+					username: message.author.username
+				})
+			});
 			data.memberData.money = data.memberData.money - amount;
 			if (!data.userData.achievements.slots.achieved) {
 				data.userData.achievements.slots.progress.now = 0;

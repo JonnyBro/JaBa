@@ -26,16 +26,16 @@ class Back extends Command {
 		if (!queue.previousSongs[0]) return message.error("music/back:NO_PREV_SONG");
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(message.translate("music/back:DESCRIPTION"))
+			.setAuthor({ name: message.translate("music/back:DESCRIPTION") })
 			.setThumbnail(queue.tracks[0].thumbnail)
-			.setFooter(data.config.embed.footer)
-			.setColor(data.config.embed.color);
+			.setColor(data.config.embed.color)
+			.setFooter({ text: data.config.embed.footer });
 
-		const m = await message.channel.send(embed);
+		const m = await message.channel.send({ embeds: [embed] });
 
 		this.client.player.previous(message);
 		embed.setDescription(message.translate("music/back:SUCCESS"));
-		m.edit(embed);
+		m.edit({ embeds: [embed] });
 	}
 };
 

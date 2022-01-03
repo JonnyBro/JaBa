@@ -36,9 +36,9 @@ class Checkinvites extends Command {
 		const embed = new Discord.MessageEmbed()
 			.setDescription(text)
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer);
+			.setFooter({ text: data.config.embed.footer });
 
-		const m = await message.channel.send(embed);
+		const m = await message.channel.send({ embeds: [embed] });
 
 		setTimeout(function () {
 			m.delete();

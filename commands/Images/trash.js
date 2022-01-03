@@ -27,10 +27,13 @@ class Trash extends Command {
 			format: "png",
 			size: 512
 		}));
-		const attachment = new Discord.MessageAttachment(buffer, "trash.png");
 		m.delete();
 
-		message.channel.send(attachment);
+		message.channel.send({
+			files: [{
+				attachment: buffer
+			}]
+		});
 	}
 };
 

@@ -20,14 +20,14 @@ class Quote extends Command {
 	async run(message, args, data) {
 		function embed(m) {
 			const embed = new Discord.MessageEmbed()
-				.setAuthor(m.author.tag, m.author.displayAvatarURL({
+				.setAuthor({ name: m.author.tag, iconURL: m.author.displayAvatarURL({
 					size: 512,
 					dynamic: true,
 					format: "png"
-				}))
+				})})
 				.setDescription(m.content)
 				.setColor(m.member ? m.member.roles.highest ? m.member.roles.highest.color : data.config.embed.color : data.config.embed.color)
-				.setFooter(m.guild.name + " | #" + m.channel.name)
+				.setFooter({ text: m.guild.name + " | #" + m.channel.name })
 				.setTimestamp(m.createdTimestamp);
 			if (m.attachments.size > 0) embed.setImage(m.attachments.first().url);
 			return embed;
@@ -35,7 +35,7 @@ class Quote extends Command {
 
 		const msgID = args[0];
 		if (isNaN(msgID)) {
-			message.author.send(message.translate("general/quote:MISSING_ID")).then(() => {
+			message.author.send({ content: message.translate("general/quote:MISSING_ID") }).then(() => {
 				message.delete();
 			}).catch(() => {
 				message.error("misc:CANNOT_DM");
@@ -66,7 +66,7 @@ class Quote extends Command {
 				return;
 			}).then((msg) => {
 				message.delete();
-				message.channel.send(embed(msg));
+				message.channel.send({ embeds: [embed(msg)] });
 			});
 		} else {
 			channel.messages.fetch(msgID).catch(() => {
@@ -78,7 +78,7 @@ class Quote extends Command {
 				return;
 			}).then((msg) => {
 				message.delete();
-				message.channel.send(embed(msg));
+				message.channel.send({ embeds: [embed(msg)] });
 			});
 		};
 	}

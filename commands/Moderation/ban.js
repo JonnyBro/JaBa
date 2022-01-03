@@ -29,7 +29,7 @@ class Ban extends Command {
 		if (user.id === message.author.id) return message.error("moderation/ban:YOURSELF");
 
 		// If the user is already banned
-		const banned = await message.guild.fetchBans();
+		const banned = await message.guild.bans.fetch();
 		if (banned.some((m) => m.user.id === user.id)) return message.error("moderation/ban:ALREADY_BANNED", {
 			username: user.tag
 		});
@@ -42,7 +42,7 @@ class Ban extends Command {
 		if (member) {
 			const memberPosition = member.roles.highest.position;
 			const moderationPosition = message.member.roles.highest.position;
-			if (message.member.ownerID !== message.author.id && !(moderationPosition > memberPosition)) return message.error("moderation/ban:SUPERIOR");
+			if (message.member.ownerId !== message.author.id && !(moderationPosition > memberPosition)) return message.error("moderation/ban:SUPERIOR");
 			if (!member.bannable) return message.error("moderation/ban:MISSING_PERM");
 		};
 
@@ -86,14 +86,14 @@ class Ban extends Command {
 				const channel = message.guild.channels.cache.get(data.guild.plugins.modlogs);
 				if (!channel) return;
 				const embed = new Discord.MessageEmbed()
-					.setAuthor(message.translate("moderation/ban:CASE", {
+					.setAuthor({ name: message.translate("moderation/ban:CASE", {
 						count: data.guild.casesCount
-					}))
+					})})
 					.addField(message.translate("common:USER"), `\`${user.tag}\` (${user.toString()})`, true)
 					.addField(message.translate("common:MODERATOR"), `\`${message.author.tag}\` (${message.author.toString()})`, true)
 					.addField(message.translate("common:REASON"), reason, true)
 					.setColor("#e02316");
-				channel.send(embed);
+				channel.send({ embeds: [embed] });
 			};
 
 		}).catch((err) => {

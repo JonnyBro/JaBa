@@ -33,9 +33,13 @@ class Bed extends Command {
 			}), users[1].displayAvatarURL({
 				format: "png"
 			}));
-			const attachment = new Discord.MessageAttachment(buffer, "bed.png");
-			message.channel.send(attachment);
 			m.delete();
+
+			message.channel.send({
+				files: [{
+					attachment: buffer
+				}]
+			});
 		} catch (e) {
 			console.log(e);
 			m.error("misc:ERROR_OCCURRED", null, {

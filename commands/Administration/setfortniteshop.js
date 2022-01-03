@@ -53,18 +53,23 @@ class Setfortniteshop extends Command {
 		const attachment = new Discord.MessageAttachment(image, "shop.png");
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(this.client.translate("general/fortniteshop:DATE", {
-				date: this.client.printDate(new Date(Date.now()), null, message.guild.data.language)
-			}, message.guild.data.language), this.client.user.displayAvatarURL({
-				size: 512,
-				dynamic: true,
-				format: "png"
-			}))
-			.attachFiles(attachment)
+			.setAuthor({
+				name: this.client.translate("general/fortniteshop:DATE", {
+					date: this.client.printDate(new Date(Date.now()), null, message.guild.data.language)
+				}, message.guild.data.language),
+				iconURL: this.client.user.displayAvatarURL({
+					size: 512,
+					dynamic: true,
+					format: "png"
+				})
+			})
 			.setImage("attachment://shop.png")
-			.setColor(this.client.config.embed.color)
-			.setFooter(this.client.config.embed.footer);
-		const msg = await channel.send(embed);
+			.setColor(data.config.embed.color)
+			.setFooter({ text: data.config.embed.footer });
+		const msg = await channel.send({
+			embeds: [embed],
+			files: [attachment]
+		});
 		await msg.react("😍");
 		await msg.react("😐");
 		await msg.react("😭");

@@ -23,7 +23,7 @@ class Hentai extends Command {
 		var gif = null;
 		const embed = new Discord.MessageEmbed()
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer)
+			.setFooter({ text: data.config.embed.footer })
 			.setTimestamp()
 
 		switch (category) {
@@ -95,7 +95,7 @@ class Hentai extends Command {
 				}))
 				break;
 		};
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 	}
 };
 

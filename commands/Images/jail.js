@@ -28,10 +28,13 @@ class Jail extends Command {
 				size: 1024
 			})
 		});
-		const attachment = new Discord.MessageAttachment(buffer, "jail.png");
 		m.delete();
 
-		message.channel.send(attachment);
+		message.channel.send({
+			files: [{
+				attachment: buffer
+			}]
+		});
 	}
 };
 

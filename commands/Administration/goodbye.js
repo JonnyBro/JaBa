@@ -49,7 +49,8 @@ class Goodbye extends Command {
 				author: message.author.toString()
 			});
 
-			const collector = message.channel.createMessageCollector(m => m.author.id === message.author.id, {
+			const filter = m => m.author.id === message.author.id;
+			const collector = message.channel.createMessageCollector({ filter,
 				time: 120000 // 2 minutes
 			});
 
@@ -100,7 +101,7 @@ class Goodbye extends Command {
 			});
 
 			collector.on("end", (_, reason) => {
-				if (reason === "time") return message.error("misc:TIMEOUT");
+				if (reason === "time") return message.error("misc:TIMES_UP");
 			});
 		};
 	}

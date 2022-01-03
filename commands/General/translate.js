@@ -49,18 +49,19 @@ class Translate extends Command {
 		});
 
 		const resEmbed = new Discord.MessageEmbed()
-			.setAuthor("Переводчик", this.client.user.displayAvatarURL({
+			.setAuthor({ name: "Переводчик", iconURL: this.client.user.displayAvatarURL({
 				size: 512,
 				dynamic: true,
 				format: "png"
-			}))
+			})})
 			.addField(translated.from.language.iso, "```" + toTranslate + "```")
 			.addField(language, "```" + translated.text + "```")
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer);
+			.setFooter({ text: data.config.embed.footer });
 
-		return pWait.edit("", {
-			embed: resEmbed
+		return pWait.edit({
+			content: null,
+			embeds: [resEmbed]
 		});
 	}
 };

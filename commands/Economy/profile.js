@@ -42,7 +42,7 @@ class Profile extends Command {
 
 		const commonsGuilds = client.guilds.cache.filter((g) => g.members.cache.get(member.id));
 		let globalMoney = 0;
-		await asyncForEach(commonsGuilds.array(), async (guild) => {
+		await asyncForEach(commonsGuilds, async (guild) => {
 			const memberData = await client.findOrCreateMember({
 				id: member.id,
 				guildID: guild.id
@@ -52,17 +52,13 @@ class Profile extends Command {
 		});
 
 		const profileEmbed = new Discord.MessageEmbed()
-			.setAuthor(message.translate("economy/profile:TITLE", {
+			.setAuthor({ name: message.translate("economy/profile:TITLE", {
 				username: member.user.tag
-			}), member.user.displayAvatarURL({
+			}), iconURL: member.user.displayAvatarURL({
 				size: 512,
 				dynamic: true,
 				format: "png"
-			}))
-			.attachFiles([{
-				attachment: await userData.getAchievements(),
-				name: "achievements.png"
-			}])
+			})})
 			.setImage("attachment://achievements.png")
 			.addField(message.translate("economy/profile:BIO"), userData.bio ? userData.bio : message.translate("economy/profile:NO_BIO"))
 			.addField(message.translate("economy/profile:CASH"), `**${memberData.money}** ${message.getNoun(memberData.money, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
@@ -78,10 +74,10 @@ class Profile extends Command {
 				prefix: data.guild.prefix
 			}))
 			.setColor(data.config.embed.color) // Sets the color of the embed
-			.setFooter(data.config.embed.footer) // Sets the footer of the embed
+			.setFooter({ text: data.config.embed.footer }) // Sets the footer of the embed
 			.setTimestamp();
 
-		message.channel.send(profileEmbed); // Send the embed in the current channel
+		message.channel.send({ embeds: [profileEmbed], files: [userData.getAchievements()] }); // Send the embed in the current channel
 	}
 };
 

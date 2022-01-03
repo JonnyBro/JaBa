@@ -101,13 +101,13 @@
 											<% if(guild.plugins.suggestions && bot.channels.cache.has(guild.plugins.suggestions)) { %>
 											<option selected="selected">
 												#<%= bot.channels.cache.get(guild.plugins.suggestions).name %></option>
-											<% guild.channels.cache.filter((ch) => ch.type === "text" && ch.id !== guild.plugins.suggestions).forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT" && ch.id !== guild.plugins.suggestions).forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<option><%= translate("common:NO_CHANNEL") %></option>
 											<% } else { %>
 											<option selected="selected"><%= translate("common:NO_CHANNEL") %></option>
-											<% guild.channels.cache.filter((ch) => ch.type === "text").forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT").forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<% } %>
@@ -119,13 +119,13 @@
 											<% if(guild.plugins.reports && bot.channels.cache.has(guild.plugins.reports)) { %>
 											<option selected="selected">
 												#<%= bot.channels.cache.get(guild.plugins.reports).name %></option>
-											<% guild.channels.cache.filter((ch) => ch.type === "text" && ch.id !== guild.plugins.reports).forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT" && ch.id !== guild.plugins.reports).forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<option><%= translate("common:NO_CHANNEL") %></option>
 											<% } else { %>
 											<option selected="selected"><%= translate("common:NO_CHANNEL") %></option>
-											<% guild.channels.cache.filter((ch) => ch.type === "text").forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT").forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<% } %>
@@ -137,13 +137,13 @@
 											<% if(guild.plugins.modlogs && bot.channels.cache.has(guild.plugins.modlogs)) { %>
 											<option selected="selected">
 												#<%= bot.channels.cache.get(guild.plugins.modlogs).name %></option>
-											<% guild.channels.cache.filter((ch) => ch.type === "text" && ch.id !== guild.plugins.modlogs).forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT" && ch.id !== guild.plugins.modlogs).forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<option><%= translate("common:NO_CHANNEL") %></option>
 											<% } else { %>
 											<option selected="selected"><%= translate("common:NO_CHANNEL")%></option>
-											<% guild.channels.cache.filter((ch) => ch.type === "text").forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT").forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<% } %>
@@ -155,13 +155,13 @@
 											<% if(guild.plugins.birthdays && bot.channels.cache.has(guild.plugins.birthdays)) { %>
 											<option selected="selected">
 												#<%= bot.channels.cache.get(guild.plugins.birthdays).name %></option>
-											<% guild.channels.cache.filter((ch) => ch.type === "text" && ch.id !== guild.plugins.birthdays).forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT" && ch.id !== guild.plugins.birthdays).forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<option><%= translate("common:NO_CHANNEL") %></option>
 											<% } else { %>
 											<option selected="selected"><%= translate("common:NO_CHANNEL") %></option>
-											<% guild.channels.cache.filter((ch) => ch.type === "text").forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT").forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<% } %>
@@ -173,13 +173,13 @@
 											<% if(guild.plugins.fortniteshop && bot.channels.cache.has(guild.plugins.fortniteshop)) { %>
 											<option selected="selected">
 												#<%= bot.channels.cache.get(guild.plugins.fortniteshop).name %></option>
-											<% guild.channels.cache.filter((ch) => ch.type === "text" && ch.id !== guild.plugins.fortniteshop).forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT" && ch.id !== guild.plugins.fortniteshop).forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<option><%= translate("common:NO_CHANNEL") %></option>
 											<% } else { %>
 											<option selected="selected"><%= translate("common:NO_CHANNEL")%></option>
-											<% guild.channels.cache.filter((ch) => ch.type === "text").forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT").forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<% } %>
@@ -218,13 +218,13 @@
 											<option selected="selected">
 												#<%= bot.channels.cache.get(guild.plugins.welcome.channel).name %>
 											</option>
-											<% guild.channels.cache.filter((ch) => ch.id !== guild.plugins.welcome.channel && ch.type === "text").forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.id !== guild.plugins.welcome.channel && ch.type === "GUILD_TEXT").forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); } else { %>
 											<option selected="selected">
-												#<%= guild.channels.cache.filter((ch) => ch.type === "text").first().name %>
+												#<%= guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT").first().name %>
 											</option>
-											<% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "text").forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "GUILD_TEXT").forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<% } %>
@@ -281,13 +281,13 @@
 											<option selected="selected">
 												#<%= bot.channels.cache.get(guild.plugins.goodbye.channel).name %>
 											</option>
-											<% guild.channels.cache.filter((ch) => ch.id !== guild.plugins.goodbye.channel && ch.type === "text").forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.id !== guild.plugins.goodbye.channel && ch.type === "GUILD_TEXT").forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); } else { %>
 											<option selected="selected">
-												#<%= guild.channels.cache.filter((ch) => ch.type === "text").first().name %>
+												#<%= guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT").first().name %>
 											</option>
-											<% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "text").forEach((ch) => { %>
+											<% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "GUILD_TEXT").forEach((ch) => { %>
 											<option>#<%= ch.name %></option>
 											<% }); %>
 											<% } %>

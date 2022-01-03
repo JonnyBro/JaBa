@@ -26,7 +26,10 @@ class Announcement extends Command {
 
 		let mention = "";
 		const msg = await message.sendT("moderation/announcement:MENTION_PROMPT");
-		const collector = new Discord.MessageCollector(message.channel, (m) => m.author.id === message.author.id, {
+
+		const filter = m => m.author.id === message.author.id;
+		const collector = new Discord.MessageCollector(message.channel, {
+			filter,
 			time: 240000
 		});
 
@@ -41,7 +44,10 @@ class Announcement extends Command {
 				tmsg.delete();
 				msg.delete();
 				const tmsg1 = await message.sendT("moderation/announcement:MENTION_TYPE_PROMPT");
-				const c = new Discord.MessageCollector(message.channel, (m) => m.author.id === message.author.id, {
+
+				const filter = m => m.author.id === message.author.id;
+				const c = new Discord.MessageCollector(message.channel, {
+					filter,
 					time: 60000
 				});
 				c.on("collect", (m) => {
@@ -69,13 +75,13 @@ class Announcement extends Command {
 			if (reason === "time") return message.error("misc:TIMES_UP");
 
 			const embed = new Discord.MessageEmbed()
-				.setAuthor(message.translate("moderation/announcement:TITLE"))
+				.setAuthor({ name: message.translate("moderation/announcement:TITLE") })
 				.setColor(data.config.embed.color)
-				.setFooter(message.author.tag)
+				.setFooter({ text: message.author.tag })
 				.setTimestamp()
 				.setDescription(text);
 
-			message.channel.send(mention, embed);
+			message.channel.send({ content: mention, embeds: [embed] });
 		});
 	}
 };

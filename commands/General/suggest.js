@@ -25,23 +25,23 @@ class Suggest extends Command {
 		if (!sugg) return message.error("general/suggest:MISSING_CONTENT");
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(message.translate("general/suggest:TITLE", {
+			.setAuthor({ name: message.translate("general/suggest:TITLE", {
 				user: message.author.username
-			}), message.author.displayAvatarURL({
+			}), iconURL: message.author.displayAvatarURL({
 				size: 512,
 				dynamic: true,
 				format: "png"
-			}))
+			})})
 			.addField(message.translate("common:AUTHOR"), `\`${message.author.username}#${message.author.discriminator}\``, true)
 			.addField(message.translate("common:DATE"), message.printDate(new Date(Date.now())), true)
 			.addField(message.translate("common:CONTENT"), sugg)
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer);
+			.setFooter({ text: data.config.embed.footer });
 
 		const success = Discord.Util.parseEmoji(this.client.customEmojis.success).id;
 		const error = Discord.Util.parseEmoji(this.client.customEmojis.error).id;
 
-		suggChannel.send(embed).then(async (m) => {
+		suggChannel.send({ embeds: [embed] }).then(async (m) => {
 			await m.react(success);
 			await m.react(error);
 		});

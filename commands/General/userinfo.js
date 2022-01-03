@@ -41,11 +41,11 @@ class Userinfo extends Command {
 		if (message.guild) member = await message.guild.members.fetch(user).catch(() => {});
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(user.tag, user.displayAvatarURL({
+			.setAuthor({ name: user.tag, iconURL: user.displayAvatarURL({
 				size: 512,
 				dynamic: true,
 				format: "png"
-			}))
+			})})
 			.setThumbnail(user.displayAvatarURL({
 				dynamic: true
 			}))
@@ -59,7 +59,7 @@ class Userinfo extends Command {
 				format: "png"
 			}))
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer);
+			.setFooter({ text: data.config.embed.footer });
 
 		if (displayPresence) {
 			embed.addField(this.client.customEmojis.games + " " + message.translate("common:GAME"), (user.presence.activity ? user.presence.activity.name : message.translate("general/userinfo:NO_GAME")), true)
@@ -95,7 +95,7 @@ class Userinfo extends Command {
 			};
 		};
 
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 	}
 };
 

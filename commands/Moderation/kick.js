@@ -34,7 +34,7 @@ class Kick extends Command {
 
 		const memberPosition = member.roles.highest.position;
 		const moderationPosition = message.member.roles.highest.position;
-		if (message.member.ownerID !== message.author.id && !(moderationPosition > memberPosition)) return message.error("moderation/ban:SUPERIOR");
+		if (message.member.ownerId !== message.author.id && !(moderationPosition > memberPosition)) return message.error("moderation/ban:SUPERIOR");
 		if (!member.kickable) return message.error("moderation/kick:MISSING_PERM");
 
 		await member.send(message.translate("moderation/kick:KICKED_DM", {
@@ -73,14 +73,14 @@ class Kick extends Command {
 				const channel = message.guild.channels.cache.get(data.guild.plugins.modlogs);
 				if (!channel) return;
 				const embed = new Discord.MessageEmbed()
-					.setAuthor(message.translate("moderation/kick:CASE", {
+					.setAuthor({ name: message.translate("moderation/kick:CASE", {
 						count: data.guild.casesCount
-					}))
+					})})
 					.addField(message.translate("common:USER"), `\`${member.user.tag}\` (${member.user.toString()})`, true)
 					.addField(message.translate("common:MODERATOR"), `\`${message.author.tag}\` (${message.author.toString()})`, true)
 					.addField(message.translate("common:REASON"), reason, true)
 					.setColor("#e88709");
-				channel.send(embed);
+				channel.send({ embeds: [embed] });
 			};
 
 		}).catch(() => {

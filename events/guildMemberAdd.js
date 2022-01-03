@@ -34,7 +34,7 @@ module.exports = class {
 		});
 		if (memberData.mute.muted && memberData.mute.endDate > Date.now()) {
 			member.guild.channels.cache.forEach((channel) => {
-				channel.updateOverwrite(member.id, {
+				channel.permissionOverwrites.edit(member.id, {
 					SEND_MESSAGES: false,
 					ADD_REACTIONS: false,
 					CONNECT: false
@@ -141,9 +141,9 @@ module.exports = class {
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 
 					const attachment = new Discord.MessageAttachment(canvas.toBuffer(), "welcome-image.png");
-					channel.send(message, attachment);
+					channel.send({ content: message, files: [attachment] });
 				} else {
-					channel.send(message);
+					channel.send({ content: message });
 				};
 			};
 		};

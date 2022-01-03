@@ -28,10 +28,13 @@ class Mission extends Command {
 				size: 2048
 			})
 		});
-		const attachment = new Discord.MessageAttachment(buffer, "mission.png");
 		m.delete();
 
-		message.channel.send(attachment);
+		message.channel.send({
+			files: [{
+				attachment: buffer
+			}]
+		});
 	}
 };
 

@@ -27,14 +27,13 @@ async function init(client) {
 						.toAttachment();
 					const attachment = new Discord.MessageAttachment(image, "shop.png");
 					const embed = new Discord.MessageEmbed()
-						.setAuthor(client.translate("general/fortniteshop:DATE", {
+						.setAuthor({ name: client.translate("general/fortniteshop:DATE", {
 							date: client.printDate(new Date(Date.now()), null, guildData.language)
-						}, guildData.language), client.user.displayAvatarURL())
-						.attachFiles(attachment)
+						}, guildData.language), iconURL: client.user.displayAvatarURL()})
 						.setImage("attachment://shop.png")
 						.setColor(client.config.embed.color)
-						.setFooter(client.config.embed.footer);
-					const msg = await fnChannel.send(embed);
+						.setFooter({ text: client.config.embed.footer });
+					const msg = await fnChannel.send({ embeds: [embed] });
 					await msg.react("😍");
 					await msg.react("😐");
 					await msg.react("😭");

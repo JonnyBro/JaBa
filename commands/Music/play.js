@@ -1,4 +1,5 @@
-const Command = require("../../base/Command.js");
+const Command = require("../../base/Command.js"),
+	{ Permissions } = require("discord.js");
 
 class Play extends Command {
 	constructor(client) {
@@ -25,7 +26,7 @@ class Play extends Command {
 
 		// Check my permissions
 		const perms = voice.permissionsFor(this.client.user);
-		if (!perms.has("CONNECT") || !perms.has("SPEAK")) return message.error("music/play:VOICE_CHANNEL_CONNECT");
+		if (!perms.has(Permissions.FLAGS.CONNECT) || !perms.has(Permissions.FLAGS.SPEAK)) return message.error("music/play:VOICE_CHANNEL_CONNECT");
 
 		try {
 			this.client.player.play(message, args.join(" "));

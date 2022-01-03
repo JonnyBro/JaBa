@@ -81,10 +81,10 @@ router.get("/callback", async (req, res) => {
 	const logsChannel = req.client.channels.cache.get(req.client.config.dashboard.logs);
 	if (!userDB.logged && logsChannel && user) {
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(user.username, user.displayAvatarURL())
+			.setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
 			.setColor(req.client.config.embed.color)
 			.setDescription(req.client.translate("dashboard:FIRST_LOGIN", { user: user.tag }));
-		logsChannel.send(embed);
+		logsChannel.send({ embeds: [embed] });
 		userDB.logged = true;
 		userDB.save();
 	};
