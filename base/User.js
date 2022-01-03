@@ -97,6 +97,7 @@ userSchema.method("genApiToken", async function() {
 userSchema.method("getAchievements", async function() {
 	const canvas = Canvas.createCanvas(1800, 250),
 		ctx = canvas.getContext("2d");
+
 	const images = [
 		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.work.achieved ? "_colored" : ""}1.png`),
 		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.firstCommand.achieved ? "_colored" : ""}2.png`),

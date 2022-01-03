@@ -85,9 +85,9 @@ class Profile extends Command {
 		const buffer = userData.getAchievements();
 		message.channel.send({
 			embeds: [profileEmbed],
-			files: [{
-				attachment: buffer
-			}]
+			// files: [{
+			// 	attachment: buffer
+			// }]
 		}); // Send the embed in the current channel
 	}
 };
