@@ -66,11 +66,11 @@ class JaBa extends Client {
 				const m = await queue.textChannel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: song.name }) })
 				if (!song.isLive) {
 					setTimeout(() => {
-						if (!m.deleted) m.delete();
+						if (m.deletable) m.delete();
 					}, song.duration * 1000);
 				} else {
 					setTimeout(() => {
-						if (!m.deleted) m.delete();
+						if (m.deletable) m.delete();
 					}, 600 * 1000);
 				}
 			})

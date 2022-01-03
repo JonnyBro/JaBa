@@ -7,7 +7,7 @@ class Queue extends Command {
 		super(client, {
 			name: "queue",
 			dirname: __dirname,
-			enabled: true,
+			enabled: false,
 			guildOnly: true,
 			aliases: ["qu"],
 			memberPermissions: [],
