@@ -61,7 +61,7 @@ class ServersList extends Command {
 		});
 
 		collector.on("collect", async (reaction) => {
-			if (reaction._emoji.name === "⬅") {
+			if (reaction._emoji.name === "⬅" && !message.channel.type !== "DM") {
 				// Updates variables
 				i0 = i0 - 10;
 				i1 = i1 - 10;
@@ -87,7 +87,7 @@ class ServersList extends Command {
 				});
 			};
 
-			if (reaction._emoji.name === "➡") {
+			if (reaction._emoji.name === "➡" && !message.channel.type !== "DM") {
 				// Updates variables
 				i0 = i0 + 10;
 				i1 = i1 + 10;
