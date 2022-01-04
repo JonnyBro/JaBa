@@ -17,7 +17,6 @@
 	"SPECIAL_CHANNELS": "Special channels",
 	"MODLOGS": "Moderation logs: *{{channel}}*",
 	"BIRTHDAYS": "Birthdays announcements: *{{channel}}*",
-	"FORTNITESHOP": "Fortnite daily shop: *{{channel}}*",
 	"SUGGESTIONS": "Suggestions: *{{channel}}*",
 	"REPORTS": "Reports: *{{channel}}*",
 	"AUTOMOD_TITLE": "Auto-moderation:",

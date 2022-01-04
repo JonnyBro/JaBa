@@ -82,12 +82,14 @@ class Profile extends Command {
 			}) // Sets the footer of the embed
 			.setTimestamp();
 
-		const buffer = userData.getAchievements();
+		const buffer = await userData.getAchievements();
+
 		message.channel.send({
 			embeds: [profileEmbed],
-			// files: [{
-			// 	attachment: buffer
-			// }]
+			files: [{
+				name: "achievements.png",
+				attachment: buffer
+			}]
 		}); // Send the embed in the current channel
 	}
 };

@@ -4,7 +4,7 @@
 	"EXAMPLES": "{{prefix}}set level @Jonny_Bro#4226 10",
 	"INVALID_MEMBER": "Вы должны упомянуть пользователя!",
 	"NO_STATUS": "Выберите параметр: `level`, `xp`, `credits` или `bank`",
-	"BOT_USER": "У ботов нет профиля!",
+	"BOT_USER": "Вы не можете изменить статистику бота!",
 	"INVALID_AMOUNT": "Укажите новое значение!",
 	"SUCCESS_LEVEL": "Уровень пользователя **{{username}}** изменён на **{{amount}}**!",
 	"SUCCESS_XP": "XP пользователя **{{username}}** изменён на **{{amount}}**!",

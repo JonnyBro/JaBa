@@ -25,7 +25,9 @@ class Reload extends Command {
 		await this.client.unloadCommand(cmd.conf.location, cmd.help.name);
 		await this.client.loadCommand(cmd.conf.location, cmd.help.name);
 
-		i18next.reloadResources(data.guild.language);
+		const lang = data.guild.language || "ru-RU";
+		i18next.reloadResources(lang);
+
 		message.success("owner/reload:SUCCESS", {
 			command: cmd.help.name
 		});

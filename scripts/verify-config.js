@@ -112,21 +112,6 @@ const checks = [
 					success("Valid DBL key");
 				};
 			};
-			if (!config.apiKeys.fortniteFNBR) {
-				ignore("fortniteFNBR API is not configured, key should not be checked.");
-			} else {
-				const res = await fetch("https://fnbr.co/api/stats", {
-					headers: {
-						"x-api-key": config.apiKeys.fortniteFNBR
-					}
-				});
-				const result = await res.json();
-				if (result.status && result.status === 401) {
-					error("Should be a valid FNBR key", "get your key here: https://fnbr.co/api/docs");
-				} else {
-					success("Valid FNBR key");
-				};
-			};
 			if (!config.apiKeys.sentryDSN) {
 				ignore("SentryDSN is not configured, key should not be checked.");
 			} else {

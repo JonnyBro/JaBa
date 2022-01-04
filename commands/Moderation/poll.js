@@ -23,7 +23,7 @@ class Poll extends Command {
 
 		message.delete().catch(() => {});
 
-		let mention = "";
+		let mention = null;
 		const msg = await message.sendT("moderation/announcement:MENTION_PROMPT");
 
 		const filter = m => m.author.id === message.author.id;

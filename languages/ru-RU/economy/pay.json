@@ -6,6 +6,6 @@
 	"BOT_USER": "Ботам не нужны деньги!",
 	"YOURSELF": "Вы не можете заплатить самому себе!",
 	"INVALID_AMOUNT": "Укажите сумму",
-	"ENOUGH_MONEY": "У вас нет **{{amount}}**",
-	"SUCCESS": "Вы отправили **{{amount}}** пользователю **{{username}}**!"
+	"ENOUGH_MONEY": "У вас нет {{amount}}",
+	"SUCCESS": "Вы отправили {{amount}} пользователю **{{username}}**!"
 }

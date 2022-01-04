@@ -27,6 +27,16 @@ class Np extends Command {
 		// Gets the current song
 		const track = queue.songs[0];
 
+		const status = queue =>
+			`Фильтры: \`${queue.filters.join(", ")
+				|| "Выкл"}\` | Повтор: \`${
+				queue.repeatMode
+					? queue.repeatMode === 2
+						? "Очереди"
+						: "Текущей песни"
+					: "Выкл"
+			}\` | Автовоспроизведение: \`${queue.autoplay ? "Вкл" : "Выкл"}\``;
+
 		// Generate discord embed to display song informations
 		const embed = new Discord.MessageEmbed()
 			.setAuthor({
@@ -36,6 +46,7 @@ class Np extends Command {
 			.addField(message.translate("music/np:T_TITLE"), `[${track.name}](${track.url})`)
 			.addField(message.translate("music/np:T_CHANNEL"), track.uploader.name ? track.uploader.name : "Отсутствует")
 			.addField(message.translate("music/np:T_DURATION"), `${queue.formattedCurrentTime} / ${track.formattedDuration}`)
+			.addField(message.translate("music/np:T_CONF"), status(queue))
 			.setColor(data.config.embed.color)
 			.setFooter({
 				text: data.config.embed.footer

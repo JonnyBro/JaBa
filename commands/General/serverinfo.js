@@ -29,6 +29,7 @@ class Serverinfo extends Command {
 		};
 
 		await guild.members.fetch();
+		const owner = await guild.fetchOwner();
 
 		const embed = new Discord.MessageEmbed()
 			.setAuthor({
@@ -48,8 +49,8 @@ class Serverinfo extends Command {
 			)
 			.addField(this.client.customEmojis.afk + message.translate("general/serverinfo:AFK_CHANNEL"), guild.afkChannel || message.translate("general/serverinfo:NO_AFK_CHANNEL"), true)
 			.addField(this.client.customEmojis.id + message.translate("common:ID"), guild.id, true)
-			.addField(this.client.customEmojis.crown + message.translate("common:OWNER"), guild.owner, true)
-			.addField(this.client.customEmojis.boost + message.translate("general/serverinfo:BOOSTS"), guild.premiumSubscriptionCount || 0, true)
+			.addField(this.client.customEmojis.crown + message.translate("common:OWNER"), owner.toString(), true)
+			.addField(this.client.customEmojis.boost + message.translate("general/serverinfo:BOOSTS"), guild.premiumSubscriptionCount || "0", true)
 			.addField(this.client.customEmojis.channels + message.translate("common:CHANNELS"),
 				`${guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size, message.translate("misc:NOUNS:TEXT:1"), message.translate("misc:NOUNS:TEXT:2"), message.translate("misc:NOUNS:TEXT:5"))}` +
 				"\n" + `${guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size, message.translate("misc:NOUNS:VOICE:1"), message.translate("misc:NOUNS:VOICE:2"), message.translate("misc:NOUNS:VOICE:5"))}` +

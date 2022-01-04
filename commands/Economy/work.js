@@ -83,7 +83,7 @@ class Work extends Command {
 		data.memberData.save();
 
 		const messageOptions = {
-			emdeds: embed
+			embeds: [embed]
 		};
 		if (!data.userData.achievements.work.achieved) {
 			data.userData.achievements.work.progress.now += 1;

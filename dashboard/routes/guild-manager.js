@@ -123,9 +123,6 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		if (data.modlogs === req.translate("common:NO_CHANNEL")) guildData.plugins.modlogs = false;
 		else guildData.plugins.modlogs = guild.channels.cache.find((ch) => "#" + ch.name === data.modlogs).id;
 
-		if (data.fortniteshop === req.translate("common:NO_CHANNEL")) guildData.plugins.fortniteshop = false;
-		else guildData.plugins.fortniteshop = guild.channels.cache.find((ch) => "#" + ch.name === data.fortniteshop).id;
-
 		if (data.birthdays === req.translate("common:NO_CHANNEL")) guildData.plugins.birthdays = false;
 		else guildData.plugins.birthdays = guild.channels.cache.find((ch) => "#" + ch.name === data.birthdays).id;
 

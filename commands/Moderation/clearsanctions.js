@@ -18,7 +18,7 @@ class Clearsanctions extends Command {
 
 	async run(message, args) {
 		const member = await this.client.resolveMember(args[0], message.guild);
-		if (!member) return message.error("moderation/clear-sanctions:MISSING_MEMBER");
+		if (!member) return message.error("moderation/clearsanctions:MISSING_MEMBER");
 
 		const memberData = await this.client.findOrCreateMember({
 			id: member.id,
@@ -26,7 +26,7 @@ class Clearsanctions extends Command {
 		});
 		memberData.sanctions = [];
 		memberData.save();
-		message.success("moderation/clear-sanctions:SUCCESS", {
+		message.success("moderation/clearsanctions:SUCCESS", {
 			username: member.user.tag
 		});
 	}

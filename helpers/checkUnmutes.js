@@ -35,7 +35,7 @@ module.exports = {
 				guild.data = guildData;
 				if (member) {
 					guild.channels.cache.forEach((channel) => {
-						const permOverwrites = channel.permissionOverwrites.get(member.id);
+						const permOverwrites = channel.permissionOverwrites.cache.get(member.id);
 						if (permOverwrites) permOverwrites.delete();
 					});
 				};
@@ -47,7 +47,7 @@ module.exports = {
 						count: memberData.mute.case
 					}))
 					.setColor("#f44271")
-					.setFooter({ text: data.config.embed.footer });
+					.setFooter({ text: guild.client.config.embed.footer });
 				const channel = guild.channels.cache.get(guildData.plugins.modlogs);
 				if (channel) channel.send({ embeds: [embed] });
 
