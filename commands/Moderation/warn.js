@@ -55,7 +55,7 @@ class Warn extends Command {
 
 		const embed = new Discord.MessageEmbed()
 			.addField(message.translate("common:USER"), `\`${member.user.tag}\` (${member.user.toString()})`)
-			.addField(message.translate("common:MODERATOR"), `\`${message.author.tag}\` (${message.author.toString()}`)
+			.addField(message.translate("common:MODERATOR"), `\`${message.author.tag}\` (${message.author.toString()})`)
 			.addField(message.translate("common:REASON"), reason, true);
 
 		if (banCount) {

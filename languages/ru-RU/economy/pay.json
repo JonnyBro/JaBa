@@ -3,7 +3,7 @@
 	"USAGE": "{{prefix}}pay [@пользователь] [сумма]",
 	"EXAMPLES": "{{prefix}}pay @Jonny_Bro#4226 1000",
 	"INVALID_MEMBER": "Вы должны упомянуть пользователя!",
-	"BOT_USER": "Вы не можете заплатить боту!",
+	"BOT_USER": "Ботам не нужны деньги!",
 	"YOURSELF": "Вы не можете заплатить самому себе!",
 	"INVALID_AMOUNT": "Укажите сумму",
 	"ENOUGH_MONEY": "У вас нет **{{amount}}**",
