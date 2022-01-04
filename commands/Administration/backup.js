@@ -16,7 +16,7 @@ class Backup extends Command {
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ADMINISTRATOR"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 10000
+			cooldown: 20000
 		});
 	}
 
