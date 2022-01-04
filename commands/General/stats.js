@@ -40,8 +40,8 @@ class Stats extends Command {
 				count: `${this.client.player.voices.collection.size} ${message.getNoun(this.client.player.voices.collection.size, message.translate("misc:NOUNS:SERVERS:1"), message.translate("misc:NOUNS:SERVERS:2"), message.translate("misc:NOUNS:SERVERS:5"))}`
 			}))
 			.addField(message.translate("general/stats:CREDITS_TITLE"), message.translate("general/stats:CREDITS_CONTENT", {
-				donators: [":("].join("\n"),
-				translators: ["`Jonny_Bro#4226` (:flag_ru:)", "`[ДАННЫЕ УДАЛЕНЫ]#2789` (:flag_ua:)", "`FaxoNfuckyou#9398` и `Jonny_Bro#4226` (:flag_us:)"].join("\n")
+				donators: ["**`Добрый Спецназ#8801`** - Тестер"].join("\n"),
+				translators: ["**`Jonny_Bro#4226`** (:flag_ru:)"].join("\n")
 			}));
 
 		statsEmbed.addField(this.client.customEmojis.link + " " + message.translate("general/stats:LINKS_TITLE"), message.translate("misc:STATS_FOOTER", {
