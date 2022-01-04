@@ -18,11 +18,10 @@ class Play extends Command {
 	}
 
 	async run(message, args) {
-		const name = args.join(" ");
-		if (!name) return message.error("music/play:MISSING_SONG_NAME");
-
 		const voice = message.member.voice.channel;
+		const name = args.join(" ");
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
+		if (!name) return message.error("music/play:MISSING_SONG_NAME");
 
 		// Check my permissions
 		const perms = voice.permissionsFor(this.client.user);

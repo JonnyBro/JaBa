@@ -33,7 +33,7 @@ class Np extends Command {
 				queue.repeatMode
 					? queue.repeatMode === 2
 						? "Очереди"
-						: "Текущей песни"
+						: "Трека"
 					: "Выкл"
 			}\` | Автовоспроизведение: \`${queue.autoplay ? "Вкл" : "Выкл"}\``;
 

@@ -23,7 +23,7 @@ class AutoPlay extends Command {
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 
-		const autoplay = queue.toggleAutoplay()
+		const autoplay = queue.toggleAutoplay();
 
 		message.success(`music/autoplay:SUCCESS_${autoplay ? "ENABLED" : "DISABLED"}`);
 	}
