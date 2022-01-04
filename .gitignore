@@ -9,6 +9,9 @@ yarn.lock
 # DB
 giveaways.json
 
+# Backups
+backups
+
 # Mac OS files
 .DS_Store
 
