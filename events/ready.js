@@ -41,8 +41,9 @@ module.exports = class {
 		let servers = client.guilds.cache.filter(guild => guild.id != "568120814776614924" && guild.id != "892727526911258654").size;
 		const version = require("../package.json").version;
 		const status = [
-			{ name: `${servers} ${client.getNoun(servers, client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5"))}`, type: "WATCHING" },
-			{ name: "help", type: "WATCHING" }
+			{ name: `${servers} ${client.getNoun(servers, client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5"))}`, type: "LISTENING" },
+			{ name: "help", type: "WATCHING" },
+			{ name: `${client.commands.size} ${client.getNoun(servers, client.translate("misc:NOUNS:COMMANDS:1"), client.translate("misc:NOUNS:COMMANDS:2"), client.translate("misc:NOUNS:COMMANDS:5"))}`, type: "WATCHING"}
 		];
 
 		let i = 0;
