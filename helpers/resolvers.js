@@ -4,8 +4,8 @@ const resolveChannel = async ({ message, search, channelType }) => {
 
 	// Try by parsing the search
 	if (contentToCheck.match(/^<#([0-9]{18})>/)) {
-		const [, channelID] = contentToCheck.match(/^<#([0-9]{18})>/);
-		const channelFound = message.guild.channels.cache.get(channelID);
+		const [, channelId] = contentToCheck.match(/^<#([0-9]{18})>/);
+		const channelFound = message.guild.channels.cache.get(channelId);
 		if (channelFound && channelType && channelFound.type === channelType) return channelFound;
 	};
 
@@ -30,8 +30,8 @@ const resolveMember = async ({ message, search, useMessageContent = true }) => {
 
 	// Try by parsing the search
 	if (contentToCheck.match(/^<@!?(\d+)>$/)) {
-		const [, userID] = contentToCheck.match(/^<@!?(\d+)>$/);
-		const memberFound = await message.guild.members.fetch(userID).catch(() => {});
+		const [, userId] = contentToCheck.match(/^<@!?(\d+)>$/);
+		const memberFound = await message.guild.members.fetch(userId).catch(() => {});
 		if (memberFound) return memberFound;
 	};
 
@@ -60,8 +60,8 @@ const resolveRole = async ({ message, search }) => {
 
 	// Try by parsing the search
 	if (contentToCheck.match(/^<@&([0-9]{18})>/)) {
-		const [, roleID] = contentToCheck.match(/^<@&([0-9]{18})>/);
-		const roleFound = message.guild.roles.cache.get(roleID);
+		const [, roleId] = contentToCheck.match(/^<@&([0-9]{18})>/);
+		const roleFound = message.guild.roles.cache.get(roleId);
 		if (roleFound)
 			return roleFound;
 	};

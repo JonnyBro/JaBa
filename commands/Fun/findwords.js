@@ -61,7 +61,9 @@ class FindWords extends Command {
 				}, false, false, "warn");
 
 				// init a collector to receive the answers
-				const collector = new Discord.MessageCollector(message.channel, (m) => !m.author.bot, {
+				const filter = m => !m.author.bot;
+				const collector = new Discord.MessageCollector(message.channel, {
+					filter,
 					time: 20000
 				});
 

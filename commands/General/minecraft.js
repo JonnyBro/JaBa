@@ -66,9 +66,11 @@ class Minecraft extends Command {
 		const imgAttachment = new Discord.MessageAttachment(await imgRes.buffer(), "success.png");
 
 		const mcEmbed = new Discord.MessageEmbed()
-			.setAuthor(message.translate("general/minecraft:FIELD_NAME", {
-				ip: json.name
-			}))
+			.setAuthor({
+				name: message.translate("general/minecraft:FIELD_NAME", {
+					ip: json.name
+				})
+			})
 			.addField(message.translate("general/minecraft:FIELD_VERSION"), json.raw.vanilla.raw.version.name)
 			.addField(message.translate("general/minecraft:FIELD_CONNECTED"), message.translate("general/minecraft:PLAYERS", {
 				count: (json.raw.players ? json.raw.players.online : json.players.length)
@@ -80,9 +82,15 @@ class Minecraft extends Command {
 			.addField(message.translate("general/minecraft:FIELD_IP"), json.connect)
 			.setColor(data.config.embed.color)
 			.setThumbnail(favicon)
-			.setFooter(data.config.embed.footer);
+			.setFooter({
+				text: data.config.embed.footer
+			});
 
-		m.edit(null, [mcEmbed, imgAttachment]);
+		m.edit({
+			content: null,
+			embeds: [mcEmbed],
+			files: [imgAttachment]
+		});
 	}
 };
 

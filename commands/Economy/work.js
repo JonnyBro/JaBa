@@ -40,11 +40,14 @@ class Work extends Command {
 		await data.memberData.save();
 
 		const embed = new Discord.MessageEmbed()
-			.setFooter(message.translate("economy/work:AWARD"), message.author.displayAvatarURL({
-				size: 512,
-				dynamic: true,
-				format: "png"
-			}))
+			.setFooter({
+				text: message.translate("economy/work:AWARD"),
+				iconURL: message.author.displayAvatarURL({
+					size: 512,
+					dynamic: true,
+					format: "png"
+				})
+			})
 			.setColor(data.config.embed.color);
 
 		const award = [
@@ -80,11 +83,7 @@ class Work extends Command {
 		data.memberData.save();
 
 		const messageOptions = {
-<<<<<<< HEAD
-			embed
-=======
 			embeds: [embed]
->>>>>>> discordjs-13
 		};
 		if (!data.userData.achievements.work.achieved) {
 			data.userData.achievements.work.progress.now += 1;

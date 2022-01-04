@@ -29,7 +29,9 @@ class Choice extends Command {
 				edit: true
 			});
 			const result = answers[parseInt(Math.floor(Math.random() * answers.length))];
-			message.channel.send("```" + result + "```");
+			message.channel.send({
+				content: "```" + result + "```"
+			});
 		}, 1500);
 	}
 };

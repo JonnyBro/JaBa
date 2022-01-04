@@ -1,7 +1,6 @@
 const Command = require("../../base/Command.js"),
 	Discord = require("discord.js"),
-	backup = require("discord-backup"),
-	Sentry = require("@sentry/node");
+	backup = require("discord-backup");
 
 backup.setStorageFolder(__dirname + "../../../backups");
 
@@ -39,7 +38,7 @@ class Backup extends Command {
 					message.error("misc:CANNOT_DM");
 				});
 			}).catch((err) => {
-				Sentry.captureException(err);
+				console.error(err);
 				return message.error("misc:ERR_OCCURRED");
 			});
 		} else if (status === "load") {

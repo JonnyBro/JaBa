@@ -25,10 +25,14 @@ class Joke extends Command {
 
 		const embed = new Discord.MessageEmbed()
 			.setDescription(joke.toDiscordSpoils())
-			.setFooter(message.translate("fun/joke:FOOTER"))
-			.setColor(this.client.config.embed.color);
+			.setFooter({
+				text: message.translate("fun/joke:FOOTER")
+			})
+			.setColor(data.config.embed.color);
 
-		message.channel.send(embed);
+		message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

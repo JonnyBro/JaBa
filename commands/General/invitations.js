@@ -21,7 +21,7 @@ class Invitations extends Command {
 		let member = await this.client.resolveMember(args[0], message.guild);
 		if (!member) member = message.member;
 
-		const invites = await message.guild.fetchInvites().catch(() => {});
+		const invites = await message.guild.invites.fetch().catch(() => {});
 		if (!invites) return message.error("misc:ERR_OCCURRED");
 
 		const memberInvites = invites.filter((i) => i.inviter && i.inviter.id === member.user.id);
@@ -48,8 +48,12 @@ class Invitations extends Command {
 
 		const embed = new Discord.MessageEmbed()
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer)
-			.setAuthor(message.translate("general/invitations:TRACKER"))
+			.setFooter({
+				text: data.config.embed.footer
+			})
+			.setAuthor({
+				name: message.translate("general/invitations:TRACKER")
+			})
 			.setDescription(message.translate("general/invitations:TITLE", {
 				member: member.user.tag,
 				guild: message.guild.name
@@ -59,7 +63,9 @@ class Invitations extends Command {
 			}))
 			.addField(message.translate("general/invitations:FIELD_CODES"), content);
 
-		message.channel.send(embed);
+		message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

@@ -25,7 +25,10 @@ class Poll extends Command {
 
 		let mention = null;
 		const msg = await message.sendT("moderation/announcement:MENTION_PROMPT");
-		const collector = new Discord.MessageCollector(message.channel, (m) => m.author.id === message.author.id, {
+
+		const filter = m => m.author.id === message.author.id;
+		const collector = new Discord.MessageCollector(message.channel, {
+			filter,
 			time: 240000
 		});
 
@@ -40,7 +43,10 @@ class Poll extends Command {
 				tmsg.delete();
 				msg.delete();
 				const tmsg1 = await message.sendT("moderation/announcement:MENTION_TYPE_PROMPT");
-				const c = new Discord.MessageCollector(message.channel, (m) => m.author.id === message.author.id, {
+
+				const filter = m => m.author.id === message.author.id;
+				const c = new Discord.MessageCollector(message.channel, {
+					filter,
 					time: 60000
 				});
 
@@ -77,14 +83,19 @@ class Poll extends Command {
 			];
 
 			const embed = new Discord.MessageEmbed()
-				.setAuthor(message.translate("moderation/poll:TITLE"))
+				.setAuthor({
+					name: message.translate("moderation/poll:TITLE")
+				})
 				.setColor(data.config.embed.color)
 				.addField(question, message.translate("moderation/poll:REACT", {
 					success: emojis[0].toString(),
 					error: emojis[1].toString()
 				}));
 
-			message.channel.send(mention, embed).then(async (m) => {
+			message.channel.send({
+				content: mention,
+				embeds: [embed]
+			}).then(async (m) => {
 				await m.react(emojis[0]);
 				await m.react(emojis[1]);
 			});

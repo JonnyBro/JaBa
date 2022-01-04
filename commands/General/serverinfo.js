@@ -32,9 +32,12 @@ class Serverinfo extends Command {
 		const owner = await guild.fetchOwner();
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(guild.name, guild.iconURL({
-				dynamic: true
-			}))
+			.setAuthor({
+				name: guild.name,
+				iconURL: guild.iconURL({
+					dynamic: true
+				})
+			})
 			.setThumbnail(guild.iconURL({
 				dynamic: true
 			}))
@@ -49,14 +52,18 @@ class Serverinfo extends Command {
 			.addField(this.client.customEmojis.crown + message.translate("common:OWNER"), owner.toString(), true)
 			.addField(this.client.customEmojis.boost + message.translate("general/serverinfo:BOOSTS"), guild.premiumSubscriptionCount || "0", true)
 			.addField(this.client.customEmojis.channels + message.translate("common:CHANNELS"),
-				`${guild.channels.cache.filter(c => c.type === "text").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "text").size, message.translate("misc:NOUNS:TEXT:1"), message.translate("misc:NOUNS:TEXT:2"), message.translate("misc:NOUNS:TEXT:5"))}` +
-				"\n" + `${guild.channels.cache.filter(c => c.type === "voice").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "voice").size, message.translate("misc:NOUNS:VOICE:1"), message.translate("misc:NOUNS:VOICE:2"), message.translate("misc:NOUNS:VOICE:5"))}` +
-				"\n" + `${guild.channels.cache.filter(c => c.type === "category").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "category").size, message.translate("misc:NOUNS:CATEGORY:1"), message.translate("misc:NOUNS:CATEGORY:2"), message.translate("misc:NOUNS:CATEGORY:5"))}`, true
+				`${guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size, message.translate("misc:NOUNS:TEXT:1"), message.translate("misc:NOUNS:TEXT:2"), message.translate("misc:NOUNS:TEXT:5"))}` +
+				"\n" + `${guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size, message.translate("misc:NOUNS:VOICE:1"), message.translate("misc:NOUNS:VOICE:2"), message.translate("misc:NOUNS:VOICE:5"))}` +
+				"\n" + `${guild.channels.cache.filter(c => c.type === "GUILD_CATEGORY").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_CATEGORY").size, message.translate("misc:NOUNS:CATEGORY:1"), message.translate("misc:NOUNS:CATEGORY:2"), message.translate("misc:NOUNS:CATEGORY:5"))}`, true
 			)
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer);
+			.setFooter({
+				text: data.config.embed.footer
+			});
 
-		message.channel.send(embed);
+		message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

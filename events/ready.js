@@ -1,4 +1,5 @@
-const chalk = require("chalk");
+const chalk = require("chalk"),
+	{ Permissions } = require("discord.js");
 
 module.exports = class {
 	constructor(client) {
@@ -11,7 +12,7 @@ module.exports = class {
 		// Logs some informations using logger
 		client.logger.log(`Loading a total of ${client.commands.size} command(s).`, "log");
 		client.logger.log(`${client.user.tag}, ready to serve ${client.users.cache.size} users in ${client.guilds.cache.filter(guild => guild.id != "568120814776614924" && guild.id != "892727526911258654").size} servers.`, "ready");
-		client.logger.log(`Invite Link: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=8`, "ready");
+		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot"] , permissions: [Permissions.FLAGS.ADMINISTRATOR] })}`, "ready");
 
 		// Discord Together
 		const discordtogether = require("../helpers/discordTogether");

@@ -26,10 +26,13 @@ class Avatar extends Command {
 			format: "png"
 		});
 
-		if (message.content.includes("link")) message.channel.send(`<${avatarURL}>`);
+		if (message.content.includes("link")) message.channel.send({ content: `<${avatarURL}>` });
 
-		const attachment = new Discord.MessageAttachment(avatarURL, `avatar.${avatarURL.split(".").pop().split("?")[0]}`);
-		message.channel.send(attachment);
+		message.channel.send({
+			files: [{
+				attachment: avatarURL
+			}]
+		});
 	}
 };
 

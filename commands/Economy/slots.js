@@ -33,9 +33,7 @@ class Slots extends Command {
 		// Gets the amount provided
 		let amount = args[0];
 		if (!amount || isNaN(amount) || amount < 1) amount = 50;
-		if (amount > data.memberData.money) return message.error("economy/slots:NOT_ENOUGH", {
-			money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
-		});
+		if (amount > data.memberData.money) return message.error("economy/slots:NOT_ENOUGH", { money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}` });
 
 		amount = Math.round(amount);
 
@@ -77,11 +75,13 @@ class Slots extends Command {
 				msg += "| : : :  **" + (message.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
 				tmsg.edit(msg);
 				const credits = getCredits(amount, true);
-				message.channel.send("**!! ДЖЕКПОТ !!**\n" + message.translate("economy/slots:VICTORY", {
-					money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-					won: `${credits} ${message.getNoun(credits, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-					username: message.author.username
-				}));
+				message.channel.send({
+					content: "**!! ДЖЕКПОТ !!**\n" + message.translate("economy/slots:VICTORY", {
+						money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+						won: `${credits} ${message.getNoun(credits, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+						username: message.author.username
+					})
+				});
 				const toAdd = credits - amount;
 				data.memberData.money = data.memberData.money + toAdd;
 				if (!data.userData.achievements.slots.achieved) {
@@ -106,11 +106,13 @@ class Slots extends Command {
 				msg += "| : : :  **" + (message.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
 				tmsg.edit(msg);
 				const credits = getCredits(amount, false);
-				message.channel.send(message.translate("economy/slots:VICTORY", {
-					money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-					won: `${credits} ${message.getNoun(credits, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-					username: message.author.username
-				}));
+				message.channel.send({
+					content: message.translate("economy/slots:VICTORY", {
+						money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+						won: `${credits} ${message.getNoun(credits, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+						username: message.author.username
+					})
+				});
 				const toAdd = credits - amount;
 				data.memberData.money = data.memberData.money + toAdd;
 				if (!data.userData.achievements.slots.achieved) {
@@ -132,10 +134,12 @@ class Slots extends Command {
 			};
 
 			msg += "| : : :  **" + (message.translate("common:DEFEAT").toUpperCase()) + "**  : : : |";
-			message.channel.send(message.translate("economy/slots:DEFEAT", {
-				money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-				username: message.author.username
-			}));
+			message.channel.send({
+				content: message.translate("economy/slots:DEFEAT", {
+					money: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+					username: message.author.username
+				})
+			});
 			data.memberData.money = data.memberData.money - amount;
 			if (!data.userData.achievements.slots.achieved) {
 				data.userData.achievements.slots.progress.now = 0;

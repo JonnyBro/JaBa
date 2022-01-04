@@ -18,7 +18,7 @@ class Lovecalc extends Command {
 		});
 	}
 
-	async run(message) {
+	async run(message, args, data) {
 		const firstMember = message.mentions.members.filter(m => m.id !== message.author.id).first();
 		if (!firstMember) return message.error("fun/lovecalc:MISSING");
 		const secondMember = message.mentions.members
@@ -37,16 +37,22 @@ class Lovecalc extends Command {
 		const percent = parseInt(string.substr(0, 2), 10);
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(`❤️ ${message.translate("fun/lovecalc:DESCRIPTION")}`)
+			.setAuthor({
+				name: `❤️ ${message.translate("fun/lovecalc:DESCRIPTION")}`
+			})
 			.setDescription(message.translate("fun/lovecalc:CONTENT", {
 				percent,
 				firstUsername: firstMember.user.username,
 				secondUsername: secondMember.user.username
 			}))
-			.setColor(this.client.config.embed.color)
-			.setFooter(this.client.config.embed.footer);
+			.setColor(data.config.embed.color)
+			.setFooter({
+				text: data.config.embed.footer
+			});
 
-		message.channel.send(embed);
+		message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

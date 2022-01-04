@@ -41,11 +41,14 @@ class Userinfo extends Command {
 		if (message.guild) member = await message.guild.members.fetch(user).catch(() => {});
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(user.tag, user.displayAvatarURL({
-				size: 512,
-				dynamic: true,
-				format: "png"
-			}))
+			.setAuthor({
+				name: user.tag,
+				iconURL: user.displayAvatarURL({
+					size: 512,
+					dynamic: true,
+					format: "png"
+				})
+			})
 			.setThumbnail(user.displayAvatarURL({
 				dynamic: true
 			}))
@@ -59,15 +62,17 @@ class Userinfo extends Command {
 				format: "png"
 			}))
 			.setColor(data.config.embed.color)
-			.setFooter(data.config.embed.footer);
+			.setFooter({
+				text: data.config.embed.footer
+			});
 
 		if (displayPresence) {
-			embed.addField(this.client.customEmojis.games + " " + message.translate("common:GAME"), (user.presence.activity ? user.presence.activity.name : message.translate("general/userinfo:NO_GAME")), true)
-			embed.addField(this.client.customEmojis.status[user.presence.status] + " " + message.translate("common:STATUS"), message.translate("common:STATUS_" + (user.presence.status.toUpperCase())), true);
+			embed.addField(this.client.customEmojis.games + " " + message.translate("common:GAME"), (member.presence.activities[0] ? `${member.presence.activities[0].name}\n${member.presence.activities[0].details}\n${member.presence.activities[0].state}` : message.translate("general/userinfo:NO_GAME")), true)
+			embed.addField(this.client.customEmojis.status[member.presence.status] + " " + message.translate("common:STATUS"), message.translate("common:STATUS_" + (member.presence.status.toUpperCase())), true);
 		};
 
 		if (member) {
-			embed.addField(this.client.customEmojis.up + " " + message.translate("general/userinfo:ROLE"), (member.roles.highest ? member.roles.highest : message.translate("general/userinfo:NO_ROLE")), true)
+			// embed.addField(this.client.customEmojis.up + " " + message.translate("general/userinfo:ROLE"), (member.roles.highest ? member.roles.highest : message.translate("general/userinfo:NO_ROLE")), true)
 			embed.addField(this.client.customEmojis.calendar2 + " " + message.translate("common:JOIN"), message.printDate(member.joinedAt), true)
 			embed.addField(this.client.customEmojis.color + " " + message.translate("common:COLOR"), member.displayHexColor, true)
 			embed.addField(this.client.customEmojis.pencil + " " + message.translate("common:NICKNAME"), (member.nickname ? member.nickname : message.translate("general/userinfo:NO_NICKNAME")), true)
@@ -95,7 +100,9 @@ class Userinfo extends Command {
 			};
 		};
 
-		message.channel.send(embed);
+		message.channel.send({
+			embeds: [embed]
+		});
 	}
 };
 

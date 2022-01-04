@@ -9,9 +9,6 @@
 			</div>
 			<div class="pull-left info">
 				<p><%= user.username %></p>
-				<a href="#"><i
-						class="fa fa-circle text-<%= user.status === "dnd" ? "danger" : user.status === "idle" ? "warning" : user.status === "online" ? "success" : ""%>"></i>
-					<%= translate("common:STATUS_" + user.status.toUpperCase()) %></a>
 			</div>
 		</div>
 		<!-- search form -->
@@ -72,6 +69,6 @@
 		$(`.sidebar-menu > li > a[href="${pathname}"]`).parent().addClass("active");
 		$(`.sidebar-menu > li > ul > li > a[href="${window.location.pathname}"]`).parent().addClass("active");
 		$(`.sidebar-menu > li > a[href="/${window.location.pathname.split("/")[1]}/"]`).parent().addClass(
-		"active");
+			"active");
 	});
 </script>

@@ -78,7 +78,9 @@ class Marry extends Command {
 			to: member.user.toString()
 		});
 
-		const collector = new Discord.MessageCollector(message.channel, (m) => m.author.id === member.id, {
+		const filter = m => m.author.id === member.id;
+		const collector = new Discord.MessageCollector(message.channel, {
+			filter,
 			time: 120000
 		});
 
@@ -96,7 +98,7 @@ class Marry extends Command {
 			// Delete pending request
 			delete pendings[message.author.id];
 			if (reason === "time") {
-				return message.error("misc:TIMES_UP", {
+				return message.error("economy/marry:TIMEOUT", {
 					username: member.user.toString()
 				});
 			};

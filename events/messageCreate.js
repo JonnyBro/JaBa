@@ -1,6 +1,5 @@
-const { string } = require("mathjs");
-
-const xpCooldown = {},
+const { Permissions } = require("discord.js"),
+	xpCooldown = {},
 	cmdCooldown = {};
 
 module.exports = class {
@@ -53,7 +52,7 @@ module.exports = class {
 		if (message.guild) {
 			await updateXp(client, message, data);
 
-			if (!message.channel.permissionsFor(message.member).has("MANAGE_MESSAGES") && !message.editedAt) {
+			if (!message.channel.permissionsFor(message.member).has(Permissions.FLAGS.MANAGE_MESSAGES) && !message.editedAt) {
 				const channelSlowmode = data.guild.slowmode.channels.find((ch) => ch.id === message.channel.id);
 				if (channelSlowmode) {
 					const uSlowmode = data.guild.slowmode.users.find((d) => d.id === (message.author.id + message.channel.id));
@@ -82,7 +81,7 @@ module.exports = class {
 
 			if (data.guild.plugins.automod.enabled && !data.guild.plugins.automod.ignored.includes(message.channel.id)) {
 				if (/(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(message.content)) {
-					if (!message.channel.permissionsFor(message.member).has("MANAGE_MESSAGES")) {
+					if (!message.channel.permissionsFor(message.member).has(Permissions.FLAGS.MANAGE_MESSAGES)) {
 						message.delete();
 						message.author.send("```" + message.content + "```");
 						return message.error("administration/automod:DELETED", {
@@ -126,14 +125,14 @@ module.exports = class {
 		if (!cmd && !customCommandAnswer && message.guild) return;
 		else if (!cmd && !customCommandAnswer && !message.guild) return message.sendT("misc:HELLO_DM");
 
-		if (message.guild && data.guild.ignoredChannels.includes(message.channel.id) && !message.member.hasPermission("MANAGE_MESSAGES")) {
+		if (message.guild && data.guild.ignoredChannels.includes(message.channel.id) && !message.member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
 			message.delete();
 			return message.author.send(message.translate("misc:RESTRICTED_CHANNEL", {
 				channel: message.channel.toString()
 			}));
 		};
 
-		if (customCommandAnswer) return message.channel.send(customCommandAnswer);
+		if (customCommandAnswer) return message.channel.send({ content: customCommandAnswer });
 		if (cmd.conf.guildOnly && !message.guild) return message.error("misc:GUILD_ONLY");
 
 		if (message.guild) {
@@ -158,7 +157,7 @@ module.exports = class {
 			});
 
 			if (neededPermissions.length > 0) return message.error("misc:MISSING_MEMBER_PERMS", { list: neededPermissions.map((p) => `\`${p}\``).join(", ") });
-			if (!message.channel.permissionsFor(message.member).has("MENTION_EVERYONE") && (message.content.includes("@everyone") || message.content.includes("@here"))) return message.error("misc:EVERYONE_MENTION");
+			if (!message.channel.permissionsFor(message.member).has(Permissions.FLAGS.MENTION_EVERYONE) && (message.content.includes("@everyone") || message.content.includes("@here"))) return message.error("misc:EVERYONE_MENTION");
 			if (!message.channel.nsfw && cmd.conf.nsfw) return message.error("misc:NSFW_COMMAND");
 		};
 

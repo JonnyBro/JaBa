@@ -30,10 +30,13 @@ class Triggered extends Command {
 			sepia: "true",
 			invert: "true"
 		});
-		const attachment = new Discord.MessageAttachment(buffer, "triggered.gif");
 		m.delete();
 
-		message.channel.send(attachment);
+		message.channel.send({
+			files: [{
+				attachment: buffer
+			}]
+		});
 	}
 };
 

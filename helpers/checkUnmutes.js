@@ -15,7 +15,7 @@ module.exports = {
 				});
 			});
 		setInterval(async () => {
-			client.databaseCache.mutedUsers.array().filter((m) => m.mute.endDate <= Date.now()).forEach(async (memberData) => {
+			client.databaseCache.mutedUsers.filter((m) => m.mute.endDate <= Date.now()).forEach(async (memberData) => {
 				const guild = client.guilds.cache.get(memberData.guildID);
 				if (!guild) return;
 				const member = guild.members.cache.get(memberData.id) || await guild.members.fetch(memberData.id).catch(() => {
@@ -49,7 +49,7 @@ module.exports = {
 					.setColor("#f44271")
 					.setFooter({ text: guild.client.config.embed.footer });
 				const channel = guild.channels.cache.get(guildData.plugins.modlogs);
-				if (channel) channel.send(embed);
+				if (channel) channel.send({ embeds: [embed] });
 
 				memberData.mute = {
 					muted: false,

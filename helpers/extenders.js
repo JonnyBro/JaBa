@@ -35,7 +35,7 @@ Message.prototype.sendT = function (key, args, options = {}) {
 	if (options.prefixEmoji) string = `${this.client.customEmojis[options.prefixEmoji]} | ${string}`;
 
 	if (options.edit) return this.edit(string);
-	else return this.channel.send(string);
+	else return this.channel.send({ content: string });
 };
 
 // Format a date
@@ -48,7 +48,7 @@ Message.prototype.convertTime = function (time, type, noPrefix) {
 	return this.client.convertTime(time, type, noPrefix, (this.guild && this.guild.data) ? this.guild.data.language : null);
 };
 
-Message.prototype.getNoun = function(number, one, two, five) {
+Message.prototype.getNoun = function (number, one, two, five) {
 	return this.client.getNoun(number, one, two, five);
 };
 

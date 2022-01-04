@@ -30,7 +30,9 @@ class Clear extends Command {
 			const newChannel = await message.channel.clone();
 			await message.channel.delete();
 			newChannel.setPosition(position);
-			return newChannel.send(message.translate("moderation/clear:CHANNEL_CLEARED"));
+			return newChannel.send({
+				content: message.translate("moderation/clear:CHANNEL_CLEARED")
+			});
 		};
 
 		let amount = args[0];
@@ -41,9 +43,8 @@ class Clear extends Command {
 		const user = message.mentions.users.first();
 
 		let messages = await message.channel.messages.fetch({
-			limit: 100
+			limit: amount
 		});
-		messages = messages.array();
 		if (user) messages = messages.filter((m) => m.author.id === user.id);
 		if (messages.length > amount) messages.length = parseInt(amount, 10);
 

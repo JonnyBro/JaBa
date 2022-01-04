@@ -25,7 +25,7 @@ module.exports = {
 					if (mustSent.length > 0) {
 						mustSent.forEach((r) => {
 							const embed = new Discord.MessageEmbed()
-								.setAuthor(client.translate("general/remindme:TITLE"))
+								.setAuthor({ name: client.translate("general/remindme:TITLE") })
 								.addField(client.translate("common:CREATION"), client.translate("general/remindme:CREATED", {
 									time: client.convertTime(r.createdAt, "from")
 								}))

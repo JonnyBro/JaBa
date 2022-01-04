@@ -42,11 +42,13 @@ class Facepalm extends Command {
 		const layer = await Canvas.loadImage("./assets/img/facepalm.png");
 		ctx.drawImage(layer, 0, 0, 632, 357);
 
-		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), "facepalm.png");
-
 		m.delete();
 
-		message.channel.send(attachment);
+		message.channel.send({
+			files: [{
+				attachment: buffer
+			}]
+		});
 	}
 };
 
