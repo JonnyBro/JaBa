@@ -31,7 +31,7 @@
         "dblapi.js": "^2.3.0",
         "discord-backup": "^3.0.1",
         "discord-canvas": "^1.3.2",
-        "discord-giveaways": "^5.0.1",
+        "discord-giveaways": "github:Androz2091/discord-giveaways#develop",
         "discord-paginationembed": "github:gazmull/discord-paginationembed#v3",
         "discord-together": "^1.3.25",
         "discord.js": "^13.5.0",

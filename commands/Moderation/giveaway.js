@@ -8,7 +8,7 @@ class Giveaway extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["gway"],
+			aliases: ["gaway"],
 			memberPermissions: ["MENTION_EVERYONE"],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
@@ -34,23 +34,33 @@ class Giveaway extends Command {
 			if (!winnersCount) return message.error("moderation/giveaway:INVALID_CREATE", { prefix: data.guild.prefix });
 			if (isNaN(winnersCount) || winnersCount > 10 || winnersCount < 1) return message.error("misc:INVALID_NUMBER_RANGE", { min: 1, max: 10 });
 
-			const prize = args.slice(3).join(" ");
+			var drop = (args[3] === "true"),
+				prize = args.slice(3).join(" ");
+
+			if (drop) prize = args.slice(4).join(" ");
+			else prize = args.slice(3).join(" ");
+
 			if (!prize) return message.error("moderation/giveaway:INVALID_CREATE", { prefix: data.guild.prefix });
 
 			this.client.giveawaysManager.start(message.channel, {
-				time: ms(time),
-				prize: prize,
+				duration: ms(time),
 				winnerCount: parseInt(winnersCount, 10),
+				prize: prize,
+				hostedBy: message.author,
+				isDrop: drop,
 				messages: {
 					giveaway: message.translate("moderation/giveaway:TITLE"),
 					giveawayEnded: message.translate("moderation/giveaway:ENDED"),
 					timeRemaining: message.translate("moderation/giveaway:TIME_REMAINING"),
 					inviteToParticipate: message.translate("moderation/giveaway:INVITE_PARTICIPATE"),
 					winMessage: message.translate("moderation/giveaway:WIN_MESSAGE"),
+					drawing: message.translate("moderation/giveaway:DRAWING"),
+					dropMessage: message.translate("moderation/giveaway:DROP"),
 					embedFooter: message.translate("moderation/giveaway:FOOTER"),
 					noWinner: message.translate("moderation/giveaway:NO_WINNER"),
 					winners: message.translate("moderation/giveaway:WINNERS"),
 					endedAt: message.translate("moderation/giveaway:END_AT"),
+					hostedBy: message.translate("moderation/giveaway:HOSTEDBY"),
 					units: {
 						seconds: message.translate("time:SECONDS", {
 							amount: ""

@@ -98,11 +98,10 @@ class JaBa extends Client {
 
 		this.giveawaysManager = new GiveawaysManager(this, {
 			storage: "./giveaways.json",
-			updateCountdownEvery: 10000,
 			default: {
 				botsCanWin: false,
 				embedColor: this.config.embed.color,
-				embedColorEnd: "FF00000",
+				embedColorEnd: "#FF0000",
 				reaction: "🎉"
 			}
 		});
