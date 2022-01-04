@@ -67,8 +67,13 @@ class Userinfo extends Command {
 			});
 
 		if (displayPresence) {
-			embed.addField(this.client.customEmojis.games + " " + message.translate("common:GAME"), (member.presence.activities[0] ? `${member.presence.activities[0].name}\n${member.presence.activities[0].details}\n${member.presence.activities[0].state}` : message.translate("general/userinfo:NO_GAME")), true)
-			embed.addField(this.client.customEmojis.status[member.presence.status] + " " + message.translate("common:STATUS"), message.translate("common:STATUS_" + (member.presence.status.toUpperCase())), true);
+			if (!member.presence.activities[0].name === "Custom Status") {
+				embed.addField(this.client.customEmojis.games + " " + message.translate("common:GAME"), (member.presence.activities[0] ? `${member.presence.activities[0].name}\n${member.presence.activities[0].details}\n${member.presence.activities[0].state}` : message.translate("general/userinfo:NO_GAME")), true)
+				embed.addField(this.client.customEmojis.status[member.presence.status] + " " + message.translate("common:STATUS"), message.translate("common:STATUS_" + (member.presence.status.toUpperCase())), true);
+			} else {
+				embed.addField(this.client.customEmojis.games + " " + message.translate("common:GAME"), (member.presence.activities[0] ? `Пользовательский статус\n${member.presence.activities[0].state}` : message.translate("general/userinfo:NO_GAME")), true)
+				embed.addField(this.client.customEmojis.status[member.presence.status] + " " + message.translate("common:STATUS"), message.translate("common:STATUS_" + (member.presence.status.toUpperCase())), true);
+			};
 		};
 
 		if (member) {
