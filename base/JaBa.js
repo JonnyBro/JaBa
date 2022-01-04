@@ -101,8 +101,8 @@ class JaBa extends Client {
 			updateCountdownEvery: 10000,
 			default: {
 				botsCanWin: false,
-				// exemptPermissions: [ "MANAGE_MESSAGES", "ADMINISTRATOR" ],
 				embedColor: this.config.embed.color,
+				embedColorEnd: "FF00000",
 				reaction: "🎉"
 			}
 		});
