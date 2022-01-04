@@ -26,7 +26,13 @@ class Pay extends Command {
 		if (!sentAmount || isNaN(sentAmount) || parseInt(sentAmount, 10) <= 0) return message.error("economy/pay:INVALID_AMOUNT", { username: member.user.tag });
 
 		const amount = Math.ceil(parseInt(sentAmount, 10));
+<<<<<<< HEAD
 		if (amount > data.memberData.money) return message.error("economy/pay:ENOUGH_MONEY", { amount: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDITS:1"), message.translate("misc:NOUNS:CREDITS:2"), message.translate("misc:NOUNS:CREDITS:5"))}` });
+=======
+		if (amount > data.memberData.money) return message.error("economy/pay:ENOUGH_MONEY", {
+			amount: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDITS:1"), message.translate("misc:NOUNS:CREDITS:2"), message.translate("misc:NOUNS:CREDITS:5"))}`
+		});
+>>>>>>> discordjs-13
 
 		const memberData = await this.client.findOrCreateMember({
 			id: member.id,
@@ -40,7 +46,7 @@ class Pay extends Command {
 		memberData.save();
 
 		message.success("economy/pay:SUCCESS", {
-			amount: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+			amount: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
 			username: member.user.tag
 		});
 	}

@@ -20,6 +20,10 @@ class Seek extends Command {
 	async run(message, args) {
 		const voice = message.member.voice.channel;
 		const queue = this.client.player.getQueue(message);
+<<<<<<< HEAD
+=======
+		const time = ms(args[0]) / 1000;
+>>>>>>> discordjs-13
 
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
 		if (!queue) return message.error("music/play:NOT_PLAYING");

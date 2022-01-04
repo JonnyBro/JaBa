@@ -20,11 +20,25 @@ if (config.apiKeys.sentryDSN) {
 };
 
 // Load JaBa class
-const JaBa = require("./base/JaBa"),
-	client = new JaBa();
+const JaBa = require("./base/JaBa");
+const client = new JaBa({
+	intents: [
+		Intents.FLAGS.GUILDS,
+		Intents.FLAGS.GUILD_MEMBERS,
+		Intents.FLAGS.GUILD_BANS,
+		Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+		Intents.FLAGS.GUILD_INVITES,
+		Intents.FLAGS.GUILD_VOICE_STATES,
+		Intents.FLAGS.GUILD_PRESENCES,
+		Intents.FLAGS.GUILD_MESSAGES,
+		Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+		Intents.FLAGS.GUILD_MESSAGE_TYPING,
+		Intents.FLAGS.DIRECT_MESSAGES,
+	],
+	partials: ["CHANNEL"]
+});
 
 const init = async () => {
-	// Search for all commands
 	const directories = await readdir("./commands/");
 	client.logger.log(`Loading a total of ${directories.length} categories.`, "log");
 	directories.forEach(async (dir) => {
@@ -37,7 +51,6 @@ const init = async () => {
 		});
 	});
 
-	// Then we load events, which will include our message and ready event.
 	const evtFiles = await readdir("./events/");
 	client.logger.log(`Loading a total of ${evtFiles.length} events.`, "log");
 	evtFiles.forEach((file) => {
@@ -48,9 +61,8 @@ const init = async () => {
 		delete require.cache[require.resolve(`./events/${file}`)];
 	});
 
-	client.login(client.config.token); // Log in to the discord api
+	client.login(client.config.token);
 
-	// connect to mongoose database
 	mongoose.connect(client.config.mongoDB, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true
@@ -69,11 +81,9 @@ const init = async () => {
 
 init();
 
-// if there are errors, log them
 client.on("disconnect", () => client.logger.log("Bot is disconnecting...", "warn"))
 	.on("reconnecting", () => client.logger.log("Bot reconnecting...", "log"))
 	.on("error", (e) => client.logger.log(e, "error"))
 	.on("warn", (info) => client.logger.log(info, "warn"));
 
-// if there is an unhandledRejection, log them
 process.on("unhandledRejection", (err) => console.error(err));

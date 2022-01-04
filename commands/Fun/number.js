@@ -66,8 +66,9 @@ class Number extends Command {
 					});
 					userdata.money = userdata.money + won;
 					userdata.save();
-					collector.stop(msg.author.username);
 				};
+
+				collector.stop();
 			};
 			if (parseInt(msg.content) < number) message.error("fun/number:BIG", {
 				user: msg.author.toString(),

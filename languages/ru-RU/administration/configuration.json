@@ -17,7 +17,6 @@
 	"SPECIAL_CHANNELS": "Специальные каналы",
 	"MODLOGS": "Логи модерации: *{{channel}}*",
 	"BIRTHDAYS": "Поздравления с днём рождения: *{{channel}}*",
-	"FORTNITESHOP": "Ежедневный магазин Fortnite: *{{channel}}*",
 	"SUGGESTIONS": "Предложения: *{{channel}}*",
 	"REPORTS": "Жалобы: *{{channel}}*",
 	"AUTOMOD_TITLE": "Автомодерация",

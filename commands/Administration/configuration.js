@@ -61,9 +61,6 @@ class Configuration extends Command {
 			}) + "\n" +
 			message.translate("administration/configuration:BIRTHDAYS", {
 				channel: guildData.plugins.birthdays ? `<#${guildData.plugins.birthdays}>` : message.translate("common:NOT_DEFINED")
-			}) + "\n" +
-			message.translate("administration/configuration:FORTNITESHOP", {
-				channel: guildData.plugins.fortniteshop ? `<#${guildData.plugins.fortniteshop}>` : message.translate("common:NOT_DEFINED")
 			})
 		);
 

@@ -31,8 +31,8 @@ module.exports = {
 								}))
 								.addField(client.translate("common:MESSAGE"), r.message)
 								.setColor(client.config.embed.color)
-								.setFooter(client.config.embed.footer);
-							dUser.send(embed);
+								.setFooter({ text: client.config.embed.footer });
+							dUser.send({ embeds: [embed] });
 						});
 						user.reminds = user.reminds.filter((r) => r.sendAt >= dateNow);
 						user.save();

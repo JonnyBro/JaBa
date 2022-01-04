@@ -81,7 +81,19 @@ class Profile extends Command {
 			.setFooter(data.config.embed.footer) // Sets the footer of the embed
 			.setTimestamp();
 
+<<<<<<< HEAD
 		message.channel.send(profileEmbed); // Send the embed in the current channel
+=======
+		const buffer = await userData.getAchievements();
+
+		message.channel.send({
+			embeds: [profileEmbed],
+			files: [{
+				name: "achievements.png",
+				attachment: buffer
+			}]
+		}); // Send the embed in the current channel
+>>>>>>> discordjs-13
 	}
 };
 

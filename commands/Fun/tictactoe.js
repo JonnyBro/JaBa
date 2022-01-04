@@ -6,7 +6,7 @@ class TicTacToe extends Command {
 		super(client, {
 			name: "tictactoe",
 			dirname: __dirname,
-			enabled: true,
+			enabled: false,
 			guildOnly: false,
 			aliases: ["ttt"],
 			memberPermissions: [],

@@ -24,7 +24,7 @@ class Announcement extends Command {
 
 		message.delete().catch(() => {});
 
-		let mention = "";
+		let mention = null;
 		const msg = await message.sendT("moderation/announcement:MENTION_PROMPT");
 		const collector = new Discord.MessageCollector(message.channel, (m) => m.author.id === message.author.id, {
 			time: 240000

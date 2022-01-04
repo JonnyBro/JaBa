@@ -80,7 +80,11 @@ class Work extends Command {
 		data.memberData.save();
 
 		const messageOptions = {
+<<<<<<< HEAD
 			embed
+=======
+			embeds: [embed]
+>>>>>>> discordjs-13
 		};
 		if (!data.userData.achievements.work.achieved) {
 			data.userData.achievements.work.progress.now += 1;

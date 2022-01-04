@@ -33,10 +33,6 @@ module.exports = class {
 		const checkReminds = require("../helpers/checkReminds");
 		checkReminds.init(client);
 
-		// DAILY SHOP FORTNITE
-		const fortniteShop = require("../helpers/fortniteShop");
-		fortniteShop.init(client);
-
 		// Start the dashboard
 		if (client.config.dashboard.enabled) client.dashboard.load(client);
 
