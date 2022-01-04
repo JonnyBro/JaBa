@@ -7,7 +7,7 @@ class Queue extends Command {
 		super(client, {
 			name: "queue",
 			dirname: __dirname,
-			enabled: false,
+			enabled: true,
 			guildOnly: true,
 			aliases: ["qu"],
 			memberPermissions: [],
@@ -18,7 +18,7 @@ class Queue extends Command {
 		});
 	}
 
-	async run(message, args, data) {
+	async run(message, args, data, interaction) {
 		const voice = message.member.voice.channel;
 		const queue = this.client.player.getQueue(message);
 
@@ -52,15 +52,15 @@ class Queue extends Command {
 			})
 			.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*Добавил ${queue.songs[0].member}*\n`);
 
-		FieldsEmbed.setArray(queue.songs[1] ? queue.songs.slice(1, queue.songs.length) : [])
+		FieldsEmbed
+			.setArray(queue.songs[1] ? queue.songs.slice(1, queue.songs.length) : [])
 			.setAuthorizedUsers([message.author.id])
 			.setChannel(message.channel)
 			.setElementsPerPage(5)
 			.setDeleteOnTimeout(true)
 			.setPageIndicator(true)
-			.formatField("Очередь", (track) => `[${track.name}](${track.url})\n*Добавил ${track.member}*\n`);
-
-		FieldsEmbed.build();
+			.formatField("Очередь", (track) => `[${track.name}](${track.url})\n*Добавил ${track.member}*\n`)
+		.build();
 	}
 };
 
