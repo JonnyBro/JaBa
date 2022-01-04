@@ -84,8 +84,10 @@ class Giveaway extends Command {
 			if (!messageID) return message.error("moderation/giveaway:MISSING_ID");
 
 			this.client.giveawaysManager.reroll(messageID, {
-				congrat: message.translate("moderation/giveaway:REROLL_CONGRAT"),
-				error: message.translate("moderation/giveaway:REROLL_ERROR")
+				messages: {
+					congrat: message.translate("moderation/giveaway:REROLL_CONGRAT"),
+					error: message.translate("moderation/giveaway:REROLL_ERROR")
+				}
 			}).then(() => {
 				return message.success("moderation/giveaway:GIVEAWAY_REROLLED");
 			}).catch(() => {
@@ -109,9 +111,7 @@ class Giveaway extends Command {
 			if (!messageID) return message.error("moderation/giveaway:MISSING_ID");
 
 			try {
-				this.client.giveawaysManager.edit(messageID, {
-					setEndTimestamp: Date.now()
-				});
+				this.client.giveawaysManager.end(messageID);
 				return message.success("moderation/giveaway:GIVEAWAY_ENDED");
 			} catch (e) {
 				return message.error("moderation/giveaway:NOT_FOUND", {
