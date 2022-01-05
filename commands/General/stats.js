@@ -18,7 +18,7 @@ class Stats extends Command {
 	}
 
 	async run(message, args, data) {
-		const hidenGuild = await this.client.guilds.fetch("568120814776614924").members.cache.size;
+		const hidenGuild = await this.client.guilds.fetch("568120814776614924").memberCount;
 			users = this.client.users.cache.size - hidenGuild,
 			servers = this.client.guilds.cache.size - 1;
 
