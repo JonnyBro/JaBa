@@ -25,12 +25,9 @@ class Choice extends Command {
 		const m = await message.sendT("fun/choice:PROGRESS", null, false, false, "loading");
 
 		setTimeout(() => {
-			m.success("fun/choice:DONE", null, {
-				edit: true
-			});
 			const result = answers[parseInt(Math.floor(Math.random() * answers.length))];
-			message.channel.send({
-				content: "```" + result + "```"
+			m.success("fun/choice:DONE", { result }, {
+				edit: true
 			});
 		}, 1500);
 	}
