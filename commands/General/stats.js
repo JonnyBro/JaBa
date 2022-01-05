@@ -18,9 +18,9 @@ class Stats extends Command {
 	}
 
 	async run(message, args, data) {
-		const hidenGuild = await this.client.guilds.fetch("568120814776614924").memberCount,
-			users = this.client.users.cache.size - hidenGuild,
-			servers = this.client.guilds.cache.size - 1;
+		const hiddenGuild = await this.client.guilds.fetch("568120814776614924");
+		const users = this.client.users.cache.size - hiddenGuild.memberCount;
+		const servers = this.client.guilds.cache.size - 1;
 
 
 		const statsEmbed = new Discord.MessageEmbed()
