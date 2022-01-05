@@ -18,6 +18,11 @@ class Stats extends Command {
 	}
 
 	async run(message, args, data) {
+		const hidenGuild = await this.client.guilds.fetch("568120814776614924").members.cache.size;
+			users = this.client.users.cache.size - hidenGuild,
+			servers = this.client.guilds.cache.size - 1;
+
+
 		const statsEmbed = new Discord.MessageEmbed()
 			.setColor(data.config.embed.color)
 			.setFooter({
@@ -28,8 +33,8 @@ class Stats extends Command {
 			})
 			.setDescription(message.translate("general/stats:MADE"))
 			.addField(this.client.customEmojis.stats + " " + message.translate("general/stats:COUNTS_TITLE"), message.translate("general/stats:COUNTS_CONTENT", {
-				servers: this.client.guilds.cache.size,
-				users: this.client.users.cache.size
+				servers: servers,
+				users: users
 			}), true)
 			.addField(this.client.customEmojis.version + " " + message.translate("general/stats:VERSIONS_TITLE"), `\`Discord.js : v${Discord.version}\`\n\`Nodejs : v${process.versions.node}\``, true)
 			.addField(this.client.customEmojis.ram + " " + message.translate("general/stats:RAM_TITLE"), `\`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB\``, true)
