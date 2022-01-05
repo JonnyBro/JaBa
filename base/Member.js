@@ -11,6 +11,7 @@ module.exports = mongoose.model("Member", new mongoose.Schema({
 	bankSold: { type: Number, default: 0 }, // Bank sold of the user
 	exp: { type: Number, default: 0 }, // Exp points of the user
 	level: { type: Number, default: 0 }, // Level of the user
+	transactions: { type: Array, default: [] }, // Transactions of the user
 
 	/* STATS */
 	registeredAt: { type: Number, default: Date.now() }, // Registered date of the member

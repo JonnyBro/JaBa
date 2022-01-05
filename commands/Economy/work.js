@@ -74,11 +74,19 @@ class Work extends Command {
 				};
 			};
 			embed.addField(message.translate("economy/work:SALARY"), message.translate("economy/work:SALARY_CONTENT", {
-					won: `${won} ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
+					won: `**${won}** ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 				}))
 				.addField(message.translate("economy/work:STREAK"), award.join(""));
 		};
 
+		const info = {
+			user: message.translate("economy/work:SALARY"),
+			amount: won,
+			date: Date.now(),
+			type: "got"
+		};
+
+		data.memberData.transactions.push(info);
 		data.memberData.money = data.memberData.money + won;
 		data.memberData.save();
 

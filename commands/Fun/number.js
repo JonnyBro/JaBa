@@ -23,7 +23,7 @@ class Number extends Command {
 		if (currentGames[message.guild.id]) return message.error("fun/number:GAME_RUNNING");
 
 		const participants = [],
-			number = Math.floor(this.client.functions.randomNum(100, 10000));
+			number = Math.floor(this.client.functions.randomNum(1000, 10000));
 
 		await message.sendT("fun/number:GAME_START");
 
@@ -40,6 +40,7 @@ class Number extends Command {
 		collector.on("collect", async msg => {
 			if (this.client.functions.getPrefix(msg, data)) return;
 			if (!participants.includes(msg.author.id)) participants.push(msg.author.id);
+			if (msg.content === "STOP") return collector.stop("force");
 			if (isNaN(msg.content)) return;
 
 			const parsedNumber = parseInt(msg.content, 10);
@@ -66,20 +67,24 @@ class Number extends Command {
 						id: msg.author.id,
 						guildID: message.guild.id
 					});
+
+					const info = {
+						user: message.translate("economy/transactions:NUMBERS"),
+						amount: won,
+						date: Date.now(),
+						type: "got"
+					};
+
+					data.memberData.transactions.push(info);
+
 					userdata.money = userdata.money + won;
 					userdata.save();
 				};
 
 				collector.stop();
 			};
-			if (parseInt(msg.content) < number) message.error("fun/number:BIG", {
-				user: msg.author.toString(),
-				number: parsedNumber
-			});
-			if (parseInt(msg.content) > number) message.error("fun/number:SMALL", {
-				user: msg.author.toString(),
-				number: parsedNumber
-			});
+			if (parseInt(msg.content) < number) message.error("fun/number:BIG", { user: msg.author.toString(), number: parsedNumber });
+			if (parseInt(msg.content) > number) message.error("fun/number:SMALL", { user: msg.author.toString(), number: parsedNumber });
 		});
 
 		collector.on("end", (_collected, reason) => {
@@ -87,6 +92,10 @@ class Number extends Command {
 			if (reason === "time") {
 				return message.error("fun/number:DEFEAT", {
 					number
+				});
+			} else if (reason === "force") {
+				return message.error("misc:FORCE_STOP", {
+					user: message.author.toString()
 				});
 			};
 		});

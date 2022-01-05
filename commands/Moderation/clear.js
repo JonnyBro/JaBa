@@ -7,7 +7,7 @@ class Clear extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["clear", "bulkdelete", "purge"],
+			aliases: ["cl", "purge"],
 			memberPermissions: ["MANAGE_MESSAGES"],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "MANAGE_MESSAGES"],
 			nsfw: false,

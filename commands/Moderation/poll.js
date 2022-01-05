@@ -8,7 +8,7 @@ class Poll extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: [],
+			aliases: ["po"],
 			memberPermissions: ["MANAGE_MESSAGES"],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,

@@ -1,11 +1,11 @@
 const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
-const asyncForEach = async (array, callback) => {
-	for (let index = 0; index < array.length; index++) {
-		await callback(array[index], index, array);
-	};
-};
+// const asyncForEach = async (array, callback) => {
+// 	for (let index = 0; index < array.size; index++) {
+// 		await callback(index, array);
+// 	};
+// };
 
 class Credits extends Command {
 	constructor(client) {
@@ -36,15 +36,16 @@ class Credits extends Command {
 		});
 
 		const commonsGuilds = this.client.guilds.cache.filter((g) => g.members.cache.get(user.id));
-		let globalMoney = 0;
-		await asyncForEach(commonsGuilds, async (guild) => {
-			const memberData = await this.client.findOrCreateMember({
-				id: user.id,
-				guildID: guild.id
-			});
-			globalMoney += memberData.money;
-			globalMoney += memberData.bankSold;
-		});
+		const globalMoney = memberData.money + memberData.bankSold;
+		// let globalMoney = 0;
+		// await asyncForEach(commonsGuilds, async (guild) => {
+		// 	const memberData = await this.client.findOrCreateMember({
+		// 		id: user.id,
+		// 		guildID: guild.id
+		// 	});
+		// 	globalMoney += memberData.money;
+		// 	globalMoney += memberData.bankSold;
+		// });
 
 		const embed = new Discord.MessageEmbed()
 			.setAuthor({

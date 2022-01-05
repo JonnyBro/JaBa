@@ -33,7 +33,7 @@ class FindWords extends Command {
 		const participants = [],
 			winners = [],
 			words = [],
-			nbGames = 4;
+			nbGames = this.client.functions.randomNum(4, 10);
 
 		// Store the date wich the game has started
 		const createdAt = Date.now(); // 20929038303
@@ -70,6 +70,7 @@ class FindWords extends Command {
 				collector.on("collect", (msg) => {
 					if (this.client.functions.getPrefix(msg, data)) return;
 					if (!participants.includes(msg.author.id)) participants.push(msg.author.id);
+					if (msg.content === "STOP") return collector.stop("force");
 					if (msg.content.toLowerCase().indexOf(word) >= 0 && wordList.map((word) => word.toLowerCase()).indexOf(msg.content.toLowerCase()) >= 0) {
 						collector.stop(msg.author.id); // Stop the collector
 					} else msg.error("fun/findwords:INVALID_WORD", { member: msg.author.toString() });
@@ -78,12 +79,17 @@ class FindWords extends Command {
 				collector.on("end", async (collected, reason) => {
 					if (reason === "time") {
 						message.error("fun/findwords:NO_WINNER");
+					} else if (reason === "force") {
+						return message.error("misc:FORCE_STOP", {
+							user: message.author.toString()
+						});
 					} else {
 						message.success("fun/findwords:WORD_FOUND", {
 							winner: `<@${reason}>`
 						});
 						winners.push(reason);
-					}
+					};
+
 					if (i < nbGames - 1) {
 						i++;
 						generateGame.call(this, words[i]);
@@ -112,6 +118,16 @@ class FindWords extends Command {
 								id: user.id,
 								guildID: message.guild.id
 							});
+
+							const info = {
+								user: message.translate("economy/transactions:WORDS"),
+								amount: won,
+								date: Date.now(),
+								type: "got"
+							};
+
+							data.memberData.transactions.push(info);
+
 							userdata.money = userdata.money + won;
 							userdata.save();
 						};

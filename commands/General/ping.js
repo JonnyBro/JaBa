@@ -7,7 +7,7 @@ class Ping extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: ["pong", "latency"],
+			aliases: ["pi"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES"],
 			nsfw: false,

@@ -1,0 +1,16 @@
+{
+	"DESCRIPTION": "Посмотреть историю транзакций!",
+	"USAGE": "{{prefix}}transactions",
+	"EXAMPLES": "{{prefix}}transactions",
+	"NO_TRANSACTIONS": "У вас нет транзакций.",
+	"EMBED_TRANSACTIONS": "Ваши транзакции",
+	"BANK": "Банк",
+	"WORDS": "Угадай слово",
+	"NUMBERS": "Угадай число",
+	"T_GOT": "Пополнение",
+	"T_SEND": "Списание",
+	"T_USER_GOT": "Источник",
+	"T_USER_SEND": "Получатель",
+	"T_AMOUNT": "Сумма",
+	"T_DATE": "Дата"
+}

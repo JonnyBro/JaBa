@@ -35,6 +35,14 @@ class Pay extends Command {
 			guildID: message.guild.id
 		});
 
+		const info = {
+			user: member.user.tag,
+			amount: parseInt(amount, 10),
+			date: Date.now(),
+			type: "send"
+		};
+
+		data.memberData.transactions.push(info);
 		data.memberData.money = data.memberData.money - parseInt(amount, 10);
 		data.memberData.save();
 

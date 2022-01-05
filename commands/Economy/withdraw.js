@@ -30,6 +30,15 @@ class Withdraw extends Command {
 
 		if (data.memberData.bankSold < amount) return message.error("economy/withdraw:NOT_ENOUGH", { money: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}` });
 
+		const info = {
+			user: message.translate("economy/transactions:BANK"),
+			amount: amount,
+			date: Date.now(),
+			type: "got"
+		};
+
+		data.memberData.transactions.push(info);
+
 		data.memberData.money = data.memberData.money + amount;
 		data.memberData.bankSold = data.memberData.bankSold - amount;
 		data.memberData.save();

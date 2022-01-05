@@ -33,6 +33,15 @@ class TicTacToe extends Command {
 				guildID: message.guild.id
 			});
 
+			const info = {
+				user: message.translate("economy/tictactoe:DESCRIPTION"),
+				amount: 100,
+				date: Date.now(),
+				type: "got"
+			};
+
+			data.memberData.transactions.push(info);
+
 			userdata.money = userdata.money + 100;
 			userdata.save();
 		});

@@ -82,7 +82,18 @@ class Slots extends Command {
 						username: message.author.username
 					})
 				});
+
 				const toAdd = credits - amount;
+
+				const info = {
+					user: message.translate("economy/slots:DESCRIPTION"),
+					amount: toAdd,
+					date: Date.now(),
+					type: "got"
+				};
+
+				data.memberData.transactions.push(info);
+
 				data.memberData.money = data.memberData.money + toAdd;
 				if (!data.userData.achievements.slots.achieved) {
 					data.userData.achievements.slots.progress.now += 1;
@@ -114,6 +125,16 @@ class Slots extends Command {
 					})
 				});
 				const toAdd = credits - amount;
+
+				const info = {
+					user: message.translate("economy/slots:DESCRIPTION"),
+					amount: toAdd,
+					date: Date.now(),
+					type: "got"
+				};
+
+				data.memberData.transactions.push(info);
+
 				data.memberData.money = data.memberData.money + toAdd;
 				if (!data.userData.achievements.slots.achieved) {
 					data.userData.achievements.slots.progress.now += 1;
@@ -140,6 +161,16 @@ class Slots extends Command {
 					username: message.author.username
 				})
 			});
+
+			const info = {
+				user: message.translate("economy/slots:DESCRIPTION"),
+				amount: amount,
+				date: Date.now(),
+				type: "send"
+			};
+
+			data.memberData.transactions.push(info);
+
 			data.memberData.money = data.memberData.money - amount;
 			if (!data.userData.achievements.slots.achieved) {
 				data.userData.achievements.slots.progress.now = 0;

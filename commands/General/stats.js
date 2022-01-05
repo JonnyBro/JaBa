@@ -8,7 +8,7 @@ class Stats extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: [],
+			aliases: ["stat"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
@@ -44,7 +44,7 @@ class Stats extends Command {
 				count: `${this.client.player.voices.collection.size} ${message.getNoun(this.client.player.voices.collection.size, message.translate("misc:NOUNS:SERVERS:1"), message.translate("misc:NOUNS:SERVERS:2"), message.translate("misc:NOUNS:SERVERS:5"))}`
 			}))
 			.addField(message.translate("general/stats:CREDITS_TITLE"), message.translate("general/stats:CREDITS_CONTENT", {
-				donators: ["**`Добрый Спецназ#8801`** - Тестер"].join("\n"),
+				donators: ["**`Добрый Спецназ#8801`** - Тестер, генератор идей"].join("\n"),
 				translators: ["**`Jonny_Bro#4226`** (:flag_ru:)"].join("\n")
 			}));
 
