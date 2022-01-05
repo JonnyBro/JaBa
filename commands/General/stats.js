@@ -22,7 +22,6 @@ class Stats extends Command {
 		const users = this.client.users.cache.size - hiddenGuild.memberCount;
 		const servers = this.client.guilds.cache.size - 1;
 
-
 		const statsEmbed = new Discord.MessageEmbed()
 			.setColor(data.config.embed.color)
 			.setFooter({
