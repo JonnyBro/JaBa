@@ -49,10 +49,10 @@ module.exports = class {
 		let i = 0;
 		setInterval(function () {
 			servers = client.guilds.cache.filter(guild => guild.id != "568120814776614924" && guild.id != "892727526911258654").size;
-			const random = status[parseInt(i, 10)];
+			const toShow = status[parseInt(i, 10)];
 
-			client.user.setActivity(`${random.name} | v${version}`, {
-				type: random.type
+			client.user.setActivity(`${toShow.name} | v${version}`, {
+				type: toShow.type
 			});
 
 			if (status[parseInt(i + 1, 10)]) i++;
