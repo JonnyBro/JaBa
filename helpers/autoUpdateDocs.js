@@ -15,9 +15,9 @@ module.exports = {
 		let text = `# JaBa имеет свыше **${Math.floor(commands.size / 10)}0 команд** в **${categories.length} категориях**!  \n\n#### Содержимое таблицы  \n**Название**: Название команды  \n**Описание**: Описание команды  \n**Использование**: Использование команды ([] - обязательно, () - необязательно)  \n**Откат**: Время, через которое команду можно будет использовать повторно\n\n`;
 
 		// categories.sort(function(a, b) {
-		// 	const aCmdsLength = commands.filter((cmd) => cmd.help.category === a).size;
-		// 	const bCmdsLength = commands.filter((cmd) => cmd.help.category === b).size;
-		// 	if (aCmdsLength > bCmdsLength) return -1;
+		// 	const aCmdsSize = commands.filter((cmd) => cmd.help.category === a).size;
+		// 	const bCmdsSize = commands.filter((cmd) => cmd.help.category === b).size;
+		// 	if (aCmdsSize > bCmdsSize) return -1;
 		// 	else return 1;
 		// })
 		categories.sort().forEach((cat) => {
@@ -25,7 +25,7 @@ module.exports = {
 				["Название", "Описание", "Использование", "Откат"]
 			];
 			const cmds = commands.filter((cmd) => cmd.help.category === cat);
-			text += `### ${cat} (${cmds.length} ${client.getNoun(cmds.length, "команда", "команды", "команд")})\n\n`;
+			text += `### ${cat} (${cmds.size} ${client.getNoun(cmds.size, "команда", "команды", "команд")})\n\n`;
 			cmds.sort(function (a, b) {
 				if (a.help.name < b.help.name) return -1;
 				else return 1;
