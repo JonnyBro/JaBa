@@ -23,14 +23,15 @@ class Setafk extends Command {
 			if (data.userData.afk) {
 				data.userData.afk = null;
 				await data.userData.save();
-				message.sendT("general/setafk:DELETED", {
+				return message.sendT("general/setafk:DELETED", {
 					username: message.author.username
 				});
 			};
 		};
 
 		message.success("general/setafk:SUCCESS", {
-			reason
+			reason,
+			prefix: data.guild.prefix
 		});
 
 		data.userData.afk = reason;
