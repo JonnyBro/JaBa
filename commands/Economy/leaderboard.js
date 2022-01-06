@@ -21,7 +21,7 @@ class Leaderboard extends Command {
 		const isOnlyOnMobile = (message.member.presence.clientStatus ? JSON.stringify(Object.keys(message.member.presence.clientStatus)) === JSON.stringify(["mobile"]) : false);
 
 		const type = args[0];
-		if (!type || (type !== "credits" && type !== "level" && type !== "rep")) return message.error("economy/leaderboard:MISSING_TYPE");
+		if (!type || !["credits", "level", "rep"].includes(type)) return message.error("economy/leaderboard:MISSING_TYPE");
 
 		if (type === "credits") {
 			const members = await this.client.membersData.find({
@@ -33,12 +33,15 @@ class Leaderboard extends Command {
 						value: m.money + m.bankSold
 					};
 				}).sort((a, b) => b.value - a.value);
+
 			const table = new AsciiTable("Таблица лидеров");
 			table.setHeading("#", message.translate("common:USER"), message.translate("common:CREDITS"));
+
 			if (membersLeaderboard.length > 20) membersLeaderboard.length = 20;
+
 			const newTable = await fetchUsers(membersLeaderboard, table, this.client);
 			message.channel.send({
-				content: `\`\`\`\n${newTable.toString()}\`\`\``
+				content: "```\n" + newTable.toString() + "```"
 			});
 		} else if (type === "level") {
 			const members = await this.client.membersData.find({
@@ -50,18 +53,19 @@ class Leaderboard extends Command {
 						value: m.level
 					};
 				}).sort((a, b) => b.value - a.value);
+
 			const table = new AsciiTable("Таблица лидеров");
 			table.setHeading("#", message.translate("common:USER"), message.translate("common:LEVEL"));
+
 			if (membersLeaderboard.length > 20) membersLeaderboard.length = 20;
+
 			const newTable = await fetchUsers(membersLeaderboard, table, this.client);
 			message.channel.send({
-				content: `\`\`\`\n${newTable.toString()}\`\`\``
+				content: "```\n" + newTable.toString() + "```"
 			});
 		} else if (type === "rep") {
 			const users = await this.client.usersData.find({
-					rep: {
-						$gt: 0
-					}
+					rep: { $gt: 0 }
 				}).lean(),
 				usersLeaderboard = users.map((u) => {
 					return {
@@ -69,12 +73,15 @@ class Leaderboard extends Command {
 						value: u.rep
 					};
 				}).sort((a, b) => b.value - a.value);
+
 			const table = new AsciiTable("Таблица лидеров");
 			table.setHeading("#", message.translate("common:USER"), message.translate("common:POINTS"));
+
 			if (usersLeaderboard.length > 20) usersLeaderboard.length = 20;
+
 			const newTable = await fetchUsers(usersLeaderboard, table, this.client);
 			message.channel.send({
-				content: `\`\`\`\n${newTable.toString()}\`\`\``
+				content: "```\n" + newTable.toString() + "```"
 			});
 		};
 
