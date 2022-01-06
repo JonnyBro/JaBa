@@ -20,12 +20,8 @@ class Marry extends Command {
 	}
 
 	async run(message, args, data) {
-		// if the message author is already wedded
-		if (data.userData.lover) return message.error("economy/marry:ALREADY_MARRIED", {
-			prefix: data.guild.prefix
-		});
+		if (data.userData.lover) return message.error("economy/marry:ALREADY_MARRIED", { prefix: data.guild.prefix });
 
-		// Gets the first mentionned member
 		const member = await this.client.resolveMember(args[0], message.guild);
 		if (!member) return message.error("economy/marry:INVALID_MEMBER");
 
@@ -33,13 +29,8 @@ class Marry extends Command {
 			id: member.id
 		});
 
-		// if the member is already wedded
-		if (userData.lover) return message.error("economy/marry:ALREADY_MARRIED_USER", {
-			username: member.user.tag
-		});
-
+		if (userData.lover) return message.error("economy/marry:ALREADY_MARRIED_USER", { username: member.user.tag });
 		if (member.user.bot) return message.error("economy/marry:BOT_USER");
-
 		if (member.id === message.author.id) return message.error("economy/marry:YOURSELF");
 
 		for (const requester in pendings) {

@@ -1,20 +1,22 @@
 const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
-// const asyncForEach = async (array, callback) => {
-// 	for (let index = 0; index < array.size; index++) {
-// 		await callback(index, array);
-// 	};
-// };
+const asyncForEach = async (collection, callback) => {
+	const allPromises = collection.map(async key => {
+		await callback(key);
+	});
 
-class Credits extends Command {
+	return await Promise.all(allPromises);
+};
+
+class Money extends Command {
 	constructor(client) {
 		super(client, {
 			name: "money",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["credits", "balance", "mon"],
+			aliases: ["balance", "mon"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
@@ -36,16 +38,15 @@ class Credits extends Command {
 		});
 
 		const commonsGuilds = this.client.guilds.cache.filter((g) => g.members.cache.get(user.id));
-		const globalMoney = memberData.money + memberData.bankSold;
-		// let globalMoney = 0;
-		// await asyncForEach(commonsGuilds, async (guild) => {
-		// 	const memberData = await this.client.findOrCreateMember({
-		// 		id: user.id,
-		// 		guildID: guild.id
-		// 	});
-		// 	globalMoney += memberData.money;
-		// 	globalMoney += memberData.bankSold;
-		// });
+		let globalMoney = 0;
+		await asyncForEach(commonsGuilds, async (guild) => {
+			const data = await this.client.findOrCreateMember({
+				id: user.id,
+				guildID: guild.id
+			});
+			globalMoney += data.money;
+			globalMoney += data.bankSold;
+		});
 
 		const embed = new Discord.MessageEmbed()
 			.setAuthor({
@@ -71,4 +72,4 @@ class Credits extends Command {
 	}
 };
 
-module.exports = Credits;
+module.exports = Money;

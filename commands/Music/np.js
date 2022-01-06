@@ -24,20 +24,15 @@ class Np extends Command {
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 
-		// Gets the current song
 		const track = queue.songs[0];
 
 		const status = queue =>
-			`Фильтры: \`${queue.filters.join(", ")
-				|| "Выкл"}\` | Повтор: \`${
+			`Фильтры: \`${queue.filters.join(", ") || "Выкл"}\` | Повтор: \`${
 				queue.repeatMode
-					? queue.repeatMode === 2
-						? "Очереди"
-						: "Трека"
+					? queue.repeatMode === 2 ? "Очереди" : "Трека"
 					: "Выкл"
 			}\` | Автовоспроизведение: \`${queue.autoplay ? "Вкл" : "Выкл"}\``;
 
-		// Generate discord embed to display song informations
 		const embed = new Discord.MessageEmbed()
 			.setAuthor({
 				name: message.translate("music/queue:TITLE")
@@ -53,7 +48,6 @@ class Np extends Command {
 			})
 			.setTimestamp();
 
-		// Send the embed in the current channel
 		message.channel.send({
 			embeds: [embed]
 		});

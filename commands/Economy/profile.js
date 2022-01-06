@@ -1,11 +1,13 @@
 const Command = require("../../base/Command.js"),
 	Discord = require("discord.js");
 
-// const asyncForEach = async (array, callback) => {
-// 	for (let index = 0; index < array.size; index++) {
-// 		await callback(index, array);
-// 	};
-// };
+const asyncForEach = async (collection, callback) => {
+	const allPromises = collection.map(async key => {
+		await callback(key);
+	});
+
+	return await Promise.all(allPromises);
+};
 
 class Profile extends Command {
 	constructor(client) {
@@ -24,33 +26,30 @@ class Profile extends Command {
 	}
 
 	async run(message, args, data) {
-		const client = this.client;
-
 		const arg = args[0] || message.author
-		let member = await client.resolveMember(arg, message.guild);
+		let member = await this.client.resolveMember(arg, message.guild);
 		if (!member) member = message.member;
 		if (member.user.bot) return message.error("economy/profile:BOT_USER");
 
-		const memberData = (member.id === message.author.id ? data.memberData : await client.findOrCreateMember({
+		const memberData = (member.id === message.author.id ? data.memberData : await this.client.findOrCreateMember({
 			id: member.id,
 			guildID: message.guild.id
 		}));
-		const userData = (member.id === message.author.id ? data.userData : await client.findOrCreateUser({
+		const userData = (member.id === message.author.id ? data.userData : await this.client.findOrCreateUser({
 			id: member.id
 		}));
 		if (userData.lover && !this.client.users.cache.get(userData.lover)) await this.client.users.fetch(userData.lover, true);
 
-		const commonsGuilds = client.guilds.cache.filter((g) => g.members.cache.get(member.id));
-		const globalMoney = memberData.money + memberData.bankSold;
-		// let globalMoney = 0;
-		// await asyncForEach(commonsGuilds, async (guild) => {
-		// 	const memberData = await client.findOrCreateMember({
-		// 		id: member.id,
-		// 		guildID: guild.id
-		// 	});
-		// 	globalMoney += memberData.money;
-		// 	globalMoney += memberData.bankSold;
-		// });
+		const commonsGuilds = this.client.guilds.cache.filter((g) => g.members.cache.get(member.id));
+		let globalMoney = 0;
+		await asyncForEach(commonsGuilds, async (guild) => {
+			const data = await this.client.findOrCreateMember({
+				id: member.id,
+				guildID: guild.id
+			});
+			globalMoney += data.money;
+			globalMoney += data.bankSold;
+		});
 
 		const profileEmbed = new Discord.MessageEmbed()
 			.setAuthor({

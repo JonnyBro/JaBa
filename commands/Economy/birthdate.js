@@ -24,7 +24,6 @@ class Birthdate extends Command {
 		const [day, month, year] = tArgs;
 		if (!day || !month || !year) return message.error("economy/birthdate:INVALID_DATE");
 
-		// Gets the string of the date
 		const match = date.match(/\d+/g);
 		if (!match) return message.error("economy/birthdate:INVALID_DATE");
 
