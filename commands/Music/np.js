@@ -45,7 +45,7 @@ class Np extends Command {
 			.setThumbnail(track.thumbnail)
 			.addField(message.translate("music/np:T_TITLE"), `[${track.name}](${track.url})`)
 			.addField(message.translate("music/np:T_CHANNEL"), track.uploader.name ? track.uploader.name : "Отсутствует")
-			.addField(message.translate("music/np:T_DURATION"), `${queue.formattedCurrentTime} / ${track.formattedDuration !== ("00:00" || "Live") ? track.formattedDuration : message.translate("music/play:LIVE")}`)
+			.addField(message.translate("music/np:T_DURATION"), `${queue.formattedCurrentTime} / ${track.duration > 1 ? track.formattedDuration : message.translate("music/play:LIVE")}`)
 			.addField(message.translate("music/np:T_CONF"), status(queue))
 			.setColor(data.config.embed.color)
 			.setFooter({
