@@ -104,10 +104,7 @@ module.exports = class {
 				const userData = await client.findOrCreateUser({
 					id: u.id
 				});
-				if (userData.afk) message.error("general/setafk:IS_AFK", {
-					user: u.tag,
-					reason: userData.afk
-				});
+				if (userData.afk) message.error("general/setafk:IS_AFK", { user: u.tag, reason: userData.afk });
 			});
 		};
 

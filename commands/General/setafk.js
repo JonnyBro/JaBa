@@ -18,7 +18,7 @@ class Setafk extends Command {
 
 	async run(message, args, data) {
 		const reason = args.join(" ");
-		if (!reason) return message.error("general/setafk:MISSING_REASON");
+		if (!reason || reason.length > 250) return message.error("general/setafk:MISSING_REASON");
 		if (reason === "delete") {
 			if (data.userData.afk) {
 				data.userData.afk = null;

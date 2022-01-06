@@ -1,8 +1,8 @@
 {
 	"DESCRIPTION": "Установить AFK статус (пользователь который упомянет вас получит сообщение)",
-	"USAGE": "{{prefix}}setafk [причина]",
+	"USAGE": "{{prefix}}setafk [причина/delete]",
 	"EXAMPLES": "{{prefix}}setafk Сру =)",
-	"MISSING_REASON": "Укажите причину AFK!",
+	"MISSING_REASON": "Укажите причину AFK! (не больше 250 символов)",
 	"SUCCESS": "Теперь вы AFK по причине: {{reason}}",
 	"DELETED": "**{{username}}**, ваш AFK статус удалён!",
 	"IS_AFK": "**{{user}}** сейчас AFK, причина:\n```{{reason}}```"
