@@ -46,7 +46,7 @@ class Rob extends Command {
 		const itsAWon = Math.floor(this.client.functions.randomNum(0, 100) < 25);
 
 		if (itsAWon) {
-			const toWait = Date.now() + 6 * (60 * 60000);
+			const toWait = Date.now() + 6 * (60 * 60000); // 6 hours
 			memberData.cooldowns.rob = toWait;
 			memberData.markModified("cooldowns");
 			await memberData.save();

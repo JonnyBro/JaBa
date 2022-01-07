@@ -1,5 +1,6 @@
 const Command = require("../../base/Command.js"),
-	fs = require("fs");
+	fs = require("fs"),
+	{ joinVoiceChannel, createAudioResource, createAudioPlayer } = require("@discordjs/voice");
 
 class Clip extends Command {
 	constructor(client) {
@@ -29,17 +30,21 @@ class Clip extends Command {
 		if (!fs.existsSync(`./clips/${clip}.mp3`)) return message.error("music/clip:NO_FILE", { file: clip });
 
 		try {
-			const connection = await voice.join();
-			await connection.voice.setSelfDeaf(true);
+			const connection = joinVoiceChannel({
+				channelId: voice.id,
+				guildId: message.guild.id,
+				adapterCreator: message.guild.voiceAdapterCreator
+			});
 
-			connection.play(`./clips/${clip}.mp3`)
-				.on("finish", () => {
-					voice.leave();
-				})
-				.on("error", err => {
-					voice.leave();
-					console.error(err);
+			const resource = createAudioResource(fs.createReadStream(`./clips/${clip}.mp3`));
+			const player = createAudioPlayer()
+				.on("error", error => {
+					connection.destroy();
+					console.error("Error:", error.message, "with track", error.resource.metadata.title);
 				});
+
+			player.play(resource);
+			connection.subscribe(player);
 		} catch (error) {
 			console.error(error);
 		};
