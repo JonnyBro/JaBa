@@ -30,7 +30,9 @@ class Birthdate extends Command {
 		const tday = +match[0],
 			tmonth = +match[1] - 1;
 		let tyear = +match[2];
+		
 		if (tyear < 100) tyear += tyear < 50 ? 2000 : 1900;
+
 		const d = new Date(tyear, tmonth, tday);
 		if (!(tday == d.getDate() && tmonth == d.getMonth() && tyear == d.getFullYear())) return message.error("economy/birthdate:INVALID_DATE");
 		if (d.getTime() > Date.now()) return message.error("economy/birthdate:DATE_TOO_HIGH");
