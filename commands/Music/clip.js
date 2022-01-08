@@ -1,6 +1,6 @@
 const Command = require("../../base/Command.js"),
 	fs = require("fs"),
-	{ joinVoiceChannel, createAudioResource, createAudioPlayer } = require("@discordjs/voice");
+	{ joinVoiceChannel, createAudioResource, createAudioPlayer, getVoiceConnection } = require("@discordjs/voice");
 
 class Clip extends Command {
 	constructor(client) {
@@ -24,7 +24,7 @@ class Clip extends Command {
 		const clip = args[0];
 
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
-		if (voice.members.find(user => user.id === this.client.user.id)) return message.error("music/clip:ACTIVE_CLIP");
+		if (getVoiceConnection(message.guild.id)) return message.error("music/clip:ACTIVE_CLIP");
 		if (queue) return message.error("music/clip:ACTIVE_QUEUE");
 		if (!clip) return message.error("music/clip:NO_ARG");
 		if (!fs.existsSync(`./clips/${clip}.mp3`)) return message.error("music/clip:NO_FILE", { file: clip });
