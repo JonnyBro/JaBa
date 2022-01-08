@@ -45,6 +45,10 @@ class Clip extends Command {
 
 			player.play(resource);
 			connection.subscribe(player);
+
+			setTimeout(() => {
+				connection.destroy();
+			}, 60 * 1000);
 		} catch (error) {
 			console.error(error);
 		};
