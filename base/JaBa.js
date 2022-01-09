@@ -71,7 +71,7 @@ class JaBa extends Client {
 				} else {
 					setTimeout(() => {
 						if (m.deletable) m.delete();
-					}, 600 * 1000);
+					}, 60 * 10 * 1000);
 				}
 			})
 			.on("addSong", (queue, song) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE", { songName: song.name }) }))
