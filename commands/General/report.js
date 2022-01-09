@@ -18,6 +18,8 @@ class Report extends Command {
 	}
 
 	async run(message, args, data) {
+		if (message.author.id === "285109105717280768") return message.channel.send({ content: "пошёл нахуй фахон" });
+
 		const repChannel = message.guild.channels.cache.get(data.guild.plugins.reports);
 		if (!repChannel) return message.error("general/report:MISSING_CHANNEL");
 
