@@ -22,7 +22,7 @@ class Addemoji extends Command {
 
 		const name = args[1] ? args[1].replace(/[^a-z0-9]/gi, "") : null;
 		if (!name) return message.error("administration/addemoji:MISSING_NAME");
-		if (name.length < 2 || name > 32) return message.error("administration/addemoji:INVALID_NAME");
+		if (name.length < 2 || name.length > 32) return message.error("administration/addemoji:INVALID_NAME");
 
 		message.guild.emojis
 			.create(URL, name)
