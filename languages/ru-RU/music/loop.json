@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Включить или отключить повтор очереди/одного трека!",
-	"USAGE": "{{prefix}}loop",
-	"EXAMPLES": "{{prefix}}loop",
+	"USAGE": "{{prefix}}loop (song/queue)",
+	"EXAMPLES": "{{prefix}}loop queue\n{{prefix}}loop",
 	"QUEUE": "Повтор очереди **включён**!",
 	"SONG": "Повтор текущего трека **включён**!",
 	"DISABLED": "Повтор **отключён**!"
