@@ -59,10 +59,8 @@ module.exports = class {
 					if (uSlowmode) {
 						if (uSlowmode.time > Date.now()) {
 							message.delete();
-							const delay = message.convertTime(uSlowmode.time, "to", true);
-
 							return message.author.send(message.translate("administration/slowmode:PLEASE_WAIT", {
-								time: delay,
+								time: message.convertTime(uSlowmode.time, "to", true),
 								channel: message.channel.toString()
 							}));
 						} else {
@@ -137,20 +135,14 @@ module.exports = class {
 			if (!cmd.conf.botPermissions.includes("EMBED_LINKS")) cmd.conf.botPermissions.push("EMBED_LINKS");
 
 			cmd.conf.botPermissions.forEach((perm) => {
-				if (!message.channel.permissionsFor(message.guild.me).has(perm)) {
-					neededPermissions.push(perm);
-				};
+				if (!message.channel.permissionsFor(message.guild.me).has(perm)) neededPermissions.push(perm);
 			});
 
-			if (neededPermissions.length > 0) return message.error("misc:MISSING_BOT_PERMS", {
-				list: neededPermissions.map((p) => `\`${p}\``).join(", ")
-			});
+			if (neededPermissions.length > 0) return message.error("misc:MISSING_BOT_PERMS", { list: neededPermissions.map((p) => `\`${p}\``).join(", ") });
 
 			neededPermissions = [];
 			cmd.conf.memberPermissions.forEach((perm) => {
-				if (!message.channel.permissionsFor(message.member).has(perm)) {
-					neededPermissions.push(perm);
-				};
+				if (!message.channel.permissionsFor(message.member).has(perm)) neededPermissions.push(perm);
 			});
 
 			if (neededPermissions.length > 0) return message.error("misc:MISSING_MEMBER_PERMS", { list: neededPermissions.map((p) => `\`${p}\``).join(", ") });

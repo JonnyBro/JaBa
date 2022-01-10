@@ -30,10 +30,14 @@ module.exports = class {
 		};
 
 		const thanksEmbed = new Discord.MessageEmbed()
-			.setAuthor({ name: "Спасибо что добавили меня на свой сервер!" })
+			.setAuthor({
+				name: "Спасибо что добавили меня на свой сервер!"
+			})
 			.setDescription(`Для настроек используйте \`${data.config.prefix}help\` и посмотрите на административные команды!\nЧтобы изменить язык используйте \`${this.client.config.prefix}setlang [язык]\`.`)
 			.setColor(data.config.embed.color)
-			.setFooter({ text: data.config.embed.footer })
+			.setFooter({
+				text: data.config.embed.footer
+			})
 			.setTimestamp();
 		messageOptions.embed = thanksEmbed;
 
@@ -41,9 +45,11 @@ module.exports = class {
 
 		const text = `Зашёл на сервер **${guild.name}**. На нём **${guild.members.cache.filter((m) => !m.user.bot).size}** пользователей (из них ${guild.members.cache.filter((m) => m.user.bot).size} ботов)`;
 
-		// Sends log embed in the logs channel
 		const logsEmbed = new Discord.MessageEmbed()
-			.setAuthor({ name: guild.name, iconURL: guild.iconURL()})
+			.setAuthor({
+				name: guild.name,
+				iconURL: guild.iconURL()
+			})
 			.setColor("#32CD32")
 			.setDescription(text);
 		this.client.channels.cache.get(data.config.support.logs).send(logsEmbed);

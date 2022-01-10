@@ -1,17 +1,17 @@
 const Canvas = require("canvas"),
 	Discord = require("discord.js"),
-	stringCleaner = require("@sindresorhus/slugify"),
 	{ resolve } = require("path");
 
 // Register assets fonts
-Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "RubikMonoOne" });
+Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "RubikMonoOne"  });
 Canvas.registerFont(resolve("./assets/fonts/KeepCalm-Medium.ttf"), { family: "KeepCalm" });
 
-const applyText = (canvas, text, defaultFontSize) => {
+const applyText = (canvas, text, defaultFontSize, width, font) => {
 	const ctx = canvas.getContext("2d");
 	do {
-		ctx.font = `${defaultFontSize -= 10}px RubikMonoOne`;
-	} while (ctx.measureText(text).width > 600);
+		ctx.font = `${(defaultFontSize -= 1)}px ${font}`;
+	} while (ctx.measureText(text).width > width);
+
 	return ctx.font;
 };
 
@@ -41,91 +41,88 @@ module.exports = class {
 					const canvas = Canvas.createCanvas(1024, 450),
 						ctx = canvas.getContext("2d");
 
-					// Background image
+					// Draw background
 					const background = await Canvas.loadImage("./assets/img/greetings_background.png");
-
-					// This uses the canvas dimensions to stretch the image onto the entire canvas
 					ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
+					// Draw layer
+					ctx.fillStyle = "#FFFFFF";
+					ctx.globalAlpha = "0.4";
+					ctx.fillRect(0, 0, 25, canvas.height);
+					ctx.fillRect(canvas.width - 25, 0, 25, canvas.height);
+					ctx.fillRect(25, 0, canvas.width - 50, 25);
+					ctx.fillRect(25, canvas.height - 25, canvas.width - 50, 25);
+					ctx.fillStyle = "#FFFFFF";
+					ctx.globalAlpha = "0.4";
+					ctx.fillRect(344, canvas.height - 296, 625, 65);
+					ctx.fillStyle = "#FFFFFF";
+					ctx.globalAlpha = "0.4";
+					ctx.fillRect(389, canvas.height - 225, 138, 65);
+					ctx.fillStyle = "#FFFFFF";
+					ctx.globalAlpha = "0.4";
+					ctx.fillRect(308, canvas.height - 110, 672, 65);
+
 					// Draw username
-					ctx.fillStyle = "#ffffff";
-					const username = stringCleaner(member.user.username, {
-						separator: " ",
-						lowercase: false,
-						decamelize: false,
-						preserveLeadingUnderscore: true,
-					});
-					ctx.font = applyText(canvas, username, 50);
-					ctx.fillText(username, canvas.width - 660, canvas.height - 250);
+					ctx.globalAlpha = 1;
+					ctx.fillStyle = "#FFFFFF";
+					ctx.font = applyText(canvas, member.user.username, 48, 600, "RubikMonoOne");
+					ctx.fillText(member.user.username, canvas.width - 670, canvas.height - 250);
 
 					// Draw server name
 					ctx.font = applyText(canvas, member.guild.translate("administration/goodbye:IMG_GOODBYE", {
 						server: member.guild.name
-					}), 53);
+					}), 53, 625, "RubikMonoOne");
+
 					ctx.fillText(member.guild.translate("administration/goodbye:IMG_GOODBYE", {
 						server: member.guild.name
-					}), canvas.width - 690, canvas.height - 65);
+					}), canvas.width - 700, canvas.height - 70);
 
 					// Draw discriminator
 					ctx.font = "35px RubikMonoOne";
-					ctx.fillText(member.user.discriminator, canvas.width - 624, canvas.height - 180);
-					// Draw number
+					ctx.fillText(member.user.discriminator, canvas.width - 623, canvas.height - 178);
+
+					// Draw membercount
 					ctx.font = "22px RubikMonoOne";
 					ctx.fillText(member.guild.translate("administration/goodbye:IMG_NB", {
 						memberCount: member.guild.memberCount
-					}), 50, canvas.height - 50);
+					}), 40, canvas.height - 35);
 
 					// Draw # for discriminator
-					ctx.fillStyle = "#44d14a";
+					ctx.fillStyle = "#FFFFFF";
 					ctx.font = "70px RubikMonoOne";
 					ctx.fillText("#", canvas.width - 690, canvas.height - 165);
 
-					// Draw Title with gradient
-					ctx.font = "65px RubikMonoOne";
-					ctx.strokeStyle = "#1d2124";
-					ctx.lineWidth = 15;
+					// Draw title
+					ctx.font = "45px RubikMonoOne";
+					ctx.strokeStyle = "#000000";
+					ctx.lineWidth = 10;
 					ctx.strokeText(member.guild.translate("administration/goodbye:TITLE"), canvas.width - 670, canvas.height - 330);
-
-					var gradient = ctx.createLinearGradient(canvas.width - 780, 0, canvas.width - 30, 0);
-					gradient.addColorStop(0, "#e15500");
-					gradient.addColorStop(1, "#e7b121");
-					ctx.fillStyle = gradient;
+					ctx.fillStyle = "#FFFFFF";
 					ctx.fillText(member.guild.translate("administration/goodbye:TITLE"), canvas.width - 670, canvas.height - 330);
 
-					// Pick up the pen
+					// Draw avatar circle
 					ctx.beginPath();
-
-					//Define Stroke Line
 					ctx.lineWidth = 10;
-
-					//Define Stroke Style
-					ctx.strokeStyle = "#df0909";
-
-					// Start the arc to form a circle
+					ctx.strokeStyle = "#FFFFFF";
 					ctx.arc(180, 225, 135, 0, Math.PI * 2, true);
-
-					// Draw Stroke
 					ctx.stroke();
-
-					// Put the pen down
 					ctx.closePath();
-
-					// Clip off the region you drew on
 					ctx.clip();
-
-					const options = {
-							format: "png",
-							size: 512
-						},
-						avatar = await Canvas.loadImage(member.user.displayAvatarURL(options));
-
-					// Move the image downwards vertically and constrain its height to 200, so it"s a square
+					const avatar = await Canvas.loadImage(member.user.displayAvatarURL({
+						format: "png",
+						size: 512
+					}));
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 
 					const attachment = new Discord.MessageAttachment(canvas.toBuffer(), "goodbye-image.png");
-					channel.send({ content: message, files: [attachment] });
+					channel.send({
+						content: message,
+						files: [attachment]
+					});
 				} else {
-					channel.send({ content: message });
+					channel.send({
+						content: message
+					});
 				};
 			};
 		};

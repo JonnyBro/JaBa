@@ -11,7 +11,7 @@
 	"FORM_SUCCESS": "**Готово!**\n\n:arrow_right_hook: *Используйте `{{prefix}}goodbye test` для предпросмотра вашего сообщения!*",
 	"MAX_CHARACT": "Ваше сообщение не должно быть больше 1800 символов!",
 	"DISABLED": "**Сообщения отключены!**\n\n:arrow_right_hook: *Используйте `{{prefix}}configuration`, чтобы увидеть обновлённые настройки!*",
-	"IMG_GOODBYE": "Вышел с сервера {{server}}!",
+	"IMG_GOODBYE": "Вышел с {{server}}!",
 	"IMG_NB": "{{memberCount}} участников!",
-	"TITLE": "Прощание"
+	"TITLE": "До встречи!"
 }
