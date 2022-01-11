@@ -33,10 +33,15 @@ class Setafk extends Command {
 			data.userData.afk = reason;
 			data.userData.save();
 
-			return message.success("general/setafk:SUCCESS", {
+			const m = await message.success("general/setafk:SUCCESS", {
 				reason,
 				prefix: data.guild.prefix
 			});
+
+			setTimeout(() => {
+				if (m.deletable) m.delete();
+				if (message.deletable) message.delete();
+			}, 10 * 1000);
 		};
 	}
 };
