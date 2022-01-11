@@ -36,6 +36,10 @@ class Debug extends Command {
 			guildID: message.guild.id
 		});
 
+		const userData = await this.client.findOrCreateUser({
+			id: member.id,
+		});
+
 		var newValue = 0;
 
 		if (action === "set") {
@@ -48,8 +52,8 @@ class Debug extends Command {
 				memberData.exp = newValue;
 				memberData.save();
 			} else if (status === "rep") {
-				memberData.rep = newValue;
-				memberData.save();
+				userData.rep = newValue;
+				userData.save();
 			} else if (status === "credits") {
 				memberData.money = newValue;
 				memberData.save();
@@ -72,9 +76,9 @@ class Debug extends Command {
 				memberData.exp = newValue;
 				memberData.save();
 			} else if (status === "rep") {
-				newValue = memberData.rep + parseInt(amount, 10);
-				memberData.rep = newValue;
-				memberData.save();
+				newValue = userData.rep + parseInt(amount, 10);
+				userData.rep = newValue;
+				userData.save();
 			} else if (status === "credits") {
 				newValue = memberData.money + parseInt(amount, 10);
 				memberData.money = newValue;
