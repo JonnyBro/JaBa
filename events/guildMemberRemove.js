@@ -83,9 +83,7 @@ module.exports = class {
 
 					// Draw membercount
 					ctx.font = "22px RubikMonoOne";
-					ctx.fillText(member.guild.translate("administration/goodbye:IMG_NB", {
-						memberCount: member.guild.memberCount
-					}), 40, canvas.height - 35);
+					ctx.fillText(`${member.guild.memberCount} ${this.client.getNoun(member.guild.memberCount, member.guild.translate("misc:NOUNS:MEMBERS:1"), member.guild.translate("misc:NOUNS:MEMBERS:2"), member.guild.translate("misc:NOUNS:MEMBERS:5"))}`, 40, canvas.height - 35);
 
 					// Draw # for discriminator
 					ctx.fillStyle = "#FFFFFF";
