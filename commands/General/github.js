@@ -7,7 +7,7 @@ class Github extends Command {
 		super(client, {
 			name: "github",
 			dirname: __dirname,
-			enabled: true,
+			enabled: false,
 			guildOnly: false,
 			aliases: ["git"],
 			memberPermissions: [],
@@ -19,7 +19,7 @@ class Github extends Command {
 	}
 
 	async run(message, args, data) {
-		const res = await fetch("https://api.github.com/repos/JonnyBro/jaba-v2");
+		const res = await fetch("https://api.github.com/repos/JonnyBro/JaBa");
 		const json = await res.json();
 
 		const embed = new Discord.MessageEmbed()
