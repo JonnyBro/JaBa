@@ -34,7 +34,7 @@ module.exports = {
 					`**${cmd.help.name}** ${cmd.help.aliases.length ? `**(${cmd.help.aliases.join(", ")})**` : ""}`,
 					client.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:DESCRIPTION`),
 					client.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:USAGE`),
-					cmd.conf.guildOnly ? "Только на сервере" : "Везде",
+					cmd.conf.guildOnly ? "Только на сервере" : "На сервере и в ЛС бота",
 					`${Math.ceil(cmd.conf.cooldown / 1000)} ${client.getNoun(Math.ceil(cmd.conf.cooldown / 1000), "секунда", "секунды", "секунд")}`
 				]);
 			});
