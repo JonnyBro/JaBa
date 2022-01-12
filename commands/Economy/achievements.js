@@ -18,7 +18,7 @@ class Achievements extends Command {
 	}
 
 	async run(message, args, data) {
-		let member = message.author;
+		let member = message.guild ? message.member : message.author;
 		if (args[0]) member = await this.client.resolveMember(args[0], message.guild);
 		if (message.guild && member.user.bot) return message.error("economy/profile:BOT_USER");
 
