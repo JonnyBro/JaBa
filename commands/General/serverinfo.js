@@ -47,7 +47,7 @@ class Serverinfo extends Command {
 				`${guild.members.cache.filter(m => !m.user.bot).size} ${message.getNoun(guild.members.cache.filter(m => !m.user.bot).size, message.translate("misc:NOUNS:MEMBERS:1"), message.translate("misc:NOUNS:MEMBERS:2"), message.translate("misc:NOUNS:MEMBERS:5"))}` +
 				"\n" + `${guild.members.cache.filter(m => m.user.bot).size} ${message.getNoun(guild.members.cache.filter(m => m.user.bot).size, message.translate("misc:NOUNS:BOTS:1"), message.translate("misc:NOUNS:BOTS:2"), message.translate("misc:NOUNS:BOTS:5"))}`, true
 			)
-			.addField(this.client.customEmojis.afk + message.translate("general/serverinfo:AFK_CHANNEL"), guild.afkChannel || message.translate("general/serverinfo:NO_AFK_CHANNEL"), true)
+			.addField(this.client.customEmojis.afk + message.translate("general/serverinfo:AFK_CHANNEL"), guild.afkChannel.toString() || message.translate("general/serverinfo:NO_AFK_CHANNEL"), true)
 			.addField(this.client.customEmojis.id + message.translate("common:ID"), guild.id, true)
 			.addField(this.client.customEmojis.crown + message.translate("common:OWNER"), owner.toString(), true)
 			.addField(this.client.customEmojis.boost + message.translate("general/serverinfo:BOOSTS"), guild.premiumSubscriptionCount || "0", true)
