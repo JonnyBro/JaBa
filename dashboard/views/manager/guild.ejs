@@ -26,6 +26,64 @@
 			</section>
 
 			<section class="content">
+				<!-- Info boxes -->
+				<div class="row">
+					<div class="col-md-2 col-sm-6 col-xs-12">
+						<div class="info-box">
+							<span class="info-box-icon bg-green"><i class="fa fa-area-chart"></i></span>
+							<div class="info-box-content">
+								<span class="info-box-text"><%= translate("common:LEVEL") %></span>
+								<span class="info-box-number"><%= guild.members.find(u => u.id === user.id).level %></span>
+							</div>
+							<!-- /.info-box-content -->
+						</div>
+						<!-- /.info-box -->
+					</div>
+					<!-- /.col -->
+					<div class="col-md-2 col-sm-6 col-xs-12">
+						<div class="info-box">
+							<span class="info-box-icon bg-green"><i class="fa fa-area-chart"></i></span>
+							<div class="info-box-content">
+								<span class="info-box-text"><%= translate("dashboard:EXP") %></span>
+								<span class="info-box-number"><%= guild.members.find(u => u.id === user.id).exp %> / <%= 5 * (guild.members.find(u => u.id === user.id).level * guild.members.find(u => u.id === user.id).level) + 80 * guild.members.find(u => u.id === user.id).level + 100 %></span>
+							</div>
+							<!-- /.info-box-content -->
+						</div>
+						<!-- /.info-box -->
+					</div>
+					<!-- /.col -->
+					<div class="col-md-2 col-sm-6 col-xs-12">
+						<div class="info-box">
+							<span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
+							<div class="info-box-content">
+								<span class="info-box-text"><%= translate("common:CREDITS") %> / <%= translate("economy/transactions:BANK") %></span>
+								<span class="info-box-number"><%= guild.members.find(u => u.id === user.id).money %> / <%= guild.members.find(u => u.id === user.id).bankSold %></span>
+							</div>
+							<!-- /.info-box-content -->
+						</div>
+						<!-- /.info-box -->
+					</div>
+					<!-- /.col -->
+					<div class="col-md-4 col-sm-6 col-xs-12">
+						<div class="info-box">
+							<span class="info-box-icon bg-green"><i class="fa fa-refresh"></i></span>
+							<div class="info-box-content">
+								<span class="info-box-text"><%= translate("dashboard:COOLDOWNS") %></span>
+								<% for (const c in memberData.cooldowns) { %>
+									<% if (c !== "rob") { %>
+										<span class="info-box-number"><%= translate("dashboard:" + c.toUpperCase()) %>: <%= memberData.cooldowns[c] > Date.now() ? convertTime(memberData.cooldowns[c]) : translate("dashboard:CAN_USE") %></span>
+									<% } else { %>
+										<span class="info-box-number"><%= translate("dashboard:" + c.toUpperCase()) %>: <%= memberData.cooldowns[c] > Date.now() ? convertTime(memberData.cooldowns[c]) : translate("dashboard:NO_DEFENCE") %></span>
+									<% }; %>
+								<% }; %>
+							</div>
+							<!-- /.info-box-content -->
+						</div>
+						<!-- /.info-box -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
 				<div class="row">
 					<div class="col-md-6">
 						<div class="box box-widget widget-user">
@@ -51,38 +109,6 @@
 							</div>
 							<!-- /.box-footer -->
 						</div>
-						<div class="info-box">
-							<span class="info-box-icon bg-green"><i class="fa fa-area-chart"></i></span>
-							<div class="info-box-content">
-								<span class="info-box-text"><%= translate("common:LEVEL") %></span>
-								<span class="info-box-number"><%= guild.members.find(u => u.id === user.id).level %></span>
-							</div>
-							<!-- /.info-box-content -->
-						</div>
-						<div class="info-box">
-							<span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
-							<div class="info-box-content">
-								<span class="info-box-text"><%= translate("common:CREDITS") %> / <%= translate("economy/transactions:BANK") %></span>
-								<span class="info-box-number"><%= guild.members.find(u => u.id === user.id).money %> / <%= guild.members.find(u => u.id === user.id).bankSold %></span>
-							</div>
-							<!-- /.info-box-content -->
-						</div>
-						<!-- /.info-box -->
-						<div class="info-box">
-							<span class="info-box-icon bg-green"><i class="fa fa-refresh"></i></span>
-							<div class="info-box-content">
-								<span class="info-box-text"><%= translate("dashboard:COOLDOWNS") %></span>
-								<% for (const c in memberData.cooldowns) { %>
-									<% if (c !== "rob") { %>
-										<span class="info-box-number"><%= translate("dashboard:" + c.toUpperCase()) %>: <%= memberData.cooldowns[c] !== 0 ? convertTime(memberData.cooldowns[c]) : translate("dashboard:CAN_USE") %></span>
-									<% } else { %>
-										<span class="info-box-number"><%= translate("dashboard:" + c.toUpperCase()) %>: <%= memberData.cooldowns[c] !== 0 ? convertTime(memberData.cooldowns[c]) : translate("dashboard:NO_DEFENCE") %></span>
-									<% }; %>
-								<% }; %>
-							</div>
-							<!-- /.info-box-content -->
-						</div>
-						<!-- /.info-box -->
 						<!-- BASIC CONFIGURATION -->
 						<div class="box box-warning">
 							<div class="box-header with-border">

@@ -13,7 +13,7 @@ module.exports.load = async(client) => {
 	const mainRouter = require("./routes/index"),
 		discordAPIRouter = require("./routes/discord"),
 		logoutRouter = require("./routes/logout"),
-		settingsRouter = require("./routes/settings"),
+		profileRouter = require("./routes/profile"),
 		guildStatsRouter = require("./routes/guild-stats"),
 		guildManagerRouter = require("./routes/guild-manager"),
 		docsManagerRouter = require("./routes/docs");
@@ -51,7 +51,7 @@ module.exports.load = async(client) => {
 		.use("/logout", logoutRouter)
 		.use("/manage", guildManagerRouter)
 		.use("/stats", guildStatsRouter)
-		.use("/settings", settingsRouter)
+		.use("/profile", profileRouter)
 		.use("/", mainRouter)
 		.use("/docs", docsManagerRouter)
 		.use(CheckAuth, function(req, res) {
