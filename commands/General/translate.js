@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js"),
+const Command = require("../../base/Command"),
 	Discord = require("discord.js"),
 	translate = require("@k3rn31p4nic/google-translate-api");
 

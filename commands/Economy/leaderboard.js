@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js"),
+const Command = require("../../base/Command"),
 	AsciiTable = require("ascii-table");
 
 class Leaderboard extends Command {

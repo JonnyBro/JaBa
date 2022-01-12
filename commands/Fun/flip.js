@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js");
+const Command = require("../../base/Command");
 
 class Flip extends Command {
 	constructor(client) {

@@ -1,5 +1,6 @@
-const Command = require("../../base/Command.js"),
-	i18next = require("i18next");
+const Command = require("../../base/Command"),
+	i18next = require("i18next"),
+	autoUpdateDocs = require("../../helpers/autoUpdateDocs");
 
 class Reload extends Command {
 	constructor(client) {
@@ -27,6 +28,7 @@ class Reload extends Command {
 
 		const lang = message.guild ? data.guild.language : "ru-RU";
 		i18next.reloadResources(lang);
+		autoUpdateDocs.update(this.client);
 
 		message.success("owner/reload:SUCCESS", {
 			command: cmd.help.name

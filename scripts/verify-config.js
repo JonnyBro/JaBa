@@ -1,5 +1,5 @@
 /* eslint-disable no-async-promise-executor */
-const config = require("../config.js");
+const config = require("../config");
 const fetch = require("node-fetch");
 
 const chalk = require("chalk");

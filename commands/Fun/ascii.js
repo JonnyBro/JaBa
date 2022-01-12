@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js"),
+const Command = require("../../base/Command"),
 	figlet = require("figlet"),
 	util = require("util"),
 	figletAsync = util.promisify(figlet);

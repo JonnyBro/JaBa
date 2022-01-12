@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js"),
+const Command = require("../../base/Command"),
 	Canvas = require("canvas");
 
 class Facepalm extends Command {

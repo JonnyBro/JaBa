@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js"),
+const Command = require("../../base/Command"),
 	{ Permissions } = require("discord.js");
 
 class Play extends Command {

@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js"),
+const Command = require("../../base/Command"),
 	canvacord = require("canvacord");
 
 class YouTubeComment extends Command {

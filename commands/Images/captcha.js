@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js"),
+const Command = require("../../base/Command"),
 	fetch = require("node-fetch");
 
 class Captcha extends Command {

@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js");
+const Command = require("../../base/Command");
 const ms = require("ms");
 
 class Seek extends Command {

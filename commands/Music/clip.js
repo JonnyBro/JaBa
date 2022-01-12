@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js"),
+const Command = require("../../base/Command"),
 	fs = require("fs"),
 	{ joinVoiceChannel, createAudioResource, createAudioPlayer, getVoiceConnection } = require("@discordjs/voice");
 

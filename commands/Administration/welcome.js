@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js"),
+const Command = require("../../base/Command"),
 	Resolvers = require("../../helpers/resolvers");
 
 class Welcome extends Command {

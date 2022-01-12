@@ -10,7 +10,7 @@ try {
 	process.exit(1);
 }
 
-const config = require("../config.js");
+const config = require("../config");
 const dbName = config.mongoDB.split("/").pop();
 const baseURL = config.mongoDB.substr(0, config.mongoDB.length - dbName.length);
 const client = new MongoClient(baseURL, {

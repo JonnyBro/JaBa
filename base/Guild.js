@@ -1,6 +1,6 @@
 const mongoose = require("mongoose"),
 	Schema = mongoose.Schema,
-	config = require("../config.js"),
+	config = require("../config"),
 	languages = require("../languages/language-meta.json");
 
 module.exports = mongoose.model("Guild", new Schema({

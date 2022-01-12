@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js"),
+const Command = require("../../base/Command"),
 	Discord = require("discord.js"),
 	md5 = require("md5");
 
