@@ -59,7 +59,7 @@ class Queue extends Command {
 			.setElementsPerPage(5)
 			.setDeleteOnTimeout(true)
 			.setPageIndicator(true)
-			.formatField("Очередь", (track) => `${ queue.songs.indexOf(track) + 1 } [${track.name}](${track.url})\n*Добавил ${track.member}*\n`)
+			.formatField("Очередь", (track) => `${ queue.songs.indexOf(track) } [${track.name}](${track.url})\n*Добавил ${track.member}*\n`)
 			.build();
 	}
 }
