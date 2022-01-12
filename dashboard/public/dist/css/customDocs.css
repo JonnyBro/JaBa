@@ -153,7 +153,6 @@ html #mode .dark {
 }
 
 @media (min-width: 1200px) {
-
 	.affix,
 	.affix-bottom {
 		width: 263px
@@ -164,8 +163,8 @@ html #mode .dark {
 
 @media (min-width: 768px) {
 	.docs-sidebar {
-		padding-top: 20px;
-		padding-left: 20px
+		padding-top: 100px;
+		padding-left: 40px
 	}
 }
 
