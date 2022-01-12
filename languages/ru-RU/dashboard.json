@@ -21,5 +21,13 @@
 	"ENABLE_AUTOROLE": "Включить",
 	"DISABLE_AUTOROLE": "Выключить",
 	"SELECTOR": "Выбор серверов",
-	"MANAGE": "Управление"
+	"MANAGE": "Управление",
+
+	"REPUTATION": "Очки репутации",
+	"COOLDOWNS": "Откаты",
+	"REP": "Команда rep",
+	"WORK": "Зарплата в work",
+	"ROB": "Защита от rob",
+	"CAN_USE": "Можно использовать",
+	"NO_DEFENCE": "Вы беспомощны"
 }

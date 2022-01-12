@@ -40,11 +40,11 @@
 						<i class="fa fa-angle-left pull-right"></i>
 					</span>
 				</a>
-				<% if(user.displayedGuilds) { %>
+				<% if (user.displayedGuilds) { %>
 				<ul class="treeview-menu">
 					<% user.displayedGuilds.forEach((guild) => { %>
 					<li><a href="<%= guild.settingsUrl %>"><i
-								class="fa fa-circle-o text-<%= guild.owner ? "blue" : "grey" %>"></i>
+								class="fa fa-circle-o text-<%= guild.owner ? "green" : "grey" %>"></i>
 							<%= guild.name %></a></li>
 					<% }); %>
 				</ul>

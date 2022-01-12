@@ -35,7 +35,7 @@ class Setafk extends Command {
 
 			const m = await message.success("general/setafk:SUCCESS", {
 				reason,
-				prefix: message.guild ? data.guild.prefix : "$"
+				prefix: message.guild ? data.guild.prefix : ""
 			});
 
 			setTimeout(() => {

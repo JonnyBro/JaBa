@@ -31,7 +31,7 @@ module.exports = {
 				else return 1;
 			}).forEach((cmd) => {
 				arrCat.push([
-					`**${cmd.help.name}** ${cmd.help.aliases.length ? `**(${cmd.help.aliases.join(", ")})**` : ""}`,
+					`**${cmd.help.name}** ${cmd.help.aliases.length ? `**(${cmd.help.aliases.join(", ")})**` : ""} ${cmd.conf.guildOnly ? "*Только на сервере*" : ""}`,
 					client.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:DESCRIPTION`),
 					client.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:USAGE`),
 					`${Math.ceil(cmd.conf.cooldown / 1000)} ${client.getNoun(Math.ceil(cmd.conf.cooldown / 1000), "секунда", "секунды", "секунд")}`

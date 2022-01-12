@@ -4,7 +4,7 @@ const express = require("express"),
 
 // Gets profile page
 router.get("/", CheckAuth, async function(req, res) {
-	res.render("settings", {
+	res.render("profile", {
 		user: req.userInfos,
 		translate: req.translate,
 		printDate: req.printDate,
@@ -25,7 +25,7 @@ router.post("/", CheckAuth, async function(req, res) {
 	};
 
 	await user.save();
-	res.redirect(303, "/settings");
+	res.redirect(303, "/profile");
 });
 
 module.exports = router;

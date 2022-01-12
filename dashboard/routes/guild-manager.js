@@ -16,12 +16,15 @@ router.get("/:serverID", CheckAuth, async(req, res) => {
 
 	// Fetch guild informations
 	const guildInfos = await utils.fetchGuild(guild.id, req.client, req.user.guilds);
+	const memberData = await req.client.findOrCreateMember({ id: req.userInfos.id, guildID: guild.id });
 
 	res.render("manager/guild", {
 		guild: guildInfos,
 		user: req.userInfos,
+		memberData: memberData,
 		translate: req.translate,
 		bot: req.client,
+		convertTime: req.convertTime,
 		currentURL: `${req.client.config.dashboard.baseURL}/${req.originalUrl}`
 	});
 });

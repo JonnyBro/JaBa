@@ -43,6 +43,7 @@ module.exports.load = async(client) => {
 			if (req.user) {
 				req.translate = req.client.translations.get(req.locale);
 				req.printDate = (date) => req.client.printDate(date, null, req.locale);
+				req.convertTime = (time) => req.client.convertTime(time, "to", true, req.locale);
 			};
 			next();
 		})

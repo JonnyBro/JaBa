@@ -29,8 +29,9 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="box box-widget widget-user">
-							<div class="widget-user-header bg-aqua-active">
+							<div class="widget-user-header bg-red">
 								<h3 class="widget-user-username"><%= guild.name %></h3>
+								<i> <%= guild.id %> </i>
 							</div>
 							<div class="widget-user-image">
 								<img class="img-circle" src="<%= guild.iconURL %>" alt="Server icon">
@@ -50,6 +51,38 @@
 							</div>
 							<!-- /.box-footer -->
 						</div>
+						<div class="info-box">
+							<span class="info-box-icon bg-green"><i class="fa fa-area-chart"></i></span>
+							<div class="info-box-content">
+								<span class="info-box-text"><%= translate("common:LEVEL") %></span>
+								<span class="info-box-number"><%= guild.members.find(u => u.id === user.id).level %></span>
+							</div>
+							<!-- /.info-box-content -->
+						</div>
+						<div class="info-box">
+							<span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
+							<div class="info-box-content">
+								<span class="info-box-text"><%= translate("common:CREDITS") %> / <%= translate("economy/transactions:BANK") %></span>
+								<span class="info-box-number"><%= guild.members.find(u => u.id === user.id).money %> / <%= guild.members.find(u => u.id === user.id).bankSold %></span>
+							</div>
+							<!-- /.info-box-content -->
+						</div>
+						<!-- /.info-box -->
+						<div class="info-box">
+							<span class="info-box-icon bg-green"><i class="fa fa-refresh"></i></span>
+							<div class="info-box-content">
+								<span class="info-box-text"><%= translate("dashboard:COOLDOWNS") %></span>
+								<% for (const c in memberData.cooldowns) { %>
+									<% if (c !== "rob") { %>
+										<span class="info-box-number"><%= translate("dashboard:" + c.toUpperCase()) %>: <%= memberData.cooldowns[c] !== 0 ? convertTime(memberData.cooldowns[c]) : translate("dashboard:CAN_USE") %></span>
+									<% } else { %>
+										<span class="info-box-number"><%= translate("dashboard:" + c.toUpperCase()) %>: <%= memberData.cooldowns[c] !== 0 ? convertTime(memberData.cooldowns[c]) : translate("dashboard:NO_DEFENCE") %></span>
+									<% }; %>
+								<% }; %>
+							</div>
+							<!-- /.info-box-content -->
+						</div>
+						<!-- /.info-box -->
 						<!-- BASIC CONFIGURATION -->
 						<div class="box box-warning">
 							<div class="box-header with-border">
@@ -69,7 +102,7 @@
 										<label><%= translate("common:LANGUAGE") %></label>
 										<select class="form-control" name="language">
 											<% bot.languages.forEach((language) => { %>
-											<% if(guild.language === language.name) { %>
+											<% if (guild.language === language.name) { %>
 											<option selected="selected"><%= language.aliases[0] %></option>
 											<% } else { %>
 											<option><%= language.aliases[0] %></options>
@@ -98,7 +131,7 @@
 									<div class="form-group">
 										<label><%= translate("common:SUGGESTIONS") %></label>
 										<select class="form-control" name="suggestions">
-											<% if(guild.plugins.suggestions && bot.channels.cache.has(guild.plugins.suggestions)) { %>
+											<% if (guild.plugins.suggestions && bot.channels.cache.has(guild.plugins.suggestions)) { %>
 											<option selected="selected">
 												#<%= bot.channels.cache.get(guild.plugins.suggestions).name %></option>
 											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT" && ch.id !== guild.plugins.suggestions).forEach((ch) => { %>
@@ -116,7 +149,7 @@
 									<div class="form-group">
 										<label><%= translate("common:REPORTS") %></label>
 										<select class="form-control" name="reports">
-											<% if(guild.plugins.reports && bot.channels.cache.has(guild.plugins.reports)) { %>
+											<% if (guild.plugins.reports && bot.channels.cache.has(guild.plugins.reports)) { %>
 											<option selected="selected">
 												#<%= bot.channels.cache.get(guild.plugins.reports).name %></option>
 											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT" && ch.id !== guild.plugins.reports).forEach((ch) => { %>
@@ -134,7 +167,7 @@
 									<div class="form-group">
 										<label><%= translate("common:MODLOGS") %></label>
 										<select class="form-control" name="modlogs">
-											<% if(guild.plugins.modlogs && bot.channels.cache.has(guild.plugins.modlogs)) { %>
+											<% if (guild.plugins.modlogs && bot.channels.cache.has(guild.plugins.modlogs)) { %>
 											<option selected="selected">
 												#<%= bot.channels.cache.get(guild.plugins.modlogs).name %></option>
 											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT" && ch.id !== guild.plugins.modlogs).forEach((ch) => { %>
@@ -152,7 +185,7 @@
 									<div class="form-group">
 										<label><%= translate("common:BIRTHDAYS") %></label>
 										<select class="form-control" name="birthdays">
-											<% if(guild.plugins.birthdays && bot.channels.cache.has(guild.plugins.birthdays)) { %>
+											<% if (guild.plugins.birthdays && bot.channels.cache.has(guild.plugins.birthdays)) { %>
 											<option selected="selected">
 												#<%= bot.channels.cache.get(guild.plugins.birthdays).name %></option>
 											<% guild.channels.cache.filter((ch) => ch.type === "GUILD_TEXT" && ch.id !== guild.plugins.birthdays).forEach((ch) => { %>
@@ -196,7 +229,7 @@
 									<div class="form-group">
 										<label><%= translate("common:CHANNEL") %></label>
 										<select class="form-control" name="channel">
-											<% if(guild.plugins.welcome.enabled && bot.channels.cache.has(guild.plugins.welcome.channel)) { %>
+											<% if (guild.plugins.welcome.enabled && bot.channels.cache.has(guild.plugins.welcome.channel)) { %>
 											<option selected="selected">
 												#<%= bot.channels.cache.get(guild.plugins.welcome.channel).name %>
 											</option>
@@ -216,7 +249,7 @@
 									<div class="form-group">
 										<div class="checkbox">
 											<label>
-												<% if(guild.plugins.welcome.withImage || !guild.plugins.welcome.enabled) { %>
+												<% if (guild.plugins.welcome.withImage || !guild.plugins.welcome.enabled) { %>
 												<input type="checkbox" name="withImage"
 													checked><%= translate("dashboard:WELCOME_IMG") %>
 												<% } else { %>
@@ -229,7 +262,7 @@
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<% if(guild.plugins.welcome.enabled) { %>
+									<% if (guild.plugins.welcome.enabled) { %>
 									<button type="submit" name="welcomeDisable"
 										class="btn btn-danger"><%= translate("dashboard:DISABLE_MESSAGES") %></button>
 									<button type="submit" name="welcomeUpdate"
@@ -259,7 +292,7 @@
 									<div class="form-group">
 										<label><%= translate("common:CHANNEL") %></label>
 										<select class="form-control" name="channel">
-											<% if(guild.plugins.goodbye.enabled && bot.channels.cache.has(guild.plugins.goodbye.channel)) { %>
+											<% if (guild.plugins.goodbye.enabled && bot.channels.cache.has(guild.plugins.goodbye.channel)) { %>
 											<option selected="selected">
 												#<%= bot.channels.cache.get(guild.plugins.goodbye.channel).name %>
 											</option>
@@ -279,7 +312,7 @@
 									<div class="form-group">
 										<div class="checkbox">
 											<label>
-												<% if(guild.plugins.goodbye.withImage || !guild.plugins.goodbye.enabled) { %>
+												<% if (guild.plugins.goodbye.withImage || !guild.plugins.goodbye.enabled) { %>
 												<input type="checkbox" name="withImage"
 													checked><%= translate("dashboard:GOODBYE_IMG") %>
 												<% } else { %>
@@ -292,7 +325,7 @@
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<% if(guild.plugins.goodbye.enabled) { %>
+									<% if (guild.plugins.goodbye.enabled) { %>
 									<button type="submit" name="goodbyeDisable"
 										class="btn btn-danger"><%= translate("dashboard:DISABLE_MESSAGES") %></button>
 									<button type="submit" name="goodbyeUpdate"
@@ -316,7 +349,7 @@
 									<div class="form-group">
 										<label><%= translate("common:ROLE") %></label>
 										<select class="form-control" name="role">
-											<% if(guild.plugins.autorole.enabled && guild.roles.cache.has(guild.plugins.autorole.role)) { %>
+											<% if (guild.plugins.autorole.enabled && guild.roles.cache.has(guild.plugins.autorole.role)) { %>
 											<option selected="selected">
 												@<%= guild.roles.cache.get(guild.plugins.autorole.role).name %></option>
 											<% guild.roles.cache.filter((r) => r.id !== guild.plugins.autorole.role && r.name !== "@everyone").forEach((r) => { %>
@@ -334,7 +367,7 @@
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<% if(guild.plugins.autorole.enabled) { %>
+									<% if (guild.plugins.autorole.enabled) { %>
 									<button type="submit" name="autoroleDisable"
 										class="btn btn-danger"><%= translate("dashboard:DISABLE_AUTOROLE") %></button>
 									<button type="submit" name="autoroleUpdate"
