@@ -1,5 +1,4 @@
-const chalk = require("chalk"),
-	{ Permissions } = require("discord.js");
+const { Permissions } = require("discord.js");
 
 module.exports = class {
 	constructor(client) {

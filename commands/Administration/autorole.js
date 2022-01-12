@@ -53,8 +53,8 @@ class Autorole extends Command {
 			message.success("administration/autorole:SUCCESS_DISABLED", {
 				prefix: data.guild.prefix
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Autorole;

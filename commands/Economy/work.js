@@ -27,7 +27,7 @@ class Work extends Command {
 			if (isInCooldown > Date.now()) return message.error("economy/work:COOLDOWN", {
 				time: message.convertTime(isInCooldown, "to", true)
 			});
-		};
+		}
 
 		if (Date.now() > data.memberData.cooldowns.work + (24 * 3600000)) data.memberData.workStreak = 0;
 
@@ -62,8 +62,8 @@ class Work extends Command {
 		if (data.memberData.workStreak >= 5) {
 			won += 200;
 			embed.addField(message.translate("economy/work:SALARY"), message.translate("economy/work:SALARY_CONTENT", {
-					won: `${won} ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
-				}))
+				won: `${won} ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
+			}))
 				.addField(message.translate("economy/work:STREAK"), message.translate("economy/work:STREAK_CONTENT"));
 			data.memberData.workStreak = 0;
 		} else {
@@ -71,13 +71,13 @@ class Work extends Command {
 				if (data.memberData.workStreak > i) {
 					const letter = Discord.Util.parseEmoji(award[i]).name.split("_")[1];
 					award[i] = `:regional_indicator_${letter.toLowerCase()}:`;
-				};
-			};
+				}
+			}
 			embed.addField(message.translate("economy/work:SALARY"), message.translate("economy/work:SALARY_CONTENT", {
-					won: `**${won}** ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
-				}))
+				won: `**${won}** ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
+			}))
 				.addField(message.translate("economy/work:STREAK"), award.join(""));
-		};
+		}
 
 		const info = {
 			user: message.translate("economy/work:SALARY"),
@@ -101,14 +101,14 @@ class Work extends Command {
 					attachment: "./assets/img/achievements/achievement_unlocked1.png"
 				}];
 				data.userData.achievements.work.achieved = true;
-			};
+			}
 			data.userData.markModified("achievements.work");
 			data.userData.save();
-		};
+		}
 
 		// Send the embed in the current channel
 		message.channel.send(messageOptions);
 	}
-};
+}
 
 module.exports = Work;

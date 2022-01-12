@@ -28,6 +28,6 @@ class Delcommand extends Command {
 			commandName: name
 		});
 	}
-};
+}
 
 module.exports = Delcommand;

@@ -121,8 +121,8 @@ class Backup extends Command {
 			});
 		} else {
 			return message.error("administration/backup:MISSING_STATUS");
-		};
+		}
 	}
-};
+}
 
 module.exports = Backup;

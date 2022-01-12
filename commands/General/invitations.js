@@ -33,8 +33,8 @@ class Invitations extends Command {
 				return message.error("general/invitations:NOBODY_MEMBER", {
 					member: member.user.tag
 				});
-			};
-		};
+			}
+		}
 
 		const content = memberInvites.map((i) => {
 			return message.translate("general/invitations:CODE", {
@@ -67,6 +67,6 @@ class Invitations extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Invitations;

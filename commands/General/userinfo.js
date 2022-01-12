@@ -32,8 +32,8 @@ class Userinfo extends Command {
 			if (!user) {
 				user = await this.client.users.fetch(args[0], true).catch(() => {});
 				displayPresence = false;
-			};
-		};
+			}
+		}
 
 		if (!user) return message.error("general/userinfo:INVALID_USER");
 
@@ -68,23 +68,23 @@ class Userinfo extends Command {
 
 		if (displayPresence) {
 			if (member.presence.activities[0].name === "Custom Status") {
-				embed.addField(this.client.customEmojis.games + " " + message.translate("common:GAME"), (member.presence.activities[0] ? `Пользовательский статус\n${member.presence.activities[0].state || message.translate("common:NOT_DEFINED")}` : message.translate("general/userinfo:NO_GAME")), true)
+				embed.addField(this.client.customEmojis.games + " " + message.translate("common:GAME"), (member.presence.activities[0] ? `Пользовательский статус\n${member.presence.activities[0].state || message.translate("common:NOT_DEFINED")}` : message.translate("general/userinfo:NO_GAME")), true);
 				embed.addField(this.client.customEmojis.status[member.presence.status] + " " + message.translate("common:STATUS"), message.translate("common:STATUS_" + (member.presence.status.toUpperCase())), true);
 			} else {
-				embed.addField(this.client.customEmojis.games + " " + message.translate("common:GAME"), (member.presence.activities[0] ? `${member.presence.activities[0].name}\n${member.presence.activities[0].details}\n${member.presence.activities[0].state}` : message.translate("general/userinfo:NO_GAME")), true)
+				embed.addField(this.client.customEmojis.games + " " + message.translate("common:GAME"), (member.presence.activities[0] ? `${member.presence.activities[0].name}\n${member.presence.activities[0].details}\n${member.presence.activities[0].state}` : message.translate("general/userinfo:NO_GAME")), true);
 				embed.addField(this.client.customEmojis.status[member.presence.status] + " " + message.translate("common:STATUS"), message.translate("common:STATUS_" + (member.presence.status.toUpperCase())), true);
-			};
-		};
+			}
+		}
 
 		if (member) {
 			// embed.addField(this.client.customEmojis.up + " " + message.translate("general/userinfo:ROLE"), (member.roles.highest ? member.roles.highest : message.translate("general/userinfo:NO_ROLE")), true)
-			embed.addField(this.client.customEmojis.calendar2 + " " + message.translate("common:JOIN"), message.printDate(member.joinedAt), true)
-			embed.addField(this.client.customEmojis.color + " " + message.translate("common:COLOR"), member.displayHexColor, true)
-			embed.addField(this.client.customEmojis.pencil + " " + message.translate("common:NICKNAME"), (member.nickname ? member.nickname : message.translate("general/userinfo:NO_NICKNAME")), true)
+			embed.addField(this.client.customEmojis.calendar2 + " " + message.translate("common:JOIN"), message.printDate(member.joinedAt), true);
+			embed.addField(this.client.customEmojis.color + " " + message.translate("common:COLOR"), member.displayHexColor, true);
+			embed.addField(this.client.customEmojis.pencil + " " + message.translate("common:NICKNAME"), (member.nickname ? member.nickname : message.translate("general/userinfo:NO_NICKNAME")), true);
 			embed.addField(this.client.customEmojis.roles + " " + message.translate("common:ROLES"), (member.roles.size > 10 ? member.roles.cache.map((r) => r).slice(0, 9).join(", ") + " " + message.translate("general/userinfo:MORE_ROLES", {
 				count: member.roles.cache.size - 10
 			}) : (member.roles.cache.size < 1) ? message.translate("general/userinfo:NO_ROLE") : member.roles.cache.map((r) => r).join(", ")));
-		};
+		}
 
 		if (user.bot && this.client.config.apiKeys.dbl && (this.client.config.apiKeys.dbl !== "")) {
 			const res = await fetch("https://discordbots.org/api/bots/" + user.id, {
@@ -102,13 +102,13 @@ class Userinfo extends Command {
 						lib: data.lib || "unknown"
 					}), true)
 					.addField(this.client.customEmojis.link + " " + message.translate("common:LINKS"), `${data.support ? `[${message.translate("common:SUPPORT")}](${data.support}) | ` : ""}${data.invite ?  `[${message.translate("common:INVITE")}](${data.invite}) | ` : ""}${data.github ?  `[GitHub](${data.github}) | ` : ""}${data.website ?  `[${message.translate("common:WEBSITE")}](${data.website})` : ""}`, true);
-			};
-		};
+			}
+		}
 
 		message.channel.send({
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Userinfo;

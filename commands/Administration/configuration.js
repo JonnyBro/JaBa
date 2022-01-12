@@ -91,6 +91,6 @@ class Configuration extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Configuration;

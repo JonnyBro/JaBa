@@ -106,6 +106,6 @@ class Mute extends Command {
 			});
 		}
 	}
-};
+}
 
 module.exports = Mute;

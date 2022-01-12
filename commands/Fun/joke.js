@@ -34,6 +34,6 @@ class Joke extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Joke;

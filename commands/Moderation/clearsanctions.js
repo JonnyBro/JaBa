@@ -30,6 +30,6 @@ class Clearwarns extends Command {
 			username: member.user.tag
 		});
 	}
-};
+}
 
 module.exports = Clearwarns;

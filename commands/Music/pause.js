@@ -27,6 +27,6 @@ class Pause extends Command {
 
 		message.sendT("music/pause:SUCCESS");
 	}
-};
+}
 
 module.exports = Pause;

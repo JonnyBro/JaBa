@@ -1,5 +1,4 @@
-const Command = require("../../base/Command.js"),
-	Discord = require("discord.js");
+const Command = require("../../base/Command.js");
 
 class Dictator extends Command {
 	constructor(client) {
@@ -13,7 +12,7 @@ class Dictator extends Command {
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 5000
+			cooldown: 3000
 		});
 	}
 
@@ -36,6 +35,6 @@ class Dictator extends Command {
 			}]
 		});
 	}
-};
+}
 
 module.exports = Dictator;

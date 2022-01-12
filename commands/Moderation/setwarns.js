@@ -39,8 +39,8 @@ class Setwarns extends Command {
 					prefix: data.guild.prefix,
 					count: `${number} ${message.getNoun(number, message.translate("misc:NOUNS:WARNS:1"), message.translate("misc:NOUNS:WARNS:2"), message.translate("misc:NOUNS:WARNS:5"))}`
 				});
-			};
-		};
+			}
+		}
 
 		if (!number || isNaN(number)) return message.error("misc:INVALID_NUMBER");
 		if (number < 1 || number > 10) return message.error("misc:INVALID_NUMBER_RANGE", 1, 10);
@@ -61,8 +61,8 @@ class Setwarns extends Command {
 				prefix: data.guild.prefix,
 				count: `${number} ${message.getNoun(number, message.translate("misc:NOUNS:WARNS:1"), message.translate("misc:NOUNS:WARNS:2"), message.translate("misc:NOUNS:WARNS:5"))}`
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Setwarns;

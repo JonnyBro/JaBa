@@ -45,6 +45,6 @@ class Back extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Back;

@@ -30,7 +30,7 @@ class Help extends Command {
 				return message.error("general/help:NOT_FOUND", {
 					search: args[0]
 				});
-			};
+			}
 
 			const description = message.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:DESCRIPTION`);
 			const usage = message.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:USAGE`, {
@@ -59,7 +59,7 @@ class Help extends Command {
 			return message.channel.send({
 				embeds: [groupEmbed]
 			});
-		};
+		}
 
 		const categories = [];
 		const commands = this.client.commands;
@@ -68,7 +68,7 @@ class Help extends Command {
 			if (!categories.includes(command.help.category)) {
 				if (command.help.category === "Owner" && message.author.id !== this.client.config.owner.id) return;
 				categories.push(command.help.category);
-			};
+			}
 		});
 
 		const emojis = this.client.customEmojis;
@@ -88,7 +88,7 @@ class Help extends Command {
 
 		if (message.guild) {
 			if (data.guild.customCommands.length > 0) embed.addField(`${emojis.categories.custom} ${message.guild.name} | ${message.translate("general/help:CUSTOM_COMMANDS")} - (${data.guild.customCommands.length})`, data.guild.customCommands.map((cmd) => `\`${cmd.name}\``).join(", "));
-		};
+		}
 
 		embed.addField("\u200B", message.translate("misc:STATS_FOOTER", {
 			dashboardLink: "https://jaba.pp.ua/",
@@ -111,6 +111,6 @@ class Help extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Help;

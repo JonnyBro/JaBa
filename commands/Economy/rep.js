@@ -28,7 +28,7 @@ class Rep extends Command {
 			if (isInCooldown > Date.now()) return message.error("economy/rep:COOLDOWN", {
 				time: message.convertTime(isInCooldown, "to", true)
 			});
-		};
+		}
 
 		const user = await this.client.resolveUser(args[0]);
 		if (!user) return message.error("economy/rep:INVALID_USER");
@@ -56,15 +56,15 @@ class Rep extends Command {
 						attachment: "./assets/img/achievements/achievement_unlocked6.png"
 					}]
 				});
-			};
+			}
 			userData.markModified("achievements.rep");
-		};
+		}
 		await userData.save();
 
 		message.success("economy/rep:SUCCESS", {
 			username: user.username
 		});
 	}
-};
+}
 
 module.exports = Rep;

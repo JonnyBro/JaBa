@@ -5,5 +5,5 @@ module.exports = async (req, res, next) => {
 		const state = Math.random().toString(36).substring(5);
 		req.client.states[state] = redirectURL;
 		return res.redirect(`/api/login?state=${state}`);
-	};
+	}
 };

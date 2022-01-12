@@ -43,6 +43,6 @@ class Stop extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Stop;

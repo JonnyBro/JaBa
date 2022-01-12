@@ -25,8 +25,8 @@ class Serverinfo extends Command {
 			if (!found) {
 				found = this.client.guilds.cache.find(g => g.name.includes(args.join(" ")) || g.id === args[0]);
 				if (found) guild = found;
-			};
-		};
+			}
+		}
 
 		await guild.members.fetch();
 		const owner = await guild.fetchOwner();
@@ -65,6 +65,6 @@ class Serverinfo extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Serverinfo;

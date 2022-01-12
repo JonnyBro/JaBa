@@ -21,6 +21,6 @@ module.exports = class {
 					attachment: "./assets/img/achievements/achievement_unlocked5.png"
 				}]
 			});
-		};
+		}
 	}
 };

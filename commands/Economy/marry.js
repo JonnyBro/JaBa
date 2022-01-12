@@ -58,8 +58,8 @@ class Marry extends Command {
 					firstUsername: member.user.tag,
 					secondUsername: user.tag
 				});
-			};
-		};
+			}
+		}
 
 		// Update pending requests
 		pendings[message.author.id] = member.id;
@@ -82,17 +82,13 @@ class Marry extends Command {
 				return collector.stop(false);
 			} else {
 				return message.error("misc:INVALID_YES_NO");
-			};
+			}
 		});
 
 		collector.on("end", async (_collected, reason) => {
 			// Delete pending request
 			delete pendings[message.author.id];
-			if (reason === "time") {
-				return message.error("economy/marry:TIMEOUT", {
-					username: member.user.toString()
-				});
-			};
+			if (reason === "time") return message.error("economy/marry:TIMEOUT", { username: member.user.toString() });
 			if (reason) {
 				data.userData.lover = member.id;
 				await data.userData.save();
@@ -113,14 +109,14 @@ class Marry extends Command {
 					userData.achievements.married.progress.now = 1;
 					userData.markModified("achievements.married");
 					userData.save();
-				};
+				}
 				if (!data.userData.achievements.married.achieved) {
 					if (!sent) message.channel.send(messageOptions);
 					data.userData.achievements.married.achieved = true;
 					data.userData.achievements.married.progress.now = 1;
 					data.userData.markModified("achievements.married");
 					data.userData.save();
-				};
+				}
 				return message.success("economy/marry:SUCCESS", {
 					creator: message.author.toString(),
 					partner: member.user.toString()
@@ -130,9 +126,9 @@ class Marry extends Command {
 					creator: message.author.toString(),
 					partner: member.user.toString()
 				});
-			};
+			}
 		});
 	}
-};
+}
 
 module.exports = Marry;

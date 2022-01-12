@@ -43,6 +43,6 @@ class Filters extends Command {
 			embeds: [list]
 		});
 	}
-};
+}
 
 module.exports = Filters;

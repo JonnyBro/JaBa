@@ -48,6 +48,6 @@ module.exports = {
 		} else {
 			fs.writeFileSync("./dashboard/public/docs/commands.md", text);
 			client.logger.log("Dashboard docs updated!");
-		};
+		}
 	}
 };

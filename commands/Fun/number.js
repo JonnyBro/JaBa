@@ -79,27 +79,20 @@ class Number extends Command {
 
 					userdata.money = userdata.money + won;
 					userdata.save();
-				};
+				}
 
 				collector.stop();
-			};
+			}
 			if (parseInt(msg.content) < number) message.error("fun/number:BIG", { user: msg.author.toString(), number: parsedNumber });
 			if (parseInt(msg.content) > number) message.error("fun/number:SMALL", { user: msg.author.toString(), number: parsedNumber });
 		});
 
 		collector.on("end", (_collected, reason) => {
 			delete currentGames[message.guild.id];
-			if (reason === "time") {
-				return message.error("fun/number:DEFEAT", {
-					number
-				});
-			} else if (reason === "force") {
-				return message.error("misc:FORCE_STOP", {
-					user: message.author.toString()
-				});
-			};
+			if (reason === "time") return message.error("fun/number:DEFEAT", { number });
+			else if (reason === "force") return message.error("misc:FORCE_STOP", { user: message.author.toString() });
 		});
 	}
-};
+}
 
 module.exports = Number;

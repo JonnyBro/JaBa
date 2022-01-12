@@ -38,8 +38,8 @@ class Setmodlogs extends Command {
 			return message.success("administration/setmodlogs:ENABLED", {
 				channel: channel.toString()
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Setmodlogs;

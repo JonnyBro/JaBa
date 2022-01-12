@@ -21,8 +21,8 @@ router.post("/", CheckAuth, async function(req, res) {
 		if (checkDate(data.birthdate)) {
 			user.birthdate = checkDate(data.birthdate);
 			user.markModified("birthdate");
-		};
-	};
+		}
+	}
 
 	await user.save();
 	res.redirect(303, "/profile");
@@ -47,4 +47,4 @@ function checkDate(birthdate) {
 	if (d.getTime() < (Date.now() - 2.523e+12)) return false;
 
 	return d;
-};
+}

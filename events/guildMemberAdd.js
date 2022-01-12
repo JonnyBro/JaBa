@@ -40,7 +40,7 @@ module.exports = class {
 					CONNECT: false
 				}).catch(() => {});
 			});
-		};
+		}
 
 		// Check if the autorole is enabled
 		if (guildData.plugins.autorole.enabled) member.roles.add(guildData.plugins.autorole.role).catch(() => {});
@@ -53,7 +53,7 @@ module.exports = class {
 					.replace(/{user}/g, member)
 					.replace(/{server}/g, member.guild.name)
 					.replace(/{membercount}/g, member.guild.memberCount)
-					.replace(/{createdat}/g, this.client.printDate(member.user.createdAt))
+					.replace(/{createdat}/g, this.client.printDate(member.user.createdAt));
 				if (guildData.plugins.welcome.withImage) {
 					const canvas = Canvas.createCanvas(1024, 450),
 						ctx = canvas.getContext("2d");
@@ -138,8 +138,8 @@ module.exports = class {
 					channel.send({
 						content: message
 					});
-				};
-			};
-		};
+				}
+			}
+		}
 	}
 };

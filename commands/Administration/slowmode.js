@@ -47,8 +47,8 @@ class Slowmode extends Command {
 				channel: `#${channel.name}`,
 				time: this.client.functions.convertTime(message.guild, ms(time))
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Slowmode;

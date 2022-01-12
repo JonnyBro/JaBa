@@ -17,8 +17,8 @@ class TicTacToe extends Command {
 		});
 	}
 
-	async run(message, args) {
-		const game = new TTT({ language: "ru" })
+	async run(message) {
+		const game = new TTT({ language: "ru" });
 		game.handleMessage(message);
 
 		game.on("win", async (data) => {
@@ -46,6 +46,6 @@ class TicTacToe extends Command {
 			userdata.save();
 		});
 	}
-};
+}
 
 module.exports = TicTacToe;

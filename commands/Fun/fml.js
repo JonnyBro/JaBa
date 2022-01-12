@@ -34,6 +34,6 @@ class Fml extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Fml;

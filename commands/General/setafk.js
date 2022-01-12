@@ -28,7 +28,7 @@ class Setafk extends Command {
 				return message.sendT("general/setafk:DELETED", {
 					username: message.author.username
 				});
-			};
+			}
 		} else {
 			data.userData.afk = reason;
 			data.userData.save();
@@ -42,8 +42,8 @@ class Setafk extends Command {
 				if (m.deletable) m.delete();
 				if (message.deletable) message.delete();
 			}, 10 * 1000);
-		};
+		}
 	}
-};
+}
 
 module.exports = Setafk;

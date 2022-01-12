@@ -63,7 +63,7 @@ class JaBa extends Client {
 
 		this.player
 			.on("playSong", async (queue, song) => {
-				const m = await queue.textChannel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: song.name }) })
+				const m = await queue.textChannel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: song.name }) });
 				if (!song.isLive) {
 					setTimeout(() => {
 						if (m.deletable) m.delete();
@@ -77,7 +77,7 @@ class JaBa extends Client {
 			.on("addSong", (queue, song) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE", { songName: song.name }) }))
 			.on("addList", (queue, playlist) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE_COUNT", { songCount: playlist.songs.length }) }))
 			.on("searchResult", (message, result) => {
-				let i = 0
+				let i = 0;
 				const embed = new MessageEmbed()
 					.setDescription(Util.escapeSpoiler(result.map(song => `**${++i} -** ${song.name}`).join("\n")))
 					.setFooter({ text: this.translate("music/play:RESULTS_FOOTER") })
@@ -105,11 +105,11 @@ class JaBa extends Client {
 				reaction: "🎉"
 			}
 		});
-	};
+	}
 
 	get defaultLanguage() {
 		return this.languages.find(language => language.default).name;
-	};
+	}
 
 	translate(key, args, locale) {
 		if (!locale) locale = this.defaultLanguage;
@@ -117,7 +117,7 @@ class JaBa extends Client {
 		if (!language) throw "Invalid language set in data.";
 
 		return language(key, args);
-	};
+	}
 
 	printDate(date, format, locale) {
 		if (!locale) locale = this.defaultLanguage;
@@ -127,7 +127,7 @@ class JaBa extends Client {
 		return moment(new Date(date))
 			.locale(languageData.moment)
 			.format(format);
-	};
+	}
 
 	convertTime(time, type, noPrefix, locale) {
 		if (!type) time = "to";
@@ -136,7 +136,7 @@ class JaBa extends Client {
 		const m = moment(time).locale(languageData.moment);
 
 		return (type === "to" ? m.toNow(noPrefix) : m.fromNow(noPrefix));
-	};
+	}
 
 	getNoun(number, one, two, five) {
 		let n = Math.abs(number);
@@ -147,7 +147,7 @@ class JaBa extends Client {
 		if (n >= 2 && n <= 4) return two;
 
 		return five;
-	};
+	}
 
 	// This function is used to load a command and add it to the collection
 	loadCommand(commandPath, commandName) {
@@ -165,8 +165,8 @@ class JaBa extends Client {
 			return false;
 		} catch (e) {
 			return `Unable to load command ${commandName}: ${e}`;
-		};
-	};
+		}
+	}
 
 	// This function is used to unload a command (you need to load them again)
 	async unloadCommand(commandPath, commandName) {
@@ -180,7 +180,7 @@ class JaBa extends Client {
 		delete require.cache[require.resolve(`.${commandPath}${path.sep}${commandName}.js`)];
 
 		return false;
-	};
+	}
 
 	// This function is used to find a user data or create it
 	async findOrCreateUser({ id: userID }, isLean) {
@@ -203,9 +203,9 @@ class JaBa extends Client {
 				this.databaseCache.users.set(userID, userData);
 
 				return isLean ? userData.toJSON() : userData;
-			};
-		};
-	};
+			}
+		}
+	}
 
 	// This function is used to find a member data or create it
 	async findOrCreateMember({ id: memberID, guildID }, isLean) {
@@ -234,13 +234,13 @@ class JaBa extends Client {
 				if (guild) {
 					guild.members.push(memberData._id);
 					await guild.save();
-				};
+				}
 				this.databaseCache.members.set(`${memberID}${guildID}`, memberData);
 
 				return isLean ? memberData.toJSON() : memberData;
-			};
-		};
-	};
+			}
+		}
+	}
 
 	// This function is used to find a guild data or create it
 	async findOrCreateGuild({ id: guildID }, isLean) {
@@ -263,9 +263,9 @@ class JaBa extends Client {
 				this.databaseCache.guilds.set(guildID, guildData);
 
 				return isLean ? guildData.toJSON() : guildData;
-			};
-		};
-	};
+			}
+		}
+	}
 
 	// This function is used to resolve a user from a string
 	async resolveUser(search) {
@@ -277,7 +277,7 @@ class JaBa extends Client {
 			const id = search.match(/^<@!?(\d+)>$/)[1];
 			user = this.users.fetch(id).catch(() => {});
 			if (user) return user;
-		};
+		}
 
 		// Try username search
 		if (search.match(/^!?(\w+)#(\d+)$/)) {
@@ -285,11 +285,11 @@ class JaBa extends Client {
 			const discriminator = search.match(/^!?(\w+)#(\d+)$/)[1];
 			user = this.users.find((u) => u.username === username && u.discriminator === discriminator);
 			if (user) return user;
-		};
+		}
 		user = await this.users.fetch(search).catch(() => {});
 
 		return user;
-	};
+	}
 
 	async resolveMember(search, guild) {
 		let member = null;
@@ -300,18 +300,18 @@ class JaBa extends Client {
 			const id = search.match(/^<@!?(\d+)>$/)[1];
 			member = await guild.members.fetch(id).catch(() => {});
 			if (member) return member;
-		};
+		}
 
 		// Try username search
 		if (search.match(/^!?(\w+)#(\d+)$/)) {
 			guild = await guild.fetch();
 			member = guild.members.cache.find((m) => m.user.tag === search);
 			if (member) return member;
-		};
+		}
 		member = await guild.members.fetch(search).catch(() => {});
 
 		return member;
-	};
+	}
 
 	async resolveRole(search, guild) {
 		let role = null;
@@ -322,7 +322,7 @@ class JaBa extends Client {
 			const id = search.match(/^<@&!?(\d+)>$/)[1];
 			role = guild.roles.cache.get(id);
 			if (role) return role;
-		};
+		}
 
 		// Try name search
 		role = guild.roles.cache.find((r) => search === r.name);
@@ -330,7 +330,7 @@ class JaBa extends Client {
 		role = guild.roles.cache.get(search);
 
 		return role;
-	};
-};
+	}
+}
 
 module.exports = JaBa;

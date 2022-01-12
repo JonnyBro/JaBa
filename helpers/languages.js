@@ -18,14 +18,14 @@ async function walkDirectory(dir, namespaces = [], folderName = "") {
 			namespaces = folder.namespaces;
 		} else {
 			namespaces.push(`${folderName}${file.substr(0, file.length - 5)}`);
-		};
-	};
+		}
+	}
 
 	return {
 		namespaces: [...new Set(namespaces)],
 		languages
 	};
-};
+}
 
 module.exports = async () => {
 	const options = {

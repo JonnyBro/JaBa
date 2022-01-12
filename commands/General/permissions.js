@@ -34,13 +34,13 @@ class Permissions extends Command {
 			} else {
 				text += `${perm} ✅\n`;
 				total.allowed++;
-			};
+			}
 		});
 		text += `\n${total.allowed} ✅ | ${total.denied} ❌` + "\n```";
 		message.channel.send({
 			content: text
 		});
 	}
-};
+}
 
 module.exports = Permissions;

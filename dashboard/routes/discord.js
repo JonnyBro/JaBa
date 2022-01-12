@@ -20,8 +20,8 @@ router.get("/callback", async (req, res) => {
 			req.client.knownGuilds.push({ id: guildID, user: req.user.id });
 
 			return res.redirect(`/manage/${guildID}`);
-		};
-	};
+		}
+	}
 
 	const redirectURL = req.client.states[req.query.state] || "/selector";
 	const params = new URLSearchParams();
@@ -56,7 +56,7 @@ router.get("/callback", async (req, res) => {
 			const json = await response.json();
 			if (json.retry_after) await req.client.wait(json.retry_after);
 			else userData.infos = json;
-		};
+		}
 
 		/* User guilds */
 		if (!userData.guilds) {
@@ -67,8 +67,8 @@ router.get("/callback", async (req, res) => {
 			const json = await response.json();
 			if (json.retry_after) await req.client.wait(json.retry_after);
 			else userData.guilds = json;
-		};
-	};
+		}
+	}
 
 	/* Change format (from "0": { data }, "1": { data }, etc... to [ { data }, { data } ]) */
 	const guilds = [];
@@ -87,7 +87,7 @@ router.get("/callback", async (req, res) => {
 		logsChannel.send({ embeds: [embed] });
 		userDB.logged = true;
 		userDB.save();
-	};
+	}
 	res.redirect(redirectURL);
 });
 

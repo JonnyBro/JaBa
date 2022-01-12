@@ -28,6 +28,6 @@ class Setlang extends Command {
 			lang: language.nativeName
 		});
 	}
-};
+}
 
 module.exports = Setlang;

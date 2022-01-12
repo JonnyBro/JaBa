@@ -16,11 +16,11 @@ class Say extends Command {
 		});
 	}
 
-	async run(message, args, data) {
+	async run(message, args) {
 		if (!args[0]) return message.delete();
 
 		// Arguments split
-		let split = "++";
+		const split = "++";
 		args = args.join(" ").split(split);
 		for (var i = 0; i < args.length; i++) args[i] = args[i].trim();
 
@@ -67,8 +67,8 @@ class Say extends Command {
 					content: args[0]
 				});
 			}, 2000);
-		};
+		}
 	}
-};
+}
 
 module.exports = Say;

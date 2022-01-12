@@ -26,7 +26,7 @@ class Deposit extends Command {
 		} else {
 			if (isNaN(amount) || parseInt(amount, 10) < 1) return message.error("economy/deposit:MISSING_AMOUNT");
 			amount = parseInt(amount, 10);
-		};
+		}
 
 		if (data.memberData.money < amount) return message.error("economy/deposit:NOT_ENOUGH_CREDIT", { money: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}` });
 
@@ -47,6 +47,6 @@ class Deposit extends Command {
 			money: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 		});
 	}
-};
+}
 
 module.exports = Deposit;

@@ -8,7 +8,7 @@ try {
 } catch (e) {
 	console.log(chalk.red("Cannot find module mongodb. Please install it using \"npm install mongodb\" before executing script."));
 	process.exit(1);
-};
+}
 
 const config = require("../config.js");
 const dbName = config.mongoDB.split("/").pop();

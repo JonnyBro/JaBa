@@ -70,6 +70,6 @@ class Money extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Money;

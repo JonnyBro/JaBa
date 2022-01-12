@@ -17,8 +17,8 @@ if (config.apiKeys.sentryDSN) {
 	} catch (e) {
 		console.log(e);
 		console.log(chalk.yellow("Looks like your Sentry DSN key is invalid. If you do not intend to use Sentry, please remove the key from the configuration file."));
-	};
-};
+	}
+}
 
 // Load JaBa class
 const JaBa = require("./base/JaBa");
@@ -46,9 +46,7 @@ const init = async () => {
 		const commands = await readdir(`./commands/${dir}/`);
 		commands.filter((cmd) => cmd.split(".").pop() === "js").forEach((cmd) => {
 			const response = client.loadCommand(`./commands/${dir}`, cmd);
-			if (response) {
-				client.logger.log(response, "error");
-			};
+			if (response) client.logger.log(response, "error");
 		});
 	});
 

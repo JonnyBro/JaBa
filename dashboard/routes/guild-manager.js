@@ -12,7 +12,7 @@ router.get("/:serverID", CheckAuth, async(req, res) => {
 			translate: req.translate,
 			currentURL: `${req.client.config.dashboard.baseURL}/${req.originalUrl}`
 		});
-	};
+	}
 
 	// Fetch guild informations
 	const guildInfos = await utils.fetchGuild(guild.id, req.client, req.user.guilds);
@@ -38,7 +38,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 			translate: req.translate,
 			currentURL: `${req.client.config.dashboard.baseURL}/${req.originalUrl}`
 		});
-	};
+	}
 
 	const guildData = await req.client.findOrCreateGuild({ id: guild.id });
 	const data = req.body;
@@ -49,7 +49,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		if (data.prefix.length >= 1 && data.prefix.length < 2000) guildData.prefix = data.prefix;
 
 		await guildData.save();
-	};
+	}
 
 	if (Object.prototype.hasOwnProperty.call(data, "welcomeEnable") || Object.prototype.hasOwnProperty.call(data, "welcomeUpdate")) {
 		const welcome = {
@@ -61,7 +61,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		guildData.plugins.welcome = welcome;
 		guildData.markModified("plugins.welcome");
 		await guildData.save();
-	};
+	}
 
 	if (Object.prototype.hasOwnProperty.call(data, "welcomeDisable")) {
 		const welcome = {
@@ -73,7 +73,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		guildData.plugins.welcome = welcome;
 		guildData.markModified("plugins.welcome");
 		await guildData.save();
-	};
+	}
 
 	if (Object.prototype.hasOwnProperty.call(data, "goodbyeEnable") || Object.prototype.hasOwnProperty.call(data, "goodbyeUpdate")) {
 		const goodbye = {
@@ -85,7 +85,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		guildData.plugins.goodbye = goodbye;
 		guildData.markModified("plugins.goodbye");
 		await guildData.save();
-	};
+	}
 
 	if (Object.prototype.hasOwnProperty.call(data, "goodbyeDisable")) {
 		const goodbye = {
@@ -97,7 +97,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		guildData.plugins.goodbye = goodbye;
 		guildData.markModified("plugins.goodbye");
 		await guildData.save();
-	};
+	}
 
 	if (Object.prototype.hasOwnProperty.call(data, "autoroleEnable") || Object.prototype.hasOwnProperty.call(data, "autoroleUpdate")) {
 		const autorole = {
@@ -107,7 +107,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		guildData.plugins.autorole = autorole;
 		guildData.markModified("plugins.autorole");
 		await guildData.save();
-	};
+	}
 
 	if (Object.prototype.hasOwnProperty.call(data, "autoroleDisable")) {
 		const autorole = {
@@ -117,7 +117,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		guildData.plugins.autorole = autorole;
 		guildData.markModified("plugins.autorole");
 		await guildData.save();
-	};
+	}
 
 	if (Object.prototype.hasOwnProperty.call(data, "suggestions")) {
 		if (data.suggestions === req.translate("common:NO_CHANNEL")) guildData.plugins.suggestions = false;
@@ -130,7 +130,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		else guildData.plugins.birthdays = guild.channels.cache.find((ch) => "#" + ch.name === data.birthdays).id;
 
 		guildData.markModified("plugins");
-	};
+	}
 
 	await guildData.save();
 

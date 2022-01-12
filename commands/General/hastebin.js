@@ -47,8 +47,8 @@ class Hastebin extends Command {
 			});
 		} catch (e) {
 			message.error("misc:ERR_OCCURRED");
-		};
+		}
 	}
-};
+}
 
 module.exports = Hastebin;

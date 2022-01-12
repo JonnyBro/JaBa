@@ -41,7 +41,7 @@ class FindWords extends Command {
 		for (let i = 0; i < nbGames; i++) {
 			const result = Math.floor((Math.random() * wordList.length));
 			words.push(wordList[result].substring(0, 3).toLowerCase());
-		};
+		}
 
 		let i = 0; // Inits i variable to count games
 		currentGames[message.guild.id] = true; // Update current game variable
@@ -77,18 +77,14 @@ class FindWords extends Command {
 				});
 
 				collector.on("end", async (collected, reason) => {
-					if (reason === "time") {
-						message.error("fun/findwords:NO_WINNER");
-					} else if (reason === "force") {
-						return message.error("misc:FORCE_STOP", {
-							user: message.author.toString()
-						});
-					} else {
+					if (reason === "time") message.error("fun/findwords:NO_WINNER");
+					else if (reason === "force") return message.error("misc:FORCE_STOP", { user: message.author.toString() });
+					else {
 						message.success("fun/findwords:WORD_FOUND", {
 							winner: `<@${reason}>`
 						});
 						winners.push(reason);
-					};
+					}
 
 					if (i < nbGames - 1) {
 						i++;
@@ -130,11 +126,11 @@ class FindWords extends Command {
 
 							userdata.money = userdata.money + won;
 							userdata.save();
-						};
-					};
+						}
+					}
 				});
 			}, delay);
-		};
+		}
 
 		async function getWinner(array) {
 			return new Promise(function (resolve) {
@@ -150,12 +146,12 @@ class FindWords extends Command {
 					if (counts[winner] > compare) {
 						compare = counts[winner];
 						mostFrequent = array[i];
-					};
-				};
+					}
+				}
 				resolve(mostFrequent);
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = FindWords;

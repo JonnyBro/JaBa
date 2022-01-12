@@ -33,8 +33,7 @@ class Qrcode extends Command {
 			content: message.translate("images/qrcode:SUCCESS"),
 			embeds: [embed]
 		});
-
 	}
-};
+}
 
 module.exports = Qrcode;

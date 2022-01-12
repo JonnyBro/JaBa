@@ -47,9 +47,9 @@ class Automod extends Command {
 				data.guild.markModified("plugins.automod");
 				data.guild.save();
 				message.success("administration/automod:DISABLED");
-			};
-		};
+			}
+		}
 	}
-};
+}
 
 module.exports = Automod;

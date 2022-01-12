@@ -38,8 +38,8 @@ class Setbirthdays extends Command {
 			return message.success("administration/setbirthdays:ENABLED", {
 				channel: channel.toString()
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Setbirthdays;

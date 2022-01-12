@@ -25,6 +25,6 @@ class Setbio extends Command {
 		message.success("economy/setbio:SUCCESS");
 		await data.userData.save();
 	}
-};
+}
 
 module.exports = Setbio;

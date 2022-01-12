@@ -40,6 +40,6 @@ class Remindme extends Command {
 
 		message.success("general/remindme:SAVED");
 	}
-};
+}
 
 module.exports = Remindme;

@@ -25,13 +25,13 @@ module.exports = class {
 				id: message.guild.id
 			});
 			message.guild.data = data.guild = guild;
-		};
+		}
 
 		// Check if the bot was mentionned
 		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) {
 			if (message.guild) return message.sendT("misc:HELLO_SERVER", { username: message.author.username, prefix: data.guild.prefix });
 			else return message.sendT("misc:HELLO_DM");
-		};
+		}
 
 		if (message.content.includes("@someone") && message.guild) return client.commands.get("someone").run(message, null, data);
 
@@ -42,7 +42,7 @@ module.exports = class {
 				guildID: message.guild.id
 			});
 			data.memberData = memberData;
-		};
+		}
 
 		const userData = await client.findOrCreateUser({
 			id: message.author.id
@@ -65,17 +65,17 @@ module.exports = class {
 							}));
 						} else {
 							uSlowmode.time = channelSlowmode.time + Date.now();
-						};
+						}
 					} else {
 						data.guild.slowmode.users.push({
 							id: message.author.id + message.channel.id,
 							time: channelSlowmode.time + Date.now()
 						});
-					};
+					}
 					data.guild.markModified("slowmode.users");
 					await data.guild.save();
-				};
-			};
+				}
+			}
 
 			if (data.guild.plugins.automod.enabled && !data.guild.plugins.automod.ignored.includes(message.channel.id)) {
 				if (/(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(message.content)) {
@@ -85,9 +85,9 @@ module.exports = class {
 						return message.error("administration/automod:DELETED", {
 							username: message.author.tag
 						});
-					};
-				};
-			};
+					}
+				}
+			}
 
 			const afkReason = data.userData.afk;
 			if (afkReason) {
@@ -96,7 +96,7 @@ module.exports = class {
 				message.sendT("general/setafk:DELETED", {
 					username: message.author.username
 				});
-			};
+			}
 
 			message.mentions.users.forEach(async (u) => {
 				const userData = await client.findOrCreateUser({
@@ -104,7 +104,7 @@ module.exports = class {
 				});
 				if (userData.afk) message.error("general/setafk:IS_AFK", { user: u.tag, reason: userData.afk });
 			});
-		};
+		}
 
 		// Gets the prefix
 		const prefix = client.functions.getPrefix(message, data);
@@ -125,7 +125,7 @@ module.exports = class {
 			return message.author.send(message.translate("misc:RESTRICTED_CHANNEL", {
 				channel: message.channel.toString()
 			}));
-		};
+		}
 
 		if (customCommandAnswer) return message.channel.send({ content: customCommandAnswer });
 		if (cmd.conf.guildOnly && !message.guild) return message.error("misc:GUILD_ONLY");
@@ -148,7 +148,7 @@ module.exports = class {
 			if (neededPermissions.length > 0) return message.error("misc:MISSING_MEMBER_PERMS", { list: neededPermissions.map((p) => `\`${p}\``).join(", ") });
 			if (!message.channel.permissionsFor(message.member).has(Permissions.FLAGS.MENTION_EVERYONE) && (message.content.includes("@everyone") || message.content.includes("@here"))) return message.error("misc:EVERYONE_MENTION");
 			if (!message.channel.nsfw && cmd.conf.nsfw) return message.error("misc:NSFW_COMMAND");
-		};
+		}
 
 		if (!cmd.conf.enabled) return message.error("misc:COMMAND_DISABLED");
 		if (cmd.conf.ownerOnly && message.author.id !== client.config.owner.id) return message.error("misc:OWNER_ONLY");
@@ -157,13 +157,13 @@ module.exports = class {
 		if (!uCooldown) {
 			cmdCooldown[message.author.id] = {};
 			uCooldown = cmdCooldown[message.author.id];
-		};
+		}
 
 		const time = uCooldown[cmd.help.name] || 0;
 		if (time && (time > Date.now())) {
 			const seconds = Math.ceil((time - Date.now()) / 1000);
 			return message.error("misc:COOLDOWNED", { seconds: `${seconds} ${client.getNoun(seconds, message.translate("misc:NOUNS:SECONDS:1"), message.translate("misc:NOUNS:SECONDS:2"), message.translate("misc:NOUNS:SECONDS:5"))}` });
-		};
+		}
 
 		cmdCooldown[message.author.id][cmd.help.name] = Date.now() + cmd.conf.cooldown;
 
@@ -194,7 +194,7 @@ module.exports = class {
 					attachment: "./assets/img/achievements/achievement_unlocked2.png"
 				}]
 			});
-		};
+		}
 
 		try {
 			cmd.run(message, args, data);
@@ -202,7 +202,7 @@ module.exports = class {
 		} catch (e) {
 			console.error(e);
 			return message.error("misc:ERR_OCCURRED");
-		};
+		}
 	}
 };
 
@@ -219,7 +219,7 @@ async function updateXp(client, msg, data) {
 	const isInCooldown = xpCooldown[msg.author.id];
 	if (isInCooldown) {
 		if (isInCooldown > Date.now()) return;
-	};
+	}
 
 	// Records in the database the time when the member will be able to win xp again (1min)
 	const toWait = Date.now() + 60000;
@@ -239,4 +239,4 @@ async function updateXp(client, msg, data) {
 	// Update user data
 	data.memberData.exp = parseInt(newXp, 10);
 	await data.memberData.save();
-};
+}

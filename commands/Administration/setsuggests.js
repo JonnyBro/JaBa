@@ -38,8 +38,8 @@ class Setsuggests extends Command {
 			return message.success("administration/setsuggests:ENABLED", {
 				channel: channel.toString()
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Setsuggests;

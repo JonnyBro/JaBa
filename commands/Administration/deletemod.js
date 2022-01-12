@@ -28,8 +28,8 @@ class Deletemod extends Command {
 			data.guild.autoDeleteModCommands = false;
 			data.guild.save();
 			message.success("administration/deletemod:DISABLED");
-		};
+		}
 	}
-};
+}
 
 module.exports = Deletemod;

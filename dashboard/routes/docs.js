@@ -1,6 +1,5 @@
 const express = require("express"),
-	router = express.Router(),
-	fs = require("fs");
+	router = express.Router();
 
 router.get("/", function (req, res) {
 	res.render("docs", {

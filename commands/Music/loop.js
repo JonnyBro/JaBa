@@ -31,10 +31,10 @@ class Loop extends Command {
 			mode = this.client.player.setRepeatMode(message, 1);
 		} else {
 			mode = this.client.player.setRepeatMode(message, 0);
-		};
+		}
 
-		message.success(`music/loop:${mode ? mode === 2 ? "QUEUE" : "SONG" : "DISABLED"}`)
+		message.success(`music/loop:${mode ? mode === 2 ? "QUEUE" : "SONG" : "DISABLED"}`);
 	}
-};
+}
 
 module.exports = Loop;

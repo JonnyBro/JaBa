@@ -25,6 +25,6 @@ class Ping extends Command {
 			}, { edit: true });
 		});
 	}
-};
+}
 
 module.exports = Ping;

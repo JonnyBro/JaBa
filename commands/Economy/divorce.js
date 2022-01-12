@@ -39,6 +39,6 @@ class Divorce extends Command {
 			})
 		});
 	}
-};
+}
 
 module.exports = Divorce;

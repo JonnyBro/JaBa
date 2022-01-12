@@ -51,11 +51,11 @@ class Sanctions extends Command {
 			memberData.sanctions.forEach((s) => {
 				embed.addField(s.type + " | #" + s.case, `${message.translate("common:MODERATOR")}: <@${s.moderator}>\n${message.translate("common:REASON")}: ${s.reason}`, true);
 			});
-		};
+		}
 		message.channel.send({
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Sanctions;

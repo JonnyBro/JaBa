@@ -13,7 +13,7 @@ module.exports = {
 				for (const user of users) {
 					if (!client.users.cache.has(user.id)) client.users.fetch(user.id);
 					client.databaseCache.usersReminds.set(user.id, user);
-				};
+				}
 			});
 		setInterval(async function () {
 			const dateNow = Date.now();
@@ -37,8 +37,8 @@ module.exports = {
 						user.reminds = user.reminds.filter((r) => r.sendAt >= dateNow);
 						user.save();
 						if (user.reminds.length === 0) client.databaseCache.usersReminds.delete(user.id);
-					};
-				};
+					}
+				}
 			});
 		}, 1000);
 	}

@@ -1,5 +1,4 @@
 const Command = require("../../base/Command.js"),
-	Discord = require("discord.js"),
 	fetch = require("node-fetch");
 
 class Captcha extends Command {
@@ -14,7 +13,7 @@ class Captcha extends Command {
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 5000
+			cooldown: 3000
 		});
 	}
 
@@ -38,8 +37,8 @@ class Captcha extends Command {
 			m.error("misc:ERR_OCCURRED", null, {
 				edit: true
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Captcha;

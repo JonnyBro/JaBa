@@ -22,7 +22,7 @@ class Clips extends Command {
 		fs.readdir("./clips", function (err, files) {
 			if (err) return console.log("Unable to read directory: " + err);
 
-			let clips = [];
+			const clips = [];
 
 			files.forEach(function (file) {
 				clips.push(file.substring(0, file.length - 4));
@@ -41,6 +41,6 @@ class Clips extends Command {
 			});
 		});
 	}
-};
+}
 
 module.exports = Clips;

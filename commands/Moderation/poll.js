@@ -37,7 +37,7 @@ class Poll extends Command {
 				tmsg.delete();
 				msg.delete();
 				collector.stop(true);
-			};
+			}
 
 			if (tmsg.content.toLowerCase() === message.translate("common:YES").toLowerCase()) {
 				tmsg.delete();
@@ -63,12 +63,12 @@ class Poll extends Command {
 						m.delete();
 						collector.stop(true);
 						c.stop(true);
-					};
+					}
 				});
 				c.on("end", (collected, reason) => {
 					if (reason === "time") return message.error("misc:TIMES_UP");
 				});
-			};
+			}
 		});
 
 		collector.on("end", (collected, reason) => {
@@ -101,6 +101,6 @@ class Poll extends Command {
 			});
 		});
 	}
-};
+}
 
 module.exports = Poll;

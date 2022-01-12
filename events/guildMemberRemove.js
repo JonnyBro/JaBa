@@ -36,7 +36,7 @@ module.exports = class {
 					.replace(/{user}/g, member.user.tag)
 					.replace(/{server}/g, member.guild.name)
 					.replace(/{membercount}/g, member.guild.memberCount)
-					.replace(/{createdat}/g, this.client.printDate(member.user.createdAt))
+					.replace(/{createdat}/g, this.client.printDate(member.user.createdAt));
 				if (guildData.plugins.goodbye.withImage) {
 					const canvas = Canvas.createCanvas(1024, 450),
 						ctx = canvas.getContext("2d");
@@ -121,8 +121,8 @@ module.exports = class {
 					channel.send({
 						content: message
 					});
-				};
-			};
-		};
+				}
+			}
+		}
 	}
 };

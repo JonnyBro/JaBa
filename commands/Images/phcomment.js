@@ -1,5 +1,4 @@
 const Command = require("../../base/Command.js"),
-	Discord = require("discord.js"),
 	canvacord = require("canvacord");
 
 class Phcomment extends Command {
@@ -14,7 +13,7 @@ class Phcomment extends Command {
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 5000
+			cooldown: 3000
 		});
 	}
 
@@ -22,17 +21,15 @@ class Phcomment extends Command {
 		let user = await this.client.resolveUser(args[0]);
 		let text = args.join(" ");
 
-		if (user) {
-			text = args.slice(1).join(" ");
-		} else {
-			user = message.author;
-		};
+		if (user) text = args.slice(1).join(" ");
+		else user = message.author;
 
 		if (!text) return message.error("images/phcomment:MISSING_TEXT");
 
 		const m = await message.sendT("misc:PLEASE_WAIT", null, {
 			prefixEmoji: "loading"
 		});
+
 		try {
 			const buffer = await canvacord.Canvas.phub({
 				username: user.username,
@@ -53,8 +50,8 @@ class Phcomment extends Command {
 			m.error("misc:ERROR_OCCURRED", null, {
 				edit: true
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Phcomment;

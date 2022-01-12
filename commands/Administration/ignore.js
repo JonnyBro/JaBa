@@ -34,8 +34,8 @@ class Ignore extends Command {
 			return message.success("administration/ignore:IGNORED", {
 				channel: channel.toString()
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Ignore;

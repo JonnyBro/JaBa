@@ -29,6 +29,6 @@ class Ascii extends Command {
 			content: "```" + rendered + "```"
 		});
 	}
-};
+}
 
 module.exports = Ascii;

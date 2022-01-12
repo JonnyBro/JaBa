@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js")
+const Command = require("../../base/Command.js");
 
 class Filter extends Command {
 	constructor(client) {
@@ -36,6 +36,6 @@ class Filter extends Command {
 			prefix: data.guild.prefix
 		});
 	}
-};
+}
 
 module.exports = Filter;

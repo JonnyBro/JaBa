@@ -11,7 +11,7 @@ async function fetchGuild(guildID, client, guilds) {
 	const conf = await client.findOrCreateGuild({ id:guild.id });
 
 	return { ...guild, ...conf.toJSON(), ...guilds.find((g) => g.id === guild.id) };
-};
+}
 
 /**
  * Fetch user informations (stats, guilds, etc...)
@@ -34,12 +34,12 @@ async function fetchUser(userData, client, query) {
 		});
 		userData.displayedGuilds = userData.guilds.filter((g) => g.displayed && g.admin);
 		if (userData.displayedGuilds.length < 1) delete userData.displayedGuilds;
-	};
+	}
 	const user = await client.users.fetch(userData.id);
 	const userDb = await client.findOrCreateUser({ id: user.id }, true);
 	const userInfos = { ...user.toJSON(), ...userDb, ...userData };
 
 	return userInfos;
-};
+}
 
 module.exports = { fetchUser, fetchGuild };

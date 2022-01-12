@@ -16,7 +16,7 @@ class Debug extends Command {
 		});
 	}
 
-	async run(message, args, data) {
+	async run(message, args) {
 		const action = args[0];
 		if (!action || !["set", "add"].includes(action)) return message.error("owner/debug:NO_ACTION");
 
@@ -60,7 +60,7 @@ class Debug extends Command {
 			} else if (status === "bank") {
 				memberData.bankSold = newValue;
 				memberData.save();
-			};
+			}
 
 			message.success("owner/debug:SUCCESS_" + status.toUpperCase(), {
 				username: member.user.tag,
@@ -87,14 +87,14 @@ class Debug extends Command {
 				newValue = memberData.bankSold + parseInt(amount, 10);
 				memberData.bankSold = newValue;
 				memberData.save();
-			};
+			}
 
 			message.success("owner/debug:SUCCESS_" + status.toUpperCase(), {
 				username: member.user.tag,
 				amount: newValue
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Debug;

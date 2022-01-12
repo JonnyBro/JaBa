@@ -42,7 +42,7 @@ class Slots extends Command {
 			else if (isJackpot) number = number * 4;
 
 			return Math.round(number);
-		};
+		}
 
 		const tmsg = await message.sendT("misc:PLEASE_WAIT", null, {
 			prefixEmoji: "loading"
@@ -105,13 +105,13 @@ class Slots extends Command {
 								attachment: "./assets/img/achievements/achievement_unlocked4.png"
 							}]
 						});
-					};
+					}
 					data.userData.markModified("achievements.slots");
 					await data.userData.save();
-				};
+				}
 				await data.memberData.save();
 				return;
-			};
+			}
 
 			if (colonnes[0][i2] == colonnes[1][j2] || colonnes[1][j2] == colonnes[2][k2] || colonnes[0][i2] == colonnes[2][k2]) {
 				msg += "| : : :  **" + (message.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
@@ -146,13 +146,13 @@ class Slots extends Command {
 								attachment: "./assets/img/achievements/achievement_unlocked4.png"
 							}]
 						});
-					};
+					}
 					data.userData.markModified("achievements.slots");
 					await data.userData.save();
-				};
+				}
 				await data.memberData.save();
 				return;
-			};
+			}
 
 			msg += "| : : :  **" + (message.translate("common:DEFEAT").toUpperCase()) + "**  : : : |";
 			message.channel.send({
@@ -176,10 +176,10 @@ class Slots extends Command {
 				data.userData.achievements.slots.progress.now = 0;
 				data.userData.markModified("achievements.slots");
 				await data.userData.save();
-			};
+			}
 			await data.memberData.save();
 			return;
-		};
+		}
 
 		function editMsg() {
 			let msg = "[ :slot_machine: | **СЛОТЫ** ]\n------------------\n";
@@ -199,8 +199,8 @@ class Slots extends Command {
 			msg += colonnes[0][i3] + " : " + colonnes[1][j3] + " : " + colonnes[2][k3] + "\n";
 
 			tmsg.edit(msg);
-		};
+		}
 	}
-};
+}
 
 module.exports = Slots;

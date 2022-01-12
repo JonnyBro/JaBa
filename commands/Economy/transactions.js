@@ -24,8 +24,8 @@ class Transactions extends Command {
 			if (t.date > timestamp) {
 				const index = transactions.indexOf(t);
 				transactions.splice(index, 1);
-			};
-		};
+			}
+		}
 
 		const embed = new Discord.MessageEmbed()
 			.setAuthor({
@@ -54,13 +54,13 @@ class Transactions extends Command {
 				embeds: [embed]
 			});
 		} else {
-			embed.addField(message.translate("economy/transactions:T_GOT"), sortedTransactions[0].join("\n"), true)
-			embed.addField(message.translate("economy/transactions:T_SEND"), sortedTransactions[1].join("\n"), true)
-		};
+			embed.addField(message.translate("economy/transactions:T_GOT"), sortedTransactions[0].join("\n"), true);
+			embed.addField(message.translate("economy/transactions:T_SEND"), sortedTransactions[1].join("\n"), true);
+		}
 		message.channel.send({
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Transactions;

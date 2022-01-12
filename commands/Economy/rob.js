@@ -28,7 +28,7 @@ class Rob extends Command {
 		const isInCooldown = memberData.cooldowns.rob || 0;
 		if (isInCooldown) {
 			if (isInCooldown > Date.now()) return message.error("economy/rob:COOLDOWN", { username: member.user.tag });
-		};
+		}
 
 		let amountToRob = args[1];
 		if (!amountToRob || isNaN(amountToRob) || parseInt(amountToRob, 10) <= 0) return message.error("economy/rob:MISSING_AMOUNT", { username: member.user.username });
@@ -71,8 +71,8 @@ class Rob extends Command {
 			memberData.money += won;
 			memberData.save();
 			data.memberData.save();
-		};
+		}
 	}
-};
+}
 
 module.exports = Rob;

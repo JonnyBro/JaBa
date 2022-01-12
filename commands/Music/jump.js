@@ -48,6 +48,6 @@ class Jump extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Jump;

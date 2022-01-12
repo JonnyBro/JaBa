@@ -29,7 +29,7 @@ class Translate extends Command {
 				message.error("misc:CANNOT_DM");
 			});
 			return;
-		};
+		}
 
 		const pWait = await message.sendT("misc:PLEASE_WAIT", null, {
 			prefixEmoji: "loading"
@@ -67,6 +67,6 @@ class Translate extends Command {
 			embeds: [resEmbed]
 		});
 	}
-};
+}
 
 module.exports = Translate;

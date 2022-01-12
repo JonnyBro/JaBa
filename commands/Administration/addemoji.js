@@ -33,6 +33,6 @@ class Addemoji extends Command {
 				emojiName: name
 			}));
 	}
-};
+}
 
 module.exports = Addemoji;

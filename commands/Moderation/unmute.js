@@ -40,8 +40,8 @@ class Unmute extends Command {
 			message.error("moderation/unmute:NOT_MUTED", {
 				username: member.user.tag
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Unmute;

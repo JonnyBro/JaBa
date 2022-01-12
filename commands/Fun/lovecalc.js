@@ -54,6 +54,6 @@ class Lovecalc extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Lovecalc;

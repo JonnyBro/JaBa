@@ -26,6 +26,6 @@ class Eightball extends Command {
 			content: answer
 		});
 	}
-};
+}
 
 module.exports = Eightball;

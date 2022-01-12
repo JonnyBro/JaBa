@@ -13,7 +13,7 @@ router.get("/:serverID", CheckAuth, async(req, res) => {
 			language: req.language,
 			currentURL: `${req.client.config.dashboard.baseURL}/${req.originalUrl}`
 		});
-	};
+	}
 
 	// Fetch guild informations
 	const guildInfos = await utils.fetchGuild(guild.id, req.client, req.user.guilds);
@@ -28,7 +28,7 @@ router.get("/:serverID", CheckAuth, async(req, res) => {
 	for (const cat in leaderboards) {
 		const e = leaderboards[cat];
 		if (e.length > 10) e.length = 10;
-	};
+	}
 
 	const stats = {
 		money: await utils.fetchUsers(leaderboards.money, req.client),
@@ -55,7 +55,7 @@ function getCommands(commands) {
 		else aDateCommand[tDate] = 1;
 	});
 	return aDateCommand;
-};
+}
 
 function getCommandsUsage(commands) {
 	const objectCount = commands.reduce((acc, curr) => {
@@ -73,7 +73,7 @@ function getCommandsUsage(commands) {
 	});
 
 	return percentages;
-};
+}
 
 function getPercentagePerKey(myArray) {
 	const sum = getSum(myArray);
@@ -82,31 +82,31 @@ function getPercentagePerKey(myArray) {
 		const val = myArray[key];
 		const percentage = Math.round((val / sum) * 100);
 		arrayWithPercentages.push({key, percentage});
-	};
+	}
 
 	return arrayWithPercentages;
-};
+}
 
 function getSum(myArray) {
 	let sum = 0;
 	for (const key in myArray) sum += myArray[key];
 
 	return sum;
-};
+}
 
 function sortArrayOfObjects(key, arr) {
 	const array = arr.slice(0);
 	return array.sort((a, b) => {
 		return b[key] - a[key];
 	});
-};
+}
 
 function formatDate(date) {
 	let dd = date.getDate();
 	let mm = date.getMonth() + 1;
-	if (dd < 10) dd = `0${dd}`
-	if (mm < 10) mm = `0${mm}`
-	date = `${mm}/${dd}`
+	if (dd < 10) dd = `0${dd}`;
+	if (mm < 10) mm = `0${mm}`;
+	date = `${mm}/${dd}`;
 
 	return date;
-};
+}

@@ -1,5 +1,4 @@
-const Command = require("../../base/Command.js"),
-	Discord = require("discord.js");
+const Command = require("../../base/Command.js");
 
 class BatSlap extends Command {
 	constructor(client) {
@@ -13,7 +12,7 @@ class BatSlap extends Command {
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 5000
+			cooldown: 3000
 		});
 	}
 
@@ -43,6 +42,6 @@ class BatSlap extends Command {
 			}]
 		});
 	}
-};
+}
 
 module.exports = BatSlap;

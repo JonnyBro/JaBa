@@ -75,6 +75,6 @@ class Achievements extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Achievements;

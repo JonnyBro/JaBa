@@ -28,7 +28,7 @@ module.exports = {
 			return prefix;
 		} else {
 			return true;
-		};
+		}
 	},
 
 	// This function return a actual link to the support server
@@ -44,7 +44,7 @@ module.exports = {
 			return invite ? invite.url : null;
 		} else {
 			return "";
-		};
+		}
 	},
 
 	// This function sort an array
@@ -90,31 +90,31 @@ module.exports = {
 
 		const d = absoluteDays ?
 			absoluteDays === 1 ?
-			guild.translate("time:ONE_DAY") :
-			guild.translate("time:DAYS", {
-				amount: absoluteDays
-			}) :
+				guild.translate("time:ONE_DAY") :
+				guild.translate("time:DAYS", {
+					amount: absoluteDays
+				}) :
 			null;
 		const h = absoluteHours ?
 			absoluteHours === 1 ?
-			guild.translate("time:ONE_HOUR") :
-			guild.translate("time:HOURS", {
-				amount: absoluteHours
-			}) :
+				guild.translate("time:ONE_HOUR") :
+				guild.translate("time:HOURS", {
+					amount: absoluteHours
+				}) :
 			null;
 		const m = absoluteMinutes ?
 			absoluteMinutes === 1 ?
-			guild.translate("time:ONE_MINUTE") :
-			guild.translate("time:MINUTES", {
-				amount: absoluteMinutes
-			}) :
+				guild.translate("time:ONE_MINUTE") :
+				guild.translate("time:MINUTES", {
+					amount: absoluteMinutes
+				}) :
 			null;
 		const s = absoluteSeconds ?
 			absoluteSeconds === 1 ?
-			guild.translate("time:ONE_SECOND") :
-			guild.translate("time:SECONDS", {
-				amount: absoluteSeconds
-			}) :
+				guild.translate("time:ONE_SECOND") :
+				guild.translate("time:SECONDS", {
+					amount: absoluteSeconds
+				}) :
 			null;
 
 		const absoluteTime = [];

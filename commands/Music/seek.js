@@ -30,6 +30,6 @@ class Seek extends Command {
 
 		message.sendT("music/seek:SUCCESS");
 	}
-};
+}
 
 module.exports = Seek;

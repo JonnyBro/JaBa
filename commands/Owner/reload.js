@@ -32,6 +32,6 @@ class Reload extends Command {
 			command: cmd.help.name
 		});
 	}
-};
+}
 
 module.exports = Reload;

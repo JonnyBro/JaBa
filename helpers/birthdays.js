@@ -36,17 +36,17 @@ async function init(client) {
 										.setFooter({ text: client.config.embed.footer })
 										.addField(client.translate("economy/birthdate:HAPPY_BIRTHDAY"), client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
 											user: user.id,
-											age: `${age} ${client.getNoun(age, message.translate("misc:NOUNS:AGE:1"), message.translate("misc:NOUNS:AGE:2"), message.translate("misc:NOUNS:AGE:5"))}`
+											age: `${age} ${client.getNoun(age, client.translate("misc:NOUNS:AGE:1"), client.translate("misc:NOUNS:AGE:2"), client.translate("misc:NOUNS:AGE:5"))}`
 										}));
 									const msg = await channel.send({ content: "@here", embeds: [embed] });
 									await msg.react("🎉");
-								};
-							};
+								}
+							}
 						});
-				};
-			};
+				}
+			}
 		});
 	}, null, true, "Europe/Moscow");
-};
+}
 
 module.exports = { init };

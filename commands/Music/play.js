@@ -36,6 +36,6 @@ class Play extends Command {
 			console.error(e);
 		}
 	}
-};
+}
 
 module.exports = Play;

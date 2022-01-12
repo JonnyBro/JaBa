@@ -34,6 +34,6 @@ class Someone extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Someone;

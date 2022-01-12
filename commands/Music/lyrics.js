@@ -45,7 +45,7 @@ class Lyrics extends Command {
 				return message.error("music/lyrics:NO_LYRICS_FOUND", {
 					songName
 				});
-			};
+			}
 
 			embed.setDescription(lyrics);
 			message.channel.send({
@@ -59,6 +59,6 @@ class Lyrics extends Command {
 			});
 		}
 	}
-};
+}
 
 module.exports = Lyrics;

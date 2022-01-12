@@ -31,6 +31,6 @@ class Choice extends Command {
 			});
 		}, 1500);
 	}
-};
+}
 
 module.exports = Choice;

@@ -68,18 +68,18 @@ class Warn extends Command {
 				}));
 				caseInfo.type = "ban";
 				embed.setAuthor({
-						name: message.translate("moderation/ban:CASE", {
-							count: data.guild.casesCount
-						})
+					name: message.translate("moderation/ban:CASE", {
+						count: data.guild.casesCount
 					})
+				})
 					.setColor("#e02316");
 				message.guild.members.ban(member).catch(() => {});
 				message.success("moderation/setwarns:AUTO_BAN", {
 					username: member.user.tag,
 					count: banCount
 				});
-			};
-		};
+			}
+		}
 
 		if (kickCount) {
 			if (sanctions >= kickCount) {
@@ -91,18 +91,18 @@ class Warn extends Command {
 				}));
 				caseInfo.type = "kick";
 				embed.setAuthor({
-						name: message.translate("moderation/kick:CASE", {
-							count: data.guild.casesCount
-						})
+					name: message.translate("moderation/kick:CASE", {
+						count: data.guild.casesCount
 					})
+				})
 					.setColor("#e88709");
 				member.kick().catch(() => {});
 				message.success("moderation/setwarns:AUTO_KICK", {
 					username: member.user.tag,
 					count: kickCount
 				});
-			};
-		};
+			}
+		}
 
 		member.send(message.translate("moderation/warn:WARNED_DM", {
 			username: member.user.tag,
@@ -112,10 +112,10 @@ class Warn extends Command {
 		}));
 		caseInfo.type = "warn";
 		embed.setAuthor({
-				name: message.translate("moderation/warn:CASE", {
-					caseNumber: data.guild.casesCount
-				})
+			name: message.translate("moderation/warn:CASE", {
+				caseNumber: data.guild.casesCount
 			})
+		})
 			.setColor("#8c14e2");
 		message.success("moderation/warn:WARNED", {
 			username: member.user.tag,
@@ -131,8 +131,8 @@ class Warn extends Command {
 			channel.send({
 				embeds: [embed]
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Warn;

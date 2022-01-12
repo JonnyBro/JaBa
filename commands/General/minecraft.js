@@ -37,7 +37,7 @@ class Minecraft extends Command {
 				host: ip[0],
 				port: ip[1]
 			};
-		};
+		}
 
 		const m = await message.sendT("misc:PLEASE_WAIT", null, {
 			prefixEmoji: "loading"
@@ -58,7 +58,7 @@ class Minecraft extends Command {
 			}).catch((err) => {
 				Sentry.captureException(err);
 			});
-		};
+		}
 
 		if (!json) return m.error("general/minecraft:FAILED", null, { edit: true });
 
@@ -92,6 +92,6 @@ class Minecraft extends Command {
 			files: [imgAttachment]
 		});
 	}
-};
+}
 
 module.exports = Minecraft;

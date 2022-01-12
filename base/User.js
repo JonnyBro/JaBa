@@ -6,7 +6,7 @@ const genToken = () => {
 	const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzy0123456789.-_";
 	for (let i = 0; i < 32; i++) {
 		token += characters.charAt(Math.floor(Math.random() * characters.length));
-	};
+	}
 	return token;
 };
 
@@ -112,7 +112,7 @@ userSchema.method("getAchievements", async function() {
 	for (let i = 0; i < images.length; i++) {
 		await ctx.drawImage(images[i], dim, 10, 350, 200);
 		dim += 200;
-	};
+	}
 
 	return canvas.toBuffer();
 });

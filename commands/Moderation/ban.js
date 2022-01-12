@@ -44,7 +44,7 @@ class Ban extends Command {
 			const moderationPosition = message.member.roles.highest.position;
 			if (message.member.ownerId !== message.author.id && !(moderationPosition > memberPosition)) return message.error("moderation/ban:SUPERIOR");
 			if (!member.bannable) return message.error("moderation/ban:MISSING_PERM");
-		};
+		}
 
 		await user.send(message.translate("moderation/ban:BANNED_DM", {
 			username: user.tag,
@@ -77,7 +77,7 @@ class Ban extends Command {
 			if (memberData) {
 				memberData.sanctions.push(caseInfo);
 				memberData.save();
-			};
+			}
 
 			data.guild.casesCount++;
 			data.guild.save();
@@ -98,13 +98,13 @@ class Ban extends Command {
 				channel.send({
 					embeds: [embed]
 				});
-			};
+			}
 
 		}).catch((err) => {
 			console.log(err);
 			return message.error("moderation/ban:MISSING_PERM");
 		});
 	}
-};
+}
 
 module.exports = Ban;

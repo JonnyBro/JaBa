@@ -21,7 +21,7 @@ class Goodbye extends Command {
 		if (args[0] === "test" && data.guild.plugins.goodbye.enabled) {
 			this.client.emit("guildMemberRemove", message.member);
 			return message.success("administration/goodbye:TEST_SUCCESS");
-		};
+		}
 
 		if ((!args[0] || !["edit", "off"].includes(args[0])) && data.guild.plugins.goodbye.enabled) return message.error("administration/goodbye:MISSING_STATUS");
 
@@ -58,13 +58,10 @@ class Goodbye extends Command {
 			collector.on("collect", async msg => {
 				// If the message is filled, it means the user sent yes or no for the image
 				if (goodbye.message) {
-					if (msg.content.toLowerCase() === message.translate("common:YES").toLowerCase()) {
-						goodbye.withImage = true;
-					} else if (msg.content.toLowerCase() === message.translate("common:NO").toLowerCase()) {
-						goodbye.withImage = false;
-					} else {
-						return message.error("misc:INVALID_YES_NO");
-					};
+					if (msg.content.toLowerCase() === message.translate("common:YES").toLowerCase()) goodbye.withImage = true;
+					else if (msg.content.toLowerCase() === message.translate("common:NO").toLowerCase()) goodbye.withImage = false;
+					else return message.error("misc:INVALID_YES_NO");
+
 					data.guild.plugins.goodbye = goodbye;
 					data.guild.markModified("plugins.goodbye");
 					await data.guild.save();
@@ -73,16 +70,16 @@ class Goodbye extends Command {
 						channel: `<#${goodbye.channel}>`
 					});
 					return collector.stop();
-				};
+				}
 
 				// If the channel is filled and the message is not, it means the user sent the message
 				if (goodbye.channel && !goodbye.message) {
 					if (msg.content.length < 1800) {
 						goodbye.message = msg.content;
 						return message.sendT("administration/goodbye:FORM_3");
-					};
+					}
 					return message.error("administration/goodbye:MAX_CHARACT");
-				};
+				}
 
 				// If the channel is not filled, it means the user sent it
 				if (!goodbye.channel) {
@@ -98,14 +95,14 @@ class Goodbye extends Command {
 						author: msg.author.tag,
 						memberCount: msg.guild.memberCount
 					});
-				};
+				}
 			});
 
 			collector.on("end", (_, reason) => {
 				if (reason === "time") return message.error("misc:TIMES_UP");
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Goodbye;

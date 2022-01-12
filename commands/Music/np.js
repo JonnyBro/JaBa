@@ -52,6 +52,6 @@ class Np extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Np;

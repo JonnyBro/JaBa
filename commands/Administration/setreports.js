@@ -38,8 +38,8 @@ class Setreports extends Command {
 			return message.success("administration/setreports:ENABLED", {
 				channel: channel.toString()
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Setreports;

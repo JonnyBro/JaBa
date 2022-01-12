@@ -20,6 +20,6 @@ class Flip extends Command {
 		const isHeads = Math.random() > 0.5;
 		isHeads ? message.sendT("fun/flip:HEADS") : message.sendT("fun/flip:TAILS");
 	}
-};
+}
 
 module.exports = Flip;

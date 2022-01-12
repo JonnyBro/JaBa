@@ -37,6 +37,6 @@ class Staff extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Staff;

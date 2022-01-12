@@ -48,6 +48,6 @@ class Invite extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Invite;

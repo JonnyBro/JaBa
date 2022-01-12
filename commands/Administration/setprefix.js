@@ -28,6 +28,6 @@ class Setprefix extends Command {
 			prefix
 		});
 	}
-};
+}
 
 module.exports = Setprefix;

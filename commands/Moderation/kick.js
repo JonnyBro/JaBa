@@ -85,12 +85,12 @@ class Kick extends Command {
 				channel.send({
 					embeds: [embed]
 				});
-			};
+			}
 
 		}).catch(() => {
 			return message.error("moderation/kick:MISSING_PERM");
 		});
 	}
-};
+}
 
 module.exports = Kick;

@@ -1,5 +1,4 @@
 const Command = require("../../base/Command.js"),
-	Discord = require("discord.js"),
 	canvacord = require("canvacord");
 
 class Trash extends Command {
@@ -14,7 +13,7 @@ class Trash extends Command {
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 5000
+			cooldown: 3000
 		});
 	}
 
@@ -35,6 +34,6 @@ class Trash extends Command {
 			}]
 		});
 	}
-};
+}
 
 module.exports = Trash;

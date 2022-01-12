@@ -25,6 +25,6 @@ class Lmg extends Command {
 		});
 		message.delete().catch(() => {});
 	}
-};
+}
 
 module.exports = Lmg;

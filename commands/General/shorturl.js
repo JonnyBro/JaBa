@@ -37,6 +37,6 @@ class ShortURL extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = ShortURL;

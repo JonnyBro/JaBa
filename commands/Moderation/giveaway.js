@@ -117,11 +117,11 @@ class Giveaway extends Command {
 				return message.error("moderation/giveaway:NOT_FOUND", {
 					messageID
 				});
-			};
+			}
 		} else {
 			return message.error("moderation/giveaway:MISSING_STATUS");
 		}
 	}
-};
+}
 
 module.exports = Giveaway;

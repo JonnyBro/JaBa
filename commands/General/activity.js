@@ -37,7 +37,7 @@ class Activity extends Command {
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
-						.setTimestamp()
+						.setTimestamp();
 					return message.channel.send({
 						embeds: [embed]
 					});
@@ -53,7 +53,7 @@ class Activity extends Command {
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
-						.setTimestamp()
+						.setTimestamp();
 					return message.channel.send({
 						embeds: [embed]
 					});
@@ -69,7 +69,7 @@ class Activity extends Command {
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
-						.setTimestamp()
+						.setTimestamp();
 					return message.channel.send({
 						embeds: [embed]
 					});
@@ -85,7 +85,7 @@ class Activity extends Command {
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
-						.setTimestamp()
+						.setTimestamp();
 					return message.channel.send({
 						embeds: [embed]
 					});
@@ -101,7 +101,7 @@ class Activity extends Command {
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
-						.setTimestamp()
+						.setTimestamp();
 					return message.channel.send({
 						embeds: [embed]
 					});
@@ -117,7 +117,7 @@ class Activity extends Command {
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
-						.setTimestamp()
+						.setTimestamp();
 					return message.channel.send({
 						embeds: [embed]
 					});
@@ -133,7 +133,7 @@ class Activity extends Command {
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
-						.setTimestamp()
+						.setTimestamp();
 					return message.channel.send({
 						embeds: [embed]
 					});
@@ -149,7 +149,7 @@ class Activity extends Command {
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
-						.setTimestamp()
+						.setTimestamp();
 					return message.channel.send({
 						embeds: [embed]
 					});
@@ -165,7 +165,7 @@ class Activity extends Command {
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
-						.setTimestamp()
+						.setTimestamp();
 					return message.channel.send({
 						embeds: [embed]
 					});
@@ -181,7 +181,7 @@ class Activity extends Command {
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
-						.setTimestamp()
+						.setTimestamp();
 					return message.channel.send({
 						embeds: [embed]
 					});
@@ -197,7 +197,7 @@ class Activity extends Command {
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
-						.setTimestamp()
+						.setTimestamp();
 					return message.channel.send({
 						embeds: [embed]
 					});
@@ -213,14 +213,14 @@ class Activity extends Command {
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
-						.setTimestamp()
+						.setTimestamp();
 					return message.channel.send({
 						embeds: [embed]
 					});
 				});
 				break;
 
-			default:
+			default: {
 				const embed = new Discord.MessageEmbed()
 					.setTitle(message.translate("general/activity:TITLE"))
 					.setDescription(activities.join("\n"))
@@ -228,13 +228,13 @@ class Activity extends Command {
 					.setFooter({
 						text: message.translate("general/activity:FOOTER")
 					})
-					.setTimestamp()
+					.setTimestamp();
 				message.channel.send({
 					embeds: [embed]
 				});
-				break;
-		};
+			}
+		}
 	}
-};
+}
 
 module.exports = Activity;

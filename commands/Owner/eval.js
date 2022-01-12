@@ -16,7 +16,7 @@ class Eval extends Command {
 		});
 	}
 
-	async run(message, args, data) {
+	async run(message) {
 		const content = message.content.split(" ").slice(1).join(" ");
 		const result = new Promise((resolve) => resolve(eval(content)));
 
@@ -37,6 +37,6 @@ class Eval extends Command {
 			});
 		});
 	}
-};
+}
 
 module.exports = Eval;

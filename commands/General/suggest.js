@@ -59,6 +59,6 @@ class Suggest extends Command {
 			channel: suggChannel.toString()
 		});
 	}
-};
+}
 
 module.exports = Suggest;

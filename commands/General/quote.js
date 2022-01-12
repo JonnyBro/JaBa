@@ -36,7 +36,7 @@ class Quote extends Command {
 				.setTimestamp(m.createdTimestamp);
 			if (m.attachments.size > 0) embed.setImage(m.attachments.first().url);
 			return embed;
-		};
+		}
 
 		const msgID = args[0];
 		if (isNaN(msgID)) {
@@ -48,7 +48,7 @@ class Quote extends Command {
 				message.error("misc:CANNOT_DM");
 			});
 			return;
-		};
+		}
 
 		let channel = args[1];
 		if (args[1]) {
@@ -57,18 +57,18 @@ class Quote extends Command {
 				message.author.send(message.translate("general/quote:NO_MESSAGE_ID")).then(() => {
 					message.delete();
 				}).catch(() => {
-					message.error("misc:CANNOT_DM")
+					message.error("misc:CANNOT_DM");
 				});
 				return;
-			};
-		};
+			}
+		}
 
 		if (!channel) {
 			message.channel.messages.fetch(msgID).catch(() => {
 				message.author.send((message.translate("general/quote:NO_MESSAGE_ID"))).then(() => {
 					message.delete();
 				}).catch(() => {
-					message.error("misc:CANNOT_DM")
+					message.error("misc:CANNOT_DM");
 				});
 				return;
 			}).then((msg) => {
@@ -82,7 +82,7 @@ class Quote extends Command {
 				message.author.send(message.translate("general/quote:NO_MESSAGE_ID")).then(() => {
 					message.delete();
 				}).catch(() => {
-					message.error("misc:CANNOT_DM")
+					message.error("misc:CANNOT_DM");
 				});
 				return;
 			}).then((msg) => {
@@ -91,8 +91,8 @@ class Quote extends Command {
 					embeds: [embed(msg)]
 				});
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Quote;

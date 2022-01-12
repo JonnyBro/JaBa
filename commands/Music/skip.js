@@ -47,6 +47,6 @@ class Skip extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Skip;

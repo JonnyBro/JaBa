@@ -37,6 +37,6 @@ class Addcommand extends Command {
 			prefix: data.guild.prefix
 		});
 	}
-};
+}
 
 module.exports = Addcommand;

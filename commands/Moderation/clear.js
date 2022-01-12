@@ -33,7 +33,7 @@ class Clear extends Command {
 			return newChannel.send({
 				content: message.translate("moderation/clear:CHANNEL_CLEARED")
 			});
-		};
+		}
 
 		let amount = args[0];
 		if (!amount || isNaN(amount) || parseInt(amount) < 1) return message.error("moderation/clear:MISSING_AMOUNT");
@@ -64,12 +64,12 @@ class Clear extends Command {
 			toDelete = await message.success("moderation/clear:CLEARED", {
 				amount: `${--amount} ${message.getNoun(--amount, message.translate("misc:NOUNS:MESSAGES:1"), message.translate("misc:NOUNS:MESSAGES:2"), message.translate("misc:NOUNS:MESSAGES:5"))}`
 			});
-		};
+		}
 
 		setTimeout(function () {
 			toDelete.delete();
 		}, 2000);
 	}
-};
+}
 
 module.exports = Clear;

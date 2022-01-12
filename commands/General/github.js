@@ -47,6 +47,6 @@ class Github extends Command {
 			embeds: [embed]
 		});
 	}
-};
+}
 
 module.exports = Github;

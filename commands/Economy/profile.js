@@ -26,7 +26,7 @@ class Profile extends Command {
 	}
 
 	async run(message, args, data) {
-		const arg = args[0] || message.author
+		const arg = args[0] || message.author;
 		let member = await this.client.resolveMember(arg, message.guild);
 		if (!member) member = message.member;
 		if (member.user.bot) return message.error("economy/profile:BOT_USER");
@@ -92,6 +92,6 @@ class Profile extends Command {
 			}]
 		}); // Send the embed in the current channel
 	}
-};
+}
 
 module.exports = Profile;

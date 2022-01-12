@@ -64,6 +64,6 @@ class Report extends Command {
 			channel: repChannel.toString()
 		});
 	}
-};
+}
 
 module.exports = Report;

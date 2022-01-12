@@ -17,7 +17,7 @@ const checks = [
 				success("node.js version equal or higher than v12");
 			} else {
 				error("node.js version should be equal or higher than v12");
-			};
+			}
 			res();
 		});
 	},
@@ -35,7 +35,7 @@ const checks = [
 					error("Should be added to the emojis server", "please add your bot on this server: https://discord.gg/5wrBEwE4bc to make the emojis working");
 				} else {
 					success("Added to the emojis server");
-				};
+				}
 				res();
 			}).catch(() => {
 				error("Should be a valid bot token");
@@ -79,7 +79,7 @@ const checks = [
 					error("Should be a valid Amethyste API key", "get your key here: https://api.amethyste.moe/");
 				} else {
 					success("Valid Amethyste API key");
-				};
+				}
 			}
 			if (!config.apiKeys.blagueXYZ) {
 				ignore("blague.xyz API is not configured, key should not be checked.");
@@ -94,8 +94,8 @@ const checks = [
 					error("Should be a valid blague.xyz key", "get your key here: https://blague.xyz/");
 				} else {
 					success("Valid blague.xyz key");
-				};
-			};
+				}
+			}
 			if (!config.apiKeys.dbl) {
 				ignore("DBL API is not configured, key should not be checked.");
 			} else {
@@ -110,8 +110,8 @@ const checks = [
 					error("Should be a valid DBL key", "get your key here: https://top.gg/ OR delete the key from the config if you don't have a key");
 				} else {
 					success("Valid DBL key");
-				};
-			};
+				}
+			}
 			if (!config.apiKeys.sentryDSN) {
 				ignore("SentryDSN is not configured, key should not be checked.");
 			} else {
@@ -124,8 +124,8 @@ const checks = [
 					success("should be a valid Sentry DSN key");
 				} catch (e) {
 					error("valid Sentry DSN key", "Sentry is not recommended, delete the key from the config");
-				};
-			};
+				}
+			}
 			resolve();
 		});
 	},
@@ -157,8 +157,8 @@ const checks = [
 					error("Dashboard port should be available", "you have probably another process using this port");
 				} else {
 					success("Dashboard port is available");
-				};
-			};
+				}
+			}
 			resolve();
 		});
 	}
@@ -168,6 +168,6 @@ const checks = [
 	console.log(chalk.yellow("This script will check if your config is errored, and some other important things such as whether your database is started, etc..."));
 	for (const check of checks) {
 		await check();
-	};
+	}
 	process.exit(0);
 })();

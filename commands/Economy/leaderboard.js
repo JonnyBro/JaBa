@@ -83,11 +83,11 @@ class Leaderboard extends Command {
 			message.channel.send({
 				content: "```\n" + newTable.toString() + "```"
 			});
-		};
+		}
 
 		if (isOnlyOnMobile) message.sendT("economy/leaderboard:MOBILE");
 	}
-};
+}
 
 module.exports = Leaderboard;
 
@@ -105,4 +105,4 @@ async function fetchUsers(array, table, client) {
 		});
 		resolve(table);
 	});
-};
+}

@@ -10,8 +10,8 @@ module.exports = class {
 			if ((!this.client.config.proUsers.includes(guild.ownerId) || this.guilds.filter((g) => g.ownerId === guild.ownerId) > 1) && guild.ownerId !== this.client.config.owner.id) {
 				this.client.logger.log(`${guild.ownerId} tried to invite JaBa on its server.`);
 				return guild.leave();
-			};
-		};
+			}
+		}
 
 		const messageOptions = {};
 
@@ -27,16 +27,16 @@ module.exports = class {
 			}];
 			userData.markModified("achievements.invite");
 			await userData.save();
-		};
+		}
 
 		const thanksEmbed = new Discord.MessageEmbed()
 			.setAuthor({
 				name: "Спасибо что добавили меня на свой сервер!"
 			})
-			.setDescription(`Для настроек используйте \`${data.config.prefix}help\` и посмотрите на административные команды!\nЧтобы изменить язык используйте \`${this.client.config.prefix}setlang [язык]\`.`)
-			.setColor(data.config.embed.color)
+			.setDescription(`Для настроек используйте \`${this.client.config.prefix}help\` и посмотрите на административные команды!\nЧтобы изменить язык используйте \`${this.client.config.prefix}setlang [язык]\`.`)
+			.setColor(this.client.config.embed.color)
 			.setFooter({
-				text: data.config.embed.footer
+				text: this.client.config.embed.footer
 			})
 			.setTimestamp();
 		messageOptions.embed = thanksEmbed;
@@ -52,6 +52,6 @@ module.exports = class {
 			})
 			.setColor("#32CD32")
 			.setDescription(text);
-		this.client.channels.cache.get(data.config.support.logs).send(logsEmbed);
+		this.client.channels.cache.get(this.client.config.support.logs).send(logsEmbed);
 	}
 };

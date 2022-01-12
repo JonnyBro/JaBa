@@ -1,5 +1,4 @@
 const Command = require("../../base/Command.js"),
-	Discord = require("discord.js"),
 	fetch = require("node-fetch");
 
 class Clyde extends Command {
@@ -14,7 +13,7 @@ class Clyde extends Command {
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 5000
+			cooldown: 3000
 		});
 	}
 
@@ -40,8 +39,8 @@ class Clyde extends Command {
 			m.error("misc:ERROR_OCCURRED", null, {
 				edit: true
 			});
-		};
+		}
 	}
-};
+}
 
 module.exports = Clyde;

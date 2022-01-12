@@ -26,7 +26,7 @@ class Withdraw extends Command {
 		} else {
 			if (isNaN(amount) || parseInt(amount, 10) < 1) return message.error("economy/withdraw:MISSING_AMOUNT");
 			amount = parseInt(amount, 10);
-		};
+		}
 
 		if (data.memberData.bankSold < amount) return message.error("economy/withdraw:NOT_ENOUGH", { money: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}` });
 
@@ -47,6 +47,6 @@ class Withdraw extends Command {
 			money: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 		});
 	}
-};
+}
 
 module.exports = Withdraw;

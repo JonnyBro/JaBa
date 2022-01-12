@@ -58,6 +58,6 @@ class Stats extends Command {
 			embeds: [statsEmbed]
 		});
 	}
-};
+}
 
 module.exports = Stats;

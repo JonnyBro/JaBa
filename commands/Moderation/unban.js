@@ -36,9 +36,9 @@ class Unban extends Command {
 				return message.error("misc:NO_USER_FOUND_ID", {
 					id: args[0]
 				});
-			};
+			}
 			user = this.client.users.filter((u) => u.username === arr[0]).find((u) => u.discriminator === arr[1]);
-		};
+		}
 
 		if (!user) return message.error("misc:NO_USER_FOUND_ID", { id: args[0] });
 
@@ -55,6 +55,6 @@ class Unban extends Command {
 			server: message.guild.name
 		});
 	}
-};
+}
 
 module.exports = Unban;

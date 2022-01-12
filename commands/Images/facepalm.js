@@ -1,6 +1,5 @@
 const Command = require("../../base/Command.js"),
-	Canvas = require("canvas"),
-	Discord = require("discord.js");
+	Canvas = require("canvas");
 
 class Facepalm extends Command {
 	constructor(client) {
@@ -14,7 +13,7 @@ class Facepalm extends Command {
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES"],
 			nsfw: false,
 			ownerOnly: false,
-			cooldown: 5000
+			cooldown: 3000
 		});
 	}
 
@@ -50,6 +49,6 @@ class Facepalm extends Command {
 			}]
 		});
 	}
-};
+}
 
 module.exports = Facepalm;

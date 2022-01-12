@@ -27,6 +27,6 @@ class Resume extends Command {
 
 		message.sendT("music/resume:SUCCESS");
 	}
-};
+}
 
 module.exports = Resume;

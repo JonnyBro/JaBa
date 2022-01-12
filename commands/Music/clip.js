@@ -51,8 +51,8 @@ class Clip extends Command {
 			}, 60 * 1000);
 		} catch (error) {
 			console.error(error);
-		};
+		}
 	}
-};
+}
 
 module.exports = Clip;

@@ -27,6 +27,6 @@ class AutoPlay extends Command {
 
 		message.success(`music/autoplay:SUCCESS_${autoplay ? "ENABLED" : "DISABLED"}`);
 	}
-};
+}
 
 module.exports = AutoPlay;

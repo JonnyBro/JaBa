@@ -18,7 +18,7 @@ class Queue extends Command {
 		});
 	}
 
-	async run(message, args, data, interaction) {
+	async run(message, args, data) {
 		const voice = message.member.voice.channel;
 		const queue = this.client.player.getQueue(message);
 
@@ -38,7 +38,7 @@ class Queue extends Command {
 			return message.channel.send({
 				embeds: [embed]
 			});
-		};
+		}
 
 		const FieldsEmbed = new Pagination.FieldsEmbed();
 
@@ -60,8 +60,8 @@ class Queue extends Command {
 			.setDeleteOnTimeout(true)
 			.setPageIndicator(true)
 			.formatField("Очередь", (track) => `[${track.name}](${track.url})\n*Добавил ${track.member}*\n`)
-		.build();
+			.build();
 	}
-};
+}
 
 module.exports = Queue;

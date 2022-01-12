@@ -16,7 +16,7 @@ class Set extends Command {
 		});
 	}
 
-	async run(message, args, data) {
+	async run(message, args) {
 		const status = args[0];
 		if (!status || !["level", "xp", "credits", "bank"].includes(status)) return message.error("administration/set:NO_STATUS");
 
@@ -52,6 +52,6 @@ class Set extends Command {
 			amount
 		});
 	}
-};
+}
 
 module.exports = Set;
