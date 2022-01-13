@@ -21,7 +21,6 @@
         "@sentry/node": "6.3.6",
         "@sindresorhus/slugify": "^1.1.0",
         "amethyste-api": "github:Androz2091/amethyste-api",
-        "ascii-table": "0.0.9",
         "blague.xyz": "^2.0.4",
         "btoa": "^1.2.1",
         "canvacord": "^5.1.0",

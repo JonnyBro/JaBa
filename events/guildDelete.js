@@ -12,7 +12,9 @@ module.exports = class {
 		const embed = new Discord.MessageEmbed()
 			.setAuthor({
 				name: guild.name,
-				iconURL: guild.iconURL()
+				iconURL: guild.iconURL({
+					dynamic: true
+				})
 			})
 			.setColor("#B22222")
 			.setDescription(text);

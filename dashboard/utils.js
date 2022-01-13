@@ -46,11 +46,9 @@ async function fetchUsers(array, client) {
 	return new Promise((resolve) => {
 		const users = [];
 		array.filter((e) => e.id).forEach((element) => {
-			client.users.fetch(element.id).then((user) => {
-				user.username = user.username.replace(/[\W_]+/g, " ");
-				if (user.username.length > 13) {
-					user.username = user.username.substr(0, 10) + "...";
-				}
+			client.users.fetch(element.id).then(user => {
+				if (user.username.length > 15) user.username = user.username.substr(0, 12) + "...";
+
 				users.push({
 					...{
 						money: element.money,

@@ -48,7 +48,9 @@ module.exports = class {
 		const logsEmbed = new Discord.MessageEmbed()
 			.setAuthor({
 				name: guild.name,
-				iconURL: guild.iconURL()
+				iconURL: guild.iconURL({
+					dynamic: true
+				})
 			})
 			.setColor("#32CD32")
 			.setDescription(text);
