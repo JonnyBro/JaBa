@@ -33,7 +33,7 @@
 							<span class="info-box-icon bg-green"><i class="fa fa-area-chart"></i></span>
 							<div class="info-box-content">
 								<span class="info-box-text"><%= translate("common:LEVEL") %></span>
-								<span class="info-box-number"><%= guild.members.find(u => u.id === user.id).level %></span>
+								<span class="info-box-number"><%= memberData.level %></span>
 							</div>
 							<!-- /.info-box-content -->
 						</div>
@@ -45,7 +45,7 @@
 							<span class="info-box-icon bg-green"><i class="fa fa-area-chart"></i></span>
 							<div class="info-box-content">
 								<span class="info-box-text"><%= translate("dashboard:EXP") %></span>
-								<span class="info-box-number"><%= guild.members.find(u => u.id === user.id).exp %> / <%= 5 * (guild.members.find(u => u.id === user.id).level * guild.members.find(u => u.id === user.id).level) + 80 * guild.members.find(u => u.id === user.id).level + 100 %></span>
+								<span class="info-box-number"><%= memberData.exp %> / <%= 5 * (memberData.level * memberData.level) + 80 * memberData.level + 100 %></span>
 							</div>
 							<!-- /.info-box-content -->
 						</div>
@@ -57,7 +57,7 @@
 							<span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
 							<div class="info-box-content">
 								<span class="info-box-text"><%= translate("common:CREDITS") %> / <%= translate("economy/transactions:BANK") %></span>
-								<span class="info-box-number"><%= guild.members.find(u => u.id === user.id).money %> / <%= guild.members.find(u => u.id === user.id).bankSold %></span>
+								<span class="info-box-number"><%= memberData.money %> / <%= memberData.bankSold %></span>
 							</div>
 							<!-- /.info-box-content -->
 						</div>
@@ -129,12 +129,12 @@
 										<label><%= translate("common:LANGUAGE") %></label>
 										<select class="form-control" name="language">
 											<% bot.languages.forEach((language) => { %>
-											<% if (guild.language === language.name) { %>
-											<option selected="selected"><%= language.aliases[0] %></option>
-											<% } else { %>
-											<option><%= language.aliases[0] %></options>
+												<% if (guild.language === language.name) { %>
+													<option selected="selected"><%= language.nativeName %></option>
+												<% } else { %>
+													<option><%= language.nativeName %></options>
 												<% } %>
-												<% }) %>
+											<% }) %>
 										</select>
 									</div>
 								</div>
