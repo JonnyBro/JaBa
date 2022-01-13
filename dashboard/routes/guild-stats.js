@@ -16,11 +16,17 @@ router.get("/:serverID", CheckAuth, async (req, res) => {
 
 	// Fetch guild informations
 	const membersData = await req.client.membersData.find({
-		guildID: guild.id
-	}).lean();
+			guildID: guild.id
+		}).lean(),
+		members = membersData.map((m) => {
+			return {
+				id: m.id,
+				money: m.money + m.bankSold
+			};
+		}).sort((a, b) => b.money - a.money);
 
 	const leaderboards = {
-		money: utils.sortArrayOfObjects("money", membersData),
+		money: members,
 		level: utils.sortArrayOfObjects("level", membersData)
 	};
 
