@@ -25,14 +25,13 @@ class Triggered extends Command {
 			url: user.displayAvatarURL({
 				format: "png",
 				size: 512
-			}),
-			sepia: "true",
-			invert: "true"
+			})
 		});
 		m.delete();
 
 		message.channel.send({
 			files: [{
+				name: "triggered.gif",
 				attachment: buffer
 			}]
 		});
