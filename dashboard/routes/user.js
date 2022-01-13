@@ -6,7 +6,7 @@ const express = require("express"),
 // Gets user page
 router.get("/:userID/:serverID", CheckAuth, async function (req, res) {
 	const guild = req.client.guilds.cache.get(req.params.serverID);
-	if (!guild || !req.userInfos.displayedGuilds || !req.userInfos.displayedGuilds.find((g) => g.id === req.params.serverID)) {
+	if (!guild) {
 		return res.render("404", {
 			user: req.userInfos,
 			translate: req.translate,
