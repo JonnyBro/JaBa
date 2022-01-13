@@ -49,13 +49,12 @@ class JaBa extends Client {
 		if (this.config.apiKeys.amethyste) this.AmeAPI = new AmeClient(this.config.apiKeys.amethyste);
 		this.icanhazdadjoke = async function() {
 			const joke = await fetch("https://icanhazdadjoke.com/", {
-				method: "GET",
 				headers: {
 					"Accept": "application/json"
 				}
 			});
 
-			return joke;
+			return joke.json();
 		};
 
 		this.player = new DisTube.default(this, {

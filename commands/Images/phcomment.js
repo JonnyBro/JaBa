@@ -47,7 +47,7 @@ class Phcomment extends Command {
 			});
 		} catch (e) {
 			console.log(e);
-			m.error("misc:ERROR_OCCURRED", null, {
+			m.error("misc:ERR_OCCURRED", null, {
 				edit: true
 			});
 		}

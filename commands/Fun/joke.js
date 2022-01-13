@@ -19,7 +19,7 @@ class Joke extends Command {
 
 	async run(message, args, data) {
 		const joke = await this.client.icanhazdadjoke();
-		if (joke.status !== "200") return;
+		if (joke.status === 200) return message.error("misc:ERR_OCCURRED");
 
 		const embed = new Discord.MessageEmbed()
 			.setDescription(joke.joke)
