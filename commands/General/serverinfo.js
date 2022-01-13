@@ -41,13 +41,14 @@ class Serverinfo extends Command {
 			.setThumbnail(guild.iconURL({
 				dynamic: true
 			}))
+			.addField(this.client.customEmojis.link + " " + message.translate("general/serverinfo:LINK"), `[${message.translate("general/serverinfo:LINK_TEXT")}](https://jaba.pp.ua/stats/${guild.id})`)
 			.addField(this.client.customEmojis.title + message.translate("common:NAME"), guild.name, true)
 			.addField(this.client.customEmojis.calendar + message.translate("common:CREATION"), message.printDate(guild.createdAt), true)
 			.addField(this.client.customEmojis.users + message.translate("common:MEMBERS"),
 				`${guild.members.cache.filter(m => !m.user.bot).size} ${message.getNoun(guild.members.cache.filter(m => !m.user.bot).size, message.translate("misc:NOUNS:MEMBERS:1"), message.translate("misc:NOUNS:MEMBERS:2"), message.translate("misc:NOUNS:MEMBERS:5"))}` +
 				"\n" + `${guild.members.cache.filter(m => m.user.bot).size} ${message.getNoun(guild.members.cache.filter(m => m.user.bot).size, message.translate("misc:NOUNS:BOTS:1"), message.translate("misc:NOUNS:BOTS:2"), message.translate("misc:NOUNS:BOTS:5"))}`, true
 			)
-			.addField(this.client.customEmojis.afk + message.translate("general/serverinfo:AFK_CHANNEL"), guild.afkChannel.toString() || message.translate("general/serverinfo:NO_AFK_CHANNEL"), true)
+			.addField(this.client.customEmojis.afk + message.translate("general/serverinfo:AFK_CHANNEL"), guild.afkChannel ? guild.afkChannel.toString() : message.translate("general/serverinfo:NO_AFK_CHANNEL"), true)
 			.addField(this.client.customEmojis.id + message.translate("common:ID"), guild.id, true)
 			.addField(this.client.customEmojis.crown + message.translate("common:OWNER"), owner.toString(), true)
 			.addField(this.client.customEmojis.boost + message.translate("general/serverinfo:BOOSTS"), guild.premiumSubscriptionCount.toString() || "0", true)

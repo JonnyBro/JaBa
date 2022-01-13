@@ -33,7 +33,7 @@ module.exports = class {
 			else return message.sendT("misc:HELLO_DM");
 		}
 
-		if (message.content.includes("@someone") && message.guild) return client.commands.get("someone").run(message, null, data);
+		if (message.content.includes("@someone") && message.guild && client.commands.get("someone").conf.enabled) return client.commands.get("someone").run(message, null, data);
 
 		if (message.guild) {
 			// Gets the data of the member

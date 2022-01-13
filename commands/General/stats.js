@@ -46,14 +46,13 @@ class Stats extends Command {
 			.addField(message.translate("general/stats:CREDITS_TITLE"), message.translate("general/stats:CREDITS_CONTENT", {
 				donators: ["**`Добрый Спецназ#8801`** - Тестер, генератор идей"].join("\n"),
 				translators: ["**`Jonny_Bro#4226`** (:flag_ru:)"].join("\n")
+			}))
+			.addField(this.client.customEmojis.link + " " + message.translate("general/stats:LINKS_TITLE"), message.translate("misc:STATS_FOOTER", {
+				dashboardLink: "https://jaba.pp.ua/",
+				docsLink: "https://jaba.pp.ua/docs/",
+				donateLink: "https://qiwi.com/n/JONNYBRO/",
+				owner: this.client.config.owner.id
 			}));
-
-		statsEmbed.addField(this.client.customEmojis.link + " " + message.translate("general/stats:LINKS_TITLE"), message.translate("misc:STATS_FOOTER", {
-			dashboardLink: "https://jaba.pp.ua/",
-			docsLink: "https://jaba.pp.ua/docs/",
-			donateLink: "https://qiwi.com/n/JONNYBRO/",
-			owner: this.client.config.owner.id
-		}));
 		message.channel.send({
 			embeds: [statsEmbed]
 		});

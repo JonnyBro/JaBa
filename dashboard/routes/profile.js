@@ -6,9 +6,10 @@ const express = require("express"),
 router.get("/", CheckAuth, async function(req, res) {
 	res.render("profile", {
 		user: req.userInfos,
+		bot: req.client,
 		translate: req.translate,
 		printDate: req.printDate,
-		currentURL: `${req.client.config.dashboard.baseURL}/${req.originalUrl}`
+		currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`
 	});
 });
 

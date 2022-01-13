@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const Command = require("../../base/Command");
 
 class Eval extends Command {
@@ -16,7 +17,7 @@ class Eval extends Command {
 		});
 	}
 
-	async run(message) {
+	async run(message, data) {
 		const content = message.content.split(" ").slice(1).join(" ");
 		const result = new Promise((resolve) => resolve(eval(content)));
 

@@ -4,5 +4,7 @@
 	"EXAMPLES": "{{prefix}}serverinfo кык\n{{prefix}}serverinfo",
 	"AFK_CHANNEL": "AFK канал",
 	"NO_AFK_CHANNEL": "Нет AFK канала",
-	"BOOSTS": "Кол-во бустов"
+	"BOOSTS": "Кол-во бустов",
+	"LINK": "Статистика сервера",
+	"LINK_TEXT": "Нажмите сюда, чтобы открыть статистику сервера!"
 }

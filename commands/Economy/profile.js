@@ -63,6 +63,7 @@ class Profile extends Command {
 				})
 			})
 			.setImage("attachment://achievements.png")
+			.addField(this.client.customEmojis.link + " " + message.translate("economy/profile:LINK"), `[${message.translate("economy/profile:LINK_TEXT")}](https://jaba.pp.ua/user/${member.user.id}/${message.guild.id})`)
 			.addField(message.translate("economy/profile:BIO"), userData.bio ? userData.bio : message.translate("economy/profile:NO_BIO"))
 			.addField(message.translate("economy/profile:CASH"), `**${memberData.money}** ${message.getNoun(memberData.money, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
 			.addField(message.translate("economy/profile:BANK"), `**${memberData.bankSold}** ${message.getNoun(memberData.bankSold, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)

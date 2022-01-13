@@ -6,7 +6,7 @@ class Someone extends Command {
 		super(client, {
 			name: "someone",
 			dirname: __dirname,
-			enabled: true,
+			enabled: false,
 			guildOnly: true,
 			aliases: ["somebody"],
 			memberPermissions: [],

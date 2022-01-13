@@ -10,7 +10,7 @@ router.get("/:serverID", CheckAuth, async(req, res) => {
 		return res.render("404", {
 			user: req.userInfos,
 			translate: req.translate,
-			currentURL: `${req.client.config.dashboard.baseURL}/${req.originalUrl}`
+			currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`
 		});
 	}
 
@@ -25,7 +25,7 @@ router.get("/:serverID", CheckAuth, async(req, res) => {
 		translate: req.translate,
 		bot: req.client,
 		convertTime: req.convertTime,
-		currentURL: `${req.client.config.dashboard.baseURL}/${req.originalUrl}`
+		currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`
 	});
 });
 
@@ -36,7 +36,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		return res.render("404", {
 			user: req.userInfos,
 			translate: req.translate,
-			currentURL: `${req.client.config.dashboard.baseURL}/${req.originalUrl}`
+			currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`
 		});
 	}
 
@@ -44,7 +44,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 	const data = req.body;
 
 	if (data.language) {
-		const language = req.client.languages.find((language) => language.aliases[0].toLowerCase() === data.language.toLowerCase());
+		const language = req.client.languages.find((language) => language.nativeName.toLowerCase() === data.language.toLowerCase());
 		if (language) guildData.language = language.name;
 		if (data.prefix.length >= 1 && data.prefix.length < 2000) guildData.prefix = data.prefix;
 
