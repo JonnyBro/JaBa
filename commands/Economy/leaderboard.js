@@ -60,7 +60,7 @@ class Leaderboard extends Command {
 					value: userNames,
 					inline: true
 				}, {
-					name: message.translate("economy/leaderboard:LEVEL"),
+					name: message.translate("economy/leaderboard:CREDITS"),
 					value: money,
 					inline: true
 				});
