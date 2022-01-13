@@ -1,12 +1,12 @@
 const { MessageEmbed, Util, Client, Collection } = require("discord.js"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ SoundCloudPlugin } = require("@distube/soundcloud"),
-	{ SpotifyPlugin } = require("@distube/spotify"),
-	{ Client: Joker } = require("blague.xyz");
+	{ SpotifyPlugin } = require("@distube/spotify");
 
 const util = require("util"),
 	AmeClient = require("amethyste-api"),
 	path = require("path"),
+	fetch = require("node-fetch"),
 	DisTube = require("distube"),
 	moment = require("moment");
 
@@ -47,9 +47,16 @@ class JaBa extends Client {
 		this.databaseCache.mutedUsers = new Collection(); // members who are currently muted
 
 		if (this.config.apiKeys.amethyste) this.AmeAPI = new AmeClient(this.config.apiKeys.amethyste);
-		if (this.config.apiKeys.blagueXYZ) this.joker = new Joker(this.config.apiKeys.blagueXYZ, {
-			defaultLanguage: "en"
-		});
+		this.icanhazdadjoke = async function() {
+			const joke = await fetch("https://icanhazdadjoke.com/", {
+				method: "GET",
+				headers: {
+					"Accept": "application/json"
+				}
+			});
+
+			return joke;
+		};
 
 		this.player = new DisTube.default(this, {
 			searchSongs: 10,

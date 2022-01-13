@@ -18,15 +18,15 @@ class Joke extends Command {
 	}
 
 	async run(message, args, data) {
-		if (!this.client.config.apiKeys.blagueXYZ) return message.error("misc:COMMAND_DISABLED");
-
-		// const joke = await this.client.joker.randomJoke(data.guild.language.substr(0, 2));
-		const joke = await this.client.joker.randomJoke("en");
+		const joke = await this.client.icanhazdadjoke();
+		if (joke.status !== "200") return;
 
 		const embed = new Discord.MessageEmbed()
-			.setDescription(joke.toDiscordSpoils())
+			.setDescription(joke.joke)
 			.setFooter({
-				text: message.translate("fun/joke:FOOTER")
+				text: message.translate("fun/joke:FOOTER", {
+					id: joke.id
+				})
 			})
 			.setColor(data.config.embed.color);
 
