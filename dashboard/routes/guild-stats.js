@@ -47,6 +47,7 @@ router.get("/:serverID", CheckAuth, async (req, res) => {
 		stats,
 		memberData: memberData,
 		bot: req.client,
+		convertTime: req.convertTime,
 		guildID: guild.id,
 		translate: req.translate,
 		currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`,
