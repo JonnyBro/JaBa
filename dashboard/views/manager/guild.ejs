@@ -64,25 +64,6 @@
 						<!-- /.info-box -->
 					</div>
 					<!-- /.col -->
-					<div class="col-md-4 col-sm-6 col-xs-12">
-						<div class="info-box">
-							<span class="info-box-icon bg-yellow"><i class="fa fa-refresh"></i></span>
-							<div class="info-box-content">
-								<span class="info-box-text"><%= translate("dashboard:COOLDOWNS") %></span>
-								<span class="info-box-number"><%= translate("dashboard:REP") %>: <%= user.cooldowns.rep > Date.now() ? convertTime(user.cooldowns.rep) : translate("dashboard:CAN_USE") %></span>
-								<% for (const c in memberData.cooldowns) { %>
-									<% if (c !== "rob") { %>
-										<span class="info-box-number"><%= translate("dashboard:" + c.toUpperCase()) %>: <%= memberData.cooldowns[c] > Date.now() ? convertTime(memberData.cooldowns[c]) : translate("dashboard:CAN_USE") %></span>
-									<% } else { %>
-										<span class="info-box-number"><%= translate("dashboard:" + c.toUpperCase()) %>: <%= memberData.cooldowns[c] > Date.now() ? convertTime(memberData.cooldowns[c]) : translate("dashboard:NO_DEFENCE") %></span>
-									<% }; %>
-								<% }; %>
-							</div>
-							<!-- /.info-box-content -->
-						</div>
-						<!-- /.info-box -->
-					</div>
-					<!-- /.col -->
 				</div>
 				<!-- /.row -->
 				<div class="row">

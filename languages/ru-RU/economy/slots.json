@@ -4,5 +4,5 @@
 	"EXAMPLES": "{{prefix}}slots\n{{prefix}}slots 100",
 	"DEFEAT": "**{{username}}** поставил {{money}} и всё проиграл.",
 	"VICTORY": "**{{username}}** поставил {{money}} и выиграл {{won}}!",
-	"NOT_ENOUGH": "У вас должно быть хотя бы **{{money}}**."
+	"NOT_ENOUGH": "У вас нет {{money}}."
 }
