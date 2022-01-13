@@ -13,9 +13,9 @@ router.get("/:userID/:serverID", CheckAuth, async function (req, res) {
 			currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`
 		});
 	}
-
 	const guildData = await req.client.findOrCreateGuild({ id: guild.id });
-	await utils.fetchUser({
+
+	const userInfos = await utils.fetchUser({
 		id: req.params.userID
 	}, req.client).catch(() => {
 		res.render("404", {
@@ -27,6 +27,7 @@ router.get("/:userID/:serverID", CheckAuth, async function (req, res) {
 
 	res.render("user", {
 		user: req.userInfos,
+		userInfos: userInfos,
 		guild: guildData,
 		bot: req.client,
 		translate: req.translate,
