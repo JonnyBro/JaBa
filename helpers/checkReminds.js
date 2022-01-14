@@ -25,14 +25,20 @@ module.exports = {
 					if (mustSent.length > 0) {
 						mustSent.forEach((r) => {
 							const embed = new Discord.MessageEmbed()
-								.setAuthor({ name: client.translate("general/remindme:TITLE") })
+								.setAuthor({
+									name: client.translate("general/remindme:TITLE")
+								})
 								.addField(client.translate("common:CREATION"), client.translate("general/remindme:CREATED", {
 									time: client.convertTime(r.createdAt, "from")
 								}))
 								.addField(client.translate("common:MESSAGE"), r.message)
 								.setColor(client.config.embed.color)
-								.setFooter({ text: client.config.embed.footer });
-							dUser.send({ embeds: [embed] });
+								.setFooter({
+									text: client.config.embed.footer
+								});
+							dUser.send({
+								embeds: [embed]
+							});
 						});
 						user.reminds = user.reminds.filter((r) => r.sendAt >= dateNow);
 						user.save();

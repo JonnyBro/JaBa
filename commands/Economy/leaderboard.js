@@ -42,7 +42,7 @@ class Leaderboard extends Command {
 				const user = (await this.client.users.fetch(data.id)).tag;
 
 				userNames += `**${i + 1}**. ${user}\n`;
-				money += `**${data.money}**\n`;
+				money += `${data.money}\n`;
 			}
 
 			const embed = new Discord.MessageEmbed()
@@ -89,8 +89,8 @@ class Leaderboard extends Command {
 				const user = (await this.client.users.fetch(data.id)).tag;
 
 				userNames += `**${i + 1}**. ${user}\n`;
-				level += `**${data.level}**\n`;
-				xp += `**${data.xp}** / **${5 * (data.level * data.level) + 80 * data.level + 100}**\n`;
+				level += `${data.level}\n`;
+				xp += `${data.xp} / ${5 * (data.level * data.level) + 80 * data.level + 100}\n`;
 			}
 
 			const embed = new Discord.MessageEmbed()
@@ -139,7 +139,7 @@ class Leaderboard extends Command {
 				const user = (await this.client.users.fetch(data.id)).tag;
 
 				userNames += `**${i + 1}**. ${user}\n`;
-				rep += `**${data.rep}**\n`;
+				rep += `${data.rep}\n`;
 			}
 
 			const embed = new Discord.MessageEmbed()

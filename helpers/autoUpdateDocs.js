@@ -5,10 +5,10 @@ module.exports = {
 	 * @param {object} client The Discord Client instance
 	 */
 	update(client) {
-		const table = require("markdown-table");
-		const fs = require("fs");
-		const commands = client.commands;
-		const categories = [];
+		const table = require("markdown-table"),
+			fs = require("fs"),
+			commands = client.commands,
+			categories = [];
 		commands.forEach((cmd) => {
 			if (!categories.includes(cmd.help.category)) categories.push(cmd.help.category);
 		});

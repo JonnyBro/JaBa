@@ -1,9 +1,8 @@
 const Discord = require("discord.js");
 
-/* THIS CHECK IF THERE IS A USER TO UNMUTE */
 module.exports = {
 	/**
-	 * Starts checking...
+	 * Check if there is a user to unmute
 	 * @param {object} client The Discord Client instance
 	 */
 	async init(client) {
@@ -47,9 +46,13 @@ module.exports = {
 						count: memberData.mute.case
 					}))
 					.setColor("#f44271")
-					.setFooter({ text: guild.client.config.embed.footer });
+					.setFooter({
+						text: guild.client.config.embed.footer
+					});
 				const channel = guild.channels.cache.get(guildData.plugins.modlogs);
-				if (channel) channel.send({ embeds: [embed] });
+				if (channel) channel.send({
+					embeds: [embed]
+				});
 
 				memberData.mute = {
 					muted: false,
