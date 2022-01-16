@@ -47,22 +47,29 @@ class Backup extends Command {
 
 			backup.fetch(backupID).then(async () => {
 				message.sendT("administration/backup:CONFIRMATION");
-				await message.channel.awaitMessages((m) => (m.author.id === message.author.id) && (m.content === "confirm"), {
-					max: 1,
-					time: 20000,
-					errors: ["time"]
-				}).catch((err) => {
-					console.error(err);
-					message.error("misc:TIMES_UP");
-				});
-				message.author.send(message.translate("administration/backup:START_LOADING"));
 
-				backup.load(backupID, message.guild).then(() => {
-					backup.remove(backupID);
-					message.author.send(message.translate("administration/backup:LOAD_SUCCESS"));
-				}).catch((err) => {
-					console.error(err);
-					return message.error("misc:ERR_OCCURRED");
+				const filter = m => m.author.id === message.author.id;
+				const collector = message.channel.createMessageCollector({
+					filter,
+					time: 20000
+				});
+
+				collector.on("collect", async msg => {
+					if (msg.content.toLowerCase() === message.translate("common:YES").toLowerCase()) {
+						message.author.send(message.translate("administration/backup:START_LOADING"));
+
+						backup.load(backupID, message.guild).then(() => {
+							backup.remove(backupID);
+							message.author.send(message.translate("administration/backup:LOAD_SUCCESS"));
+						}).catch((err) => {
+							console.error(err);
+							return message.error("misc:ERR_OCCURRED");
+						});
+					}
+				});
+
+				collector.on("end", (_, reason) => {
+					if (reason === "time") return message.error("misc:TIMES_UP");
 				});
 			}).catch((err) => {
 				console.error(err);
@@ -102,17 +109,25 @@ class Backup extends Command {
 
 			backup.fetch(backupID).then(async () => {
 				message.sendT("administration/backup:REMOVE_CONFIRMATION");
-				await message.channel.awaitMessages(m => (m.author.id === message.author.id) && (m.content === "confirm"), {
-					max: 1,
-					time: 20000,
-					errors: ["time"]
-				}).catch((err) => {
-					console.error(err);
-					message.error("misc:TIMES_UP");
+
+				const filter = m => m.author.id === message.author.id;
+				const collector = message.channel.createMessageCollector({
+					filter,
+					time: 20000
 				});
 
-				backup.remove(backupID).then(async () => {
-					message.success("administration/backup:SUCCESS_REMOVED");
+				collector.on("collect", async msg => {
+					if (msg.content.toLowerCase() === message.translate("common:YES").toLowerCase()) {
+						message.author.send(message.translate("administration/backup:START_LOADING"));
+
+						backup.remove(backupID).then(async () => {
+							message.success("administration/backup:SUCCESS_REMOVED");
+						});
+					}
+				});
+
+				collector.on("end", (_, reason) => {
+					if (reason === "time") return message.error("misc:TIMES_UP");
 				});
 			}).catch((err) => {
 				console.error(err);

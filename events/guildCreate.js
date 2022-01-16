@@ -18,6 +18,7 @@ module.exports = class {
 		const userData = await this.client.findOrCreateUser({
 			id: guild.ownerId
 		});
+
 		if (!userData.achievements.invite.achieved) {
 			userData.achievements.invite.progress.now += 1;
 			userData.achievements.invite.achieved = true;
@@ -41,9 +42,8 @@ module.exports = class {
 			.setTimestamp();
 		messageOptions.embed = thanksEmbed;
 
-		guild.owner.send(messageOptions).catch(() => {});
-
-		const text = `Зашёл на сервер **${guild.name}**. На нём **${guild.members.cache.filter((m) => !m.user.bot).size}** пользователей (из них ${guild.members.cache.filter((m) => m.user.bot).size} ботов)`;
+		const owner = await guild.fetchOwner();
+		owner.send(messageOptions);
 
 		const logsEmbed = new Discord.MessageEmbed()
 			.setAuthor({
@@ -53,7 +53,7 @@ module.exports = class {
 				})
 			})
 			.setColor("#32CD32")
-			.setDescription(text);
+			.setDescription(`Зашёл на сервер **${guild.name}**. На нём **${guild.members.cache.filter((m) => !m.user.bot).size}** пользователей (из них ${guild.members.cache.filter((m) => m.user.bot).size} ботов)`);
 		this.client.channels.cache.get(this.client.config.support.logs).send(logsEmbed);
 	}
 };
