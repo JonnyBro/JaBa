@@ -45,7 +45,7 @@ module.exports = class {
 		const owner = await guild.fetchOwner();
 		owner.send(messageOptions);
 
-		const logsEmbed = new Discord.MessageEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setAuthor({
 				name: guild.name,
 				iconURL: guild.iconURL({
@@ -54,6 +54,8 @@ module.exports = class {
 			})
 			.setColor("#32CD32")
 			.setDescription(`Зашёл на сервер **${guild.name}**. На нём **${guild.members.cache.filter((m) => !m.user.bot).size}** пользователей (из них ${guild.members.cache.filter((m) => m.user.bot).size} ботов)`);
-		this.client.channels.cache.get(this.client.config.support.logs).send(logsEmbed);
+		this.client.channels.cache.get(this.client.config.support.logs).send({
+			embeds: [embed]
+		});
 	}
 };
