@@ -2,7 +2,7 @@ const Command = require("../../base/Command"),
 	Discord = require("discord.js"),
 	backup = require("discord-backup");
 
-backup.setStorageFolder(__dirname + "/../../../backups");
+backup.setStorageFolder(__dirname + "/../../backups");
 
 class Backup extends Command {
 	constructor(client) {
