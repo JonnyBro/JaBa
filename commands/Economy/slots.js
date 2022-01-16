@@ -39,7 +39,7 @@ class Slots extends Command {
 
 		function getCredits(number, isJackpot) {
 			if (!isJackpot) number = number * 1.5;
-			else if (isJackpot) number = number * 4;
+			else if (isJackpot) number = number * 5;
 
 			return Math.round(number);
 		}
@@ -48,7 +48,9 @@ class Slots extends Command {
 			prefixEmoji: "loading"
 		});
 		editMsg();
+
 		const interval = setInterval(editMsg, 1000);
+
 		setTimeout(() => {
 			clearInterval(interval);
 			end(tmsg);

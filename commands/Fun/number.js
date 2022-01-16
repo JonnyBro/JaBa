@@ -63,7 +63,7 @@ class Number extends Command {
 						credits: `**${won}** ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 					});
 
-					const userdata = await this.client.findOrCreateMember({
+					const memberData = await this.client.findOrCreateMember({
 						id: msg.author.id,
 						guildID: message.guild.id
 					});
@@ -77,8 +77,8 @@ class Number extends Command {
 
 					data.memberData.transactions.push(info);
 
-					userdata.money = userdata.money + won;
-					userdata.save();
+					memberData.money += won;
+					memberData.save();
 				}
 
 				collector.stop();

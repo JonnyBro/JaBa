@@ -110,7 +110,7 @@ class FindWords extends Command {
 								credits: `**${won}** ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 							});
 
-							const userdata = await this.client.findOrCreateMember({
+							const memberData = await this.client.findOrCreateMember({
 								id: user.id,
 								guildID: message.guild.id
 							});
@@ -124,8 +124,8 @@ class FindWords extends Command {
 
 							data.memberData.transactions.push(info);
 
-							userdata.money = userdata.money + won;
-							userdata.save();
+							memberData.money += won;
+							memberData.save();
 						}
 					}
 				});

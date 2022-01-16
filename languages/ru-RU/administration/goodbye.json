@@ -2,7 +2,7 @@
 	"DESCRIPTION": "Включить или отключить сообщения при выходе пользователя с сервера!",
 	"USAGE": "{{prefix}}goodbye (edit/off/test)",
 	"EXAMPLES": "{{prefix}}goodbye\n{{prefix}}goodbye test",
-	"MISSING_STATUS": "Выберите действие: `edit`, `off` или `test`",
+	"MISSING_STATUS": "Выберите действие: `edit`, `off` или `test`!",
 	"DEFAULT_MESSAGE": "Пока, {user}! Нас теперь {membercount} без тебя :'(",
 	"TEST_SUCCESS": "Тест выполнен!",
 	"FORM_1": "**В какой канал будут отправляться сообщения?**\n\n:arrow_right_hook: *Отправьте упоминание канала!*",

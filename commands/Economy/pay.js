@@ -23,7 +23,7 @@ class Pay extends Command {
 		if (member.id === message.author.id) return message.error("economy/pay:YOURSELF");
 
 		const sentAmount = args[1];
-		if (!sentAmount || isNaN(sentAmount) || parseInt(sentAmount, 10) <= 0) return message.error("economy/pay:INVALID_AMOUNT", { username: member.user.tag });
+		if (!sentAmount || isNaN(sentAmount) || parseInt(sentAmount, 10) <= 0) return message.error("economy/pay:INVALID_AMOUNT");
 
 		const amount = Math.ceil(parseInt(sentAmount, 10));
 		if (amount > data.memberData.money) return message.error("economy/pay:ENOUGH_MONEY", {
