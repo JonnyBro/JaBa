@@ -30,6 +30,7 @@ class Backup extends Command {
 			});
 			backup.create(message.guild).then((backup) => {
 				m.delete();
+
 				message.success("administration/backup:SUCCESS_PUBLIC");
 				message.author.send(message.translate("administration/backup:SUCCESS_PRIVATE", {
 					backupID: backup.id
@@ -61,6 +62,7 @@ class Backup extends Command {
 						backup.load(backupID, message.guild).then(() => {
 							backup.remove(backupID);
 							message.author.send(message.translate("administration/backup:LOAD_SUCCESS"));
+							collector.stop();
 						}).catch((err) => {
 							console.error(err);
 							return message.error("misc:ERR_OCCURRED");
@@ -118,11 +120,10 @@ class Backup extends Command {
 
 				collector.on("collect", async msg => {
 					if (msg.content.toLowerCase() === message.translate("common:YES").toLowerCase()) {
-						message.author.send(message.translate("administration/backup:START_LOADING"));
-
 						backup.remove(backupID).then(async () => {
 							message.success("administration/backup:SUCCESS_REMOVED");
 						});
+						collector.stop();
 					}
 				});
 
