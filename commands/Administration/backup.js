@@ -47,13 +47,13 @@ class Backup extends Command {
 
 			backup.fetch(backupID).then(async () => {
 				message.sendT("administration/backup:CONFIRMATION");
-				await message.channel.awaitMessages(m => (m.author.id === message.author.id) && (m.content === "confirm"), {
+				await message.channel.awaitMessages((m) => (m.author.id === message.author.id) && (m.content === "confirm"), {
 					max: 1,
 					time: 20000,
 					errors: ["time"]
 				}).catch((err) => {
 					console.error(err);
-					return message.error("administration/backup:TIMES_UP");
+					message.error("misc:TIMES_UP");
 				});
 				message.author.send(message.translate("administration/backup:START_LOADING"));
 
@@ -106,8 +106,9 @@ class Backup extends Command {
 					max: 1,
 					time: 20000,
 					errors: ["time"]
-				}).catch(() => {
-					return message.error("administration/backup:TIMES_UP");
+				}).catch((err) => {
+					console.error(err);
+					message.error("misc:TIMES_UP");
 				});
 
 				backup.remove(backupID).then(async () => {
