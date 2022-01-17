@@ -58,13 +58,21 @@ class JaBa extends Client {
 		};
 
 		this.player = new DisTube.default(this, {
+			plugins: [
+				new SpotifyPlugin({
+					emitEventsAfterFetching: true
+				}),
+				new SoundCloudPlugin()
+			],
+			emitNewSongOnly: true,
+			leaveOnEmpty: true,
+			leaveOnFinish: true,
+			leaveOnStop: false,
 			searchSongs: 10,
 			searchCooldown: 30,
-			leaveOnEmpty: true,
 			emptyCooldown: 0,
-			leaveOnFinish: true,
-			leaveOnStop: true,
-			plugins: [new SoundCloudPlugin(), new SpotifyPlugin()],
+			emitAddListWhenCreatingQueue: false,
+			emitAddSongWhenCreatingQueue: false
 		});
 
 		this.player
