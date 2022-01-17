@@ -20,7 +20,7 @@ class Hentai extends Command {
 
 	async run(message, args, data) {
 		const category = args[0];
-		var gif = null;
+		let gif = null;
 		const embed = new Discord.MessageEmbed()
 			.setColor(data.config.embed.color)
 			.setFooter({

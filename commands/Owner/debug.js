@@ -40,7 +40,7 @@ class Debug extends Command {
 			id: member.id,
 		});
 
-		var newValue = 0;
+		let newValue = 0;
 
 		if (action === "set") {
 			newValue = parseInt(amount, 10);

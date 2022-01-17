@@ -34,8 +34,8 @@ class Giveaway extends Command {
 			if (!winnersCount) return message.error("moderation/giveaway:INVALID_CREATE", { prefix: data.guild.prefix });
 			if (isNaN(winnersCount) || winnersCount > 10 || winnersCount < 1) return message.error("misc:INVALID_NUMBER_RANGE", { min: 1, max: 10 });
 
-			var drop = (args[3] === "true"),
-				prize = args.slice(3).join(" ");
+			const drop = (args[3] === "true");
+			let	prize = args.slice(3).join(" ");
 
 			if (drop) prize = args.slice(4).join(" ");
 			else prize = args.slice(3).join(" ");

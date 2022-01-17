@@ -23,7 +23,7 @@ class Userinfo extends Command {
 
 		const isID = !isNaN(args[0]);
 
-		var user;
+		let user;
 		if (!args[0]) user = message.author;
 		if (message.mentions.users.first()) user = message.mentions.users.first();
 

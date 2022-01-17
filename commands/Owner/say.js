@@ -22,9 +22,10 @@ class Say extends Command {
 		// Arguments split
 		const split = "++";
 		args = args.join(" ").split(split);
-		for (var i = 0; i < args.length; i++) args[i] = args[i].trim();
+		for (let i = 0; i < args.length; i++) args[i] = args[i].trim();
 
-		if (message.attachments.size > 0) var attachment = message.attachments.first().url;
+		let attachment = null;
+		if (message.attachments.size > 0) attachment = message.attachments.first();
 
 		if (args[1] && !args[2]) {
 			message.delete();
@@ -34,7 +35,10 @@ class Say extends Command {
 			setTimeout(function () {
 				if (attachment) saychannel.send({
 					content: args[0],
-					files: [attachment]
+					files: [{
+						name: attachment.name,
+						attachment: attachment.url
+					}]
 				});
 				else saychannel.send({
 					content: args[0]
@@ -47,7 +51,10 @@ class Say extends Command {
 			setTimeout(function () {
 				if (attachment) saychannel.send({
 					content: args[0],
-					files: [attachment]
+					files: [{
+						name: attachment.name,
+						attachment: attachment.url
+					}]
 				});
 				else saychannel.send({
 					content: args[0]
@@ -61,7 +68,10 @@ class Say extends Command {
 			setTimeout(function () {
 				if (attachment) saychannel.send({
 					content: args[0],
-					files: [attachment]
+					files: [{
+						name: attachment.name,
+						attachment: attachment.url
+					}]
 				});
 				else saychannel.send({
 					content: args[0]
