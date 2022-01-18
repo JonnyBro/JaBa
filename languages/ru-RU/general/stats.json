@@ -5,7 +5,7 @@
 	"COUNTS_TITLE": "• __Статистика__",
 	"COUNTS_CONTENT": "`Сервера: {{servers}}`\n`Пользователи: {{users}}`",
 	"VERSIONS_TITLE": "• __Использует__",
-	"RAM_TITLE": "• __Использовано ОЗУ__",
+	"RAM_TITLE": "• __Использование ОЗУ__",
 	"ONLINE_TITLE": "• __Онлайн__",
 	"ONLINE_CONTENT": "Работает {{time}}",
 	"MUSIC_TITLE": "• __Музыка__",
