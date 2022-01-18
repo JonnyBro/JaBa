@@ -1,0 +1,5 @@
+{
+	"DESCRIPTION": "Создать изображение \"wasted\"",
+	"USAGE": "{{prefix}}wasted (@пользователь)",
+	"EXAMPLES": "{{prefix}}wasted\n{{prefix}}wasted @Jonny_Bro#4226"
+}

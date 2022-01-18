@@ -1,0 +1,5 @@
+{
+	"DESCRIPTION": "Создать изображение \"tobecontinued\"",
+	"USAGE": "{{prefix}}tobecontinued (@пользователь)",
+	"EXAMPLES": "{{prefix}}tobecontinued\n{{prefix}}tobecontinued @Jonny_Bro#4226"
+}

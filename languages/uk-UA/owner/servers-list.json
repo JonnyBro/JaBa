@@ -1,0 +1,5 @@
+{
+	"DESCRIPTION": "Показать список серверов бота!",
+	"USAGE": "{{prefix}}servers-list",
+	"EXAMPLES": "{{prefix}}servers-list"
+}

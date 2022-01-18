@@ -1,0 +1,16 @@
+{
+	"DESCRIPTION": "Включить или отключить сообщения при выходе пользователя с сервера!",
+	"USAGE": "{{prefix}}goodbye (edit/off/test)",
+	"EXAMPLES": "{{prefix}}goodbye\n{{prefix}}goodbye test",
+	"MISSING_STATUS": "Выберите действие: `edit`, `off` или `test`!",
+	"DEFAULT_MESSAGE": "Пока, {user}! Нас теперь {membercount} без тебя :'(",
+	"TEST_SUCCESS": "Тест выполнен!",
+	"FORM_1": "**В какой канал будут отправляться сообщения?**\n\n:arrow_right_hook: *Отправьте упоминание канала!*",
+	"FORM_2": "**Укажите ваше сообщение.**\n\n**Если необходимо:**\n*-* __Упомянуть пользователя__: {user}\n*-* __Количество участников__: {membercount}\n*-* __Название сервера__: {server}\n\n**Например:**\nПрощай, {user}, мы будем скучать! Теперь нас {membercount}.\n:fast_forward:\nПрощай, {{author}}, мы будем скучать! Теперь нас {{memberCount}}.",
+	"FORM_3": "**Вы хотите добавить карточку к сообщению?**\n\n:arrow_right_hook: *Отправьте `да` или `нет`!*",
+	"FORM_SUCCESS": "**Готово!**\n\n:arrow_right_hook: *Используйте `{{prefix}}goodbye test` для предпросмотра вашего сообщения!*",
+	"MAX_CHARACT": "Ваше сообщение не должно быть больше 1800 символов!",
+	"DISABLED": "**Сообщения отключены!**\n\n:arrow_right_hook: *Используйте `{{prefix}}configuration`, чтобы увидеть обновлённые настройки!*",
+	"IMG_GOODBYE": "Вышел с {{server}}!",
+	"TITLE": "До встречи!"
+}

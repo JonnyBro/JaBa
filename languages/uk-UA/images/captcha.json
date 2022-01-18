@@ -1,0 +1,5 @@
+{
+	"DESCRIPTION": "Создать изображение \"captcha\"",
+	"USAGE": "{{prefix}}captcha (@пользователь)",
+	"EXAMPLES": "{{prefix}}captcha\n{{prefix}}captcha @Jonny_Bro#4226"
+}

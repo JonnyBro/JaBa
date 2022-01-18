@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Включить или отключить автоудаление команд модерации!",
+	"USAGE": "{{prefix}}deletemod [on/off]",
+	"EXAMPLES": "{{prefix}}deletemod on",
+	"MISSING_STATUS": "Укажите значение `on` или `off`!",
+	"ENABLED": "Автоудаление команд модерации включено!",
+	"DISABLED": "Автоудаление команд модерации отключено!"
+}

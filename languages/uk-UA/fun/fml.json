@@ -1,0 +1,6 @@
+{
+	"DESCRIPTION": "Получить случайный FML",
+	"USAGE": "{{prefix}}fml",
+	"EXAMPLES": "{{prefix}}fml",
+	"FOOTER": "JaBa | blague.xyz"
+}

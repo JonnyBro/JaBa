@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Разбранить пользователя на сервере!",
+	"USAGE": "{{prefix}}unban [ID]",
+	"EXAMPLES": "{{prefix}}unban 281361531411890186",
+	"MISSING_ID": "Укажите ID пользователя!",
+	"NOT_BANNED": "**{{username}}** не забанен!",
+	"UNBANNED": "**{{username}}** был разбанен на сервере **{{server}}**!"
+}

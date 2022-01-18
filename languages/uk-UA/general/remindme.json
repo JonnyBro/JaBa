@@ -1,0 +1,9 @@
+{
+	"DESCRIPTION": "Создать напоминание",
+	"USAGE": "{{prefix}}remindme [время] [сообщение]",
+	"EXAMPLES": "{{prefix}}remindme 24h Использовать команду work\n{{prefix}}remindme 3m Достать курицу из морозилки!",
+	"MISSING_MESSAGE": "Введите сообщение!",
+	"SAVED": "Напоминание сохранено!",
+	"TITLE": "Напоминание от JaBa",
+	"CREATED": "Сообщение создано {{time}}"
+}
