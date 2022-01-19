@@ -107,7 +107,7 @@ class Horserace extends Command {
 								for (let j = 0; j < Object.keys(thisGame.bets).length; j++) {
 									if (Object.values(thisGame.bets)[j].horse !== i + 1) {
 										const memberData = await this.client.findOrCreateMember({
-											id: Object.values(thisGame.bets)[j],
+											id: Object.keys(thisGame.bets)[j],
 											guildID: message.guild.id
 										});
 
