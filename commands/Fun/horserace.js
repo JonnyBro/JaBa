@@ -7,7 +7,7 @@ class Horserace extends Command {
 		super(client, {
 			name: "horserace",
 			dirname: __dirname,
-			enabled: false,
+			enabled: true,
 			guildOnly: true,
 			aliases: ["hr"],
 			memberPermissions: [],
