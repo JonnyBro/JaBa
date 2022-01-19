@@ -45,7 +45,7 @@ class Horserace extends Command {
 						}),
 						value: message.translate("fun/horserace:HORSE_VALUE", {
 							speed,
-							profit: Math.round(profit * 100)
+							profit
 						})
 					});
 				}
@@ -71,14 +71,14 @@ class Horserace extends Command {
 			});
 
 			thisGame.bets[author.id] = {
-				amount: amount,
-				horse: horse
+				amount,
+				horse
 			};
 
 			message.sendT("fun/horserace:BET", {
 				user: author.username,
 				amount: `**${Math.floor(amount)}** ${message.getNoun(Math.floor(amount), message.translate("misc:NOUNS:CREDITS:1"), message.translate("misc:NOUNS:CREDITS:2"), message.translate("misc:NOUNS:CREDITS:5"))}`,
-				horse: horse
+				horse
 			});
 
 		} else if (args[0] === "go") {

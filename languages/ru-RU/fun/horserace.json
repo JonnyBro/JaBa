@@ -6,7 +6,7 @@
 	"HORSE_NUM": "На скачках всего 5 лошадей!",
 	"EMBED_T": "Конные скачки",
 	"HORSE_NAME": "Лошадь {{number}}",
-	"HORSE_VALUE": "Скорость - {{speed}}\nПрибыль - {{profit}}%",
+	"HORSE_VALUE": "Скорость - {{speed}}\nПрибыль - *ставка* x {{profit}}",
 	"BET": "**{{user}}** поставил {{amount}} на лошадь **{{horse}}**!",
 	"NO_WINNERS": "Победила лошадь **{{horse}}**. Никто не выиграл кредиты!",
 	"WINNERS": "Победила лошадь **{{horse}}**. {{winners}}!",
