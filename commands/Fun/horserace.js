@@ -24,7 +24,8 @@ class Horserace extends Command {
 
 		if (args[0] === "create") {
 			let thisGame = games[message.channel.id];
-			if (thisGame !== undefined) message.sendT("fun/horserace:GAME_RUNNING");
+
+			if (thisGame) message.sendT("fun/horserace:GAME_RUNNING");
 			else {
 				games[message.channel.id] = {
 					horseSpeeds: [],
@@ -57,16 +58,19 @@ class Horserace extends Command {
 				});
 			}
 		} else if (args[0] === "bet") {
+			const thisGame = games[message.channel.id];
 			const horse = parseInt(args[1]);
-			if (horse > 5) return message.sendT("fun/horserace:HORSE_NUM");
 			const amount = parseInt(args[2]);
+
+			if (horse > 5) return message.sendT("fun/horserace:HORSE_NUM");
+			if (!thisGame) return message.sendT("fun/horserace:NO_GAME_RUNNING");
 
 			if (!amount || isNaN(amount) || parseInt(amount, 10) <= 0) return message.error("economy/pay:INVALID_AMOUNT");
 			if (amount > data.memberData.money) return message.error("economy/pay:ENOUGH_MONEY", {
 				amount: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDITS:1"), message.translate("misc:NOUNS:CREDITS:2"), message.translate("misc:NOUNS:CREDITS:5"))}`
 			});
 
-			games[message.channel.id].bets[author.id] = {
+			thisGame.bets[author.id] = {
 				amount: amount,
 				horse: horse
 			};
@@ -80,6 +84,8 @@ class Horserace extends Command {
 		} else if (args[0] === "go") {
 			const thisGame = games[message.channel.id];
 			const horsePositions = [0, 0, 0, 0, 0];
+
+			if (!thisGame) return message.sendT("fun/horserace:NO_GAME_RUNNING");
 
 			// eslint-disable-next-line no-constant-condition
 			while (true) {
