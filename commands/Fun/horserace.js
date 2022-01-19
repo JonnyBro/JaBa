@@ -104,7 +104,7 @@ class Horserace extends Command {
 											user: message.translate("economy/transactions:HORSERACE"),
 											amount: Object.values(thisGame.bets)[j].amount,
 											date: Date.now(),
-											type: "got"
+											type: "send"
 										};
 
 										data.memberData.transactions.push(info);
