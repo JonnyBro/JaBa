@@ -8,7 +8,7 @@ class Horserace extends Command {
 			name: "horserace",
 			dirname: __dirname,
 			enabled: false,
-			guildOnly: false,
+			guildOnly: true,
 			aliases: ["hr"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
@@ -57,9 +57,9 @@ class Horserace extends Command {
 				});
 			}
 		} else if (args[0] === "bet") {
-			const horse = parseFloat(args[1]);
+			const horse = parseInt(args[1]);
 			if (horse > 5) return message.sendT("fun/horserace:HORSE_NUM");
-			const amount = parseFloat(args[2]);
+			const amount = parseInt(args[2]);
 
 			if (!amount || isNaN(amount) || parseInt(amount, 10) <= 0) return message.error("economy/pay:INVALID_AMOUNT");
 			if (amount > data.memberData.money) return message.error("economy/pay:ENOUGH_MONEY", {
