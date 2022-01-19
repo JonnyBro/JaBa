@@ -105,7 +105,7 @@ class Horserace extends Command {
 							} else {
 								let winners = "";
 								for (let j = 0; j < winnings.length; j++) {
-									winners += `\n<@${winnings[j][0]}> выиграл **${winnings[j][1]}** ${message.getNoun(winnings[j][1], message.translate("misc:NOUNS:CREDITS:1"), message.translate("misc:NOUNS:CREDITS:2"), message.translate("misc:NOUNS:CREDITS:5"))}!`;
+									winners += `\n<@${winnings[j][0]}> выиграл **${Math.floor(winnings[j][1])}** ${message.getNoun(Math.floor(winnings[j][1]), message.translate("misc:NOUNS:CREDITS:1"), message.translate("misc:NOUNS:CREDITS:2"), message.translate("misc:NOUNS:CREDITS:5"))}!`;
 
 									const memberData = await this.client.findOrCreateMember({
 										id: winnings[j][0],
@@ -114,14 +114,14 @@ class Horserace extends Command {
 
 									const info = {
 										user: message.translate("economy/transactions:HORSERACE"),
-										amount: winnings[j][1],
+										amount: Math.floor(winnings[j][1]),
 										date: Date.now(),
 										type: "got"
 									};
 
 									data.memberData.transactions.push(info);
 
-									memberData.money += winnings[j][1];
+									memberData.money += Math.floor(winnings[j][1]);
 									memberData.save();
 								}
 

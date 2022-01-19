@@ -8,7 +8,7 @@
 	"HORSE_NAME": "Лошадь {{number}}",
 	"HORSE_VALUE": "Скорость - {{speed}}\nПрибыль - {{profit}}%",
 	"BET": "**{{user}}** поставил {{amount}} на лошадь **{{horse}}**!",
-	"NO_WINNERS": "Победила лошадь {{horse}}. Никто не выиграл кредиты!",
-	"WINNERS": "Победила лошадь {{horse}}. {{winners}}!",
+	"NO_WINNERS": "Победила лошадь **{{horse}}**. Никто не выиграл кредиты!",
+	"WINNERS": "Победила лошадь **{{horse}}**. {{winners}}!",
 	"GAME_RUNNING": "Игра уже идёт!"
 }
