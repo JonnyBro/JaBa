@@ -106,6 +106,11 @@ class Horserace extends Command {
 							if (winnings.length === 0) {
 								for (let j = 0; j < Object.keys(thisGame.bets).length; j++) {
 									if (Object.values(thisGame.bets)[j].horse !== i + 1) {
+										const memberData = await this.client.findOrCreateMember({
+											id: Object.values(thisGame.bets)[j],
+											guildID: message.guild.id
+										});
+
 										const info = {
 											user: message.translate("economy/transactions:HORSERACE"),
 											amount: Object.values(thisGame.bets)[j].amount,
@@ -113,8 +118,8 @@ class Horserace extends Command {
 											type: "send"
 										};
 
-										data.memberData.transactions.push(info);
-										data.memberData.money -= Object.values(thisGame.bets)[j].amount;
+										memberData.transactions.push(info);
+										memberData.money -= Object.values(thisGame.bets)[j].amount;
 									}
 								}
 
