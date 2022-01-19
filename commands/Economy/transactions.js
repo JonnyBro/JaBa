@@ -54,8 +54,8 @@ class Transactions extends Command {
 				embeds: [embed]
 			});
 		} else {
-			embed.addField(message.translate("economy/transactions:T_GOT"), sortedTransactions[0].join("\n"), true);
-			embed.addField(message.translate("economy/transactions:T_SEND"), sortedTransactions[1].join("\n"), true);
+			if (sortedTransactions[0].length > 0) embed.addField(message.translate("economy/transactions:T_GOT"), sortedTransactions[0].join("\n"), true);
+			if (sortedTransactions[1].length > 0) embed.addField(message.translate("economy/transactions:T_SEND"), sortedTransactions[1].join("\n"), true);
 		}
 		message.channel.send({
 			embeds: [embed]
