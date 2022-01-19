@@ -25,7 +25,7 @@ class Horserace extends Command {
 		if (args[0] === "create") {
 			let thisGame = games[message.channel.id];
 
-			if (thisGame) message.error("fun/horserace:GAME_RUNNING");
+			if (thisGame) return message.error("fun/horserace:GAME_RUNNING");
 			else {
 				games[message.channel.id] = {
 					horseSpeeds: [],
