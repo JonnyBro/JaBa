@@ -95,7 +95,7 @@ class Horserace extends Command {
 						if (horsePositions[i] === 3) {
 							const winnings = [];
 
-							const profit = Math.floor((((8.9 / 9) * (10 - thisGame.horseSpeeds[i])) + 1.1) * 10) / 10;
+							const profit = Math.floor((((8.9 / 9) * (6 - thisGame.horseSpeeds[i])) + 1.1) * 10) / 10;
 
 							for (let j = 0; j < Object.keys(thisGame.bets).length; j++) {
 								if (Object.values(thisGame.bets)[j].horse === i + 1) {
