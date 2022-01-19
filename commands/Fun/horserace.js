@@ -36,8 +36,8 @@ class Horserace extends Command {
 
 				const f = [];
 				for (let i = 0; i < 5; i++) {
-					const speed = Math.ceil(Math.random() * 10);
-					const profit = Math.floor((((8.9 / 9) * (10 - speed)) + 1.1) * 10) / 10;
+					const speed = this.client.functions.randomNum(1, 5);
+					const profit = Math.floor((((8.9 / 9) * (6 - speed)) + 1.1) * 10) / 10;
 					thisGame.horseSpeeds.push(speed);
 					f.push({
 						name: message.translate("fun/horserace:HORSE_NAME", {
@@ -90,7 +90,7 @@ class Horserace extends Command {
 			// eslint-disable-next-line no-constant-condition
 			while (true) {
 				for (let i = 0; i < 5; i++) {
-					if (thisGame.horseSpeeds[i] >= Math.random() * 15) {
+					if (thisGame.horseSpeeds[i] >= Math.floor(Math.random() * 15)) {
 						horsePositions[i] += 1;
 						if (horsePositions[i] === 3) {
 							const winnings = [];
