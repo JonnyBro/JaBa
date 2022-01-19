@@ -19,13 +19,13 @@ class Horserace extends Command {
 	}
 
 	async run(message, args, data) {
-		if (!args[0]) return message.sendT("fun/horserace:MISSING_STATUS");
+		if (!args[0]) return message.error("fun/horserace:MISSING_STATUS");
 		const author = message.author;
 
 		if (args[0] === "create") {
 			let thisGame = games[message.channel.id];
 
-			if (thisGame) message.sendT("fun/horserace:GAME_RUNNING");
+			if (thisGame) message.error("fun/horserace:GAME_RUNNING");
 			else {
 				games[message.channel.id] = {
 					horseSpeeds: [],
@@ -62,8 +62,8 @@ class Horserace extends Command {
 			const horse = parseInt(args[1]);
 			const amount = parseInt(args[2]);
 
-			if (horse > 5) return message.sendT("fun/horserace:HORSE_NUM");
-			if (!thisGame) return message.sendT("fun/horserace:NO_GAME_RUNNING");
+			if (horse > 5) return message.error("fun/horserace:HORSE_NUM");
+			if (!thisGame) return message.error("fun/horserace:NO_GAME_RUNNING");
 
 			if (!amount || isNaN(amount) || parseInt(amount, 10) <= 0) return message.error("economy/pay:INVALID_AMOUNT");
 			if (amount > data.memberData.money) return message.error("economy/pay:ENOUGH_MONEY", {
@@ -85,7 +85,7 @@ class Horserace extends Command {
 			const thisGame = games[message.channel.id];
 			const horsePositions = [0, 0, 0, 0, 0];
 
-			if (!thisGame) return message.sendT("fun/horserace:NO_GAME_RUNNING");
+			if (!thisGame) return message.error("fun/horserace:NO_GAME_RUNNING");
 
 			// eslint-disable-next-line no-constant-condition
 			while (true) {
