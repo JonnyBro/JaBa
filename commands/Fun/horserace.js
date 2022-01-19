@@ -136,15 +136,17 @@ class Horserace extends Command {
 										guildID: message.guild.id
 									});
 
+									const toAdd = Math.floor(winnings[j][1]) - Object.values(thisGame.bets)[j].amount;
+
 									const info = {
 										user: message.translate("economy/transactions:HORSERACE"),
-										amount: Math.floor(winnings[j][1]),
+										amount: toAdd,
 										date: Date.now(),
 										type: "got"
 									};
 
 									memberData.transactions.push(info);
-									memberData.money += Math.floor(winnings[j][1]);
+									memberData.money += toAdd;
 									memberData.save();
 								}
 
