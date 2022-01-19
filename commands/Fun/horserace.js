@@ -71,10 +71,9 @@ class Horserace extends Command {
 				horse: horse
 			};
 
-			data.memberData.money -= amount;
 			message.sendT("fun/horserace:BET", {
 				user: author.username,
-				amount: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDITS:1"), message.translate("misc:NOUNS:CREDITS:2"), message.translate("misc:NOUNS:CREDITS:5"))}`,
+				amount: `**${Math.floor(amount)}** ${message.getNoun(Math.floor(amount), message.translate("misc:NOUNS:CREDITS:1"), message.translate("misc:NOUNS:CREDITS:2"), message.translate("misc:NOUNS:CREDITS:5"))}`,
 				horse: horse
 			});
 
@@ -87,7 +86,7 @@ class Horserace extends Command {
 				for (let i = 0; i < 5; i++) {
 					if (thisGame.horseSpeeds[i] >= Math.random() * 15) {
 						horsePositions[i] += 1;
-						if (horsePositions[i] == 3) {
+						if (horsePositions[i] === 3) {
 							const winnings = [];
 
 							const profit = Math.floor((((8.9 / 9) * (10 - thisGame.horseSpeeds[i])) + 1.1) * 10) / 10;
@@ -99,6 +98,20 @@ class Horserace extends Command {
 							}
 
 							if (winnings.length === 0) {
+								for (let j = 0; j < Object.keys(thisGame.bets).length; j++) {
+									if (Object.values(thisGame.bets)[j].horse !== i + 1) {
+										const info = {
+											user: message.translate("economy/transactions:HORSERACE"),
+											amount: Object.values(thisGame.bets)[j].amount,
+											date: Date.now(),
+											type: "got"
+										};
+
+										data.memberData.transactions.push(info);
+										data.memberData.money -= Object.values(thisGame.bets)[j].amount;
+									}
+								}
+
 								message.sendT("fun/horserace:NO_WINNERS", {
 									horse: i + 1
 								});
@@ -119,8 +132,7 @@ class Horserace extends Command {
 										type: "got"
 									};
 
-									data.memberData.transactions.push(info);
-
+									memberData.transactions.push(info);
 									memberData.money += Math.floor(winnings[j][1]);
 									memberData.save();
 								}
