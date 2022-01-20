@@ -1,3 +1,8 @@
+### JaBa v3.3.1
+* Изменено
+	* Команды *findwords*, *horserace*, *number* и *tictactoe* перемещены в категорию *Economy*.
+	* Новые коэффициенты для *horserace*.
+
 ### JaBa v3.3.0
 * Добавлено
 	* Команда *horserace* - конные скачки со ставками.

@@ -37,7 +37,14 @@ class Horserace extends Command {
 				const f = [];
 				for (let i = 0; i < 5; i++) {
 					const speed = this.client.functions.randomNum(1, 5);
-					const profit = Math.floor((((8.9 / 9) * (6 - speed)) + 1.1) * 10) / 10;
+					const profit = {
+						1: 3.5,
+						2: 3,
+						3: 2.5,
+						4: 2,
+						5: 1.5,
+					};
+					// const profit = Math.floor((((8.9 / 9) * (6 - speed)) + 1.1) * 10) / 10;
 					thisGame.horseSpeeds.push(speed);
 					f.push({
 						name: message.translate("fun/horserace:HORSE_NAME", {
@@ -45,7 +52,7 @@ class Horserace extends Command {
 						}),
 						value: message.translate("fun/horserace:HORSE_VALUE", {
 							speed,
-							profit
+							profit: profit[speed]
 						})
 					});
 				}
@@ -95,11 +102,19 @@ class Horserace extends Command {
 						if (horsePositions[i] === 3) {
 							const winnings = [];
 
-							const profit = Math.floor((((8.9 / 9) * (6 - thisGame.horseSpeeds[i])) + 1.1) * 10) / 10;
+							const profit = {
+								1: 3.5,
+								2: 3,
+								3: 2.5,
+								4: 2,
+								5: 1.5,
+							};
+
+							// const profit = Math.floor((((8.9 / 9) * (6 - thisGame.horseSpeeds[i])) + 1.1) * 10) / 10;
 
 							for (let j = 0; j < Object.keys(thisGame.bets).length; j++) {
 								if (Object.values(thisGame.bets)[j].horse === i + 1) {
-									winnings.push([Object.keys(thisGame.bets)[j], Object.values(thisGame.bets)[j].amount * profit]);
+									winnings.push([Object.keys(thisGame.bets)[j], Object.values(thisGame.bets)[j].amount * profit[thisGame.horseSpeeds[i]]]);
 								}
 							}
 
