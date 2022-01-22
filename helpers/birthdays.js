@@ -41,7 +41,7 @@ async function init(client) {
 										})
 										.addField(client.translate("economy/birthdate:HAPPY_BIRTHDAY"), client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
 											user: user.id,
-											age: `${age} ${client.getNoun(age, client.translate("misc:NOUNS:AGE:1"), client.translate("misc:NOUNS:AGE:2"), client.translate("misc:NOUNS:AGE:5"))}`
+											age: `**${age}** ${client.getNoun(age, client.translate("misc:NOUNS:AGE:1"), client.translate("misc:NOUNS:AGE:2"), client.translate("misc:NOUNS:AGE:5"))}`
 										}));
 									const msg = await channel.send({
 										embeds: [embed]
