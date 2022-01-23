@@ -7,9 +7,9 @@ module.exports = class {
 
 	async run() {
 		const client = this.client;
-		const hiddenGuild = await client.guilds.fetch("568120814776614924");
-		const tUsers = client.users.cache.size - hiddenGuild.memberCount;
-		const tServers = client.guilds.cache.size - 1;
+		let hiddenGuild = await client.guilds.fetch("568120814776614924");
+		let tUsers = client.users.cache.size - hiddenGuild.memberCount;
+		let tServers = client.guilds.cache.size - 1;
 
 		// Logs some informations using logger
 		client.logger.log(`Loading a total of ${client.commands.size} command(s).`, "log");
@@ -28,29 +28,31 @@ module.exports = class {
 		const discordbotsorg = require("../helpers/discordbots.org");
 		discordbotsorg.init(client);
 
-		// UNMUTE USERS
+		// Unmute users
 		const checkUnmutes = require("../helpers/checkUnmutes");
 		checkUnmutes.init(client);
 
-		// SEND REMINDS
+		// Send reminds
 		const checkReminds = require("../helpers/checkReminds");
 		checkReminds.init(client);
 
 		// Start the dashboard
 		if (client.config.dashboard.enabled) client.dashboard.load(client);
 
-		// Update status every 20s
-		let servers = client.guilds.cache.filter(guild => guild.id !== "568120814776614924" && guild.id !== "892727526911258654").size;
+		// Update status
 		const version = require("../package.json").version;
 		const status = [
-			{ name: `${servers} ${client.getNoun(servers, client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5"))}`, type: "LISTENING" },
 			{ name: "help", type: "WATCHING" },
-			{ name: `${client.commands.size} ${client.getNoun(servers, client.translate("misc:NOUNS:COMMANDS:1"), client.translate("misc:NOUNS:COMMANDS:2"), client.translate("misc:NOUNS:COMMANDS:5"))}`, type: "WATCHING"}
+			{ name: `${client.commands.size} ${client.getNoun(client.commands.size, client.translate("misc:NOUNS:COMMANDS:1"), client.translate("misc:NOUNS:COMMANDS:2"), client.translate("misc:NOUNS:COMMANDS:5"))}`, type: "WATCHING"},
+			{ name: `${tServers} ${client.getNoun(tServers, client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5"))}`, type: "LISTENING" },
+			{ name: `${tUsers} ${client.getNoun(tUsers, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))}`, type: "LISTENING" }
 		];
 
 		let i = 0;
-		setInterval(function () {
-			servers = client.guilds.cache.filter(guild => guild.id !== "568120814776614924" && guild.id !== "892727526911258654").size;
+		setInterval(async function () {
+			hiddenGuild = await client.guilds.fetch("568120814776614924");
+			tUsers = client.users.cache.size - hiddenGuild.memberCount;
+			tServers = client.guilds.cache.filter(guild => guild.id !== "568120814776614924" && guild.id !== "892727526911258654").size;
 			const toShow = status[parseInt(i, 10)];
 
 			client.user.setActivity(`${toShow.name} | v${version}`, {
