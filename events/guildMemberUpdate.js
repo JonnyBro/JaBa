@@ -17,7 +17,7 @@ module.exports = class {
 
 			newMember.send({
 				files: [{
-					name: "unlocked.png",
+					name: "achievement_unlocked5.png",
 					attachment: "./assets/img/achievements/achievement_unlocked5.png"
 				}]
 			});

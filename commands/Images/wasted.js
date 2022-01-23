@@ -31,6 +31,7 @@ class Wasted extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "wasted.png",
 				attachment: buffer
 			}]
 		});

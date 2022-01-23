@@ -31,6 +31,7 @@ class Tobecontinued extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "tobecontinued.png",
 				attachment: buffer
 			}]
 		});

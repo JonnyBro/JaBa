@@ -31,6 +31,7 @@ class Mission extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "mission.png",
 				attachment: buffer
 			}]
 		});

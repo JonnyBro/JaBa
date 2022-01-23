@@ -52,7 +52,7 @@ class Rep extends Command {
 				userData.achievements.rep.achieved = true;
 				message.channel.send({
 					files: [{
-						name: "unlocked.png",
+						name: "achievement_unlocked6.png",
 						attachment: "./assets/img/achievements/achievement_unlocked6.png"
 					}]
 				});

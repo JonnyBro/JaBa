@@ -31,6 +31,7 @@ class Dictator extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "dictator.png",
 				attachment: buffer
 			}]
 		});

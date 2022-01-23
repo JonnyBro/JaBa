@@ -97,7 +97,7 @@ class Marry extends Command {
 				const messageOptions = {
 					content: `${member.toString()} :heart: ${message.author.toString()}`,
 					files: [{
-						name: "unlocked.png",
+						name: "achievement_unlocked3.png",
 						attachment: "./assets/img/achievements/achievement_unlocked3.png"
 					}]
 				};

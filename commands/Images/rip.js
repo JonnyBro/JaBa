@@ -31,6 +31,7 @@ class Rip extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "rip.png",
 				attachment: buffer
 			}]
 		});

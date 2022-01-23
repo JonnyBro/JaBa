@@ -103,7 +103,7 @@ class Slots extends Command {
 						data.userData.achievements.slots.achieved = true;
 						message.channel.send({
 							files: [{
-								name: "unlocked.png",
+								name: "achievement_unlocked4.png",
 								attachment: "./assets/img/achievements/achievement_unlocked4.png"
 							}]
 						});
@@ -144,7 +144,7 @@ class Slots extends Command {
 						data.userData.achievements.slots.achieved = true;
 						message.channel.send({
 							files: [{
-								name: "unlocked.png",
+								name: "achievement_unlocked4.png",
 								attachment: "./assets/img/achievements/achievement_unlocked4.png"
 							}]
 						});

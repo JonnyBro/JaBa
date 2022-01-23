@@ -31,6 +31,7 @@ class Challenger extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "challenger.png",
 				attachment: buffer
 			}]
 		});

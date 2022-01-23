@@ -29,6 +29,7 @@ class Avatar extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "avatar.png",
 				attachment: avatarURL
 			}]
 		});

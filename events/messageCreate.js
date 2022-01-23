@@ -190,7 +190,7 @@ module.exports = class {
 			await data.userData.save();
 			await message.channel.send({
 				files: [{
-					name: "unlocked.png",
+					name: "achievement_unlocked2.png",
 					attachment: "./assets/img/achievements/achievement_unlocked2.png"
 				}]
 			});

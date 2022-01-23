@@ -31,6 +31,7 @@ class Burn extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "burn.png",
 				attachment: buffer
 			}]
 		});

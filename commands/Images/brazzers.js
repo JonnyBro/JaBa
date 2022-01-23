@@ -31,6 +31,7 @@ class Brazzers extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "brazzers.png",
 				attachment: buffer
 			}]
 		});

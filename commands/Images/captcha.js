@@ -29,6 +29,7 @@ class Captcha extends Command {
 
 			message.channel.send({
 				files: [{
+					name: "captcha.png",
 					attachment: json.message
 				}]
 			});

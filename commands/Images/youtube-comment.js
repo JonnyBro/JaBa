@@ -1,14 +1,14 @@
 const Command = require("../../base/Command"),
 	canvacord = require("canvacord");
 
-class YouTubeComment extends Command {
+class Ytcomment extends Command {
 	constructor(client) {
 		super(client, {
-			name: "youtube-comment",
+			name: "ytcomment",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: ["ytcomment"],
+			aliases: [],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES"],
 			nsfw: false,
@@ -40,10 +40,11 @@ class YouTubeComment extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "ytcomment.png",
 				attachment: image
 			}]
 		});
 	}
 }
 
-module.exports = YouTubeComment;
+module.exports = Ytcomment;

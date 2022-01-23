@@ -31,6 +31,7 @@ class Approved extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "approved.png",
 				attachment: buffer
 			}]
 		});

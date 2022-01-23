@@ -31,6 +31,7 @@ class Scary extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "scary.png",
 				attachment: buffer
 			}]
 		});

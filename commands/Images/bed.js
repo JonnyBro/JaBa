@@ -36,6 +36,7 @@ class Bed extends Command {
 
 			message.channel.send({
 				files: [{
+					name: "bed.png",
 					attachment: buffer
 				}]
 			});

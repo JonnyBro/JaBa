@@ -42,6 +42,7 @@ class Phcomment extends Command {
 
 			message.channel.send({
 				files: [{
+					name: "phcomment.png",
 					attachment: buffer
 				}]
 			});

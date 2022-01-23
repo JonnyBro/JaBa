@@ -1,13 +1,13 @@
 const Command = require("../../base/Command");
 
-class Jail extends Command {
+class Ps4 extends Command {
 	constructor(client) {
 		super(client, {
-			name: "jail",
+			name: "ps4",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: ["ja"],
+			aliases: [],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES"],
 			nsfw: false,
@@ -21,7 +21,7 @@ class Jail extends Command {
 		const m = await message.sendT("misc:PLEASE_WAIT", null, {
 			prefixEmoji: "loading"
 		});
-		const buffer = await this.client.AmeAPI.generate("jail", {
+		const buffer = await this.client.AmeAPI.generate("ps4", {
 			url: user.displayAvatarURL({
 				format: "png",
 				size: 512
@@ -31,11 +31,11 @@ class Jail extends Command {
 
 		message.channel.send({
 			files: [{
-				name: "jail.png",
+				name: "ps4.png",
 				attachment: buffer
 			}]
 		});
 	}
 }
 
-module.exports = Jail;
+module.exports = Ps4;

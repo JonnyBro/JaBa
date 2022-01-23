@@ -30,6 +30,7 @@ class Clyde extends Command {
 			const json = await res.json();
 			message.channel.send({
 				files: [{
+					name: "clyde.png",
 					attachment: json.message
 				}]
 			});

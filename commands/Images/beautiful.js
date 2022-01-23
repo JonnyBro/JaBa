@@ -31,6 +31,7 @@ class Beautiful extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "beautiful.png",
 				attachment: buffer
 			}]
 		});

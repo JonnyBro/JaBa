@@ -1,3 +1,10 @@
+### JaBa v3.3.2
+* Добавлено
+	* Команды *crush*, *magik* и *ps4* в категорию *Images*.
+
+* Удалено
+	* Команда *tweet*.
+
 ### JaBa v3.3.1
 * Изменено
 	* Команды *findwords*, *horserace*, *number* и *tictactoe* перемещены в категорию *Economy*.

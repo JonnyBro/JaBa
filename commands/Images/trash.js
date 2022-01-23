@@ -30,6 +30,7 @@ class Trash extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "trash.png",
 				attachment: buffer
 			}]
 		});

@@ -45,6 +45,7 @@ class Facepalm extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "facepalm.png",
 				attachment: canvas.toBuffer()
 			}]
 		});

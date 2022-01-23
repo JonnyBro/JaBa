@@ -31,6 +31,7 @@ class Fire extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "fire.png",
 				attachment: buffer
 			}]
 		});

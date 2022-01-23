@@ -38,6 +38,7 @@ class BatSlap extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "batslap.png",
 				attachment: buffer
 			}]
 		});

@@ -31,6 +31,7 @@ class Wanted extends Command {
 
 		message.channel.send({
 			files: [{
+				name: "wanted.png",
 				attachment: buffer
 			}]
 		});

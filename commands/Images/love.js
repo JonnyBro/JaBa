@@ -31,6 +31,7 @@ class Love extends Command {
 			const json = await res.json();
 			message.channel.send({
 				files: [{
+					name: "love.png",
 					attachment: json.message
 				}]
 			});
