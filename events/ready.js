@@ -7,10 +7,13 @@ module.exports = class {
 
 	async run() {
 		const client = this.client;
+		const hiddenGuild = await client.guilds.fetch("568120814776614924");
+		const tUsers = client.users.cache.size - hiddenGuild.memberCount;
+		const tServers = client.guilds.cache.size - 1;
 
 		// Logs some informations using logger
 		client.logger.log(`Loading a total of ${client.commands.size} command(s).`, "log");
-		client.logger.log(`${client.user.tag}, ready to serve ${client.users.cache.size} users in ${client.guilds.cache.filter(guild => guild.id != "568120814776614924" && guild.id != "892727526911258654").size} servers.`, "ready");
+		client.logger.log(`${client.user.tag}, ready to serve ${tUsers} users in ${tServers} servers.`, "ready");
 		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot"] , permissions: [Permissions.FLAGS.ADMINISTRATOR] })}`, "ready");
 
 		// Discord Together
