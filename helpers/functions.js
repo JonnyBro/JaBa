@@ -8,6 +8,7 @@ module.exports = {
 	/**
 	 * Gets message prefix
 	 * @param {object} message The Discord message
+	 * @param {object} data Server data
 	 * @returns The prefix
 	 */
 	getPrefix(message, data) {

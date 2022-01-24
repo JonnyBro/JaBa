@@ -17,15 +17,15 @@ class SteamCard extends Command {
 	}
 
 	async run(message, args) {
-		const text = args.join(" ");
-		if (!text) return message.error("images/qrcode:MISSING_TEXT");
+		const nArgs = args.join(" ").split(new RegExp(/ <@!(\d+)>/));
+		if (!args[0]) return message.error("images/qrcode:MISSING_TEXT");
 
-		const user = await this.client.resolveUser(args[0]) || message.author;
+		const user = await this.client.resolveUser(nArgs[1]) || message.author;
 		const m = await message.sendT("misc:PLEASE_WAIT", null, {
 			prefixEmoji: "loading"
 		});
 		const buffer = await this.client.AmeAPI.generate("steamcard", {
-			text: text,
+			text: nArgs[0],
 			url: user.displayAvatarURL({
 				format: "png",
 				size: 512
