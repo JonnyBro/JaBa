@@ -52,7 +52,7 @@ module.exports = class {
 		setInterval(async function () {
 			hiddenGuild = await client.guilds.fetch("568120814776614924");
 			tUsers = client.users.cache.size - hiddenGuild.memberCount;
-			tServers = client.guilds.cache.filter(guild => guild.id !== "568120814776614924" && guild.id !== "892727526911258654").size;
+			tServers = client.guilds.cache.size - 1;
 			const toShow = status[parseInt(i, 10)];
 
 			client.user.setActivity(`${toShow.name} | v${version}`, {
