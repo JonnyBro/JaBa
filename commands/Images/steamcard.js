@@ -17,7 +17,7 @@ class SteamCard extends Command {
 	}
 
 	async run(message, args) {
-		const nArgs = args.join(" ").split(new RegExp(/ <@!(\d+)>/));
+		const nArgs = args.join(" ").split(new RegExp(/ <(@!|@)(\d+)>/));
 		if (!args[0]) return message.error("images/qrcode:MISSING_TEXT");
 
 		const user = await this.client.resolveUser(nArgs[1]) || message.author;
