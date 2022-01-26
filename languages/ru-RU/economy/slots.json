@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "JaBa Casino",
+	"DESCRIPTION": "Казино \"JaBa Casino\"",
 	"USAGE": "{{prefix}}slots (сумма)",
 	"EXAMPLES": "{{prefix}}slots\n{{prefix}}slots 100",
 	"DEFEAT": "**{{username}}** поставил {{money}} и всё проиграл.",
