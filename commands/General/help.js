@@ -83,7 +83,7 @@ class Help extends Command {
 			});
 		categories.sort().forEach((cat) => {
 			const tCommands = commands.filter((cmd) => cmd.help.category === cat);
-			embed.addField(`${emojis.categories[cat.toLowerCase()]} ${cat} - (${tCommands.size})`, `${tCommands.map((cmd) => `${cmd.help.name}`).join(", ")}`);
+			embed.addField(`${emojis.categories[cat.toLowerCase()]} ${cat} - (${tCommands.size})`, `${tCommands.map((cmd) => `\`${cmd.help.name}\``).join(", ")}`);
 		});
 
 		if (message.guild) {
