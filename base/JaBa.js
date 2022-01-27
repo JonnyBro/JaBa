@@ -1,4 +1,4 @@
-const { MessageEmbed, Util, Client, Collection } = require("discord.js"),
+const { MessageEmbed, Client, Collection } = require("discord.js"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ SoundCloudPlugin } = require("@distube/soundcloud"),
 	{ SpotifyPlugin } = require("@distube/spotify");
@@ -93,7 +93,7 @@ class JaBa extends Client {
 			.on("searchResult", (message, result) => {
 				let i = 0;
 				const embed = new MessageEmbed()
-					.setDescription(Util.escapeSpoiler(result.map(song => `**${++i} -** ${song.name}`).join("\n")))
+					.setDescription(result.map(song => `**${++i} -** ${song.name}`).join("\n"))
 					.setFooter({ text: this.translate("music/play:RESULTS_FOOTER") })
 					.setColor(this.config.embed.color);
 				message.channel.send({ embeds: [embed] });
