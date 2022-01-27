@@ -17,20 +17,20 @@ class Addemoji extends Command {
 	}
 
 	async run(message, args) {
-		const URL = args[0];
-		if (!URL) return message.error("administration/addemoji:MISSING_URL");
+		const url = args[0];
+		if (!url) return message.error("administration/addemoji:MISSING_URL");
 
 		const name = args[1] ? args[1].replace(/[^a-z0-9]/gi, "") : null;
 		if (!name) return message.error("administration/addemoji:MISSING_NAME");
 		if (name.length < 2 || name.length > 32) return message.error("administration/addemoji:INVALID_NAME");
 
 		message.guild.emojis
-			.create(URL, name)
+			.create(url, name)
 			.then(emoji => message.success("administration/addemoji:SUCCESS", {
-				emojiName: `<:${emoji.name}:${emoji.id}>`
+				emoji: emoji.name
 			}))
 			.catch(() => message.error("administration/addemoji:ERROR", {
-				emojiName: name
+				emoji: name
 			}));
 	}
 }
