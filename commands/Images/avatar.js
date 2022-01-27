@@ -20,16 +20,14 @@ class Avatar extends Command {
 		let user = await this.client.resolveUser(args[0]);
 		if (!user) user = message.author;
 		const avatarURL = user.displayAvatarURL({
-			size: 512,
 			dynamic: true,
-			format: "png"
+			size: 512
 		});
 
-		if (message.content.includes("link")) message.channel.send({ content: `<${avatarURL}>` });
+		if (args[0] === "link") return message.channel.send({ content: `<${avatarURL}>` });
 
 		message.channel.send({
 			files: [{
-				name: "avatar.png",
 				attachment: avatarURL
 			}]
 		});
