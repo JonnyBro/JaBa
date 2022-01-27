@@ -15,7 +15,7 @@ module.exports = class {
 
 		// Fuck u faxon
 		if (message.author.id === "285109105717280768" && message.guild) {
-			const emoji = this.client.emojis.cache.get("936283491711209572");
+			const emoji = this.client.emojis.cache.find(emoji => emoji.id === "936279706070823022");
 			await message.react(emoji);
 		}
 
