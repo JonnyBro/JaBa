@@ -35,7 +35,7 @@ class Clear extends Command {
 			});
 		}
 
-		let amount = args[0];
+		const amount = args[0];
 		if (!amount || isNaN(amount) || parseInt(amount) < 1) return message.error("moderation/clear:MISSING_AMOUNT");
 
 		await message.delete();
@@ -49,7 +49,6 @@ class Clear extends Command {
 		if (messages.length > amount) messages.length = parseInt(amount, 10);
 
 		messages = messages.filter((m) => !m.pinned);
-		amount++;
 
 		message.channel.bulkDelete(messages, true);
 
@@ -57,12 +56,12 @@ class Clear extends Command {
 
 		if (user) {
 			toDelete = await message.success("moderation/clear:CLEARED_MEMBER", {
-				amount: `${--amount} ${message.getNoun(--amount, message.translate("misc:NOUNS:MESSAGES:1"), message.translate("misc:NOUNS:MESSAGES:2"), message.translate("misc:NOUNS:MESSAGES:5"))}`,
+				amount: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:MESSAGES:1"), message.translate("misc:NOUNS:MESSAGES:2"), message.translate("misc:NOUNS:MESSAGES:5"))}`,
 				username: user.tag
 			});
 		} else {
 			toDelete = await message.success("moderation/clear:CLEARED", {
-				amount: `${--amount} ${message.getNoun(--amount, message.translate("misc:NOUNS:MESSAGES:1"), message.translate("misc:NOUNS:MESSAGES:2"), message.translate("misc:NOUNS:MESSAGES:5"))}`
+				amount: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:MESSAGES:1"), message.translate("misc:NOUNS:MESSAGES:2"), message.translate("misc:NOUNS:MESSAGES:5"))}`
 			});
 		}
 
