@@ -13,12 +13,6 @@ module.exports = class {
 		// If the message author is a bot
 		if (message.author.bot) return;
 
-		// Fuck u faxon
-		if (message.author.id === "285109105717280768" && message.guild) {
-			const emoji = this.client.emojis.cache.find(emoji => emoji.id === "936279706070823022");
-			await message.react(emoji);
-		}
-
 		// If the member on a guild is invisible or not cached, fetch them.
 		if (message.guild && !message.member) await message.guild.members.fetch(message.author.id);
 
