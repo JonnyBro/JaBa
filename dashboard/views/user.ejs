@@ -54,7 +54,8 @@
 								<!-- /.col -->
 								<div class="col-sm-4 border-right">
 									<div class="description-block">
-										<h5 class="description-header"><%= translate("economy/profile:REGISTERED").substr(2) %></h5>
+										<h5 class="description-header">
+											<%= translate("economy/profile:REGISTERED").substr(2) %></h5>
 										<span
 											class="description-text"><%= printDate(new Date(userInfos.registeredAt)) %></span>
 									</div>
@@ -84,9 +85,22 @@
 							<span class="info-box-icon bg-red"><i class="fa fa-area-chart"></i></span>
 
 							<div class="info-box-content">
+								<span class="info-box-text"><%= translate("economy/profile:LEVEL").substr(2) %></span>
 								<span
-									class="info-box-text"><%= translate("economy/profile:LEVEL").substr(2) %></span>
-								<span class="info-box-number"><%= guild.members.find(u => u.id === userInfos.id).level %></span>
+									class="info-box-number"><%= guild.members.find(u => u.id === userInfos.id).level %></span>
+							</div>
+							<!-- /.info-box-content -->
+						</div>
+						<!-- /.info-box -->
+					</div>
+					<!-- /.col -->
+					<div class="col-md-3 col-sm-6 col-xs-12">
+						<div class="info-box">
+							<span class="info-box-icon bg-red"><i class="fa fa-area-chart"></i></span>
+
+							<div class="info-box-content">
+								<span class="info-box-text"><%= translate("economy/profile:EXP").substr(2) %></span>
+								<span class="info-box-number"><%= guild.members.find(u => u.id === userInfos.id).exp %> / <%= 5 * (guild.members.find(u => u.id === userInfos.id).exp * guild.members.find(u => u.id === userInfos.id).exp) + 80 * guild.members.find(u => u.id === userInfos.id).exp + 100 %></span>
 							</div>
 							<!-- /.info-box-content -->
 						</div>
@@ -98,9 +112,11 @@
 							<span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
 
 							<div class="info-box-content">
+								<span class="info-box-text"><%= translate("economy/profile:CASH").substr(2) %> /
+									<%= translate("economy/profile:BANK").substr(2) %></span>
 								<span
-									class="info-box-text"><%= translate("economy/profile:CASH").substr(2) %> / <%= translate("economy/profile:BANK").substr(2) %></span>
-								<span class="info-box-number"><%= guild.members.find(u => u.id === userInfos.id).money %> / <%= guild.members.find(u => u.id === userInfos.id).bankSold %></span>
+									class="info-box-number"><%= guild.members.find(u => u.id === userInfos.id).money %>
+									/ <%= guild.members.find(u => u.id === userInfos.id).bankSold %></span>
 							</div>
 							<!-- /.info-box-content -->
 						</div>
@@ -112,7 +128,8 @@
 							<span class="info-box-icon bg-yellow"><i class="fa fa-star-o"></i></span>
 
 							<div class="info-box-content">
-								<span class="info-box-text"><%= translate("economy/profile:REPUTATION").substr(2) %></span>
+								<span
+									class="info-box-text"><%= translate("economy/profile:REPUTATION").substr(2) %></span>
 								<span class="info-box-number"><%= userInfos.rep %></span>
 							</div>
 							<!-- /.info-box-content -->
