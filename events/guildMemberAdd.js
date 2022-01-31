@@ -43,7 +43,7 @@ module.exports = class {
 		}
 
 		// Check if the autorole is enabled
-		if (guildData.plugins.autorole.enabled) member.roles.add(guildData.plugins.autorole.role).catch(() => {});
+		if (guildData.plugins.autorole.enabled) member.roles.add(guildData.plugins.autorole.role);
 
 		// Check if welcome message is enabled
 		if (guildData.plugins.welcome.enabled) {
