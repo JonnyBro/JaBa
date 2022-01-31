@@ -6,13 +6,6 @@ module.exports = class {
 	}
 
 	async run(guild) {
-		if (this.client.config.proMode) {
-			if ((!this.client.config.proUsers.includes(guild.ownerId) || this.guilds.filter((g) => g.ownerId === guild.ownerId) > 1) && guild.ownerId !== this.client.config.owner.id) {
-				this.client.logger.log(`${guild.ownerId} tried to invite JaBa on its server.`);
-				return guild.leave();
-			}
-		}
-
 		const messageOptions = {};
 
 		const userData = await this.client.findOrCreateUser({

@@ -21,6 +21,8 @@ module.exports = class {
 	}
 
 	async run(member) {
+		if (member.guild.id === "568120814776614924") return;
+
 		await member.guild.members.fetch();
 
 		const guildData = await this.client.findOrCreateGuild({
