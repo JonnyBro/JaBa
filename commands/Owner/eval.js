@@ -17,7 +17,7 @@ class Eval extends Command {
 		});
 	}
 
-	async run(message, data) {
+	async run(message, args, data) {
 		const content = message.content.split(" ").slice(1).join(" ");
 		const result = new Promise((resolve) => resolve(eval(content)));
 
