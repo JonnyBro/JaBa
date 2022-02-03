@@ -67,7 +67,7 @@ class JaBa extends Client {
 			emitNewSongOnly: true,
 			leaveOnEmpty: true,
 			leaveOnFinish: true,
-			leaveOnStop: false,
+			leaveOnStop: true,
 			searchSongs: 10,
 			searchCooldown: 30,
 			emptyCooldown: 0,
