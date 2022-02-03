@@ -19,13 +19,13 @@ class Horserace extends Command {
 	}
 
 	async run(message, args, data) {
-		if (!args[0]) return message.error("fun/horserace:MISSING_STATUS");
+		if (!args[0]) return message.error("economy/horserace:MISSING_STATUS");
 		const author = message.author;
 
 		if (args[0] === "create") {
 			let thisGame = games[message.channel.id];
 
-			if (thisGame) return message.error("fun/horserace:GAME_RUNNING");
+			if (thisGame) return message.error("economy/horserace:GAME_RUNNING");
 			else {
 				games[message.channel.id] = {
 					horseSpeeds: [],
@@ -47,10 +47,10 @@ class Horserace extends Command {
 					// const profit = Math.floor((((8.9 / 9) * (6 - speed)) + 1.1) * 10) / 10;
 					thisGame.horseSpeeds.push(speed);
 					f.push({
-						name: message.translate("fun/horserace:HORSE_NAME", {
+						name: message.translate("economy/horserace:HORSE_NAME", {
 							number: i + 1
 						}),
-						value: message.translate("fun/horserace:HORSE_VALUE", {
+						value: message.translate("economy/horserace:HORSE_VALUE", {
 							speed,
 							profit: profit[speed]
 						})
@@ -59,7 +59,7 @@ class Horserace extends Command {
 				message.channel.send({
 					embeds: [{
 						color: data.config.embed.color,
-						title: message.translate("fun/horserace:EMBED_T"),
+						title: message.translate("economy/horserace:EMBED_T"),
 						fields: f
 					}]
 				});
@@ -69,8 +69,8 @@ class Horserace extends Command {
 			const horse = parseInt(args[1]);
 			const amount = parseInt(args[2]);
 
-			if (horse > 5) return message.error("fun/horserace:HORSE_NUM");
-			if (!thisGame) return message.error("fun/horserace:NO_GAME_RUNNING");
+			if (horse > 5) return message.error("economy/horserace:HORSE_NUM");
+			if (!thisGame) return message.error("economy/horserace:NO_GAME_RUNNING");
 
 			if (!amount || isNaN(amount) || parseInt(amount, 10) <= 0) return message.error("economy/pay:INVALID_AMOUNT");
 			if (amount > data.memberData.money) return message.error("economy/pay:ENOUGH_MONEY", {
@@ -82,7 +82,7 @@ class Horserace extends Command {
 				horse
 			};
 
-			message.sendT("fun/horserace:BET", {
+			message.sendT("economy/horserace:BET", {
 				user: author.username,
 				amount: `**${Math.floor(amount)}** ${message.getNoun(Math.floor(amount), message.translate("misc:NOUNS:CREDITS:1"), message.translate("misc:NOUNS:CREDITS:2"), message.translate("misc:NOUNS:CREDITS:5"))}`,
 				horse
@@ -92,7 +92,7 @@ class Horserace extends Command {
 			const thisGame = games[message.channel.id];
 			const horsePositions = [0, 0, 0, 0, 0];
 
-			if (!thisGame) return message.error("fun/horserace:NO_GAME_RUNNING");
+			if (!thisGame) return message.error("economy/horserace:NO_GAME_RUNNING");
 
 			// eslint-disable-next-line no-constant-condition
 			while (true) {
@@ -138,7 +138,7 @@ class Horserace extends Command {
 									}
 								}
 
-								message.sendT("fun/horserace:NO_WINNERS", {
+								message.sendT("economy/horserace:NO_WINNERS", {
 									horse: i + 1
 								});
 							} else {
@@ -165,7 +165,7 @@ class Horserace extends Command {
 									memberData.save();
 								}
 
-								message.sendT("fun/horserace:WINNERS", {
+								message.sendT("economy/horserace:WINNERS", {
 									horse: i + 1,
 									winners
 								});

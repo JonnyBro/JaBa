@@ -20,12 +20,12 @@ class Number extends Command {
 	}
 
 	async run(message, args, data) {
-		if (currentGames[message.guild.id]) return message.error("fun/number:GAME_RUNNING");
+		if (currentGames[message.guild.id]) return message.error("economy/number:GAME_RUNNING");
 
 		const participants = [],
 			number = this.client.functions.randomNum(1000, 10000);
 
-		await message.sendT("fun/number:GAME_START");
+		await message.sendT("economy/number:GAME_START");
 
 		// Store the date wich the game has started
 		const gameCreatedAt = Date.now();
@@ -47,7 +47,7 @@ class Number extends Command {
 
 			if (parsedNumber === number) {
 				const time = this.client.functions.convertTime(message.guild, Date.now() - gameCreatedAt);
-				message.sendT("fun/number:GAME_STATS", {
+				message.sendT("economy/number:GAME_STATS", {
 					winner: msg.author.toString(),
 					number,
 					time,
@@ -58,7 +58,7 @@ class Number extends Command {
 				if (participants.length > 1 && data.guild.disabledCategories && !data.guild.disabledCategories.includes("Economy")) {
 					const won = 100 * (participants.length * 0.5);
 
-					message.sendT("fun/number:WON", {
+					message.sendT("economy/number:WON", {
 						winner: msg.author.username,
 						credits: `**${won}** ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 					});
@@ -83,13 +83,13 @@ class Number extends Command {
 
 				collector.stop();
 			}
-			if (parseInt(msg.content) < number) message.error("fun/number:BIG", { user: msg.author.toString(), number: parsedNumber });
-			if (parseInt(msg.content) > number) message.error("fun/number:SMALL", { user: msg.author.toString(), number: parsedNumber });
+			if (parseInt(msg.content) < number) message.error("economy/number:BIG", { user: msg.author.toString(), number: parsedNumber });
+			if (parseInt(msg.content) > number) message.error("economy/number:SMALL", { user: msg.author.toString(), number: parsedNumber });
 		});
 
 		collector.on("end", (_collected, reason) => {
 			delete currentGames[message.guild.id];
-			if (reason === "time") return message.error("fun/number:DEFEAT", { number });
+			if (reason === "time") return message.error("economy/number:DEFEAT", { number });
 			else if (reason === "force") return message.error("misc:FORCE_STOP", { user: message.author.toString() });
 		});
 	}

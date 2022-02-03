@@ -20,7 +20,7 @@ class FindWords extends Command {
 	}
 
 	async run(message, args, data) {
-		if (currentGames[message.guild.id]) return message.error("fun/number:GAME_RUNNING");
+		if (currentGames[message.guild.id]) return message.error("economy/number:GAME_RUNNING");
 
 		// Reads words file
 		let lang = null;
@@ -52,11 +52,11 @@ class FindWords extends Command {
 
 			// Launch timer
 			const delay = (i === 0) ? 10000 : 0;
-			if (i === 0) message.sendT("fun/findwords:GAME_STARTING");
+			if (i === 0) message.sendT("economy/findwords:GAME_STARTING");
 
 			setTimeout(() => {
 				// Send announcment message
-				message.sendT("fun/findwords:FIND_WORD", {
+				message.sendT("economy/findwords:FIND_WORD", {
 					word: word.toUpperCase()
 				}, false, false, "warn");
 
@@ -73,14 +73,14 @@ class FindWords extends Command {
 					if (msg.content === "STOP") return collector.stop("force");
 					if (msg.content.toLowerCase().indexOf(word) >= 0 && wordList.map((word) => word.toLowerCase()).indexOf(msg.content.toLowerCase()) >= 0) {
 						collector.stop(msg.author.id); // Stop the collector
-					} else msg.error("fun/findwords:INVALID_WORD", { member: msg.author.toString() });
+					} else msg.error("economy/findwords:INVALID_WORD", { member: msg.author.toString() });
 				});
 
 				collector.on("end", async (collected, reason) => {
-					if (reason === "time") message.error("fun/findwords:NO_WINNER");
+					if (reason === "time") message.error("economy/findwords:NO_WINNER");
 					else if (reason === "force") return message.error("misc:FORCE_STOP", { user: message.author.toString() });
 					else {
-						message.success("fun/findwords:WORD_FOUND", {
+						message.success("economy/findwords:WORD_FOUND", {
 							winner: `<@${reason}>`
 						});
 						winners.push(reason);
@@ -91,12 +91,12 @@ class FindWords extends Command {
 						generateGame.call(this, words[i]);
 					} else {
 						currentGames[message.guild.id] = false;
-						if (winners.length < 1) return message.error("fun/findwords:NO_WINNER_ALL");
+						if (winners.length < 1) return message.error("economy/findwords:NO_WINNER_ALL");
 
 						const winnerID = await getWinner(winners);
 						const time = message.convertTime(createdAt, "from", true);
 						const user = await this.client.users.fetch(winnerID);
-						message.sendT("fun/findwords:GAME_STATS", {
+						message.sendT("economy/findwords:GAME_STATS", {
 							winner: user.username,
 							duration: time,
 							participantCount: participants.length,
@@ -105,7 +105,7 @@ class FindWords extends Command {
 						if (participants.length > 1 && data.guild.disabledCategories && !data.guild.disabledCategories.includes("Economy")) {
 							const won = 150 * (participants.length * 0.5);
 
-							message.sendT("fun/findwords:CREDITS", {
+							message.sendT("economy/findwords:CREDITS", {
 								winner: user.username,
 								credits: `**${won}** ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
 							});

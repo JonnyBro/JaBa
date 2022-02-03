@@ -44,31 +44,3 @@ class TicTacToe extends Command {
 }
 
 module.exports = TicTacToe;
-
-// const game = new TTT({ language: "ru" });
-// game.handleMessage(message);
-
-// game.on("win", async (data) => {
-// 	if (data.winner.id === "AI") return;
-
-// 	message.sendT("fun/number:WON", {
-// 		winner: data.winner.displayName
-// 	});
-
-// 	const userdata = await this.client.findOrCreateMember({
-// 		id: data.winner.id,
-// 		guildID: message.guild.id
-// 	});
-
-// 	const info = {
-// 		user: message.translate("economy/tictactoe:DESCRIPTION"),
-// 		amount: 100,
-// 		date: Date.now(),
-// 		type: "got"
-// 	};
-
-// 	data.memberData.transactions.push(info);
-
-// 	userdata.money = userdata.money + 100;
-// 	userdata.save();
-// });
