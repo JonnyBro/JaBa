@@ -19,20 +19,17 @@ class TicTacToe extends Command {
 
 	async run(message, args, data) {
 		tictactoe(message, {
+			resultBtn: true,
 			embedColor: data.config.embed.color,
 			embedFoot: data.config.embed.footer
 		}).then(async (winner) => {
-			message.sendT("economy/number:WON", {
-				winner: winner.username
-			});
-
 			const memberData = await this.client.findOrCreateMember({
 				id: winner.id,
 				guildID: message.guild.id
 			});
 
 			const info = {
-				user: message.translate("economy/tictactoe:DESCRIPTION"),
+				user: message.translate("economy/transactions:TTT"),
 				amount: 100,
 				date: Date.now(),
 				type: "got"
@@ -40,7 +37,7 @@ class TicTacToe extends Command {
 
 			memberData.transactions.push(info);
 
-			memberData.money = memberData.money + 100;
+			memberData.money += 100;
 			memberData.save();
 		});
 	}

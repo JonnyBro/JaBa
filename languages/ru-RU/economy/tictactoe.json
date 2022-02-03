@@ -1,5 +1,24 @@
 {
 	"DESCRIPTION": "Крестики-нолики!",
 	"USAGE": "{{prefix}}tictactoe",
-	"EXAMPLES": "{{prefix}}tictactoe"
+	"EXAMPLES": "{{prefix}}tictactoe",
+	"NO_USER": "Укажите пользователя!",
+	"BOT_USER": "Вы не можете играть против бота!",
+	"YOURSELF": "Вы не можете играть с самим собой!",
+	"ACCEPT": "Принять",
+	"DECLINE": "Отказаться",
+	"INVITE_USER": "Хей, <@!{{opponent}}>, вам предложили сыграть в крестики-нолики",
+	"REQUEST_SEND": "Запрос отправлен <@!{{opponent}}>",
+	"REQUEST_WAIT": "Ожидаю ответа {{user}}",
+	"WAITING": "Ожидаю ход | <@!{{user}}>, Ваш эмодзи: {{emoji}}",
+	"WON": "<@!{{winner}}> ({{emoji}}) выиграл!",
+	"CANT_PLAY": "Сейчас не ваш ход!",
+	"TIE": "Ничья",
+	"TIE_DESC": "Никто не выиграл, это ничья!",
+	"NO_ANSWER": "<@!{{user}}> не ответил вовремя! (30с)",
+	"NO_ANSWER_TITLE": "Запрос не принят вовремя",
+	"NOT_ANSWERED": "<@{{user}}> не принял запрос!",
+	"CANCELED": "Игра отменена!",
+	"CANCELED_DESC": "{{user}} отказался от игры!",
+	"TIMES_UP": "Время вышло! Лимит: 30 секунд"
 }

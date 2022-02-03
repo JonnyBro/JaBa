@@ -35,61 +35,63 @@ async function tictactoe(message, options = []) {
 				opponent = message.options.getUser(options.userSlash || "user");
 
 				if (!opponent)
-					return message.followUp({
-						content: "Укажите пользователя!",
+					return message.reply({
+						content: message.translate("economy/tictactoe:NO_USER"),
 						ephemeral: true
 					});
 
 				if (opponent.bot)
-					return message.followUp({
-						content: "Вы не можете играть против ботов!",
+					return message.reply({
+						content: message.translate("economy/tictactoe:BOT_USER"),
 						ephemeral: true
 					});
 
 				if (opponent.id == (message.user ? message.user : message.author).id)
-					return message.followUp({
-						content: "Вы не можете играть с самим собой!",
+					return message.reply({
+						content: message.translate("economy/tictactoe:YOURSELF"),
 						ephemeral: true
 					});
 			} else if (!message.commandId) {
 				opponent = message.mentions.members.first()?.user;
 
 				if (!opponent)
-					return message.channel.send({
-						content: "Укажите пользователя!"
+					return message.reply({
+						content: message.translate("economy/tictactoe:NO_USER")
 					});
 
 				if (opponent.bot)
-					return message.followUp({
-						content: "Вы не можете играть против ботов!",
+					return message.reply({
+						content: message.translate("economy/tictactoe:BOT_USER"),
 						ephemeral: true
 					});
 
 				if (opponent.id === message.member.id)
-					return message.channel.send({
-						content:
-							"Вы не можете играть с самим собой!"
+					return message.reply({
+						content: message.translate("economy/tictactoe:YOURSELF")
 					});
 			}
 
-			const foot = { text: options.embedFoot } || { text: "Удачи =)" };
+			const foot = options.embedFoot ? { text: options.embedFoot } : { text: "Удачи =)" };
 
 			const acceptEmbed = new Discord.MessageEmbed()
-				.setTitle(`Ожидаю ответа ${opponent.tag}!`)
+				.setTitle(message.translate("economy/tictactoe:REQUEST_WAIT", {
+					user: opponent.tag
+				}))
 				.setAuthor({
 					name: (message.user ? message.user : message.author).tag,
 					iconURL: (message.user ? message.user : message.author).displayAvatarURL()
 				})
 				.setColor(options.embedColor || "#075FFF")
-				.setFooter(foot);
+				.setFooter(foot)
+				.setTimestamp();
 
 			const accept = new Discord.MessageButton()
-				.setLabel("Принять")
+				.setLabel(message.translate("economy/tictactoe:ACCEPT"))
 				.setStyle("SUCCESS")
 				.setCustomId("acceptttt");
 
 			const decline = new Discord.MessageButton()
-				.setLabel("Отказаться")
+				.setLabel(message.translate("economy/tictactoe:DECLINE"))
 				.setStyle("DANGER")
 				.setCustomId("declinettt");
 
@@ -101,14 +103,18 @@ async function tictactoe(message, options = []) {
 			let m;
 
 			if (message.commandId) {
-				m = await message.followUp({
-					content: "Хей, <@" + opponent.id + ">, вам предложили сыграть в крестики-нолики",
+				m = await message.reply({
+					content: message.translate("economy/tictactoe:INVITE_USER", {
+						opponent: opponent.id
+					}),
 					embeds: [acceptEmbed],
 					components: [accep]
 				});
 			} else if (!message.commandId) {
 				m = await message.reply({
-					content: "Хей, <@" + opponent.id + ">, вам предложили сыграть в крестики-нолики",
+					content: message.translate("economy/tictactoe:INVITE_USER", {
+						opponent: opponent.id
+					}),
 					embeds: [acceptEmbed],
 					components: [accep]
 				});
@@ -120,7 +126,9 @@ async function tictactoe(message, options = []) {
 			collector.on("collect", async (button) => {
 				if (button.user.id !== opponent.id)
 					return button.reply({
-						content: `Запрос отправлен <@${opponent.id}>.`,
+						content: message.translate("economy/tictactoe:REQUEST_SEND", {
+							opponent: opponent.id
+						}),
 						ephemeral: true
 					});
 
@@ -129,9 +137,7 @@ async function tictactoe(message, options = []) {
 					return collector.stop("decline");
 				} else if (button.customId == "acceptttt") {
 					collector.stop();
-					if (message.commandId) {
-						button.message.delete();
-					}
+					if (message.commandId) button.message.delete();
 
 					const fighters = [
 						(message.user ? message.user : message.author).id,
@@ -194,19 +200,20 @@ async function tictactoe(message, options = []) {
 					const { MessageActionRow, MessageButton } = require("discord.js");
 
 					const epm = new Discord.MessageEmbed()
-						.setTitle("Крестики-нолики")
+						.setTitle(message.translate("economy/tictactoe:DESCRIPTION"))
 						.setColor(options.embedColor || "#075FFF")
 						.setFooter(foot)
 						.setTimestamp();
 
 					let msg;
 					if (message.commandId) {
-						msg = await message.followUp({
+						msg = await message.reply({
 							embeds: [
 								epm.setDescription(
-									`Ожидаю ход | <@!${Args.userid}>, Ваш эмодзи: ${
-										client.emojis.cache.get(o_emoji) || "⭕"
-									}`
+									message.translate("economy/tictactoe:WAITING", {
+										user: Args.userid,
+										emoji: client.emojis.cache.get(o_emoji) || "⭕"
+									})
 								)
 							]
 						});
@@ -214,9 +221,10 @@ async function tictactoe(message, options = []) {
 						msg = await button.message.edit({
 							embeds: [
 								epm.setDescription(
-									`Ожидаю ход | <@!${Args.userid}>, Ваш эмодзи: ${
-										client.emojis.cache.get(o_emoji) || "⭕"
-									}`
+									message.translate("economy/tictactoe:WAITING", {
+										user: Args.userid,
+										emoji: client.emojis.cache.get(o_emoji) || "⭕"
+									})
 								)
 							]
 						});
@@ -340,16 +348,18 @@ async function tictactoe(message, options = []) {
 								if (options.resultBtn === true)
 									return m
 										.edit({
-											content: `<@${fighters[1]}> (${
-												client.emojis.cache.get(o_emoji) || "⭕"
-											}) выиграл`,
+											content: message.translate("economy/tictactoe:WON", {
+												winner: fighters[1],
+												emoji: client.emojis.cache.get(o_emoji) || "⭕"
+											}),
 											components: buttons,
 
 											embeds: [
 												epm.setDescription(
-													`<@!${fighters[1]}> (${
-														client.emojis.cache.get(o_emoji) || "⭕"
-													}) выиграл.`
+													message.translate("economy/tictactoe:WON", {
+														winner: fighters[1],
+														emoji: client.emojis.cache.get(o_emoji) || "⭕"
+													})
 												)
 											]
 										})
@@ -359,15 +369,17 @@ async function tictactoe(message, options = []) {
 								else if (!options.resultBtn || options.resultBtn === false)
 									return m
 										.edit({
-											content: `<@${fighters[1]}> (${
-												client.emojis.cache.get(o_emoji) || "⭕"
-											}) выиграл`,
+											content: message.translate("economy/tictactoe:WON", {
+												winner: fighters[1],
+												emoji: client.emojis.cache.get(o_emoji) || "⭕"
+											}),
 
 											embeds: [
 												epm.setDescription(
-													`<@!${fighters[1]}> (${
-														client.emojis.cache.get(o_emoji) || "⭕"
-													}) выиграл\n\`\`\`\n${Args.a1.emoji
+													`${message.translate("economy/tictactoe:WON", {
+														winner: fighters[1],
+														emoji: client.emojis.cache.get(o_emoji) || "⭕"
+													})}\n\`\`\`\n${Args.a1.emoji
 														.replace(o_emoji, "⭕")
 														.replace(x_emoji, "❌")} | ${Args.a2.emoji
 														.replace(o_emoji, "⭕")
@@ -405,15 +417,17 @@ async function tictactoe(message, options = []) {
 								if (options.resultBtn === true)
 									return m
 										.edit({
-											content: `<@${fighters[0]}> (${
-												client.emojis.cache.get(o_emoji) || "⭕"
-											}) выиграл`,
+											content: message.translate("economy/tictactoe:WON", {
+												winner: fighters[0],
+												emoji: client.emojis.cache.get(o_emoji) || "⭕"
+											}),
 											components: buttons,
 											embeds: [
 												epm.setDescription(
-													`<@!${fighters[0]}> (${
-														client.emojis.cache.get(o_emoji) || "⭕"
-													}) выиграл`
+													message.translate("economy/tictactoe:WON", {
+														winner: fighters[0],
+														emoji: client.emojis.cache.get(o_emoji) || "⭕"
+													})
 												)
 											]
 										})
@@ -423,15 +437,17 @@ async function tictactoe(message, options = []) {
 								else if (!options.resultBtn || options.resultBtn === false)
 									return m
 										.edit({
-											content: `<@${fighters[0]}> (${
-												client.emojis.cache.get(o_emoji) || "⭕"
-											}) выиграл`,
+											content: message.translate("economy/tictactoe:WON", {
+												winner: fighters[0],
+												emoji: client.emojis.cache.get(o_emoji) || "⭕"
+											}),
 
 											embeds: [
 												epm.setDescription(
-													`<@!${fighters[0]}> (${
-														client.emojis.cache.get(o_emoji) || "⭕"
-													}) выиграл\n\`\`\`\n${Args.a1.emoji
+													`${message.translate("economy/tictactoe:WON", {
+														winner: fighters[0],
+														emoji: client.emojis.cache.get(o_emoji) || "⭕"
+													})}\n\`\`\`\n${Args.a1.emoji
 														.replace(o_emoji, "⭕")
 														.replace(x_emoji, "❌")} | ${Args.a2.emoji
 														.replace(o_emoji, "⭕")
@@ -520,15 +536,17 @@ async function tictactoe(message, options = []) {
 								if (options.resultBtn === true)
 									return m
 										.edit({
-											content: `<@${fighters[1]}> (${
-												client.emojis.cache.get(x_emoji) || "❌"
-											}) выиграл`,
+											content: message.translate("economy/tictactoe:WON", {
+												winner: fighters[1],
+												emoji: client.emojis.cache.get(o_emoji) || "⭕"
+											}),
 											components: buttons,
 											embeds: [
 												epm.setDescription(
-													`<@!${fighters[1]}> (${
-														client.emojis.cache.get(x_emoji) || "❌"
-													}) выиграл`
+													message.translate("economy/tictactoe:WON", {
+														winner: fighters[1],
+														emoji: client.emojis.cache.get(o_emoji) || "⭕"
+													})
 												)
 											]
 										})
@@ -538,14 +556,16 @@ async function tictactoe(message, options = []) {
 								else if (!options.resultBtn || options.resultBtn === false)
 									return m
 										.edit({
-											content: `<@${fighters[1]}> (${
-												client.emojis.cache.get(x_emoji) || "❌"
-											}) выиграл`,
+											content: message.translate("economy/tictactoe:WON", {
+												winner: fighters[1],
+												emoji: client.emojis.cache.get(o_emoji) || "⭕"
+											}),
 											embeds: [
 												epm.setDescription(
-													`<@!${fighters[1]}> (${
-														client.emojis.cache.get(x_emoji) || "❌"
-													}) выиграл\n\`\`\`\n${Args.a1.emoji
+													`${message.translate("economy/tictactoe:WON", {
+														winner: fighters[1],
+														emoji: client.emojis.cache.get(o_emoji) || "⭕"
+													})}\n\`\`\`\n${Args.a1.emoji
 														.replace(o_emoji, "⭕")
 														.replace(x_emoji, "❌")} | ${Args.a2.emoji
 														.replace(o_emoji, "⭕")
@@ -583,15 +603,17 @@ async function tictactoe(message, options = []) {
 								if (options.resultBtn === true)
 									return m
 										.edit({
-											content: `<@${fighters[0]}> (${
-												client.emojis.cache.get(x_emoji) || "❌"
-											}) выиграл`,
+											content: message.translate("economy/tictactoe:WON", {
+												winner: fighters[0],
+												emoji: client.emojis.cache.get(o_emoji) || "⭕"
+											}),
 											components: buttons,
 											embeds: [
 												epm.setDescription(
-													`<@!${fighters[0]}> (${
-														client.emojis.cache.get(x_emoji) || "❌"
-													}) выиграл`
+													message.translate("economy/tictactoe:WON", {
+														winner: fighters[0],
+														emoji: client.emojis.cache.get(o_emoji) || "⭕"
+													})
 												)
 											]
 										})
@@ -601,14 +623,16 @@ async function tictactoe(message, options = []) {
 								else
 									return m
 										.edit({
-											content: `<@${fighters[0]}> (${
-												client.emojis.cache.get(x_emoji) || "❌"
-											}) выиграл`,
+											content: message.translate("economy/tictactoe:WON", {
+												winner: fighters[0],
+												emoji: client.emojis.cache.get(o_emoji) || "⭕"
+											}),
 											embeds: [
 												epm.setDescription(
-													`<@!${fighters[0]}> (${
-														client.emojis.cache.get(x_emoji) || "❌"
-													}) выиграл\n\`\`\`\n${Args.a1.emoji
+													`${message.translate("economy/tictactoe:WON", {
+														winner: fighters[0],
+														emoji: client.emojis.cache.get(o_emoji) || "⭕"
+													})}\n\`\`\`\n${Args.a1.emoji
 														.replace(o_emoji, "⭕")
 														.replace(x_emoji, "❌")} | ${Args.a2.emoji
 														.replace(o_emoji, "⭕")
@@ -644,11 +668,10 @@ async function tictactoe(message, options = []) {
 							content: `<@${Args.userid}>`,
 							embeds: [
 								epm.setDescription(
-									`Ожидаю ход | <@!${Args.userid}> | Ваш эмодзи: ${
-										Args.user == 0
-											? `${client.emojis.cache.get(o_emoji) || "⭕"}`
-											: `${client.emojis.cache.get(x_emoji) || "❌"}`
-									}`
+									message.translate("economy/tictactoe:WAITING", {
+										user: Args.userid,
+										emoji: Args.user == 0 ? `${client.emojis.cache.get(o_emoji) || "⭕"}` : `${client.emojis.cache.get(x_emoji) || "❌"}`
+									})
 								)
 							],
 							components: [a, b, c]
@@ -663,7 +686,7 @@ async function tictactoe(message, options = []) {
 						collector.on("collect", (b) => {
 							if (b.user.id !== Args.userid) {
 								b.reply({
-									content: "Вы не можете играть сейчас!",
+									content: message.translate("economy/tictactoe:CANT_PLAY"),
 									ephemeral: true
 								});
 
@@ -690,8 +713,7 @@ async function tictactoe(message, options = []) {
 										(prev, [key, value]) => ({
 											...prev,
 											[key]: fun(key, value)
-										}),
-										{}
+										}), {}
 									);
 								const objectFilter = (obj, predicate) =>
 									Object.keys(obj)
@@ -760,8 +782,8 @@ async function tictactoe(message, options = []) {
 										if (options.resultBtn === true)
 											return m
 												.edit({
-													content: "Ничья",
-													embeds: [epm.setDescription("Это ничья!")]
+													content: message.translate("economy/tictactoe:TIE"),
+													embeds: [epm.setDescription(message.translate("economy/tictactoe:TIE_DESC"))]
 												})
 												.then((m) => {
 													m.react(dashmoji);
@@ -769,10 +791,10 @@ async function tictactoe(message, options = []) {
 										else
 											return m
 												.edit({
-													content: "Ничья",
+													content: message.translate("economy/tictactoe:TIE"),
 													embeds: [
 														epm.setDescription(
-															`Это ничья!\n\`\`\`\n${Args.a1.emoji
+															`${message.translate("economy/tictactoe:TIE_DESC")}!\n\`\`\`\n${Args.a1.emoji
 																.replace(o_emoji, "⭕")
 																.replace(x_emoji, "❌")} | ${Args.a2.emoji
 																.replace(o_emoji, "⭕")
@@ -811,7 +833,9 @@ async function tictactoe(message, options = []) {
 						collector.on("end", (collected, reason) => {
 							if (collected.size === 0 && reason == "time")
 								m.edit({
-									content: `<@!${Args.userid}> не ответил вовремя! (30с)`,
+									content: message.translate("economy/tictactoe:NO_ANSWER", {
+										user: Args.userid
+									}),
 									components: []
 								});
 						});
@@ -822,30 +846,36 @@ async function tictactoe(message, options = []) {
 			collector.on("end", (collected, reason) => {
 				if (reason == "time") {
 					const embed = new Discord.MessageEmbed()
-						.setTitle("Запрос не принят вовремя")
+						.setTitle(message.translate("economy/tictactoe:NO_ANSWER_TITLE"))
 						.setAuthor({
 							name: (message.user ? message.user : message.author).tag,
 							iconURL: (message.user ? message.user : message.author).displayAvatarURL()
 						})
 						.setColor(options.timeoutEmbedColor || "#C90000")
 						.setFooter(foot)
-						.setDescription("Время вышло!\nЛимит: 30с");
+						.setTimestamp()
+						.setDescription(message.translate("economy/tictactoe:TIMES_UP"));
 					m.edit({
-						content: "<@" + opponent.id + "> не принял запрос",
+						content: message.translate("economy/tictactoe:NOT_ANSWERED", {
+							user: opponent.id
+						}),
 						embeds: [embed],
 						components: []
 					});
 				}
 				if (reason == "decline") {
 					const embed = new Discord.MessageEmbed()
-						.setTitle("Игра отменена!")
+						.setTitle(message.translate("economy/tictactoe:CANCELED"))
 						.setAuthor({
 							name: (message.user ? message.user : message.author).tag,
 							iconURL: (message.user ? message.user : message.author).displayAvatarURL()
 						})
 						.setColor(options.timeoutEmbedColor || "#C90000")
 						.setFooter(foot)
-						.setDescription(`${opponent.user.tag} отказался от игры!`);
+						.setTimestamp()
+						.setDescription(message.translate("economy/tictactoe:NO_ANSWER", {
+							user: opponent.user.tag
+						}));
 					m.edit({
 						embeds: [embed],
 						components: []
@@ -853,7 +883,7 @@ async function tictactoe(message, options = []) {
 				}
 			});
 		} catch (err) {
-			console.log(`tictactoe | Ошибка: ${err.stack}`);
+			console.log(`tictactoe | ERROR: ${err.stack}`);
 		}
 	});
 }
