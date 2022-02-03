@@ -24,24 +24,25 @@ class Activity extends Command {
 		const perms = voice.permissionsFor(this.client.user);
 		if (!perms.has(Discord.Permissions.FLAGS.CONNECT) || !perms.has(Discord.Permissions.FLAGS.SPEAK)) return message.error("music/play:VOICE_CHANNEL_CONNECT");
 
-		const activities = ["awkword", "betrayal", "checkers", "chess", "doodlecrew", "fishing", "lettertile", "poker", "spellcast", "wordsnack", "puttparty", "youtube"];
+		const activities = ["awkword", "betrayal", "checkers", "chess", "sketchheads", "fishing", "lettertile", "poker", "spellcast", "wordsnack", "puttparty", "youtube"];
 		const activity = args[0];
 
 		switch (activity) {
 			case "awkword":
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "awkword").then(async invite => {
-					const embed = new Discord.MessageEmbed()
-						.setTitle("Awkword")
-						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Awkword", channel: voice.name })}](${invite.code})**`)
-						.setFooter({
-							text: message.translate("general/activity:FOOTER")
-						})
-						.setTimestamp();
-					return message.channel.send({
-						embeds: [embed]
-					});
-				});
+				message.channel.send("Не работает!");
+				// this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "awkword").then(async invite => {
+				// 	const embed = new Discord.MessageEmbed()
+				// 		.setTitle("Awkword")
+				// 		.setColor(data.config.embed.color)
+				// 		.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Awkword", channel: voice.name })}](${invite.code})**`)
+				// 		.setFooter({
+				// 			text: message.translate("general/activity:FOOTER")
+				// 		})
+				// 		.setTimestamp();
+				// 	return message.channel.send({
+				// 		embeds: [embed]
+				// 	});
+				// });
 				break;
 
 			case "betrayal":
@@ -92,12 +93,12 @@ class Activity extends Command {
 				});
 				break;
 
-			case "doodlecrew":
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "doodlecrew").then(async invite => {
+			case "sketchheads":
+				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "sketchheads").then(async invite => {
 					const embed = new Discord.MessageEmbed()
-						.setTitle("Doodle Crew")
+						.setTitle("Sketch Heads")
 						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Doodle Crew", channel: voice.name })}](${invite.code})**`)
+						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Sketch Heads", channel: voice.name })}](${invite.code})**`)
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
