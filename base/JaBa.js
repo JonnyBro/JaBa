@@ -1,7 +1,8 @@
 const { MessageEmbed, Client, Collection } = require("discord.js"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ SoundCloudPlugin } = require("@distube/soundcloud"),
-	{ SpotifyPlugin } = require("@distube/spotify");
+	{ SpotifyPlugin } = require("@distube/spotify"),
+	{ YtDlpPlugin } = require("@distube/yt-dlp");
 
 const util = require("util"),
 	AmeClient = require("amethyste-api"),
@@ -62,8 +63,10 @@ class JaBa extends Client {
 				new SpotifyPlugin({
 					emitEventsAfterFetching: true
 				}),
-				new SoundCloudPlugin()
+				new SoundCloudPlugin(),
+				new YtDlpPlugin()
 			],
+			youtubeDL: false,
 			emitNewSongOnly: true,
 			leaveOnEmpty: true,
 			leaveOnFinish: true,
