@@ -35,7 +35,7 @@ Message.prototype.sendT = function (key, args, options = {}) {
 	if (options.prefixEmoji) string = `${this.client.customEmojis[options.prefixEmoji]} | ${string}`;
 
 	if (options.edit) return this.edit(string);
-	else return this.channel.send({ content: string });
+	else return this.reply({ content: string });
 };
 
 // Format a date
