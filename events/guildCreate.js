@@ -38,6 +38,9 @@ module.exports = class {
 		const owner = await guild.fetchOwner();
 		owner.send(messageOptions);
 
+		const users = guild.members.cache.filter((m) => !m.user.bot).size;
+		const bots = guild.members.cache.filter((m) => m.user.bot).size;
+
 		const embed = new Discord.MessageEmbed()
 			.setAuthor({
 				name: guild.name,
@@ -46,7 +49,7 @@ module.exports = class {
 				})
 			})
 			.setColor("#32CD32")
-			.setDescription(`Зашёл на сервер **${guild.name}**. На нём **${guild.members.cache.filter((m) => !m.user.bot).size}** пользователей (из них ${guild.members.cache.filter((m) => m.user.bot).size} ботов)`);
+			.setDescription(`Зашёл на сервер **${guild.name}**. На нём **${users}** ${this.client.getNoun(users, this.client.translate("misc:NOUNS:MEMBERS:1"), this.client.translate("misc:NOUNS:MEMBERS:2"), this.client.translate("misc:NOUNS:MEMBERS:5"))} (из них ${bots} ${this.client.getNoun(bots, this.client.translate("misc:NOUNS:BOTS:1"), this.client.translate("misc:NOUNS:BOTS:2"), this.client.translate("misc:NOUNS:BOTS:5"))})`);
 		this.client.channels.cache.get(this.client.config.support.logs).send({
 			embeds: [embed]
 		});
