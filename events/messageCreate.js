@@ -8,8 +8,6 @@ module.exports = class {
 	}
 
 	async run(message) {
-		if (message.guild.id === "568120814776614924") return;
-
 		const data = {};
 
 		// If the message author is a bot

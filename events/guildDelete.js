@@ -17,7 +17,7 @@ module.exports = class {
 				})
 			})
 			.setColor("#B22222")
-			.setDescription(`Вышел с сервера **${guild.name}**. На нём **${users}** ${this.client.getNoun(users, this.client.translate("misc:NOUNS:MEMBERS:1"), this.client.translate("misc:NOUNS:MEMBERS:2"), this.client.translate("misc:NOUNS:MEMBERS:5"))} (из них ${bots} ${this.client.getNoun(bots, this.client.translate("misc:NOUNS:BOTS:1"), this.client.translate("misc:NOUNS:BOTS:2"), this.client.translate("misc:NOUNS:BOTS:5"))})`);
+			.setDescription(`Вышел с сервера **${guild.name}**. На нём **${users}** ${this.client.getNoun(users, this.client.translate("misc:NOUNS:MEMBERS:1"), this.client.translate("misc:NOUNS:MEMBERS:2"), this.client.translate("misc:NOUNS:MEMBERS:5"))} (из них **${bots}** ${this.client.getNoun(bots, this.client.translate("misc:NOUNS:BOTS:1"), this.client.translate("misc:NOUNS:BOTS:2"), this.client.translate("misc:NOUNS:BOTS:5"))})`);
 		this.client.channels.cache.get(this.client.config.support.logs).send({
 			embeds: [embed]
 		});
