@@ -3,6 +3,7 @@
 	"USAGE": "{{prefix}}invite (copy)",
 	"EXAMPLES": "{{prefix}}invite\n{{prefix}}invite copy",
 	"LINKS": "Ссылки JaBa",
+	"CLICK": "[**Тык**]({{link}})",
 	"TIP": "Отправьте `{{prefix}}invite copy`, чтобы получить ссылку для копирования!",
 	"ADD": "Пригласить JaBa",
 	"VOTE": "Проголосовать за JaBa",

@@ -36,8 +36,12 @@ class Invite extends Command {
 			.setDescription(message.translate("general/invite:TIP", {
 				prefix: data.guild.prefix || ""
 			}))
-			.addField(message.translate("general/invite:ADD"), inviteLink)
-			.addField(message.translate("general/invite:SUPPORT"), donateLink + `\nдля других способов пишите в ЛС <@${data.config.owner.id}>`)
+			.addField(message.translate("general/invite:ADD"), message.translate("general/invite:CLICK", {
+				link: inviteLink
+			}))
+			.addField(message.translate("general/invite:SUPPORT"), message.translate("general/invite:CLICK", {
+				link: donateLink
+			}) + `\n*для других способов пишите в ЛС <@${data.config.owner.id}>*`)
 			// .addField(message.translate("general/invite:VOTE"), voteURL)
 			.setColor(data.config.embed.color)
 			.setFooter({
