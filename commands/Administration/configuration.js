@@ -87,7 +87,7 @@ class Configuration extends Command {
 		embed.addField(message.translate("administration/configuration:AUTODELETEMOD"), guildData.autoDeleteModCommands ? message.translate("administration/configuration:AUTODELETEMOD_ENABLED") : message.translate("administration/configuration:AUTODELETEMOD_DISABLED"));
 
 		// Dashboard link
-		embed.addField(message.translate("administration/configuration:DASHBOARD_TITLE"), `[${message.translate("administration/configuration:DASHBOARD_CONTENT")}](${this.client.config.dashboard.baseURL})`);
+		embed.addField(message.translate("administration/configuration:DASHBOARD_TITLE"), `[${message.translate("administration/configuration:DASHBOARD_CONTENT")}](${data.config.dashboard.baseURL})`);
 
 		message.channel.send({
 			embeds: [embed]

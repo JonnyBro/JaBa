@@ -1,6 +1,7 @@
 ### JaBa v3.3.6
 * Изменения
-	* Панель управления теперь доступна по ссылке *https://dashboard.jaba.pp.ua*
+	* Панель управления теперь доступна по ссылке *https://dashboard.jaba.pp.ua*.
+	* Вы теперь можете пригласить JaBa на свой сервер по ссылке из команды *invite*, *stats* или [тут](https://discord.com/api/oauth2/authorize?client_id=708637495054565426&scope=bot&permissions=8)
 
 ### JaBa v3.3.5
 * Исправления

@@ -6,7 +6,7 @@ class Invite extends Command {
 		super(client, {
 			name: "invite",
 			dirname: __dirname,
-			enabled: false,
+			enabled: true,
 			guildOnly: false,
 			aliases: ["i", "add", "vote"],
 			memberPermissions: [],
@@ -22,10 +22,10 @@ class Invite extends Command {
 			scopes: ["bot"],
 			permissions: [Discord.Permissions.FLAGS.ADMINISTRATOR]
 		});
-		const voteURL = `https://discordbots.org/bot/${this.client.user.id}/vote`;
-		const supportURL = await this.client.functions.supportLink(this.client);
+		const donateLink = "https://qiwi.com/n/JONNYBRO/";
+		// const voteURL = `https://discordbots.org/bot/${this.client.user.id}/vote`;
 
-		if (args[0] && args[0] === "copy") return message.channel.send({
+		if (args[0] && args[0] === "copy") return message.reply({
 			content: inviteLink
 		});
 
@@ -37,8 +37,8 @@ class Invite extends Command {
 				prefix: data.guild.prefix || ""
 			}))
 			.addField(message.translate("general/invite:ADD"), inviteLink)
-			.addField(message.translate("general/invite:VOTE"), voteURL)
-			.addField(message.translate("general/invite:SUPPORT"), supportURL)
+			.addField(message.translate("general/invite:SUPPORT"), donateLink + `\nдля других способов пишите в ЛС <@${data.config.owner.id}>`)
+			// .addField(message.translate("general/invite:VOTE"), voteURL)
 			.setColor(data.config.embed.color)
 			.setFooter({
 				text: data.config.embed.footer

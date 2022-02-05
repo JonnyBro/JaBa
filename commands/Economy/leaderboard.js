@@ -17,7 +17,7 @@ class Leaderboard extends Command {
 		});
 	}
 
-	async run(message, args) {
+	async run(message, args, data) {
 		const isOnlyOnMobile = (message.member.presence.clientStatus ? JSON.stringify(Object.keys(message.member.presence.clientStatus)) === JSON.stringify(["mobile"]) : false);
 
 		const type = args[0];
@@ -54,7 +54,7 @@ class Leaderboard extends Command {
 						dynamic: true
 					})
 				})
-				.setColor(this.client.config.embed.color)
+				.setColor(data.config.embed.color)
 				.addFields({
 					name: message.translate("economy/leaderboard:TOP"),
 					value: userNames,
@@ -102,7 +102,7 @@ class Leaderboard extends Command {
 						dynamic: true
 					})
 				})
-				.setColor(this.client.config.embed.color)
+				.setColor(data.config.embed.color)
 				.addFields({
 					name: message.translate("economy/leaderboard:TOP"),
 					value: userNames,
@@ -151,7 +151,7 @@ class Leaderboard extends Command {
 						dynamic: true
 					})
 				})
-				.setColor(this.client.config.embed.color)
+				.setColor(data.config.embed.color)
 				.addFields({
 					name: message.translate("economy/leaderboard:TOP"),
 					value: userNames,

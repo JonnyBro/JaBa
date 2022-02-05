@@ -86,10 +86,10 @@ class Userinfo extends Command {
 			}) : (member.roles.cache.size < 1) ? message.translate("general/userinfo:NO_ROLE") : member.roles.cache.map((r) => r).join(", ")));
 		}
 
-		if (user.bot && this.client.config.apiKeys.dbl && (this.client.config.apiKeys.dbl !== "")) {
+		if (user.bot && data.config.apiKeys.dbl && (data.config.apiKeys.dbl !== "")) {
 			const res = await fetch("https://discordbots.org/api/bots/" + user.id, {
 				headers: {
-					"Authorization": this.client.config.apiKeys.dbl
+					"Authorization": data.config.apiKeys.dbl
 				}
 			});
 			const data = await res.json();

@@ -51,9 +51,9 @@ class Help extends Command {
 				.addField(message.translate("general/help:FIELD_EXAMPLES"), examples)
 				.addField(message.translate("general/help:FIELD_ALIASES"), cmd.help.aliases.length > 0 ? cmd.help.aliases.map(a => "`" + a + "`").join("\n") : message.translate("general/help:NO_ALIAS"))
 				.addField(message.translate("general/help:FIELD_PERMISSIONS"), cmd.conf.memberPermissions.length > 0 ? cmd.conf.memberPermissions.map((p) => `\`${p}\``).join("\n") : message.translate("general/help:NO_REQUIRED_PERMISSION"))
-				.setColor(this.client.config.embed.color)
+				.setColor(data.config.embed.color)
 				.setFooter({
-					text: this.client.config.embed.footer
+					text: data.config.embed.footer
 				});
 
 			return message.channel.send({
@@ -66,7 +66,7 @@ class Help extends Command {
 
 		commands.forEach((command) => {
 			if (!categories.includes(command.help.category)) {
-				if (command.help.category === "Owner" && message.author.id !== this.client.config.owner.id) return;
+				if (command.help.category === "Owner" && message.author.id !== data.config.owner.id) return;
 				categories.push(command.help.category);
 			}
 		});
@@ -94,7 +94,7 @@ class Help extends Command {
 			dashboardLink: "https://dashboard.jaba.pp.ua/",
 			docsLink: "https://jaba.pp.ua/docs/",
 			donateLink: "https://qiwi.com/n/JONNYBRO/",
-			owner: this.client.config.owner.id
+			owner: data.config.owner.id
 		}));
 		embed.setAuthor({
 			name: message.translate("general/help:TITLE", {
