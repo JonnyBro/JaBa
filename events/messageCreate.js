@@ -145,7 +145,7 @@ module.exports = class {
 				if (!message.channel.permissionsFor(message.member).has(perm)) neededPermissions.push(perm);
 			});
 
-			if (neededPermissions.length > 0) return message.error("misc:MISSING_MEMBER_PERMS", { list: neededPermissions.map((p) => `\`${p}\``).join(", ") });
+			if (neededPermissions.length > 0) return message.error("misc:MISSING_MEMBER_PERMS", { list: neededPermissions.map((p) => `\`${message.translate(`misc:PERMISSIONS:${p.toUpperCase()}`)}\``).join(", ") });
 			if (!message.channel.permissionsFor(message.member).has(Permissions.FLAGS.MENTION_EVERYONE) && (message.content.includes("@everyone") || message.content.includes("@here"))) return message.error("misc:EVERYONE_MENTION");
 			if (!message.channel.nsfw && cmd.conf.nsfw) return message.error("misc:NSFW_COMMAND");
 		}
