@@ -55,14 +55,14 @@ class Clear extends Command {
 		let toDelete = null;
 
 		if (user) {
-			toDelete = await message.success("moderation/clear:CLEARED_MEMBER", {
+			toDelete = await message.channel.send(message.translate("moderation/clear:CLEARED_MEMBER", {
 				amount: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:MESSAGES:1"), message.translate("misc:NOUNS:MESSAGES:2"), message.translate("misc:NOUNS:MESSAGES:5"))}`,
 				username: user.tag
-			});
+			}));
 		} else {
-			toDelete = await message.success("moderation/clear:CLEARED", {
+			toDelete = await message.channel.send(message.translate("moderation/clear:CLEARED", {
 				amount: `${amount} ${message.getNoun(amount, message.translate("misc:NOUNS:MESSAGES:1"), message.translate("misc:NOUNS:MESSAGES:2"), message.translate("misc:NOUNS:MESSAGES:5"))}`
-			});
+			}));
 		}
 
 		setTimeout(function () {

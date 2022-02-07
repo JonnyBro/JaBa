@@ -93,6 +93,7 @@ class Help extends Command {
 		embed.addField("\u200B", message.translate("misc:STATS_FOOTER", {
 			dashboardLink: "https://dashboard.jaba.pp.ua/",
 			docsLink: "https://jaba.pp.ua/docs/",
+			inviteLink: this.client.generateInvite({ scopes: ["bot"], permissions: [Discord.Permissions.FLAGS.ADMINISTRATOR] }),
 			donateLink: "https://qiwi.com/n/JONNYBRO/",
 			owner: data.config.owner.id
 		}));
