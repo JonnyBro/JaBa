@@ -1,6 +1,6 @@
 const Command = require("../../base/Command"),
 	fs = require("fs"),
-	{ joinVoiceChannel, createAudioResource, createAudioPlayer, getVoiceConnection } = require("@discordjs/voice");
+	{ joinVoiceChannel, createAudioResource, createAudioPlayer, getVoiceConnection, AudioPlayerStatus } = require("@discordjs/voice");
 
 class Clip extends Command {
 	constructor(client) {
@@ -38,17 +38,17 @@ class Clip extends Command {
 
 			const resource = createAudioResource(fs.createReadStream(`./clips/${clip}.mp3`));
 			const player = createAudioPlayer()
-				.on("error", error => {
+				.on("error", err => {
 					connection.destroy();
-					console.error("Error:", error.message, "with track", error.resource.metadata.title);
+					console.error(err.message);
 				});
 
 			player.play(resource);
 			connection.subscribe(player);
 
-			setTimeout(() => {
+			player.on(AudioPlayerStatus.Idle, () => {
 				connection.destroy();
-			}, 60 * 1000);
+			});
 		} catch (error) {
 			console.error(error);
 		}
