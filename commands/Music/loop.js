@@ -25,9 +25,9 @@ class Loop extends Command {
 
 		const type = args[0];
 		let mode = null;
-		if (type === "queue") {
+		if (type === "queue" || type === "all") {
 			mode = this.client.player.setRepeatMode(message, 2);
-		} else if (type === "song") {
+		} else if (type === "song" || type === "single") {
 			mode = this.client.player.setRepeatMode(message, 1);
 		} else {
 			mode = this.client.player.setRepeatMode(message, 0);
