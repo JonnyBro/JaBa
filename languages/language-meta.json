@@ -6,7 +6,7 @@
 		"defaultMomentFormat": "Do MMMM YYYY",
 		"default": true,
 		"aliases": [
-			"Russian",
+			"Русский",
 			"ru",
 			"ru-ru",
 			"ru_ru",
@@ -20,7 +20,7 @@
 		"defaultMomentFormat": "Do MMMM YYYY",
 		"default": false,
 		"aliases": [
-			"Ukrainian",
+			"Украинский",
 			"uk",
 			"uk-ua",
 			"uk_ua",
