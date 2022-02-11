@@ -15,7 +15,7 @@
 	},
 	{
 		"name": "uk-UA",
-		"nativeName": "Украинский",
+		"nativeName": "Українська",
 		"moment": "ru",
 		"defaultMomentFormat": "Do MMMM YYYY",
 		"default": false,
