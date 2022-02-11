@@ -5,6 +5,6 @@
 	"MISSING_AMOUNT": "Укажите кол-во сообщений для удаления!",
 	"ALL_CONFIRM": "Все сообщения в канале будут удалены! Введите `confirm` для подтверждения",
 	"CHANNEL_CLEARED": "Канал очищен!",
-	"CLEARED": "**{{amount}}** было удалено!",
-	"CLEARED_MEMBER": "**{{amount}}** от **{{username}}** было удалено!"
+	"CLEARED": "Было удалено **{{amount}}**!",
+	"CLEARED_MEMBER": "Было удалено **{{amount}}** от **{{username}}**!"
 }
