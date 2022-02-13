@@ -48,7 +48,7 @@ class Stats extends Command {
 				translators: ["**`Jonny_Bro#4226`** (:flag_ru:)"].join("\n")
 			}))
 			.addField(this.client.customEmojis.link + " " + message.translate("general/stats:LINKS_TITLE"), message.translate("misc:STATS_FOOTER", {
-				dashboardLink: "https://dashboard.jaba.pp.ua/",
+				dashboardLink: "https://jaba.pp.ua/",
 				docsLink: "https://jaba.pp.ua/docs/",
 				inviteLink: this.client.generateInvite({ scopes: ["bot"], permissions: [Discord.Permissions.FLAGS.ADMINISTRATOR] }),
 				donateLink: "https://qiwi.com/n/JONNYBRO/",

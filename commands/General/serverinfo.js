@@ -41,7 +41,7 @@ class Serverinfo extends Command {
 			.setThumbnail(guild.iconURL({
 				dynamic: true
 			}))
-			.addField(this.client.customEmojis.link + " " + message.translate("general/serverinfo:LINK"), `[${message.translate("general/serverinfo:LINK_TEXT")}](https://dashboard.jaba.pp.ua/stats/${guild.id})`)
+			.addField(this.client.customEmojis.link + " " + message.translate("general/serverinfo:LINK"), `[${message.translate("general/serverinfo:LINK_TEXT")}](https://jaba.pp.ua/stats/${guild.id})`)
 			.addField(this.client.customEmojis.title + message.translate("common:NAME"), guild.name, true)
 			.addField(this.client.customEmojis.calendar + message.translate("common:CREATION"), message.printDate(guild.createdAt), true)
 			.addField(this.client.customEmojis.users + message.translate("common:MEMBERS"),
