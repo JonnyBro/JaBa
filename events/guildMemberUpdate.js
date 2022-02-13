@@ -4,6 +4,8 @@ module.exports = class {
 	}
 
 	async run(oldMember, newMember) {
+		if (oldMember.guild.id === "568120814776614924") return;
+
 		if (oldMember.guild.id !== this.client.config.support.id) return;
 		if (oldMember.roles.cache.some((r) => r.name === "Поддержавшие JaBa")) return;
 		if (newMember.roles.cache.some((r) => r.name === "Поддержавшие JaBa")) {

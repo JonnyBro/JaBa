@@ -66,6 +66,7 @@ module.exports.load = async(client) => {
 		.use(CheckAuth, function(err, req, res) {
 			console.error(err.stack);
 			if (!req.user) return res.redirect("/");
+
 			res.status(500).render("500", {
 				user: req.userInfos,
 				translate: req.translate,
