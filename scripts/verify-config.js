@@ -7,8 +7,6 @@ const success = (message) => console.log(`   ${chalk.green("✓")} ${message}`);
 const error = (message, howToFix) => console.log(`   ${chalk.red("✗")} ${message}${howToFix ? ` : ${howToFix}` : ""}`);
 const ignore = (message) => console.log(`   ${chalk.yellow("~")} ${message}`);
 
-const delay = (ms) => new Promise((r) => setTimeout(r, ms));
-
 const checks = [
 	() => {
 		console.log("\n\nEnvironnement");
@@ -110,20 +108,6 @@ const checks = [
 					error("Should be a valid DBL key", "get your key here: https://top.gg/ OR delete the key from the config if you don't have a key");
 				} else {
 					success("Valid DBL key");
-				}
-			}
-			if (!config.apiKeys.sentryDSN) {
-				ignore("SentryDSN is not configured, key should not be checked.");
-			} else {
-				const Sentry = require("@sentry/node");
-				try {
-					Sentry.init({
-						dsn: config.apiKeys.sentryDSN
-					});
-					await delay(1000);
-					success("should be a valid Sentry DSN key");
-				} catch (e) {
-					error("valid Sentry DSN key", "Sentry is not recommended, delete the key from the config");
 				}
 			}
 			resolve();

@@ -19,7 +19,6 @@
         "@distube/spotify": "^1.2.1",
         "@distube/yt-dlp": "^1.0.2",
         "@k3rn31p4nic/google-translate-api": "github:k3rn31p4nic/google-translate-api",
-        "@sentry/node": "6.3.6",
         "@sindresorhus/slugify": "^1.1.0",
         "amethyste-api": "github:Androz2091/amethyste-api",
         "btoa": "^1.2.1",

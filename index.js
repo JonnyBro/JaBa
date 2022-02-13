@@ -1,24 +1,10 @@
 require("./helpers/extenders");
 
-const Sentry = require("@sentry/node"),
-	util = require("util"),
+const util = require("util"),
 	fs = require("fs"),
 	readdir = util.promisify(fs.readdir),
 	mongoose = require("mongoose"),
-	chalk = require("chalk"),
 	{ Intents } = require("discord.js");
-
-const config = require("./config");
-if (config.apiKeys.sentryDSN) {
-	try {
-		Sentry.init({
-			dsn: config.apiKeys.sentryDSN
-		});
-	} catch (e) {
-		console.log(e);
-		console.log(chalk.yellow("Looks like your Sentry DSN key is invalid. If you do not intend to use Sentry, please remove the key from the configuration file."));
-	}
-}
 
 // Load JaBa class
 const JaBa = require("./base/JaBa");
