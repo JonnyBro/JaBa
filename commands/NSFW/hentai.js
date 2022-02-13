@@ -97,7 +97,7 @@ class Hentai extends Command {
 				}));
 				break;
 		}
-		message.channel.send({
+		message.reply({
 			embeds: [embed]
 		});
 	}

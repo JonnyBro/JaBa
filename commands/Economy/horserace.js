@@ -56,7 +56,7 @@ class Horserace extends Command {
 						})
 					});
 				}
-				message.channel.send({
+				message.reply({
 					embeds: [{
 						color: data.config.embed.color,
 						title: message.translate("economy/horserace:EMBED_T"),

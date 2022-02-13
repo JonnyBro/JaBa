@@ -48,7 +48,7 @@ class Invite extends Command {
 				text: data.config.embed.footer
 			});
 
-		message.channel.send({
+		message.reply({
 			embeds: [embed]
 		});
 	}

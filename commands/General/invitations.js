@@ -63,7 +63,7 @@ class Invitations extends Command {
 			}))
 			.addField(message.translate("general/invitations:FIELD_CODES"), content);
 
-		message.channel.send({
+		message.reply({
 			embeds: [embed]
 		});
 	}

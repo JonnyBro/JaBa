@@ -85,13 +85,13 @@ class Profile extends Command {
 
 		const buffer = await userData.getAchievements();
 
-		message.channel.send({
+		message.reply({
 			embeds: [profileEmbed],
 			files: [{
 				name: "achievements.png",
 				attachment: buffer
 			}]
-		}); // Send the embed in the current channel
+		});
 	}
 }
 

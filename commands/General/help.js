@@ -56,7 +56,7 @@ class Help extends Command {
 					text: data.config.embed.footer
 				});
 
-			return message.channel.send({
+			return message.reply({
 				embeds: [groupEmbed]
 			});
 		}
@@ -108,7 +108,7 @@ class Help extends Command {
 			})
 		});
 
-		return message.channel.send({
+		return message.reply({
 			embeds: [embed]
 		});
 	}

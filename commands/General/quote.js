@@ -73,7 +73,7 @@ class Quote extends Command {
 				return;
 			}).then((msg) => {
 				message.delete();
-				message.channel.send({
+				message.reply({
 					embeds: [embed(msg)]
 				});
 			});
@@ -87,7 +87,7 @@ class Quote extends Command {
 				return;
 			}).then((msg) => {
 				message.delete();
-				message.channel.send({
+				message.reply({
 					embeds: [embed(msg)]
 				});
 			});

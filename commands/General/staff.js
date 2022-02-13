@@ -33,7 +33,7 @@ class Staff extends Command {
 			.setFooter({
 				text: data.config.embed.footer
 			});
-		message.channel.send({
+		message.reply({
 			embeds: [embed]
 		});
 	}

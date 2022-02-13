@@ -33,7 +33,7 @@ class ShortURL extends Command {
 				text: data.config.embed.footer
 			})
 			.setDescription(body);
-		message.channel.send({
+		message.reply({
 			embeds: [embed]
 		});
 	}

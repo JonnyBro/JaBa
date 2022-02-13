@@ -50,14 +50,14 @@ class Transactions extends Command {
 
 		if (transactions.length < 1) {
 			embed.setDescription(message.translate("economy/transactions:NO_TRANSACTIONS"));
-			return message.channel.send({
+			return message.reply({
 				embeds: [embed]
 			});
 		} else {
 			if (sortedTransactions[0].length > 0) embed.addField(message.translate("economy/transactions:T_GOT"), sortedTransactions[0].join("\n"), true);
 			if (sortedTransactions[1].length > 0) embed.addField(message.translate("economy/transactions:T_SEND"), sortedTransactions[1].join("\n"), true);
 		}
-		message.channel.send({
+		message.reply({
 			embeds: [embed]
 		});
 	}

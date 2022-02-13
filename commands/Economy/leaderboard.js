@@ -65,7 +65,7 @@ class Leaderboard extends Command {
 					inline: true
 				});
 
-			message.channel.send({
+			message.reply({
 				embeds: [embed]
 			});
 		} else if (type === "level") {
@@ -117,7 +117,7 @@ class Leaderboard extends Command {
 					inline: true
 				});
 
-			message.channel.send({
+			message.reply({
 				embeds: [embed]
 			});
 		} else if (type === "rep") {
@@ -162,7 +162,7 @@ class Leaderboard extends Command {
 					inline: true
 				});
 
-			message.channel.send({
+			message.reply({
 				embeds: [embed]
 			});
 		}

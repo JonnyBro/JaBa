@@ -35,7 +35,7 @@ class Queue extends Command {
 				})
 				.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*Добавил ${queue.songs[0].member}*\n`)
 				.setColor(data.config.embed.color);
-			return message.channel.send({
+			return message.reply({
 				embeds: [embed]
 			});
 		}

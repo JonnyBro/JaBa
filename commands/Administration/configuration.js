@@ -89,7 +89,7 @@ class Configuration extends Command {
 		// Dashboard link
 		embed.addField(message.translate("administration/configuration:DASHBOARD_TITLE"), `[${message.translate("administration/configuration:DASHBOARD_CONTENT")}](${data.config.dashboard.baseURL})`);
 
-		message.channel.send({
+		message.reply({
 			embeds: [embed]
 		});
 	}

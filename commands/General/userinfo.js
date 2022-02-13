@@ -105,7 +105,7 @@ class Userinfo extends Command {
 			}
 		}
 
-		message.channel.send({
+		message.reply({
 			embeds: [embed]
 		});
 	}

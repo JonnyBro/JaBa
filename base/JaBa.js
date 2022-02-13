@@ -99,7 +99,7 @@ class JaBa extends Client {
 					.setDescription(result.map(song => `**${++i} -** ${song.name}`).join("\n"))
 					.setFooter({ text: this.translate("music/play:RESULTS_FOOTER") })
 					.setColor(this.config.embed.color);
-				message.channel.send({ embeds: [embed] });
+				message.reply({ embeds: [embed] });
 			})
 			.on("searchDone", () => {})
 			.on("searchCancel", message => message.error("misc:TIMES_UP"))

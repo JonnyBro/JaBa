@@ -29,7 +29,7 @@ class Activity extends Command {
 
 		switch (activity) {
 			case "awkword":
-				message.channel.send("Не работает!");
+				message.reply("Не работает!");
 				// this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "awkword").then(async invite => {
 				// 	const embed = new Discord.MessageEmbed()
 				// 		.setTitle("Awkword")
@@ -39,7 +39,7 @@ class Activity extends Command {
 				// 			text: message.translate("general/activity:FOOTER")
 				// 		})
 				// 		.setTimestamp();
-				// 	return message.channel.send({
+				// 	return message.reply({
 				// 		embeds: [embed]
 				// 	});
 				// });
@@ -55,7 +55,7 @@ class Activity extends Command {
 							text: message.translate("general/activity:FOOTER")
 						})
 						.setTimestamp();
-					return message.channel.send({
+					return message.reply({
 						embeds: [embed]
 					});
 				});
@@ -71,7 +71,7 @@ class Activity extends Command {
 							text: message.translate("general/activity:FOOTER")
 						})
 						.setTimestamp();
-					return message.channel.send({
+					return message.reply({
 						embeds: [embed]
 					});
 				});
@@ -87,7 +87,7 @@ class Activity extends Command {
 							text: message.translate("general/activity:FOOTER")
 						})
 						.setTimestamp();
-					return message.channel.send({
+					return message.reply({
 						embeds: [embed]
 					});
 				});
@@ -103,7 +103,7 @@ class Activity extends Command {
 							text: message.translate("general/activity:FOOTER")
 						})
 						.setTimestamp();
-					return message.channel.send({
+					return message.reply({
 						embeds: [embed]
 					});
 				});
@@ -119,7 +119,7 @@ class Activity extends Command {
 							text: message.translate("general/activity:FOOTER")
 						})
 						.setTimestamp();
-					return message.channel.send({
+					return message.reply({
 						embeds: [embed]
 					});
 				});
@@ -135,7 +135,7 @@ class Activity extends Command {
 							text: message.translate("general/activity:FOOTER")
 						})
 						.setTimestamp();
-					return message.channel.send({
+					return message.reply({
 						embeds: [embed]
 					});
 				});
@@ -151,7 +151,7 @@ class Activity extends Command {
 							text: message.translate("general/activity:FOOTER")
 						})
 						.setTimestamp();
-					return message.channel.send({
+					return message.reply({
 						embeds: [embed]
 					});
 				});
@@ -167,7 +167,7 @@ class Activity extends Command {
 							text: message.translate("general/activity:FOOTER")
 						})
 						.setTimestamp();
-					return message.channel.send({
+					return message.reply({
 						embeds: [embed]
 					});
 				});
@@ -183,7 +183,7 @@ class Activity extends Command {
 							text: message.translate("general/activity:FOOTER")
 						})
 						.setTimestamp();
-					return message.channel.send({
+					return message.reply({
 						embeds: [embed]
 					});
 				});
@@ -199,7 +199,7 @@ class Activity extends Command {
 							text: message.translate("general/activity:FOOTER")
 						})
 						.setTimestamp();
-					return message.channel.send({
+					return message.reply({
 						embeds: [embed]
 					});
 				});
@@ -215,7 +215,7 @@ class Activity extends Command {
 							text: message.translate("general/activity:FOOTER")
 						})
 						.setTimestamp();
-					return message.channel.send({
+					return message.reply({
 						embeds: [embed]
 					});
 				});
@@ -230,7 +230,7 @@ class Activity extends Command {
 						text: message.translate("general/activity:FOOTER")
 					})
 					.setTimestamp();
-				message.channel.send({
+				message.reply({
 					embeds: [embed]
 				});
 			}

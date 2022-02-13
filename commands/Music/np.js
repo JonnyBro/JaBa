@@ -48,7 +48,7 @@ class Np extends Command {
 			})
 			.setTimestamp();
 
-		message.channel.send({
+		message.reply({
 			embeds: [embed]
 		});
 	}

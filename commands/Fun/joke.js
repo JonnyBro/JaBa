@@ -30,7 +30,7 @@ class Joke extends Command {
 			})
 			.setColor(data.config.embed.color);
 
-		message.channel.send({
+		message.reply({
 			embeds: [embed]
 		});
 	}

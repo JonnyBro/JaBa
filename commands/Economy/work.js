@@ -107,7 +107,7 @@ class Work extends Command {
 		}
 
 		// Send the embed in the current channel
-		message.channel.send(messageOptions);
+		message.reply(messageOptions);
 	}
 }
 

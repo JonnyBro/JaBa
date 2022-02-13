@@ -54,7 +54,7 @@ class Stats extends Command {
 				donateLink: "https://qiwi.com/n/JONNYBRO/",
 				owner: data.config.owner.id
 			}));
-		message.channel.send({
+		message.reply({
 			embeds: [statsEmbed]
 		});
 	}

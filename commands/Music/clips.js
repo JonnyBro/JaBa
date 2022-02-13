@@ -36,7 +36,7 @@ class Clips extends Command {
 					text: data.config.embed.footer
 				})
 				.setTimestamp();
-			message.channel.send({
+			message.reply({
 				embeds: [embed]
 			});
 		});

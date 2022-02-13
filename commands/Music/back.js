@@ -35,7 +35,7 @@ class Back extends Command {
 				text: data.config.embed.footer
 			});
 
-		const m = await message.channel.send({
+		const m = await message.reply({
 			embeds: [embed]
 		});
 

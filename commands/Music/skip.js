@@ -35,7 +35,7 @@ class Skip extends Command {
 			})
 			.setColor(data.config.embed.color);
 
-		const m = await message.channel.send({
+		const m = await message.reply({
 			embeds: [embed]
 		});
 
