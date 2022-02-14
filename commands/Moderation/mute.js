@@ -21,7 +21,7 @@ class Mute extends Command {
 	async run(message, args, data) {
 		const member = await this.client.resolveMember(args[0], message.guild);
 		if (!member) return message.error("moderation/mute:MISSING_MEMBER");
-		if (member.id === message.author.id) return message.error("moderation/ban:YOURSELF");
+		if (member.id === message.author.id) return message.error("moderation/mute:YOURSELF");
 
 		const memberPosition = member.roles.highest.position;
 		const moderationPosition = message.member.roles.highest.position;

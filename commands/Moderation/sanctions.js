@@ -1,14 +1,14 @@
 const Command = require("../../base/Command"),
 	Discord = require("discord.js");
 
-class Sanctions extends Command {
+class Warns extends Command {
 	constructor(client) {
 		super(client, {
-			name: "sanctions",
+			name: "warns",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["warns"],
+			aliases: ["ws"],
 			memberPermissions: ["MANAGE_MESSAGES"],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
@@ -19,7 +19,7 @@ class Sanctions extends Command {
 
 	async run(message, args, data) {
 		const user = await this.client.resolveUser(args[0]);
-		if (!user) return message.error("moderation/sanctions:MISSING_MEMBER");
+		if (!user) return message.error("moderation/warns:MISSING_MEMBER");
 
 		const memberData = await this.client.findOrCreateMember({
 			id: user.id,
@@ -41,7 +41,7 @@ class Sanctions extends Command {
 			});
 
 		if (memberData.sanctions.length < 1) {
-			embed.setDescription(message.translate("moderation/sanctions:NO_SANCTION", {
+			embed.setDescription(message.translate("moderation/warns:NO_SANCTION", {
 				username: user.tag
 			}));
 			return message.reply({
@@ -58,4 +58,4 @@ class Sanctions extends Command {
 	}
 }
 
-module.exports = Sanctions;
+module.exports = Warns;
