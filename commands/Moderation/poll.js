@@ -34,14 +34,14 @@ class Poll extends Command {
 			if (tmsg.content.toLowerCase() === message.translate("common:NO").toLowerCase()) {
 				tmsg.delete();
 				msg.delete();
-				message.delete();
 				collector.stop(true);
+
+				message.delete();
 			}
 
 			if (tmsg.content.toLowerCase() === message.translate("common:YES").toLowerCase()) {
 				tmsg.delete();
 				msg.delete();
-				message.delete();
 				const tmsg1 = await message.sendT("moderation/announcement:MENTION_TYPE_PROMPT");
 
 				const filter = m => m.author.id === message.author.id;
@@ -65,12 +65,12 @@ class Poll extends Command {
 						c.stop(true);
 					}
 				});
+
 				c.on("end", (collected, reason) => {
-					if (reason === "time") {
-						message.delete();
-						return message.error("misc:TIMES_UP");
-					}
+					if (reason === "time") return message.error("misc:TIMES_UP");
 				});
+
+				message.delete();
 			}
 		});
 
