@@ -37,7 +37,7 @@ class Announcement extends Command {
 				msg.delete();
 				collector.stop(true);
 
-				message.delete();
+				if (message.deletable) message.delete();
 			}
 
 			if (tmsg.content.toLowerCase() === message.translate("common:YES").toLowerCase()) {
@@ -70,7 +70,7 @@ class Announcement extends Command {
 					if (reason === "time") return message.error("misc:TIMES_UP");
 				});
 
-				message.delete();
+				if (message.deletable) message.delete();
 			}
 		});
 
