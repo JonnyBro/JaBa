@@ -45,7 +45,7 @@ class Stats extends Command {
 			}))
 			.addField(message.translate("general/stats:CREDITS_TITLE"), message.translate("general/stats:CREDITS_CONTENT", {
 				donators: ["**`Добрый Спецназ#8801`** - Тестер, генератор идей"].join("\n"),
-				translators: ["**`Jonny_Bro#4226`** (:flag_ru:)"].join("\n")
+				translators: ["**`Jonny_Bro#4226`** - :flag_ru:", "**`[ДАННЫЕ УДАЛЕНЫ]#4507`** - :flag_ua:"].join("\n")
 			}))
 			.addField(this.client.customEmojis.link + " " + message.translate("general/stats:LINKS_TITLE"), message.translate("misc:STATS_FOOTER", {
 				dashboardLink: "https://jaba.pp.ua/",
