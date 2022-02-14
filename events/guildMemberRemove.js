@@ -21,7 +21,7 @@ module.exports = class {
 	}
 
 	async run(member) {
-		if (member.guild.id === "568120814776614924") return;
+		if (member.guild && member.guild.id === "568120814776614924") return;
 
 		await member.guild.members.fetch();
 

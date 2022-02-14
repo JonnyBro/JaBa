@@ -21,8 +21,6 @@ class Poll extends Command {
 		const question = args.join(" ");
 		if (!question) return message.error("moderation/poll:MISSING_QUESTION");
 
-		message.delete().catch(() => {});
-
 		let mention = null;
 		const msg = await message.sendT("moderation/announcement:MENTION_PROMPT");
 
@@ -36,12 +34,14 @@ class Poll extends Command {
 			if (tmsg.content.toLowerCase() === message.translate("common:NO").toLowerCase()) {
 				tmsg.delete();
 				msg.delete();
+				message.delete();
 				collector.stop(true);
 			}
 
 			if (tmsg.content.toLowerCase() === message.translate("common:YES").toLowerCase()) {
 				tmsg.delete();
 				msg.delete();
+				message.delete();
 				const tmsg1 = await message.sendT("moderation/announcement:MENTION_TYPE_PROMPT");
 
 				const filter = m => m.author.id === message.author.id;
@@ -57,7 +57,7 @@ class Poll extends Command {
 						m.delete();
 						collector.stop(true);
 						c.stop(true);
-					} else if (m.content.toLowerCase() === "every") {
+					} else if (m.content.toLowerCase() === "everyone") {
 						mention = "@everyone";
 						tmsg1.delete();
 						m.delete();
@@ -66,7 +66,10 @@ class Poll extends Command {
 					}
 				});
 				c.on("end", (collected, reason) => {
-					if (reason === "time") return message.error("misc:TIMES_UP");
+					if (reason === "time") {
+						message.delete();
+						return message.error("misc:TIMES_UP");
+					}
 				});
 			}
 		});

@@ -41,7 +41,7 @@ class Invite extends Command {
 			}))
 			.addField(message.translate("general/invite:SUPPORT"), message.translate("general/invite:CLICK", {
 				link: donateLink
-			}) + `\n*для других способов пишите в ЛС <@${data.config.owner.id}>*`)
+			}) + `\n*для других способов пишите в ЛС <@${data.config.owner.id}> (указывайте ваш Discord тэг чтобы я мог выдать вам ачивку)*`)
 			// .addField(message.translate("general/invite:VOTE"), voteURL)
 			.setColor(data.config.embed.color)
 			.setFooter({
