@@ -58,12 +58,12 @@ class Ban extends Command {
 			reason
 		}).then(() => {
 			// Send a success message in the current channel
-			message.sendT("moderation/ban:BANNED", {
+			message.channel.send(message.translate("moderation/ban:BANNED", {
 				username: user.tag,
 				server: message.guild.name,
 				moderator: message.author.tag,
 				reason
-			});
+			}));
 
 			const caseInfo = {
 				channel: message.channel.id,

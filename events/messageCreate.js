@@ -200,7 +200,7 @@ module.exports = class {
 
 		try {
 			cmd.run(message, args, data);
-			if (cmd.help.category === "Moderation" && data.guild.autoDeleteModCommands) message.delete();
+			if (cmd.help.category === "Moderation" && data.guild.autoDeleteModCommands) setTimeout(() => message.delete(), 3000);
 		} catch (e) {
 			console.error(e);
 			return message.error("misc:ERR_OCCURRED");

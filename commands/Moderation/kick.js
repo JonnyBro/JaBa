@@ -47,12 +47,12 @@ class Kick extends Command {
 		// Kick the user
 		member.kick(reason).then(() => {
 			// Send a success message in the current channel
-			message.sendT("moderation/kick:KICKED", {
+			message.channel.send(message.translate("moderation/kick:KICKED", {
 				username: member.user.tag,
 				server: message.guild.name,
 				moderator: message.author.tag,
 				reason
-			});
+			}));
 
 			data.guild.casesCount++;
 			data.guild.save();

@@ -18,7 +18,8 @@ class Clear extends Command {
 
 	async run(message, args) {
 		if (args[0] === "all") {
-			message.sendT("moderation/clear:ALL_CONFIRM");
+			message.channel.send(message.translate("moderation/clear:ALL_CONFIRM"));
+			
 			await message.channel.awaitMessages((m) => (m.author.id === message.author.id) && (m.content === "confirm"), {
 				max: 1,
 				time: 20000,
@@ -26,6 +27,7 @@ class Clear extends Command {
 			}).catch(() => {
 				return message.error("misc:TIMES_UP");
 			});
+
 			const position = message.channel.position;
 			const newChannel = await message.channel.clone();
 			await message.channel.delete();
