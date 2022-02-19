@@ -61,7 +61,9 @@ class ServersList extends Command {
 		});
 
 		collector.on("collect", async (reaction) => {
-			if (reaction._emoji.name === "⬅" && !message.channel.type !== "DM") {
+			if (message.channel.type === "DM") return;
+
+			if (reaction._emoji.name === "⬅") {
 				// Updates variables
 				i0 = i0 - 10;
 				i1 = i1 - 10;
@@ -87,7 +89,7 @@ class ServersList extends Command {
 				});
 			}
 
-			if (reaction._emoji.name === "➡" && !message.channel.type !== "DM") {
+			if (reaction._emoji.name === "➡") {
 				// Updates variables
 				i0 = i0 + 10;
 				i1 = i1 + 10;
@@ -113,7 +115,7 @@ class ServersList extends Command {
 				});
 			}
 
-			if (reaction._emoji.name === "❌" && !message.channel.type !== "DM") return msg.delete();
+			if (reaction._emoji.name === "❌") return msg.delete();
 
 			// Remove the reaction when the user react to the message
 			await reaction.users.remove(message.author.id);
