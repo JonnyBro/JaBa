@@ -18,7 +18,7 @@ class ServersList extends Command {
 	}
 
 	async run(message, args, data) {
-		if (message.channel.type !== "DM") message.delete();
+		if (message.deletable) message.delete();
 
 		let i0 = 0,
 			i1 = 10,
@@ -50,76 +50,78 @@ class ServersList extends Command {
 			embeds: [embed]
 		});
 
-		await msg.react("⬅");
-		await msg.react("➡");
-		await msg.react("❌");
+		if (message.channel.type !== "DM") {
+			await msg.react("⬅");
+			await msg.react("➡");
+			await msg.react("❌");
 
-		const filter = (reaction, user) => user.id === message.author.id;
-		const collector = msg.createReactionCollector({
-			filter,
-			time: 30000
-		});
+			const filter = (reaction, user) => user.id === message.author.id;
+			const collector = msg.createReactionCollector({
+				filter,
+				time: 30000
+			});
 
-		collector.on("collect", async (reaction) => {
-			if (message.channel.type === "DM") return;
+			collector.on("collect", async (reaction) => {
+				if (message.channel.type === "DM") return;
 
-			if (reaction._emoji.name === "⬅") {
-				// Updates variables
-				i0 = i0 - 10;
-				i1 = i1 - 10;
-				page = page - 1;
+				if (reaction._emoji.name === "⬅") {
+					// Updates variables
+					i0 = i0 - 10;
+					i1 = i1 - 10;
+					page = page - 1;
 
-				// if there is no guild to display, delete the message
-				if (i0 < 0) return msg.delete();
-				if (!i0 || !i1) return msg.delete();
+					// if there is no guild to display, delete the message
+					if (i0 < 0) return msg.delete();
+					if (!i0 || !i1) return msg.delete();
 
-				description = `${message.translate("common:SERVERS")}: ${this.client.guilds.cache.size}\n\n` +
-					this.client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount).map((r) => r)
-						.map((r, i) => `**${i + 1}** - ${r.name} | ${r.memberCount} ${message.translate("common:MEMBERS")}`)
-						.slice(i0, i1)
-						.join("\n");
+					description = `${message.translate("common:SERVERS")}: ${this.client.guilds.cache.size}\n\n` +
+						this.client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount).map((r) => r)
+							.map((r, i) => `**${i + 1}** - ${r.name} | ${r.memberCount} ${message.translate("common:MEMBERS")}`)
+							.slice(i0, i1)
+							.join("\n");
 
-				// Update the embed with new informations
-				embed.setTitle(`${message.translate("common:PAGE")}: ${page}/${Math.round(this.client.guilds.cache.size/10)}`)
-					.setDescription(description);
+					// Update the embed with new informations
+					embed.setTitle(`${message.translate("common:PAGE")}: ${page}/${Math.round(this.client.guilds.cache.size/10)}`)
+						.setDescription(description);
 
-				// Edit the message
-				msg.edit({
-					embeds: [embed]
-				});
-			}
+					// Edit the message
+					msg.edit({
+						embeds: [embed]
+					});
+				}
 
-			if (reaction._emoji.name === "➡") {
-				// Updates variables
-				i0 = i0 + 10;
-				i1 = i1 + 10;
-				page = page + 1;
+				if (reaction._emoji.name === "➡") {
+					// Updates variables
+					i0 = i0 + 10;
+					i1 = i1 + 10;
+					page = page + 1;
 
-				// if there is no guild to display, delete the message
-				if (i1 > this.client.guilds.cache.size + 10) return msg.delete();
-				if (!i0 || !i1) return msg.delete();
+					// if there is no guild to display, delete the message
+					if (i1 > this.client.guilds.cache.size + 10) return msg.delete();
+					if (!i0 || !i1) return msg.delete();
 
-				description = `${message.translate("common:SERVERS")}: ${this.client.guilds.cache.size}\n\n` +
-					this.client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount).map((r) => r)
-						.map((r, i) => `**${i + 1}** - ${r.name} | ${r.memberCount} ${message.translate("common:MEMBERS").toLowerCase()}`)
-						.slice(i0, i1)
-						.join("\n");
+					description = `${message.translate("common:SERVERS")}: ${this.client.guilds.cache.size}\n\n` +
+						this.client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount).map((r) => r)
+							.map((r, i) => `**${i + 1}** - ${r.name} | ${r.memberCount} ${message.translate("common:MEMBERS").toLowerCase()}`)
+							.slice(i0, i1)
+							.join("\n");
 
-				// Update the embed with new informations
-				embed.setTitle(`${message.translate("common:PAGE")}: ${page}/${Math.round(this.client.guilds.cache.size/10)}`)
-					.setDescription(description);
+					// Update the embed with new informations
+					embed.setTitle(`${message.translate("common:PAGE")}: ${page}/${Math.round(this.client.guilds.cache.size/10)}`)
+						.setDescription(description);
 
-				// Edit the message
-				msg.edit({
-					embeds: [embed]
-				});
-			}
+					// Edit the message
+					msg.edit({
+						embeds: [embed]
+					});
+				}
 
-			if (reaction._emoji.name === "❌") return msg.delete();
+				if (reaction._emoji.name === "❌") return msg.delete();
 
-			// Remove the reaction when the user react to the message
-			await reaction.users.remove(message.author.id);
-		});
+				// Remove the reaction when the user react to the message
+				await reaction.users.remove(message.author.id);
+			});
+		}
 	}
 }
 
