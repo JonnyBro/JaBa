@@ -18,8 +18,6 @@ class ServersList extends Command {
 	}
 
 	async run(message, args, data) {
-		if (message.deletable) message.delete();
-
 		let i0 = 0,
 			i1 = 10,
 			page = 1;
@@ -49,6 +47,8 @@ class ServersList extends Command {
 		const msg = await message.reply({
 			embeds: [embed]
 		});
+
+		if (message.deletable) message.delete();
 
 		if (message.channel.type !== "DM") {
 			await msg.react("⬅");
