@@ -24,7 +24,7 @@ class Activity extends Command {
 		const perms = voice.permissionsFor(this.client.user);
 		if (!perms.has(Discord.Permissions.FLAGS.CONNECT) || !perms.has(Discord.Permissions.FLAGS.SPEAK)) return message.error("music/play:VOICE_CHANNEL_CONNECT");
 
-		const activities = ["awkword", "betrayal", "checkers", "chess", "sketchheads", "fishing", "lettertile", "poker", "spellcast", "wordsnack", "puttparty", "youtube"];
+		const activities = ["awkword", "betrayal", "checkers", "chess", "sketchheads", "ocho", "fishing", "lettertile", "poker", "spellcast", "wordsnack", "puttparty", "youtube"];
 		const activity = args[0];
 
 		switch (activity) {
@@ -99,6 +99,22 @@ class Activity extends Command {
 						.setTitle("Sketch Heads")
 						.setColor(data.config.embed.color)
 						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Sketch Heads", channel: voice.name })}](${invite.code})**`)
+						.setFooter({
+							text: message.translate("general/activity:FOOTER")
+						})
+						.setTimestamp();
+					return message.reply({
+						embeds: [embed]
+					});
+				});
+				break;
+
+			case "ocho":
+				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "ocho").then(async invite => {
+					const embed = new Discord.MessageEmbed()
+						.setTitle("Ocho")
+						.setColor(data.config.embed.color)
+						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Ocho", channel: voice.name })}](${invite.code})**`)
 						.setFooter({
 							text: message.translate("general/activity:FOOTER")
 						})
