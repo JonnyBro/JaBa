@@ -28,7 +28,7 @@ class Clyde extends Command {
 		try {
 			const res = await fetch(encodeURI(`https://nekobot.xyz/api/imagegen?type=clyde&text=${text}`));
 			const json = await res.json();
-			message.channel.send({
+			message.reply({
 				files: [{
 					name: "clyde.png",
 					attachment: json.message

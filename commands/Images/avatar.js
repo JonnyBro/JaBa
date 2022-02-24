@@ -24,9 +24,9 @@ class Avatar extends Command {
 			size: 512
 		});
 
-		if (args[0] === "link") return message.channel.send({ content: `<${avatarURL}>` });
+		if (args[0] === "link") return message.reply({ content: `<${avatarURL}>` });
 
-		message.channel.send({
+		message.reply({
 			files: [{
 				attachment: avatarURL
 			}]

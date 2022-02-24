@@ -38,7 +38,7 @@ class Ytcomment extends Command {
 		});
 		m.delete();
 
-		message.channel.send({
+		message.reply({
 			files: [{
 				name: "ytcomment.png",
 				attachment: image

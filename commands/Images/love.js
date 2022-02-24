@@ -29,7 +29,7 @@ class Love extends Command {
 		try {
 			const res = await fetch(encodeURI(`https://nekobot.xyz/api/imagegen?type=ship&user1=${users[0].displayAvatarURL({ format: "png", size: 512 })}&user2=${users[1].displayAvatarURL({ format: "png", size: 512 })}`));
 			const json = await res.json();
-			message.channel.send({
+			message.reply({
 				files: [{
 					name: "love.png",
 					attachment: json.message

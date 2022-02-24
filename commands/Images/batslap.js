@@ -36,7 +36,7 @@ class BatSlap extends Command {
 		});
 		m.delete();
 
-		message.channel.send({
+		message.reply({
 			files: [{
 				name: "batslap.png",
 				attachment: buffer

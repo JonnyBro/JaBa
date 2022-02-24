@@ -23,7 +23,7 @@ class Announcement extends Command {
 		if (text.length > 1030) return message.error("moderation/announcement:TOO_LONG");
 
 		let mention = null;
-		const msg = await message.channel.send(message.translate("moderation/announcement:MENTION_PROMPT"));
+		const msg = await message.sendT("moderation/announcement:MENTION_PROMPT");
 
 		const filter = m => m.author.id === message.author.id;
 		const collector = new Discord.MessageCollector(message.channel, {

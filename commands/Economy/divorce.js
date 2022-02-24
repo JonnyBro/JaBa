@@ -33,6 +33,7 @@ class Divorce extends Command {
 		message.success("economy/divorce:DIVORCED", {
 			username: user.username
 		});
+
 		user.send({
 			content: message.translate("economy/divorce:DIVORCED_U", {
 				username: message.author.username

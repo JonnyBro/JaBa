@@ -45,13 +45,15 @@ class Mute extends Command {
 			}).catch(() => {});
 		});
 
-		member.send(message.translate("moderation/mute:MUTED_DM", {
-			username: member.user.username,
-			server: message.guild.name,
-			moderator: message.author.tag,
-			time,
-			reason
-		}));
+		member.send({
+			content: message.translate("moderation/mute:MUTED_DM", {
+				username: member.user.username,
+				server: message.guild.name,
+				moderator: message.author.tag,
+				time,
+				reason
+			})
+		});
 
 		message.success("moderation/mute:MUTED", {
 			username: member.user.tag,

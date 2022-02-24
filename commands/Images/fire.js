@@ -29,7 +29,7 @@ class Fire extends Command {
 		});
 		m.delete();
 
-		message.channel.send({
+		message.reply({
 			files: [{
 				name: "fire.png",
 				attachment: buffer

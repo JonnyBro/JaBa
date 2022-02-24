@@ -29,7 +29,7 @@ class Triggered extends Command {
 		});
 		m.delete();
 
-		message.channel.send({
+		message.reply({
 			files: [{
 				name: "triggered.gif",
 				attachment: buffer

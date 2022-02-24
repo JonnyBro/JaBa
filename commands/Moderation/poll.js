@@ -22,7 +22,7 @@ class Poll extends Command {
 		if (!question) return message.error("moderation/poll:MISSING_QUESTION");
 
 		let mention = null;
-		const msg = await message.channel.send(message.translate("moderation/announcement:MENTION_PROMPT"));
+		const msg = await message.sendT("moderation/announcement:MENTION_PROMPT");
 
 		const filter = m => m.author.id === message.author.id;
 		const collector = new Discord.MessageCollector(message.channel, {

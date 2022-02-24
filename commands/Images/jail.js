@@ -29,7 +29,7 @@ class Jail extends Command {
 		});
 		m.delete();
 
-		message.channel.send({
+		message.reply({
 			files: [{
 				name: "jail.png",
 				attachment: buffer

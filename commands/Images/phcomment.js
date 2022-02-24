@@ -40,7 +40,7 @@ class Phcomment extends Command {
 			});
 			m.delete();
 
-			message.channel.send({
+			message.reply({
 				files: [{
 					name: "phcomment.png",
 					attachment: buffer

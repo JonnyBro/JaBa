@@ -29,7 +29,7 @@ class Scary extends Command {
 		});
 		m.delete();
 
-		message.channel.send({
+		message.reply({
 			files: [{
 				name: "scary.png",
 				attachment: buffer

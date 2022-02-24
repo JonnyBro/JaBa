@@ -27,7 +27,7 @@ class Captcha extends Command {
 			const json = await res.json();
 			m.delete();
 
-			message.channel.send({
+			message.reply({
 				files: [{
 					name: "captcha.png",
 					attachment: json.message

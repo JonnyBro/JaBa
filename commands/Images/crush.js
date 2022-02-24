@@ -29,7 +29,7 @@ class Crush extends Command {
 		});
 		m.delete();
 
-		message.channel.send({
+		message.reply({
 			files: [{
 				name: "crush.png",
 				attachment: buffer

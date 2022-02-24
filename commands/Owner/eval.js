@@ -26,14 +26,14 @@ class Eval extends Command {
 				depth: 0
 			});
 			if (output.includes(this.client.token)) output = output.replace(this.client.token, "T0K3N");
-			message.channel.send({
+			message.reply({
 				content: "```js\n" + output + "```"
 			});
 		}).catch((err) => {
 			console.error(err);
 			err = err.toString();
 			if (err.includes(this.client.token)) err = err.replace(this.client.token, "T0K3N");
-			message.channel.send({
+			message.reply({
 				content: "```js\n" + err + "```"
 			});
 		});

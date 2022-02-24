@@ -60,12 +60,14 @@ class Warn extends Command {
 
 		if (banCount) {
 			if (sanctions >= banCount) {
-				member.send(message.translate("moderation/ban:BANNED_DM", {
-					username: member.user,
-					moderator: message.author.tag,
-					server: message.guild.name,
-					reason
-				}));
+				member.send({
+					content: message.translate("moderation/ban:BANNED_DM", {
+						username: member.user,
+						moderator: message.author.tag,
+						server: message.guild.name,
+						reason
+					})
+				});
 				caseInfo.type = "ban";
 				embed.setAuthor({
 					name: message.translate("moderation/ban:CASE", {
@@ -83,12 +85,14 @@ class Warn extends Command {
 
 		if (kickCount) {
 			if (sanctions >= kickCount) {
-				member.send(message.translate("moderation/kick:KICKED_DM", {
-					username: member.user,
-					moderator: message.author.tag,
-					server: message.guild.name,
-					reason
-				}));
+				member.send({
+					content: message.translate("moderation/kick:KICKED_DM", {
+						username: member.user,
+						moderator: message.author.tag,
+						server: message.guild.name,
+						reason
+					})
+				});
 				caseInfo.type = "kick";
 				embed.setAuthor({
 					name: message.translate("moderation/kick:CASE", {
@@ -104,12 +108,14 @@ class Warn extends Command {
 			}
 		}
 
-		member.send(message.translate("moderation/warn:WARNED_DM", {
-			username: member.user.tag,
-			server: message.guild.name,
-			moderator: message.author.tag,
-			reason
-		}));
+		member.send({
+			content: message.translate("moderation/warn:WARNED_DM", {
+				username: member.user.tag,
+				server: message.guild.name,
+				moderator: message.author.tag,
+				reason
+			})
+		});
 		caseInfo.type = "warn";
 		embed.setAuthor({
 			name: message.translate("moderation/warn:CASE", {

@@ -29,7 +29,7 @@ class Tobecontinued extends Command {
 		});
 		m.delete();
 
-		message.channel.send({
+		message.reply({
 			files: [{
 				name: "tobecontinued.png",
 				attachment: buffer

@@ -29,7 +29,7 @@ class Ps4 extends Command {
 		});
 		m.delete();
 
-		message.channel.send({
+		message.reply({
 			files: [{
 				name: "ps4.png",
 				attachment: buffer

@@ -34,7 +34,7 @@ class Bed extends Command {
 			}));
 			m.delete();
 
-			message.channel.send({
+			message.reply({
 				files: [{
 					name: "bed.png",
 					attachment: buffer

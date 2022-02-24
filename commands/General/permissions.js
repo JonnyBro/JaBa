@@ -41,7 +41,7 @@ class Permissions extends Command {
 		});
 		text += `\n${total.allowed} ✅ | ${total.denied} ❌`;
 
-		message.channel.send({
+		message.reply({
 			content: text
 		});
 	}

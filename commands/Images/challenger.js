@@ -29,7 +29,7 @@ class Challenger extends Command {
 		});
 		m.delete();
 
-		message.channel.send({
+		message.reply({
 			files: [{
 				name: "challenger.png",
 				attachment: buffer

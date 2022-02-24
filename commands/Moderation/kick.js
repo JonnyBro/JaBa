@@ -37,22 +37,26 @@ class Kick extends Command {
 		if (message.member.ownerId !== message.author.id && !(moderationPosition > memberPosition)) return message.error("moderation/ban:SUPERIOR");
 		if (!member.kickable) return message.error("moderation/kick:MISSING_PERM");
 
-		await member.send(message.translate("moderation/kick:KICKED_DM", {
-			username: member.user.tag,
-			server: message.guild.name,
-			moderator: message.author.tag,
-			reason
-		})).catch(() => {});
-
-		// Kick the user
-		member.kick(reason).then(() => {
-			// Send a success message in the current channel
-			message.channel.send(message.translate("moderation/kick:KICKED", {
+		await member.send({
+			content: message.translate("moderation/kick:KICKED_DM", {
 				username: member.user.tag,
 				server: message.guild.name,
 				moderator: message.author.tag,
 				reason
-			}));
+			})
+		});
+
+		// Kick the user
+		member.kick(reason).then(() => {
+			// Send a success message in the current channel
+			message.reply({
+				content: message.translate("moderation/kick:KICKED", {
+					username: member.user.tag,
+					server: message.guild.name,
+					moderator: message.author.tag,
+					reason
+				})
+			});
 
 			data.guild.casesCount++;
 			data.guild.save();
