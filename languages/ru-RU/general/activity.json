@@ -3,5 +3,6 @@
 	"USAGE": "{{prefix}}activity (активность)",
 	"EXAMPLES": "{{prefix}}activity\n{{prefix}}activity chess",
 	"TITLE": "Список доступных активностей",
-	"FOOTER": "JaBa | Discord Together"
+	"FOOTER": "JaBa | Discord Together",
+	"NO_BOOST": "Необходим первый уровень буста или выше!"
 }
