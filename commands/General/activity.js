@@ -24,27 +24,23 @@ class Activity extends Command {
 		const perms = voice.permissionsFor(this.client.user);
 		if (!perms.has(Discord.Permissions.FLAGS.CONNECT) || !perms.has(Discord.Permissions.FLAGS.SPEAK)) return message.error("music/play:VOICE_CHANNEL_CONNECT");
 
-		const activities = ["awkword", "betrayal", "checkers", "chess", "sketchheads", "ocho", "fishing", "lettertile", "poker", "spellcast", "wordsnack", "puttparty", "youtube"];
+		const activities = [
+			"betrayal",
+			"checkers (Необходим уровень буста первый или выше)",
+			"chess (Необходим уровень буста первый или выше)",
+			"sketchheads",
+			"ocho (Необходим уровень буста первый или выше)",
+			"fishing",
+			"lettertile",
+			"poker (Необходим уровень буста первый или выше)",
+			"spellcast (Необходим уровень буста первый или выше)",
+			"wordsnack",
+			"puttparty",
+			"youtube"
+		];
 		const activity = args[0];
 
 		switch (activity) {
-			case "awkword":
-				message.reply("Не работает!");
-				// this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "awkword").then(async invite => {
-				// 	const embed = new Discord.MessageEmbed()
-				// 		.setTitle("Awkword")
-				// 		.setColor(data.config.embed.color)
-				// 		.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Awkword", channel: voice.name })}](${invite.code})**`)
-				// 		.setFooter({
-				// 			text: message.translate("general/activity:FOOTER")
-				// 		})
-				// 		.setTimestamp();
-				// 	return message.reply({
-				// 		embeds: [embed]
-				// 	});
-				// });
-				break;
-
 			case "betrayal":
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "betrayal").then(async invite => {
 					const embed = new Discord.MessageEmbed()
@@ -62,7 +58,7 @@ class Activity extends Command {
 				break;
 
 			case "checkers":
-				if (message.guild.PremiumTier === "NONE") return message.error("general/activity:NO_BOOST");
+				if (message.guild.premiumTier === "NONE") return message.error("general/activity:NO_BOOST");
 
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "checkers").then(async invite => {
 					const embed = new Discord.MessageEmbed()
@@ -80,7 +76,7 @@ class Activity extends Command {
 				break;
 
 			case "chess":
-				if (message.guild.PremiumTier === "NONE") return message.error("general/activity:NO_BOOST");
+				if (message.guild.premiumTier === "NONE") return message.error("general/activity:NO_BOOST");
 
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "chess").then(async invite => {
 					const embed = new Discord.MessageEmbed()
@@ -114,7 +110,7 @@ class Activity extends Command {
 				break;
 
 			case "ocho":
-				if (message.guild.PremiumTier === "NONE") return message.error("general/activity:NO_BOOST");
+				if (message.guild.premiumTier === "NONE") return message.error("general/activity:NO_BOOST");
 
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "ocho").then(async invite => {
 					const embed = new Discord.MessageEmbed()
@@ -164,7 +160,7 @@ class Activity extends Command {
 				break;
 
 			case "poker":
-				if (message.guild.PremiumTier === "NONE") return message.error("general/activity:NO_BOOST");
+				if (message.guild.premiumTier === "NONE") return message.error("general/activity:NO_BOOST");
 
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "poker").then(async invite => {
 					const embed = new Discord.MessageEmbed()
@@ -182,7 +178,7 @@ class Activity extends Command {
 				break;
 
 			case "spellcast":
-				if (message.guild.PremiumTier === "NONE") return message.error("general/activity:NO_BOOST");
+				if (message.guild.premiumTier === "NONE") return message.error("general/activity:NO_BOOST");
 
 				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "spellcast").then(async invite => {
 					const embed = new Discord.MessageEmbed()
