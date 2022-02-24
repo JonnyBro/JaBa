@@ -21,7 +21,7 @@ class Lmg extends Command {
 		if (!question) return message.error("fun/lmg:MISSING");
 		const encodedQuestion = question.replace(/[' '_]/g, "+");
 		await message.reply({
-			content: `https://google.gik-team.com/?q=${encodedQuestion}`
+			content: `<https://google.gik-team.com/?q=${encodedQuestion}>`
 		});
 		message.delete().catch(() => {});
 	}

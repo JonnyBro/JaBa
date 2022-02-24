@@ -27,7 +27,7 @@ class Permissions extends Command {
 			allowed: 0
 		};
 
-		let text = `${message.translate("general/permissions:TITLE", { user: member.user.username, channel: message.channel.name })}\n\n`;
+		let text = `**${message.translate("general/permissions:TITLE", { user: member.user.username, channel: message.channel.name })}**\n`;
 		permissions.forEach((perm) => {
 			if (perm === "REQUEST_TO_SPEAK") return;
 
