@@ -33,7 +33,7 @@ class FindWords extends Command {
 		const participants = [],
 			winners = [],
 			words = [],
-			nbGames = this.client.functions.randomNum(4, 10);
+			nbGames = this.client.functions.randomNum(3, 10);
 
 		// Store the date wich the game has started
 		const createdAt = Date.now(); // 20929038303

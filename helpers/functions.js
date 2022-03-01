@@ -5,12 +5,6 @@ languages.forEach((lang) => {
 });
 
 module.exports = {
-	/**
-	 * Gets message prefix
-	 * @param {object} message The Discord message
-	 * @param {object} data Server data
-	 * @returns The prefix
-	 */
 	getPrefix(message, data) {
 		if (message.channel.type !== "DM") {
 			const prefixes = [
@@ -21,34 +15,31 @@ module.exports = {
 				message.client.user.username.toLowerCase(),
 				data.guild.prefix
 			];
+
 			let prefix = null;
+
 			prefixes.forEach((p) => {
 				if (message.content.startsWith(p) || message.content.toLowerCase().startsWith(p)) prefix = p;
 			});
 
 			return prefix;
-		} else {
-			return true;
-		}
+		} else return true;
 	},
 
-	// This function return an actual link to the support server
-	async supportLink(client) {
-		const guild = client.guilds.cache.get(client.config.support.id);
+	async createInvite(client, guildId) {
+		const guild = client.guilds.cache.get(guildId);
 		const member = guild.me;
 		const channel = guild.channels.cache.find((ch) => ch.permissionsFor(member.id).has(Permissions.FLAGS.CREATE_INSTANT_INVITE) && ch.type === "GUILD_TEXT" || ch.type === "GUILD_VOICE");
 		if (channel) {
 			const invite = await channel.createInvite({
-				maxAge: 0
+				maxAge: 0,
+				maxUses: 5
 			}).catch(() => {});
 
-			return invite ? invite.url : null;
-		} else {
-			return "";
-		}
+			return invite ? invite.url : "No URL";
+		} return "No Invite";
 	},
 
-	// This function sort an array
 	sortByKey(array, key) {
 		return array.sort(function (a, b) {
 			const x = a[key];
@@ -57,7 +48,6 @@ module.exports = {
 		});
 	},
 
-	// This function return a shuffled array
 	shuffle(pArray) {
 		const array = [];
 		pArray.forEach(element => array.push(element));
@@ -78,9 +68,8 @@ module.exports = {
 		return array;
 	},
 
-	// This function return a random number between min and max
 	randomNum(min, max) {
-		return Math.floor(Math.random() * (max - min)) + min;
+		return Math.floor(Math.random() * (max - min) + min + 1);
 	},
 
 	convertTime(guild, time) {
