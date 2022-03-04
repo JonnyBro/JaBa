@@ -1,8 +1,8 @@
 {
-	"DESCRIPTION": "Украсть эмодзи на данный сервер с другого!",
-	"USAGE": "{{prefix}}stealemoji [эмодзи]",
+	"DESCRIPTION": "Вкрасти емодзі на даний сервер з іншого!",
+	"USAGE": "{{prefix}}stealemoji [емодзі]",
 	"EXAMPLES": "{{prefix}}stealemoji :coolstorybob:",
-	"MISSING_EMOJI": "Укажите эмодзи!",
-	"SUCCESS": "{{emoji}} добавлен!",
-	"ERROR": "{{emoji}} не был добавлен. Проверьте, есть ли место для добавления эмодзи!"
+	"MISSING_EMOJI": "Вкажіть емодзі!",
+	"SUCCESS": "{{emoji}} додано!",
+	"ERROR": "{{emoji}} не було додано. Перевірте, чи є місце для додавання емоди!"
 }

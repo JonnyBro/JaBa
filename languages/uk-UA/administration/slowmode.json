@@ -1,8 +1,8 @@
 {
-	"DESCRIPTION": "Включить медленный режим в канале",
-	"USAGE": "{{prefix}}slowmode [#канал] (время)",
-	"EXAMPLES": "{{prefix}}slowmode #основной 10m\n{{prefix}}slowmode #основной",
-	"DISABLED": "**Медленный режим был выключен в канале {{channel}}!**\n\n:arrow_right_hook: *Отправьте `{{prefix}}slowmode [#канал] (время)`, чтобы снова включить медленный режим!*",
-	"ENABLED": "**Медленный режим в `{{time}}` установлен в канале `{{channel}}`!**\n\n:arrow_right_hook: *Отправьте `{{prefix}}slowmode {{channel}}`, чтобы отключить!*",
-	"PLEASE_WAIT": "В канале {{channel}} включён медленный режим! Подождите {{time}} перед отправкой следующего сообщения!"
+	"DESCRIPTION": "Увімкнути повільний режим у каналі",
+	"USAGE": "{{prefix}}slowmode [#канал] (час)",
+	"EXAMPLES": "{{prefix}}slowmode #основний 10m\n{{prefix}}slowmode #основний",
+	"DISABLED": "**Повільний режим був вимкнений у {{channel}}!**\n\n:arrow_right_hook: *Надіслати `{{prefix}}slowmode [#канал] (час)`, щоб знову ввімкнути повільний режим!*",
+	"ENABLED": "**Повільний режим в `{{time}}` встановлений у каналі `{{channel}}`!**\n\n:arrow_right_hook: *Надішліть `{{prefix}}slowmode {{channel} }`, щоб вимкнути!*",
+	"PLEASE_WAIT": "У {{channel}} увімкнено повільний режим! Зачекайте {{time}} перед надсиланням наступного повідомлення!"
 }
