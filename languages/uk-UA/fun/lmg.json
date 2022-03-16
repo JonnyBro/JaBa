@@ -1,6 +1,6 @@
 {
-	"DESCRIPTION": "Создать LMGTFY (давай я загуглю это для тебя) ссылку",
-	"USAGE": "{{prefix}}lmg [запрос]",
-	"EXAMPLES": "{{prefix}}lmg Как создать Discord бота?",
-	"MISSING": "Укажите запрос!"
+	"DESCRIPTION": "Створити LMGTFY (давай я загуглю це для тебе) посилання",
+	"USAGE": "{{prefix}}lmg [запит]",
+	"EXAMPLES": "{{prefix}}lmg Як створити Discord бота?",
+	"MISSING": "Вкажіть запит!"
 }
