@@ -1,15 +1,15 @@
 {
-	"DESCRIPTION": "Конные скачки!",
+	"DESCRIPTION": "Кінні перегони!",
 	"USAGE": "{{prefix}}horserace [create/bet/go]",
 	"EXAMPLES": "{{prefix}}horserace create\n{{prefix}}horserace bet 3 100",
-	"MISSING_STATUS": "Выберите параметр: `create`, `bet` или `go`!",
-	"HORSE_NUM": "На скачках всего 5 лошадей!",
-	"EMBED_T": "Конные скачки",
-	"HORSE_NAME": "Лошадь {{number}}",
-	"HORSE_VALUE": "Скорость - {{speed}}\nПрибыль - *ставка* x **{{profit}}**",
-	"BET": "**{{user}}** поставил {{amount}} на лошадь **{{horse}}**!",
-	"NO_WINNERS": "Победила лошадь **{{horse}}**. Никто не выиграл кредиты!",
-	"WINNERS": "Победила лошадь **{{horse}}**. {{winners}}!",
-	"GAME_RUNNING": "Игра уже идёт!",
-	"NO_GAME_RUNNING": "Игра не начата!"
+	"MISSING_STATUS": "Виберіть параметр: `create`, `bet` або `go`!",
+	"HORSE_NUM": "На перегонах всього 5 коней!",
+	"EMBED_T": "Кінні перегони",
+	"HORSE_NAME": "Кінь {{number}}",
+	"HORSE_VALUE": "Швидкість - {{speed}}\nПрибуток - *ставка* x **{{profit}}**",
+	"BET": "**{{user}}** поставив {{amount}} на коня **{{horse}}**!",
+	"NO_WINNERS": "Переміг кінь **{{horse}}**. Ніхто не виграв кредити!",
+	"WINNERS": "Переміг кінь **{{horse}}**. {{winners}}!",
+	"GAME_RUNNING": "Гра вже йде!",
+	"NO_GAME_RUNNING": "Гру не розпочато!"
 }

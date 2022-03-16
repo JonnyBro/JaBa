@@ -1,6 +1,6 @@
 {
-	"DESCRIPTION": "Показать количество кредитов у пользователя",
-	"USAGE": "{{prefix}}money (@пользователь)",
+	"DESCRIPTION": "Показати кількість кредитів у користувача",
+	"USAGE": "{{prefix}}money (@користувач)",
 	"EXAMPLES": "{{prefix}}money\n{{prefix}}money @Jonny_Bro#4226",
-	"TITLE": "Кредиты {{username}}"
+	"TITLE": "{{username}} Кредити"
 }
