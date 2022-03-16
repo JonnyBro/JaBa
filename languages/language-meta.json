@@ -16,7 +16,7 @@
 	{
 		"name": "uk-UA",
 		"nativeName": "Українська",
-		"moment": "ru",
+		"moment": "uk",
 		"defaultMomentFormat": "Do MMMM YYYY",
 		"default": false,
 		"aliases": [
