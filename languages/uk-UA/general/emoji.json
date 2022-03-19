@@ -1,10 +1,10 @@
 {
-	"DESCRIPTION": "Показать информацию об эмодзи!",
-	"USAGE": "{{prefix}}emoji [эмодзи]",
+	"DESCRIPTION": "Показати інформацію про емодзі!",
+	"USAGE": "{{prefix}}emoji [емодзі]",
 	"EXAMPLES": "{{prefix}}emoji :tada:",
-	"TITLE": "Информация об {{emoji}}",
-	"NAME": "Название",
-	"ANIMATED": "Анимирован",
+	"TITLE": "Інформація про {{emoji}}",
+	"NAME": "Назва",
+	"ANIMATED": "Анімований",
 	"ID": "ID",
-	"STANDART": "Стандартный эмодзи"
+	"STANDART": "Стандартний емодзі"
 }

@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Создать изображение \"captcha\"",
-	"USAGE": "{{prefix}}captcha (@пользователь)",
+	"DESCRIPTION": "Створити зображення \"captcha\"",
+	"USAGE": "{{prefix}}captcha (@користувач)",
 	"EXAMPLES": "{{prefix}}captcha\n{{prefix}}captcha @Jonny_Bro#4226"
 }

@@ -1,11 +1,11 @@
 {
-	"DESCRIPTION": "Отправить жалобу в специальный канал!",
-	"USAGE": "{{prefix}}report [@пользователь] (причина)",
-	"EXAMPLES": "{{prefix}}report @Jonny_Bro#4226 Нарушение правил",
-	"MISSING_CHANNEL": "Канал для жалоб не настроен!",
-	"MISSING_REASON": "Введите причину!",
-	"MISSING_USER": "Вы должны упомянуть пользователя!",
-	"INVALID_USER": "Вы не можете пожаловаться на себя",
-	"SUCCESS": "Ваша жалоба отправлена в {{channel}}!",
-	"TITLE": "Жалоба - {{user}}"
+	"DESCRIPTION": "Надіслати скаргу до спеціального каналу!",
+	"USAGE": "{{prefix}}report [@користувач] (причина)",
+	"EXAMPLES": "{{prefix}}report @Jonny_Bro#4226 Порушення правил",
+	"MISSING_CHANNEL": "Канал для скарг не налаштований!",
+	"MISSING_REASON": "Введіть причину!",
+	"MISSING_USER": "Ви повинні згадати користувача!",
+	"INVALID_USER": "Ви не можете поскаржитися на себе",
+	"SUCCESS": "Ваша скарга надіслана в {{channel}}!",
+	"TITLE": "Скарга - {{user}}"
 }

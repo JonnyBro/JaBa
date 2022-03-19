@@ -1,6 +1,6 @@
 {
-	"DESCRIPTION": "Показать список доступных звуков",
+	"DESCRIPTION": "Показати список доступних звуків",
 	"USAGE": "{{prefix}}clips",
 	"EXAMPLES": "{{prefix}}clips",
-	"EMBED_TITLE": "**Список клипов**"
+	"EMBED_TITLE": "**Список кліпів**"
 }

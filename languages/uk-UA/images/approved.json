@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Создать изображение \"approved\"",
-	"USAGE": "{{prefix}}approved (@пользователь)",
+	"DESCRIPTION": "Створити зображення \"approved\"",
+	"USAGE": "{{prefix}}approved (@користувач)",
 	"EXAMPLES": "{{prefix}}approved\n{{prefix}}approved @Jonny_Bro#4226"
 }

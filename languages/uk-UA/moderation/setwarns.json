@@ -1,12 +1,12 @@
 {
-	"DESCRIPTION": "Настроить наказание которое пользователь будет получать после данного кол-ва предупреждений!",
+	"DESCRIPTION": "Налаштувати покарання, яке користувач буде отримувати після даної кількості попереджень!",
 	"USAGE": "{{prefix}}setwarns [kick/ban] [число/reset]",
 	"EXAMPLES": "{{prefix}}setwarns kick 5\n{{prefix}}setwarns ban 10\n{{prefix}}setwarns ban reset",
-	"MISSING_TYPE": "Выберите действие: `kick` или `ban`!",
-	"SUCCESS_KICK": "`{{count}}` приведут к кику!\n\n:arrow_right_hook: *Используйте `{{prefix}}configuration`, чтобы увидеть обновлённые настройки!*",
-	"SUCCESS_BAN": "`{{count}}` приведут к бану!\n\n:arrow_right_hook: *Используйте `{{prefix}}configuration`, чтобы увидеть обновлённые настройки!*",
-	"SUCCESS_KICK_RESET": "**Автокик пользователей отключён!**\n\n:arrow_right_hook: *Используйте `{{prefix}}configuration`, чтобы увидеть обновлённые настройки!*",
-	"SUCCESS_BAN_RESET": "**Автобан пользователей отключён!**\n\n:arrow_right_hook: *Используйте `{{prefix}}configuration`, чтобы увидеть обновлённые настройки!*",
-	"AUTO_BAN": "**{{username}}** был автоматически забанен за достижение {{count}}!",
-	"AUTO_KICK": "**{{username}}** был автоматически кикнут за достижение {{count}}!"
-}
+	"MISSING_TYPE": "Виберіть дію: `kick` або `ban`!",
+	"SUCCESS_KICK": "`{{count}}` призведуть до кіку!\n\n:arrow_right_hook: *Використовуйте `{{prefix}}configuration`, щоб побачити оновлені налаштування!*",
+	"SUCCESS_BAN": "`{{count}}` приведуть до бана!\n\n:arrow_right_hook: *Використовуйте `{{prefix}}configuration`, щоб побачити оновлені налаштування!*",
+	"SUCCESS_KICK_RESET": "**Автокік користувачів вимкнено!**\n\n:arrow_right_hook: *Використовуйте `{{prefix}}configuration`, щоб побачити оновлені налаштування!*",
+	"SUCCESS_BAN_RESET": "**Автобан користувачів вимкнено!**\n\n:arrow_right_hook: *Використовуйте `{{prefix}}configuration`, щоб побачити оновлені налаштування!*",
+	"AUTO_BAN": "**{{username}}** був автоматично забанений за досягнення {{count}}!",
+	"AUTO_KICK": "**{{username}}** був автоматично кікнутий за досягнення {{count}}!"
+	}

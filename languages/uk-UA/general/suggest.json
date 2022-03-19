@@ -1,9 +1,9 @@
 {
-	"DESCRIPTION": "Отправить предложение в специальный канал!",
-	"USAGE": "{{prefix}}suggest [предложение]",
-	"EXAMPLES": "{{prefix}}suggest Новый канал #nsfw :smiling_imp:",
-	"MISSING_CHANNEL": "Канал для предложений не настроен!",
-	"MISSING_CONTENT": "Введите предложение!",
-	"TITLE": "Предложение - {{user}}",
-	"SUCCESS": "Ваше предложение отправлено в {{channel}}!"
+	"DESCRIPTION": "Надіслати пропозицію до спеціального каналу!",
+	"USAGE": "{{prefix}}suggest [пропозиція]",
+	"EXAMPLES": "{{prefix}}suggest Новий канал #nsfw :smiling_imp:",
+	"MISSING_CHANNEL": "Канал для пропозицій не налаштований!",
+	"MISSING_CONTENT": "Введіть пропозицію!",
+	"TITLE": "Пропозиція - {{user}}",
+	"SUCCESS": "Ваша пропозиція надіслана в {{channel}}!"
 }

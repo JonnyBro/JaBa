@@ -1,15 +1,15 @@
 {
-	"DESCRIPTION": "Позволяет изменять многие данные пользователя!",
-	"USAGE": "{{prefix}}debug [set/add] [level/xp/credits/bank/rep] [@пользователь] [значение]",
+	"DESCRIPTION": "Дозволяє змінювати багато даних користувача!",
+	"USAGE": "{{prefix}}debug [set/add] [level/xp/credits/bank/rep] [@користувач] [значення]",
 	"EXAMPLES": "{{prefix}}debug set level @Jonny_Bro#4226 10000",
-	"INVALID_MEMBER": "Вы должны упомянуть пользователя!",
-	"NO_ACTION": "Выберите действие: `set` или `add`!",
-	"NO_STATUS": "Выберите параметр: `level`, `xp`, `credits`, `rep` или `bank`!",
-	"BOT_USER": "Вы не можете изменить статистику бота!",
-	"INVALID_AMOUNT": "Укажите новое значение!",
-	"SUCCESS_LEVEL": "Уровень пользователя **{{username}}** изменён на **{{amount}}**!",
-	"SUCCESS_XP": "XP пользователя **{{username}}** изменён на **{{amount}}**!",
-	"SUCCESS_CREDITS": "Кредиты пользователя **{{username}}** изменены на **{{amount}}**!",
-	"SUCCESS_BANK": "Банк пользователя **{{username}}** изменён на **{{amount}}**!",
-	"SUCCESS_REP": "Очки репутации пользователя **{{username}}** изменены на **{{amount}}**!"
-}
+	"INVALID_MEMBER": "Ви повинні згадати користувача!",
+	"NO_ACTION": "Виберіть дію: `set` або `add`!",
+	"NO_STATUS": "Виберіть параметр: `level`, `xp`, `credits`, `rep` або `bank`!",
+	"BOT_USER": "Ви не можете змінити статистику робота!",
+	"INVALID_AMOUNT": "Вкажіть нове значення!",
+	"SUCCESS_LEVEL": "Рівень користувача **{{username}}** змінено на **{{amount}}**!",
+	"SUCCESS_XP": "XP користувача **{{username}}** змінено на **{{amount}}**!",
+	"SUCCESS_CREDITS": "Кредити користувача **{{username}}** змінені на **{{amount}}**!",
+	"SUCCESS_BANK": "Банк користувача **{{username}}** змінено на **{{amount}}**!",
+	"SUCCESS_REP": "Очки репутації користувача **{{username}}** змінені на **{{amount}}**!"
+	}

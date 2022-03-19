@@ -1,10 +1,10 @@
 {
-	"DESCRIPTION": "Удалить сообщения!",
-	"USAGE": "{{prefix}}clear [кол-во_сообщений] (@пользователь)",
+	"DESCRIPTION": "Видалити повідомлення!",
+	"USAGE": "{{prefix}}clear [у_повідомлень] (@користувач)",
 	"EXAMPLES": "{{prefix}}clear 10\n{{prefix}}clear 10 @Jonny_Bro#4226\n{{prefix}}clear all",
-	"MISSING_AMOUNT": "Укажите кол-во сообщений для удаления!",
-	"ALL_CONFIRM": "Все сообщения в канале будут удалены! Введите `confirm` для подтверждения",
-	"CHANNEL_CLEARED": "Канал очищен!",
-	"CLEARED": "Было удалено **{{amount}}**!",
-	"CLEARED_MEMBER": "Было удалено **{{amount}}** от **{{username}}**!"
+	"MISSING_AMOUNT": "Вкажіть кількість повідомлень для видалення!",
+	"ALL_CONFIRM": "Всі повідомлення в каналі будуть видалені! Введіть `confirm` для підтвердження",
+	"CHANNEL_CLEARED": "Канал очищений!",
+	"CLEARED": "Було видалено **{{amount}}**!",
+	"CLEARED_MEMBER": "Було видалено **{{amount}}** від **{{username}}**!"
 }

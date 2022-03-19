@@ -1,10 +1,10 @@
 {
-	"DESCRIPTION": "Показать информацию о сервере!",
-	"USAGE": "{{prefix}}serverinfo [ID/название]",
-	"EXAMPLES": "{{prefix}}serverinfo кык\n{{prefix}}serverinfo",
+	"DESCRIPTION": "Показати інформацію про сервер!",
+	"USAGE": "{{prefix}}serverinfo [ID/назва]",
+	"EXAMPLES": "{{prefix}}serverinfo кик\n{{prefix}}serverinfo",
 	"AFK_CHANNEL": "AFK канал",
-	"NO_AFK_CHANNEL": "Нет AFK канала",
-	"BOOSTS": "Кол-во бустов",
+	"NO_AFK_CHANNEL": "Немає AFK каналу",
+	"BOOSTS": "К-сть бустів",
 	"LINK": "Статистика сервера",
-	"LINK_TEXT": "Нажмите сюда, чтобы открыть статистику сервера!"
+	"LINK_TEXT": "Натисніть тут, щоб відкрити статистику сервера!"
 }

@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Написать сообщение от имени бота!",
-	"USAGE": "{{prefix}}say [текст] ++ (ID/название-канала) ++ (ID/название-сервера)",
-	"EXAMPLES": "{{prefix}}say Hello World!\n{{prefix}}say Hello World! ++ 123456789098765432"
-}
+	"DESCRIPTION": "Написати повідомлення від імені бота!",
+	"USAGE": "{{prefix}}say [текст] ++ (ID/назва-каналу) ++ (ID/назва-сервера)",
+	"EXAMPLES": "{{prefix}}say Слава Україні!\n{{prefix}}say Слава Україні! ++ 123456789098765432"
+	}

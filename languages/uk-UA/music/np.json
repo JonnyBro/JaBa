@@ -1,12 +1,12 @@
 {
-	"DESCRIPTION": "Показать информацию о играющем сейчас треке!",
+	"DESCRIPTION": "Показати інформацію про трек, що грає зараз!",
 	"USAGE": "{{prefix}}np",
 	"EXAMPLES": "{{prefix}}np",
-	"CURRENTLY_PLAYING": "Сейчас играет",
-	"T_TITLE": "Название",
+	"CURRENTLY_PLAYING": "Зараз грає",
+	"T_TITLE": "Назва",
 	"T_CHANNEL": "Канал",
-	"T_DURATION": "Длительность",
-	"T_CONF": "Настройки",
-	"T_DESCRIPTION": "Описание",
-	"NO_DESCRIPTION": "Описание отсутствует"
+	"T_DURATION": "Тривалість",
+	"T_CONF": "Налаштування",
+	"T_DESCRIPTION": "Опис",
+	"NO_DESCRIPTION": "Опис відсутній"
 }

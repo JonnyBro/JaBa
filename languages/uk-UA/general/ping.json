@@ -1,6 +1,6 @@
 {
-	"DESCRIPTION": "Показать пинг бота",
+	"DESCRIPTION": "Показати пінг бота",
 	"USAGE": "{{prefix}}ping",
 	"EXAMPLES": "{{prefix}}ping",
-	"CONTENT": "Понг! Мой пинг - `{{ping}}` ms."
+	"CONTENT": "Понг! Мій пінг - `{{ping}}` ms."
 }
