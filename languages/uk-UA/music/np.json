@@ -9,10 +9,10 @@
 	"T_CONF": "Налаштування",
 	"T_DESCRIPTION": "Опис",
 	"NO_DESCRIPTION": "Опис відсутній",
-	"FILTERS": "Фильтры",
+	"FILTERS": "Фільтри",
 	"REPEAT": "Повтор",
-	"AUTOPLAY": "Автовоспроизведение",
-	"QUEUE": "Очереди",
+	"AUTOPLAY": "Автовідтворення",
+	"QUEUE": "Черги",
 	"SONG": "Трека",
 	"ENABLED": "Вкл.",
 	"DISABLED": "Выкл."
