@@ -27,11 +27,17 @@ class Np extends Command {
 		const track = queue.songs[0];
 
 		const status = queue =>
-			`Фильтры: \`${queue.filters.join(", ") || "Выкл"}\` | Повтор: \`${
+			`${message.translate("music/np:FILTERS")}: \`${
+				queue.filters.join(", ") || message.translate("music/np:DISABLED")
+			}\` | ${message.translate("music/np:REPEAT")}: \`${
 				queue.repeatMode
-					? queue.repeatMode === 2 ? "Очереди" : "Трека"
-					: "Выкл"
-			}\` | Автовоспроизведение: \`${queue.autoplay ? "Вкл" : "Выкл"}\``;
+					? queue.repeatMode === 2 ? message.translate("music/np:QUEUE") : message.translate("music/np:SONG")
+					: message.translate("music/np:DISABLED")
+			}\` | ${message.translate("music/np:AUTOPLAY")}: \`${
+				queue.autoplay
+					? message.translate("music/np:ENABLED")
+					: message.translate("music/np:DISABLED")
+			}\``;
 
 		const embed = new Discord.MessageEmbed()
 			.setAuthor({

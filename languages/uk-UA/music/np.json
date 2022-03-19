@@ -8,5 +8,12 @@
 	"T_DURATION": "Тривалість",
 	"T_CONF": "Налаштування",
 	"T_DESCRIPTION": "Опис",
-	"NO_DESCRIPTION": "Опис відсутній"
+	"NO_DESCRIPTION": "Опис відсутній",
+	"FILTERS": "Фильтры",
+	"REPEAT": "Повтор",
+	"AUTOPLAY": "Автовоспроизведение",
+	"QUEUE": "Очереди",
+	"SONG": "Трека",
+	"ENABLED": "Вкл.",
+	"DISABLED": "Выкл."
 }
