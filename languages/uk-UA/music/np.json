@@ -14,6 +14,6 @@
 	"AUTOPLAY": "Автовідтворення",
 	"QUEUE": "Черги",
 	"SONG": "Трека",
-	"ENABLED": "Вкл.",
-	"DISABLED": "Выкл."
+	"ENABLED": "Вмк.",
+	"DISABLED": "Вимк."
 }
