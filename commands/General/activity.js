@@ -26,14 +26,14 @@ class Activity extends Command {
 
 		const activities = [
 			"betrayal",
-			"checkers (Необходим первый уровень буста или выше)",
-			"chess (Необходим первый уровень буста или выше)",
+			`checkers (${message.translate("general/activity:NO_BOOST")})`,
+			`chess (${message.translate("general/activity:NO_BOOST")})`,
 			"sketchheads",
-			"ocho (Необходим первый уровень буста или выше)",
+			`ocho (${message.translate("general/activity:NO_BOOST")})`,
 			"fishing",
 			"lettertile",
-			"poker (Необходим первый уровень буста или выше)",
-			"spellcast (Необходим первый уровень буста или выше)",
+			`poker (${message.translate("general/activity:NO_BOOST")})`,
+			`spellcast (${message.translate("general/activity:NO_BOOST")})`,
 			"wordsnack",
 			"puttparty",
 			"youtube"
