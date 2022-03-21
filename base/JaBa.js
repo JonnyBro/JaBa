@@ -80,7 +80,7 @@ class JaBa extends Client {
 
 		this.player
 			.on("playSong", async (queue, song) => {
-				const m = await queue.textChannel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: song.name }) });
+				const m = await queue.textChannel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: song.name }, queue.textChannel.guild.data.language) });
 				if (song.duration > 1) {
 					setTimeout(() => {
 						if (m.deletable) m.delete();
@@ -91,13 +91,13 @@ class JaBa extends Client {
 					}, 10 * 60 * 1000); // m * s * ms
 				}
 			})
-			.on("addSong", (queue, song) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE", { songName: song.name }) }))
-			.on("addList", (queue, playlist) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE_COUNT", { songCount: playlist.songs.length }) }))
+			.on("addSong", (queue, song) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE", { songName: song.name }, queue.textChannel.guild.data.language) }))
+			.on("addList", (queue, playlist) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE_COUNT", { songCount: playlist.songs.length }, queue.textChannel.guild.data.language) }))
 			.on("searchResult", (message, result) => {
 				let i = 0;
 				const embed = new MessageEmbed()
 					.setDescription(result.map(song => `**${++i} -** ${song.name}`).join("\n"))
-					.setFooter({ text: this.translate("music/play:RESULTS_FOOTER") })
+					.setFooter({ text: this.translate("music/play:RESULTS_FOOTER", null, message.guild.data.language) })
 					.setColor(this.config.embed.color);
 				message.reply({ embeds: [embed] });
 			})
@@ -107,11 +107,11 @@ class JaBa extends Client {
 			.on("searchNoResult", message => message.error("music/play:NO_RESULT"))
 			.on("error", (textChannel, e) => {
 				console.error(e);
-				textChannel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e }) });
+				textChannel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e }, textChannel.guild.data.language) });
 			})
-			.on("finish", queue => queue.textChannel.send(this.translate("music/play:QUEUE_ENDED")))
-			// .on("disconnect", queue => queue.textChannel.send(this.translate("music/play:STOP_DISCONNECTED")))
-			.on("empty", queue => queue.textChannel.send(this.translate("music/play:STOP_EMPTY")));
+			.on("finish", queue => queue.textChannel.send(this.translate("music/play:QUEUE_ENDED", null, queue.textChannel.guild.data.language)))
+			// .on("disconnect", queue => queue.textChannel.send(this.translate("music/play:STOP_DISCONNECTED", null, queue.textChannel.guild.data.language)))
+			.on("empty", queue => queue.textChannel.send(this.translate("music/play:STOP_EMPTY", null, queue.textChannel.guild.data.language)));
 
 		this.giveawaysManager = new GiveawaysManager(this, {
 			storage: "./giveaways.json",
