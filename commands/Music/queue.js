@@ -50,7 +50,7 @@ class Queue extends Command {
 					dynamic: true
 				})
 			})
-			.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*Добавил ${queue.songs[0].member}*\n`);
+			.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*${message.translate("music/queue:TITLE")} ${queue.songs[0].member}*\n`);
 
 		FieldsEmbed
 			.setArray(queue.songs[1] ? queue.songs.slice(1, queue.songs.length) : [])
@@ -60,7 +60,7 @@ class Queue extends Command {
 			.setDeleteOnTimeout(true)
 			.setDisabledNavigationEmojis(["jump"])
 			.setPageIndicator(true)
-			.formatField("Очередь", (track) => `**${queue.songs.indexOf(track)}**. [${track.name}](${track.url})\n*Добавил ${track.member}*\n`)
+			.formatField(message.translate("music/queue:TITLE"), (track) => `**${queue.songs.indexOf(track)}**. [${track.name}](${track.url})\n*${message.translate("music/queue:TITLE")} ${track.member}*\n`)
 			.build();
 	}
 }
