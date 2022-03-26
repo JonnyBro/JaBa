@@ -1,8 +1,8 @@
 {
-	"DESCRIPTION": "Удалить плейлист",
-	"USAGE": "{{prefix}}removeplaylist [название]",
-	"EXAMPLES": "{{prefix}}removeplaylist Мой крутой плейлист",
-	"NO_NAME": "Укажите название плейлиста!",
-	"REMOVED": "Плейлист `{{name}}` удалён!",
-	"NOT_FOUND": "Плейлист `{{name}}` не найден!"
+	"DESCRIPTION": "Видалити плейлист",
+	"USAGE": "{{prefix}}removeplaylist [назва]",
+	"EXAMPLES": "{{prefix}}removeplaylist Мій крутий плейлист",
+	"NO_NAME": "Вкажіть назву плейлиста!",
+	"REMOVED": "Плейлист `{{name}}` видалений!",
+	"NOT_FOUND": "Плейлист `{{name}}` не знайдено!"
 }
