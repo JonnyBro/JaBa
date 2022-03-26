@@ -3,6 +3,5 @@
 	"USAGE": "{{prefix}}queue",
 	"EXAMPLES": "{{prefix}}queue",
 	"TITLE": "Черга",
-	"ADDED": "Додав",
-	"PLAYLIST": "Плейлист"
+	"ADDED": "Додав"
 }
