@@ -1,8 +1,5 @@
 {
-	"DESCRIPTION": "Создать плейлист",
-	"USAGE": "{{prefix}}createplaylist [название] | [ссылки на треки/трансляции]",
-	"EXAMPLES": "{{prefix}}createplaylist Мой крутой плейлист | https://www.youtube.com/watch?v=dQw4w9WgXcQ https://www.youtube.com/watch?v=MEg-oqI9qmw",
-	"NO_NAME": "Укажите название плейлиста!",
-	"NO_SONGS": "Укажите ссылки(у) на треки/трансляции!",
-	"CREATED": "Плейлист `{{name}}` сохранён!"
+	"DESCRIPTION": "Воспроизвести плейлист",
+	"USAGE": "{{prefix}}playplaylist [название]",
+	"EXAMPLES": "{{prefix}}playplaylist Мой крутой плейлист"
 }
