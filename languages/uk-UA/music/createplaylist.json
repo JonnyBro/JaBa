@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Створити плейлист",
+	"USAGE": "{{prefix}}createplaylist [назва] | [посилання на треки/трансляції]",
+	"EXAMPLES": "{{prefix}}createplaylist Мій крутий плейлист | https://www.youtube.com/watch?v=dQw4w9WgXcQ https://www.youtube.com/watch?v=MEg-oqI9qmw",
+	"NO_NAME": "Вкажіть назву плейлиста!",
+	"NO_SONGS": "Вкажіть посилання на треки/трансляції!",
+	"CREATED": "Плейлист `{{name}}` збережений!"
+}

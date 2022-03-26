@@ -1,0 +1,12 @@
+{
+	"DESCRIPTION": "Подивитися список ваших плейлистів",
+	"USAGE": "{{prefix}}playlists (назва)",
+	"EXAMPLES": "{{prefix}}playlists\n{{prefix}}playlists Мій крутий плейлист",
+	"EMBED_TITLE": "Список плейлистів",
+	"EMBED_TITLE2": "Плейлист \"{{name}}\"",
+	"NO_PLAYLISTS": "У вас немає плейлистів!",
+	"PLAYLISTS": "Плейлисти",
+	"NAME": "Назва",
+	"COUNT": "Кількість треків",
+	"SONGS": "Треки в плейлисті"
+}
