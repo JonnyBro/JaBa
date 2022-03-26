@@ -1,6 +1,6 @@
 {
     "name": "jaba",
-    "version": "3.4.3",
+    "version": "3.4.4",
     "description": "A very complete Discord bot (more than 100 commands) that uses the Discord.js",
     "main": "index.js",
     "private": true,
@@ -34,7 +34,7 @@
         "discord-paginationembed": "github:gazmull/discord-paginationembed#v3",
         "discord-together": "^1.3.3",
         "discord.js": "^13.6.0",
-        "distube": "^3.3.2",
+        "distube": "^3.3.3",
         "ejs": "^3.1.3",
         "express": "^4.17.1",
         "express-session": "^1.17.0",

@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Удалить плейлист",
+	"USAGE": "{{prefix}}removeplaylist [название]",
+	"EXAMPLES": "{{prefix}}removeplaylist Мой крутой плейлист",
+	"NO_NAME": "Укажите название плейлиста!",
+	"REMOVED": "Плейлист `{{name}}` удалён!",
+	"NOT_FOUND": "Плейлист `{{name}}` не найден!"
+}

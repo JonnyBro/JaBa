@@ -33,7 +33,7 @@ class Queue extends Command {
 						dynamic: true
 					})
 				})
-				.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*Добавил ${queue.songs[0].member}*\n`)
+				.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*${message.translate("music/queue:ADDED")} ${queue.songs[0].member || message.translate("music/queue:PLAYLIST")}*\n`)
 				.setColor(data.config.embed.color);
 			return message.reply({
 				embeds: [embed]
@@ -50,8 +50,7 @@ class Queue extends Command {
 					dynamic: true
 				})
 			})
-			.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*${message.translate("music/queue:TITLE")} ${queue.songs[0].member}*\n`);
-
+			.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*${message.translate("music/queue:ADDED")} ${queue.songs[0].member || message.translate("music/queue:PLAYLIST")}*\n`);
 		FieldsEmbed
 			.setArray(queue.songs[1] ? queue.songs.slice(1, queue.songs.length) : [])
 			.setAuthorizedUsers([message.author.id])
@@ -60,7 +59,7 @@ class Queue extends Command {
 			.setDeleteOnTimeout(true)
 			.setDisabledNavigationEmojis(["jump"])
 			.setPageIndicator(true)
-			.formatField(message.translate("music/queue:TITLE"), (track) => `**${queue.songs.indexOf(track)}**. [${track.name}](${track.url})\n*${message.translate("music/queue:TITLE")} ${track.member}*\n`)
+			.formatField(message.translate("music/queue:TITLE"), (track) => `**${queue.songs.indexOf(track)}**. [${track.name}](${track.url})\n*${message.translate("music/queue:ADDED")} ${track.member || message.translate("music/queue:PLAYLIST")}*\n`)
 			.build();
 	}
 }

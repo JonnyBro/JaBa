@@ -82,10 +82,11 @@ const userSchema = new mongoose.Schema({
 	}},
 
 	/* OTHER INFORMATIONS */
-	afk: { type: String, default: null }, // Whether the member is AFK
-	reminds: { type: Array, default: [] }, // the reminds of the user
-	logged: { type: Boolean, default: false }, // if the user is logged to the dashboard
-	apiToken: { type: String, default: genToken() } // the api token of the user
+	afk: { type: String, default: null }, // The AFK reason (if any)
+	reminds: { type: Array, default: [] }, // The reminds of the user
+	playlists: { type: Array, default: [] }, // The playlists of the user
+	logged: { type: Boolean, default: false }, // If the user is logged to the dashboard
+	apiToken: { type: String, default: genToken() } // The API token of the user
 });
 
 userSchema.method("genApiToken", async function() {

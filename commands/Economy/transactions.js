@@ -20,8 +20,8 @@ class Transactions extends Command {
 	async run(message, args, data) {
 		const timestamp = Date.now() + (30 * 24 * 60 * 60 * 1000); // day hour min sec msec / 1 month
 		const transactions = data.memberData.transactions;
-		for (const t of transactions) {
-			if (t.date > timestamp) {
+		for await (const t of transactions) {
+			if (t.date < timestamp) {
 				const index = transactions.indexOf(t);
 				transactions.splice(index, 1);
 			}
@@ -50,13 +50,11 @@ class Transactions extends Command {
 
 		if (transactions.length < 1) {
 			embed.setDescription(message.translate("economy/transactions:NO_TRANSACTIONS"));
-			return message.reply({
-				embeds: [embed]
-			});
 		} else {
 			if (sortedTransactions[0].length > 0) embed.addField(message.translate("economy/transactions:T_GOT"), sortedTransactions[0].join("\n"), true);
 			if (sortedTransactions[1].length > 0) embed.addField(message.translate("economy/transactions:T_SEND"), sortedTransactions[1].join("\n"), true);
 		}
+
 		message.reply({
 			embeds: [embed]
 		});
