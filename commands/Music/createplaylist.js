@@ -17,6 +17,7 @@ class CreatePlaylist extends Command {
 	}
 
 	async run(message, args, data) {
+		if (!args) return message.error("music/createplaylist:NO_NAME");
 		args = args.join(" ").split(" | ");
 
 		const name = args[0];
