@@ -12,24 +12,20 @@ module.exports = class {
 
 		const data = {};
 
-		// If the message author is a bot
 		if (message.author.bot) return;
 
-		// If the member on a guild is invisible or not cached, fetch them.
 		if (message.guild && !message.member) await message.guild.members.fetch(message.author.id);
 
 		const client = this.client;
 		data.config = client.config;
 
 		if (message.guild) {
-			// Gets guild data
 			const guild = await client.findOrCreateGuild({
 				id: message.guild.id
 			});
 			message.guild.data = data.guild = guild;
 		}
 
-		// Check if the bot was mentionned
 		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) {
 			if (message.guild) return message.sendT("misc:HELLO_SERVER", { username: message.author.username, prefix: data.guild.prefix });
 			else return message.sendT("misc:HELLO_DM");
@@ -38,7 +34,6 @@ module.exports = class {
 		if (message.content.includes("@someone") && message.guild && client.commands.get("someone").conf.enabled) return client.commands.get("someone").run(message, null, data);
 
 		if (message.guild) {
-			// Gets the data of the member
 			const memberData = await client.findOrCreateMember({
 				id: message.author.id,
 				guildID: message.guild.id
@@ -108,7 +103,6 @@ module.exports = class {
 			});
 		}
 
-		// Gets the prefix
 		const prefix = client.functions.getPrefix(message, data);
 		if (!prefix) return;
 
@@ -223,7 +217,7 @@ async function updateXp(client, msg, data) {
 	const toWait = Date.now() + 60000; // 1 min
 	xpCooldown[msg.author.id] = toWait;
 
-	const won = client.functions.randomNum(2, 5);
+	const won = client.functions.randomNum(1, 4);
 	const newXp = parseInt(points + won, 10);
 	const neededXp = 5 * (level * level) + 80 * level + 100;
 
