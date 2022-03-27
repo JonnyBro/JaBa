@@ -45,8 +45,8 @@ class Suggest extends Command {
 				text: data.config.embed.footer
 			});
 
-		const success = Discord.Util.parseEmoji(this.client.customEmojis.success).id;
-		const error = Discord.Util.parseEmoji(this.client.customEmojis.error).id;
+		const success = Discord.Util.parseEmoji(this.client.customEmojis.cool).id;
+		const error = Discord.Util.parseEmoji(this.client.customEmojis.notcool).id;
 
 		suggChannel.send({
 			embeds: [embed]
