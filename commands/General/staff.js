@@ -27,8 +27,8 @@ class Staff extends Command {
 					guild: message.guild.name
 				})
 			})
-			.addField(message.translate("general/staff:ADMINS"), (administrators.size > 0 ? administrators.map((a) => `${this.client.customEmojis.status[a.presence.status]} | <@${a.user.id}>`).join("\n") : message.translate("general/staff:NO_ADMINS")))
-			.addField(message.translate("general/staff:MODS"), (moderators.size > 0 ? moderators.map((m) => `${this.client.customEmojis.status[m.presence.status]} | <@${m.user.id}>`).join("\n") : message.translate("general/staff:NO_MODS")))
+			.addField(message.translate("general/staff:ADMINS"), (administrators.size > 0 ? administrators.map((a) => `${a.presence ? this.client.customEmojis.status[a.presence.status] : this.client.customEmojis.status.offline} | <@${a.user.id}>`).join("\n") : message.translate("general/staff:NO_ADMINS")))
+			.addField(message.translate("general/staff:MODS"), (moderators.size > 0 ? moderators.map((m) => `${m.presence ? this.client.customEmojis.status[m.presence.status] : this.client.customEmojis.status.offline} | <@${m.user.id}>`).join("\n") : message.translate("general/staff:NO_MODS")))
 			.setColor(data.config.embed.color)
 			.setFooter({
 				text: data.config.embed.footer
