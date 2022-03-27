@@ -1,8 +1,0 @@
-{
-	"DESCRIPTION": "Отримати NSFW гіфку",
-	"USAGE": "{{prefix}}hentai (категорія/help)",
-	"EXAMPLES": "{{prefix}}hentai\n{{prefix}}hentai help",
-	"NOCATEGORY": "Якщо Ви хочете побачити що-небудь з певної категорії, введіть її назву після команди.\nВикористовуйте **`{{prefix}}hentai help`** щоб побачити всі категорії\n",
-	"HELP_1": "Доступні категорії (ви можете використовувати команду без аргументів)",
-	"HELP_2": "neko\ncum\nsolo\nanal\nyuri\nblowjob - bj\npussy\nclassic\nfutanari - futa\n```"
-}

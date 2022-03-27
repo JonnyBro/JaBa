@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Получить случайную шутку!",
-	"USAGE": "{{prefix}}joke",
-	"EXAMPLES": "{{prefix}}joke",
-	"FOOTER": "JaBa | ID шутки: {{id}} | icanhazdadjoke.com"
-}
