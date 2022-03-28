@@ -1,9 +1,9 @@
 {
-	"DESCRIPTION": "Получить NSFW изображение с выбранного или случайного сабреддита",
+	"DESCRIPTION": "Отримати NSFW зображення з вибраного або випадкового сабреддита",
 	"USAGE": "{{prefix}}hentai (тег/list)",
 	"EXAMPLES": "{{prefix}}hentai\n{{prefix}}hentai list",
-	"SEARCHING": "Ищу изображение по тегу `{{tag}}`",
-	"SEARCHING_RANDOM": "Ищу случайное изображение",
-	"EMBED_TITLE": "Доступные категории",
-	"NOT_FOUND": "Данной категории не существует!"
+	"SEARCHING": "Шукаю зображення за тегом `{{tag}}`",
+	"SEARCHING_RANDOM": "Шукаю випадкове зображення",
+	"EMBED_TITLE": "Доступні категорії",
+	"NOT_FOUND": "Цей категорії не існує!"
 }
