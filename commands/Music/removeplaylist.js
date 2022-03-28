@@ -17,7 +17,7 @@ class RemovePlaylist extends Command {
 	}
 
 	async run(message, args, data) {
-		const name = args[0];
+		const name = args.join(" ");
 		if (!name) return message.error("music/createplaylist:NO_NAME");
 
 		const playlists = data.userData.playlists;
