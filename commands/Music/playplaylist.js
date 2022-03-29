@@ -23,13 +23,11 @@ class PlayPlaylists extends Command {
 		const name = args.join(" ");
 		let playlist;
 		for (const pl of data.userData.playlists) {
-			if (pl.name === name) {
-				playlist = new DisTube.Playlist(pl);
-			} else {
-				return message.error("music/removeplaylist:NOT_FOUND", {
-					name
-				});
-			}
+			if (!pl.name === name) return message.error("music/removeplaylist:NOT_FOUND", {
+				name
+			});
+
+			playlist = new DisTube.Playlist(pl);
 		}
 
 		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");

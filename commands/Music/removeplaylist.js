@@ -22,21 +22,19 @@ class RemovePlaylist extends Command {
 
 		const playlists = data.userData.playlists;
 		for (const playlist of playlists) {
-			if (playlist.name === name) {
-				const index = playlists.indexOf(playlist);
-				playlists.splice(index, 1);
+			if (!playlist.name === name) return message.error("music/removeplaylist:NOT_FOUND", {
+				name
+			});
 
-				data.userData.markModified("playlists");
-				data.userData.save();
+			const index = playlists.indexOf(playlist);
+			playlists.splice(index, 1);
 
-				message.success("music/removeplaylist:REMOVED", {
-					name
-				});
-			} else {
-				message.error("music/removeplaylist:NOT_FOUND", {
-					name
-				});
-			}
+			data.userData.markModified("playlists");
+			data.userData.save();
+
+			message.success("music/removeplaylist:REMOVED", {
+				name
+			});
 		}
 	}
 }

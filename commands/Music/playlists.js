@@ -25,13 +25,11 @@ class Playlists extends Command {
 			let playlist;
 
 			for (const pl of playlists) {
-				if (pl.name === name) {
-					playlist = pl;
-				} else {
-					message.error("music/removeplaylist:NOT_FOUND", {
-						name
-					});
-				}
+				if (!pl.name === name) return message.error("music/removeplaylist:NOT_FOUND", {
+					name
+				});
+
+				playlist = pl;
 			}
 
 			const embed = new Discord.MessageEmbed()
