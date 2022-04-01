@@ -19,7 +19,7 @@ class Invite extends Command {
 
 	async run(message, args, data) {
 		const inviteLink = this.client.generateInvite({
-			scopes: ["bot"],
+			scopes: ["bot", "applications.commands"],
 			permissions: [Discord.Permissions.FLAGS.ADMINISTRATOR]
 		});
 		const donateLink = "https://qiwi.com/n/JONNYBRO/";

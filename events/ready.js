@@ -14,7 +14,7 @@ module.exports = class {
 		// Logs some informations using logger
 		client.logger.log(`Loading a total of ${client.commands.size} command(s).`, "log");
 		client.logger.log(`${client.user.tag}, ready to serve ${tUsers} users in ${tServers} servers.`, "ready");
-		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot"] , permissions: [Permissions.FLAGS.ADMINISTRATOR] })}`, "ready");
+		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"] , permissions: [Permissions.FLAGS.ADMINISTRATOR] })}`, "ready");
 
 		// Discord Together
 		const discordtogether = require("../helpers/discordTogether");
