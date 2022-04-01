@@ -1,10 +1,10 @@
 const Command = require("../../base/Command"),
 	Discord = require("discord.js");
 
-class Invitations extends Command {
+class Invites extends Command {
 	constructor(client) {
 		super(client, {
-			name: "invitations",
+			name: "invites",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
@@ -28,16 +28,16 @@ class Invitations extends Command {
 
 		if (memberInvites.size <= 0) {
 			if (member === message.member) {
-				return message.error("general/invitations:NOBODY_AUTHOR");
+				return message.error("general/invites:NOBODY_AUTHOR");
 			} else {
-				return message.error("general/invitations:NOBODY_MEMBER", {
+				return message.error("general/invites:NOBODY_MEMBER", {
 					member: member.user.tag
 				});
 			}
 		}
 
 		const content = memberInvites.map((i) => {
-			return message.translate("general/invitations:CODE", {
+			return message.translate("general/invites:CODE", {
 				uses: i.uses,
 				code: i.code,
 				channel: i.channel.toString()
@@ -52,16 +52,16 @@ class Invitations extends Command {
 				text: data.config.embed.footer
 			})
 			.setAuthor({
-				name: message.translate("general/invitations:TRACKER")
+				name: message.translate("general/invites:TRACKER")
 			})
-			.setDescription(message.translate("general/invitations:TITLE", {
+			.setDescription(message.translate("general/invites:TITLE", {
 				member: member.user.tag,
 				guild: message.guild.name
 			}))
-			.addField(message.translate("general/invitations:FIELD_INVITED"), message.translate("general/invitations:FIELD_MEMBERS", {
+			.addField(message.translate("general/invites:FIELD_INVITED"), message.translate("general/invites:FIELD_MEMBERS", {
 				total: index
 			}))
-			.addField(message.translate("general/invitations:FIELD_CODES"), content);
+			.addField(message.translate("general/invites:FIELD_CODES"), content);
 
 		message.reply({
 			embeds: [embed]
@@ -69,4 +69,4 @@ class Invitations extends Command {
 	}
 }
 
-module.exports = Invitations;
+module.exports = Invites;

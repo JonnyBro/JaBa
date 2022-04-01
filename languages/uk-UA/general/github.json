@@ -1,8 +1,0 @@
-{
-	"DESCRIPTION": "Показати інформацію про GitHub репозиторії старої версії JaBa!",
-	"USAGE": "{{prefix}}github",
-	"EXAMPLES": "{{prefix}}github",
-	"CLICK_HERE": "Натисніть сюди, щоб відкрити посилання",
-	"LANGUAGE": "Мова",
-	"OWNER": "Власник репозиторію"
-}

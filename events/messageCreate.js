@@ -31,8 +31,6 @@ module.exports = class {
 			else return message.sendT("misc:HELLO_DM");
 		}
 
-		if (message.content.includes("@someone") && message.guild && client.commands.get("someone").conf.enabled) return client.commands.get("someone").run(message, null, data);
-
 		if (message.guild) {
 			const memberData = await client.findOrCreateMember({
 				id: message.author.id,

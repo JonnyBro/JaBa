@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Опублікувати текст на Hastebin!",
-	"USAGE": "{{prefix}}hastebin [текст]",
-	"EXAMPLES": "{{prefix}}hastebin Hello World!",
-	"MISSING_TEXT": "Введіть текст!",
-	"SUCCESS": "Успішно опубліковано!"
-}
