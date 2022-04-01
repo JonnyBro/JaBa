@@ -57,7 +57,6 @@ class Queue extends Command {
 			.setChannel(message.channel)
 			.setElementsPerPage(5)
 			.setDeleteOnTimeout(true)
-			.setDisabledNavigationEmojis(["jump"])
 			.setPageIndicator(true)
 			.formatField(message.translate("music/queue:TITLE"), (track) => `**${queue.songs.indexOf(track)}**. [${track.name}](${track.url})\n*${message.translate("music/queue:ADDED")} ${track.member}*\n`)
 			.build();
