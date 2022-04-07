@@ -21,7 +21,8 @@ class Ping extends Command {
 			ping: "..."
 		}).then((m) => {
 			m.sendT("general/ping:CONTENT", {
-				ping: m.createdTimestamp - message.createdTimestamp
+				ping: m.createdTimestamp - message.createdTimestamp,
+				cping: Math.round(this.client.ws.ping)
 			}, { edit: true });
 		});
 	}
