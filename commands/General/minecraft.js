@@ -30,11 +30,11 @@ class Minecraft extends Command {
 		};
 
 		if (ip.split(":").length > 1) {
-			const ip = ip.split(":");
+			const ipp = ip.split(":");
 			options = {
 				type: "minecraft",
-				host: ip[0],
-				port: ip[1]
+				host: ipp[0],
+				port: ipp[1]
 			};
 		}
 
