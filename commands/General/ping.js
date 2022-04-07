@@ -18,11 +18,12 @@ class Ping extends Command {
 
 	async run(message) {
 		message.sendT("general/ping:CONTENT", {
-			ping: "..."
+			ping: "...",
+			wsping: "..."
 		}).then((m) => {
 			m.sendT("general/ping:CONTENT", {
 				ping: m.createdTimestamp - message.createdTimestamp,
-				cping: Math.round(this.client.ws.ping)
+				wsping: Math.round(this.client.ws.ping)
 			}, { edit: true });
 		});
 	}
