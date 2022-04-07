@@ -42,7 +42,7 @@ class Userinfo extends Command {
 
 		const embed = new Discord.MessageEmbed()
 			.setAuthor({
-				name: user.tag,
+				name: `${user.tag} (${user.id})`,
 				iconURL: user.displayAvatarURL({
 					size: 512,
 					dynamic: true,
