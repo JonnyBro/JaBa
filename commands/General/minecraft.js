@@ -1,6 +1,5 @@
 const Command = require("../../base/Command"),
 	Discord = require("discord.js"),
-	fetch = require("node-fetch"),
 	gamedig = require("gamedig");
 
 class Minecraft extends Command {
@@ -61,10 +60,7 @@ class Minecraft extends Command {
 
 		if (!json) return m.error("general/minecraft:FAILED", null, { edit: true });
 
-		const imgRes = await fetch(`https://www.minecraftskinstealer.com/achievement/a.php?i=2&h=Success&t=${ip}`);
-		const imgAttachment = new Discord.MessageAttachment(await imgRes.buffer(), "success.png");
-
-		const mcEmbed = new Discord.MessageEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setAuthor({
 				name: message.translate("general/minecraft:FIELD_NAME", {
 					ip: json.name
@@ -87,8 +83,7 @@ class Minecraft extends Command {
 
 		m.edit({
 			content: null,
-			embeds: [mcEmbed],
-			files: [imgAttachment]
+			embeds: [embed]
 		});
 	}
 }
