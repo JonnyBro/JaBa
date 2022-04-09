@@ -90,7 +90,7 @@ class Goodbye extends Command {
 					if (!channel) return message.error("misc:INVALID_CHANNEL");
 
 					goodbye.channel = channel.id;
-					message.sendT("administration/goodbye:FORM_2", {
+					return message.sendT("administration/goodbye:FORM_2", {
 						channel: channel.toString(),
 						author: msg.author.tag,
 						memberCount: msg.guild.memberCount

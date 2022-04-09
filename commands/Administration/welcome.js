@@ -93,7 +93,7 @@ class Welcome extends Command {
 					if (!channel) return message.error("misc:INVALID_CHANNEL");
 
 					welcome.channel = channel.id;
-					message.sendT("administration/welcome:FORM_2", {
+					return message.sendT("administration/welcome:FORM_2", {
 						guildName: message.guild.name,
 						author: msg.author.tag,
 						memberCount: msg.guild.memberCount

@@ -34,7 +34,9 @@ class Whois extends Command {
 					text: data.config.embed.footer
 				})
 				.setTimestamp();
-			return message.reply(embed);
+			return message.reply({
+				embeds: [embed]
+			});
 		}
 
 		const embed = new Discord.MessageEmbed()
