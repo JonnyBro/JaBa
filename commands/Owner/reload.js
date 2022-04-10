@@ -26,7 +26,6 @@ class Reload extends Command {
 		await this.client.unloadCommand(cmd.conf.location, cmd.help.name);
 		await this.client.loadCommand(cmd.conf.location, cmd.help.name);
 
-		// const lang = message.guild ? data.guild.language : "ru-RU";
 		i18next.reloadResources(["ru-RU", "uk-UA"]);
 		autoUpdateDocs.update(this.client);
 
