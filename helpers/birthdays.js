@@ -2,7 +2,7 @@ const CronJob = require("cron").CronJob,
 	Discord = require("discord.js");
 
 async function init(client) {
-	new CronJob("0 10 * * *", async function () {
+	new CronJob("0 5 * * *", async function () {
 		client.guilds.cache.forEach(async (guild) => {
 			const date = new Date(),
 				currentDay = date.getDate(),
