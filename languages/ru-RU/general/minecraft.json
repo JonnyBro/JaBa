@@ -7,10 +7,9 @@
 	"ONLINE": "Онлайн",
 	"OFFLINE": "Оффлайн",
 	"PLAYERS": "{{count}} игрок(а/ов)",
-	"FIELD_NAME": "Информация об {{ip}}",
 	"FIELD_VERSION": "Версия",
 	"FIELD_CONNECTED": "Игроков на сервере",
-	"FIELD_MAX": "Максимум",
 	"FIELD_STATUS": "Статус",
+	"FIELD_PING": "Пинг",
 	"FIELD_IP": "Полный IP"
 }

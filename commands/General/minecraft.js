@@ -62,19 +62,13 @@ class Minecraft extends Command {
 
 		const embed = new Discord.MessageEmbed()
 			.setAuthor({
-				name: message.translate("general/minecraft:FIELD_NAME", {
-					ip: json.name
-				})
+				name: json.name
 			})
-			.addField(message.translate("general/minecraft:FIELD_VERSION"), json.raw.vanilla.raw.version.name)
-			.addField(message.translate("general/minecraft:FIELD_CONNECTED"), message.translate("general/minecraft:PLAYERS", {
-				count: (json.raw.players ? json.raw.players.online : json.players.length)
-			}))
-			.addField(message.translate("general/minecraft:FIELD_MAX"), message.translate("general/minecraft:PLAYERS", {
-				count: (json.raw.players ? json.raw.players.max : json.maxplayers)
-			}))
 			.addField(message.translate("general/minecraft:FIELD_STATUS"), message.translate("general/minecraft:ONLINE"))
-			.addField(message.translate("general/minecraft:FIELD_IP"), json.connect)
+			.addField(message.translate("general/minecraft:FIELD_CONNECTED"), `**${(json.raw.players ? json.raw.players.online : json.players.length)}** ${message.getNoun((json.raw.players ? json.raw.players.online : json.players.length), message.translate("misc:NOUNS:PLAYERS:1"), message.translate("misc:NOUNS:PLAYERS:2"), message.translate("misc:NOUNS:PLAYERS:5"))} / **${(json.raw.players ? json.raw.players.max : json.maxplayers)}** ${message.getNoun((json.raw.players ? json.raw.players.max : json.maxplayers), message.translate("misc:NOUNS:PLAYERS:1"), message.translate("misc:NOUNS:PLAYERS:2"), message.translate("misc:NOUNS:PLAYERS:5"))}`)
+			.addField(message.translate("general/minecraft:FIELD_IP"), json.connect, true)
+			.addField(message.translate("general/minecraft:FIELD_VERSION"), json.raw.vanilla.raw.version.name, true)
+			.addField(message.translate("general/minecraft:FIELD_PING"), json.raw.vanilla.ping.toString())
 			.setColor(data.config.embed.color)
 			.setThumbnail(favicon)
 			.setFooter({
