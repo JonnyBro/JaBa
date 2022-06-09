@@ -873,8 +873,8 @@ async function tictactoe(message, options = []) {
 						.setColor(options.timeoutEmbedColor || "#C90000")
 						.setFooter(foot)
 						.setTimestamp()
-						.setDescription(message.translate("economy/tictactoe:NO_ANSWER", {
-							user: opponent.user.tag
+						.setDescription(message.translate("economy/tictactoe:CANCELED_DESC", {
+							user: opponent.id
 						}));
 					m.edit({
 						embeds: [embed],

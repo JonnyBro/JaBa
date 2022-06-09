@@ -22,7 +22,7 @@ class TicTacToe extends Command {
 			resultBtn: true,
 			embedColor: data.config.embed.color,
 			embedFoot: data.config.embed.footer
-		}).then(async (winner) => {
+		}).then(async winner => {
 			const memberData = await this.client.findOrCreateMember({
 				id: winner.id,
 				guildID: message.guild.id
