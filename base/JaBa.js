@@ -48,6 +48,7 @@ class JaBa extends Client {
 		this.databaseCache.mutedUsers = new Collection(); // members who are currently muted
 
 		if (this.config.apiKeys.amethyste) this.AmeAPI = new AmeClient(this.config.apiKeys.amethyste);
+
 		this.icanhazdadjoke = async function() {
 			const joke = await fetch("https://icanhazdadjoke.com/", {
 				headers: {
@@ -92,7 +93,7 @@ class JaBa extends Client {
 				}
 			})
 			.on("addSong", (queue, song) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE", { songName: song.name }, queue.textChannel.guild.data.language) }))
-			.on("addList", (queue, playlist) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE_COUNT", { songCount: playlist.songs.length }, queue.textChannel.guild.data.language) }))
+			.on("addList", (queue, playlist) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE_COUNT", { songCount: `**${playlist.songs.length}** ${this.getNoun(playlist.songs.length, this.translate("misc:NOUNS:TRACKS:1"), this.translate("misc:NOUNS:TRACKS:1"), this.translate("misc:NOUNS:TRACKS:2"), this.translate("misc:NOUNS:TRACKS:5"))}` }, queue.textChannel.guild.data.language) }))
 			.on("searchResult", (message, result) => {
 				let i = 0;
 				const embed = new MessageEmbed()
