@@ -1,15 +1,17 @@
 # Bot Configuration
 config.js
 
-# Node modules
-node_modules
-yarn.lock
-
 # DB
 giveaways.json
 
 # Backups
 backups
+
+# commands.md
+**/commands.md
+
+# Clips
+clips
 
 # Mac OS files
 .DS_Store
@@ -21,8 +23,6 @@ report*.json
 # IDE
 .vscode
 
-# commands.md
-**/commands.md
-
-# Clips
-clips
+# Node modules
+node_modules
+yarn.lock
