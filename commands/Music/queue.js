@@ -9,7 +9,7 @@ class Queue extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["qu"],
+			aliases: ["q"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,

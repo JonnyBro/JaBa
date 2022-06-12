@@ -4,5 +4,5 @@
 	"EXAMPLES": "{{prefix}}delcommand hello",
 	"MISSING_NAME": "Введите название команды!",
 	"UNKNOWN_COMMAND": "Команда {{commandName}} не существует!",
-	"SUCCESS": "Команда {{commandName}} была удалена с сервера!"
+	"SUCCESS": "Команда **{{commandName}}** была удалена с сервера!"
 }

@@ -8,7 +8,7 @@ class Quote extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["q"],
+			aliases: ["qu"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
@@ -40,12 +40,8 @@ class Quote extends Command {
 
 		const msgID = args[0];
 		if (isNaN(msgID)) {
-			message.author.send({
-				content: message.translate("general/quote:MISSING_ID")
-			}).then(() => {
-				message.delete();
-			}).catch(() => {
-				message.error("misc:CANNOT_DM");
+			message.error("general/quote:MISSING_ID").then(() => {
+				if (message.deletable) message.delete();
 			});
 			return;
 		}
@@ -54,10 +50,8 @@ class Quote extends Command {
 		if (args[1]) {
 			channel = this.client.channels.cache.get(args[1]);
 			if (!channel) {
-				message.author.send(message.translate("general/quote:NO_MESSAGE_ID")).then(() => {
-					message.delete();
-				}).catch(() => {
-					message.error("misc:CANNOT_DM");
+				message.error("general/quote:NO_MESSAGE_ID").then(() => {
+					if (message.deletable) message.delete();
 				});
 				return;
 			}
@@ -65,31 +59,27 @@ class Quote extends Command {
 
 		if (!channel) {
 			message.channel.messages.fetch(msgID).catch(() => {
-				message.author.send((message.translate("general/quote:NO_MESSAGE_ID"))).then(() => {
-					message.delete();
-				}).catch(() => {
-					message.error("misc:CANNOT_DM");
+				message.error("general/quote:NO_MESSAGE_ID").then(() => {
+					if (message.deletable) message.delete();
 				});
 				return;
 			}).then((msg) => {
-				message.delete();
+				if (message.deletable) message.delete();
 				message.reply({
 					embeds: [embed(msg)]
 				});
 			});
 		} else {
-			channel.messages.fetch(msgID).catch(() => {
-				message.author.send(message.translate("general/quote:NO_MESSAGE_ID")).then(() => {
-					message.delete();
-				}).catch(() => {
-					message.error("misc:CANNOT_DM");
-				});
-				return;
-			}).then((msg) => {
-				message.delete();
+			channel.messages.fetch(msgID).then((msg) => {
+				if (message.deletable) message.delete();
 				message.reply({
 					embeds: [embed(msg)]
 				});
+			}).catch(() => {
+				message.error("general/quote:NO_MESSAGE_ID").then(() => {
+					if (message.deletable) message.delete();
+				});
+				return;
 			});
 		}
 	}

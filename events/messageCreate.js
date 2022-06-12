@@ -121,7 +121,7 @@ module.exports = class {
 			}));
 		}
 
-		if (customCommandAnswer) return message.channel.send({ content: customCommandAnswer });
+		if (customCommandAnswer) return message.channel.send({ content: customCommandAnswer.replace("{user}", message.author).replace("{guild}", message.guild) });
 		if (cmd.conf.guildOnly && !message.guild) return message.error("misc:GUILD_ONLY");
 
 		if (message.guild) {
