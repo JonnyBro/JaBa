@@ -19,11 +19,11 @@ class Transactions extends Command {
 
 	async run(message, args, data) {
 		const timestamp = Date.now() + (30 * 24 * 60 * 60 * 1000); // day hour min sec msec / 1 month
-		const transactions = data.memberData.transactions;
-		for await (const t of transactions) {
-			if (t.date < timestamp) {
-				const index = transactions.indexOf(t);
-				transactions.splice(index, 1);
+		for await (const transaction of data.memberData.transactions) {
+			if (transaction.date < timestamp) {
+				const index = data.memberData.transactions.indexOf(transaction);
+				data.memberData.transactions.splice(index, 1);
+				await data.memberData.transactions.save();
 			}
 		}
 
@@ -41,7 +41,8 @@ class Transactions extends Command {
 				text: data.config.embed.footer
 			});
 
-		const sortedTransactions = [ [], [] ];
+		const transactions = data.memberData.transactions,
+			sortedTransactions = [ [], [] ];
 
 		transactions.slice(-20).forEach((t) => {
 			const array = t.type === "got" ? sortedTransactions[0] : sortedTransactions[1];

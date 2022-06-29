@@ -27,15 +27,15 @@ class Rob extends Command {
 		});
 		const isInCooldown = memberData.cooldowns.rob || 0;
 		if (isInCooldown) {
-			if (isInCooldown > Date.now()) return message.error("economy/rob:COOLDOWN", { username: member.user.tag });
+			if (isInCooldown > Date.now()) return message.error("economy/rob:COOLDOWN", { user: member.user });
 		}
 
 		let amountToRob = args[1];
-		if (!amountToRob || isNaN(amountToRob) || parseInt(amountToRob, 10) <= 0) return message.error("economy/rob:MISSING_AMOUNT", { username: member.user.username });
+		if (!amountToRob || isNaN(amountToRob) || parseInt(amountToRob, 10) <= 0) return message.error("economy/rob:MISSING_AMOUNT", { user: member.user });
 
 		amountToRob = Math.floor(parseInt(amountToRob, 10));
 
-		if (amountToRob > memberData.money) return message.error("economy/rob:NOT_ENOUGH_MEMBER", { username: member.user.username });
+		if (amountToRob > memberData.money) return message.error("economy/rob:NOT_ENOUGH_MEMBER", { user: member.user });
 
 		const potentiallyLose = Math.floor(amountToRob * 1.5);
 		if (potentiallyLose > data.memberData.money) return message.error("economy/rob:NOT_ENOUGH_AUTHOR", {
@@ -50,10 +50,10 @@ class Rob extends Command {
 			memberData.cooldowns.rob = toWait;
 			memberData.markModified("cooldowns");
 			await memberData.save();
-			const randomNum = this.client.functions.randomNum(1, 3);
+			const randomNum = this.client.functions.randomNum(1, 2);
 			message.sendT("economy/rob:ROB_WON_" + randomNum, {
 				money: `${amountToRob} ${message.getNoun(amountToRob, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-				username: member.user.username
+				user: member.user
 			});
 			data.memberData.money += amountToRob;
 			memberData.money -= amountToRob, 10;
@@ -61,11 +61,11 @@ class Rob extends Command {
 			data.memberData.save();
 		} else {
 			const won = Math.floor(0.9 * amountToRob);
-			const randomNum = this.client.functions.randomNum(1, 3);
+			const randomNum = this.client.functions.randomNum(1, 2);
 			message.sendT("economy/rob:ROB_LOSE_" + randomNum, {
 				fine: `${potentiallyLose} ${message.getNoun(potentiallyLose, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
 				offset: `${won} ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-				username: member.user.username
+				user: member.user
 			});
 			data.memberData.money -= potentiallyLose;
 			memberData.money += won;

@@ -83,7 +83,7 @@ class Horserace extends Command {
 			};
 
 			message.sendT("economy/horserace:BET", {
-				user: author.username,
+				user: author,
 				amount: `**${Math.floor(amount)}** ${message.getNoun(Math.floor(amount), message.translate("misc:NOUNS:CREDITS:1"), message.translate("misc:NOUNS:CREDITS:2"), message.translate("misc:NOUNS:CREDITS:5"))}`,
 				horse
 			});

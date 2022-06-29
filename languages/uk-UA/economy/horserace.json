@@ -7,7 +7,7 @@
 	"EMBED_T": "Кінні перегони",
 	"HORSE_NAME": "Кінь {{number}}",
 	"HORSE_VALUE": "Швидкість - {{speed}}\nПрибуток - *ставка* x **{{profit}}**",
-	"BET": "**{{user}}** поставив {{amount}} на коня **{{horse}}**!",
+	"BET": "{{user}} поставив {{amount}} на коня **{{horse}}**!",
 	"NO_WINNERS": "Переміг кінь **{{horse}}**. Ніхто не виграв кредити!",
 	"WINNERS": "Переміг кінь **{{horse}}**. {{winners}}!",
 	"GAME_RUNNING": "Гра вже йде!",
