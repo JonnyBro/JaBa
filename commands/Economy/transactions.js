@@ -23,7 +23,7 @@ class Transactions extends Command {
 			if (transaction.date < timestamp) {
 				const index = data.memberData.transactions.indexOf(transaction);
 				data.memberData.transactions.splice(index, 1);
-				await data.memberData.transactions.save();
+				await data.memberData.save();
 			}
 		}
 
