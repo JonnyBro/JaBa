@@ -37,7 +37,7 @@ module.exports = {
 			}).catch(() => {});
 
 			return invite ? invite.url : "No URL";
-		} return "No Invite";
+		} return "No channels found for invite";
 	},
 
 	sortByKey(array, key) {

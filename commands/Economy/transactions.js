@@ -18,15 +18,6 @@ class Transactions extends Command {
 	}
 
 	async run(message, args, data) {
-		const timestamp = Date.now() + (30 * 24 * 60 * 60 * 1000); // day hour min sec msec / 1 month
-		for await (const transaction of data.memberData.transactions) {
-			if (transaction.date < timestamp) {
-				const index = data.memberData.transactions.indexOf(transaction);
-				data.memberData.transactions.splice(index, 1);
-				await data.memberData.save();
-			}
-		}
-
 		const embed = new Discord.MessageEmbed()
 			.setAuthor({
 				name: message.translate("economy/transactions:EMBED_TRANSACTIONS"),

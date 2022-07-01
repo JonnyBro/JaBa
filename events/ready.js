@@ -36,6 +36,10 @@ module.exports = class {
 		const checkReminds = require("../helpers/checkReminds");
 		checkReminds.init(client);
 
+		// Clear transactions
+		const clearTransactions = require("../helpers/clearTransactions");
+		clearTransactions.init(client);
+
 		// Start the dashboard
 		if (client.config.dashboard.enabled) client.dashboard.load(client);
 

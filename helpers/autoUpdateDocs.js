@@ -41,13 +41,8 @@ module.exports = {
 			text += `${table(arrCat)}\n\n`;
 		});
 
-		if (!fs.existsSync("./dashboard/public/docs")) {
-			fs.mkdirSync("./dashboard/public/docs");
-			fs.writeFileSync("./dashboard/public/docs/commands.md", text);
-			client.logger.log("Dashboard docs updated!");
-		} else {
-			fs.writeFileSync("./dashboard/public/docs/commands.md", text);
-			client.logger.log("Dashboard docs updated!");
-		}
+		if (!fs.existsSync("./dashboard/public/docs")) fs.mkdirSync("./dashboard/public/docs");
+		fs.writeFileSync("./dashboard/public/docs/commands.md", text);
+		client.logger.log("Dashboard docs updated!");
 	}
 };
