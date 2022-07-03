@@ -51,6 +51,7 @@ class Rep extends Command {
 			if (userData.achievements.rep.progress.now >= userData.achievements.rep.progress.total) {
 				userData.achievements.rep.achieved = true;
 				message.channel.send({
+					content: `${user}`,
 					files: [{
 						name: "achievement_unlocked6.png",
 						attachment: "./assets/img/achievements/achievement_unlocked6.png"

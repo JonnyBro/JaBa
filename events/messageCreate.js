@@ -9,6 +9,7 @@ module.exports = class {
 
 	async run(message) {
 		if (message.guild && message.guild.id === "568120814776614924") return;
+		if (message.content.includes("no bitches")) message.reply({ files: [{ name: "b.png", attachment: "./assets/img/b.png" }] });
 
 		const data = {};
 
@@ -182,7 +183,7 @@ module.exports = class {
 			data.userData.achievements.firstCommand.achieved = true;
 			data.userData.markModified("achievements.firstCommand");
 			await data.userData.save();
-			await message.channel.send({
+			await message.reply({
 				files: [{
 					name: "achievement_unlocked2.png",
 					attachment: "./assets/img/achievements/achievement_unlocked2.png"

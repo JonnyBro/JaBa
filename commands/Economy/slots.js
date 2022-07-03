@@ -101,7 +101,7 @@ class Slots extends Command {
 					data.userData.achievements.slots.progress.now += 1;
 					if (data.userData.achievements.slots.progress.now === data.userData.achievements.slots.progress.total) {
 						data.userData.achievements.slots.achieved = true;
-						message.channel.send({
+						message.reply({
 							files: [{
 								name: "achievement_unlocked4.png",
 								attachment: "./assets/img/achievements/achievement_unlocked4.png"
@@ -142,7 +142,7 @@ class Slots extends Command {
 					data.userData.achievements.slots.progress.now += 1;
 					if (data.userData.achievements.slots.progress.now === data.userData.achievements.slots.progress.total) {
 						data.userData.achievements.slots.achieved = true;
-						message.channel.send({
+						message.reply({
 							files: [{
 								name: "achievement_unlocked4.png",
 								attachment: "./assets/img/achievements/achievement_unlocked4.png"
