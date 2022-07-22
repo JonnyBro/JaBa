@@ -1,14 +1,13 @@
 {
     "name": "jaba",
-    "version": "3.4.7",
+    "version": "4.0",
     "description": "A very complete Discord bot (more than 100 commands) that uses the Discord.js",
     "main": "index.js",
     "private": true,
     "scripts": {
         "start": "node .",
         "lint": "eslint . --ext .js",
-        "testcfg": "node scripts/verify-config.js",
-        "migratedb": "node scripts/migrate-db-from-v4.6-to-v4.7.js"
+        "testcfg": "node scripts/verify-config.js"
     },
     "author": "Jonny_Bro",
     "license": "ISC",
