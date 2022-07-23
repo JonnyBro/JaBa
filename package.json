@@ -14,9 +14,9 @@
     "dependencies": {
         "@discordjs/opus": "^0.7.0",
         "@discordjs/voice": "^0.10.0",
-        "@distube/soundcloud": "^1.1.0",
-        "@distube/spotify": "^1.2.1",
-        "@distube/yt-dlp": "^1.0.2",
+        "@distube/soundcloud": "^1.2.1",
+        "@distube/spotify": "^1.3.2",
+        "@distube/yt-dlp": "^1.1.3",
         "@distube/ytdl-core": "^4.11.3",
         "@k3rn31p4nic/google-translate-api": "github:k3rn31p4nic/google-translate-api",
         "@sindresorhus/slugify": "^1.1.0",
