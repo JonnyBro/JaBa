@@ -1,5 +1,6 @@
 const Canvas = require("canvas"),
-	Discord = require("discord.js"),
+	BaseEvent = require("../base/BaseEvent"),
+	{ MessageAttachment } = require("discord.js"),
 	{ resolve } = require("path");
 
 // Register assets fonts
@@ -15,12 +16,19 @@ const applyText = (canvas, text, defaultFontSize, width, font) => {
 	return ctx.font;
 };
 
-module.exports = class {
-	constructor(client) {
-		this.client = client;
+class GuildMemberRemove extends BaseEvent {
+	constructor() {
+		super({
+			name: "guildMemberRemove",
+			once: false
+		});
 	}
 
-	async run(member) {
+	/**
+	 *
+	 * @param {import("discord.js").GuildMember} member
+	 */
+	async execute(member) {
 		if (member.guild && member.guild.id === "568120814776614924") return;
 
 		await member.guild.members.fetch();
@@ -114,7 +122,7 @@ module.exports = class {
 					}));
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 
-					const attachment = new Discord.MessageAttachment(canvas.toBuffer(), "goodbye-image.png");
+					const attachment = new MessageAttachment(canvas.toBuffer(), "goodbye-image.png");
 					channel.send({
 						content: message,
 						files: [attachment]
@@ -127,4 +135,6 @@ module.exports = class {
 			}
 		}
 	}
-};
+}
+
+module.exports = GuildMemberRemove;

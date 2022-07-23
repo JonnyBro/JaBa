@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Відтворити плейлист",
-	"USAGE": "{{prefix}}playplaylist [назва]",
-	"EXAMPLES": "{{prefix}}playplaylist Мій крутий плейлист"
-}

@@ -1,8 +1,7 @@
-const { Guild, Message, MessageEmbed } = require("discord.js");
-const config = require("../config");
+const { Guild, Message } = require("discord.js");
 
 Guild.prototype.translate = function (key, args) {
-	const language = this.client.translations.get(this.data.language);
+	const language = this.client.translations.get(this.guild ? this.guild.data.language : "ru-RU");
 	if (!language) throw "Message: Invalid language set in data.";
 
 	return language(key, args);
@@ -50,22 +49,4 @@ Message.prototype.convertTime = function (time, type, noPrefix) {
 
 Message.prototype.getNoun = function (number, one, two, five) {
 	return this.client.getNoun(number, one, two, five);
-};
-
-MessageEmbed.prototype.errorColor = function () {
-	this.setColor("#FF0000");
-
-	return this;
-};
-
-MessageEmbed.prototype.successColor = function () {
-	this.setColor("#32CD32");
-
-	return this;
-};
-
-MessageEmbed.prototype.defaultColor = function () {
-	this.setColor(config.color);
-
-	return this;
 };

@@ -1,9 +1,19 @@
-module.exports = class {
-	constructor(client) {
-		this.client = client;
+const BaseEvent = require("../base/BaseEvent");
+
+class GuildMemberUpdate extends BaseEvent {
+	constructor() {
+		super({
+			name: "guildMemberRemove",
+			once: false
+		});
 	}
 
-	async run(oldMember, newMember) {
+	/**
+	 *
+	 * @param {import("discord.js").GuildMember} oldMember
+	 * @param {import("discord.js").GuildMember} newMember
+	 */
+	async execute(oldMember, newMember) {
 		if (oldMember.guild && oldMember.guild.id === "568120814776614924") return;
 
 		if (oldMember.guild.id !== this.client.config.support.id) return;
@@ -25,4 +35,6 @@ module.exports = class {
 			});
 		}
 	}
-};
+}
+
+module.exports = GuildMemberUpdate;

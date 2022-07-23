@@ -1,15 +1,19 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js"),
+	BaseEvent = require("../base/BaseEvent");
 
-module.exports = class {
-	constructor(client) {
-		this.client = client;
+class GuildDelete extends BaseEvent {
+	constructor() {
+		super({
+			name: "guildDelete",
+			once: false
+		});
 	}
-
-	async run(guild) {
-		const users = guild.members.cache.filter((m) => !m.user.bot).size;
-		const bots = guild.members.cache.filter((m) => m.user.bot).size;
-
-		const embed = new Discord.MessageEmbed()
+	/**
+	 *
+	 * @param {import("discord.js").Guild} guild
+	 */
+	async execute(guild) {
+		const embed = new MessageEmbed()
 			.setAuthor({
 				name: guild.name,
 				iconURL: guild.iconURL({
@@ -17,9 +21,11 @@ module.exports = class {
 				})
 			})
 			.setColor("#B22222")
-			.setDescription(`Вышел с сервера **${guild.name}**. На нём **${users}** ${this.client.getNoun(users, this.client.translate("misc:NOUNS:USERS:1"), this.client.translate("misc:NOUNS:USERS:2"), this.client.translate("misc:NOUNS:USERS:5"))} (из них **${bots}** ${this.client.getNoun(bots, this.client.translate("misc:NOUNS:BOTS:1"), this.client.translate("misc:NOUNS:BOTS:2"), this.client.translate("misc:NOUNS:BOTS:5"))})`);
+			.setDescription(`Вышел с сервера **${guild.name}**.`);
 		this.client.channels.cache.get(this.client.config.support.logs).send({
 			embeds: [embed]
 		});
 	}
-};
+}
+
+module.exports = GuildDelete;

@@ -1,8 +1,11 @@
 module.exports = {
 	/* The token of your Discord Bot */
 	token: "XXXXXXXXXXX",
+	/* ID of Bot's user */
+	user: "XXXXXXXXXXX",
 	/* For the support server */
 	support: {
+		enabled: false, // Set to false for production
 		id: "XXXXXXXXXXX", // The ID of the support server
 		logs: "XXXXXXXXXXX", // And the ID of the logs channel of your server (new servers for example)
 	},
@@ -17,7 +20,6 @@ module.exports = {
 		failureURL: "https://dashboard.example.com" // url on which users will be redirected if they click the cancel button (discord authentication)
 	},
 	mongoDB: "mongodb://localhost:27017/discordbot", // The URl of the mongodb database
-	prefix: "*", // The default prefix for the bot
 	/* For the embeds (embeded messages) */
 	embed: {
 		color: "#0091fc", // The default color for the embeds
@@ -28,18 +30,10 @@ module.exports = {
 		id: "XXXXXXXXXXX", // The ID of the bot's owner
 		name: "@XXXXXXXXXXX#1234" // And the name of the bot's owner
 	},
-	/* DBL votes webhook (optional) */
-	votes: {
-		port: 5000, // The port for the server
-		password: "XXXXXXXXXXX", // The webhook auth that you have defined on discordbots.org
-		channel: "XXXXXXXXXXX" // The ID of the channel that in you want the votes logs
-	},
 	/* The API keys that are required for certain commands */
 	apiKeys: {
 		// BLAGUE.XYZ: https://blague.xyz/
 		blagueXYZ: "XXXXXXXXXXX",
-		// DBL: https://discordbots.org/api/docs#mybots
-		dbl: "XXXXXXXXXXX",
 		// AMETHYSTE: https://api.amethyste.moe
 		amethyste: "XXXXXXXXXXX"
 	},

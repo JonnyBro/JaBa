@@ -2,12 +2,18 @@ const { MessageEmbed, Client, Collection } = require("discord.js"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ SoundCloudPlugin } = require("@distube/soundcloud"),
 	{ SpotifyPlugin } = require("@distube/spotify"),
-	{ YtDlpPlugin } = require("@distube/yt-dlp");
+	{ YtDlpPlugin } = require("@distube/yt-dlp"),
+	{ SlashCommandBuilder } = require("@discordjs/builders"),
+	{ REST } = require("@discordjs/rest"),
+	{ Routes } = require("discord-api-types/v9");
 
 const util = require("util"),
+	BaseEvent = require("./BaseEvent.js"),
+	BaseCommand = require("./BaseCommand.js"),
 	AmeClient = require("amethyste-api"),
 	path = require("path"),
-	fetch = require("node-fetch"),
+	fs = require("fs").promises,
+	mongoose = require("mongoose"),
 	DisTube = require("distube"),
 	moment = require("moment");
 
@@ -26,16 +32,13 @@ class JaBa extends Client {
 		this.customEmojis = require("../emojis"); // load the bot's emojis
 		this.languages = require("../languages/language-meta"); // Load the bot's languages
 		this.commands = new Collection(); // Creates new commands collection
-		this.aliases = new Collection(); // Creates new command aliases collection
 		this.logger = require("../helpers/logger"); // Load the logger file
 		this.wait = util.promisify(setTimeout); // client.wait(1000) - Wait 1 second
 		this.functions = require("../helpers/functions"); // Load the functions file
 		this.guildsData = require("../base/Guild"); // Guild mongoose model
 		this.usersData = require("../base/User"); // User mongoose model
 		this.membersData = require("../base/Member"); // Member mongoose model
-		this.logs = require("../base/Log"); // Log mongoose model
 		this.dashboard = require("../dashboard/app"); // Dashboard app
-		this.queues = new Collection(); // This collection will be used for the music
 		this.states = {}; // Used for the dashboard
 		this.knownGuilds = [];
 
@@ -43,21 +46,10 @@ class JaBa extends Client {
 		this.databaseCache.users = new Collection();
 		this.databaseCache.guilds = new Collection();
 		this.databaseCache.members = new Collection();
-
 		this.databaseCache.usersReminds = new Collection(); // members with active reminds
 		this.databaseCache.mutedUsers = new Collection(); // members who are currently muted
 
 		if (this.config.apiKeys.amethyste) this.AmeAPI = new AmeClient(this.config.apiKeys.amethyste);
-
-		this.icanhazdadjoke = async function() {
-			const joke = await fetch("https://icanhazdadjoke.com/", {
-				headers: {
-					"Accept": "application/json"
-				}
-			});
-
-			return joke.json();
-		};
 
 		this.player = new DisTube.default(this, {
 			plugins: [
@@ -167,38 +159,139 @@ class JaBa extends Client {
 		return five;
 	}
 
-	// This function is used to load a command and add it to the collection
-	loadCommand(commandPath, commandName) {
+	/**
+	*
+	* @param {String} dir
+	* @param {String} guild_id
+	* @returns
+	*/
+	async loadCommands(dir, guild_id) {
+		const filePath = path.join(__dirname, dir);
+		const files = await fs.readdir(filePath);
+		const rest = new REST({ version: "9" }).setToken(this.config.token);
+		const commands = [];
+		const guild_commands = [];
+		for (let index = 0; index < files.length; index++) {
+			const file = files[index];
+			const stat = await fs.lstat(path.join(filePath, file));
+			if (stat.isDirectory()) this.loadCommands(this, path.join(dir, file));
+			if (file.endsWith(".js")) {
+				const Command = require(path.join(filePath, file));
+				if (Command.prototype instanceof BaseCommand) {
+					const command = new Command();
+					this.commands.set(command.command.name, command);
+					const aliases = [];
+					if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0) {
+						command.aliases.forEach((alias) => {
+							const command_alias = command.command instanceof SlashCommandBuilder ? { ...command.command.toJSON() } : { ...command.command };
+							command_alias.name = alias;
+							aliases.push(command_alias);
+							this.commands.set(alias, command);
+						});
+					}
+
+					if (command.guildOnly) guild_commands.push(command.command instanceof SlashCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
+					else commands.push(command.command instanceof SlashCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
+
+					if (command.onLoad || typeof command.onLoad === "function") await command.onLoad(this);
+					this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
+				}
+			}
+		}
+
 		try {
-			const props = new(require(`.${commandPath}${path.sep}${commandName}`))(this);
-			this.logger.log(`Loading Command: ${props.help.name}. 👌`, "log");
-			props.conf.location = commandPath;
-			if (props.init) props.init(this);
-
-			this.commands.set(props.help.name, props);
-			props.help.aliases.forEach((alias) => {
-				this.aliases.set(alias, props.help.name);
-			});
-
-			return false;
-		} catch (e) {
-			return `Unable to load command ${commandName}: ${e}`;
+			if (guild_id && guild_id.length) {
+				await rest.put(
+					Routes.applicationGuildCommands(this.config.user, guild_id), {
+						body: guild_commands
+					},
+				);
+			}
+			await rest.put(
+				Routes.applicationCommands(this.config.user), {
+					body: commands
+				},
+			);
+			this.logger.log("Successfully registered application commands.");
+		} catch (err) {
+			this.logger.log("Cannot load commands: " + err.message, "error");
 		}
 	}
 
-	// This function is used to unload a command (you need to load them again)
-	async unloadCommand(commandPath, commandName) {
-		let command;
-		if (this.commands.has(commandName)) command = this.commands.get(commandName);
-		else if (this.aliases.has(commandName)) command = this.commands.get(this.aliases.get(commandName));
-
-		if (!command) return `The command \`${commandName}\` doesn't seem to exist, nor is it an alias. Try again!`;
-		if (command.shutdown) await command.shutdown(this);
-
-		delete require.cache[require.resolve(`.${commandPath}${path.sep}${commandName}.js`)];
-
-		return false;
+	/**
+	*
+	* @param {String} dir
+	* @returns
+	*/
+	async loadEvents(dir) {
+		const filePath = path.join(__dirname, dir);
+		const files = await fs.readdir(filePath);
+		for (let index = 0; index < files.length; index++) {
+			const file = files[index];
+			const stat = await fs.lstat(path.join(filePath, file));
+			if (stat.isDirectory()) this.loadEvents(this, path.join(dir, file));
+			if (file.endsWith(".js")) {
+				const Event = require(path.join(filePath, file));
+				if (Event.prototype instanceof BaseEvent) {
+					const event = new Event();
+					if (!event.name || !event.name.length) return console.error(`Cannot load "${file}" event file: Event name is not set!`);
+					if (event.once) this.once(event.name, event.execute.bind(event, this));
+					else this.on(event.name, event.execute.bind(event, this));
+					this.logger.log(`Successfully loaded "${file}" event file. (Event: ${event.name})`);
+				}
+			}
+		}
 	}
+
+	async init() {
+		this.login(this.config.token);
+
+		mongoose.connect(this.config.mongoDB, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true
+		}).then(() => {
+			this.logger.log("Connected to the Mongodb database.", "log");
+		}).catch((err) => {
+			this.logger.log(`Unable to connect to the Mongodb database. Error: ${err}`, "error");
+		});
+
+		const languages = require("../helpers/languages");
+		this.translations = await languages();
+
+		// const autoUpdateDocs = require("../helpers/autoUpdateDocs");
+		// autoUpdateDocs.update(this);
+	}
+
+	// loadCommand(commandPath, commandName) {
+	// 	try {
+	// 		const props = new(require(`.${commandPath}${path.sep}${commandName}`))(this);
+	// 		this.logger.log(`Loading Command: ${props.help.name}. 👌`, "log");
+	// 		props.conf.location = commandPath;
+	// 		if (props.init) props.init(this);
+
+	// 		this.commands.set(props.help.name, props);
+	// 		props.help.aliases.forEach((alias) => {
+	// 			this.aliases.set(alias, props.help.name);
+	// 		});
+
+	// 		return false;
+	// 	} catch (e) {
+	// 		return `Unable to load command ${commandName}: ${e}`;
+	// 	}
+	// }
+
+	// async unloadCommand(commandPath, commandName) {
+	// 	let command;
+	// 	if (this.commands.has(commandName)) command = this.commands.get(commandName);
+	// 	else if (this.aliases.has(commandName)) command = this.commands.get(this.aliases.get(commandName));
+
+	// 	if (!command) return `The command \`${commandName}\` doesn't seem to exist, nor is it an alias. Try again!`;
+	// 	if (command.shutdown) await command.shutdown(this);
+
+	// 	delete require.cache[require.resolve(`.${commandPath}${path.sep}${commandName}.js`)];
+
+	// 	return false;
+	// }
 
 	// This function is used to find a user data or create it
 	async findOrCreateUser({ id: userID }, isLean) {

@@ -1,11 +1,19 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js"),
+	BaseEvent = require("../base/BaseEvent");
 
-module.exports = class {
-	constructor(client) {
-		this.client = client;
+class GuildCreate extends BaseEvent {
+	constructor() {
+		super({
+			name: "guildCreate",
+			once: false
+		});
 	}
 
-	async run(guild) {
+	/**
+	 *
+	 * @param {import("discord.js").Guild} guild
+	 */
+	async execute(guild) {
 		const messageOptions = {};
 
 		const userData = await this.client.findOrCreateUser({
@@ -23,11 +31,11 @@ module.exports = class {
 			await userData.save();
 		}
 
-		const thanksEmbed = new Discord.MessageEmbed()
+		const thanksEmbed = new MessageEmbed()
 			.setAuthor({
 				name: "Спасибо что добавили меня на свой сервер!"
 			})
-			.setDescription(`Для настроек используйте \`${this.client.config.prefix}help\` и посмотрите на административные команды!\nЧтобы изменить язык используйте \`${this.client.config.prefix}setlang [язык]\`.`)
+			.setDescription("Чтобы получить список команд использууйуте `/help` и посмотрите на административные команды!.")
 			.setColor(this.client.config.embed.color)
 			.setFooter({
 				text: this.client.config.embed.footer
@@ -41,7 +49,7 @@ module.exports = class {
 		const users = guild.members.cache.filter((m) => !m.user.bot).size;
 		const bots = guild.members.cache.filter((m) => m.user.bot).size;
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new MessageEmbed()
 			.setAuthor({
 				name: guild.name,
 				iconURL: guild.iconURL({
@@ -54,4 +62,6 @@ module.exports = class {
 			embeds: [embed]
 		});
 	}
-};
+}
+
+module.exports = GuildCreate;

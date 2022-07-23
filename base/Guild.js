@@ -1,6 +1,5 @@
 const mongoose = require("mongoose"),
 	Schema = mongoose.Schema,
-	config = require("../config"),
 	languages = require("../languages/language-meta.json");
 
 module.exports = mongoose.model("Guild", new Schema({
@@ -13,7 +12,6 @@ module.exports = mongoose.model("Guild", new Schema({
 
 	/* CONFIGURATION */
 	language: { type: String, default: languages.find((l) => l.default).name }, // Language of the guild
-	prefix: { type: String, default: config.prefix }, // Default or custom prefix of the guild
 	plugins: { type: Object, default: { // Plugins data
 		// Welcome messages
 		welcome: {
@@ -55,14 +53,6 @@ module.exports = mongoose.model("Guild", new Schema({
 		reports: false, // the channel in which the reports will be sent
 		logs: false // the channel in which the logs (message deleted, etc...) will be sent
 	}},
-	slowmode: { type: Object, default: { // Servers slowmode
-		users: [],
-		channels: []
-	}},
 	casesCount: { type: Number, default: 0 },
-	ignoredChannels: { type: Array, default: [] }, // Channels ignored by the bot
-	customCommands: { type: Array, default: [] }, // Custom commands of the guild
-	commands: { type: Array, default: [] }, // Commands logs
 	autoDeleteModCommands: { type: Boolean, default: false }, // Whether to auto delete moderation commands
-	disabledCategories: { type: Array, default: [] } // Disabled categories
 }));
