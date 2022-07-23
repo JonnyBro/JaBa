@@ -24,10 +24,6 @@ module.exports = class {
 		const birthdays = require("../helpers/birthdays");
 		birthdays.init(client);
 
-		// DiscordBots.org STATS
-		const discordbotsorg = require("../helpers/discordbots.org");
-		discordbotsorg.init(client);
-
 		// Unmute users
 		const checkUnmutes = require("../helpers/checkUnmutes");
 		checkUnmutes.init(client);

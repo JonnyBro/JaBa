@@ -8,7 +8,7 @@ class Invite extends Command {
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: false,
-			aliases: ["i", "add", "vote"],
+			aliases: ["i"],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
@@ -23,7 +23,6 @@ class Invite extends Command {
 			permissions: [Discord.Permissions.FLAGS.ADMINISTRATOR]
 		});
 		const donateLink = "https://qiwi.com/n/JONNYBRO/";
-		// const voteURL = `https://discordbots.org/bot/${this.client.user.id}/vote`;
 
 		if (args[0] && args[0] === "copy") return message.reply({
 			content: inviteLink
@@ -42,7 +41,6 @@ class Invite extends Command {
 			.addField(message.translate("general/invite:SUPPORT"), message.translate("general/invite:CLICK", {
 				link: donateLink
 			}) + `\n*для других способов пишите в ЛС <@${data.config.owner.id}> (указывайте ваш Discord тэг чтобы я мог выдать вам ачивку)*`)
-			// .addField(message.translate("general/invite:VOTE"), voteURL)
 			.setColor(data.config.embed.color)
 			.setFooter({
 				text: data.config.embed.footer

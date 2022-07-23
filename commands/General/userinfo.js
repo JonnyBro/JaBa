@@ -86,25 +86,6 @@ class Userinfo extends Command {
 			}) : (member.roles.cache.size < 1) ? message.translate("general/userinfo:NO_ROLE") : member.roles.cache.map((r) => r).join(", ")));
 		}
 
-		if (user.bot && data.config.apiKeys.dbl && (data.config.apiKeys.dbl !== "")) {
-			const res = await fetch("https://discordbots.org/api/bots/" + user.id, {
-				headers: {
-					"Authorization": data.config.apiKeys.dbl
-				}
-			});
-			const data = await res.json();
-			if (!data.error) {
-				embed.addField(this.client.customEmojis.desc + " " + message.translate("common:DESCRIPTION"), data.shortdesc, true)
-					.addField(this.client.customEmojis.stats + " " + message.translate("common:STATS"), message.translate("general/userinfo:BOT_STATS", {
-						votes: data.monthlyPoints || 0,
-						servers: data.server_count || 0,
-						shards: (data.shards || [0]).length,
-						lib: data.lib || "unknown"
-					}), true)
-					.addField(this.client.customEmojis.link + " " + message.translate("common:LINKS"), `${data.support ? `[${message.translate("common:SUPPORT")}](${data.support}) | ` : ""}${data.invite ?  `[${message.translate("common:INVITE")}](${data.invite}) | ` : ""}${data.github ?  `[GitHub](${data.github}) | ` : ""}${data.website ?  `[${message.translate("common:WEBSITE")}](${data.website})` : ""}`, true);
-			}
-		}
-
 		message.reply({
 			embeds: [embed]
 		});

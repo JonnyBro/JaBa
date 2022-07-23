@@ -94,22 +94,6 @@ const checks = [
 					success("Valid blague.xyz key");
 				}
 			}
-			if (!config.apiKeys.dbl) {
-				ignore("DBL API is not configured, key should not be checked.");
-			} else {
-				const res = await fetch("https://top.gg/api/bots/check?userId=test", {
-					method: "POST",
-					headers: {
-						Authorization: config.apiKeys.dbl
-					}
-				});
-				const result = await res.json();
-				if (result.error && result.error === "Unauthorized") {
-					error("Should be a valid DBL key", "get your key here: https://top.gg/ OR delete the key from the config if you don't have a key");
-				} else {
-					success("Valid DBL key");
-				}
-			}
 			resolve();
 		});
 	},
