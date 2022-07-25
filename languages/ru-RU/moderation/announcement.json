@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Отправить объявление в текущий канал!",
-	"USAGE": "{{prefix}}announcement [текст]",
-	"EXAMPLES": "{{prefix}}announcement Новый модератор!",
+	"USAGE": "announcement [текст]",
+	"EXAMPLES": "announcement Новый модератор!",
 	"MISSING_TEXT": "Укажите текст!",
 	"TOO_LONG": "Текст должен быть короче 1030 символов!",
 	"MENTION_PROMPT": "Хотите добавить упоминание к вашему сообщению?\nОтправьте `да` или `нет`!",

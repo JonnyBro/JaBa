@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показать конфигурацию сервера!",
-	"USAGE": "{{prefix}}configuration",
-	"EXAMPLES": "{{prefix}}configuration",
+	"USAGE": "configuration",
+	"EXAMPLES": "configuration",
 	"PREFIX_TITLE": "Префикс",
 	"IGNORED_CHANNELS_TITLE": "Игнорируемые каналы",
 	"NO_IGNORED_CHANNELS": "Нет игнорируемых каналов.",

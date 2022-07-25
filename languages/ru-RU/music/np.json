@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показать информацию о играющем сейчас треке!",
-	"USAGE": "{{prefix}}np",
-	"EXAMPLES": "{{prefix}}np",
+	"USAGE": "np",
+	"EXAMPLES": "np",
 	"CURRENTLY_PLAYING": "Сейчас играет",
 	"T_TITLE": "Название",
 	"T_CHANNEL": "Канал",

@@ -1,7 +1,7 @@
 ﻿{
 	"DESCRIPTION": "Change user's XP, level, credits or bank!",
-	"USAGE": "{{prefix}}set [level/xp/credits/bank] [@user] [value]",
-	"EXAMPLES": "{{prefix}}set level @Jonny_Bro#4226 10",
+	"USAGE": "set [level/xp/credits/bank] [@user] [value]",
+	"EXAMPLES": "set level @Jonny_Bro#4226 10",
 	"INVALID_MEMBER": "You must mention the user!",
 	"NO_STATUS": "Select a parameter: `level`, `xp`, `credits` or `bank`",
 	"BOT_USER": "Bots don't have a profile!",

@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показати список команд або допомогу по цій команді.",
-	"USAGE": "{{prefix}}help (команда)",
-	"EXAMPLES": "{{prefix}}help\n{{prefix}}help ping",
+	"USAGE": "help (команда)",
+	"EXAMPLES": "help\nhelp ping",
 	"CUSTOM": "У доданих команд немає опису.",
 	"NOT_FOUND": "Команда `{{search}}` не існує",
 	"FIELD_USAGE": "Використання",
@@ -10,7 +10,7 @@
 	"FIELD_EXAMPLES": "Приклади",
 	"NO_ALIAS": "Немає скорочень",
 	"CMD_TITLE": "Допомога з {{cmd}}",
-	"INFO": "● Щоб отримати допомогу по певній команді, використовуйте `{{prefix}}help <команда>`!",
+	"INFO": "● Щоб отримати допомогу по певній команді, використовуйте `help <команда>`!",
 	"CUSTOM_COMMANDS": "Додана команда",
 	"FIELD_PERMISSIONS": "Необхідні права",
 	"NO_REQUIRED_PERMISSION": "Ніякі особливі права не потрібні для використання цієї команди.",

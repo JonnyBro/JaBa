@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Вгадай загадане мною число!",
-	"USAGE": "{{prefix}}number (STOP)",
-	"EXAMPLES": "{{prefix}}number",
+	"USAGE": "number (STOP)",
+	"EXAMPLES": "number",
 	"GAME_START": "Я загадав число, починайте!\nНапишіть STOP, якщо хочете зупинити гру!",
 	"BIG": "{{user}} | Моє число **більше**, ніж `{{number}}`!",
 	"SMALL": "{{user}} | Моє число **менше** ніж `{{number}}`!",

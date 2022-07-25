@@ -1,10 +1,10 @@
 {
 	"DESCRIPTION": "Увімкнути або вимкнути автопризначення ролі при вході на сервер!",
-	"USAGE": "{{prefix}}autorole [on/off] (@роль)",
-	"EXAMPLES": "{{prefix}}autorole on @новенький\n{{prefix}}autorole off",
+	"USAGE": "autorole [on/off] (@роль)",
+	"EXAMPLES": "autorole on @новенький\nautorole off",
 	"MISSING_STATUS": "Вкажіть значення `on` або `off`!",
 	"MISSING_ROLE": "Вкажіть роль!",
 	"SUCCESS_ENABLED": "Автопризначення ролі увімкнено! Нові користувачі автоматично отримуватимуть **{{roleName}}** під час входу на сервер.",
-	"ALREADY_DISABLED": "**Автопризначення ролі вже вимкнено.**\n\n:arrow_right_hook: *Використовуйте `{{prefix}}autorole on @роль`, щоб увімкнути!*",
-	"SUCCESS_DISABLED": "**Автопризначення ролі вимкнено!**\n\n:arrow_right_hook: *Використовуйте `{{prefix}}configuration`, щоб побачити оновлені налаштування!*"
+	"ALREADY_DISABLED": "**Автопризначення ролі вже вимкнено.**\n\n:arrow_right_hook: *Використовуйте `autorole on @роль`, щоб увімкнути!*",
+	"SUCCESS_DISABLED": "**Автопризначення ролі вимкнено!**\n\n:arrow_right_hook: *Використовуйте `configuration`, щоб побачити оновлені налаштування!*"
 	}

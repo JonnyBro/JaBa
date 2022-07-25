@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Перетворити текст на ASCII код! Підтримуються лише англійські літери та цифри!",
-	"USAGE": "{{prefix}}ascii [текст]",
-	"EXAMPLES": "{{prefix}}ascii Hello world!",
+	"USAGE": "ascii [текст]",
+	"EXAMPLES": "ascii Hello world!",
 	"TEXT_MISSING": "Введіть текст (не більше 20 символів)!"
 }

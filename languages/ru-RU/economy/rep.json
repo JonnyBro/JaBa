@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Дать очко репутации пользователю!",
-	"USAGE": "{{prefix}}rep [@пользователь]",
-	"EXAMPLES": "{{prefix}}rep @Jonny_Bro#4226",
+	"USAGE": "rep [@пользователь]",
+	"EXAMPLES": "rep @Jonny_Bro#4226",
 	"COOLDOWN": "Вы должны подождать **{{time}}** до следующего использования!",
 	"INVALID_USER": "Вы должны упомянуть пользователя!",
 	"BOT_USER": "Боты и так крутые!",

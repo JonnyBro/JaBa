@@ -1,5 +1,5 @@
 {
 	"DESCRIPTION": "Generates a \"ytcomment\" image",
-	"USAGE": "{{prefix}}ytcomment (@member) [text]",
-	"EXAMPLES": "{{prefix}}ytcomment Hi!\n{{prefix}}ytcomment @Jonny_Bro#4226 Hi!"
+	"USAGE": "ytcomment (@member) [text]",
+	"EXAMPLES": "ytcomment Hi!\nytcomment @Jonny_Bro#4226 Hi!"
 }

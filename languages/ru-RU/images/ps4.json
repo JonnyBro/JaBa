@@ -1,5 +1,5 @@
 {
 	"DESCRIPTION": "Создать изображение \"ps4\"",
-	"USAGE": "{{prefix}}ps4 (@пользователь)",
-	"EXAMPLES": "{{prefix}}ps4\n{{prefix}}ps4 @Jonny_Bro#4226"
+	"USAGE": "ps4 (@пользователь)",
+	"EXAMPLES": "ps4\nps4 @Jonny_Bro#4226"
 }

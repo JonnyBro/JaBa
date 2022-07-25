@@ -9,7 +9,7 @@ class Mention extends BaseCommand {
 		super({
 			command: {
 				name: "mention",
-				type: 2 // Type 2 is MESSAGE COMMAND.
+				type: 2 // Type 2 is USER COMMAND.
 			},
 			aliases: ["m"], // Application command aliases.
 			guildOnly: true // Determines whether your command is only guild.

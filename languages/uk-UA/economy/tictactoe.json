@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Хрестики-нуліки!",
-	"USAGE": "{{prefix}}tictactoe [@користувач]",
-	"EXAMPLES": "{{prefix}}tictactoe @Jonny_Bro#4226",
+	"USAGE": "tictactoe [@користувач]",
+	"EXAMPLES": "tictactoe @Jonny_Bro#4226",
 	"NO_USER": "Вкажіть користувача!",
 	"BOT_USER": "Ви не можете грати проти бота!",
 	"YOURSELF": "Ви не можете грати із самим собою!",

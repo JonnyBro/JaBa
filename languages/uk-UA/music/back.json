@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Увімкнути попередній трек",
-	"USAGE": "{{prefix}}back",
-	"EXAMPLES": "{{prefix}}back",
+	"USAGE": "back",
+	"EXAMPLES": "back",
 	"NO_PREV_SONG": "Попередній трек відсутній!",
 	"SUCCESS": "Грає попередній трек!"
 }

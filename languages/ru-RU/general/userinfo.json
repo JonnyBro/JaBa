@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показать информацию о пользователе!",
-	"USAGE": "{{prefix}}userinfo (@пользователь/ID)",
-	"EXAMPLES": "{{prefix}}userinfo\n{{prefix}}userinfo @Jonny_Bro#4226\n{{prefix}}userinfo 281361531411890186",
+	"USAGE": "userinfo (@пользователь/ID)",
+	"EXAMPLES": "userinfo\nuserinfo @Jonny_Bro#4226\nuserinfo 281361531411890186",
 	"INVALID_USER": "Пользователь с ID `{{search}}` не найден!",
 	"NO_GAME": "Не играет",
 	"NO_ROLE": "Нет роли",

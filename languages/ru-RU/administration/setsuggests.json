@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Установить канал для предложений!",
-	"USAGE": "{{prefix}}setsuggests (#канал)",
-	"EXAMPLES": "{{prefix}}setsuggests #предложения\n{{prefix}}setsuggests",
+	"USAGE": "setsuggests (#канал)",
+	"EXAMPLES": "setsuggests #предложения\nsetsuggests",
 	"ENABLED": "Предложения будут отправляться в **{{channel}}**!",
 	"DISABLED": "Предложения отключены!"
 }

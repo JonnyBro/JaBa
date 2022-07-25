@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 class BaseCommand {
-	constructor(options) {
+	constructor(options, client) {
 		/**
 		 * @type {import("@discordjs/builders").SlashCommandBuilder | import("discord.js").ApplicationCommandData}
 		 */
@@ -7,11 +8,15 @@ class BaseCommand {
 		/**
 		 * @type {Array<String>}
 		 */
-		this.aliases = options.aliases;
+		this.aliases = options.aliases || [];
 		/**
 		 * @type {Boolean}
 		 */
 		this.guildOnly = options.guildOnly || true;
+		/**
+		 * @type {Boolean}
+		 */
+		this.ownerOnly = options.ownerOnly || false;
 	}
 }
 

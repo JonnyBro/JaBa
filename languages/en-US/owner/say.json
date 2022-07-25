@@ -1,5 +1,5 @@
 ﻿{
 	"DESCRIPTION": "Send a message on behalf of the bot!",
-	"USAGE": "{{prefix}}say [text] ++ (ID/channel-name) ++ (ID/server-name)",
-	"EXAMPLES": "{{prefix}}say Hello World!\n{{prefix}}say Hello World! ++ 123456789098765432"
+	"USAGE": "say [text] ++ (ID/channel-name) ++ (ID/server-name)",
+	"EXAMPLES": "say Hello World!\nsay Hello World! ++ 123456789098765432"
 }

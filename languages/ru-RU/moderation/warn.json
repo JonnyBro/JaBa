@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Выдать предупреждение пользователю в ЛС",
-	"USAGE": "{{prefix}}warn [@пользователь] (причина)",
-	"EXAMPLES": "{{prefix}}warn @Jonny_Bro#4226 stupid",
+	"USAGE": "warn [@пользователь] (причина)",
+	"EXAMPLES": "warn @Jonny_Bro#4226 stupid",
 	"MISSING_MEMBER": "Вы должны упомянуть пользователя!",
 	"YOURSELF": "Вы не можете подать жалобу на себя!",
 	"MISSING_REASON": "Укажите причину!",

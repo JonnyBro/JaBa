@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показати інформацію про емодзі!",
-	"USAGE": "{{prefix}}emoji [емодзі]",
-	"EXAMPLES": "{{prefix}}emoji :tada:",
+	"USAGE": "emoji [емодзі]",
+	"EXAMPLES": "emoji :tada:",
 	"TITLE": "Інформація про {{emoji}}",
 	"NAME": "Назва",
 	"ANIMATED": "Анімований",

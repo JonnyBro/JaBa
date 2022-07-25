@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Warn a member in private messages",
-	"USAGE": "{{prefix}}warn [@member] [reason]",
-	"EXAMPLES": "{{prefix}}warn @Jonny_Bro#4226 Dumb",
+	"USAGE": "warn [@member] [reason]",
+	"EXAMPLES": "warn @Jonny_Bro#4226 Dumb",
 	"MISSING_MEMBER": "Please specify the member you want to warn!",
 	"YOURSELF": "You can't warn yourself!",
 	"MISSING_REASON": "Please enter a reason!",

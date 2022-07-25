@@ -1,10 +1,10 @@
 {
 	"DESCRIPTION": "Получить ссылку на приглашение JaBa!",
-	"USAGE": "{{prefix}}invite (copy)",
-	"EXAMPLES": "{{prefix}}invite\n{{prefix}}invite copy",
+	"USAGE": "invite (copy)",
+	"EXAMPLES": "invite\ninvite copy",
 	"LINKS": "Ссылки JaBa",
 	"CLICK": "[**Тык**]({{link}})",
-	"TIP": "Отправьте `{{prefix}}invite copy`, чтобы получить ссылку для копирования!",
+	"TIP": "Отправьте `invite copy`, чтобы получить ссылку для копирования!",
 	"ADD": "Пригласить JaBa",
 	"VOTE": "Проголосовать за JaBa",
 	"SUPPORT": "Поддержать разработчика"

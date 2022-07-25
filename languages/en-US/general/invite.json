@@ -1,10 +1,10 @@
 {
 	"DESCRIPTION": "Shows JaBa links!",
-	"USAGE": "{{prefix}}invite (copy)",
-	"EXAMPLES": "{{prefix}}invite\n{{prefix}}invite copy",
+	"USAGE": "invite (copy)",
+	"EXAMPLES": "invite\ninvite copy",
 	"LINKS": "JaBa links",
 	"CLICK": "[**Click**]({{link}})",
-	"TIP": "Send `{{prefix}}invite copy` to be able to copy the invite link!",
+	"TIP": "Send `invite copy` to be able to copy the invite link!",
 	"ADD": "Invite JaBa",
 	"VOTE": "Vote for JaBa",
 	"SUPPORT": "Support developer"

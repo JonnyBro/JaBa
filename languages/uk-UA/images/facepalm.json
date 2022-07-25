@@ -1,5 +1,5 @@
 {
 	"DESCRIPTION": "Створити зображення \"facepalm\"",
-	"USAGE": "{{prefix}}facepalm (@користувач)",
-	"EXAMPLES": "{{prefix}}facepalm\n{{prefix}}facepalm @Jonny_Bro#4226"
+	"USAGE": "facepalm (@користувач)",
+	"EXAMPLES": "facepalm\nfacepalm @Jonny_Bro#4226"
 }

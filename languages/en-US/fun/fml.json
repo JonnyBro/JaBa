@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Gets a random FML",
-	"USAGE": "{{prefix}}fml",
-	"EXAMPLES": "{{prefix}}fml",
+	"USAGE": "fml",
+	"EXAMPLES": "fml",
 	"FOOTER": "blague.xyz | By Skiz#0001"
 }

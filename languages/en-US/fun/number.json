@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Find the right number!",
-	"USAGE": "{{prefix}}number",
-	"EXAMPLES": "{{prefix}}number",
+	"USAGE": "number",
+	"EXAMPLES": "number",
 	"GAME_START": "Number chosen, you can start!",
 	"BIG": "{{user}} | My number is **bigger** than `{{number}}`!",
 	"SMALL": "{{user}} | My number is **smaller** than `{{number}}`!",

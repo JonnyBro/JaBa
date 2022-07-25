@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Встановити дату народження",
-	"USAGE": "{{prefix}}birthdate [ДД/ММ/РРРР]",
-	"EXAMPLES": "{{prefix}}birthdate 01/01/2010",
+	"USAGE": "birthdate [ДД/ММ/РРРР]",
+	"EXAMPLES": "birthdate 01/01/2010",
 	"MISSING_DATE": "Вкажіть дату у форматі 20/11/2003",
 	"INVALID_DATE": "Використовуйте цей формат: ДД/ММ/РРРР. Наприклад, `1 січня 2010` буде `01/01/2010`.",
 	"DATE_TOO_LOW": "Вам більше 80 років? :eyes:",

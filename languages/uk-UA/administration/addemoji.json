@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Додати ємодзі на сервер!",
-	"USAGE": "{{prefix}}addemoji [посилання-на-зображення] [назва]",
-	"EXAMPLES": "{{prefix}}addemoji https://via.placeholder.com/150 placeholder",
+	"USAGE": "addemoji [посилання-на-зображення] [назва]",
+	"EXAMPLES": "addemoji https://via.placeholder.com/150 placeholder",
 	"MISSING_URL": "Укажіть посилання на зображення!",
 	"MISSING_NAME": "Укажіть назву ємодзі!",
 	"INVALID_NAME": "Назва ємодзі повинна бути від 2 до 32 символів!",

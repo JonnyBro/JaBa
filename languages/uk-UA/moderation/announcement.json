@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Надіслати оголошення до поточного каналу!",
-	"USAGE": "{{prefix}}announcement [текст]",
-	"EXAMPLES": "{{prefix}}announcement Новий модератор!",
+	"USAGE": "announcement [текст]",
+	"EXAMPLES": "announcement Новий модератор!",
 	"MISSING_TEXT": "Вкажіть текст!",
 	"TOO_LONG": "Текст повинен бути коротшим за 1030 символів!",
 	"MENTION_PROMPT": "Хочете додати згадку до вашого повідомлення?\nНадіслати `так` або `ні`!",

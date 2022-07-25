@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Управление раздачами!",
-	"USAGE": "{{prefix}}giveaway [create/reroll/delete/end] [время] [кол-во победителей] (Дроп? true) [приз]",
-	"EXAMPLES": "{{prefix}}giveaway create 1d 2 100 рублей на карту!\n{{prefix}}giveaway create 1d 2 true 100 рублей на карту\n{{prefix}}giveaway reroll 597812898022031374",
+	"USAGE": "giveaway [create/reroll/delete/end] [время] [кол-во победителей] (Дроп? true) [приз]",
+	"EXAMPLES": "giveaway create 1d 2 100 рублей на карту!\ngiveaway create 1d 2 true 100 рублей на карту\ngiveaway reroll 597812898022031374",
 	"MISSING_STATUS": "Выберите действие: `create`, `reroll`, `end` или `delete`!",
 	"INVALID_CREATE": "Какой-то из аргументов указан неверно, попробуйте снова!",
 	"MISSING_ID": "Укажите ID сообщения раздачи!",

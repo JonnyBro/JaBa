@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Подкинуть монетку!",
-	"USAGE": "{{prefix}}flip",
-	"EXAMPLES": "{{prefix}}flip",
+	"USAGE": "flip",
+	"EXAMPLES": "flip",
 	"HEADS": ":coin: | Орёл!",
 	"TAILS": ":coin: | Решка!"
 }

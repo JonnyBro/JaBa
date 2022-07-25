@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Увімкнути або вимкнути використання команд у каналі",
-	"USAGE": "{{prefix}}ignore [канал]",
-	"EXAMPLES": "{{prefix}}ignore #основний",
+	"USAGE": "ignore [канал]",
+	"EXAMPLES": "ignore #основний",
 	"ALLOWED": "Тепер команди в {{channel}} дозволені!",
 	"IGNORED": "Тепер команди в {{channel}} заборонені!"
 	}

@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Show commands list or specific command help.",
-	"USAGE": "{{prefix}}help (command)",
-	"EXAMPLES": "{{prefix}}help\n{{prefix}}help ping",
+	"USAGE": "help (command)",
+	"EXAMPLES": "help\nhelp ping",
 	"CUSTOM": "A custom command doesn't have help page.",
 	"NOT_FOUND": "`{{search}}` is not a valid command",
 	"FIELD_USAGE": "Usage",
@@ -10,8 +10,8 @@
 	"FIELD_EXAMPLES": "Examples",
 	"FIELD_PERMISSIONS": "Permissions",
 	"NO_ALIAS": "No alias",
-	"CMD_TITLE": "{{prefix}}{{cmd}} help",
-	"INFO": "● To get help on a specific command type `{{prefix}}help <command>`!",
+	"CMD_TITLE": "{{cmd}} help",
+	"INFO": "● To get help on a specific command type `help <command>`!",
 	"CUSTOM_COMMANDS": "Custom commands",
 	"TITLE": "{{name}} | Commands",
 	"NO_REQUIRED_PERMISSION": "No specific permission is required to execute this command."

@@ -1,5 +1,5 @@
 {
 	"DESCRIPTION": "Створити зображення \"bed\"",
-	"USAGE": "{{prefix}}bed (@користувач1) (@користувач2)",
-	"EXAMPLES": "{{prefix}}bed @Jonny_Bro#4226\n{{prefix}}bed @Jonny_Bro#4226 @Dkflbvbh k.hyfqc#9402"
+	"USAGE": "bed (@користувач1) (@користувач2)",
+	"EXAMPLES": "bed @Jonny_Bro#4226\nbed @Jonny_Bro#4226 @Dkflbvbh k.hyfqc#9402"
 	}

@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Позволяет изменять многие данные пользователя!",
-	"USAGE": "{{prefix}}debug [set/add] [level/xp/credits/bank/rep] [@пользователь] [значение]",
-	"EXAMPLES": "{{prefix}}debug set level @Jonny_Bro#4226 10000",
+	"USAGE": "debug [set/add] [level/xp/credits/bank/rep] [@пользователь] [значение]",
+	"EXAMPLES": "debug set level @Jonny_Bro#4226 10000",
 	"INVALID_MEMBER": "Вы должны упомянуть пользователя!",
 	"NO_ACTION": "Выберите действие: `set` или `add`!",
 	"NO_STATUS": "Выберите параметр: `level`, `xp`, `credits`, `rep` или `bank`!",

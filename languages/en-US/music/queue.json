@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Shows the server queue",
-	"USAGE": "{{prefix}}queue",
-	"EXAMPLES": "{{prefix}}queue",
+	"USAGE": "queue",
+	"EXAMPLES": "queue",
 	"TITLE": "Server Queue"
 }

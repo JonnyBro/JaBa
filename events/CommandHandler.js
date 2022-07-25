@@ -15,6 +15,7 @@ class CommandHandler extends BaseEvent {
 	 */
 	async execute(client, interaction) {
 		if (interaction.type !== "APPLICATION_COMMAND" && !interaction.isCommand()) return;
+
 		const command = client.commands.get(interaction.commandName);
 		const data = [];
 
@@ -23,7 +24,8 @@ class CommandHandler extends BaseEvent {
 		});
 		data.userData = userData;
 
-		if (command.guildOnly && !interaction.inGuild()) return;
+		if (command.guildOnly && !interaction.inGuild()) return interaction.reply({ content: client.translate("misc:GUILD_ONLY"), ephemeral: true});
+		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.reply({ content: client.translate("misc:OWNER_ONLY"), ephemeral: true });
 
 		if (interaction.inGuild()) {
 			const guildData = await client.findOrCreateGuild({

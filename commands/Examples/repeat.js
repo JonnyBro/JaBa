@@ -1,4 +1,3 @@
-const { TextChannel } = require("discord.js");
 const BaseCommand = require("../base/BaseCommand");
 
 class Repeat extends BaseCommand {
@@ -10,7 +9,7 @@ class Repeat extends BaseCommand {
 		super({
 			command: {
 				name: "repeat", // Application command name.
-				type: 3 // Type 3 is USER COMMAND.
+				type: 3 // Type 3 is MESSAGE COMMAND.
 			},
 			aliases: ["r"], // Application command aliases.
 			guildOnly: true // Determines whether your command is only guild.

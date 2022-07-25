@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Shows information about a Minecraft server!",
-	"USAGE": "{{prefix}}minecraft [ip]",
-	"EXAMPLES": "{{prefix}}minecraft mc.hypixel.net",
+	"USAGE": "minecraft [ip]",
+	"EXAMPLES": "minecraft mc.hypixel.net",
 	"MISSING_IP": "Please enter a valid IP address!",
 	"FAILED": "This server is offline or blocking access!",
 	"ONLINE": "Online",

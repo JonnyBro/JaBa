@@ -1,5 +1,5 @@
 {
 	"DESCRIPTION": "Створити зображення \"wanted\"",
-	"USAGE": "{{prefix}}wanted (@користувач)",
-	"EXAMPLES": "{{prefix}}wanted\n{{prefix}}wanted @Jonny_Bro#4226"
+	"USAGE": "wanted (@користувач)",
+	"EXAMPLES": "wanted\nwanted @Jonny_Bro#4226"
 	}

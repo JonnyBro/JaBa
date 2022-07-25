@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Получить мем с выбранного или случайного сабреддита",
-	"USAGE": "{{prefix}}memes (тег)",
-	"EXAMPLES": "{{prefix}}memes\n{{prefix}}memes me_irl",
+	"USAGE": "memes (тег)",
+	"EXAMPLES": "memes\nmemes me_irl",
 	"SEARCHING": "Ищу мем по тегу `{{tag}}`...",
 	"SEARCHING_RANDOM": "Ищу случайный мем...",
 	"EMBED_TITLE": "Доступные категории",

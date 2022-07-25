@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показать очередь на воспроизведение",
-	"USAGE": "{{prefix}}queue",
-	"EXAMPLES": "{{prefix}}queue",
+	"USAGE": "queue",
+	"EXAMPLES": "queue",
 	"TITLE": "Очередь",
 	"ADDED": "Добавил"
 }

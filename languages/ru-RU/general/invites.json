@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показать кол-во пользователей которых пользователь пригласил на сервер!",
-	"USAGE": "{{prefix}}invites (@пользователь)",
-	"EXAMPLES": "{{prefix}}invites\n{{prefix}}invites @Jonny_Bro#4226",
+	"USAGE": "invites (@пользователь)",
+	"EXAMPLES": "invites\ninvites @Jonny_Bro#4226",
 	"NOBODY_AUTHOR": "Вы никого не пригласили на сервер!",
 	"NOBODY_MEMBER": "{{member}} никого не приглашал(а) на сервер!",
 	"CODE": "**{{code}}** ({{uses}} использований) | {{channel}}",

@@ -1,16 +1,16 @@
 {
 	"DESCRIPTION": "Увімкнути або вимкнути повідомлення при виході користувача з сервера!",
-	"USAGE": "{{prefix}}goodbye (edit/off/test)",
-	"EXAMPLES": "{{prefix}}goodbye\n{{prefix}}goodbye test",
+	"USAGE": "goodbye (edit/off/test)",
+	"EXAMPLES": "goodbye\ngoodbye test",
 	"MISSING_STATUS": "Виберіть дію: `edit`, `off` або `test`!",
 	"DEFAULT_MESSAGE": "Бувай, {user}! Нас тепер {membercount} без тебе :'(",
 	"TEST_SUCCESS": "Тест виконано!",
 	"FORM_1": "**У який канал надсилатимуться повідомлення?**\n\n:arrow_right_hook: *Надішліть згадку каналу!*",
 	"FORM_2": "**Вкажіть ваше повідомлення.**\n\n**Якщо необхідно:**\n*-* __Згадати користувача__: {user}\n*-* __Кількість учасників__: {membercount}\n*- * __Назва сервера__: {server}\n\n**Наприклад:**\nБувай, {user}, ми будемо нудьгувати!Тепер нас {membercount}.\n:fast_forward:\nБувай, {{author}}, ми будемо нудьгувати! Тепер нас {{memberCount}}.",
 	"FORM_3": "**Ви хочете додати картку до повідомлення?**\n\n:arrow_right_hook: *Надішліть `так` або `ні`!*",
-	"FORM_SUCCESS": "**Готово!**\n\n:arrow_right_hook: *Використовуйте `{{prefix}}goodbye test` для перегляду вашого повідомлення!*",
+	"FORM_SUCCESS": "**Готово!**\n\n:arrow_right_hook: *Використовуйте `goodbye test` для перегляду вашого повідомлення!*",
 	"MAX_CHARACT": "Ваше повідомлення не повинно перевищувати 1800 символів!",
-	"DISABLED": "**Повідомлення вимкнено!**\n\n:arrow_right_hook: *Використовуйте `{{prefix}}configuration`, щоб побачити оновлені налаштування!*",
+	"DISABLED": "**Повідомлення вимкнено!**\n\n:arrow_right_hook: *Використовуйте `configuration`, щоб побачити оновлені налаштування!*",
 	"IMG_GOODBYE": "Вийшов з {{server}}!",
 	"TITLE": "До зустрічі!"
 	}

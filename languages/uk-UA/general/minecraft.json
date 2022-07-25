@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показати інформацію про Minecraft сервер!",
-	"USAGE": "{{prefix}}minecraft [IP]",
-	"EXAMPLES": "{{prefix}}minecraft mc.hypixel.net",
+	"USAGE": "minecraft [IP]",
+	"EXAMPLES": "minecraft mc.hypixel.net",
 	"MISSING_IP": "Вкажіть IP сервера!",
 	"FAILED": "Сервер недоступний або доступ заборонено!",
 	"ONLINE": "Онлайн",

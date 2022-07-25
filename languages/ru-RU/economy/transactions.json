@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Посмотреть историю транзакций!",
-	"USAGE": "{{prefix}}transactions",
-	"EXAMPLES": "{{prefix}}transactions",
+	"USAGE": "transactions",
+	"EXAMPLES": "transactions",
 	"NO_TRANSACTIONS": "У вас нет транзакций.",
 	"EMBED_TRANSACTIONS": "Ваши транзакции",
 	"BANK": "Банк",

@@ -1,5 +1,5 @@
 {
 	"DESCRIPTION": "Створити зображення \"magik\"",
-	"USAGE": "{{prefix}}magik (@користувач)",
-	"EXAMPLES": "{{prefix}}magik\n{{prefix}}magik @Jonny_Bro#4226"
+	"USAGE": "magik (@користувач)",
+	"EXAMPLES": "magik\nmagik @Jonny_Bro#4226"
 }

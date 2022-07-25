@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Вгадай задумане мною слово!",
-	"USAGE": "{{prefix}}findwords (STOP)",
-	"EXAMPLES": "{{prefix}}findwords",
+	"USAGE": "findwords (STOP)",
+	"EXAMPLES": "findwords",
 	"INVALID_WORD": "{{member}} | Це слово не існує або я його не знаю :(",
 	"GAME_STARTING": ":timer: | Гра розпочнеться через 10 секунд!\nНапишіть STOP, якщо хочете зупинити гру!",
 	"FIND_WORD": "20 секунд, щоб знайти слово, в якому є **{{word}}**!",

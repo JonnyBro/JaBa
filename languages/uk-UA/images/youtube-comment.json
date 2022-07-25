@@ -1,5 +1,5 @@
 {
 	"DESCRIPTION": "Створити зображення \"ytcomment\"",
-	"USAGE": "{{prefix}}ytcomment (@користувач) [текст]",
-	"EXAMPLES": "{{prefix}}ytcomment Привіт!\n{{prefix}}ytcomment @Jonny_Bro#4226 Привіт!"
+	"USAGE": "ytcomment (@користувач) [текст]",
+	"EXAMPLES": "ytcomment Привіт!\nytcomment @Jonny_Bro#4226 Привіт!"
 }

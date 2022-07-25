@@ -1,9 +1,9 @@
 {
 	"DESCRIPTION": "Увімкнути або вимкнути фільтр музики",
-	"USAGE": "{{prefix}}filter [фільтр]",
-	"EXAMPLES": "{{prefix}}filter vaporwave",
-	"MISSING_FILTER": "Вкажіть фільтр для його включення! (або надішліть `{{prefix}}filters`, щоб побачити статуси фільтрів)",
-	"UNKNOWN_FILTER": "Заданий фільтр не існує! Використовуйте `{{prefix}}filters` щоб побачити список фільтрів або `{{prefix}}filter off` щоб вимкнути всі фільтри!",
+	"USAGE": "filter [фільтр]",
+	"EXAMPLES": "filter vaporwave",
+	"MISSING_FILTER": "Вкажіть фільтр для його включення! (або надішліть `filters`, щоб побачити статуси фільтрів)",
+	"UNKNOWN_FILTER": "Заданий фільтр не існує! Використовуйте `filters` щоб побачити список фільтрів або `filter off` щоб вимкнути всі фільтри!",
 	"CHANGING_FILTER": "Обновляю фільтри, зачекайте...",
 	"REMOVING_FILTER": "Відключаю всі фільтри, зачекайте..."
 }

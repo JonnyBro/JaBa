@@ -1,5 +1,5 @@
 {
 	"DESCRIPTION": "Створити зображення \"jail\"",
-	"USAGE": "{{prefix}}jail (@користувач)",
-	"EXAMPLES": "{{prefix}}jail\n{{prefix}}jail @Jonny_Bro#4226"
+	"USAGE": "jail (@користувач)",
+	"EXAMPLES": "jail\njail @Jonny_Bro#4226"
 }

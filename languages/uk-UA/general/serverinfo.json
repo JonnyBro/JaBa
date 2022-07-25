@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показати інформацію про сервер!",
-	"USAGE": "{{prefix}}serverinfo [ID/назва]",
-	"EXAMPLES": "{{prefix}}serverinfo кик\n{{prefix}}serverinfo",
+	"USAGE": "serverinfo [ID/назва]",
+	"EXAMPLES": "serverinfo кик\nserverinfo",
 	"AFK_CHANNEL": "AFK канал",
 	"NO_AFK_CHANNEL": "Немає AFK каналу",
 	"BOOSTS": "К-сть бустів",

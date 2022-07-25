@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Steal emoji!",
-	"USAGE": "{{prefix}}stealemoji [emoji]",
-	"EXAMPLES": "{{prefix}}stealemoji :coolstorybob:",
+	"USAGE": "stealemoji [emoji]",
+	"EXAMPLES": "stealemoji :coolstorybob:",
 	"MISSING_EMOJI": "Please provide an emoji!",
 	"SUCCESS": "{{emoji}} added!",
 	"ERROR": "{{emoji}} couldn't be added. Check if your server still has space for new emojis!"

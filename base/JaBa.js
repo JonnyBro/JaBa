@@ -117,55 +117,15 @@ class JaBa extends Client {
 		});
 	}
 
-	get defaultLanguage() {
-		return this.languages.find(language => language.default).name;
-	}
-
-	translate(key, args, locale) {
-		if (!locale) locale = this.defaultLanguage;
-		const language = this.translations.get(locale);
-		if (!language) throw "Invalid language set in data.";
-
-		return language(key, args);
-	}
-
-	printDate(date, format, locale) {
-		if (!locale) locale = this.defaultLanguage;
-		const languageData = this.languages.find((language) => language.name === locale || language.aliases.includes(locale));
-		if (!format) format = languageData.defaultMomentFormat;
-
-		return moment(new Date(date))
-			.locale(languageData.moment)
-			.format(format);
-	}
-
-	convertTime(time, type, noPrefix, locale) {
-		if (!type) time = "to";
-		if (!locale) locale = this.defaultLanguage;
-		const languageData = this.languages.find((language) => language.name === locale || language.aliases.includes(locale));
-		const m = moment(time).locale(languageData.moment);
-
-		return (type === "to" ? m.toNow(noPrefix) : m.fromNow(noPrefix));
-	}
-
-	getNoun(number, one, two, five) {
-		let n = Math.abs(number);
-		n %= 100;
-		if (n >= 5 && n <= 20) return five;
-		n %= 10;
-		if (n === 1) return one;
-		if (n >= 2 && n <= 4) return two;
-
-		return five;
-	}
-
 	/**
-	*
-	* @param {String} dir
-	* @param {String} guild_id
-	* @returns
-	*/
+	 *
+	 * @param {String} dir
+	 * @param {String} guild_id
+	 * @returns
+	 */
 	async loadCommands(dir, guild_id) {
+		if (!this.translations) this.translations = await require("../helpers/languages")();
+
 		const filePath = path.join(__dirname, dir);
 		const files = await fs.readdir(filePath);
 		const rest = new REST({ version: "9" }).setToken(this.config.token);
@@ -174,11 +134,11 @@ class JaBa extends Client {
 		for (let index = 0; index < files.length; index++) {
 			const file = files[index];
 			const stat = await fs.lstat(path.join(filePath, file));
-			if (stat.isDirectory()) this.loadCommands(this, path.join(dir, file));
+			if (stat.isDirectory()) this.loadCommands(path.join(dir, file), guild_id);
 			if (file.endsWith(".js")) {
 				const Command = require(path.join(filePath, file));
 				if (Command.prototype instanceof BaseCommand) {
-					const command = new Command();
+					const command = new Command(this);
 					this.commands.set(command.command.name, command);
 					const aliases = [];
 					if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0) {
@@ -219,17 +179,17 @@ class JaBa extends Client {
 	}
 
 	/**
-	*
-	* @param {String} dir
-	* @returns
-	*/
+	 *
+	 * @param {String} dir
+	 * @returns
+	 */
 	async loadEvents(dir) {
 		const filePath = path.join(__dirname, dir);
 		const files = await fs.readdir(filePath);
 		for (let index = 0; index < files.length; index++) {
 			const file = files[index];
 			const stat = await fs.lstat(path.join(filePath, file));
-			if (stat.isDirectory()) this.loadEvents(this, path.join(dir, file));
+			if (stat.isDirectory()) this.loadEvents(path.join(dir, file));
 			if (file.endsWith(".js")) {
 				const Event = require(path.join(filePath, file));
 				if (Event.prototype instanceof BaseEvent) {
@@ -255,45 +215,61 @@ class JaBa extends Client {
 			this.logger.log(`Unable to connect to the Mongodb database. Error: ${err}`, "error");
 		});
 
-		const languages = require("../helpers/languages");
-		this.translations = await languages();
+		// const languages = require("../helpers/languages");
+		// this.translations = await languages();
 
 		// const autoUpdateDocs = require("../helpers/autoUpdateDocs");
 		// autoUpdateDocs.update(this);
 	}
 
-	// loadCommand(commandPath, commandName) {
-	// 	try {
-	// 		const props = new(require(`.${commandPath}${path.sep}${commandName}`))(this);
-	// 		this.logger.log(`Loading Command: ${props.help.name}. 👌`, "log");
-	// 		props.conf.location = commandPath;
-	// 		if (props.init) props.init(this);
+	get defaultLanguage() {
+		return this.languages.find(language => language.default).name;
+	}
 
-	// 		this.commands.set(props.help.name, props);
-	// 		props.help.aliases.forEach((alias) => {
-	// 			this.aliases.set(alias, props.help.name);
-	// 		});
+	/**
+	 *
+	 * @param {String} key
+	 * @param {Array} args
+	 * @param {String} locale
+	 */
+	translate(key, args, locale) {
+		if (!locale) locale = this.defaultLanguage;
+		const language = this.translations.get(locale);
+		if (!language) throw "Invalid language set in data.";
 
-	// 		return false;
-	// 	} catch (e) {
-	// 		return `Unable to load command ${commandName}: ${e}`;
-	// 	}
-	// }
+		return language(key, args);
+	}
 
-	// async unloadCommand(commandPath, commandName) {
-	// 	let command;
-	// 	if (this.commands.has(commandName)) command = this.commands.get(commandName);
-	// 	else if (this.aliases.has(commandName)) command = this.commands.get(this.aliases.get(commandName));
+	printDate(date, format, locale) {
+		if (!locale) locale = this.defaultLanguage;
+		const languageData = this.languages.find((language) => language.name === locale || language.aliases.includes(locale));
+		if (!format) format = languageData.defaultMomentFormat;
 
-	// 	if (!command) return `The command \`${commandName}\` doesn't seem to exist, nor is it an alias. Try again!`;
-	// 	if (command.shutdown) await command.shutdown(this);
+		return moment(new Date(date))
+			.locale(languageData.moment)
+			.format(format);
+	}
 
-	// 	delete require.cache[require.resolve(`.${commandPath}${path.sep}${commandName}.js`)];
+	convertTime(time, type, noPrefix, locale) {
+		if (!type) time = "to";
+		if (!locale) locale = this.defaultLanguage;
+		const languageData = this.languages.find((language) => language.name === locale || language.aliases.includes(locale));
+		const m = moment(time).locale(languageData.moment);
 
-	// 	return false;
-	// }
+		return (type === "to" ? m.toNow(noPrefix) : m.fromNow(noPrefix));
+	}
 
-	// This function is used to find a user data or create it
+	getNoun(number, one, two, five) {
+		let n = Math.abs(number);
+		n %= 100;
+		if (n >= 5 && n <= 20) return five;
+		n %= 10;
+		if (n === 1) return one;
+		if (n >= 2 && n <= 4) return two;
+
+		return five;
+	}
+
 	async findOrCreateUser({ id: userID }, isLean) {
 		if (this.databaseCache.users.get(userID)) return isLean ? this.databaseCache.users.get(userID).toJSON() : this.databaseCache.users.get(userID);
 		else {
@@ -318,7 +294,6 @@ class JaBa extends Client {
 		}
 	}
 
-	// This function is used to find a member data or create it
 	async findOrCreateMember({ id: memberID, guildID }, isLean) {
 		if (this.databaseCache.members.get(`${memberID}${guildID}`)) return isLean ? this.databaseCache.members.get(`${memberID}${guildID}`).toJSON() : this.databaseCache.members.get(`${memberID}${guildID}`);
 		else {
@@ -353,7 +328,6 @@ class JaBa extends Client {
 		}
 	}
 
-	// This function is used to find a guild data or create it
 	async findOrCreateGuild({ id: guildID }, isLean) {
 		if (this.databaseCache.guilds.get(guildID)) return isLean ? this.databaseCache.guilds.get(guildID).toJSON() : this.databaseCache.guilds.get(guildID);
 		else {
@@ -378,7 +352,6 @@ class JaBa extends Client {
 		}
 	}
 
-	// This function is used to resolve a user from a string
 	async resolveUser(search) {
 		let user = null;
 		if (!search || typeof search !== "string") return;

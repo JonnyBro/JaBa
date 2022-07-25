@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Конные скачки!",
-	"USAGE": "{{prefix}}horserace [create/bet/go]",
-	"EXAMPLES": "{{prefix}}horserace create\n{{prefix}}horserace bet 3 100",
+	"USAGE": "horserace [create/bet/go]",
+	"EXAMPLES": "horserace create\nhorserace bet 3 100",
 	"MISSING_STATUS": "Выберите параметр: `create`, `bet` или `go`!",
 	"HORSE_NUM": "На скачках всего 5 лошадей!",
 	"EMBED_T": "Конные скачки",

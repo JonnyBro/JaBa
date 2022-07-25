@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Почати відтворення треку!",
-	"USAGE": "{{prefix}}play [назва-трека/посилання]",
-	"EXAMPLES": "{{prefix}}play Never Gonna Give You Up",
+	"USAGE": "play [назва-трека/посилання]",
+	"EXAMPLES": "play Never Gonna Give You Up",
 	"NO_VOICE_CHANNEL": "Ви повинні знаходитися в голосовому каналі!",
 	"VOICE_CHANNEL_CONNECT": "Я не можу приєднатися до вашого голосового каналу!",
 	"MISSING_SONG_NAME": "Вкажіть назву треку або посилання на нього!",
