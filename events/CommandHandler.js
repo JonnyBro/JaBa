@@ -31,7 +31,7 @@ class CommandHandler extends BaseEvent {
 			const guildData = await client.findOrCreateGuild({
 				id: interaction.guildId
 			});
-			data.guildData = guildData;
+			interaction.guild.data = data.guildData = guildData;
 
 			const memberData = await client.findOrCreateMember({
 				id: interaction.member.id,

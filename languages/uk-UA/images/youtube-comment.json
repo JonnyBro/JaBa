@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Створити зображення \"ytcomment\"",
-	"USAGE": "ytcomment (@користувач) [текст]",
-	"EXAMPLES": "ytcomment Привіт!\nytcomment @Jonny_Bro#4226 Привіт!"
-}

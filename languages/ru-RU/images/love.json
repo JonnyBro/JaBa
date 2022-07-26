@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Создать изображение \"love\"",
-	"USAGE": "love (@пользователь1) (@пользователь2)",
-	"EXAMPLES": "love @Jonny_Bro#4226\nlove @Jonny_Bro#4226 @JaBa#9042"
-}

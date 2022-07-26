@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Створити зображення \"phcomment\"",
-	"USAGE": "phcomment (@користувач) [текст]",
-	"EXAMPLES": "phcomment Привіт!\nphcomment @Jonny_Bro#4226 Привіт!",
-	"MISSING_TEXT": "Вкажіть текст!"
-}

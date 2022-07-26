@@ -1,8 +1,0 @@
-{
-	"DESCRIPTION": "Створити власну команду!",
-	"USAGE": "addcommand [назва] [відповідь]",
-	"EXAMPLES": "addcommand hello Привіт, {user}. Добро пожаловать на {guild}!",
-	"MISSING_NAME": "Укажіть назву команди!",
-	"MISSING_ANSWER": "Укажіть відповідь команди!",
-	"SUCCESS": "Команда **{{commandName}}** створена!"
-}

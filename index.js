@@ -12,7 +12,7 @@ const client = new JaBa({
 	client.translations = await require("./helpers/languages")();
 
 	await client.loadEvents("../events");
-	await client.loadCommands("../commands", client.config.support.production ? "" : client.config.support.id);
+	await client.loadCommands("../commands");
 	await client.init();
 })();
 

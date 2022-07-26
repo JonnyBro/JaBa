@@ -120,10 +120,9 @@ class JaBa extends Client {
 	/**
 	 *
 	 * @param {String} dir
-	 * @param {String} guild_id
 	 * @returns
 	 */
-	async loadCommands(dir, guild_id) {
+	async loadCommands(dir) {
 		const filePath = path.join(__dirname, dir);
 		const files = await fs.readdir(filePath);
 		const rest = new REST({ version: "9" }).setToken(this.config.token);
@@ -132,7 +131,8 @@ class JaBa extends Client {
 		for (let index = 0; index < files.length; index++) {
 			const file = files[index];
 			const stat = await fs.lstat(path.join(filePath, file));
-			if (stat.isDirectory()) this.loadCommands(path.join(dir, file), guild_id);
+			if (stat.isDirectory()) this.loadCommands(path.join(dir, file));
+
 			if (file.endsWith(".js")) {
 				const Command = require(path.join(filePath, file));
 				if (Command.prototype instanceof BaseCommand) {
@@ -148,7 +148,7 @@ class JaBa extends Client {
 						});
 					}
 
-					if (command.guildOnly) guild_commands.push(command.command instanceof SlashCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
+					if (!this.config.production) guild_commands.push(command.command instanceof SlashCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
 					else commands.push(command.command instanceof SlashCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
 
 					if (command.onLoad || typeof command.onLoad === "function") await command.onLoad(this);
@@ -158,22 +158,88 @@ class JaBa extends Client {
 		}
 
 		try {
-			if (guild_id && guild_id.length) {
+			if (!this.config.production) {
 				await rest.put(
-					Routes.applicationGuildCommands(this.config.user, guild_id), {
+					Routes.applicationGuildCommands(this.config.user, this.config.support.id), {
 						body: guild_commands
-					},
+					}
+				);
+			} else {
+				await rest.put(
+					Routes.applicationCommands(this.config.user), {
+						body: commands
+					}
 				);
 			}
-			await rest.put(
-				Routes.applicationCommands(this.config.user), {
-					body: commands
-				},
-			);
+
 			this.logger.log("Successfully registered application commands.");
 		} catch (err) {
 			this.logger.log("Cannot load commands: " + err.message, "error");
 		}
+	}
+
+	/**
+	 *
+	 * @param {String} dir
+	 * @param {String} file
+	 */
+	async loadCommand(dir, file) {
+		const commands = [];
+		const guild_commands = [];
+		const rest = new REST({ version: "9" }).setToken(this.config.token);
+		const Command = require(path.join(dir, `${file}.js`));
+		if (Command.prototype instanceof BaseCommand) {
+			const command = new Command(this);
+			this.commands.set(command.command.name, command);
+			const aliases = [];
+			if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0) {
+				command.aliases.forEach((alias) => {
+					const command_alias = command.command instanceof SlashCommandBuilder ? { ...command.command.toJSON() } : { ...command.command };
+					command_alias.name = alias;
+					aliases.push(command_alias);
+					this.commands.set(alias, command);
+				});
+			}
+
+			if (!this.config.production) guild_commands.push(command.command instanceof SlashCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
+			else commands.push(command.command instanceof SlashCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
+
+			if (command.onLoad || typeof command.onLoad === "function") await command.onLoad(this);
+			this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
+
+			try {
+				if (!this.config.production) {
+					await rest.put(
+						Routes.applicationGuildCommands(this.config.user, this.config.support.id), {
+							body: guild_commands
+						}
+					);
+				} else {
+					await rest.put(
+						Routes.applicationCommands(this.config.user), {
+							body: commands
+						}
+					);
+				}
+
+				this.logger.log("Successfully registered application commands.");
+			} catch (err) {
+				this.logger.log("Cannot load commands: " + err.message, "error");
+			}
+
+			return;
+		}
+	}
+
+	/**
+	 *
+	 * @param {String} dir
+	 * @param {String} name
+	 */
+	async unloadCommand(dir, name) {
+		delete require.cache[require.resolve(`${dir}${path.sep}${name}.js`)];
+
+		return;
 	}
 
 	/**

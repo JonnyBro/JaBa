@@ -1,8 +1,0 @@
-{
-	"DESCRIPTION": "Видалити власну команду!",
-	"USAGE": "delcommand [назва]",
-	"EXAMPLES": "delcommand hello",
-	"MISSING_NAME": "Введіть назву команди!",
-	"UNKNOWN_COMMAND": "Команда {{commandName}} не існує!",
-	"SUCCESS": "Команда {{commandName}} була видалена з серверу!"
-}

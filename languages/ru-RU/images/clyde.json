@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Создать изображение \"Clyde\"",
-	"USAGE": "clyde [текст]",
-	"EXAMPLES": "clyde Discord закроется 11 декабря 2002 года. Прощайте!.",
-	"MISSING_TEXT": "Введите текст!"
-}

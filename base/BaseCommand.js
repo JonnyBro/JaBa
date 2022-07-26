@@ -20,7 +20,7 @@ class BaseCommand {
 		 */
 		this.ownerOnly = options.ownerOnly || false;
 		/**
-		 * @type {Object}
+		 * @type __dirname
 		 */
 		this.dirname = options.dirname || false;
 		/**

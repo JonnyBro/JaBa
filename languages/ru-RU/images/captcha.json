@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Создать изображение \"captcha\"",
-	"USAGE": "captcha (@пользователь)",
-	"EXAMPLES": "captcha\ncaptcha @Jonny_Bro#4226"
-}

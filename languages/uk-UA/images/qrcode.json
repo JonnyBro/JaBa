@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Створити QR код із тексту",
-	"USAGE": "qrcode [текст]",
-	"EXAMPLES": "qrcode Hello World!",
-	"MISSING_TEXT": "Вкажіть текст!",
-	"SUCCESS": "От ваш QR код!"
-}
