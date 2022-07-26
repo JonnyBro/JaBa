@@ -1,10 +1,10 @@
 const Canvas = require("canvas"),
-	BaseEvent = require("../base/BaseEvent"),
+	BaseEvent = require("../../base/BaseEvent"),
 	{ MessageAttachment } = require("discord.js"),
 	{ resolve } = require("path");
 
 // Register assets fonts
-Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "RubikMonoOne"  });
+Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "RubikMonoOne" });
 Canvas.registerFont(resolve("./assets/fonts/KeepCalm-Medium.ttf"), { family: "KeepCalm" });
 
 const applyText = (canvas, text, defaultFontSize, width, font) => {
@@ -16,10 +16,10 @@ const applyText = (canvas, text, defaultFontSize, width, font) => {
 	return ctx.font;
 };
 
-class GuildMemberRemove extends BaseEvent {
+class GuildMemberAdd extends BaseEvent {
 	constructor() {
 		super({
-			name: "guildMemberRemove",
+			name: "guildMemberAdd",
 			once: false
 		});
 	}
@@ -38,16 +38,33 @@ class GuildMemberRemove extends BaseEvent {
 		});
 		member.guild.data = guildData;
 
-		// Check if goodbye message is enabled
-		if (guildData.plugins.goodbye.enabled) {
-			const channel = member.guild.channels.cache.get(guildData.plugins.goodbye.channel);
+		const memberData = await this.client.findOrCreateMember({
+			id: member.id,
+			guildID: member.guild.id
+		});
+		if (memberData.mute.muted && memberData.mute.endDate > Date.now()) {
+			member.guild.channels.cache.forEach((channel) => {
+				channel.permissionOverwrites.edit(member.id, {
+					SEND_MESSAGES: false,
+					ADD_REACTIONS: false,
+					CONNECT: false
+				}).catch(() => {});
+			});
+		}
+
+		// Check if the autorole is enabled
+		if (guildData.plugins.autorole.enabled) member.roles.add(guildData.plugins.autorole.role);
+
+		// Check if welcome message is enabled
+		if (guildData.plugins.welcome.enabled) {
+			const channel = member.guild.channels.cache.get(guildData.plugins.welcome.channel);
 			if (channel) {
-				const message = guildData.plugins.goodbye.message
-					.replace(/{user}/g, member.user.tag)
+				const message = guildData.plugins.welcome.message
+					.replace(/{user}/g, member)
 					.replace(/{server}/g, member.guild.name)
 					.replace(/{membercount}/g, member.guild.memberCount)
 					.replace(/{createdat}/g, this.client.printDate(member.user.createdAt));
-				if (guildData.plugins.goodbye.withImage) {
+				if (guildData.plugins.welcome.withImage) {
 					const canvas = Canvas.createCanvas(1024, 450),
 						ctx = canvas.getContext("2d");
 
@@ -79,11 +96,11 @@ class GuildMemberRemove extends BaseEvent {
 					ctx.fillText(member.user.username, canvas.width - 670, canvas.height - 250);
 
 					// Draw server name
-					ctx.font = applyText(canvas, member.guild.translate("administration/goodbye:IMG_GOODBYE", {
+					ctx.font = applyText(canvas, member.guild.translate("administration/welcome:IMG_WELCOME", {
 						server: member.guild.name
 					}), 53, 625, "RubikMonoOne");
 
-					ctx.fillText(member.guild.translate("administration/goodbye:IMG_GOODBYE", {
+					ctx.fillText(member.guild.translate("administration/welcome:IMG_WELCOME", {
 						server: member.guild.name
 					}), canvas.width - 700, canvas.height - 70);
 
@@ -93,7 +110,7 @@ class GuildMemberRemove extends BaseEvent {
 
 					// Draw membercount
 					ctx.font = "22px RubikMonoOne";
-					ctx.fillText(`${member.guild.memberCount} ${this.client.getNoun(member.guild.memberCount, member.guild.translate("misc:NOUNS:MEMBERS:1"), member.guild.translate("misc:NOUNS:MEMBERS:2"), member.guild.translate("misc:NOUNS:MEMBERS:5"))}`, 40, canvas.height - 35);
+					ctx.fillText(`${member.guild.memberCount}й ${member.guild.translate("misc:NOUNS:MEMBERS:1")}`, 40, canvas.height - 35);
 
 					// Draw # for discriminator
 					ctx.fillStyle = "#FFFFFF";
@@ -104,9 +121,9 @@ class GuildMemberRemove extends BaseEvent {
 					ctx.font = "45px RubikMonoOne";
 					ctx.strokeStyle = "#000000";
 					ctx.lineWidth = 10;
-					ctx.strokeText(member.guild.translate("administration/goodbye:TITLE"), canvas.width - 670, canvas.height - 330);
+					ctx.strokeText(member.guild.translate("administration/welcome:TITLE"), canvas.width - 670, canvas.height - 330);
 					ctx.fillStyle = "#FFFFFF";
-					ctx.fillText(member.guild.translate("administration/goodbye:TITLE"), canvas.width - 670, canvas.height - 330);
+					ctx.fillText(member.guild.translate("administration/welcome:TITLE"), canvas.width - 670, canvas.height - 330);
 
 					// Draw avatar circle
 					ctx.beginPath();
@@ -122,7 +139,7 @@ class GuildMemberRemove extends BaseEvent {
 					}));
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 
-					const attachment = new MessageAttachment(canvas.toBuffer(), "goodbye-image.png");
+					const attachment = new MessageAttachment(canvas.toBuffer(), "welcome-image.png");
 					channel.send({
 						content: message,
 						files: [attachment]
@@ -137,4 +154,4 @@ class GuildMemberRemove extends BaseEvent {
 	}
 }
 
-module.exports = GuildMemberRemove;
+module.exports = GuildMemberAdd;

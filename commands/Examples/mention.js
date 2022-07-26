@@ -1,9 +1,9 @@
-const BaseCommand = require("../base/BaseCommand");
+const BaseCommand = require("../../base/BaseCommand");
 
 class Mention extends BaseCommand {
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../../base/JaBa")} client
 	 */
 	constructor() {
 		super({
@@ -12,19 +12,20 @@ class Mention extends BaseCommand {
 				type: 2 // Type 2 is USER COMMAND.
 			},
 			aliases: ["m"], // Application command aliases.
+			dirname: __dirname,
 			guildOnly: true // Determines whether your command is only guild.
 		});
 	}
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../../base/JaBa")} client
 	 */
 	async onLoad() {
 		//...
 	}
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ContextMenuInteraction} interaction
 	 */
 	async execute(client, interaction) {

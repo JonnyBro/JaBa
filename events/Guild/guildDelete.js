@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js"),
-	BaseEvent = require("../base/BaseEvent");
+	BaseEvent = require("../../base/BaseEvent");
 
 class GuildDelete extends BaseEvent {
 	constructor() {

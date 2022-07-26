@@ -1,4 +1,4 @@
-const BaseEvent = require("../base/BaseEvent");
+const BaseEvent = require("../../base/BaseEvent");
 
 class GuildMemberUpdate extends BaseEvent {
 	constructor() {

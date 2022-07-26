@@ -1,11 +1,11 @@
 /* eslint-disable no-async-promise-executor */
-const config = require("../config");
-const fetch = require("node-fetch");
-
-const chalk = require("chalk");
-const success = (message) => console.log(`   ${chalk.green("✓")} ${message}`);
-const error = (message, howToFix) => console.log(`   ${chalk.red("✗")} ${message}${howToFix ? ` : ${howToFix}` : ""}`);
-const ignore = (message) => console.log(`   ${chalk.yellow("~")} ${message}`);
+const { Intents } = require("discord.js"),
+	config = require("../config"),
+	fetch = require("node-fetch"),
+	chalk = require("chalk"),
+	success = (message) => console.log(`   ${chalk.green("✓")} ${message}`),
+	error = (message, howToFix) => console.log(`   ${chalk.red("✗")} ${message}${howToFix ? ` : ${howToFix}` : ""}`),
+	ignore = (message) => console.log(`   ${chalk.yellow("~")} ${message}`);
 
 const checks = [
 	() => {
@@ -23,7 +23,7 @@ const checks = [
 		console.log("\n\nDiscord Bot");
 		return new Promise((res) => {
 			const Discord = require("discord.js");
-			const client = new Discord.Client();
+			const client = new Discord.Client({ intents: Object.keys(Intents.FLAGS) });
 			let readyResolve;
 			new Promise((resolve) => readyResolve = resolve);
 			client.login(config.token).then(async () => {
@@ -55,7 +55,7 @@ const checks = [
 				success("Connection to Mongo database success");
 				res();
 			}).catch(() => {
-				error("Should be able to connect to Mongo database", "please verify if the MongoDB server is started");
+				error("Not able to connect to Mongo database", "please verify if the MongoDB server is started");
 				res();
 			});
 		});
@@ -64,7 +64,7 @@ const checks = [
 		console.log("\n\nAPI keys");
 		return new Promise(async (resolve) => {
 			if (!config.apiKeys.amethyste) {
-				ignore("Amethyste API is not configured, key should not be checked.");
+				ignore("Amethyste API is not configured, skipping check.");
 			} else {
 				const res = await fetch("https://v1.api.amethyste.moe/generate/blurple", {
 					method: "POST",
@@ -74,13 +74,13 @@ const checks = [
 				});
 				const result = await res.json();
 				if (result.status === 401) {
-					error("Should be a valid Amethyste API key", "get your key here: https://api.amethyste.moe/");
+					error("Not valid Amethyste API key", "get your key here: https://api.amethyste.moe/");
 				} else {
 					success("Valid Amethyste API key");
 				}
 			}
 			if (!config.apiKeys.blagueXYZ) {
-				ignore("blague.xyz API is not configured, key should not be checked.");
+				ignore("blague.xyz API is not configured, skipping check.");
 			} else {
 				const res = await fetch("https://blague.xyz/api/joke/random", {
 					headers: {
@@ -89,25 +89,9 @@ const checks = [
 				});
 				const result = await res.json();
 				if (result.status === 401) {
-					error("Should be a valid blague.xyz key", "get your key here: https://blague.xyz/");
+					error("Not valid blague.xyz key", "get your key here: https://blague.xyz/");
 				} else {
 					success("Valid blague.xyz key");
-				}
-			}
-			if (!config.apiKeys.dbl) {
-				ignore("DBL API is not configured, key should not be checked.");
-			} else {
-				const res = await fetch("https://top.gg/api/bots/check?userId=test", {
-					method: "POST",
-					headers: {
-						Authorization: config.apiKeys.dbl
-					}
-				});
-				const result = await res.json();
-				if (result.error && result.error === "Unauthorized") {
-					error("Should be a valid DBL key", "get your key here: https://top.gg/ OR delete the key from the config if you don't have a key");
-				} else {
-					success("Valid DBL key");
 				}
 			}
 			resolve();
@@ -117,7 +101,7 @@ const checks = [
 		console.log("\n\nDashboard");
 		return new Promise(async (resolve) => {
 			if (!config.dashboard.enabled) {
-				ignore("Dashboard is not enabled, config shouldn't be checked.");
+				ignore("Dashboard is not enabled, skipping check.");
 			} else {
 				const checkPortTaken = (port) => {
 					return new Promise((resolve) => {
@@ -138,7 +122,7 @@ const checks = [
 				};
 				const isPortTaken = await checkPortTaken(config.dashboard.port);
 				if (isPortTaken) {
-					error("Dashboard port should be available", "you have probably another process using this port");
+					error("Dashboard port not available", "you have probably another process using this port");
 				} else {
 					success("Dashboard port is available");
 				}

@@ -34,7 +34,7 @@ class MessageCreate extends BaseEvent {
 			message.guild.data = data.guild = guild;
 		}
 
-		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) return message.sendT("misc:HELLO_SERVER", { username: message.author.username });
+		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) return message.replyT("misc:HELLO_SERVER", { username: message.author.username });
 
 		if (message.guild) {
 			const memberData = await client.findOrCreateMember({
@@ -68,7 +68,7 @@ class MessageCreate extends BaseEvent {
 			if (afkReason) {
 				data.userData.afk = null;
 				await data.userData.save();
-				message.sendT("general/setafk:DELETED", {
+				message.replyT("general/setafk:DELETED", {
 					username: message.author.username
 				});
 			}

@@ -6,6 +6,5 @@
 	"NO_GAME": "Not playing",
 	"NO_ROLE": "No role",
 	"NO_NICKNAME": "No nickname",
-	"MORE_ROLES": "and {{count}} others roles",
-	"BOT_STATS": "**{{votes}}** votes ([top.gg](https://top.gg))\n**{{servers}}** servers\n**{{shards}}** shards\nUsing **{{lib}}**"
+	"MORE_ROLES": "and {{count}} others roles"
 }

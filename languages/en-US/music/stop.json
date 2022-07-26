@@ -2,6 +2,5 @@
 	"DESCRIPTION": "Stop the music",
 	"USAGE": "stop",
 	"EXAMPLES": "stop",
-	"VOTE_CONTENT": "React with 👍 to stop the music! {{requiredCount}} more votes are required.",
 	"SUCCESS": "Music stopped!"
 }

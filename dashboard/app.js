@@ -2,7 +2,7 @@ const config = require("../config"),
 	utils = require("./utils"),
 	CheckAuth = require("./auth/CheckAuth");
 
-module.exports.load = async(client) => {
+module.exports.init = async(client) => {
 	/* Init express app */
 	const express = require("express"),
 		session = require("express-session"),

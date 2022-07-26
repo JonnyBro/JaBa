@@ -19,7 +19,7 @@ class Ready extends BaseEvent {
 		let tServers = client.guilds.cache.size - 1;
 
 		// Logs some informations using logger
-		client.logger.log(`Loaded a total of ${commands.length} command(s).`, "log");
+		client.logger.log(`Loaded a total of ${commands.length} command(s).`, "ready");
 		client.logger.log(`${client.user.tag}, ready to serve ${tUsers} users in ${tServers} servers.`, "ready");
 		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"] , permissions: [Permissions.FLAGS.ADMINISTRATOR] })}`, "ready");
 
@@ -44,7 +44,7 @@ class Ready extends BaseEvent {
 		clearTransactions.init(client);
 
 		// Start the dashboard
-		if (client.config.dashboard.enabled) client.dashboard.load(client);
+		if (client.config.dashboard.enabled) client.dashboard.init(client);
 
 		// Update status
 		const version = require("../package.json").version;

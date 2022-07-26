@@ -1,7 +1,7 @@
 const CronJob = require("cron").CronJob,
 	Discord = require("discord.js");
 
-async function init(client) {
+module.exports.init = async function (client) {
 	new CronJob("0 5 * * *", async function () {
 		client.guilds.cache.forEach(async (guild) => {
 			const date = new Date(),
@@ -55,8 +55,4 @@ async function init(client) {
 			}
 		});
 	}, null, true, "Europe/Moscow");
-}
-
-module.exports = {
-	init
 };

@@ -17,6 +17,7 @@ class Eval extends BaseCommand {
 						.setDescription(client.translate("owner/eval:USAGE"))
 						.setRequired(true)),
 			aliases: ["e"],
+			dirname: __dirname,
 			guildOnly: true,
 			ownerOnly: true
 		});

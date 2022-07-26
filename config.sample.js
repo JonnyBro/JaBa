@@ -4,8 +4,8 @@ module.exports = {
 	/* ID of Bot's user */
 	user: "XXXXXXXXXXX",
 	/* For the support server */
+	production: true, // Set to true for production
 	support: {
-		enabled: false, // Set to false for production
 		id: "XXXXXXXXXXX", // The ID of the support server
 		logs: "XXXXXXXXXXX", // And the ID of the logs channel of your server (new servers for example)
 	},

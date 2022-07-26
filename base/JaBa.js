@@ -124,8 +124,6 @@ class JaBa extends Client {
 	 * @returns
 	 */
 	async loadCommands(dir, guild_id) {
-		if (!this.translations) this.translations = await require("../helpers/languages")();
-
 		const filePath = path.join(__dirname, dir);
 		const files = await fs.readdir(filePath);
 		const rest = new REST({ version: "9" }).setToken(this.config.token);
@@ -215,11 +213,8 @@ class JaBa extends Client {
 			this.logger.log(`Unable to connect to the Mongodb database. Error: ${err}`, "error");
 		});
 
-		// const languages = require("../helpers/languages");
-		// this.translations = await languages();
-
-		// const autoUpdateDocs = require("../helpers/autoUpdateDocs");
-		// autoUpdateDocs.update(this);
+		const autoUpdateDocs = require("../helpers/autoUpdateDocs");
+		autoUpdateDocs.update(this);
 	}
 
 	get defaultLanguage() {
@@ -251,12 +246,12 @@ class JaBa extends Client {
 	}
 
 	convertTime(time, type, noPrefix, locale) {
-		if (!type) time = "to";
+		if (!type) type = false;
 		if (!locale) locale = this.defaultLanguage;
 		const languageData = this.languages.find((language) => language.name === locale || language.aliases.includes(locale));
 		const m = moment(time).locale(languageData.moment);
 
-		return (type === "to" ? m.toNow(noPrefix) : m.fromNow(noPrefix));
+		return (type ? m.toNow(noPrefix) : m.fromNow(noPrefix));
 	}
 
 	getNoun(number, one, two, five) {

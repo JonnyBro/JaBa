@@ -1,10 +1,10 @@
 // Thanks to simply-djs for this =)
 
-const Discord = require("discord.js");
+const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 
 /**
- * @param message Discord Message
- * @param options Array of Options
+ * @param {require("discord.js").Message} message
+ * @param {Array} options
  */
 /**
   slash => Boolean
@@ -23,7 +23,6 @@ const Discord = require("discord.js");
 
   idleEmoji => (Emoji ID) String
  */
-
 async function tictactoe(message, options = []) {
 	// eslint-disable-next-line no-async-promise-executor
 	return new Promise(async (resolve) => {
@@ -73,7 +72,7 @@ async function tictactoe(message, options = []) {
 
 			const foot = options.embedFoot ? { text: options.embedFoot } : { text: "Удачи =)" };
 
-			const acceptEmbed = new Discord.MessageEmbed()
+			const acceptEmbed = new MessageEmbed()
 				.setTitle(message.translate("economy/tictactoe:REQUEST_WAIT", {
 					user: opponent.tag
 				}))
@@ -85,17 +84,17 @@ async function tictactoe(message, options = []) {
 				.setFooter(foot)
 				.setTimestamp();
 
-			const accept = new Discord.MessageButton()
+			const accept = new MessageButton()
 				.setLabel(message.translate("economy/tictactoe:ACCEPT"))
 				.setStyle("SUCCESS")
 				.setCustomId("acceptttt");
 
-			const decline = new Discord.MessageButton()
+			const decline = new MessageButton()
 				.setLabel(message.translate("economy/tictactoe:DECLINE"))
 				.setStyle("DANGER")
 				.setCustomId("declinettt");
 
-			const accep = new Discord.MessageActionRow().addComponents([
+			const accep = new MessageActionRow().addComponents([
 				accept,
 				decline
 			]);
@@ -199,7 +198,7 @@ async function tictactoe(message, options = []) {
 					};
 					const { MessageActionRow, MessageButton } = require("discord.js");
 
-					const epm = new Discord.MessageEmbed()
+					const epm = new MessageEmbed()
 						.setTitle(message.translate("economy/tictactoe:DESCRIPTION"))
 						.setColor(options.embedColor || "#075FFF")
 						.setFooter(foot)
@@ -845,7 +844,7 @@ async function tictactoe(message, options = []) {
 
 			collector.on("end", (collected, reason) => {
 				if (reason == "time") {
-					const embed = new Discord.MessageEmbed()
+					const embed = new MessageEmbed()
 						.setTitle(message.translate("economy/tictactoe:NO_ANSWER_TITLE"))
 						.setAuthor({
 							name: (message.user ? message.user : message.author).tag,
@@ -864,7 +863,7 @@ async function tictactoe(message, options = []) {
 					});
 				}
 				if (reason == "decline") {
-					const embed = new Discord.MessageEmbed()
+					const embed = new MessageEmbed()
 						.setTitle(message.translate("economy/tictactoe:CANCELED"))
 						.setAuthor({
 							name: (message.user ? message.user : message.author).tag,

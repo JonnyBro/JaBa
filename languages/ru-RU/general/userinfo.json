@@ -7,6 +7,5 @@
 	"NO_ROLE": "Нет роли",
 	"ROLE": "Высшая роль",
 	"NO_NICKNAME": "Нет никнейма",
-	"MORE_ROLES": "и ещё {{count}} роль(и/ей)",
-	"BOT_STATS": "**{{votes}}** голосов ([top.gg](https://top.gg))\n**{{servers}}** серверов\n**{{shards}}** шардов\nИспользует **{{lib}}**"
+	"MORE_ROLES": "и ещё {{count}} роль(и/ей)"
 }
