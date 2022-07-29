@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 
 module.exports.init = function (client) {
 	client.usersData
@@ -18,7 +18,7 @@ module.exports.init = function (client) {
 				const mustSent = reminds.filter((r) => r.sendAt < dateNow);
 				if (mustSent.length > 0) {
 					mustSent.forEach((r) => {
-						const embed = new Discord.MessageEmbed()
+						const embed = new MessageEmbed()
 							.setAuthor({
 								name: client.translate("general/remindme:TITLE")
 							})

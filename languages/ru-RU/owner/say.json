@@ -1,5 +1,8 @@
 {
-	"DESCRIPTION": "Написать сообщение от имени бота!",
-	"USAGE": "say [текст] ++ (ID/название-канала) ++ (ID/название-сервера)",
-	"EXAMPLES": "say Hello World!\nsay Hello World! ++ 123456789098765432"
+	"DESCRIPTION": "Написать сообщение от имени бота",
+	"USAGE": "[текст] (#канал)",
+	"EXAMPLES": "say Hello World!\nsay Hello World! #новости",
+	"DONE": "Сообщение `{{message}}` отправлено в {{channel}}!",
+	"MESSAGE": "Сообщение",
+	"CHANNEL": "Канал"
 }

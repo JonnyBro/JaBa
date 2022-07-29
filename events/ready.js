@@ -56,6 +56,7 @@ class Ready extends BaseEvent {
 		];
 
 		let i = 0;
+		setTimeout
 		setInterval(async function () {
 			hiddenGuild = await client.guilds.fetch("568120814776614924");
 			tUsers = client.users.cache.size - hiddenGuild.memberCount;

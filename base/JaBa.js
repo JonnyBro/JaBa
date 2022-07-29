@@ -122,37 +122,39 @@ class JaBa extends Client {
 	 * @param {String} dir
 	 * @returns
 	 */
+
 	async loadCommands(dir) {
 		const filePath = path.join(__dirname, dir);
-		const files = await fs.readdir(filePath);
+		var folders = await fs.readdir(filePath); folders = folders.map(file => path.join(filePath, file)).filter(async (path) => { path = await fs.lstat(path); path.isDirectory(); });
 		const rest = new REST({ version: "9" }).setToken(this.config.token);
 		const commands = [];
-		const guild_commands = [];
-		for (let index = 0; index < files.length; index++) {
-			const file = files[index];
-			const stat = await fs.lstat(path.join(filePath, file));
-			if (stat.isDirectory()) this.loadCommands(path.join(dir, file));
+		for (let index = 0; index < folders.length; index++) {
+			const folder = folders[index];
+			const files = await fs.readdir(folder);
 
-			if (file.endsWith(".js")) {
-				const Command = require(path.join(filePath, file));
-				if (Command.prototype instanceof BaseCommand) {
-					const command = new Command(this);
-					this.commands.set(command.command.name, command);
-					const aliases = [];
-					if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0) {
-						command.aliases.forEach((alias) => {
-							const command_alias = command.command instanceof SlashCommandBuilder ? { ...command.command.toJSON() } : { ...command.command };
-							command_alias.name = alias;
-							aliases.push(command_alias);
-							this.commands.set(alias, command);
-						});
+			for (let index = 0; index < files.length; index++) {
+				const file = files[index];
+
+				if (file.endsWith(".js")) {
+					const Command = require(path.join(folder, file));
+					if (Command.prototype instanceof BaseCommand) {
+						const command = new Command(this);
+						this.commands.set(command.command.name, command);
+						const aliases = [];
+						if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0) {
+							command.aliases.forEach((alias) => {
+								const command_alias = command.command instanceof SlashCommandBuilder ? { ...command.command.toJSON() } : { ...command.command };
+								command_alias.name = alias;
+								aliases.push(command_alias);
+								this.commands.set(alias, command);
+							});
+						}
+
+						commands.push(command.command instanceof SlashCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
+
+						if (command.onLoad || typeof command.onLoad === "function") await command.onLoad(this);
+						this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
 					}
-
-					if (!this.config.production) guild_commands.push(command.command instanceof SlashCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
-					else commands.push(command.command instanceof SlashCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
-
-					if (command.onLoad || typeof command.onLoad === "function") await command.onLoad(this);
-					this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
 				}
 			}
 		}
@@ -161,7 +163,7 @@ class JaBa extends Client {
 			if (!this.config.production) {
 				await rest.put(
 					Routes.applicationGuildCommands(this.config.user, this.config.support.id), {
-						body: guild_commands
+						body: commands
 					}
 				);
 			} else {
@@ -184,9 +186,6 @@ class JaBa extends Client {
 	 * @param {String} file
 	 */
 	async loadCommand(dir, file) {
-		const commands = [];
-		const guild_commands = [];
-		const rest = new REST({ version: "9" }).setToken(this.config.token);
 		const Command = require(path.join(dir, `${file}.js`));
 		if (Command.prototype instanceof BaseCommand) {
 			const command = new Command(this);
@@ -201,31 +200,8 @@ class JaBa extends Client {
 				});
 			}
 
-			if (!this.config.production) guild_commands.push(command.command instanceof SlashCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
-			else commands.push(command.command instanceof SlashCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
-
 			if (command.onLoad || typeof command.onLoad === "function") await command.onLoad(this);
 			this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
-
-			try {
-				if (!this.config.production) {
-					await rest.put(
-						Routes.applicationGuildCommands(this.config.user, this.config.support.id), {
-							body: guild_commands
-						}
-					);
-				} else {
-					await rest.put(
-						Routes.applicationCommands(this.config.user), {
-							body: commands
-						}
-					);
-				}
-
-				this.logger.log("Successfully registered application commands.");
-			} catch (err) {
-				this.logger.log("Cannot load commands: " + err.message, "error");
-			}
 
 			return;
 		}
@@ -411,70 +387,6 @@ class JaBa extends Client {
 				return isLean ? guildData.toJSON() : guildData;
 			}
 		}
-	}
-
-	async resolveUser(search) {
-		let user = null;
-		if (!search || typeof search !== "string") return;
-
-		// Try ID search
-		if (search.match(/^<@!?(\d+)>$/)) {
-			const id = search.match(/^<@!?(\d+)>$/)[1];
-			user = this.users.fetch(id).catch(() => {});
-			if (user) return user;
-		}
-
-		// Try username search
-		if (search.match(/^!?(\w+)#(\d+)$/)) {
-			const username = search.match(/^!?(\w+)#(\d+)$/)[0];
-			const discriminator = search.match(/^!?(\w+)#(\d+)$/)[1];
-			user = this.users.find((u) => u.username === username && u.discriminator === discriminator);
-			if (user) return user;
-		}
-		user = await this.users.fetch(search).catch(() => {});
-
-		return user;
-	}
-
-	async resolveMember(search, guild) {
-		let member = null;
-		if (!search || typeof search !== "string") return;
-
-		// Try ID search
-		if (search.match(/^<@!?(\d+)>$/)) {
-			const id = search.match(/^<@!?(\d+)>$/)[1];
-			member = await guild.members.fetch(id).catch(() => {});
-			if (member) return member;
-		}
-
-		// Try username search
-		if (search.match(/^!?(\w+)#(\d+)$/)) {
-			guild = await guild.fetch();
-			member = guild.members.cache.find((m) => m.user.tag === search);
-			if (member) return member;
-		}
-		member = await guild.members.fetch(search).catch(() => {});
-
-		return member;
-	}
-
-	async resolveRole(search, guild) {
-		let role = null;
-		if (!search || typeof search !== "string") return;
-
-		// Try ID search
-		if (search.match(/^<@&!?(\d+)>$/)) {
-			const id = search.match(/^<@&!?(\d+)>$/)[1];
-			role = guild.roles.cache.get(id);
-			if (role) return role;
-		}
-
-		// Try name search
-		role = guild.roles.cache.find((r) => search === r.name);
-		if (role) return role;
-		role = guild.roles.cache.get(search);
-
-		return role;
 	}
 }
 

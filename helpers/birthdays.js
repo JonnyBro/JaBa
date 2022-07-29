@@ -1,5 +1,5 @@
-const CronJob = require("cron").CronJob,
-	Discord = require("discord.js");
+const { CronJob } = require("cron"),
+	{ MessageEmbed } = require("discord.js");
 
 module.exports.init = async function (client) {
 	new CronJob("0 5 * * *", async function () {
@@ -26,7 +26,7 @@ module.exports.init = async function (client) {
 								const age = currentYear - year;
 
 								if (currentMonth === month && currentDay === day) {
-									const embed = new Discord.MessageEmbed()
+									const embed = new MessageEmbed()
 										.setAuthor({
 											name: client.user.username,
 											iconURL: client.user.displayAvatarURL({

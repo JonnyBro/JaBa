@@ -1,18 +1,23 @@
+const table = require("markdown-table"),
+	fs = require("fs");
+
 module.exports.update = function (client) {
-	const table = require("markdown-table"),
-		fs = require("fs"),
-		commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()],
+	const commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()],
 		categories = [];
+
 	commands.forEach((cmd) => {
 		if (!categories.includes(cmd.category)) categories.push(cmd.category);
 	});
+
 	let text = `# JaBa имеет **${commands.length} ${client.getNoun(commands.length, "команда", "команды", "команд")}** в **${categories.length} ${client.getNoun(categories.length, "категории", "категориях", "категориях")}**!  \n\n#### Содержимое таблицы  \n**Название**: Название команды  \n**Описание**: Описание команды  \n**Использование**: Использование команды ( [] - обязательно, () - необязательно )  \n**Разрешено использование**: Где можно использовать команду  \n\n`;
+
 	// categories.sort(function(a, b) {
 	// 	const aCmdsSize = commands.filter((cmd) => cmd.category === a).size;
 	// 	const bCmdsSize = commands.filter((cmd) => cmd.category === b).size;
 	// 	if (aCmdsSize > bCmdsSize) return -1;
 	// 	else return 1;
 	// })
+
 	categories.sort().forEach((cat) => {
 		const categoriesArray = [
 			["Название", "Описание", "Использование", "Разрешено использование"]
@@ -33,6 +38,7 @@ module.exports.update = function (client) {
 		});
 		text += `${table(categoriesArray)}\n\n`;
 	});
+
 	if (!fs.existsSync("./dashboard/public/docs")) fs.mkdirSync("./dashboard/public/docs");
 	fs.writeFileSync("./dashboard/public/docs/commands.md", text);
 	client.logger.log("Dashboard docs updated!");

@@ -10,10 +10,7 @@ module.exports = {
 		const member = guild.me;
 		const channel = guild.channels.cache.find((ch) => ch.permissionsFor(member.id).has(Permissions.FLAGS.CREATE_INSTANT_INVITE) && ch.type === "GUILD_TEXT" || ch.type === "GUILD_VOICE");
 		if (channel) {
-			const invite = await channel.createInvite({
-				maxAge: 0,
-				maxUses: 5
-			}).catch(() => {});
+			const invite = await channel.createInvite();
 
 			return invite ? invite.url : "No URL";
 		} return "No channels found for invite";

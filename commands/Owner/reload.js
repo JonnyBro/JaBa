@@ -37,11 +37,9 @@ class Reload extends BaseCommand {
 	 * @param {Array} data
 	 */
 	async execute(client, interaction) {
-		interaction.deferReply({ ephemeral: true });
-
 		const command = interaction.options.getString("command");
 		const cmd = client.commands.get(command);
-		if (!cmd) return interaction.error("owner/reload:NOT_FOUND", { search: command });
+		if (!cmd) return interaction.error("owner/reload:NOT_FOUND", { search: command }, { ephemeral: true });
 
 		await client.unloadCommand(`../commands/${cmd.category}`, cmd.command.name);
 		await client.loadCommand(`../commands/${cmd.category}`, cmd.command.name);
@@ -51,7 +49,7 @@ class Reload extends BaseCommand {
 
 		interaction.success("owner/reload:SUCCESS", {
 			command: cmd.command.name
-		}, { edit: true, ephemeral: true });
+		}, { ephemeral: true });
 	}
 }
 

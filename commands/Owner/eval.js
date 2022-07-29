@@ -16,7 +16,7 @@ class Eval extends BaseCommand {
 					option.setName("code")
 						.setDescription(client.translate("owner/eval:USAGE"))
 						.setRequired(true)),
-			aliases: ["e"],
+			aliases: [],
 			dirname: __dirname,
 			guildOnly: true,
 			ownerOnly: true

@@ -1,9 +1,8 @@
 {
-	"DESCRIPTION": "Получить NSFW изображение с выбранного или случайного сабреддита",
-	"USAGE": "nsfw (тег/list)",
-	"EXAMPLES": "nsfw\nnsfw list",
-	"SEARCHING": "Ищу изображение по тегу `{{tag}}`",
-	"SEARCHING_RANDOM": "Ищу случайное изображение",
-	"EMBED_TITLE": "Доступные категории",
-	"NOT_FOUND": "Данной категории не существует!"
+	"DESCRIPTION": "Найти NSFW изображение по тэгу",
+	"USAGE": "nsfw",
+	"EXAMPLES": "nsfw",
+	"AVAILABLE_CATEGORIES": "Доступные категории:",
+	"NOTHING_SELECTED": "Ничего не выбрано",
+	"TAG": "Тэг"
 }

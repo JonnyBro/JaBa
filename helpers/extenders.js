@@ -11,7 +11,7 @@ Message.prototype.replyT = function (key, args, options = {}) {
 	let string = this.translate(key, args, this.guild ? this.guild.data.language : "ru-RU");
 	if (options.prefixEmoji) string = `${this.client.customEmojis[options.prefixEmoji]} | ${string}`;
 
-	if (options.edit) return this.edit(string);
+	if (options.edit) return this.edit({ content: string });
 	else return this.reply({ content: string });
 };
 
@@ -38,8 +38,8 @@ Interaction.prototype.replyT = function (key, args, options = {}) {
 	let string = this.translate(key, args, this.guild ? this.guild.data.language : "ru-RU");
 	if (options.prefixEmoji) string = `${this.client.customEmojis[options.prefixEmoji]} | ${string}`;
 
-	if (options.edit) return this.editReply(string);
-	else return this.reply({ content: string, ephemeral: options.ephemeral || false, fetchReply: options.fetchReply || false });
+	if (options.edit) return this.editReply({ content: string, ephemeral: options.ephemeral || false });
+	else return this.reply({ content: string, ephemeral: options.ephemeral || false });
 };
 
 Interaction.prototype.error = function (key, args, options = {}) {
