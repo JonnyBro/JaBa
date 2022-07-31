@@ -1,5 +1,5 @@
 const Command = require("../../base/Command"),
-	Discord = require("discord.js");
+	{ parseEmoji, EmbedBuilder } = require("discord.js");
 
 class Work extends Command {
 	constructor(client) {
@@ -39,12 +39,11 @@ class Work extends Command {
 		data.memberData.workStreak = (data.memberData.workStreak || 0) + 1;
 		await data.memberData.save();
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setFooter({
 				text: message.translate("economy/work:AWARD"),
 				iconURL: message.author.displayAvatarURL({
 					size: 512,
-					dynamic: true,
 					format: "png"
 				})
 			})
@@ -61,22 +60,38 @@ class Work extends Command {
 
 		if (data.memberData.workStreak >= 5) {
 			won += 200;
-			embed.addField(message.translate("economy/work:SALARY"), message.translate("economy/work:SALARY_CONTENT", {
-				won: `${won} ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
-			}))
-				.addField(message.translate("economy/work:STREAK"), message.translate("economy/work:STREAK_CONTENT"));
+			embed.addFields([
+				{
+					name: message.translate("economy/work:SALARY"),
+					value: message.translate("economy/work:SALARY_CONTENT", {
+						won: `${won} ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
+					})
+				},
+				{
+					name: message.translate("economy/work:STREAK"),
+					value: message.translate("economy/work:STREAK_CONTENT")
+				}
+			]);
 			data.memberData.workStreak = 0;
 		} else {
 			for (let i = 0; i < award.length; i++) {
 				if (data.memberData.workStreak > i) {
-					const letter = Discord.Util.parseEmoji(award[i]).name.split("_")[1];
+					const letter = parseEmoji(award[i]).name.split("_")[1];
 					award[i] = `:regional_indicator_${letter.toLowerCase()}:`;
 				}
 			}
-			embed.addField(message.translate("economy/work:SALARY"), message.translate("economy/work:SALARY_CONTENT", {
-				won: `**${won}** ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
-			}))
-				.addField(message.translate("economy/work:STREAK"), award.join(""));
+			embed.addFields([
+				{
+					name: message.translate("economy/work:SALARY"),
+					value: message.translate("economy/work:SALARY_CONTENT", {
+						won: `**${won}** ${message.getNoun(won, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`
+					})
+				},
+				{
+					name: message.translate("economy/work:STREAK"),
+					value: award.join("")
+				}
+			]);
 		}
 
 		const info = {

@@ -60,15 +60,35 @@ class Minecraft extends Command {
 
 		if (!json) return m.error("general/minecraft:FAILED", null, { edit: true });
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setAuthor({
 				name: json.name
 			})
-			.addField(message.translate("general/minecraft:FIELD_STATUS"), message.translate("general/minecraft:ONLINE"))
-			.addField(message.translate("general/minecraft:FIELD_CONNECTED"), `**${(json.raw.players ? json.raw.players.online : json.players.length)}** ${message.getNoun((json.raw.players ? json.raw.players.online : json.players.length), message.translate("misc:NOUNS:PLAYERS:1"), message.translate("misc:NOUNS:PLAYERS:2"), message.translate("misc:NOUNS:PLAYERS:5"))} / **${(json.raw.players ? json.raw.players.max : json.maxplayers)}** ${message.getNoun((json.raw.players ? json.raw.players.max : json.maxplayers), message.translate("misc:NOUNS:PLAYERS:1"), message.translate("misc:NOUNS:PLAYERS:2"), message.translate("misc:NOUNS:PLAYERS:5"))}`)
-			.addField(message.translate("general/minecraft:FIELD_IP"), json.connect, true)
-			.addField(message.translate("general/minecraft:FIELD_VERSION"), json.raw.vanilla.raw.version.name, true)
-			.addField(message.translate("general/minecraft:FIELD_PING"), json.raw.vanilla.ping.toString())
+			.addFields([
+				{
+					name: message.translate("general/minecraft:FIELD_STATUS"),
+					value: message.translate("general/minecraft:ONLINE")
+				},
+				{
+					name: message.translate("general/minecraft:FIELD_CONNECTED"),
+					value: `**${(json.raw.players ? json.raw.players.online : json.players.length)}** ${message.getNoun((json.raw.players ? json.raw.players.online : json.players.length), message.translate("misc:NOUNS:PLAYERS:1"), message.translate("misc:NOUNS:PLAYERS:2"), message.translate("misc:NOUNS:PLAYERS:5"))} / **${(json.raw.players ? json.raw.players.max : json.maxplayers)}** ${message.getNoun((json.raw.players ? json.raw.players.max : json.maxplayers), message.translate("misc:NOUNS:PLAYERS:1"), message.translate("misc:NOUNS:PLAYERS:2"), message.translate("misc:NOUNS:PLAYERS:5"))}`
+				},
+				{
+					name: message.translate("general/minecraft:FIELD_IP"),
+					value: json.connect,
+					inline: true
+				},
+				{
+					name: message.translate("general/minecraft:FIELD_VERSION"),
+					value: json.raw.vanilla.raw.version.name,
+					inline: true
+
+				},
+				{
+					name: message.translate("general/minecraft:FIELD_PING"),
+					value: json.raw.vanilla.ping.toString()
+				}
+			])
 			.setColor(data.config.embed.color)
 			.setThumbnail(favicon)
 			.setFooter({

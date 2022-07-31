@@ -2,7 +2,5 @@
 	"DESCRIPTION": "Найти NSFW изображение по тэгу",
 	"USAGE": "nsfw",
 	"EXAMPLES": "nsfw",
-	"AVAILABLE_CATEGORIES": "Доступные категории:",
-	"NOTHING_SELECTED": "Ничего не выбрано",
 	"TAG": "Тэг"
 }

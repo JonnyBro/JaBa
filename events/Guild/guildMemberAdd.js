@@ -1,6 +1,6 @@
 const Canvas = require("canvas"),
 	BaseEvent = require("../../base/BaseEvent"),
-	{ MessageAttachment } = require("discord.js"),
+	{ AttachmentBuilder } = require("discord.js"),
 	{ resolve } = require("path");
 
 // Register assets fonts
@@ -139,7 +139,7 @@ class GuildMemberAdd extends BaseEvent {
 					}));
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 
-					const attachment = new MessageAttachment(canvas.toBuffer(), "welcome-image.png");
+					const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: "welcome-image.png" });
 					channel.send({
 						content: message,
 						files: [attachment]

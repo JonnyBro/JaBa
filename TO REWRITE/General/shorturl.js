@@ -27,7 +27,7 @@ class ShortURL extends Command {
 
 		if (body === "Error: Please enter a valid URL to shorten") return message.error("general/shorturl:MISSING_URL");
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setColor(data.config.embed.color)
 			.setFooter({
 				text: data.config.embed.footer

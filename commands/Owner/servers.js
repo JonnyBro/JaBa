@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require("@discordjs/builders"),
-	{ MessageEmbed } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Servers extends BaseCommand {
@@ -44,12 +43,11 @@ class Servers extends BaseCommand {
 				.slice(0, 10)
 				.join("\n");
 
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.user.tag,
 				iconURL: interaction.user.displayAvatarURL({
 					size: 512,
-					dynamic: true,
 					format: "png"
 				})
 			})

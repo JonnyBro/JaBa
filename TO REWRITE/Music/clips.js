@@ -28,7 +28,7 @@ class Clips extends Command {
 				clips.push(file.substring(0, file.length - 4));
 			});
 
-			const embed = new Discord.MessageEmbed()
+			const embed = new Discord.EmbedBuilder()
 				.setTitle(message.translate("music/clips:EMBED_TITLE"))
 				.setDescription(clips.join("\n"))
 				.setColor(data.config.embed.color)

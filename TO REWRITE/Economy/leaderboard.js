@@ -45,14 +45,12 @@ class Leaderboard extends Command {
 				money += `${data.money}\n`;
 			}
 
-			const embed = new Discord.MessageEmbed()
+			const embed = new Discord.EmbedBuilder()
 				.setAuthor({
 					name: message.translate("economy/leaderboard:TABLE", {
 						name: message.guild.name
 					}),
-					iconURL: message.guild.iconURL({
-						dynamic: true
-					})
+					iconURL: message.guild.iconURL()
 				})
 				.setColor(data.config.embed.color)
 				.addFields({
@@ -93,14 +91,12 @@ class Leaderboard extends Command {
 				xp += `${data.xp} / ${5 * (data.level * data.level) + 80 * data.level + 100}\n`;
 			}
 
-			const embed = new Discord.MessageEmbed()
+			const embed = new Discord.EmbedBuilder()
 				.setAuthor({
 					name: message.translate("economy/leaderboard:TABLE", {
 						name: message.guild.name
 					}),
-					iconURL: message.guild.iconURL({
-						dynamic: true
-					})
+					iconURL: message.guild.iconURL()
 				})
 				.setColor(data.config.embed.color)
 				.addFields({
@@ -142,14 +138,12 @@ class Leaderboard extends Command {
 				rep += `${data.rep}\n`;
 			}
 
-			const embed = new Discord.MessageEmbed()
+			const embed = new Discord.EmbedBuilder()
 				.setAuthor({
 					name: message.translate("economy/leaderboard:TABLE", {
 						name: message.guild.name
 					}),
-					iconURL: message.guild.iconURL({
-						dynamic: true
-					})
+					iconURL: message.guild.iconURL()
 				})
 				.setColor(data.config.embed.color)
 				.addFields({

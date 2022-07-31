@@ -48,20 +48,33 @@ class Money extends Command {
 			globalMoney += data.bankSold;
 		});
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setAuthor({
 				name: message.translate("economy/money:TITLE", {
 					username: member.user.username
 				}),
 				iconURL: member.user.displayAvatarURL({
 					size: 512,
-					dynamic: true,
 					format: "png"
 				})
 			})
-			.addField(message.translate("economy/profile:CASH"), `**${memberData.money}** ${message.getNoun(memberData.money, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
-			.addField(message.translate("economy/profile:BANK"), `**${memberData.bankSold}** ${message.getNoun(memberData.bankSold, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
-			.addField(message.translate("economy/profile:GLOBAL"), `**${globalMoney}** ${message.getNoun(globalMoney, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
+			.addFields([
+				{
+					name: message.translate("economy/profile:CASH"),
+					value: `**${memberData.money}** ${message.getNoun(memberData.money, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+					inline: true
+				},
+				{
+					name: message.translate("economy/profile:BANK"),
+					value: `**${memberData.bankSold}** ${message.getNoun(memberData.bankSold, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+					inline: true
+				},
+				{
+					name: message.translate("economy/profile:GLOBAL"),
+					value: `**${globalMoney}** ${message.getNoun(globalMoney, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+					inline: true
+				}
+			])
 			.setColor(data.config.embed.color)
 			.setFooter({
 				text: data.config.embed.footer

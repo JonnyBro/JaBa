@@ -31,32 +31,62 @@ class Serverinfo extends Command {
 		await guild.members.fetch();
 		const owner = await guild.fetchOwner();
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setAuthor({
 				name: guild.name,
-				iconURL: guild.iconURL({
-					dynamic: true
-				})
+				iconURL: guild.iconURL()
 			})
-			.setThumbnail(guild.iconURL({
-				dynamic: true
-			}))
-			.addField(this.client.customEmojis.link + " " + message.translate("general/serverinfo:LINK"), `[${message.translate("general/serverinfo:LINK_TEXT")}](${this.client.config.dashboard.baseURL}/stats/${guild.id})`)
-			.addField(this.client.customEmojis.title + message.translate("common:NAME"), guild.name, true)
-			.addField(this.client.customEmojis.calendar + message.translate("common:CREATION"), this.client.printDate(guild.createdAt), true)
-			.addField(this.client.customEmojis.users + message.translate("common:MEMBERS"),
-				`${guild.members.cache.filter(m => !m.user.bot).size} ${message.getNoun(guild.members.cache.filter(m => !m.user.bot).size, message.translate("misc:NOUNS:MEMBERS:1"), message.translate("misc:NOUNS:MEMBERS:2"), message.translate("misc:NOUNS:MEMBERS:5"))}` +
-				"\n" + `${guild.members.cache.filter(m => m.user.bot).size} ${message.getNoun(guild.members.cache.filter(m => m.user.bot).size, message.translate("misc:NOUNS:BOTS:1"), message.translate("misc:NOUNS:BOTS:2"), message.translate("misc:NOUNS:BOTS:5"))}`, true
-			)
-			.addField(this.client.customEmojis.afk + message.translate("general/serverinfo:AFK_CHANNEL"), guild.afkChannel ? guild.afkChannel.toString() : message.translate("general/serverinfo:NO_AFK_CHANNEL"), true)
-			.addField(this.client.customEmojis.id + message.translate("common:ID"), guild.id, true)
-			.addField(this.client.customEmojis.crown + message.translate("common:OWNER"), owner.toString(), true)
-			.addField(this.client.customEmojis.boost + message.translate("general/serverinfo:BOOSTS"), guild.premiumSubscriptionCount.toString() || "0", true)
-			.addField(this.client.customEmojis.channels + message.translate("common:CHANNELS"),
-				`${guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size, message.translate("misc:NOUNS:TEXT:1"), message.translate("misc:NOUNS:TEXT:2"), message.translate("misc:NOUNS:TEXT:5"))}` +
-				"\n" + `${guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size, message.translate("misc:NOUNS:VOICE:1"), message.translate("misc:NOUNS:VOICE:2"), message.translate("misc:NOUNS:VOICE:5"))}` +
-				"\n" + `${guild.channels.cache.filter(c => c.type === "GUILD_CATEGORY").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_CATEGORY").size, message.translate("misc:NOUNS:CATEGORY:1"), message.translate("misc:NOUNS:CATEGORY:2"), message.translate("misc:NOUNS:CATEGORY:5"))}`, true
-			)
+			.setThumbnail(guild.iconURL())
+			.addFields([
+				{
+					name: this.client.customEmojis.link + " " + message.translate("general/serverinfo:LINK"),
+					value: `[${message.translate("general/serverinfo:LINK_TEXT")}](${this.client.config.dashboard.baseURL}/stats/${guild.id})`
+				},
+				{
+					name: this.client.customEmojis.title + message.translate("common:NAME"),
+					value: guild.name,
+					inline: true
+				},
+				{
+					name: this.client.customEmojis.calendar + message.translate("common:CREATION"),
+					value: this.client.printDate(guild.createdAt),
+					inline: true
+				},
+				{
+					name: this.client.customEmojis.users + message.translate("common:MEMBERS"),
+					value: `${guild.members.cache.filter(m => !m.user.bot).size} ${message.getNoun(guild.members.cache.filter(m => !m.user.bot).size, message.translate("misc:NOUNS:MEMBERS:1"), message.translate("misc:NOUNS:MEMBERS:2"), message.translate("misc:NOUNS:MEMBERS:5"))}` +
+						"\n" + `${guild.members.cache.filter(m => m.user.bot).size} ${message.getNoun(guild.members.cache.filter(m => m.user.bot).size, message.translate("misc:NOUNS:BOTS:1"), message.translate("misc:NOUNS:BOTS:2"), message.translate("misc:NOUNS:BOTS:5"))}`,
+					inline: true
+				},
+				{
+					name: this.client.customEmojis.afk + message.translate("general/serverinfo:AFK_CHANNEL"),
+					value: guild.afkChannel ? guild.afkChannel.toString() : message.translate("general/serverinfo:NO_AFK_CHANNEL"),
+					inline: true
+				},
+				{
+					name: this.client.customEmojis.id + message.translate("common:ID"),
+					value: guild.id,
+					inline: true
+				},
+				{
+					name: this.client.customEmojis.crown + message.translate("common:OWNER"),
+					value: owner.toString(),
+					inline: true
+				},
+				{
+					name: this.client.customEmojis.boost + message.translate("general/serverinfo:BOOSTS"),
+					value: guild.premiumSubscriptionCount.toString() || "0",
+					inline: true
+				},
+				{
+					name: this.client.customEmojis.channels + message.translate("common:CHANNELS"),
+					value: `${guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size, message.translate("misc:NOUNS:TEXT:1"), message.translate("misc:NOUNS:TEXT:2"), message.translate("misc:NOUNS:TEXT:5"))}` +
+						"\n" + `${guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size, message.translate("misc:NOUNS:VOICE:1"), message.translate("misc:NOUNS:VOICE:2"), message.translate("misc:NOUNS:VOICE:5"))}` +
+						"\n" + `${guild.channels.cache.filter(c => c.type === "GUILD_CATEGORY").size} ${message.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_CATEGORY").size, message.translate("misc:NOUNS:CATEGORY:1"), message.translate("misc:NOUNS:CATEGORY:2"), message.translate("misc:NOUNS:CATEGORY:5"))}`,
+					inline: true
+				}
+			])
+
 			.setColor(data.config.embed.color)
 			.setFooter({
 				text: data.config.embed.footer

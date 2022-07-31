@@ -51,32 +51,78 @@ class Profile extends Command {
 			globalMoney += data.bankSold;
 		});
 
-		const profileEmbed = new Discord.MessageEmbed()
+		const profileEmbed = new Discord.EmbedBuilder()
 			.setAuthor({
 				name: message.translate("economy/profile:TITLE", {
 					username: member.user.tag
 				}),
 				iconURL: member.user.displayAvatarURL({
 					size: 512,
-					dynamic: true,
 					format: "png"
 				})
 			})
 			.setImage("attachment://achievements.png")
-			.addField(this.client.customEmojis.link + " " + message.translate("economy/profile:LINK"), `[${message.translate("economy/profile:LINK_TEXT")}](${this.client.config.dashboard.baseURL}/user/${member.user.id}/${message.guild.id})`)
-			.addField(message.translate("economy/profile:BIO"), userData.bio ? userData.bio : message.translate("economy/profile:NO_BIO"))
-			.addField(message.translate("economy/profile:CASH"), `**${memberData.money}** ${message.getNoun(memberData.money, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
-			.addField(message.translate("economy/profile:BANK"), `**${memberData.bankSold}** ${message.getNoun(memberData.bankSold, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
-			.addField(message.translate("economy/profile:GLOBAL"), `**${globalMoney}** ${message.getNoun(globalMoney, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`, true)
-			.addField(message.translate("economy/profile:REPUTATION"), `**${userData.rep}** ${message.getNoun(userData.rep, message.translate("misc:NOUNS:POINTS:1"), message.translate("misc:NOUNS:POINTS:2"), message.translate("misc:NOUNS:POINTS:5"))}`, true)
-			.addField(message.translate("economy/profile:LEVEL"), `**${memberData.level}**`, true)
-			.addField(message.translate("economy/profile:EXP"), `**${memberData.exp}/${5 * (memberData.level * memberData.level) + 80 * memberData.level + 100}** xp`, true)
-			.addField(message.translate("economy/profile:REGISTERED"), this.client.printDate(new Date(memberData.registeredAt)), true)
-			.addField(message.translate("economy/profile:BIRTHDATE"), (!userData.birthdate ? message.translate("economy/profile:NO_BIRTHDATE") : this.client.printDate(new Date(userData.birthdate))), true)
-			.addField(message.translate("economy/profile:LOVER"), (!userData.lover ? message.translate("economy/profile:NO_LOVER") : this.client.users.cache.get(userData.lover).tag), true)
-			.addField(message.translate("economy/profile:ACHIEVEMENTS"), message.translate("economy/profile:ACHIEVEMENTS_CONTENT", {
-				prefix: data.guild.prefix
-			}))
+			.addFields([
+				{
+					name: this.client.customEmojis.link + " " + message.translate("economy/profile:LINK"),
+					value: `[${message.translate("economy/profile:LINK_TEXT")}](${this.client.config.dashboard.baseURL}/user/${member.user.id}/${message.guild.id})`
+				},
+				{
+					name: message.translate("economy/profile:BIO"),
+					value: userData.bio ? userData.bio : message.translate("economy/profile:NO_BIO")
+				},
+				{
+					name: message.translate("economy/profile:CASH"),
+					value: `**${memberData.money}** ${message.getNoun(memberData.money, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+					inline: true
+				},
+				{
+					name: message.translate("economy/profile:BANK"),
+					value: `**${memberData.bankSold}** ${message.getNoun(memberData.bankSold, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+					inline: true
+				},
+				{
+					name: message.translate("economy/profile:GLOBAL"),
+					value: `**${globalMoney}** ${message.getNoun(globalMoney, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
+					inline: true
+				},
+				{
+					name: message.translate("economy/profile:REPUTATION"),
+					value: `**${userData.rep}** ${message.getNoun(userData.rep, message.translate("misc:NOUNS:POINTS:1"), message.translate("misc:NOUNS:POINTS:2"), message.translate("misc:NOUNS:POINTS:5"))}`,
+					inline: true
+				},
+				{
+					name: message.translate("economy/profile:LEVEL"),
+					value:`**${memberData.level}**`,
+					inline: true
+				},
+				{
+					name: message.translate("economy/profile:EXP"),
+					value: `**${memberData.exp}/${5 * (memberData.level * memberData.level) + 80 * memberData.level + 100}** xp`,
+					inline: true
+				},
+				{
+					name: message.translate("economy/profile:REGISTERED"),
+					value: this.client.printDate(new Date(memberData.registeredAt)),
+					inline: true
+				},
+				{
+					name: message.translate("economy/profile:BIRTHDATE"),
+					value: (!userData.birthdate ? message.translate("economy/profile:NO_BIRTHDATE") : this.client.printDate(new Date(userData.birthdate))),
+					inline: true
+				},
+				{
+					name: message.translate("economy/profile:LOVER"),
+					value: (!userData.lover ? message.translate("economy/profile:NO_LOVER") : this.client.users.cache.get(userData.lover).tag),
+					inline: true
+				},
+				{
+					name: message.translate("economy/profile:ACHIEVEMENTS"),
+					value: message.translate("economy/profile:ACHIEVEMENTS_CONTENT", {
+						prefix: data.guild.prefix
+					})
+				}
+			])
 			.setColor(data.config.embed.color) // Sets the color of the embed
 			.setFooter({
 				text: data.config.embed.footer

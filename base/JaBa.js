@@ -1,14 +1,13 @@
-const { MessageEmbed, Client, Collection } = require("discord.js"),
+const { EmbedBuilder, Client, Collection } = require("discord.js"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ SoundCloudPlugin } = require("@distube/soundcloud"),
 	{ SpotifyPlugin } = require("@distube/spotify"),
 	{ YtDlpPlugin } = require("@distube/yt-dlp"),
-	{ SlashCommandBuilder } = require("@discordjs/builders"),
+	{ SlashCommandBuilder } = require("discord.js"),
 	{ REST } = require("@discordjs/rest"),
-	{ Routes } = require("discord-api-types/v9");
+	{ Routes } = require("discord-api-types/v10");
 
-const util = require("util"),
-	BaseEvent = require("./BaseEvent.js"),
+const BaseEvent = require("./BaseEvent.js"),
 	BaseCommand = require("./BaseCommand.js"),
 	AmeClient = require("amethyste-api"),
 	path = require("path"),
@@ -33,7 +32,7 @@ class JaBa extends Client {
 		this.languages = require("../languages/language-meta"); // Load the bot's languages
 		this.commands = new Collection(); // Creates new commands collection
 		this.logger = require("../helpers/logger"); // Load the logger file
-		this.wait = util.promisify(setTimeout); // client.wait(1000) - Wait 1 second
+		this.wait = require("node:timers/promises").setTimeout; // client.wait(1000) - Wait 1 second
 		this.functions = require("../helpers/functions"); // Load the functions file
 		this.guildsData = require("../base/Guild"); // Guild mongoose model
 		this.usersData = require("../base/User"); // User mongoose model
@@ -59,7 +58,7 @@ class JaBa extends Client {
 				new SoundCloudPlugin(),
 				new YtDlpPlugin()
 			],
-			youtubeDL: false,
+			directLink: true,
 			emitNewSongOnly: true,
 			leaveOnEmpty: true,
 			leaveOnFinish: true,
@@ -88,7 +87,7 @@ class JaBa extends Client {
 			.on("addList", (queue, playlist) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE_COUNT", { songCount: `**${playlist.songs.length}** ${this.getNoun(playlist.songs.length, this.translate("misc:NOUNS:TRACKS:1"), this.translate("misc:NOUNS:TRACKS:1"), this.translate("misc:NOUNS:TRACKS:2"), this.translate("misc:NOUNS:TRACKS:5"))}` }, queue.textChannel.guild.data.language) }))
 			.on("searchResult", (message, result) => {
 				let i = 0;
-				const embed = new MessageEmbed()
+				const embed = new EmbedBuilder()
 					.setDescription(result.map(song => `**${++i} -** ${song.name}`).join("\n"))
 					.setFooter({ text: this.translate("music/play:RESULTS_FOOTER", null, message.guild.data.language) })
 					.setColor(this.config.embed.color);
@@ -126,7 +125,7 @@ class JaBa extends Client {
 	async loadCommands(dir) {
 		const filePath = path.join(__dirname, dir);
 		var folders = await fs.readdir(filePath); folders = folders.map(file => path.join(filePath, file)).filter(async (path) => { path = await fs.lstat(path); path.isDirectory(); });
-		const rest = new REST({ version: "9" }).setToken(this.config.token);
+		const rest = new REST().setToken(this.config.token);
 		const commands = [];
 		for (let index = 0; index < folders.length; index++) {
 			const folder = folders[index];

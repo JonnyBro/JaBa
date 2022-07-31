@@ -85,15 +85,20 @@ class Poll extends Command {
 				this.client.emojis.cache.find(e => e.name === error)
 			];
 
-			const embed = new Discord.MessageEmbed()
+			const embed = new Discord.EmbedBuilder()
 				.setAuthor({
 					name: message.translate("moderation/poll:TITLE")
 				})
 				.setColor(data.config.embed.color)
-				.addField(question, message.translate("moderation/poll:REACT", {
-					success: emojis[0].toString(),
-					error: emojis[1].toString()
-				}));
+				.addFields([
+					{
+						name: question,
+						value: message.translate("moderation/poll:REACT", {
+							success: emojis[0].toString(),
+							error: emojis[1].toString()
+						})
+					}
+				]);
 
 			message.channel.send({
 				content: mention,

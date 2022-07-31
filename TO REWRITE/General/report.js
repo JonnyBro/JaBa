@@ -1,5 +1,5 @@
 const Command = require("../../base/Command"),
-	Discord = require("discord.js");
+	{ EmbedBuilder, parseEmoji} = require("discord.js");
 
 class Report extends Command {
 	constructor(client) {
@@ -30,28 +30,45 @@ class Report extends Command {
 		const rep = args.slice(1).join(" ");
 		if (!rep) return message.error("general/report:MISSING_REASON");
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: message.translate("general/report:TITLE", {
 					user: member.user.tag
 				}),
 				iconURL: message.author.displayAvatarURL({
 					size: 512,
-					dynamic: true,
 					format: "png"
 				})
 			})
-			.addField(message.translate("common:AUTHOR"), message.author.tag, true)
-			.addField(message.translate("common:DATE"), this.client.printDate(new Date(Date.now())), true)
-			.addField(message.translate("common:REASON"), rep, true)
-			.addField(message.translate("common:USER"), `\`${member.user.tag}\` (${member.user.toString()})`, true)
+			.addFields([
+				{
+					name: message.translate("common:AUTHOR"),
+					value: message.author.tag,
+					inline: true
+				},
+				{
+					name: message.translate("common:DATE"),
+					value: this.client.printDate(new Date(Date.now())),
+					inline: true
+				},
+				{
+					name: message.translate("common:REASON"),
+					value: rep,
+					inline: true
+				},
+				{
+					name: message.translate("common:USER"),
+					value: `\`${member.user.tag}\` (${member.user.toString()})`,
+					inline: true
+				}
+			])
 			.setColor(data.config.embed.color)
 			.setFooter({
 				text: data.config.embed.footer
 			});
 
-		const success = Discord.Util.parseEmoji(this.client.customEmojis.success).id;
-		const error = Discord.Util.parseEmoji(this.client.customEmojis.error).id;
+		const success = parseEmoji(this.client.customEmojis.cool).id;
+		const error = parseEmoji(this.client.customEmojis.notcool).id;
 
 		repChannel.send({
 			embeds: [embed]

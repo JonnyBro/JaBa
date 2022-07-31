@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
-class Ping extends BaseCommand {
+class LMGTFY extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../base/JaBa")} client
@@ -9,8 +9,12 @@ class Ping extends BaseCommand {
 	constructor(client) {
 		super({
 			command: new SlashCommandBuilder()
-				.setName("ping")
-				.setDescription(client.translate("general/ping:DESCRIPTION")),
+				.setName("lmgtfy")
+				.setDescription(client.translate("fun/lmgtfy:DESCRIPTION"))
+				.addStringOption(option =>
+					option.setName("question")
+						.setDescription(client.translate("fun/8ball:QUESTION"))
+						.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
 			guildOnly: true,
@@ -31,10 +35,13 @@ class Ping extends BaseCommand {
 	 * @param {Array} data
 	 */
 	async execute(client, interaction) {
-		interaction.replyT("general/ping:CONTENT", {
-			ping: Math.round(client.ws.ping)
+		const question = interaction.options.getString("question").replace(/[' '_]/g, "+");
+
+		interaction.reply({
+			content: `<https://letmegooglethat.com/?q=${question}>`,
+			ephemeral: true
 		});
 	}
 }
 
-module.exports = Ping;
+module.exports = LMGTFY;

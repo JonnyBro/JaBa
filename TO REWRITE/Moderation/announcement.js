@@ -77,7 +77,7 @@ class Announcement extends Command {
 		collector.on("end", (collected, reason) => {
 			if (reason === "time") return message.error("misc:TIMES_UP");
 
-			const embed = new Discord.MessageEmbed()
+			const embed = new Discord.EmbedBuilder()
 				.setAuthor({
 					name: message.translate("moderation/announcement:TITLE")
 				})

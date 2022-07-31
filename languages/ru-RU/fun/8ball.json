@@ -1,8 +1,8 @@
 {
-	"DESCRIPTION": "Я говорю правду!",
-	"USAGE": "8ball [вопрос?]",
+	"DESCRIPTION": "Я говорю правду",
+	"QUESTION": "Вопрос",
 	"EXAMPLES": "8ball JaBa крутой?",
-	"ERR_QUESTION": "Введите вопрос!",
+	"ERR_QUESTION": "Вопрос должен оканчиваться на `?`.",
 	"RESPONSE_1": "Бесспорно",
 	"RESPONSE_2": "Предрешено",
 	"RESPONSE_3": "Никаких сомнений",

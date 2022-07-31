@@ -1,4 +1,4 @@
-const { Permissions } = require("discord.js"),
+const { PermissionsBitField } = require("discord.js"),
 	xpCooldown = {},
 	BaseEvent = require("../base/BaseEvent");
 
@@ -54,7 +54,7 @@ class MessageCreate extends BaseEvent {
 
 			if (data.guild.plugins.automod.enabled && !data.guild.plugins.automod.ignored.includes(message.channel.id)) {
 				if (/(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(message.content)) {
-					if (!message.channel.permissionsFor(message.member).has(Permissions.FLAGS.MANAGE_MESSAGES)) {
+					if (!message.channel.permissionsFor(message.member).has(PermissionsBitField.Flags.ManageMessages)) {
 						message.delete();
 						message.author.send("```" + message.content + "```");
 						return message.error("administration/automod:DELETED", {

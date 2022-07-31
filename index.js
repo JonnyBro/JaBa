@@ -1,10 +1,10 @@
 require("./helpers/extenders");
 
-const { Intents } = require("discord.js"),
+const { GatewayIntentBits } = require("discord.js"),
 	JaBa = require("./base/JaBa");
 
 const client = new JaBa({
-	intents: Object.keys(Intents.FLAGS),
+	intents: [ GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildBans, GatewayIntentBits.GuildEmojisAndStickers, GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildInvites, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildMessageTyping, GatewayIntentBits.MessageContent ],
 	allowedMentions: { parse: ["everyone", "roles", "users"] }
 });
 
@@ -17,7 +17,7 @@ const client = new JaBa({
 })();
 
 client.on("disconnect", () => client.logger.log("Bot is disconnecting...", "warn"))
-	.on("reconnecting", () => client.logger.log("Bot reconnecting...", "log"))
+	.on("reconnecting", () => client.logger.log("Bot reconnecting...", "warn"))
 	.on("error", (e) => client.logger.log(e, "error"))
 	.on("warn", (info) => client.logger.log(info, "warn"));
 process.on("unhandledRejection", (err) => console.error(err));

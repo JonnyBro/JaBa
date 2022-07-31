@@ -1,4 +1,4 @@
-const { Permissions } = require("discord.js");
+const { PermissionsBitField } = require("discord.js");
 
 /**
  * Fetch user informations (stats, guilds, etc...)
@@ -12,8 +12,8 @@ async function fetchUser(userData, client, query) {
 		userData.guilds.forEach((guild) => {
 			if (!client.guilds.cache.get(guild.id)) return;
 			// eslint-disable-next-line no-undef
-			const perms = new Permissions(BigInt(guild.permissions));
-			if (perms.has(Permissions.FLAGS.MANAGE_GUILD)) guild.admin = true;
+			const perms = new PermissionsBitField(BigInt(guild.permissions));
+			if (perms.has(PermissionsBitField.Flags.ManageGuild)) guild.admin = true;
 
 			guild.settingsUrl = (client.guilds.cache.get(guild.id) ? `/manage/${guild.id}/` : `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8&guild_id=${guild.id}`);
 			guild.statsUrl = (client.guilds.cache.get(guild.id) ? `/stats/${guild.id}/` : `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8&guild_id=${guild.id}`);

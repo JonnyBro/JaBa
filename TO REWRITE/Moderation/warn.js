@@ -53,10 +53,22 @@ class Warn extends Command {
 			reason
 		};
 
-		const embed = new Discord.MessageEmbed()
-			.addField(message.translate("common:USER"), `\`${member.user.tag}\` (${member.user.toString()})`)
-			.addField(message.translate("common:MODERATOR"), `\`${message.author.tag}\` (${message.author.toString()})`)
-			.addField(message.translate("common:REASON"), reason, true);
+		const embed = new Discord.EmbedBuilder()
+			.addFields([
+				{
+					name: message.translate("common:USER"),
+					value: `\`${member.user.tag}\` (${member.user.toString()})`
+				},
+				{
+					name: message.translate("common:MODERATOR"),
+					value: `\`${message.author.tag}\` (${message.author.toString()})`
+				},
+				{
+					name: message.translate("common:REASON"),
+					value: reason, 
+					inline: true
+				}
+			]);
 
 		if (banCount) {
 			if (sanctions >= banCount) {

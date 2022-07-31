@@ -1,5 +1,5 @@
 const Command = require("../../base/Command"),
-	Discord = require("discord.js");
+	{ EmbedBuilder, parseEmoji } = require("discord.js");
 
 class Suggest extends Command {
 	constructor(client) {
@@ -26,27 +26,39 @@ class Suggest extends Command {
 		const sugg = args.join(" ");
 		if (!sugg) return message.error("general/suggest:MISSING_CONTENT");
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: message.translate("general/suggest:TITLE", {
 					user: message.author.username
 				}),
 				iconURL: message.author.displayAvatarURL({
 					size: 512,
-					dynamic: true,
 					format: "png"
 				})
 			})
-			.addField(message.translate("common:AUTHOR"), `\`${message.author.username}#${message.author.discriminator}\``, true)
-			.addField(message.translate("common:DATE"), this.client.printDate(new Date(Date.now())), true)
-			.addField(message.translate("common:CONTENT"), sugg)
+			.addFields([
+				{
+					name: message.translate("common:AUTHOR"),
+					value: `\`${message.author.username}#${message.author.discriminator}\``,
+					inline: true
+				},
+				{
+					name: message.translate("common:DATE"),
+					value: this.client.printDate(new Date(Date.now())),
+					inline: true
+				},
+				{
+					name: message.translate("common:CONTENT"),
+					value: sugg
+				}
+			])
 			.setColor(data.config.embed.color)
 			.setFooter({
 				text: data.config.embed.footer
 			});
 
-		const success = Discord.Util.parseEmoji(this.client.customEmojis.cool).id;
-		const error = Discord.Util.parseEmoji(this.client.customEmojis.notcool).id;
+		const success = parseEmoji(this.client.customEmojis.cool).id;
+		const error = parseEmoji(this.client.customEmojis.notcool).id;
 
 		suggChannel.send({
 			embeds: [embed]

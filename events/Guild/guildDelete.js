@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js"),
+const { EmbedBuilder } = require("discord.js"),
 	BaseEvent = require("../../base/BaseEvent");
 
 class GuildDelete extends BaseEvent {
@@ -13,12 +13,10 @@ class GuildDelete extends BaseEvent {
 	 * @param {import("discord.js").Guild} guild
 	 */
 	async execute(guild) {
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: guild.name,
-				iconURL: guild.iconURL({
-					dynamic: true
-				})
+				iconURL: guild.iconURL()
 			})
 			.setColor("#B22222")
 			.setDescription(`Вышел с сервера **${guild.name}**.`);

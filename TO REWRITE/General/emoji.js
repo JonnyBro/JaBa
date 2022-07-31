@@ -1,5 +1,5 @@
 const Command = require("../../base/Command"),
-	Discord = require("discord.js");
+	{ EmbedBuilder, parseEmoji } = require("discord.js");
 
 class EmojiInfo extends Command {
 	constructor(client) {
@@ -21,9 +21,9 @@ class EmojiInfo extends Command {
 		const rawEmoji = args[0];
 		if (!rawEmoji) return message.error("administration/stealemoji:MISSING_EMOJI");
 
-		const parsedEmoji = Discord.Util.parseEmoji(rawEmoji);
+		const parsedEmoji = parseEmoji(rawEmoji);
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: message.translate("general/emoji:TITLE", {
 					emoji: parsedEmoji.name
@@ -33,9 +33,20 @@ class EmojiInfo extends Command {
 			.setFooter({
 				text: data.config.embed.footer
 			})
-			.addField(message.translate("general/emoji:NAME"), parsedEmoji.name)
-			.addField(message.translate("general/emoji:ANIMATED"), parsedEmoji.animated ? message.translate("common:YES") : message.translate("common:NO"))
-			.addField(message.translate("general/emoji:ID"), parsedEmoji.id ? parsedEmoji.id.toString() : message.translate("general/emoji:STANDART"));
+			.addFields([
+				{
+					name: message.translate("general/emoji:NAME"),
+					value: parsedEmoji.name
+				},
+				{
+					name: message.translate("general/emoji:ANIMATED"),
+					value: parsedEmoji.animated ? message.translate("common:YES") : message.translate("common:NO")
+				},
+				{
+					name: message.translate("general/emoji:ID"),
+					value: parsedEmoji.id ? parsedEmoji.id.toString() : message.translate("general/emoji:STANDART")
+				}
+			]);
 
 		message.reply({
 			embeds: [embed]

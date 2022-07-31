@@ -18,12 +18,11 @@ class Transactions extends Command {
 	}
 
 	async run(message, args, data) {
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setAuthor({
 				name: message.translate("economy/transactions:EMBED_TRANSACTIONS"),
 				iconURL: message.author.displayAvatarURL({
 					size: 512,
-					dynamic: true,
 					format: "png"
 				})
 			})
@@ -43,8 +42,20 @@ class Transactions extends Command {
 		if (transactions.length < 1) {
 			embed.setDescription(message.translate("economy/transactions:NO_TRANSACTIONS"));
 		} else {
-			if (sortedTransactions[0].length > 0) embed.addField(message.translate("economy/transactions:T_GOT"), sortedTransactions[0].join("\n"), true);
-			if (sortedTransactions[1].length > 0) embed.addField(message.translate("economy/transactions:T_SEND"), sortedTransactions[1].join("\n"), true);
+			if (sortedTransactions[0].length > 0) embed.addFields([
+				{
+					name: message.translate("economy/transactions:T_GOT"),
+					value: sortedTransactions[0].join("\n"),
+					inline: true
+				}
+			]);
+			if (sortedTransactions[1].length > 0) embed.addFields([
+				{
+					name: message.translate("economy/transactions:T_SEND"),
+					value: sortedTransactions[1].join("\n"),
+					inline: true
+				}
+			]);
 		}
 
 		message.reply({

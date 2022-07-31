@@ -1,3 +1,4 @@
+const { ApplicationCommandType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Repeat extends BaseCommand {
@@ -8,12 +9,12 @@ class Repeat extends BaseCommand {
 	constructor() {
 		super({
 			command: {
-				name: "repeat", // Application command name.
-				type: 3 // Type 3 is MESSAGE COMMAND.
+				name: "repeat",
+				type: ApplicationCommandType.Message
 			},
-			aliases: ["r"], // Application command aliases.
+			aliases: [],
 			dirname: __dirname,
-			guildOnly: true // Determines whether your command is only guild.
+			guildOnly: true
 		});
 	}
 	/**

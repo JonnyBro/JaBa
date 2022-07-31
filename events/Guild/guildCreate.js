@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js"),
+const { EmbedBuilder } = require("discord.js"),
 	BaseEvent = require("../../base/BaseEvent");
 
 class GuildCreate extends BaseEvent {
@@ -31,7 +31,7 @@ class GuildCreate extends BaseEvent {
 			await userData.save();
 		}
 
-		const thanksEmbed = new MessageEmbed()
+		const thanksEmbed = new EmbedBuilder()
 			.setAuthor({
 				name: "Спасибо что добавили меня на свой сервер!"
 			})
@@ -49,12 +49,10 @@ class GuildCreate extends BaseEvent {
 		const users = guild.members.cache.filter((m) => !m.user.bot).size;
 		const bots = guild.members.cache.filter((m) => m.user.bot).size;
 
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: guild.name,
-				iconURL: guild.iconURL({
-					dynamic: true
-				})
+				iconURL: guild.iconURL()
 			})
 			.setColor("#32CD32")
 			.setDescription(`Зашёл на сервер **${guild.name}**. На нём **${users}** ${this.client.getNoun(users, this.client.translate("misc:NOUNS:USERS:1"), this.client.translate("misc:NOUNS:USERS:2"), this.client.translate("misc:NOUNS:USERS:5"))} (из них **${bots}** ${this.client.getNoun(bots, this.client.translate("misc:NOUNS:BOTS:1"), this.client.translate("misc:NOUNS:BOTS:2"), this.client.translate("misc:NOUNS:BOTS:5"))})`);

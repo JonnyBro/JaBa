@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Перевести текст!",
-	"USAGE": "translate [язык] [текст]",
-	"EXAMPLES": "translate english Как дела?",
-	"LIST_SENT": "Список языков отправлен вам в ЛС!",
-	"MISSING_LANGUAGE": "Укажите язык! Чтобы получить список языков, введите `translate langs-list`!",
-	"INVALID_LANGUAGE": "Язык `{{search}}` не найден! Чтобы получить список языков, введите `translate langs-list`!",
-	"MISSING_CONTENT": "Введите текст!"
-}

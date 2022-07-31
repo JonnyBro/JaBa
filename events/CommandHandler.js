@@ -1,4 +1,5 @@
 const BaseEvent = require("../base/BaseEvent");
+const { InteractionType } = require("discord.js");
 
 class CommandHandler extends BaseEvent {
 	constructor() {
@@ -14,7 +15,7 @@ class CommandHandler extends BaseEvent {
 	 * @param {import("discord.js").Interaction} interaction
 	 */
 	async execute(client, interaction) {
-		if (interaction.type !== "APPLICATION_COMMAND" && !interaction.isCommand()) return;
+		if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isCommand()) return;
 
 		const command = client.commands.get(interaction.commandName);
 		const data = [];

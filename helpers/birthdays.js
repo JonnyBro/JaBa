@@ -1,5 +1,5 @@
 const { CronJob } = require("cron"),
-	{ MessageEmbed } = require("discord.js");
+	{ EmbedBuilder } = require("discord.js");
 
 module.exports.init = async function (client) {
 	new CronJob("0 5 * * *", async function () {
@@ -26,12 +26,11 @@ module.exports.init = async function (client) {
 								const age = currentYear - year;
 
 								if (currentMonth === month && currentDay === day) {
-									const embed = new MessageEmbed()
+									const embed = new EmbedBuilder()
 										.setAuthor({
 											name: client.user.username,
 											iconURL: client.user.displayAvatarURL({
 												size: 512,
-												dynamic: true,
 												format: "png"
 											})
 										})
@@ -39,11 +38,16 @@ module.exports.init = async function (client) {
 										.setFooter({
 											text: client.config.embed.footer
 										})
-										.addField(client.translate("economy/birthdate:HAPPY_BIRTHDAY"), client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
-											name: user.username,
-											user: user.id,
-											age: `**${age}** ${client.getNoun(age, client.translate("misc:NOUNS:AGE:1"), client.translate("misc:NOUNS:AGE:2"), client.translate("misc:NOUNS:AGE:5"))}`
-										}));
+										.addFields([
+											{
+												name: client.translate("economy/birthdate:HAPPY_BIRTHDAY"),
+												value: client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
+													name: user.username,
+													user: user.id,
+													age: `**${age}** ${client.getNoun(age, client.translate("misc:NOUNS:AGE:1"), client.translate("misc:NOUNS:AGE:2"), client.translate("misc:NOUNS:AGE:5"))}`
+												})
+											}
+										]);
 									const msg = await channel.send({
 										embeds: [embed]
 									});

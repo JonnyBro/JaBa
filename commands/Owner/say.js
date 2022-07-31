@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Say extends BaseCommand {
@@ -38,7 +38,7 @@ class Say extends BaseCommand {
 	 * @param {Array} data
 	 */
 	async execute(client, interaction) {
-		interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply({ ephemeral: true });
 		const message = interaction.options.getString("message");
 		const channel = interaction.options.getChannel("channel");
 

@@ -20,7 +20,6 @@ class Avatar extends Command {
 		let user = await this.client.resolveUser(args[0]);
 		if (!user) user = message.author;
 		const avatarURL = user.displayAvatarURL({
-			dynamic: true,
 			size: 512
 		});
 

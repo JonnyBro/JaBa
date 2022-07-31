@@ -1,5 +1,5 @@
-const { SlashCommandBuilder } = require("@discordjs/builders"),
-	BaseCommand = require("../../base/BaseCommand"),
+const { SlashCommandBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand"),
 	i18next = require("i18next"),
 	autoUpdateDocs = require("../../helpers/autoUpdateDocs");
 
@@ -15,7 +15,7 @@ class Reload extends BaseCommand {
 				.setDescription(client.translate("owner/reload:DESCRIPTION"))
 				.addStringOption(option =>
 					option.setName("command")
-						.setDescription(client.translate("owner/reload:USAGE"))
+						.setDescription(client.translate("owner/reload:COMMAND"))
 						.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

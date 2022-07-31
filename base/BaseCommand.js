@@ -4,7 +4,7 @@ const path = require("path");
 class BaseCommand {
 	constructor(options, client) {
 		/**
-		 * @type {import("@discordjs/builders").SlashCommandBuilder | import("discord.js").ApplicationCommandData}
+		 * @type {import("discord.js").SlashCommandBuilder | import("discord.js").ApplicationCommandData}
 		 */
 		this.command = options.command;
 		/**

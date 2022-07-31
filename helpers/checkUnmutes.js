@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports.init = async function (client) {
 	client.membersData
@@ -33,7 +33,7 @@ module.exports.init = async function (client) {
 				});
 			}
 			const user = member ? member.user : await client.users.fetch(memberData.id);
-			const embed = new MessageEmbed()
+			const embed = new EmbedBuilder()
 				.setDescription(guild.translate("moderation/unmute:SUCCESS_CASE", {
 					user: user.toString(),
 					usertag: user.tag,

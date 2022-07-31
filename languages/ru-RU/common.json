@@ -58,6 +58,8 @@
 	"MODLOGS": "Логи модерации",
 	"NO_CHANNEL": "Канал не выбран",
 	"REPORTS": "Жалобы",
-	"BIRTHDAYS": "Поздравления с днём рождения",
-	"DISCONNECT": "Отключить"
+	"UNKNOWN": "Неизвестно",
+	"NOTHING_SELECTED": "Ничего не выбрано",
+	"AVAILABLE_CATEGORIES": "Доступные категории:",
+	"BIRTHDAYS": "Поздравления с днём рождения"
 }

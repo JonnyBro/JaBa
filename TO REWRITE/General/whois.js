@@ -24,7 +24,7 @@ class Whois extends Command {
 		const whois = await fetch(`http://ip-api.com/json/${args[0]}?fields=status,message,continent,continentCode,country,countryCode,region,regionName,city,zip,timezone,currency,isp,org,as,mobile,proxy,hosting,query`).then(response => response.json());
 
 		if (whois.status === "fail") {
-			const embed = new Discord.MessageEmbed()
+			const embed = new Discord.EmbedBuilder()
 				.setDescription(whois.message)
 				.setTitle(message.translate("general/whois:ERROR", {
 					ip: args[0]
@@ -39,7 +39,7 @@ class Whois extends Command {
 			});
 		}
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setTitle(message.translate("general/whois:INFO_ABOUT", {
 				ip: args[0]
 			}))
@@ -49,14 +49,14 @@ class Whois extends Command {
 			.setColor(data.config.embed.color)
 			.addFields(
 				{ name: "IP", value: whois.query, inline: true },
-				{ name: message.translate("general/whois:COUNTRY"), value: `${whois.country || "Неизвестно"} (${whois.countryCode || "Неизвестно"})`, inline: true },
-				{ name: message.translate("general/whois:REGION"), value: `${whois.regionName || "Неизвестно"} (${whois.region || "Неизвестно"})`, inline: true },
-				{ name: message.translate("general/whois:CITY"), value: `${whois.city || "Неизвестно"}`, inline: true },
-				{ name: message.translate("general/whois:ZIP"), value: `${whois.zip || "Неизвестно"}`, inline: true },
-				{ name: message.translate("general/whois:TIMEZONE"), value: `${whois.timezone || "Неизвестно"}`, inline: true },
-				{ name: message.translate("general/whois:CONTINENT"), value: `${whois.continent || "Неизвестно"} (${whois.continentCode || "Неизвестно"})`, inline: true },
-				{ name: message.translate("general/whois:CURRENCY"), value: `${whois.currency || "Неизвестно"}`, inline: true },
-				{ name: message.translate("general/whois:ISP"), value: `${whois.isp || "Неизвестно"}`, inline: true }
+				{ name: message.translate("general/whois:COUNTRY"), value: `${whois.country || message.translate("common:UNKNOWN")} (${whois.countryCode || message.translate("common:UNKNOWN")})`, inline: true },
+				{ name: message.translate("general/whois:REGION"), value: `${whois.regionName || message.translate("common:UNKNOWN")} (${whois.region || message.translate("common:UNKNOWN")})`, inline: true },
+				{ name: message.translate("general/whois:CITY"), value: `${whois.city || message.translate("common:UNKNOWN")}`, inline: true },
+				{ name: message.translate("general/whois:ZIP"), value: `${whois.zip || message.translate("common:UNKNOWN")}`, inline: true },
+				{ name: message.translate("general/whois:TIMEZONE"), value: `${whois.timezone || message.translate("common:UNKNOWN")}`, inline: true },
+				{ name: message.translate("general/whois:CONTINENT"), value: `${whois.continent || message.translate("common:UNKNOWN")} (${whois.continentCode || message.translate("common:UNKNOWN")})`, inline: true },
+				{ name: message.translate("general/whois:CURRENCY"), value: `${whois.currency || message.translate("common:UNKNOWN")}`, inline: true },
+				{ name: message.translate("general/whois:ISP"), value: `${whois.isp || message.translate("common:UNKNOWN")}`, inline: true }
 			)
 			.setTimestamp();
 

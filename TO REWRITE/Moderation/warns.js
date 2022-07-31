@@ -26,12 +26,11 @@ class Warns extends Command {
 			guildID: message.guild.id
 		});
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setAuthor({
 				name: user.tag,
 				iconURL: user.displayAvatarURL({
 					size: 512,
-					dynamic: true,
 					format: "png"
 				})
 			})
@@ -49,7 +48,13 @@ class Warns extends Command {
 			});
 		} else {
 			memberData.sanctions.forEach((s) => {
-				embed.addField(s.type + " | #" + s.case, `${message.translate("common:MODERATOR")}: <@${s.moderator}>\n${message.translate("common:REASON")}: ${s.reason}`, true);
+				embed.addFields([
+					{
+						name: s.type + " | #" + s.case,
+						value: `${message.translate("common:MODERATOR")}: <@${s.moderator}>\n${message.translate("common:REASON")}: ${s.reason}`,
+						inline: true
+					}
+				]);
 			});
 		}
 		message.reply({

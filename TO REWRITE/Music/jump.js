@@ -26,7 +26,7 @@ class Jump extends Command {
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 		if (number < 0) return message.error("music/jump:NO_PREV_SONG", { prefix: data.guild.prefix });
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setAuthor({
 				name: message.translate("music/jump:SUCCESS")
 			})

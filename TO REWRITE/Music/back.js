@@ -25,7 +25,7 @@ class Back extends Command {
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 		if (!queue.previousSongs[0]) return message.error("music/back:NO_PREV_SONG");
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setAuthor({
 				name: message.translate("music/back:DESCRIPTION")
 			})

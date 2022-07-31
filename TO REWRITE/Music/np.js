@@ -1,14 +1,14 @@
 const Command = require("../../base/Command"),
 	Discord = require("discord.js");
 
-class Np extends Command {
+class Nowplaying extends Command {
 	constructor(client) {
 		super(client, {
-			name: "np",
+			name: "nowplaying",
 			dirname: __dirname,
 			enabled: true,
 			guildOnly: true,
-			aliases: ["nowplaying"],
+			aliases: [],
 			memberPermissions: [],
 			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 			nsfw: false,
@@ -39,15 +39,29 @@ class Np extends Command {
 					: message.translate("music/np:DISABLED")
 			}\``;
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setAuthor({
 				name: message.translate("music/queue:TITLE")
 			})
 			.setThumbnail(track.thumbnail)
-			.addField(message.translate("music/np:T_TITLE"), `[${track.name}](${track.url})`)
-			.addField(message.translate("music/np:T_CHANNEL"), track.uploader.name ? track.uploader.name : "Отсутствует")
-			.addField(message.translate("music/np:T_DURATION"), `${queue.formattedCurrentTime} / ${track.duration > 1 ? track.formattedDuration : message.translate("music/play:LIVE")}`)
-			.addField(message.translate("music/np:T_CONF"), status(queue))
+			.addFields([
+				{
+					name: message.translate("music/np:T_TITLE"),
+					value: `[${track.name}](${track.url})`
+				},
+				{
+					name: message.translate("music/np:T_CHANNEL"),
+					value: track.uploader.name || message.translate("common:UNKNOWN")
+				},
+				{
+					name: message.translate("music/np:T_DURATION"),
+					value: `${queue.formattedCurrentTime} / ${track.duration > 1 ? track.formattedDuration : message.translate("music/play:LIVE")}`
+				},
+				{
+					name: message.translate("music/np:T_CONF"),
+					value: status(queue)
+				}
+			])
 			.setColor(data.config.embed.color)
 			.setFooter({
 				text: data.config.embed.footer
@@ -60,4 +74,4 @@ class Np extends Command {
 	}
 }
 
-module.exports = Np;
+module.exports = Nowplaying;

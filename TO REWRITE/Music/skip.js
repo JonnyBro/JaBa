@@ -25,7 +25,7 @@ class Skip extends Command {
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 		if (!queue.songs[1]) return message.error("music/skip:NO_NEXT_SONG");
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setAuthor({
 				name: message.translate("music/skip:SUCCESS")
 			})

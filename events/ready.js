@@ -1,5 +1,5 @@
 const BaseEvent = require("../base/BaseEvent"),
-	{ Permissions } = require("discord.js");
+	{ PermissionsBitField } = require("discord.js");
 
 class Ready extends BaseEvent {
 	constructor() {
@@ -21,7 +21,7 @@ class Ready extends BaseEvent {
 		// Logs some informations using logger
 		client.logger.log(`Loaded a total of ${commands.length} command(s).`, "ready");
 		client.logger.log(`${client.user.tag}, ready to serve ${tUsers} users in ${tServers} servers.`, "ready");
-		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"] , permissions: [Permissions.FLAGS.ADMINISTRATOR] })}`, "ready");
+		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"] , permissions: [ PermissionsBitField.Flags.Administrator ] })}`, "ready");
 
 		// Discord Together
 		const discordtogether = require("../helpers/discordTogether");
@@ -56,7 +56,6 @@ class Ready extends BaseEvent {
 		];
 
 		let i = 0;
-		setTimeout
 		setInterval(async function () {
 			hiddenGuild = await client.guilds.fetch("568120814776614924");
 			tUsers = client.users.cache.size - hiddenGuild.memberCount;

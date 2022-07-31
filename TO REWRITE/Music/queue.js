@@ -1,6 +1,6 @@
 const Command = require("../../base/Command"),
 	Discord = require("discord.js"),
-	Pagination = require("discord-paginationembed");
+	Pagination = require("customizable-discordjs-pagination");
 
 class Queue extends Command {
 	constructor(client) {
@@ -26,14 +26,17 @@ class Queue extends Command {
 		if (!queue) return message.error("music/play:NOT_PLAYING");
 
 		if (queue.songs.length === 1) {
-			const embed = new Discord.MessageEmbed()
+			const embed = new Discord.EmbedBuilder()
 				.setAuthor({
 					name: message.translate("music/queue:TITLE"),
-					iconURL: message.guild.iconURL({
-						dynamic: true
-					})
+					iconURL: message.guild.iconURL()
 				})
-				.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*${message.translate("music/queue:ADDED")} ${queue.songs[0].member}*\n`)
+				.addFields([
+					{
+						name: message.translate("music/np:CURRENTLY_PLAYING"),
+						value: `[${queue.songs[0].name}](${queue.songs[0].url})\n*${message.translate("music/queue:ADDED")} ${queue.songs[0].member}*\n`
+					}
+				])
 				.setColor(data.config.embed.color);
 			return message.reply({
 				embeds: [embed]
@@ -46,11 +49,14 @@ class Queue extends Command {
 			.setColor(data.config.embed.color)
 			.setAuthor({
 				name: message.translate("music/queue:TITLE"),
-				iconURL: message.guild.iconURL({
-					dynamic: true
-				})
+				iconURL: message.guild.iconURL()
 			})
-			.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*${message.translate("music/queue:ADDED")} ${queue.songs[0].member}*\n`);
+			.addFields([
+				{
+					name: message.translate("music/np:CURRENTLY_PLAYING"),
+					value: `[${queue.songs[0].name}](${queue.songs[0].url})\n*${message.translate("music/queue:ADDED")} ${queue.songs[0].member}*\n`
+				}
+			]);
 		FieldsEmbed
 			.setArray(queue.songs[1] ? queue.songs.slice(1, queue.songs.length) : [])
 			.setAuthorizedUsers([message.author.id])

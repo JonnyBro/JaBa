@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const { SlashCommandBuilder } = require("@discordjs/builders");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Eval extends BaseCommand {
@@ -14,7 +14,7 @@ class Eval extends BaseCommand {
 				.setDescription(client.translate("owner/eval:DESCRIPTION"))
 				.addStringOption(option =>
 					option.setName("code")
-						.setDescription(client.translate("owner/eval:USAGE"))
+						.setDescription(client.translate("owner/eval:CODE"))
 						.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

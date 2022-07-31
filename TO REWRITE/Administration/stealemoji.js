@@ -1,5 +1,5 @@
 const Command = require("../../base/Command"),
-	{ Util } = require("discord.js");
+	{ parseEmoji } = require("discord.js");
 
 class Stealemoji extends Command {
 	constructor(client) {
@@ -21,7 +21,7 @@ class Stealemoji extends Command {
 		if (!args.length) return message.error("administration/stealemoji:MISSING_EMOJI");
 
 		for (const rawEmoji of args) {
-			const parsedEmoji = Util.parseEmoji(rawEmoji);
+			const parsedEmoji = parseEmoji(rawEmoji);
 			const extension = parsedEmoji.animated ? "gif" : "png";
 
 			message.guild.emojis

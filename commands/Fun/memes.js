@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, 
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
-class NSFW extends BaseCommand {
+class Memes extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../base/JaBa")} client
@@ -10,8 +10,8 @@ class NSFW extends BaseCommand {
 	constructor(client) {
 		super({
 			command: new SlashCommandBuilder()
-				.setName("nsfw")
-				.setDescription(client.translate("nsfw/nsfw:DESCRIPTION")),
+				.setName("memes")
+				.setDescription(client.translate("fun/memes:DESCRIPTION")),
 			aliases: [],
 			dirname: __dirname,
 			guildOnly: true,
@@ -32,9 +32,7 @@ class NSFW extends BaseCommand {
 	 * @param {Array} data
 	 */
 	async execute(client, interaction) {
-		if (!interaction.channel.nsfw) return interaction.replyT("misc:NSFW_COMMAND", null, { ephemeral: true });
-
-		const tags = ["hentai", "ecchi", "lewdanimegirls", "hentaifemdom", "animefeets", "animebooty", "biganimetiddies", "sideoppai", "ahegao"].map(tag =>
+		const tags = ["memes", "dankmemes", "me_irl", "wholesomememes"].map(tag =>
 			JSON.parse(JSON.stringify({
 				label: tag,
 				value: tag
@@ -44,14 +42,13 @@ class NSFW extends BaseCommand {
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new SelectMenuBuilder()
-					.setCustomId("nsfw_select")
+					.setCustomId("memes_select")
 					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
 					.addOptions(tags)
 			);
 
 		const msg = await interaction.reply({
 			content: interaction.translate("common:AVAILABLE_CATEGORIES"),
-			ephemeral: true,
 			components: [row],
 			fetchReply: true
 		});
@@ -81,4 +78,4 @@ class NSFW extends BaseCommand {
 	}
 }
 
-module.exports = NSFW;
+module.exports = Memes;

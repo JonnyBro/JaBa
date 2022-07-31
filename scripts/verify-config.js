@@ -1,5 +1,5 @@
 /* eslint-disable no-async-promise-executor */
-const { Intents } = require("discord.js"),
+const { GatewayIntentBits } = require("discord.js"),
 	config = require("../config"),
 	fetch = require("node-fetch"),
 	chalk = require("chalk"),
@@ -23,7 +23,7 @@ const checks = [
 		console.log("\n\nDiscord Bot");
 		return new Promise((res) => {
 			const Discord = require("discord.js");
-			const client = new Discord.Client({ intents: Object.keys(Intents.FLAGS) });
+			const client = new Discord.Client({ intents: [ GatewayIntentBits.Guilds ] });
 			let readyResolve;
 			new Promise((resolve) => readyResolve = resolve);
 			client.login(config.token).then(async () => {

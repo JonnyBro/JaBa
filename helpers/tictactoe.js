@@ -1,6 +1,6 @@
 // Thanks to simply-djs for this =)
 
-const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
+const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
 
 /**
  * @param {require("discord.js").Message} message
@@ -66,7 +66,7 @@ async function tictactoe(interaction, options = {}) {
 
 			const foot = options.embedFoot ? { text: options.embedFoot } : { text: "Удачи =)" };
 
-			const acceptEmbed = new MessageEmbed()
+			const acceptEmbed = new EmbedBuilder()
 				.setTitle(interaction.translate("economy/tictactoe:REQUEST_WAIT", {
 					user: opponent.tag
 				}))
@@ -78,17 +78,17 @@ async function tictactoe(interaction, options = {}) {
 				.setFooter(foot)
 				.setTimestamp();
 
-			const accept = new MessageButton()
+			const accept = new ButtonBuilder()
 				.setLabel(interaction.translate("economy/tictactoe:ACCEPT"))
 				.setStyle("SUCCESS")
 				.setCustomId("acceptttt");
 
-			const decline = new MessageButton()
+			const decline = new ButtonBuilder()
 				.setLabel(interaction.translate("economy/tictactoe:DECLINE"))
 				.setStyle("DANGER")
 				.setCustomId("declinettt");
 
-			const accep = new MessageActionRow().addComponents([
+			const accep = new ActionRowBuilder().addComponents([
 				accept,
 				decline
 			]);
@@ -145,54 +145,54 @@ async function tictactoe(interaction, options = {}) {
 					const Args = {
 						user: 0,
 						a1: {
-							style: "SECONDARY",
+							style: ButtonStyle.Secondary,
 							emoji: dashmoji,
 							disabled: false
 						},
 						a2: {
-							style: "SECONDARY",
+							style: ButtonStyle.Secondary,
 							emoji: dashmoji,
 							disabled: false
 						},
 						a3: {
-							style: "SECONDARY",
+							style: ButtonStyle.Secondary,
 							emoji: dashmoji,
 							disabled: false
 						},
 						b1: {
-							style: "SECONDARY",
+							style: ButtonStyle.Secondary,
 							emoji: dashmoji,
 							disabled: false
 						},
 						b2: {
-							style: "SECONDARY",
+							style: ButtonStyle.Secondary,
 							emoji: dashmoji,
 							disabled: false
 						},
 						b3: {
-							style: "SECONDARY",
+							style: ButtonStyle.Secondary,
 							emoji: dashmoji,
 							disabled: false
 						},
 						c1: {
-							style: "SECONDARY",
+							style: ButtonStyle.Secondary,
 							emoji: dashmoji,
 							disabled: false
 						},
 						c2: {
-							style: "SECONDARY",
+							style: ButtonStyle.Secondary,
 							emoji: dashmoji,
 							disabled: false
 						},
 						c3: {
-							style: "SECONDARY",
+							style: ButtonStyle.Secondary,
 							emoji: dashmoji,
 							disabled: false
 						}
 					};
-					const { MessageActionRow, MessageButton } = require("discord.js");
+					const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
 
-					const epm = new MessageEmbed()
+					const epm = new EmbedBuilder()
 						.setTitle(interaction.translate("economy/tictactoe:DESCRIPTION"))
 						.setColor(options.embedColor || "#075FFF")
 						.setFooter(foot)
@@ -233,54 +233,54 @@ async function tictactoe(interaction, options = {}) {
 							"<:X_:863314044781723668>": false
 						};
 
-						const a1 = new MessageButton()
+						const a1 = new ButtonBuilder()
 							.setStyle(Args.a1.style)
 							.setEmoji(Args.a1.emoji)
 							.setCustomId("a1")
 							.setDisabled(Args.a1.disabled);
-						const a2 = new MessageButton()
+						const a2 = new ButtonBuilder()
 							.setStyle(Args.a2.style)
 							.setEmoji(Args.a2.emoji)
 							.setCustomId("a2")
 							.setDisabled(Args.a2.disabled);
-						const a3 = new MessageButton()
+						const a3 = new ButtonBuilder()
 							.setStyle(Args.a3.style)
 							.setEmoji(Args.a3.emoji)
 							.setCustomId("a3")
 							.setDisabled(Args.a3.disabled);
-						const b1 = new MessageButton()
+						const b1 = new ButtonBuilder()
 							.setStyle(Args.b1.style)
 							.setEmoji(Args.b1.emoji)
 							.setCustomId("b1")
 							.setDisabled(Args.b1.disabled);
-						const b2 = new MessageButton()
+						const b2 = new ButtonBuilder()
 							.setStyle(Args.b2.style)
 							.setEmoji(Args.b2.emoji)
 							.setCustomId("b2")
 							.setDisabled(Args.b2.disabled);
-						const b3 = new MessageButton()
+						const b3 = new ButtonBuilder()
 							.setStyle(Args.b3.style)
 							.setEmoji(Args.b3.emoji)
 							.setCustomId("b3")
 							.setDisabled(Args.b3.disabled);
-						const c1 = new MessageButton()
+						const c1 = new ButtonBuilder()
 							.setStyle(Args.c1.style)
 							.setEmoji(Args.c1.emoji)
 							.setCustomId("c1")
 							.setDisabled(Args.c1.disabled);
-						const c2 = new MessageButton()
+						const c2 = new ButtonBuilder()
 							.setStyle(Args.c2.style)
 							.setEmoji(Args.c2.emoji)
 							.setCustomId("c2")
 							.setDisabled(Args.c2.disabled);
-						const c3 = new MessageButton()
+						const c3 = new ButtonBuilder()
 							.setStyle(Args.c3.style)
 							.setEmoji(Args.c3.emoji)
 							.setCustomId("c3")
 							.setDisabled(Args.c3.disabled);
-						const a = new MessageActionRow().addComponents([a1, a2, a3]);
-						const b = new MessageActionRow().addComponents([b1, b2, b3]);
-						const c = new MessageActionRow().addComponents([c1, c2, c3]);
+						const a = new ActionRowBuilder().addComponents([a1, a2, a3]);
+						const b = new ActionRowBuilder().addComponents([b1, b2, b3]);
+						const c = new ActionRowBuilder().addComponents([c1, c2, c3]);
 						const buttons = [a, b, c];
 
 						if (
@@ -688,14 +688,14 @@ async function tictactoe(interaction, options = {}) {
 								if (Args.user == 0) {
 									Args.user = 1;
 									Args[b.customId] = {
-										style: "SUCCESS",
+										style: ButtonStyle.Success,
 										emoji: o_emoji,
 										disabled: true
 									};
 								} else {
 									Args.user = 0;
 									Args[b.customId] = {
-										style: "DANGER",
+										style: ButtonStyle.Danger,
 										emoji: x_emoji,
 										disabled: true
 									};
@@ -838,7 +838,7 @@ async function tictactoe(interaction, options = {}) {
 
 			collector.on("end", (collected, reason) => {
 				if (reason == "time") {
-					const embed = new MessageEmbed()
+					const embed = new EmbedBuilder()
 						.setTitle(interaction.translate("economy/tictactoe:NO_ANSWER_TITLE"))
 						.setAuthor({
 							name: (interaction.user ? interaction.user : interaction.author).tag,
@@ -857,7 +857,7 @@ async function tictactoe(interaction, options = {}) {
 					});
 				}
 				if (reason == "decline") {
-					const embed = new MessageEmbed()
+					const embed = new EmbedBuilder()
 						.setTitle(interaction.translate("economy/tictactoe:CANCELED"))
 						.setAuthor({
 							name: (interaction.user ? interaction.user : interaction.author).tag,

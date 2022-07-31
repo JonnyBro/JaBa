@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Получить мем с выбранного или случайного сабреддита",
+	"DESCRIPTION": "Получить мем с выбранного сабреддита",
 	"USAGE": "memes (тег)",
 	"EXAMPLES": "memes\nmemes me_irl",
 	"SEARCHING": "Ищу мем по тегу `{{tag}}`...",
