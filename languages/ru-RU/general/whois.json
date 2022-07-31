@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Получить информацию об IP адресе!",
+	"DESCRIPTION": "Получить информацию об IP адресе",
 	"USAGE": "whois (IP)",
 	"EXAMPLES": "whois 1.1.1.1",
 	"NO_IP": "Укажите IP адрес!",

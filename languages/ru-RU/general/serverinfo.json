@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Показать информацию о сервере!",
+	"DESCRIPTION": "Показать информацию о сервере",
 	"USAGE": "serverinfo [ID/название]",
 	"EXAMPLES": "serverinfo кык\nserverinfo",
 	"AFK_CHANNEL": "AFK канал",

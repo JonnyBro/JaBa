@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Показать информацию о Minecraft сервере!",
+	"DESCRIPTION": "Показать информацию о Minecraft сервере",
 	"USAGE": "minecraft [IP]",
 	"EXAMPLES": "minecraft mc.hypixel.net",
 	"MISSING_IP": "Укажите IP сервера!",

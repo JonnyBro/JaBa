@@ -23,10 +23,6 @@ class Ready extends BaseEvent {
 		client.logger.log(`${client.user.tag}, ready to serve ${tUsers} users in ${tServers} servers.`, "ready");
 		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"] , permissions: [ PermissionsBitField.Flags.Administrator ] })}`, "ready");
 
-		// Discord Together
-		const discordtogether = require("../helpers/discordTogether");
-		discordtogether.init(client);
-
 		// Birthday Announce
 		const birthdays = require("../helpers/birthdays");
 		birthdays.init(client);

@@ -8,6 +8,7 @@ const { EmbedBuilder, Client, Collection, SlashCommandBuilder, ContextMenuComman
 
 const BaseEvent = require("./BaseEvent.js"),
 	BaseCommand = require("./BaseCommand.js"),
+	{ DiscordTogether } = require("../helpers/discordTogether"),
 	AmeClient = require("amethyste-api"),
 	path = require("path"),
 	fs = require("fs").promises,
@@ -48,6 +49,8 @@ class JaBa extends Client {
 		this.databaseCache.mutedUsers = new Collection(); // members who are currently muted
 
 		if (this.config.apiKeys.amethyste) this.AmeAPI = new AmeClient(this.config.apiKeys.amethyste);
+
+		this.discordTogether = new DiscordTogether(this);
 
 		this.player = new DisTube.default(this, {
 			plugins: [

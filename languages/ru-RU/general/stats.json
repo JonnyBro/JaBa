@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Показать статистику бота!",
+	"DESCRIPTION": "Показать статистику бота",
 	"USAGE": "stats",
 	"EXAMPLES": "stats",
 	"COUNTS_TITLE": "• __Статистика__",

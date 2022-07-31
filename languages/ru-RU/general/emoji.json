@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Показать информацию об эмодзи!",
+	"DESCRIPTION": "Показать информацию об эмодзи",
 	"USAGE": "emoji [эмодзи]",
 	"EXAMPLES": "emoji :tada:",
 	"TITLE": "Информация об {{emoji}}",
