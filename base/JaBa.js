@@ -1,9 +1,8 @@
-const { EmbedBuilder, Client, Collection } = require("discord.js"),
+const { EmbedBuilder, Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ SoundCloudPlugin } = require("@distube/soundcloud"),
 	{ SpotifyPlugin } = require("@distube/spotify"),
 	{ YtDlpPlugin } = require("@distube/yt-dlp"),
-	{ SlashCommandBuilder } = require("discord.js"),
 	{ REST } = require("@discordjs/rest"),
 	{ Routes } = require("discord-api-types/v10");
 
@@ -142,14 +141,14 @@ class JaBa extends Client {
 						const aliases = [];
 						if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0) {
 							command.aliases.forEach((alias) => {
-								const command_alias = command.command instanceof SlashCommandBuilder ? { ...command.command.toJSON() } : { ...command.command };
+								const command_alias = (command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder) ? { ...command.command.toJSON() } : { ...command.command };
 								command_alias.name = alias;
 								aliases.push(command_alias);
 								this.commands.set(alias, command);
 							});
 						}
 
-						commands.push(command.command instanceof SlashCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
+						commands.push((command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder) ? command.command.toJSON() : command.command, ...aliases);
 
 						if (command.onLoad || typeof command.onLoad === "function") await command.onLoad(this);
 						this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
