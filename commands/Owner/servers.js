@@ -27,7 +27,7 @@ class Servers extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../../base/JaBa")} client
-	 * @param {import("discord.js").CommandInteraction} interaction
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Array} data
 	 */
 	async execute(client, interaction) {
@@ -72,7 +72,7 @@ class Servers extends BaseCommand {
 			time: 60 * 1000
 		});
 
-		collector.on("collect", async (reaction) => {
+		collector.on("collect", async reaction => {
 			if (reaction._emoji.name === "⬅") {
 				i0 = i0 - 10;
 				i1 = i1 - 10;

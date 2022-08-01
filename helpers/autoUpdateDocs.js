@@ -18,11 +18,11 @@ module.exports.update = function (client) {
 	// 	else return 1;
 	// })
 
-	categories.sort().forEach((cat) => {
+	categories.sort().forEach(cat => {
 		const categoriesArray = [
 			["Название", "Описание", "Использование", "Разрешено использование"]
 		];
-		const cmds = [...new Map(commands.filter((cmd) => cmd.category === cat).map(v => [v.constructor.name, v])).values()];
+		const cmds = [...new Map(commands.filter(cmd => cmd.category === cat).map(v => [v.constructor.name, v])).values()];
 
 		text += `### ${cat} (${cmds.length} ${client.getNoun(cmds.length, "команда", "команды", "команд")})\n\n`;
 		cmds.sort(function (a, b) {

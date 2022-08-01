@@ -30,7 +30,7 @@ class Poll extends Command {
 			time: 240000
 		});
 
-		collector.on("collect", async (tmsg) => {
+		collector.on("collect", async tmsg => {
 			if (tmsg.content.toLowerCase() === message.translate("common:NO").toLowerCase()) {
 				tmsg.delete();
 				msg.delete();

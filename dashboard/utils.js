@@ -11,7 +11,6 @@ async function fetchUser(userData, client, query) {
 	if (userData.guilds) {
 		userData.guilds.forEach((guild) => {
 			if (!client.guilds.cache.get(guild.id)) return;
-			// eslint-disable-next-line no-undef
 			const perms = new PermissionsBitField(BigInt(guild.permissions));
 			if (perms.has(PermissionsBitField.Flags.ManageGuild)) guild.admin = true;
 

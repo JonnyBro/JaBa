@@ -28,7 +28,7 @@ class NSFW extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../../base/JaBa")} client
-	 * @param {import("discord.js").CommandInteraction} interaction
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Array} data
 	 */
 	async execute(client, interaction) {
@@ -61,7 +61,7 @@ class NSFW extends BaseCommand {
 			idle: 60 * 1000
 		});
 
-		collector.on("collect", async (msg) => {
+		collector.on("collect", async msg => {
 			const tag = msg?.values[0];
 			const res = await fetch(`https://meme-api.herokuapp.com/gimme/${tag}`).then(response => response.json());
 

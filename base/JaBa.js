@@ -118,12 +118,27 @@ class JaBa extends Client {
 		});
 	}
 
+	async init() {
+		this.login(this.config.token);
+
+		mongoose.connect(this.config.mongoDB, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true
+		}).then(() => {
+			this.logger.log("Connected to the Mongodb database.", "log");
+		}).catch((err) => {
+			this.logger.log(`Unable to connect to the Mongodb database. Error: ${err}`, "error");
+		});
+
+		const autoUpdateDocs = require("../helpers/autoUpdateDocs");
+		autoUpdateDocs.update(this);
+	}
+
 	/**
 	 *
 	 * @param {String} dir
 	 * @returns
 	 */
-
 	async loadCommands(dir) {
 		const filePath = path.join(__dirname, dir);
 		var folders = await fs.readdir(filePath); folders = folders.map(file => path.join(filePath, file)).filter(async (path) => { path = await fs.lstat(path); path.isDirectory(); });
@@ -242,22 +257,6 @@ class JaBa extends Client {
 				}
 			}
 		}
-	}
-
-	async init() {
-		this.login(this.config.token);
-
-		mongoose.connect(this.config.mongoDB, {
-			useNewUrlParser: true,
-			useUnifiedTopology: true
-		}).then(() => {
-			this.logger.log("Connected to the Mongodb database.", "log");
-		}).catch((err) => {
-			this.logger.log(`Unable to connect to the Mongodb database. Error: ${err}`, "error");
-		});
-
-		const autoUpdateDocs = require("../helpers/autoUpdateDocs");
-		autoUpdateDocs.update(this);
 	}
 
 	get defaultLanguage() {

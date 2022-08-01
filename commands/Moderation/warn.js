@@ -32,18 +32,16 @@ class Warn extends BaseCommand {
 	 */
 	async execute(client, interaction, data) {
 		const member = interaction.targetMember;
+		const memberPosition = member.roles.highest.position;
+		const moderationPosition = interaction.member.roles.highest.position;
 		if (member.user.bot) return;
+		if (member.id === interaction.user.id) return interaction.error("moderation/warn:YOURSELF");
+		if (interaction.guild.ownerId !== interaction.user.id && !(moderationPosition > memberPosition)) return interaction.error("moderation/ban:SUPERIOR");
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
 			guildID: interaction.guildId
 		});
-
-		if (member.id === interaction.user.id) return interaction.error("moderation/warn:YOURSELF");
-
-		const memberPosition = member.roles.highest.position;
-		const moderationPosition = interaction.member.roles.highest.position;
-		if (interaction.guild.ownerId !== interaction.user.id && !(moderationPosition > memberPosition)) return interaction.error("moderation/ban:SUPERIOR");
 
 		const modal = new ModalBuilder()
 			.setCustomId("warn_modal")

@@ -28,7 +28,7 @@ class Activity extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../../base/JaBa")} client
-	 * @param {import("discord.js").CommandInteraction} interaction
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Array} data
 	 */
 	async execute(client, interaction) {
@@ -64,7 +64,7 @@ class Activity extends BaseCommand {
 			idle: 60 * 1000
 		});
 
-		collector.on("collect", async (msg) => {
+		collector.on("collect", async msg => {
 			const activity = msg?.values[0];
 
 			const invite = await client.discordTogether.createTogetherCode(voice.id, activity);
@@ -78,7 +78,8 @@ class Activity extends BaseCommand {
 				.setTimestamp();
 
 			msg.update({
-				embeds: [embed]
+				embeds: [embed],
+				components: []
 			});
 		});
 	}

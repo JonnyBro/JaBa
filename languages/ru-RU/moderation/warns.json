@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показать список нарушений пользователя!",
-	"USAGE": "sanctions [@пользователь]",
-	"EXAMPLES": "sanctions @Jonny_Bro#4226",
+	"USAGE": "ПКМ на пользователя - Приложения - warns",
+	"EXAMPLES": "",
 	"SANCTIONS_OF": "Нарушения {{member}}",
 	"NO_SANCTION": "У **{{member}}** нет нарушений."
 }

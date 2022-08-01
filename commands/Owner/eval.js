@@ -32,7 +32,7 @@ class Eval extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../../base/JaBa")} client
-	 * @param {import("discord.js").CommandInteraction} interaction
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Array} data
 	 */
 	async execute(client, interaction, data) {
