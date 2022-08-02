@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, PermissionsBitField, ComponentType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Help extends BaseCommand {
@@ -48,7 +48,7 @@ class Help extends BaseCommand {
 
 		commands.forEach(c => {
 			if (!categories.includes(c.category)) {
-				if (c.category === "Owner" && interaction.user.id !== client.config.owner.id) return;
+				if (c.category === "Owner" && interaction.member.id !== client.config.owner.id) return;
 				categories.push(c.category);
 			}
 		});
@@ -75,6 +75,7 @@ class Help extends BaseCommand {
 		});
 
 		const collector = new InteractionCollector(client, {
+			componentType: ComponentType.SelectMenu,
 			message: msg,
 			idle: 60 * 1000
 		});
@@ -107,7 +108,7 @@ class Help extends BaseCommand {
 				});
 			} else {
 				const embed = generateCommandHelp(client, interaction, arg);
-				return msg.update({
+				await msg.update({
 					content: null,
 					components: [],
 					embeds: [embed]

@@ -1,10 +1,10 @@
 {
-	"DESCRIPTION": "Начать воспроизведение трека!",
+	"DESCRIPTION": "Начать воспроизведение трека",
 	"USAGE": "play [название-трека/ссылка]",
 	"EXAMPLES": "play Never Gonna Give You Up",
+	"LINK": "Название/Прямая ссылка/Ссылка на YouTube, Spotify или SoundCloud",
 	"NO_VOICE_CHANNEL": "Вы должны находиться в голосовом канале!",
 	"VOICE_CHANNEL_CONNECT": "Я не могу присоедениться к вашему голосовому каналу!",
-	"MISSING_SONG_NAME": "Укажите название трека или ссылку на него!",
 	"RESULTS_FOOTER": "Укажите число от 1 до 10 (без префикса).",
 	"NO_RESULT": "Ничего не найдено!",
 	"NOW_PLAYING": "Сейчас играет **{{songName}}**",

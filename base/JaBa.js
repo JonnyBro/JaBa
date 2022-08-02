@@ -90,7 +90,7 @@ class JaBa extends Client {
 			.on("searchResult", (message, result) => {
 				let i = 0;
 				const embed = new EmbedBuilder()
-					.setDescription(result.map(song => `**${++i} -** ${song.name}`).join("\n"))
+					.setDescription(result.map(song => `**${++i}** - ${song.name}`).join("\n"))
 					.setFooter({ text: this.translate("music/play:RESULTS_FOOTER", null, message.guild.data.language) })
 					.setColor(this.config.embed.color);
 				message.reply({ embeds: [embed] });

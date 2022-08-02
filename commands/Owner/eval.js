@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
@@ -26,7 +25,7 @@ class Eval extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 */
-	async onLoad(client) {
+	async onLoad() {
 		//...
 	}
 	/**
@@ -35,6 +34,7 @@ class Eval extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Array} data
 	 */
+	// eslint-disable-next-line no-unused-vars
 	async execute(client, interaction, data) {
 		const code = interaction.options.getString("code");
 		const result = new Promise((resolve) => resolve(eval(code)));

@@ -43,8 +43,8 @@ class Work extends Command {
 			.setFooter({
 				text: message.translate("economy/work:AWARD"),
 				iconURL: message.author.displayAvatarURL({
-					size: 512,
-					format: "png"
+					extension: "png",
+					size: 512
 				})
 			})
 			.setColor(data.config.embed.color);

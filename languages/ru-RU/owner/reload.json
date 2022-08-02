@@ -2,5 +2,6 @@
 	"DESCRIPTION": "Перезагрузить команду!",
 	"COMMAND": "Команда",
 	"EXAMPLES": "reload help",
+	"AVAILABLE_COMMANDS": "Доступные команды:",
 	"SUCCESS": "Команда `{{command}}` успешно перезагружена!"
 }

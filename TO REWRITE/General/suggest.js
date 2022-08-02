@@ -32,8 +32,8 @@ class Suggest extends Command {
 					user: message.author.username
 				}),
 				iconURL: message.author.displayAvatarURL({
+					extension: "png",
 					size: 512,
-					format: "png"
 				})
 			})
 			.addFields([

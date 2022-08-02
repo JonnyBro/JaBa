@@ -40,7 +40,7 @@ class Lovecalc extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const firstMember = interaction.options.getMember("first_member");
-		const secondMember = interaction.options.getMember("second_member") || interaction.user;
+		const secondMember = interaction.options.getMember("second_member") || interaction.member;
 
 		const members = [firstMember, secondMember].sort((a, b) => parseInt(a.id, 10) - parseInt(b.id, 10));
 		const hash = md5(`${members[0].id}${members[1].user.username}${members[0].user.username}${members[1].id}`);

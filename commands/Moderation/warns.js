@@ -45,8 +45,8 @@ class Warns extends BaseCommand {
 					member: member.nickname || member.user.username
 				}),
 				iconURL: member.displayAvatarURL({
-					size: 512,
-					format: "png"
+					extension: "png",
+					size: 512
 				})
 			})
 			.setColor(client.config.embed.color)

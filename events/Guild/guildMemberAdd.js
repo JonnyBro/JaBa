@@ -26,19 +26,20 @@ class GuildMemberAdd extends BaseEvent {
 
 	/**
 	 *
+	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").GuildMember} member
 	 */
-	async execute(member) {
+	async execute(client, member) {
 		if (member.guild && member.guild.id === "568120814776614924") return;
 
 		await member.guild.members.fetch();
 
-		const guildData = await this.client.findOrCreateGuild({
+		const guildData = await client.findOrCreateGuild({
 			id: member.guild.id
 		});
 		member.guild.data = guildData;
 
-		const memberData = await this.client.findOrCreateMember({
+		const memberData = await client.findOrCreateMember({
 			id: member.id,
 			guildID: member.guild.id
 		});
@@ -63,7 +64,7 @@ class GuildMemberAdd extends BaseEvent {
 					.replace(/{user}/g, member)
 					.replace(/{server}/g, member.guild.name)
 					.replace(/{membercount}/g, member.guild.memberCount)
-					.replace(/{createdat}/g, this.client.printDate(member.user.createdAt));
+					.replace(/{createdat}/g, client.printDate(member.user.createdAt));
 				if (guildData.plugins.welcome.withImage) {
 					const canvas = Canvas.createCanvas(1024, 450),
 						ctx = canvas.getContext("2d");
@@ -96,13 +97,13 @@ class GuildMemberAdd extends BaseEvent {
 					ctx.fillText(member.user.username, canvas.width - 670, canvas.height - 250);
 
 					// Draw server name
-					ctx.font = applyText(canvas, member.guild.translate("administration/welcome:IMG_WELCOME", {
+					ctx.font = applyText(canvas, client.translate("administration/welcome:IMG_WELCOME", {
 						server: member.guild.name
-					}), 53, 625, "RubikMonoOne");
+					}, member.guild.data.language), 53, 625, "RubikMonoOne");
 
-					ctx.fillText(member.guild.translate("administration/welcome:IMG_WELCOME", {
+					ctx.fillText(client.translate("administration/welcome:IMG_WELCOME", {
 						server: member.guild.name
-					}), canvas.width - 700, canvas.height - 70);
+					}, member.guild.data.language), canvas.width - 700, canvas.height - 70);
 
 					// Draw discriminator
 					ctx.font = "35px RubikMonoOne";
@@ -110,7 +111,7 @@ class GuildMemberAdd extends BaseEvent {
 
 					// Draw membercount
 					ctx.font = "22px RubikMonoOne";
-					ctx.fillText(`${member.guild.memberCount}й ${member.guild.translate("misc:NOUNS:MEMBERS:1")}`, 40, canvas.height - 35);
+					ctx.fillText(`${member.guild.memberCount}й ${client.translate("misc:NOUNS:MEMBERS:1", null, member.guild.data.language)}`, 40, canvas.height - 35);
 
 					// Draw # for discriminator
 					ctx.fillStyle = "#FFFFFF";
@@ -121,9 +122,9 @@ class GuildMemberAdd extends BaseEvent {
 					ctx.font = "45px RubikMonoOne";
 					ctx.strokeStyle = "#000000";
 					ctx.lineWidth = 10;
-					ctx.strokeText(member.guild.translate("administration/welcome:TITLE"), canvas.width - 670, canvas.height - 330);
+					ctx.strokeText(client.translate("administration/welcome:TITLE", null, member.guild.data.language), canvas.width - 670, canvas.height - 330);
 					ctx.fillStyle = "#FFFFFF";
-					ctx.fillText(member.guild.translate("administration/welcome:TITLE"), canvas.width - 670, canvas.height - 330);
+					ctx.fillText(client.translate("administration/welcome:TITLE", null, member.guild.data.language), canvas.width - 670, canvas.height - 330);
 
 					// Draw avatar circle
 					ctx.beginPath();
@@ -133,8 +134,8 @@ class GuildMemberAdd extends BaseEvent {
 					ctx.stroke();
 					ctx.closePath();
 					ctx.clip();
-					const avatar = await Canvas.loadImage(member.user.displayAvatarURL({
-						format: "png",
+					const avatar = await Canvas.loadImage(member.displayAvatarURL({
+						extension: "jpg",
 						size: 512
 					}));
 					ctx.drawImage(avatar, 45, 90, 270, 270);

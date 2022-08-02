@@ -57,8 +57,8 @@ class Profile extends Command {
 					username: member.user.tag
 				}),
 				iconURL: member.user.displayAvatarURL({
-					size: 512,
-					format: "png"
+					extension: "png",
+					size: 512
 				})
 			})
 			.setImage("attachment://achievements.png")

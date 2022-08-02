@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, ComponentType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
@@ -54,6 +54,7 @@ class Memes extends BaseCommand {
 		});
 
 		const collector = new InteractionCollector(client, {
+			componentType: ComponentType.SelectMenu,
 			message: msg,
 			idle: 60 * 1000
 		});
@@ -71,7 +72,7 @@ class Memes extends BaseCommand {
 				.setImage(res.url)
 				.setTimestamp();
 
-			msg.update({
+			await msg.update({
 				embeds: [embed]
 			});
 		});

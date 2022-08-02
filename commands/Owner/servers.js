@@ -46,9 +46,9 @@ class Servers extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.user.tag,
-				iconURL: interaction.user.displayAvatarURL({
-					size: 512,
-					format: "png"
+				iconURL: interaction.member.displayAvatarURL({
+					extension: "png",
+					size: 512
 				})
 			})
 			.setColor(client.config.embed.color)
@@ -124,7 +124,7 @@ class Servers extends BaseCommand {
 
 			if (reaction._emoji.name === "❌") return msg.delete();
 
-			await reaction.users.remove(interaction.user.id);
+			await reaction.users.remove(interaction.member.id);
 		});
 	}
 }

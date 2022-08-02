@@ -36,8 +36,8 @@ class Report extends Command {
 					user: member.user.tag
 				}),
 				iconURL: message.author.displayAvatarURL({
-					size: 512,
-					format: "png"
+					extension: "png",
+					size: 512
 				})
 			})
 			.addFields([

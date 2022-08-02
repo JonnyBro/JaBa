@@ -35,8 +35,8 @@ class Warn extends BaseCommand {
 		const memberPosition = member.roles.highest.position;
 		const moderationPosition = interaction.member.roles.highest.position;
 		if (member.user.bot) return;
-		if (member.id === interaction.user.id) return interaction.error("moderation/warn:YOURSELF");
-		if (interaction.guild.ownerId !== interaction.user.id && !(moderationPosition > memberPosition)) return interaction.error("moderation/ban:SUPERIOR");
+		if (member.id === interaction.member.id) return interaction.error("moderation/warn:YOURSELF");
+		if (interaction.guild.ownerId !== interaction.member.id && !(moderationPosition > memberPosition)) return interaction.error("moderation/ban:SUPERIOR");
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
@@ -60,7 +60,7 @@ class Warn extends BaseCommand {
 
 		const submitted = await interaction.awaitModalSubmit({
 			time: 120000,
-			filter: i => i.user.id === interaction.user.id,
+			filter: i => i.user.id === interaction.member.id,
 		});
 
 		if (submitted) {
@@ -74,7 +74,7 @@ class Warn extends BaseCommand {
 			data.guildData.save();
 
 			const caseInfo = {
-				moderator: interaction.user.id,
+				moderator: interaction.member.id,
 				date: Date.now(),
 				type: "warn",
 				case: data.guildData.casesCount,

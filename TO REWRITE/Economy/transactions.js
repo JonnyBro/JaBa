@@ -22,8 +22,8 @@ class Transactions extends Command {
 			.setAuthor({
 				name: message.translate("economy/transactions:EMBED_TRANSACTIONS"),
 				iconURL: message.author.displayAvatarURL({
-					size: 512,
-					format: "png"
+					extension: "png",
+					size: 512
 				})
 			})
 			.setColor(data.config.embed.color)

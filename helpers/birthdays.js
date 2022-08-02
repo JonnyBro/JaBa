@@ -30,8 +30,8 @@ module.exports.init = async function (client) {
 										.setAuthor({
 											name: client.user.username,
 											iconURL: client.user.displayAvatarURL({
-												size: 512,
-												format: "png"
+												extension: "png",
+												size: 512
 											})
 										})
 										.setColor(client.config.embed.color)

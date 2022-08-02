@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, PermissionsBitField } = require("discord.js"),
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, PermissionsBitField, ComponentType } = require("discord.js"),
 	{ defaultApplications } = require("../../helpers/discordTogether");
 const BaseCommand = require("../../base/BaseCommand");
 
@@ -60,6 +60,7 @@ class Activity extends BaseCommand {
 		});
 
 		const collector = new InteractionCollector(client, {
+			componentType: ComponentType.SelectMenu,
 			message: msg,
 			idle: 60 * 1000
 		});
@@ -77,7 +78,7 @@ class Activity extends BaseCommand {
 				})
 				.setTimestamp();
 
-			msg.update({
+			await msg.update({
 				embeds: [embed],
 				components: []
 			});

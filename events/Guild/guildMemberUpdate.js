@@ -10,16 +10,17 @@ class GuildMemberUpdate extends BaseEvent {
 
 	/**
 	 *
+	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").GuildMember} oldMember
 	 * @param {import("discord.js").GuildMember} newMember
 	 */
-	async execute(oldMember, newMember) {
+	async execute(client, oldMember, newMember) {
 		if (oldMember.guild && oldMember.guild.id === "568120814776614924") return;
-
-		if (oldMember.guild.id !== this.client.config.support.id) return;
+		if (oldMember.guild.id !== client.config.support.id) return;
 		if (oldMember.roles.cache.some((r) => r.name === "Поддержавшие JaBa")) return;
-		if (newMember.roles.cache.some((r) => r.name === "Поддержавшие JaBa")) {
-			const userData = await this.client.findOrCreateUser({
+
+		if (newMember?.roles.cache.some((r) => r.name === "Поддержавшие JaBa")) {
+			const userData = await client.findOrCreateUser({
 				id: newMember.id
 			});
 			userData.achievements.tip.progress.now = 1;

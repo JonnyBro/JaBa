@@ -42,11 +42,6 @@ module.exports = mongoose.model("Guild", new Schema({
 			kick: false, // The number of warns required to kick the user
 			ban: false // The number of warns required to ban the user
 		},
-		// Tickets
-		tickets: {
-			enabled: false, // Whether the tickets system is enabled
-			category: null // The category for the tickets system
-		},
 		suggestions: false, // the channel in which the suggestions will be sent
 		modlogs: false, // the channel in which the moderation logs (mute, kick, ban, etc...) will be sent
 		birthdays: false, // the channel in which birtdays announcements will be sent

@@ -11,12 +11,13 @@ class GuildCreate extends BaseEvent {
 
 	/**
 	 *
+	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").Guild} guild
 	 */
-	async execute(guild) {
+	async execute(client, guild) {
 		const messageOptions = {};
 
-		const userData = await this.client.findOrCreateUser({
+		const userData = await client.findOrCreateUser({
 			id: guild.ownerId
 		});
 
@@ -36,9 +37,9 @@ class GuildCreate extends BaseEvent {
 				name: "Спасибо что добавили меня на свой сервер!"
 			})
 			.setDescription("Чтобы получить список команд использууйуте `/help` и посмотрите на административные команды!.")
-			.setColor(this.client.config.embed.color)
+			.setColor(client.config.embed.color)
 			.setFooter({
-				text: this.client.config.embed.footer
+				text: client.config.embed.footer
 			})
 			.setTimestamp();
 		messageOptions.embed = thanksEmbed;
@@ -55,8 +56,8 @@ class GuildCreate extends BaseEvent {
 				iconURL: guild.iconURL()
 			})
 			.setColor("#32CD32")
-			.setDescription(`Зашёл на сервер **${guild.name}**. На нём **${users}** ${this.client.getNoun(users, this.client.translate("misc:NOUNS:USERS:1"), this.client.translate("misc:NOUNS:USERS:2"), this.client.translate("misc:NOUNS:USERS:5"))} (из них **${bots}** ${this.client.getNoun(bots, this.client.translate("misc:NOUNS:BOTS:1"), this.client.translate("misc:NOUNS:BOTS:2"), this.client.translate("misc:NOUNS:BOTS:5"))})`);
-		this.client.channels.cache.get(this.client.config.support.logs).send({
+			.setDescription(`Зашёл на сервер **${guild.name}**. На нём **${users}** ${client.getNoun(users, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))} и **${bots}** ${client.getNoun(bots, client.translate("misc:NOUNS:BOTS:1"), client.translate("misc:NOUNS:BOTS:2"), client.translate("misc:NOUNS:BOTS:5"))}`);
+		client.channels.cache.get(client.config.support.logs).send({
 			embeds: [embed]
 		});
 	}

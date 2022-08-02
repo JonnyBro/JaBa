@@ -43,8 +43,8 @@ class Userinfo extends Command {
 			.setAuthor({
 				name: `${user.tag} (${user.id})`,
 				iconURL: user.displayAvatarURL({
-					size: 512,
-					format: "png"
+					extension: "png",
+					size: 512
 				})
 			})
 			.setThumbnail(user.displayAvatarURL())
@@ -72,8 +72,8 @@ class Userinfo extends Command {
 				{
 					name: this.client.customEmojis.avatar + " " + message.translate("common:AVATAR"),
 					value: member.displayAvatarURL({
-						size: 512,
-						format: "png"
+						extension: "png",
+						size: 512
 					})
 				}
 			])

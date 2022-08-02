@@ -8,11 +8,13 @@ class GuildDelete extends BaseEvent {
 			once: false
 		});
 	}
+
 	/**
 	 *
+	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").Guild} guild
 	 */
-	async execute(guild) {
+	async execute(client, guild) {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: guild.name,
@@ -20,7 +22,7 @@ class GuildDelete extends BaseEvent {
 			})
 			.setColor("#B22222")
 			.setDescription(`Вышел с сервера **${guild.name}**.`);
-		this.client.channels.cache.get(this.client.config.support.logs).send({
+		client.channels.cache.get(client.config.support.logs).send({
 			embeds: [embed]
 		});
 	}

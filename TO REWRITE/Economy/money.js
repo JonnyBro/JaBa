@@ -54,8 +54,8 @@ class Money extends Command {
 					username: member.user.username
 				}),
 				iconURL: member.user.displayAvatarURL({
-					size: 512,
-					format: "png"
+					extension: "png",
+					size: 512
 				})
 			})
 			.addFields([
