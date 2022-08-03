@@ -3,8 +3,6 @@
 	"USAGE": "queue",
 	"EXAMPLES": "queue",
 	"TITLE": "Очередь",
-	"PREVIOUS": "Пред. страница",
-	"NEXT": "След. страница",
-	"PAGE": "Страница",
-	"ADDED": "Добавил"
+	"ADDED": "Добавил",
+	"MORE": "и ещё {{tracks}}"
 }

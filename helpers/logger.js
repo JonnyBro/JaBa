@@ -11,7 +11,7 @@ function dateTimePad(value, digits) {
 }
 
 function format(tDate) {
-	return (tDate.getDate() + "-" +
+	return (dateTimePad((tDate.getDate()), 2) + "-" +
 		dateTimePad((tDate.getMonth() + 1), 2) + "-" +
 		dateTimePad(tDate.getFullYear(), 2) + " " +
 		dateTimePad(tDate.getHours(), 2) + ":" +

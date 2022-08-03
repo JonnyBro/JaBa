@@ -32,25 +32,25 @@ class Skip extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const voice = interaction.member.voice.channel;
-		const queue = client.player.getQueue(interaction);
-
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
-		if (!queue.songs[1]) return interaction.error("music/skip:NO_NEXT_SONG");
+		if (!queue.tracks[1]) return interaction.error("music/skip:NO_NEXT_SONG");
 
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("music/skip:SUCCESS")
 			})
-			.setThumbnail(queue.songs[1].thumbnail)
+			.setThumbnail(queue.tracks[1].thumbnail)
 			.setDescription(interaction.translate("music/play:NOW_PLAYING", {
-				songName: queue.songs[1].name
+				songName: queue.tracks[1].name
 			}))
 			.setFooter({
 				text: client.config.embed.footer
 			})
 			.setColor(client.config.embed.color);
-		client.player.skip(interaction);
+
+		queue.skip();
 
 		interaction.reply({
 			embeds: [embed]

@@ -32,27 +32,24 @@ class Back extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const voice = interaction.member.voice.channel;
-		const queue = client.player.getQueue(interaction);
-
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { ephemeral: true });
+		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { ephemeral: true });
-		if (!queue.previousSongs[0]) return interaction.error("music/back:NO_PREV_SONG", null, { ephemeral: true });
+		if (!queue.previousTracks[0]) return interaction.error("music/back:NO_PREV_SONG", null, { ephemeral: true });
 
 		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: interaction.translate("music/back:DESCRIPTION")
+				name: interaction.translate("music/back:SUCCESS")
 			})
-			.setThumbnail(queue.tracks[0].thumbnail)
-			.setDescription(interaction.translate("music/back:SUCCESS"))
+			.setThumbnail(queue.current.thumbnail)
+			.setDescription(`[${queue.current.title}](${queue.current.url})`)
 			.setColor(client.config.embed.color)
 			.setFooter({
 				text: client.config.embed.footer
 			});
-		client.player.previous(interaction);
 
-		interaction.reply({
-			embeds: [embed]
-		});
+		queue.back()
+			.then(() => interaction.reply({ embeds: [embed] }));
 	}
 }
 

@@ -1,7 +1,7 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
-class Jump extends BaseCommand {
+class Skipto extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../base/JaBa")} client
@@ -9,10 +9,10 @@ class Jump extends BaseCommand {
 	constructor(client) {
 		super({
 			command: new SlashCommandBuilder()
-				.setName("jump")
-				.setDescription(client.translate("music/jump:DESCRIPTION"))
+				.setName("skipto")
+				.setDescription(client.translate("music/skipto:DESCRIPTION"))
 				.addIntegerOption(option => option.setName("position")
-					.setDescription("music/jump:POSITION")
+					.setDescription(client.translate("music/skipto:POSITION"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
@@ -34,32 +34,22 @@ class Jump extends BaseCommand {
 	 * @param {Array} data
 	 */
 	async execute(client, interaction) {
-		const queue = client.player.getQueue(interaction);
 		const voice = interaction.member.voice.channel;
+		const queue = client.player.getQueue(interaction.guildId);
 		const position = interaction.options.getInteger("position");
 
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
-		if (position < 0) return interaction.error("music/jump:NO_PREV_SONG");
+		if (position < 0) return interaction.error("music/skipto:NO_PREV_SONG");
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
-				name: interaction.translate("music/jump:SUCCESS")
-			})
-			.setThumbnail(queue.songs[position].thumbnail)
-			.setDescription(interaction.translate("music/play:NOW_PLAYING", {
-				songName: queue.songs[position].name
-			}))
-			.setFooter({
-				text: client.config.embed.footer
-			})
-			.setColor(client.config.embed.color);
-		client.player.jump(interaction, position);
+		if (queue.tracks[position]) {
+			queue.skipTo(queue.tracks[position]);
 
-		interaction.reply({
-			embeds: [embed]
-		});
+			interaction.success("music/skipto:SUCCESS", {
+				position
+			});
+		} else return interaction.error("music/skipto:ERROR", { position });
 	}
 }
 
-module.exports = Jump;
+module.exports = Skipto;

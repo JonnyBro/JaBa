@@ -1,4 +1,5 @@
-const { SlashCommandBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, ComponentType } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, ComponentType } = require("discord.js"),
+	{ QueueRepeatMode } = require("discord-player");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Loop extends BaseCommand {
@@ -32,31 +33,37 @@ class Loop extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const voice = interaction.member.voice.channel;
-		const queue = client.player.getQueue(interaction);
-
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new SelectMenuBuilder()
-					.setCustomId("nsfw_select")
+					.setCustomId("loop_select")
 					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
 					.addOptions([
 						{
-							label: client.translate("music/loop:QUEUE"),
-							value: "queue"
+							label: client.translate("music/loop:AUTOPLAY"),
+							value: QueueRepeatMode.AUTOPLAY.toString()
 						},
 						{
-							label: client.translate("music/loop:SONG"),
-							value: "song"
+							label: client.translate("music/loop:QUEUE"),
+							value: QueueRepeatMode.QUEUE.toString()
+						},
+						{
+							label: client.translate("music/loop:TRACK"),
+							value: QueueRepeatMode.TRACK.toString()
+						},
+						{
+							label: client.translate("music/loop:DISABLE"),
+							value: QueueRepeatMode.OFF.toString()
 						}
 					])
 			);
 
 		const msg = await interaction.reply({
 			content: interaction.translate("common:AVAILABLE_CATEGORIES"),
-			ephemeral: true,
 			components: [row],
 			fetchReply: true
 		});
@@ -68,19 +75,11 @@ class Loop extends BaseCommand {
 		});
 
 		collector.on("collect", async msg => {
-			const type = msg?.values[0];
-			let mode = null;
-
-			if (type === "queue") {
-				mode = client.player.setRepeatMode(interaction, 2);
-			} else if (type === "song") {
-				mode = client.player.setRepeatMode(interaction, 1);
-			} else {
-				mode = client.player.setRepeatMode(interaction, 0);
-			}
-
+			const type = Number(msg?.values[0]);
+			queue.setRepeatMode(type);
 			await msg.update({
-				content: `music/loop:${mode ? mode === 2 ? "QUEUE_ENABLED" : "SONG_ENABLED" : "DISABLED"}`,
+				content: interaction.translate(`music/loop:${type === 3 ? "AUTOPLAY_ENABLED" :
+					type === 2 ? "QUEUE_ENABLED" : type === 1 ? "TRACK_ENABLED" : "LOOP_DISABLED"}`),
 				components: []
 			});
 		});

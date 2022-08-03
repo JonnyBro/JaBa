@@ -1,7 +1,9 @@
 {
 	"DESCRIPTION": "Перейти на заданный трек",
-	"USAGE": "jump [номер]",
-	"EXAMPLES": "jump 3",
+	"USAGE": "skipto [номер]",
+	"EXAMPLES": "skipto 3",
 	"POSITION": "Номер трека в очереди",
+	"SUCCESS": "Выполнен переход на позицию {{position}",
+	"ERROR": "На позиции {{position}} ничего не найдено",
 	"NO_PREV_SONG": "Вы не можете перейти назад, для этого используйте команду `back`!"
 }

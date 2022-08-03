@@ -1,4 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js"),
+	{ QueueRepeatMode } = require("discord-player");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Nowplaying extends BaseCommand {
@@ -31,24 +32,11 @@ class Nowplaying extends BaseCommand {
 	 * @param {Array} data
 	 */
 	async execute(client, interaction) {
-		const voice = interaction.member.voice.channel;
-		const queue = client.player.getQueue(interaction);
-
-		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+		await interaction.deferReply();
+		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
-
-		const track = queue.songs[0];
-
-		const status = queue =>
-			`${interaction.translate("music/nowplaying:REPEAT")}: \`${
-				queue.repeatMode
-					? queue.repeatMode === 2 ? interaction.translate("music/nowplaying:QUEUE") : interaction.translate("music/nowplaying:SONG")
-					: interaction.translate("music/nowplaying:DISABLED")
-			}\` | ${interaction.translate("music/nowplaying:AUTOPLAY")}: \`${
-				queue.autoplay
-					? interaction.translate("music/nowplaying:ENABLED")
-					: interaction.translate("music/nowplaying:DISABLED")
-			}\``;
+		const progressBar = queue.createProgressBar();
+		const track = queue.current;
 
 		const embed = new EmbedBuilder()
 			.setAuthor({
@@ -58,19 +46,22 @@ class Nowplaying extends BaseCommand {
 			.addFields([
 				{
 					name: interaction.translate("music/nowplaying:T_TITLE"),
-					value: `[${track.name}](${track.url})`
+					value: `[${track.title}](${track.url})`
 				},
 				{
-					name: interaction.translate("music/nowplaying:T_CHANNEL"),
-					value: track.uploader.name || interaction.translate("common:UNKNOWN")
+					name: interaction.translate("music/nowplaying:T_AUTHOR"),
+					value: track.author || interaction.translate("common:UNKNOWN")
 				},
 				{
 					name: interaction.translate("music/nowplaying:T_DURATION"),
-					value: `${queue.formattedCurrentTime} / ${track.duration > 1 ? track.formattedDuration : interaction.translate("music/play:LIVE")}`
+					value: progressBar
 				},
 				{
-					name: interaction.translate("music/nowplaying:T_CONF"),
-					value: status(queue)
+					name: "\u200b",
+					value: `${interaction.translate("music/nowplaying:REPEAT")}: \`${
+						queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") : queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") : queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK")
+							: interaction.translate("music/nowplaying:DISABLED")
+					}\``
 				}
 			])
 			.setColor(client.config.embed.color)
@@ -79,7 +70,7 @@ class Nowplaying extends BaseCommand {
 			})
 			.setTimestamp();
 
-		interaction.reply({
+		interaction.editReply({
 			embeds: [embed]
 		});
 	}

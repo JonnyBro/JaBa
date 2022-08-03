@@ -4,16 +4,14 @@
 	"EXAMPLES": "nowplaying",
 	"CURRENTLY_PLAYING": "Сейчас играет",
 	"T_TITLE": "Название",
-	"T_CHANNEL": "Канал",
+	"T_AUTHOR": "Автор",
 	"T_DURATION": "Длительность",
-	"T_CONF": "Настройки",
 	"T_DESCRIPTION": "Описание",
 	"NO_DESCRIPTION": "Описание отсутствует",
-	"FILTERS": "Фильтры",
 	"REPEAT": "Повтор",
 	"AUTOPLAY": "Автовоспроизведение",
 	"QUEUE": "Очереди",
-	"SONG": "Трека",
+	"TRACK": "Трека",
 	"ENABLED": "Вкл.",
 	"DISABLED": "Выкл."
 }

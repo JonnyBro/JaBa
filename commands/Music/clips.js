@@ -54,7 +54,6 @@ class Clips extends BaseCommand {
 
 			const msg = await interaction.reply({
 				content: interaction.translate("music/clips:AVAILABLE_CLIPS"),
-				ephemeral: true,
 				components: [row],
 				fetchReply: true
 			});
@@ -68,13 +67,11 @@ class Clips extends BaseCommand {
 			collector.on("collect", async msg => {
 				const clip = msg?.values[0];
 				const voice = msg.member.voice.channel;
-				const queue = client.player.getQueue(msg);
-
-				if (!voice) return msg.error("music/play:NO_VOICE_CHANNEL");
-				if (getVoiceConnection(msg.guild.id)) return msg.error("music/clip:ACTIVE_CLIP");
-				if (queue) return msg.error("music/clip:ACTIVE_QUEUE");
-				if (!clip) return msg.error("music/clip:NO_ARG");
-				if (!fs.existsSync(`./clips/${clip}.mp3`)) return msg.error("music/clip:NO_FILE", { file: clip });
+				if (!voice) return msg.update({ content: interaction.translate("music/play:NO_VOICE_CHANNEL"), components: [] });
+				const queue = client.player.getQueue(msg.guild.id);
+				if (queue) return msg.update({ content: interaction.translate("music/clips:ACTIVE_QUEUE"), components: [] });
+				if (getVoiceConnection(msg.guild.id)) return msg.update({ content: interaction.translate("music/clips:ACTIVE_CLIP"), components: [] });
+				if (!fs.existsSync(`./clips/${clip}.mp3`)) return msg.update({ content: interaction.translate("music/clips:NO_FILE", { file: clip }), components: [] });
 
 				try {
 					const connection = joinVoiceChannel({

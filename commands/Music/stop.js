@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Stop extends BaseCommand {
@@ -32,24 +32,13 @@ class Stop extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const voice = interaction.member.voice.channel;
-		const queue = client.player.getQueue(interaction);
-
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
-				name: interaction.translate("music/stop:DESCRIPTION")
-			})
-			.setDescription(interaction.translate("music/stop:SUCCESS"))
-			.setFooter({
-				text: client.config.embed.footer
-			})
-			.setColor(client.config.embed.color);
-		client.player.stop(interaction);
-
+		queue.destroy();
 		interaction.reply({
-			embeds: [embed]
+			content: interaction.translate("music/stop:SUCCESS")
 		});
 	}
 }

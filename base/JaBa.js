@@ -1,8 +1,9 @@
-const { EmbedBuilder, Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
+const {/* EmbedBuilder, */Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
 	{ GiveawaysManager } = require("discord-giveaways"),
-	{ SoundCloudPlugin } = require("@distube/soundcloud"),
-	{ SpotifyPlugin } = require("@distube/spotify"),
-	{ YtDlpPlugin } = require("@distube/yt-dlp"),
+	// { SoundCloudPlugin } = require("@distube/soundcloud"),
+	// { SpotifyPlugin } = require("@distube/spotify"),
+	// { YtDlpPlugin } = require("@distube/yt-dlp"),
+	{ Player } = require("discord-player"),
 	{ REST } = require("@discordjs/rest"),
 	{ Routes } = require("discord-api-types/v10");
 
@@ -13,7 +14,7 @@ const BaseEvent = require("./BaseEvent.js"),
 	path = require("path"),
 	fs = require("fs").promises,
 	mongoose = require("mongoose"),
-	DisTube = require("distube"),
+	// DisTube = require("distube"),
 	moment = require("moment");
 
 moment.relativeTimeThreshold("s", 60);
@@ -52,60 +53,35 @@ class JaBa extends Client {
 
 		this.discordTogether = new DiscordTogether(this);
 
-		this.player = new DisTube.default(this, {
-			plugins: [
-				new SpotifyPlugin({
-					emitEventsAfterFetching: true
-				}),
-				new SoundCloudPlugin(),
-				new YtDlpPlugin()
-			],
-			directLink: true,
-			emitNewSongOnly: true,
-			leaveOnEmpty: true,
-			leaveOnFinish: true,
-			leaveOnStop: true,
-			searchSongs: 10,
-			searchCooldown: 30,
-			emptyCooldown: 10,
-			emitAddListWhenCreatingQueue: false,
-			emitAddSongWhenCreatingQueue: false
+		this.player = new Player(this, {
+			autoRegisterExtractor: true,
+			leaveOnEnd: true,
+			leaveOnStop: true
 		});
 
 		this.player
-			.on("playSong", async (queue, song) => {
-				const m = await queue.textChannel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: song.name }, queue.textChannel.guild.data.language) });
-				if (song.duration > 1) {
+			.on("trackStart", async (queue, track) => {
+				const m = await queue.metadata.channel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language) });
+				if (track.durationMS > 1) {
 					setTimeout(() => {
 						if (m.deletable) m.delete();
-					}, song.duration * 1000);
+					}, track.durationMS * 1000);
 				} else {
 					setTimeout(() => {
 						if (m.deletable) m.delete();
 					}, 10 * 60 * 1000); // m * s * ms
 				}
 			})
-			.on("addSong", (queue, song) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE", { songName: song.name }, queue.textChannel.guild.data.language) }))
-			.on("addList", (queue, playlist) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE_COUNT", { songCount: `**${playlist.songs.length}** ${this.getNoun(playlist.songs.length, this.translate("misc:NOUNS:TRACKS:1"), this.translate("misc:NOUNS:TRACKS:1"), this.translate("misc:NOUNS:TRACKS:2"), this.translate("misc:NOUNS:TRACKS:5"))}` }, queue.textChannel.guild.data.language) }))
-			.on("searchResult", (message, result) => {
-				let i = 0;
-				const embed = new EmbedBuilder()
-					.setDescription(result.map(song => `**${++i}** - ${song.name}`).join("\n"))
-					.setFooter({ text: this.translate("music/play:RESULTS_FOOTER", null, message.guild.data.language) })
-					.setColor(this.config.embed.color);
-				message.reply({ embeds: [embed] });
-			})
-			.on("searchDone", () => {})
-			.on("searchCancel", message => message.error("misc:TIMES_UP"))
-			.on("searchInvalidAnswer", message => message.error("misc:INVALID_NUMBER_RANGE", { min: 1, max: 10 }))
-			.on("searchNoResult", message => message.error("music/play:NO_RESULT"))
-			.on("error", (textChannel, e) => {
+			.on("queueEnd", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)))
+			.on("channelEmpty", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.channel.guild.data.language)))
+			.on("connectionError", (queue, e) => {
 				console.error(e);
-				textChannel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e }, textChannel.guild.data.language) });
+				queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
 			})
-			.on("finish", queue => queue.textChannel.send(this.translate("music/play:QUEUE_ENDED", null, queue.textChannel.guild.data.language)))
-			// .on("disconnect", queue => queue.textChannel.send(this.translate("music/play:STOP_DISCONNECTED", null, queue.textChannel.guild.data.language)))
-			.on("empty", queue => queue.textChannel.send(this.translate("music/play:STOP_EMPTY", null, queue.textChannel.guild.data.language)));
+			.on("error", (queue, e) => {
+				console.error(e);
+				queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
+			});
 
 		this.giveawaysManager = new GiveawaysManager(this, {
 			storage: "./giveaways.json",

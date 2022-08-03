@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const BaseCommand = require("../../base/BaseCommand"),
-	ms = require("ms");
+const BaseCommand = require("../../base/BaseCommand");
 
 class Seek extends BaseCommand {
 	/**
@@ -12,8 +11,8 @@ class Seek extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("seek")
 				.setDescription(client.translate("music/seek:DESCRIPTION"))
-				.addStringOption(option => option.setName("time")
-					.setDescription("music/seek:TIME")
+				.addIntegerOption(option => option.setName("time")
+					.setDescription(client.translate("music/seek:TIME"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
@@ -36,18 +35,13 @@ class Seek extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const voice = interaction.member.voice.channel;
-		const queue = client.player.getQueue(interaction);
-		const time = ms(interaction.options.getString("time")) / 1000;
-
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
-		if (isNaN(time)) return interaction.error("music/seek:INVALID_TIME");
+		const time = interaction.options.getInteger("time");
 
-		await client.player.seek(interaction, time);
-
-		interaction.replyT("music/seek:SUCCESS", {
-			time: ms(interaction.options.getString("time"))
-		});
+		queue.seek(time)
+			.then(() => interaction.replyT("music/seek:SUCCESS", { time: `${time} ${client.getNoun(time, interaction.translate("misc:NOUNS:SECONDS:1"), interaction.translate("misc:NOUNS:SECONDS:2"), interaction.translate("misc:NOUNS:SECONDS:5"))}` }));
 	}
 }
 
