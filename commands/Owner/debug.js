@@ -49,8 +49,8 @@ class Debug extends BaseCommand {
 									{ name: client.translate("common:REP"), value: "rep" },
 								))
 						.addUserOption(option =>
-							option.setName("target")
-								.setDescription(client.translate("owner/debug:TARGET"))
+							option.setName("user")
+								.setDescription(client.translate("common:USER"))
 								.setRequired(true))
 						.addIntegerOption(option =>
 							option.setName("int")
@@ -81,9 +81,9 @@ class Debug extends BaseCommand {
 
 		if (action === "set") {
 			const type = interaction.options.getString("type");
-			const member = interaction.options.getMember("target");
+			const member = interaction.options.getMember("user");
 			const int = interaction.options.getInteger("int");
-			if (member.user.bot) return interaction.error("owner/debug:BOT");
+			if (member.user.bot) return interaction.error("misc:BOT_USER");
 
 			switch (type) {
 				case "level": {

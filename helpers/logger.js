@@ -1,6 +1,3 @@
-/*
-Logger class for easy and aesthetically pleasing console logging
-*/
 const { bgBlue, black, green } = require("chalk");
 
 function dateTimePad(value, digits) {

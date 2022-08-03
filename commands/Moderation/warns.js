@@ -1,4 +1,4 @@
-const { ApplicationCommandType, PermissionFlagsBits, EmbedBuilder, ContextMenuCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Warns extends BaseCommand {
@@ -6,12 +6,15 @@ class Warns extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 */
-	constructor() {
+	constructor(client) {
 		super({
-			command: new ContextMenuCommandBuilder()
+			command: new SlashCommandBuilder()
 				.setName("warns")
-				.setType(ApplicationCommandType.User)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages),
+				.setDescription(client.translate("moderation/warns:DESCRIPTION"))
+				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
+				.addUserOption(option => option.setName("user")
+					.setDescription(client.translate("common:USER"))
+					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
 			guildOnly: true
@@ -31,8 +34,8 @@ class Warns extends BaseCommand {
 	 * @param {Array} data
 	 */
 	async execute(client, interaction) {
-		const member = interaction.targetMember;
-		if (member.user.bot) return;
+		const member = interaction.options.getMember("user");
+		if (member.user.bot) return interaction.error("misc:BOT_USER");
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
@@ -54,19 +57,19 @@ class Warns extends BaseCommand {
 				text: client.config.embed.footer
 			});
 
-		if (memberData.sanctions.length < 1) {
-			embed.setDescription(interaction.translate("moderation/warns:NO_SANCTION", {
+		if (memberData.sanctions.length === 0) {
+			embed.setDescription(interaction.translate("moderation/warns:NO_SANCTIONS", {
 				member: member.nickname || member.user.username
 			}));
 			return interaction.reply({
 				embeds: [embed]
 			});
 		} else {
-			memberData.sanctions.forEach((s) => {
+			memberData.sanctions.forEach(sanction => {
 				embed.addFields([
 					{
-						name: s.type + " | #" + s.case,
-						value: `${interaction.translate("common:MODERATOR")}: <@${s.moderator}>\n${interaction.translate("common:REASON")}: ${s.reason}`,
+						name: sanction.type + " | #" + sanction.case,
+						value: `${interaction.translate("common:MODERATOR")}: <@${sanction.moderator}>\n${interaction.translate("common:REASON")}: ${sanction.reason}`,
 						inline: true
 					}
 				]);
