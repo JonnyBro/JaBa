@@ -1,6 +1,6 @@
-const { PermissionsBitField } = require("discord.js"),
-	xpCooldown = {},
-	BaseEvent = require("../base/BaseEvent");
+const { PermissionsBitField } = require("discord.js");
+const BaseEvent = require("../base/BaseEvent"),
+	xpCooldown = {};
 
 class MessageCreate extends BaseEvent {
 	constructor() {
