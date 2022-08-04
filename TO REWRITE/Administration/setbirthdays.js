@@ -1,5 +1,4 @@
-const Command = require("../../base/Command"),
-	Resolvers = require("../../helpers/resolvers");
+const Command = require("../../base/Command");
 
 class Setbirthdays extends Command {
 	constructor(client) {

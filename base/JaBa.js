@@ -1,8 +1,5 @@
-const {/* EmbedBuilder, */Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
+const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
 	{ GiveawaysManager } = require("discord-giveaways"),
-	// { SoundCloudPlugin } = require("@distube/soundcloud"),
-	// { SpotifyPlugin } = require("@distube/spotify"),
-	// { YtDlpPlugin } = require("@distube/yt-dlp"),
 	{ Player } = require("discord-player"),
 	{ REST } = require("@discordjs/rest"),
 	{ Routes } = require("discord-api-types/v10");
@@ -14,11 +11,10 @@ const BaseEvent = require("./BaseEvent.js"),
 	path = require("path"),
 	fs = require("fs").promises,
 	mongoose = require("mongoose"),
-	// DisTube = require("distube"),
 	moment = require("moment");
 
-moment.relativeTimeThreshold("s", 60);
 moment.relativeTimeThreshold("ss", 5);
+moment.relativeTimeThreshold("s", 60);
 moment.relativeTimeThreshold("m", 60);
 moment.relativeTimeThreshold("h", 60);
 moment.relativeTimeThreshold("d", 24);
@@ -28,18 +24,18 @@ moment.relativeTimeThreshold("M", 12);
 class JaBa extends Client {
 	constructor(options) {
 		super(options);
-		this.config = require("../config"); // Load the config file
-		this.customEmojis = require("../emojis"); // load the bot's emojis
-		this.languages = require("../languages/language-meta"); // Load the bot's languages
-		this.commands = new Collection(); // Creates new commands collection
-		this.logger = require("../helpers/logger"); // Load the logger file
-		this.wait = require("node:timers/promises").setTimeout; // client.wait(1000) - Wait 1 second
-		this.functions = require("../helpers/functions"); // Load the functions file
-		this.guildsData = require("../base/Guild"); // Guild mongoose model
-		this.usersData = require("../base/User"); // User mongoose model
-		this.membersData = require("../base/Member"); // Member mongoose model
-		this.dashboard = require("../dashboard/app"); // Dashboard app
-		this.states = {}; // Used for the dashboard
+		this.config = require("../config");
+		this.customEmojis = require("../emojis");
+		this.languages = require("../languages/language-meta");
+		this.commands = new Collection();
+		this.logger = require("../helpers/logger");
+		this.wait = require("node:timers/promises").setTimeout;
+		this.functions = require("../helpers/functions");
+		this.guildsData = require("../base/Guild");
+		this.usersData = require("../base/User");
+		this.membersData = require("../base/Member");
+		this.dashboard = require("../dashboard/app");
+		this.states = {};
 		this.knownGuilds = [];
 
 		this.databaseCache = {};

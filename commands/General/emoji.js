@@ -1,0 +1,71 @@
+const { SlashCommandBuilder, EmbedBuilder, parseEmoji } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
+
+class Emoji extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
+	constructor(client) {
+		super({
+			command: new SlashCommandBuilder()
+				.setName("emoji")
+				.setDescription(client.translate("general/emoji:DESCRIPTION"))
+				.addStringOption(option => option.setName("emoji")
+					.setDescription(client.translate("common:EMOJI"))
+					.setRequired(true)),
+			aliases: [],
+			dirname: __dirname,
+			guildOnly: true,
+			ownerOnly: false
+		});
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		const rawEmoji = interaction.options.getString("emoji");
+		const parsedEmoji = parseEmoji(rawEmoji);
+
+		const embed = new EmbedBuilder()
+			.setAuthor({
+				name: interaction.translate("general/emoji:TITLE", {
+					emoji: parsedEmoji.name
+				})
+			})
+			.setColor(client.config.embed.color)
+			.setFooter({
+				text: client.config.embed.footer
+			})
+			.addFields([
+				{
+					name: interaction.translate("general/emoji:NAME"),
+					value: parsedEmoji.name
+				},
+				{
+					name: interaction.translate("general/emoji:ANIMATED"),
+					value: parsedEmoji.animated ? interaction.translate("common:YES") : interaction.translate("common:NO")
+				},
+				{
+					name: interaction.translate("general/emoji:ID"),
+					value: parsedEmoji.id?.toString() || interaction.translate("general/emoji:STANDART")
+				}
+			]);
+
+		interaction.reply({
+			embeds: [embed]
+		});
+	}
+}
+
+module.exports = Emoji;

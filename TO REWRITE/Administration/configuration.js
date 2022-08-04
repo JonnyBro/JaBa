@@ -31,10 +31,6 @@ class Configuration extends Command {
 			});
 
 		embed.addFields([
-			{ // Guild prefix
-				name: message.translate("administration/configuration:PREFIX_TITLE"),
-				value: guildData.prefix
-			},
 			{ // Ignored channels
 				name: message.translate("administration/configuration:IGNORED_CHANNELS_TITLE"),
 				value: guildData.ignoredChannels.length > 0 ? guildData.ignoredChannels.map((ch) => `<#${ch}>`).join(", ") : message.translate("administration/configuration:NO_IGNORED_CHANNELS")

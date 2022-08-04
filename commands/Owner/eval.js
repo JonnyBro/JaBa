@@ -11,10 +11,9 @@ class Eval extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("eval")
 				.setDescription(client.translate("owner/eval:DESCRIPTION"))
-				.addStringOption(option =>
-					option.setName("code")
-						.setDescription(client.translate("owner/eval:CODE"))
-						.setRequired(true)),
+				.addStringOption(option => option.setName("code")
+					.setDescription(client.translate("owner/eval:CODE"))
+					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
 			guildOnly: true,

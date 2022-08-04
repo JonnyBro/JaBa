@@ -11,51 +11,43 @@ class Debug extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("debug")
 				.setDescription(client.translate("owner/debug:DESCRIPTION"))
-				.addSubcommand(subcommand =>
-					subcommand.setName("set")
-						.setDescription(client.translate("owner/debug:SET"))
-						.addStringOption(option =>
-							option.setName("type")
-								.setDescription(client.translate("owner/debug:TYPE"))
-								.setRequired(true)
-								.addChoices(
-									{ name: client.translate("common:LEVEL"), value: "level" },
-									{ name: client.translate("common:XP"), value: "xp" },
-									{ name: client.translate("common:CREDITS"), value: "credits" },
-									{ name: client.translate("economy/transactions:BANK"), value: "bank" },
-									{ name: client.translate("common:REP"), value: "rep" },
-								))
-						.addUserOption(option =>
-							option.setName("target")
-								.setDescription(client.translate("owner/debug:TARGET"))
-								.setRequired(true))
-						.addIntegerOption(option =>
-							option.setName("int")
-								.setDescription(client.translate("owner/debug:INT"))
-								.setRequired(true))
+				.addSubcommand(subcommand => subcommand.setName("set")
+					.setDescription(client.translate("owner/debug:SET"))
+					.addStringOption(option => option.setName("type")
+						.setDescription(client.translate("owner/debug:TYPE"))
+						.setRequired(true)
+						.addChoices(
+							{ name: client.translate("common:LEVEL"), value: "level" },
+							{ name: client.translate("common:XP"), value: "xp" },
+							{ name: client.translate("common:CREDITS"), value: "credits" },
+							{ name: client.translate("economy/transactions:BANK"), value: "bank" },
+							{ name: client.translate("common:REP"), value: "rep" },
+						))
+					.addUserOption(option => option.setName("target")
+						.setDescription(client.translate("owner/debug:TARGET"))
+						.setRequired(true))
+					.addIntegerOption(option => option.setName("int")
+						.setDescription(client.translate("owner/debug:INT"))
+						.setRequired(true))
 				)
-				.addSubcommand(subcommand =>
-					subcommand.setName("add")
-						.setDescription(client.translate("owner/debug:ADD"))
-						.addStringOption(option =>
-							option.setName("type")
-								.setDescription(client.translate("owner/debug:TYPE"))
-								.setRequired(true)
-								.addChoices(
-									{ name: client.translate("common:LEVEL"), value: "level" },
-									{ name: client.translate("common:XP"), value: "xp" },
-									{ name: client.translate("common:CREDITS"), value: "credits" },
-									{ name: client.translate("economy/transactions:BANK"), value: "bank" },
-									{ name: client.translate("common:REP"), value: "rep" },
-								))
-						.addUserOption(option =>
-							option.setName("user")
-								.setDescription(client.translate("common:USER"))
-								.setRequired(true))
-						.addIntegerOption(option =>
-							option.setName("int")
-								.setDescription(client.translate("owner/debug:INT"))
-								.setRequired(true))
+				.addSubcommand(subcommand => subcommand.setName("add")
+					.setDescription(client.translate("owner/debug:ADD"))
+					.addStringOption(option => option.setName("type")
+						.setDescription(client.translate("owner/debug:TYPE"))
+						.setRequired(true)
+						.addChoices(
+							{ name: client.translate("common:LEVEL"), value: "level" },
+							{ name: client.translate("common:XP"), value: "xp" },
+							{ name: client.translate("common:CREDITS"), value: "credits" },
+							{ name: client.translate("economy/transactions:BANK"), value: "bank" },
+							{ name: client.translate("common:REP"), value: "rep" },
+						))
+					.addUserOption(option => option.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setRequired(true))
+					.addIntegerOption(option => option.setName("int")
+						.setDescription(client.translate("owner/debug:INT"))
+						.setRequired(true))
 				),
 			aliases: [],
 			dirname: __dirname,

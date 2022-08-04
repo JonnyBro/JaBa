@@ -11,13 +11,11 @@ class Say extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("say")
 				.setDescription(client.translate("owner/say:DESCRIPTION"))
-				.addStringOption(option =>
-					option.setName("message")
-						.setDescription(client.translate("owner/say:MESSAGE"))
-						.setRequired(true))
-				.addChannelOption(option =>
-					option.setName("channel")
-						.setDescription(client.translate("owner/say:CHANNEL"))),
+				.addStringOption(option => option.setName("message")
+					.setDescription(client.translate("common:MESSAGE"))
+					.setRequired(true))
+				.addChannelOption(option => option.setName("channel")
+					.setDescription(client.translate("common:CHANNEL"))),
 			aliases: [],
 			dirname: __dirname,
 			guildOnly: true,

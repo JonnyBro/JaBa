@@ -35,8 +35,8 @@ class Queue extends BaseCommand {
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
 		const currentTrack = queue.current;
-		const tracks = queue.tracks.slice(0, 10).map((t, i) => {
-			return `${i}. [${t.title}](${t.url})\n> ${interaction.translate("music/queue:ADDED")} ${t.requestedBy}`;
+		const tracks = queue.tracks.slice(0, 10).map(track => {
+			return `${queue.tracks.indexOf(track)}. [${track.title}](${track.url})\n> ${interaction.translate("music/queue:ADDED")} ${track.requestedBy}`;
 		});
 
 		const embed = new EmbedBuilder()

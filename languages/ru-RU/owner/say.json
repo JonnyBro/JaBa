@@ -2,7 +2,5 @@
 	"DESCRIPTION": "Написать сообщение от имени бота",
 	"USAGE": "[текст] (#канал)",
 	"EXAMPLES": "say Hello World!\nsay Hello World! #новости",
-	"DONE": "Сообщение `{{message}}` отправлено в {{channel}}!",
-	"MESSAGE": "Сообщение",
-	"CHANNEL": "Канал"
+	"DONE": "Сообщение `{{message}}` отправлено в {{channel}}!"
 }

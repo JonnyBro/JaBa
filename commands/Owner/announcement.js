@@ -11,10 +11,9 @@ class Announcement extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("announcement")
 				.setDescription(client.translate("owner/announcement:DESCRIPTION"))
-				.addStringOption(option =>
-					option.setName("message")
-						.setDescription(client.translate("owner/say:MESSAGE"))
-						.setRequired(true)),
+				.addStringOption(option => option.setName("message")
+					.setDescription(client.translate("common:MESSAGE"))
+					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
 			guildOnly: true,

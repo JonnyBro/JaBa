@@ -1,9 +1,9 @@
 {
 	"DESCRIPTION": "Показать информацию о пользователе",
-	"USAGE": "userinfo (@пользователь/ID)",
-	"EXAMPLES": "userinfo\nuserinfo @Jonny_Bro#4226\nuserinfo 281361531411890186",
-	"INVALID_USER": "Пользователь с ID `{{search}}` не найден!",
-	"NO_GAME": "Не играет",
+	"USAGE": "userinfo (@пользователь)",
+	"EXAMPLES": "userinfo\nuserinfo @Jonny_Bro#4226",
+	"CUSTOM": "Пользовательский статус",
+	"NO_ACTIVITY": "Не играет",
 	"NO_ROLE": "Нет роли",
 	"ROLE": "Высшая роль",
 	"NO_NICKNAME": "Нет никнейма",

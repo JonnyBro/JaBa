@@ -13,10 +13,9 @@ class Reload extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("reload")
 				.setDescription(client.translate("owner/reload:DESCRIPTION"))
-				.addStringOption(option =>
-					option.setName("command")
-						.setDescription(client.translate("owner/reload:COMMAND"))
-						.setRequired(true)),
+				.addStringOption(option => option.setName("command")
+					.setDescription(client.translate("owner/reload:COMMAND"))
+					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
 			guildOnly: true,

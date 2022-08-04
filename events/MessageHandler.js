@@ -68,7 +68,7 @@ class MessageCreate extends BaseEvent {
 			if (afkReason) {
 				data.userData.afk = null;
 				await data.userData.save();
-				message.replyT("general/setafk:DELETED", {
+				message.replyT("general/afk:DELETED", {
 					username: message.author.username
 				});
 			}
@@ -77,7 +77,7 @@ class MessageCreate extends BaseEvent {
 				const userData = await client.findOrCreateUser({
 					id: u.id
 				});
-				if (userData.afk) message.error("general/setafk:IS_AFK", { user: u.tag, reason: userData.afk });
+				if (userData.afk) message.error("general/afk:IS_AFK", { user: u.tag, reason: userData.afk });
 			});
 		}
 		return;
