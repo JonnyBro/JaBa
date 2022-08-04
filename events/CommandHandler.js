@@ -1,5 +1,5 @@
-const BaseEvent = require("../base/BaseEvent");
 const { InteractionType } = require("discord.js");
+const BaseEvent = require("../base/BaseEvent");
 
 class CommandHandler extends BaseEvent {
 	constructor() {
