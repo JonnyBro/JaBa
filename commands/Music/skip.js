@@ -41,9 +41,9 @@ class Skip extends BaseCommand {
 			.setAuthor({
 				name: interaction.translate("music/skip:SUCCESS")
 			})
-			.setThumbnail(queue.tracks[1].thumbnail)
+			.setThumbnail(queue.tracks[1].thumbnail || null)
 			.setDescription(interaction.translate("music/play:NOW_PLAYING", {
-				songName: queue.tracks[1].name
+				songName: queue.tracks[1].title
 			}))
 			.setFooter({
 				text: client.config.embed.footer

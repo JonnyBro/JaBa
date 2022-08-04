@@ -35,7 +35,7 @@ class Queue extends BaseCommand {
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
 		const currentTrack = queue.current;
-		const tracks = queue.tracks.slice(0, 10).map((track, i) => {
+		const tracks = queue.tracks.slice(0, 5).map((track, i) => {
 			return `${i + 1}. [${track.title}](${track.url})\n> ${interaction.translate("music/queue:ADDED")} ${track.requestedBy}`;
 		});
 
@@ -48,11 +48,15 @@ class Queue extends BaseCommand {
 			.addFields(
 				{
 					name: interaction.translate("music/nowplaying:CURRENTLY_PLAYING"),
-					value: `[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}`
+					value: `[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n`
+				},
+				{
+					name: interaction.translate("music/queue:QUEUE"),
+					value: tracks.join("\n")
 				},
 				{
 					name: "\u200b",
-					value: `${tracks.join("\n")}\n${interaction.translate("music/queue:MORE", {
+					value: `${interaction.translate("music/queue:MORE", {
 						tracks: `${queue.tracks.length - tracks.length} ${client.getNoun(queue.tracks.length - tracks.length, interaction.translate("misc:NOUNS:TRACKS:1"), interaction.translate("misc:NOUNS:TRACKS:2"), interaction.translate("misc:NOUNS:TRACKS:5"))}`
 					})}`
 				}

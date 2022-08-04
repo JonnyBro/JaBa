@@ -51,7 +51,7 @@ class JaBa extends Client {
 
 		this.discordTogether = new DiscordTogether(this);
 
-		playdl.getFreeClientID().then((clientID) => {
+		playdl.getFreeClientID().then(clientID => {
 			playdl.setToken({
 				soundcloud: {
 					client_id: clientID
@@ -60,12 +60,6 @@ class JaBa extends Client {
 		});
 
 		this.player = new Player(this);
-		// ytdlOptions: {
-		// 	filter: "audioonly",
-		// 	highWaterMark: 1 << 30,
-		// 	dlChunkSize: 0,
-		// 	liveBuffer: 4900
-		// }
 		this.player.use("jaba", extractor);
 
 		this.player

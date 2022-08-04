@@ -2,7 +2,7 @@
 	"DESCRIPTION": "Показать очередь на воспроизведение",
 	"USAGE": "queue",
 	"EXAMPLES": "queue",
-	"TITLE": "Очередь",
+	"QUEUE": "Очередь",
 	"ADDED": "Добавил",
 	"MORE": "и ещё {{tracks}}"
 }
