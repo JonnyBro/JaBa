@@ -34,6 +34,7 @@ module.exports = mongoose.model("Guild", new Schema({
 			kick: false,
 			ban: false
 		},
+		news: false,
 		suggestions: false,
 		modlogs: false,
 		birthdays: false,

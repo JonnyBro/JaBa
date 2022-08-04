@@ -51,7 +51,7 @@ class Announcement extends BaseCommand {
 
 		client.guilds.cache.forEach(async guild => {
 			if (guild.id === "568120814776614924") return;
-			const channel = guild.channels.cache.find(g => g.id === guild?.data.plugins.welcome.channel);
+			const channel = guild.channels.cache.get(guild?.data.plugins.news);
 			await channel.send({
 				content: "||@everyone|| ВАЖНОЕ ОБЪЯВЛЕНИЕ!",
 				embeds: [embed]
