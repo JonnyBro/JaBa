@@ -1,5 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField } = require("discord.js"),
-	{ QueryType } = require("discord-player");
+const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Play extends BaseCommand {
@@ -44,7 +43,7 @@ class Play extends BaseCommand {
 
 		const searchResult = await client.player.search(query, {
 			requestedBy: interaction.user,
-			searchEngine: query.includes("soundcloud") ? QueryType.SOUNDCLOUD_SEARCH : QueryType.AUTO
+			searchEngine: "jaba"
 		}).catch(() => {});
 		if (!searchResult || !searchResult.tracks.length) return interaction.editReply({
 			content: interaction.translate("music/play:NO_RESULT", {
@@ -56,19 +55,14 @@ class Play extends BaseCommand {
 			metadata: {
 				channel: interaction.channel
 			},
-			ytdlOptions: {
-				filter: "audioonly",
-				highWaterMark: 1 << 30,
-				dlChunkSize: 0,
-				liveBuffer: 4900
-			}
+			leaveOnEnd: true,
+			leaveOnStop: true,
+			bufferingTimeout: 1000,
+			disableVolume: false,
+			spotifyBridge: false
 		});
 
-		if (!queue.tracks[0]) {
-			searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
-		} else {
-			searchResult.playlist ? searchResult.tracks.forEach(track => queue.insert(track)) : queue.insert(searchResult.tracks[0]);
-		}
+		searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
 
 		try {
 			if (!queue.connection) await queue.connect(interaction.member.voice.channel);

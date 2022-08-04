@@ -2,15 +2,17 @@ const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = r
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ Player } = require("discord-player"),
 	{ REST } = require("@discordjs/rest"),
-	{ Routes } = require("discord-api-types/v10");
+	{ Routes } = require("discord-api-types/v10"),
+	{ DiscordTogether } = require("../helpers/discordTogether");
 
 const BaseEvent = require("./BaseEvent.js"),
 	BaseCommand = require("./BaseCommand.js"),
-	{ DiscordTogether } = require("../helpers/discordTogether"),
 	AmeClient = require("amethyste-api"),
 	path = require("path"),
 	fs = require("fs").promises,
 	mongoose = require("mongoose"),
+	extractor = require("../helpers/extractor"),
+	playdl = require("play-dl"),
 	moment = require("moment");
 
 moment.relativeTimeThreshold("ss", 5);
@@ -49,11 +51,22 @@ class JaBa extends Client {
 
 		this.discordTogether = new DiscordTogether(this);
 
-		this.player = new Player(this, {
-			autoRegisterExtractor: true,
-			leaveOnEnd: true,
-			leaveOnStop: true
+		playdl.getFreeClientID().then((clientID) => {
+			playdl.setToken({
+				soundcloud: {
+					client_id: clientID
+				}
+			});
 		});
+
+		this.player = new Player(this);
+		// ytdlOptions: {
+		// 	filter: "audioonly",
+		// 	highWaterMark: 1 << 30,
+		// 	dlChunkSize: 0,
+		// 	liveBuffer: 4900
+		// }
+		this.player.use("jaba", extractor);
 
 		this.player
 			.on("trackStart", async (queue, track) => {

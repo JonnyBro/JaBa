@@ -42,13 +42,13 @@ class Skipto extends BaseCommand {
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 		if (position < 0) return interaction.error("music/skipto:NO_PREV_SONG");
 
-		if (queue.tracks[position]) {
-			queue.skipTo(queue.tracks[position]);
+		if (queue.tracks[position - 1]) {
+			queue.skipTo(queue.tracks[position - 1]);
 
 			interaction.success("music/skipto:SUCCESS", {
-				position
+				position: position - 1
 			});
-		} else return interaction.error("music/skipto:ERROR", { position });
+		} else return interaction.error("music/skipto:ERROR", { position: position - 1 });
 	}
 }
 
