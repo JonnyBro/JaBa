@@ -1,49 +1,58 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Skip extends Command {
+class Skip extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "skip",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("skip")
+				.setDescription(client.translate("music/skip:DESCRIPTION")),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
 			guildOnly: true,
-			aliases: ["s"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 3000
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		const voice = interaction.member.voice.channel;
+		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+		const queue = client.player.getQueue(interaction.guildId);
+		if (!queue) return interaction.error("music/play:NOT_PLAYING");
+		if (!queue.tracks[1]) return interaction.error("music/skip:NO_NEXT_SONG");
 
-	async run(message, args, data) {
-		const voice = message.member.voice.channel;
-		const queue = this.client.player.getQueue(message);
-
-		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
-		if (!queue) return message.error("music/play:NOT_PLAYING");
-		if (!queue.songs[1]) return message.error("music/skip:NO_NEXT_SONG");
-
-		const embed = new Discord.MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: message.translate("music/skip:SUCCESS")
+				name: interaction.translate("music/skip:SUCCESS")
 			})
-			.setThumbnail(queue.songs[1].thumbnail)
+			.setThumbnail(queue.tracks[1].thumbnail)
+			.setDescription(interaction.translate("music/play:NOW_PLAYING", {
+				songName: queue.tracks[1].name
+			}))
 			.setFooter({
-				text: data.config.embed.footer
+				text: client.config.embed.footer
 			})
-			.setColor(data.config.embed.color);
+			.setColor(client.config.embed.color);
 
-		const m = await message.reply({
-			embeds: [embed]
-		});
+		queue.skip();
 
-		this.client.player.skip(message);
-		embed.setDescription(message.translate("music/play:NOW_PLAYING", {
-			songName: queue.songs[1].name
-		}));
-		m.edit({
+		interaction.reply({
 			embeds: [embed]
 		});
 	}

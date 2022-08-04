@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Shows information about the current song!",
-	"USAGE": "{{prefix}}np",
-	"EXAMPLES": "{{prefix}}np",
+	"USAGE": "np",
+	"EXAMPLES": "np",
 	"CURRENTLY_PLAYING": "Currently playing",
 	"T_TITLE": "Title",
 	"T_CHANNEL": "Channel",

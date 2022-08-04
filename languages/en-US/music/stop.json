@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Stop the music",
-	"USAGE": "{{prefix}}stop",
-	"EXAMPLES": "{{prefix}}stop",
+	"USAGE": "stop",
+	"EXAMPLES": "stop",
 	"SUCCESS": "Music stopped!"
 }

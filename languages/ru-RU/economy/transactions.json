@@ -1,11 +1,10 @@
 {
 	"DESCRIPTION": "Посмотреть историю транзакций!",
-	"USAGE": "{{prefix}}transactions",
-	"EXAMPLES": "{{prefix}}transactions",
+	"USAGE": "transactions",
+	"EXAMPLES": "transactions",
 	"NO_TRANSACTIONS": "У вас нет транзакций.",
 	"EMBED_TRANSACTIONS": "Ваши транзакции",
 	"BANK": "Банк",
-	"WORDS": "Угадай слово",
 	"NUMBERS": "Угадай число",
 	"HORSERACE": "Конные скачки",
 	"TTT": "Крестики-нолики",

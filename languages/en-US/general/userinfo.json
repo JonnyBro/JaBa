@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Shows user information!",
-	"USAGE": "{{prefix}}userinfo (@user/userID)",
-	"EXAMPLES": "{{prefix}}userinfo\n{{prefix}}userinfo @Jonny_Bro#4226\n{{prefix}}userinfo 281361531411890186",
+	"USAGE": "userinfo (@user/userID)",
+	"EXAMPLES": "userinfo\nuserinfo @Jonny_Bro#4226\nuserinfo 281361531411890186",
 	"INVALID_USER": "No user on Discord has the `{{search}}` ID!",
 	"NO_GAME": "Not playing",
 	"NO_ROLE": "No role",

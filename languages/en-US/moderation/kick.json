@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Kick the mentioned member!",
-	"USAGE": "{{prefix}}kick [@member] (reason)",
-	"EXAMPLES": "{{prefix}}kick @Jonny_Bro#4226 Spam",
+	"USAGE": "kick [@member] (reason)",
+	"EXAMPLES": "kick @Jonny_Bro#4226 Spam",
 	"MISSING_MEMBER": "Please specify a valid member to kick!",
 	"YOURSELF": "You can't kick yourself!",
 	"MISSING_PERM": "An error has occurred... Please check that I have the permission to kick this specific member and try again!",

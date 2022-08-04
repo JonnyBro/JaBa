@@ -1,92 +1,117 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js"),
-	fetch = require("node-fetch");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Userinfo extends Command {
+class Userinfo extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "userinfo",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("userinfo")
+				.setDescription(client.translate("general/userinfo:DESCRIPTION"))
+				.addUserOption(option => option.setName("user")
+					.setDescription(client.translate("common:USER"))),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
-			guildOnly: false,
-			aliases: ["ui"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 1000
+			guildOnly: true,
+			ownerOnly: false
 		});
 	}
-
-	async run(message, args, data) {
-		let displayPresence = true;
-
-		const isID = !isNaN(args[0]);
-
-		let user;
-		if (!args[0]) user = message.author;
-		if (message.mentions.users.first()) user = message.mentions.users.first();
-
-		if (isID && !user) {
-			user = this.client.users.cache.get(args[0]);
-			if (!user) {
-				user = await this.client.users.fetch(args[0], true).catch(() => {});
-				displayPresence = false;
-			}
-		}
-
-		if (!user) return message.error("general/userinfo:INVALID_USER");
-
-		let member = null;
-		if (message.guild) member = await message.guild.members.fetch(user).catch(() => {});
-
-		const embed = new Discord.MessageEmbed()
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		const member = interaction.options.getMember("user") || interaction.member;
+		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: `${user.tag} (${user.id})`,
-				iconURL: user.displayAvatarURL({
-					size: 512,
-					dynamic: true,
-					format: "png"
+				name: `${member.user.tag} (${member.id})`,
+				iconURL: member.displayAvatarURL({
+					size: 512
 				})
 			})
-			.setThumbnail(user.displayAvatarURL({
-				dynamic: true
+			.setThumbnail(member.displayAvatarURL({
+				size: 512
 			}))
-			.addField(":man: " + message.translate("common:USERNAME"), user.username, true)
-			.addField(this.client.customEmojis.discriminator + " " + message.translate("common:DISCRIMINATOR"), user.discriminator, true)
-			.addField(this.client.customEmojis.bot + " " + message.translate("common:ROBOT"), (user.bot ? message.translate("common:YES") : message.translate("common:NO")), true)
-			.addField(this.client.customEmojis.calendar + " " + message.translate("common:CREATION"), message.printDate(user.createdAt), true)
-			.addField(this.client.customEmojis.avatar + " " + message.translate("common:AVATAR"), user.displayAvatarURL({
-				size: 512,
-				dynamic: true,
-				format: "png"
-			}))
-			.setColor(data.config.embed.color)
+			.addFields([
+				{
+					name: ":man: " + interaction.translate("common:USERNAME"),
+					value: member.user.tag,
+					inline: true
+				},
+				{
+					name: client.customEmojis.pencil + " " + interaction.translate("common:NICKNAME"),
+					value: member.nickname || interaction.translate("general/userinfo:NO_NICKNAME"),
+					inline: true
+				},
+				{
+					name: client.customEmojis.status[member.presence.status] + " " + interaction.translate("common:STATUS"),
+					value: interaction.translate(`common:STATUS_${member.presence.status.toUpperCase()}`),
+					inline: true
+				},
+				{
+					name: client.customEmojis.bot + " " + interaction.translate("common:ROBOT"),
+					value: member.user.bot ? interaction.translate("common:YES") : interaction.translate("common:NO"),
+					inline: true
+				},
+				{
+					name: client.customEmojis.calendar + " " + interaction.translate("common:CREATION"),
+					value: client.printDate(member.user.createdAt),
+					inline: true
+				},
+				{
+					name: client.customEmojis.calendar2 + " " + interaction.translate("common:JOIN"),
+					value: client.printDate(member.joinedAt),
+					inline: true
+				},
+				{
+					name: client.customEmojis.color + " " + interaction.translate("common:COLOR"),
+					value: member.displayHexColor,
+					inline: true
+				},
+				{
+					name: client.customEmojis.roles + " " + interaction.translate("common:ROLES"),
+					value: (member.roles.size > 10 ? member.roles.cache.map((r) => r).slice(0, 10).join(", ") + " " + interaction.translate("general/userinfo:MORE_ROLES", {
+						count: member.roles.cache.size - 10
+					}) : (member.roles.cache.size < 1) ? interaction.translate("general/userinfo:NO_ROLE") : member.roles.cache.map((r) => r).join(", ")),
+					inline: true
+				}
+			])
+			.setColor(client.config.embed.color)
 			.setFooter({
-				text: data.config.embed.footer
+				text: client.config.embed.footer
 			});
 
-		if (displayPresence) {
-			if (member.presence.activities[0].name === "Custom Status") {
-				embed.addField(this.client.customEmojis.games + " " + message.translate("common:GAME"), (member.presence.activities[0] ? `Пользовательский статус\n${member.presence.activities[0].state || message.translate("common:NOT_DEFINED")}` : message.translate("general/userinfo:NO_GAME")), true);
-				embed.addField(this.client.customEmojis.status[member.presence.status] + " " + message.translate("common:STATUS"), message.translate("common:STATUS_" + (member.presence.status.toUpperCase())), true);
-			} else {
-				embed.addField(this.client.customEmojis.games + " " + message.translate("common:GAME"), (member.presence.activities[0] ? `${member.presence.activities[0].name}\n${member.presence.activities[0].details}\n${member.presence.activities[0].state}` : message.translate("general/userinfo:NO_GAME")), true);
-				embed.addField(this.client.customEmojis.status[member.presence.status] + " " + message.translate("common:STATUS"), message.translate("common:STATUS_" + (member.presence.status.toUpperCase())), true);
-			}
+		if (member.presence.activities[0].name === "Custom Status") {
+			embed.addFields([
+				{
+					name: client.customEmojis.games + " " + interaction.translate("common:ACTIVITY"),
+					value: member.presence.activities[0] ? `${interaction.translate("general/userinfo:CUSTOM")}\n${member.presence.activities[0].state || interaction.translate("common:NOT_DEFINED")}` : interaction.translate("general/userinfo:NO_ACTIVITY"),
+					inline: true
+				}
+			]);
+		} else {
+			embed.addFields([
+				{
+					name: client.customEmojis.games + " " + interaction.translate("common:ACTIVITY"),
+					value: member.presence.activities[0] ? `${member.presence.activities[0].name}\n${member.presence.activities[0].details}\n${member.presence.activities[0].state}` : interaction.translate("general/userinfo:NO_GAME"),
+					inline: true
+				}
+			]);
 		}
 
-		if (member) {
-			// embed.addField(this.client.customEmojis.up + " " + message.translate("general/userinfo:ROLE"), (member.roles.highest ? member.roles.highest : message.translate("general/userinfo:NO_ROLE")), true)
-			embed.addField(this.client.customEmojis.calendar2 + " " + message.translate("common:JOIN"), message.printDate(member.joinedAt), true);
-			embed.addField(this.client.customEmojis.color + " " + message.translate("common:COLOR"), member.displayHexColor, true);
-			embed.addField(this.client.customEmojis.pencil + " " + message.translate("common:NICKNAME"), (member.nickname ? member.nickname : message.translate("general/userinfo:NO_NICKNAME")), true);
-			embed.addField(this.client.customEmojis.roles + " " + message.translate("common:ROLES"), (member.roles.size > 10 ? member.roles.cache.map((r) => r).slice(0, 9).join(", ") + " " + message.translate("general/userinfo:MORE_ROLES", {
-				count: member.roles.cache.size - 10
-			}) : (member.roles.cache.size < 1) ? message.translate("general/userinfo:NO_ROLE") : member.roles.cache.map((r) => r).join(", ")));
-		}
-
-		message.reply({
+		interaction.reply({
 			embeds: [embed]
 		});
 	}

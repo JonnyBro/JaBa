@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Установить канал для новостей бота",
+	"USAGE": "setnews (#канал)",
+	"EXAMPLES": "setnews #bot-news\nsetnews",
+	"ENABLED": "Поздравления включены в канале **{{channel}}**!",
+	"DISABLED": "Поздравления отключены!"
+}

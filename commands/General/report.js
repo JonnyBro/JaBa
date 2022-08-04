@@ -1,57 +1,87 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, parseEmoji } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Report extends Command {
+class Report extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "report",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("report")
+				.setDescription(client.translate("general/report:DESCRIPTION"))
+				.addUserOption(option => option.setName("user")
+					.setDescription(client.translate("common:USER"))
+					.setRequired(true))
+				.addStringOption(option => option.setName("message")
+					.setDescription(client.translate("common:MESSAGE"))
+					.setRequired(true)),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
 			guildOnly: true,
-			aliases: ["repo"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 2000
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		if (interaction.user.id === "285109105717280768") return interaction.reply({ content: "Пошёл нахуй фахон" });
+		const repChannel = interaction.guild.channels.cache.get(interaction.guild.data.plugins.reports);
+		if (!repChannel) return interaction.error("general/report:MISSING_CHANNEL");
+		const member = interaction.options.getMember("user");
+		if (member.id === interaction.user.id) return interaction.error("general/report:INVALID_USER");
+		const rep = interaction.options.getString("message");
 
-	async run(message, args, data) {
-		if (message.author.id === "285109105717280768") return message.reply({ content: "Пошёл нахуй фахон" });
-
-		const repChannel = message.guild.channels.cache.get(data.guild.plugins.reports);
-		if (!repChannel) return message.error("general/report:MISSING_CHANNEL");
-
-		const member = await this.client.resolveMember(args[0], message.guild);
-		if (!member) return message.error("general/report:MISSING_USER");
-		if (member.id === message.author.id) return message.error("general/report:INVALID_USER");
-
-		const rep = args.slice(1).join(" ");
-		if (!rep) return message.error("general/report:MISSING_REASON");
-
-		const embed = new Discord.MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: message.translate("general/report:TITLE", {
+				name: interaction.translate("general/report:TITLE", {
 					user: member.user.tag
 				}),
-				iconURL: message.author.displayAvatarURL({
-					size: 512,
-					dynamic: true,
-					format: "png"
+				iconURL: interaction.user.displayAvatarURL({
+					extension: "png",
+					size: 512
 				})
 			})
-			.addField(message.translate("common:AUTHOR"), message.author.tag, true)
-			.addField(message.translate("common:DATE"), message.printDate(new Date(Date.now())), true)
-			.addField(message.translate("common:REASON"), rep, true)
-			.addField(message.translate("common:USER"), `\`${member.user.tag}\` (${member.user.toString()})`, true)
-			.setColor(data.config.embed.color)
+			.addFields([
+				{
+					name: interaction.translate("common:DATE"),
+					value: client.printDate(new Date(Date.now()))
+				},
+				{
+					name: interaction.translate("common:AUTHOR"),
+					value: interaction.user.toString(),
+					inline: true
+				},
+				{
+					name: interaction.translate("common:USER"),
+					value: member.user.toString(),
+					inline: true
+				},
+				{
+					name: interaction.translate("common:REASON"),
+					value: rep,
+					inline: true
+				}
+			])
+			.setColor(client.config.embed.color)
 			.setFooter({
-				text: data.config.embed.footer
+				text: client.config.embed.footer
 			});
 
-		const success = Discord.Util.parseEmoji(this.client.customEmojis.success).id;
-		const error = Discord.Util.parseEmoji(this.client.customEmojis.error).id;
+		const success = parseEmoji(client.customEmojis.cool).id;
+		const error = parseEmoji(client.customEmojis.notcool).id;
 
 		repChannel.send({
 			embeds: [embed]
@@ -60,7 +90,7 @@ class Report extends Command {
 			await m.react(error);
 		});
 
-		message.success("general/report:SUCCESS", {
+		interaction.success("general/report:SUCCESS", {
 			channel: repChannel.toString()
 		});
 	}

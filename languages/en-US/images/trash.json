@@ -1,5 +1,5 @@
 {
 	"DESCRIPTION": "Generates a \"trash\" image",
-	"USAGE": "{{prefix}}trash (@member)",
-	"EXAMPLES": "{{prefix}}trash\n{{prefix}}trash @Jonny_Bro#4226"
+	"USAGE": "trash (@member)",
+	"EXAMPLES": "trash\ntrash @Jonny_Bro#4226"
 }

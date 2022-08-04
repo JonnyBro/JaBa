@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Перезавантажити команду!",
-	"USAGE": "{{prefix}}reload",
-	"EXAMPLES": "{{prefix}}reload help",
+	"USAGE": "reload",
+	"EXAMPLES": "reload help",
 	"NOT_FOUND": "Команда `{{search}}` не існує!",
 	"SUCCESS": "Команда `{{command}}` успішно перезавантажена!"
 }

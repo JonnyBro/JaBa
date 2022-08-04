@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Я говорю правду!",
-	"USAGE": "{{prefix}}8ball [питання?]",
-	"EXAMPLES": "{{prefix}}8ball JaBa крутий?",
+	"USAGE": "8ball [питання?]",
+	"EXAMPLES": "8ball JaBa крутий?",
 	"ERR_QUESTION": "Введіть питання!",
 	"RESPONSE_1": "Безперечно",
 	"RESPONSE_2": "Це продумали ще боги",

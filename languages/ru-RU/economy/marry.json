@@ -1,9 +1,9 @@
 {
 	"DESCRIPTION": "Женитесь на том, кого любите!",
-	"USAGE": "{{prefix}}marry [@пользователь]",
-	"EXAMPLES": "{{prefix}}marry @Jonny_Bro#4226",
+	"USAGE": "marry [@пользователь]",
+	"EXAMPLES": "marry @Jonny_Bro#4226",
 	"INVALID_MEMBER": "Вы должны упомянуть пользователя!",
-	"ALREADY_MARRIED": "Вы уже состоите в браке! Вы можете развестить с помощью команды `{{prefix}}divorce`.",
+	"ALREADY_MARRIED": "Вы уже состоите в браке! Вы можете развестить с помощью команды `divorce`.",
 	"ALREADY_MARRIED_USER": "Место занято! **{{username}}** уже состоит в браке!",
 	"YOURSELF": "Вы не можете жениться на себе!",
 	"REQUEST_AUTHOR_TO_AMEMBER": "Вы уже отправили предложение **{{username}}**!",

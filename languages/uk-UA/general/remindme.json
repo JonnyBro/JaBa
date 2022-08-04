@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Створити нагадування",
-	"USAGE": "{{prefix}}remindme [час] [повідомлення]",
-	"EXAMPLES": "{{prefix}}remindme 24h Використати команду work\n{{prefix}}remindme 3m Дістати курку з морозилки!",
+	"USAGE": "remindme [час] [повідомлення]",
+	"EXAMPLES": "remindme 24h Використати команду work\nremindme 3m Дістати курку з морозилки!",
 	"MISSING_MESSAGE": "Введіть повідомлення!",
 	"SAVED": "Нагадування збережено!",
 	"TITLE": "Нагадування від JaBa",

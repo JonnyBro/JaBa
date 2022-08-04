@@ -1,262 +1,88 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, PermissionsBitField, ComponentType } = require("discord.js"),
+	{ defaultApplications } = require("../../helpers/discordTogether");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Activity extends Command {
+class Activity extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "activity",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("activity")
+				.setDescription(client.translate("general/activity:DESCRIPTION")),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
 			guildOnly: true,
-			aliases: ["act"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 2000
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		const voice = interaction.member.voice.channel;
+		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
 
-	async run(message, args, data) {
-		const voice = message.member.voice.channel;
-		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
+		const perms = voice.permissionsFor(client.user);
+		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.error("music/play:VOICE_CHANNEL_CONNECT");
 
-		const perms = voice.permissionsFor(this.client.user);
-		if (!perms.has(Discord.Permissions.FLAGS.CONNECT) || !perms.has(Discord.Permissions.FLAGS.SPEAK)) return message.error("music/play:VOICE_CHANNEL_CONNECT");
+		const activities = defaultApplications.map(a => {
+			return {
+				label: `${a.name} ${a.premium_tier_level ? `(${interaction.translate("general/activity:BOOST_NEEDED")})` : ""}`,
+				value: a.id
+			};
+		});
 
-		const activities = [
-			"betrayal",
-			`checkers (${message.translate("general/activity:NO_BOOST")})`,
-			`chess (${message.translate("general/activity:NO_BOOST")})`,
-			"sketchheads",
-			`ocho (${message.translate("general/activity:NO_BOOST")})`,
-			"fishing",
-			"lettertile",
-			`poker (${message.translate("general/activity:NO_BOOST")})`,
-			`spellcast (${message.translate("general/activity:NO_BOOST")})`,
-			"wordsnack",
-			"puttparty",
-			"youtube"
-		];
-		const activity = args[0];
+		const row = new ActionRowBuilder()
+			.addComponents(
+				new SelectMenuBuilder()
+					.setCustomId("activity_select")
+					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
+					.addOptions(activities)
+			);
 
-		switch (activity) {
-			case "betrayal":
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "betrayal").then(async invite => {
-					const embed = new Discord.MessageEmbed()
-						.setTitle("Betrayal.io")
-						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Betrayal.io", channel: voice.name })}](${invite.code})**`)
-						.setFooter({
-							text: message.translate("general/activity:FOOTER")
-						})
-						.setTimestamp();
-					return message.reply({
-						embeds: [embed]
-					});
-				});
-				break;
+		const msg = await interaction.reply({
+			content: interaction.translate("general/activity:AVAILABLE_ACTIVITIES"),
+			components: [row],
+			fetchReply: true
+		});
 
-			case "checkers":
-				if (message.guild.premiumTier === "NONE") return message.error("general/activity:NO_BOOST");
+		const collector = new InteractionCollector(client, {
+			componentType: ComponentType.SelectMenu,
+			message: msg,
+			idle: 60 * 1000
+		});
 
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "checkers").then(async invite => {
-					const embed = new Discord.MessageEmbed()
-						.setTitle("Checkers In The Park")
-						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Checkers In The Park", channel: voice.name })}](${invite.code})**`)
-						.setFooter({
-							text: message.translate("general/activity:FOOTER")
-						})
-						.setTimestamp();
-					return message.reply({
-						embeds: [embed]
-					});
-				});
-				break;
+		collector.on("collect", async msg => {
+			const activity = msg?.values[0];
 
-			case "chess":
-				if (message.guild.premiumTier === "NONE") return message.error("general/activity:NO_BOOST");
+			const invite = await client.discordTogether.createTogetherCode(voice.id, activity);
+			const embed = new EmbedBuilder()
+				.setTitle(activity)
+				.setColor(client.config.embed.color)
+				.setDescription(`**[${interaction.translate("misc:CLICK_HERE", { activity: defaultApplications.find(a => a.id === activity).name, channel: voice.name })}](${invite.code})**`)
+				.setFooter({
+					text: client.config.embed.footer
+				})
+				.setTimestamp();
 
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "chess").then(async invite => {
-					const embed = new Discord.MessageEmbed()
-						.setTitle("Chess In The Park")
-						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Chess In The Park", channel: voice.name })}](${invite.code})**`)
-						.setFooter({
-							text: message.translate("general/activity:FOOTER")
-						})
-						.setTimestamp();
-					return message.reply({
-						embeds: [embed]
-					});
-				});
-				break;
-
-			case "sketchheads":
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "sketchheads").then(async invite => {
-					const embed = new Discord.MessageEmbed()
-						.setTitle("Sketch Heads")
-						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Sketch Heads", channel: voice.name })}](${invite.code})**`)
-						.setFooter({
-							text: message.translate("general/activity:FOOTER")
-						})
-						.setTimestamp();
-					return message.reply({
-						embeds: [embed]
-					});
-				});
-				break;
-
-			case "ocho":
-				if (message.guild.premiumTier === "NONE") return message.error("general/activity:NO_BOOST");
-
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "ocho").then(async invite => {
-					const embed = new Discord.MessageEmbed()
-						.setTitle("Ocho")
-						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Ocho", channel: voice.name })}](${invite.code})**`)
-						.setFooter({
-							text: message.translate("general/activity:FOOTER")
-						})
-						.setTimestamp();
-					return message.reply({
-						embeds: [embed]
-					});
-				});
-				break;
-
-			case "fishing":
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "fishing").then(async invite => {
-					const embed = new Discord.MessageEmbed()
-						.setTitle("Fishington.io")
-						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Fishington.io", channel: voice.name })}](${invite.code})**`)
-						.setFooter({
-							text: message.translate("general/activity:FOOTER")
-						})
-						.setTimestamp();
-					return message.reply({
-						embeds: [embed]
-					});
-				});
-				break;
-
-			case "lettertile":
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "lettertile").then(async invite => {
-					const embed = new Discord.MessageEmbed()
-						.setTitle("Letter Tile")
-						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Letter Tile", channel: voice.name })}](${invite.code})**`)
-						.setFooter({
-							text: message.translate("general/activity:FOOTER")
-						})
-						.setTimestamp();
-					return message.reply({
-						embeds: [embed]
-					});
-				});
-				break;
-
-			case "poker":
-				if (message.guild.premiumTier === "NONE") return message.error("general/activity:NO_BOOST");
-
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "poker").then(async invite => {
-					const embed = new Discord.MessageEmbed()
-						.setTitle("Poker Night")
-						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Poker Night", channel: voice.name })}](${invite.code})**`)
-						.setFooter({
-							text: message.translate("general/activity:FOOTER")
-						})
-						.setTimestamp();
-					return message.reply({
-						embeds: [embed]
-					});
-				});
-				break;
-
-			case "spellcast":
-				if (message.guild.premiumTier === "NONE") return message.error("general/activity:NO_BOOST");
-
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "spellcast").then(async invite => {
-					const embed = new Discord.MessageEmbed()
-						.setTitle("Spell Cast")
-						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Spell Cast", channel: voice.name })}](${invite.code})**`)
-						.setFooter({
-							text: message.translate("general/activity:FOOTER")
-						})
-						.setTimestamp();
-					return message.reply({
-						embeds: [embed]
-					});
-				});
-				break;
-
-			case "wordsnack":
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "wordsnack").then(async invite => {
-					const embed = new Discord.MessageEmbed()
-						.setTitle("Words Snack")
-						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Words Snack", channel: voice.name })}](${invite.code})**`)
-						.setFooter({
-							text: message.translate("general/activity:FOOTER")
-						})
-						.setTimestamp();
-					return message.reply({
-						embeds: [embed]
-					});
-				});
-				break;
-
-			case "puttparty":
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "puttparty").then(async invite => {
-					const embed = new Discord.MessageEmbed()
-						.setTitle("Puttparty")
-						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Puttparty", channel: voice.name })}](${invite.code})**`)
-						.setFooter({
-							text: message.translate("general/activity:FOOTER")
-						})
-						.setTimestamp();
-					return message.reply({
-						embeds: [embed]
-					});
-				});
-				break;
-
-			case "youtube":
-				this.client.discordTogether.createTogetherCode(message.member.voice.channelId, "youtube").then(async invite => {
-					const embed = new Discord.MessageEmbed()
-						.setTitle("Youtube Together")
-						.setColor(data.config.embed.color)
-						.setDescription(`**[${message.translate("misc:CLICK_HERE", { activity: "Youtube Together", channel: voice.name })}](${invite.code})**`)
-						.setFooter({
-							text: message.translate("general/activity:FOOTER")
-						})
-						.setTimestamp();
-					return message.reply({
-						embeds: [embed]
-					});
-				});
-				break;
-
-			default: {
-				const embed = new Discord.MessageEmbed()
-					.setTitle(message.translate("general/activity:TITLE"))
-					.setDescription(activities.join("\n"))
-					.setColor(data.config.embed.color)
-					.setFooter({
-						text: message.translate("general/activity:FOOTER")
-					})
-					.setTimestamp();
-				message.reply({
-					embeds: [embed]
-				});
-			}
-		}
+			await msg.update({
+				embeds: [embed],
+				components: []
+			});
+		});
 	}
 }
 

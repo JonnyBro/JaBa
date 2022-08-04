@@ -1,70 +1,70 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js"),
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
-class Whois extends Command {
+class Whois extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "whois",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("whois")
+				.setDescription(client.translate("general/whois:DESCRIPTION"))
+				.addStringOption(option => option.setName("ip")
+					.setDescription(client.translate("common:IP"))
+					.setRequired(true)),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
-			guildOnly: false,
-			aliases: ["ip"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 1000
+			guildOnly: true,
+			ownerOnly: false
 		});
 	}
-
-	async run(message, args, data) {
-		if (!args[0]) return message.error("general/whois:NO_IP");
-
-		const whois = await fetch(`http://ip-api.com/json/${args[0]}?fields=status,message,continent,continentCode,country,countryCode,region,regionName,city,zip,timezone,currency,isp,org,as,mobile,proxy,hosting,query`).then(response => response.json());
-
-		if (whois.status === "fail") {
-			const embed = new Discord.MessageEmbed()
-				.setDescription(whois.message)
-				.setTitle(message.translate("general/whois:ERROR", {
-					ip: args[0]
-				}))
-				.setColor(data.config.embed.color)
-				.setFooter({
-					text: data.config.embed.footer
-				})
-				.setTimestamp();
-			return message.reply({
-				embeds: [embed]
-			});
-		}
-
-		const embed = new Discord.MessageEmbed()
-			.setTitle(message.translate("general/whois:INFO_ABOUT", {
-				ip: args[0]
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		await interaction.deferReply();
+		const ip = interaction.options.getString("ip");
+		const whois = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,continent,continentCode,country,countryCode,region,regionName,city,zip,timezone,currency,isp,org,as,mobile,proxy,hosting,query`).then(response => response.json());
+		if (whois.status === "fail") return interaction.reply({ content: interaction.translate("general/whois:ERROR", { ip }) });
+		const embed = new EmbedBuilder()
+			.setTitle(interaction.translate("general/whois:INFO_ABOUT", {
+				ip
 			}))
 			.setFooter({
-				text: data.config.embed.footer
+				text: client.config.embed.footer
 			})
-			.setColor(data.config.embed.color)
+			.setColor(client.config.embed.color)
 			.addFields(
-				{ name: "IP", value: whois.query, inline: true },
-				{ name: message.translate("general/whois:COUNTRY"), value: `${whois.country || "Неизвестно"} (${whois.countryCode || "Неизвестно"})`, inline: true },
-				{ name: message.translate("general/whois:REGION"), value: `${whois.regionName || "Неизвестно"} (${whois.region || "Неизвестно"})`, inline: true },
-				{ name: message.translate("general/whois:CITY"), value: `${whois.city || "Неизвестно"}`, inline: true },
-				{ name: message.translate("general/whois:ZIP"), value: `${whois.zip || "Неизвестно"}`, inline: true },
-				{ name: message.translate("general/whois:TIMEZONE"), value: `${whois.timezone || "Неизвестно"}`, inline: true },
-				{ name: message.translate("general/whois:CONTINENT"), value: `${whois.continent || "Неизвестно"} (${whois.continentCode || "Неизвестно"})`, inline: true },
-				{ name: message.translate("general/whois:CURRENCY"), value: `${whois.currency || "Неизвестно"}`, inline: true },
-				{ name: message.translate("general/whois:ISP"), value: `${whois.isp || "Неизвестно"}`, inline: true }
+				{ name: interaction.translate("common:IP"), value: whois.query, inline: true },
+				{ name: interaction.translate("general/whois:COUNTRY"), value: `${whois.country || interaction.translate("common:UNKNOWN")} (${whois.countryCode || interaction.translate("common:UNKNOWN")})`, inline: true },
+				{ name: interaction.translate("general/whois:REGION"), value: `${whois.regionName || interaction.translate("common:UNKNOWN")} (${whois.region || interaction.translate("common:UNKNOWN")})`, inline: true },
+				{ name: interaction.translate("general/whois:CITY"), value: `${whois.city || interaction.translate("common:UNKNOWN")}`, inline: true },
+				{ name: interaction.translate("general/whois:ZIP"), value: `${whois.zip || interaction.translate("common:UNKNOWN")}`, inline: true },
+				{ name: interaction.translate("general/whois:TIMEZONE"), value: `${whois.timezone || interaction.translate("common:UNKNOWN")}`, inline: true },
+				{ name: interaction.translate("general/whois:CONTINENT"), value: `${whois.continent || interaction.translate("common:UNKNOWN")} (${whois.continentCode || interaction.translate("common:UNKNOWN")})`, inline: true },
+				{ name: interaction.translate("general/whois:CURRENCY"), value: `${whois.currency || interaction.translate("common:UNKNOWN")}`, inline: true },
+				{ name: interaction.translate("general/whois:ISP"), value: `${whois.isp || interaction.translate("common:UNKNOWN")}`, inline: true }
 			)
 			.setTimestamp();
 
-		if (whois.proxy == true) embed.addFields({ name: message.translate("general/whois:INFO"), value: message.translate("general/whois:PROXY") });
-		else if (whois.mobile == true) embed.addFields({ name: message.translate("general/whois:INFO"), value: message.translate("general/whois:MOBILE") });
-		else if (whois.hosting == true) embed.addFields({ name: message.translate("general/whois:INFO"), value: message.translate("general/whois:HOSTING") });
+		if (whois.proxy) embed.addFields({ name: interaction.translate("general/whois:INFO"), value: interaction.translate("general/whois:PROXY") });
+		else if (whois.mobile) embed.addFields({ name: interaction.translate("general/whois:INFO"), value: interaction.translate("general/whois:MOBILE") });
+		else if (whois.hosting) embed.addFields({ name: interaction.translate("general/whois:INFO"), value: interaction.translate("general/whois:HOSTING") });
 
-		message.reply({
+		interaction.editReply({
 			embeds: [embed]
 		});
 	}

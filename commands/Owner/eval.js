@@ -1,43 +1,61 @@
-/* eslint-disable no-unused-vars */
-const Command = require("../../base/Command");
+const { SlashCommandBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Eval extends Command {
+class Eval extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "eval",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("eval")
+				.setDescription(client.translate("owner/eval:DESCRIPTION"))
+				.addStringOption(option => option.setName("code")
+					.setDescription(client.translate("owner/eval:CODE"))
+					.setRequired(true)),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
-			guildOnly: false,
-			aliases: ["ev"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: true,
-			cooldown: 2000
+			guildOnly: true,
+			ownerOnly: true
 		});
 	}
-
-	async run(message, args, data) {
-		const content = message.content.split(" ").slice(1).join(" ");
-		const result = new Promise((resolve) => resolve(eval(content)));
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	// eslint-disable-next-line no-unused-vars
+	async execute(client, interaction, data) {
+		const code = interaction.options.getString("code");
+		const result = new Promise((resolve) => resolve(eval(code)));
 
 		return result.then((output) => {
-			if (typeof output != "string") output = require("util").inspect(output, {
-				depth: 0
-			});
-			if (output.includes(this.client.token)) output = output.replace(this.client.token, "T0K3N");
-			message.reply({
-				content: "```js\n" + output + "```"
+			if (typeof output != "string") output = require("util").inspect(output, { depth: 0 });
+
+			if (output.includes(client.token)) output = output.replace(client.token, "T0K3N");
+			interaction.reply({
+				content: "```js\n" + output + "```",
+				ephemeral: true
 			});
 		}).catch((err) => {
 			console.error(err);
 			err = err.toString();
-			if (err.includes(this.client.token)) err = err.replace(this.client.token, "T0K3N");
-			message.reply({
-				content: "```js\n" + err + "```"
+
+			if (err.includes(client.token)) err = err.replace(client.token, "T0K3N");
+			interaction.reply({
+				content: "```js\n" + err + "```",
+				ephemeral: true
 			});
 		});
 	}
 }
-
 module.exports = Eval;

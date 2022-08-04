@@ -1,18 +1,20 @@
-const { MessageEmbed, Client, Collection } = require("discord.js"),
+const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
 	{ GiveawaysManager } = require("discord-giveaways"),
-	{ SoundCloudPlugin } = require("@distube/soundcloud"),
-	{ SpotifyPlugin } = require("@distube/spotify"),
-	{ YtDlpPlugin } = require("@distube/yt-dlp");
+	{ Player } = require("discord-player"),
+	{ REST } = require("@discordjs/rest"),
+	{ Routes } = require("discord-api-types/v10");
 
-const util = require("util"),
+const BaseEvent = require("./BaseEvent.js"),
+	BaseCommand = require("./BaseCommand.js"),
+	{ DiscordTogether } = require("../helpers/discordTogether"),
 	AmeClient = require("amethyste-api"),
 	path = require("path"),
-	fetch = require("node-fetch"),
-	DisTube = require("distube"),
+	fs = require("fs").promises,
+	mongoose = require("mongoose"),
 	moment = require("moment");
 
-moment.relativeTimeThreshold("s", 60);
 moment.relativeTimeThreshold("ss", 5);
+moment.relativeTimeThreshold("s", 60);
 moment.relativeTimeThreshold("m", 60);
 moment.relativeTimeThreshold("h", 60);
 moment.relativeTimeThreshold("d", 24);
@@ -22,97 +24,60 @@ moment.relativeTimeThreshold("M", 12);
 class JaBa extends Client {
 	constructor(options) {
 		super(options);
-		this.config = require("../config"); // Load the config file
-		this.customEmojis = require("../emojis"); // load the bot's emojis
-		this.languages = require("../languages/language-meta"); // Load the bot's languages
-		this.commands = new Collection(); // Creates new commands collection
-		this.aliases = new Collection(); // Creates new command aliases collection
-		this.logger = require("../helpers/logger"); // Load the logger file
-		this.wait = util.promisify(setTimeout); // client.wait(1000) - Wait 1 second
-		this.functions = require("../helpers/functions"); // Load the functions file
-		this.guildsData = require("../base/Guild"); // Guild mongoose model
-		this.usersData = require("../base/User"); // User mongoose model
-		this.membersData = require("../base/Member"); // Member mongoose model
-		this.logs = require("../base/Log"); // Log mongoose model
-		this.dashboard = require("../dashboard/app"); // Dashboard app
-		this.queues = new Collection(); // This collection will be used for the music
-		this.states = {}; // Used for the dashboard
+		this.config = require("../config");
+		this.customEmojis = require("../emojis");
+		this.languages = require("../languages/language-meta");
+		this.commands = new Collection();
+		this.logger = require("../helpers/logger");
+		this.wait = require("node:timers/promises").setTimeout;
+		this.functions = require("../helpers/functions");
+		this.guildsData = require("../base/Guild");
+		this.usersData = require("../base/User");
+		this.membersData = require("../base/Member");
+		this.dashboard = require("../dashboard/app");
+		this.states = {};
 		this.knownGuilds = [];
 
 		this.databaseCache = {};
 		this.databaseCache.users = new Collection();
 		this.databaseCache.guilds = new Collection();
 		this.databaseCache.members = new Collection();
-
 		this.databaseCache.usersReminds = new Collection(); // members with active reminds
 		this.databaseCache.mutedUsers = new Collection(); // members who are currently muted
 
 		if (this.config.apiKeys.amethyste) this.AmeAPI = new AmeClient(this.config.apiKeys.amethyste);
 
-		this.icanhazdadjoke = async function() {
-			const joke = await fetch("https://icanhazdadjoke.com/", {
-				headers: {
-					"Accept": "application/json"
-				}
-			});
+		this.discordTogether = new DiscordTogether(this);
 
-			return joke.json();
-		};
-
-		this.player = new DisTube.default(this, {
-			plugins: [
-				new SpotifyPlugin({
-					emitEventsAfterFetching: true
-				}),
-				new SoundCloudPlugin(),
-				new YtDlpPlugin()
-			],
-			youtubeDL: false,
-			emitNewSongOnly: true,
-			leaveOnEmpty: true,
-			leaveOnFinish: true,
-			leaveOnStop: true,
-			searchSongs: 10,
-			searchCooldown: 30,
-			emptyCooldown: 10,
-			emitAddListWhenCreatingQueue: false,
-			emitAddSongWhenCreatingQueue: false
+		this.player = new Player(this, {
+			autoRegisterExtractor: true,
+			leaveOnEnd: true,
+			leaveOnStop: true
 		});
 
 		this.player
-			.on("playSong", async (queue, song) => {
-				const m = await queue.textChannel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: song.name }, queue.textChannel.guild.data.language) });
-				if (song.duration > 1) {
+			.on("trackStart", async (queue, track) => {
+				const m = await queue.metadata.channel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language) });
+				if (track.durationMS > 1) {
 					setTimeout(() => {
 						if (m.deletable) m.delete();
-					}, song.duration * 1000);
+					}, track.durationMS * 1000);
 				} else {
 					setTimeout(() => {
 						if (m.deletable) m.delete();
 					}, 10 * 60 * 1000); // m * s * ms
 				}
 			})
-			.on("addSong", (queue, song) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE", { songName: song.name }, queue.textChannel.guild.data.language) }))
-			.on("addList", (queue, playlist) => queue.textChannel.send({ content: this.translate("music/play:ADDED_QUEUE_COUNT", { songCount: `**${playlist.songs.length}** ${this.getNoun(playlist.songs.length, this.translate("misc:NOUNS:TRACKS:1"), this.translate("misc:NOUNS:TRACKS:1"), this.translate("misc:NOUNS:TRACKS:2"), this.translate("misc:NOUNS:TRACKS:5"))}` }, queue.textChannel.guild.data.language) }))
-			.on("searchResult", (message, result) => {
-				let i = 0;
-				const embed = new MessageEmbed()
-					.setDescription(result.map(song => `**${++i} -** ${song.name}`).join("\n"))
-					.setFooter({ text: this.translate("music/play:RESULTS_FOOTER", null, message.guild.data.language) })
-					.setColor(this.config.embed.color);
-				message.reply({ embeds: [embed] });
-			})
-			.on("searchDone", () => {})
-			.on("searchCancel", message => message.error("misc:TIMES_UP"))
-			.on("searchInvalidAnswer", message => message.error("misc:INVALID_NUMBER_RANGE", { min: 1, max: 10 }))
-			.on("searchNoResult", message => message.error("music/play:NO_RESULT"))
-			.on("error", (textChannel, e) => {
+			.on("queueEnd", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)))
+			.on("channelEmpty", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.channel.guild.data.language)))
+			.on("connectionError", (queue, e) => {
 				console.error(e);
-				textChannel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e }, textChannel.guild.data.language) });
+				queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
 			})
-			.on("finish", queue => queue.textChannel.send(this.translate("music/play:QUEUE_ENDED", null, queue.textChannel.guild.data.language)))
-			// .on("disconnect", queue => queue.textChannel.send(this.translate("music/play:STOP_DISCONNECTED", null, queue.textChannel.guild.data.language)))
-			.on("empty", queue => queue.textChannel.send(this.translate("music/play:STOP_EMPTY", null, queue.textChannel.guild.data.language)));
+			.on("error", (queue, e) => {
+				console.error(e);
+				queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
+			});
 
 		this.giveawaysManager = new GiveawaysManager(this, {
 			storage: "./giveaways.json",
@@ -125,10 +90,157 @@ class JaBa extends Client {
 		});
 	}
 
+	async init() {
+		this.login(this.config.token);
+
+		mongoose.connect(this.config.mongoDB, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true
+		}).then(() => {
+			this.logger.log("Connected to the Mongodb database.", "log");
+		}).catch((err) => {
+			this.logger.log(`Unable to connect to the Mongodb database. Error: ${err}`, "error");
+		});
+
+		const autoUpdateDocs = require("../helpers/autoUpdateDocs");
+		autoUpdateDocs.update(this);
+	}
+
+	/**
+	 *
+	 * @param {String} dir
+	 * @returns
+	 */
+	async loadCommands(dir) {
+		const filePath = path.join(__dirname, dir);
+		var folders = await fs.readdir(filePath); folders = folders.map(file => path.join(filePath, file)).filter(async (path) => { path = await fs.lstat(path); path.isDirectory(); });
+		const rest = new REST().setToken(this.config.token);
+		const commands = [];
+		for (let index = 0; index < folders.length; index++) {
+			const folder = folders[index];
+			const files = await fs.readdir(folder);
+
+			for (let index = 0; index < files.length; index++) {
+				const file = files[index];
+
+				if (file.endsWith(".js")) {
+					const Command = require(path.join(folder, file));
+					if (Command.prototype instanceof BaseCommand) {
+						const command = new Command(this);
+						this.commands.set(command.command.name, command);
+						const aliases = [];
+						if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0) {
+							command.aliases.forEach((alias) => {
+								const command_alias = (command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder) ? { ...command.command.toJSON() } : { ...command.command };
+								command_alias.name = alias;
+								aliases.push(command_alias);
+								this.commands.set(alias, command);
+							});
+						}
+
+						commands.push((command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder) ? command.command.toJSON() : command.command, ...aliases);
+
+						if (command.onLoad || typeof command.onLoad === "function") await command.onLoad(this);
+						this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
+					}
+				}
+			}
+		}
+
+		try {
+			if (!this.config.production) {
+				await rest.put(
+					Routes.applicationGuildCommands(this.config.user, this.config.support.id), {
+						body: commands
+					}
+				);
+			} else {
+				await rest.put(
+					Routes.applicationCommands(this.config.user), {
+						body: commands
+					}
+				);
+			}
+
+			this.logger.log("Successfully registered application commands.");
+		} catch (err) {
+			this.logger.log("Cannot load commands: " + err.message, "error");
+		}
+	}
+
+	/**
+	 *
+	 * @param {String} dir
+	 * @param {String} file
+	 */
+	async loadCommand(dir, file) {
+		const Command = require(path.join(dir, `${file}.js`));
+		if (Command.prototype instanceof BaseCommand) {
+			const command = new Command(this);
+			this.commands.set(command.command.name, command);
+			const aliases = [];
+			if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0) {
+				command.aliases.forEach((alias) => {
+					const command_alias = command.command instanceof SlashCommandBuilder ? { ...command.command.toJSON() } : { ...command.command };
+					command_alias.name = alias;
+					aliases.push(command_alias);
+					this.commands.set(alias, command);
+				});
+			}
+
+			if (command.onLoad || typeof command.onLoad === "function") await command.onLoad(this);
+			this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
+
+			return;
+		}
+	}
+
+	/**
+	 *
+	 * @param {String} dir
+	 * @param {String} name
+	 */
+	async unloadCommand(dir, name) {
+		delete require.cache[require.resolve(`${dir}${path.sep}${name}.js`)];
+
+		return;
+	}
+
+	/**
+	 *
+	 * @param {String} dir
+	 * @returns
+	 */
+	async loadEvents(dir) {
+		const filePath = path.join(__dirname, dir);
+		const files = await fs.readdir(filePath);
+		for (let index = 0; index < files.length; index++) {
+			const file = files[index];
+			const stat = await fs.lstat(path.join(filePath, file));
+			if (stat.isDirectory()) this.loadEvents(path.join(dir, file));
+			if (file.endsWith(".js")) {
+				const Event = require(path.join(filePath, file));
+				if (Event.prototype instanceof BaseEvent) {
+					const event = new Event();
+					if (!event.name || !event.name.length) return console.error(`Cannot load "${file}" event file: Event name is not set!`);
+					if (event.once) this.once(event.name, event.execute.bind(event, this));
+					else this.on(event.name, event.execute.bind(event, this));
+					this.logger.log(`Successfully loaded "${file}" event file. (Event: ${event.name})`);
+				}
+			}
+		}
+	}
+
 	get defaultLanguage() {
 		return this.languages.find(language => language.default).name;
 	}
 
+	/**
+	 *
+	 * @param {String} key
+	 * @param {Array} args
+	 * @param {String} locale
+	 */
 	translate(key, args, locale) {
 		if (!locale) locale = this.defaultLanguage;
 		const language = this.translations.get(locale);
@@ -148,12 +260,12 @@ class JaBa extends Client {
 	}
 
 	convertTime(time, type, noPrefix, locale) {
-		if (!type) time = "to";
+		if (!type) type = false;
 		if (!locale) locale = this.defaultLanguage;
 		const languageData = this.languages.find((language) => language.name === locale || language.aliases.includes(locale));
 		const m = moment(time).locale(languageData.moment);
 
-		return (type === "to" ? m.toNow(noPrefix) : m.fromNow(noPrefix));
+		return (type ? m.toNow(noPrefix) : m.fromNow(noPrefix));
 	}
 
 	getNoun(number, one, two, five) {
@@ -167,40 +279,6 @@ class JaBa extends Client {
 		return five;
 	}
 
-	// This function is used to load a command and add it to the collection
-	loadCommand(commandPath, commandName) {
-		try {
-			const props = new(require(`.${commandPath}${path.sep}${commandName}`))(this);
-			this.logger.log(`Loading Command: ${props.help.name}. 👌`, "log");
-			props.conf.location = commandPath;
-			if (props.init) props.init(this);
-
-			this.commands.set(props.help.name, props);
-			props.help.aliases.forEach((alias) => {
-				this.aliases.set(alias, props.help.name);
-			});
-
-			return false;
-		} catch (e) {
-			return `Unable to load command ${commandName}: ${e}`;
-		}
-	}
-
-	// This function is used to unload a command (you need to load them again)
-	async unloadCommand(commandPath, commandName) {
-		let command;
-		if (this.commands.has(commandName)) command = this.commands.get(commandName);
-		else if (this.aliases.has(commandName)) command = this.commands.get(this.aliases.get(commandName));
-
-		if (!command) return `The command \`${commandName}\` doesn't seem to exist, nor is it an alias. Try again!`;
-		if (command.shutdown) await command.shutdown(this);
-
-		delete require.cache[require.resolve(`.${commandPath}${path.sep}${commandName}.js`)];
-
-		return false;
-	}
-
-	// This function is used to find a user data or create it
 	async findOrCreateUser({ id: userID }, isLean) {
 		if (this.databaseCache.users.get(userID)) return isLean ? this.databaseCache.users.get(userID).toJSON() : this.databaseCache.users.get(userID);
 		else {
@@ -225,7 +303,6 @@ class JaBa extends Client {
 		}
 	}
 
-	// This function is used to find a member data or create it
 	async findOrCreateMember({ id: memberID, guildID }, isLean) {
 		if (this.databaseCache.members.get(`${memberID}${guildID}`)) return isLean ? this.databaseCache.members.get(`${memberID}${guildID}`).toJSON() : this.databaseCache.members.get(`${memberID}${guildID}`);
 		else {
@@ -260,7 +337,6 @@ class JaBa extends Client {
 		}
 	}
 
-	// This function is used to find a guild data or create it
 	async findOrCreateGuild({ id: guildID }, isLean) {
 		if (this.databaseCache.guilds.get(guildID)) return isLean ? this.databaseCache.guilds.get(guildID).toJSON() : this.databaseCache.guilds.get(guildID);
 		else {
@@ -283,71 +359,6 @@ class JaBa extends Client {
 				return isLean ? guildData.toJSON() : guildData;
 			}
 		}
-	}
-
-	// This function is used to resolve a user from a string
-	async resolveUser(search) {
-		let user = null;
-		if (!search || typeof search !== "string") return;
-
-		// Try ID search
-		if (search.match(/^<@!?(\d+)>$/)) {
-			const id = search.match(/^<@!?(\d+)>$/)[1];
-			user = this.users.fetch(id).catch(() => {});
-			if (user) return user;
-		}
-
-		// Try username search
-		if (search.match(/^!?(\w+)#(\d+)$/)) {
-			const username = search.match(/^!?(\w+)#(\d+)$/)[0];
-			const discriminator = search.match(/^!?(\w+)#(\d+)$/)[1];
-			user = this.users.find((u) => u.username === username && u.discriminator === discriminator);
-			if (user) return user;
-		}
-		user = await this.users.fetch(search).catch(() => {});
-
-		return user;
-	}
-
-	async resolveMember(search, guild) {
-		let member = null;
-		if (!search || typeof search !== "string") return;
-
-		// Try ID search
-		if (search.match(/^<@!?(\d+)>$/)) {
-			const id = search.match(/^<@!?(\d+)>$/)[1];
-			member = await guild.members.fetch(id).catch(() => {});
-			if (member) return member;
-		}
-
-		// Try username search
-		if (search.match(/^!?(\w+)#(\d+)$/)) {
-			guild = await guild.fetch();
-			member = guild.members.cache.find((m) => m.user.tag === search);
-			if (member) return member;
-		}
-		member = await guild.members.fetch(search).catch(() => {});
-
-		return member;
-	}
-
-	async resolveRole(search, guild) {
-		let role = null;
-		if (!search || typeof search !== "string") return;
-
-		// Try ID search
-		if (search.match(/^<@&!?(\d+)>$/)) {
-			const id = search.match(/^<@&!?(\d+)>$/)[1];
-			role = guild.roles.cache.get(id);
-			if (role) return role;
-		}
-
-		// Try name search
-		role = guild.roles.cache.find((r) => search === r.name);
-		if (role) return role;
-		role = guild.roles.cache.get(search);
-
-		return role;
 	}
 }
 

@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Получить зарплату!",
-	"USAGE": "{{prefix}}work",
-	"EXAMPLES": "{{prefix}}work",
+	"USAGE": "work",
+	"EXAMPLES": "work",
 	"COOLDOWN": "Вы должны подождать **{{time}}** до следующей зарплатой!",
 	"AWARD": "Закончите слово AWARD чтобы получить 200 дополнительных кредитов!",
 	"SALARY": "Зарплата",

@@ -1,37 +1,54 @@
-const Command = require("../../base/Command"),
+const { SlashCommandBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand"),
 	i18next = require("i18next"),
 	autoUpdateDocs = require("../../helpers/autoUpdateDocs");
 
-class Reload extends Command {
+class Reload extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "reload",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("reload")
+				.setDescription(client.translate("owner/reload:DESCRIPTION"))
+				.addStringOption(option => option.setName("command")
+					.setDescription(client.translate("owner/reload:COMMAND"))
+					.setRequired(true)),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
-			guildOnly: false,
-			aliases: ["rel"],
-			memberPermissions: [],
-			botPermissions: [],
-			nsfw: false,
-			ownerOnly: true,
-			cooldown: 2000
+			guildOnly: true,
+			ownerOnly: true
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		const command = interaction.options.getString("command");
+		const cmd = client.commands.get(command);
+		if (!cmd) return interaction.error("general/help:NOT_FOUND", { search: command }, { ephemeral: true });
 
-	async run(message, args) {
-		const command = args[0];
-		const cmd = this.client.commands.get(command) || this.client.commands.get(this.client.aliases.get(command));
-		if (!cmd) return message.error("owner/reload:NOT_FOUND", { search: command });
-
-		await this.client.unloadCommand(cmd.conf.location, cmd.help.name);
-		await this.client.loadCommand(cmd.conf.location, cmd.help.name);
+		await client.unloadCommand(`../commands/${cmd.category}`, cmd.command.name);
+		await client.loadCommand(`../commands/${cmd.category}`, cmd.command.name);
 
 		i18next.reloadResources(["ru-RU", "uk-UA"]);
-		autoUpdateDocs.update(this.client);
+		autoUpdateDocs.update(client);
 
-		message.success("owner/reload:SUCCESS", {
-			command: cmd.help.name
-		});
+		interaction.success("owner/reload:SUCCESS", {
+			command: cmd.command.name
+		}, { ephemeral: true });
 	}
 }
 

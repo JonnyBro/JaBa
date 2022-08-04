@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Створити зображення \"steamcard\"",
-	"USAGE": "{{prefix}}steamcard [текст] (@користувач)",
-	"EXAMPLES": "{{prefix}}steamcard Колекційна картка\n{{prefix}}steamcard Картка @Jonny_Bro#4226"
-	}

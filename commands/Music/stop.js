@@ -1,46 +1,44 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Stop extends Command {
+class Stop extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "stop",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("stop")
+				.setDescription(client.translate("music/stop:DESCRIPTION")),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
 			guildOnly: true,
-			aliases: ["leave", "st"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 3000
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		const voice = interaction.member.voice.channel;
+		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+		const queue = client.player.getQueue(interaction.guildId);
+		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
-	async run(message, args, data) {
-		const voice = message.member.voice.channel;
-		const queue = await this.client.player.getQueue(message);
-
-		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
-		if (!queue) return message.error("music/play:NOT_PLAYING");
-
-		const embed = new Discord.MessageEmbed()
-			.setAuthor({
-				name: message.translate("music/stop:DESCRIPTION")
-			})
-			.setFooter({
-				text: data.config.embed.footer
-			})
-			.setColor(data.config.embed.color);
-
-		const m = await message.reply({
-			embeds: [embed]
-		});
-
-		this.client.player.stop(message);
-		embed.setDescription(message.translate("music/stop:SUCCESS"));
-		m.edit({
-			embeds: [embed]
+		queue.destroy();
+		interaction.reply({
+			content: interaction.translate("music/stop:SUCCESS")
 		});
 	}
 }

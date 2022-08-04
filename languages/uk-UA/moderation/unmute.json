@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Розмутити користувача!",
-	"USAGE": "{{prefix}}unmute [@user]",
-	"EXAMPLES": "{{prefix}}unmute @Jonny_Bro#4226",
-	"MISSING_MEMBER": "Ви повинні згадати користувача!",
-	"NOT_MUTED": "**{{username}}** не замучений на даному сервері!",
-	"SUCCESS": "**{{username}}** був розмучений на даному сервері!",
-	"SUCCESS_CASE": "{{user}} (`{{usertag}}`) розмучений! (Номер #{{count}})"
-}

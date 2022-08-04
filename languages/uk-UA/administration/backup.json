@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Керування резервними копіями сервера!",
-	"USAGE": "{{prefix}}backup [create/load/info/remove]",
-	"EXAMPLES": "{{prefix}}backup create\n{{prefix}}backup load 123456789098765432\n{{prefix}}backup info 123456789098765432",
+	"USAGE": "backup [create/load/info/remove]",
+	"EXAMPLES": "backup create\nbackup load 123456789098765432\nbackup info 123456789098765432",
 	"MISSING_STATUS": "Виберіть дію: `create`, `load`, `info` або `remove`!",
 	"MISSING_BACKUP_ID": "Вкажіть ID резервної копії!",
 	"NO_BACKUP_FOUND": "Резервну копію з ID `{{backupID}}` не знайдено",

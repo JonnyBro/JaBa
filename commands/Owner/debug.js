@@ -1,98 +1,180 @@
-const Command = require("../../base/Command");
+const { SlashCommandBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Debug extends Command {
+class Debug extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "debug",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("debug")
+				.setDescription(client.translate("owner/debug:DESCRIPTION"))
+				.addSubcommand(subcommand => subcommand.setName("set")
+					.setDescription(client.translate("owner/debug:SET"))
+					.addStringOption(option => option.setName("type")
+						.setDescription(client.translate("owner/debug:TYPE"))
+						.setRequired(true)
+						.addChoices(
+							{ name: client.translate("common:LEVEL"), value: "level" },
+							{ name: client.translate("common:XP"), value: "xp" },
+							{ name: client.translate("common:CREDITS"), value: "credits" },
+							{ name: client.translate("economy/transactions:BANK"), value: "bank" },
+							{ name: client.translate("common:REP"), value: "rep" },
+						))
+					.addUserOption(option => option.setName("target")
+						.setDescription(client.translate("owner/debug:TARGET"))
+						.setRequired(true))
+					.addIntegerOption(option => option.setName("int")
+						.setDescription(client.translate("owner/debug:INT"))
+						.setRequired(true))
+				)
+				.addSubcommand(subcommand => subcommand.setName("add")
+					.setDescription(client.translate("owner/debug:ADD"))
+					.addStringOption(option => option.setName("type")
+						.setDescription(client.translate("owner/debug:TYPE"))
+						.setRequired(true)
+						.addChoices(
+							{ name: client.translate("common:LEVEL"), value: "level" },
+							{ name: client.translate("common:XP"), value: "xp" },
+							{ name: client.translate("common:CREDITS"), value: "credits" },
+							{ name: client.translate("economy/transactions:BANK"), value: "bank" },
+							{ name: client.translate("common:REP"), value: "rep" },
+						))
+					.addUserOption(option => option.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setRequired(true))
+					.addIntegerOption(option => option.setName("int")
+						.setDescription(client.translate("owner/debug:INT"))
+						.setRequired(true))
+				),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
 			guildOnly: true,
-			aliases: ["deb"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES"],
-			nsfw: false,
-			ownerOnly: true,
-			cooldown: 3000
+			ownerOnly: true
 		});
 	}
-
-	async run(message, args) {
-		const action = args[0];
-		if (!action || !["set", "add"].includes(action)) return message.error("owner/debug:NO_ACTION");
-
-		const status = args[1];
-		if (!status || !["level", "xp", "credits", "bank", "rep"].includes(status)) return message.error("owner/debug:NO_STATUS");
-
-		const member = await this.client.resolveMember(args[2], message.guild);
-		if (!member) return message.error("owner/debug:INVALID_MEMBER");
-		if (member.user.bot) return message.error("owner/debug:BOT_USER");
-
-		const number = args[3];
-		if (!number || isNaN(number)) return message.error("owner/debug:INVALID_AMOUNT");
-		const amount = Math.ceil(parseInt(number, 10));
-
-		const memberData = await this.client.findOrCreateMember({
-			id: member.id,
-			guildID: message.guild.id
-		});
-
-		const userData = await this.client.findOrCreateUser({
-			id: member.id,
-		});
-
-		let newValue = 0;
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction, data) {
+		const action = interaction.options.getSubcommand();
 
 		if (action === "set") {
-			newValue = parseInt(amount, 10);
+			const type = interaction.options.getString("type");
+			const member = interaction.options.getMember("user");
+			const int = interaction.options.getInteger("int");
+			if (member.user.bot) return interaction.error("misc:BOT_USER");
 
-			if (status === "level") {
-				memberData.level = newValue;
-				memberData.save();
-			} else if (status === "xp") {
-				memberData.exp = newValue;
-				memberData.save();
-			} else if (status === "rep") {
-				userData.rep = newValue;
-				userData.save();
-			} else if (status === "credits") {
-				memberData.money = newValue;
-				memberData.save();
-			} else if (status === "bank") {
-				memberData.bankSold = newValue;
-				memberData.save();
+			switch (type) {
+				case "level": {
+					data.memberData.level = int;
+					await data.memberData.save();
+					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+						username: member.user.tag,
+						amount: int
+					}, { ephemeral: true });
+				}
+
+				case "xp": {
+					data.memberData.exp = int;
+					await data.memberData.save();
+					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+						username: member.user.tag,
+						amount: int
+					}, { ephemeral: true });
+				}
+
+				case "credits": {
+					data.memberData.money = int;
+					await data.memberData.save();
+					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+						username: member.user.tag,
+						amount: int
+					}, { ephemeral: true });
+				}
+
+				case "bank": {
+					data.memberData.bankSold = int;
+					await data.memberData.save();
+					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+						username: member.user.tag,
+						amount: int
+					}, { ephemeral: true });
+				}
+
+				case "rep": {
+					data.memberData.rep = int;
+					await data.memberData.save();
+					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+						username: member.user.tag,
+						amount: int
+					}, { ephemeral: true });
+				}
 			}
+		} else {
+			const type = interaction.options.getString("type");
+			const member = interaction.options.getMember("target");
+			const int = interaction.options.getInteger("int");
+			if (member.user.bot) return interaction.error("owner/debug:BOT", { ephemeral: true });
 
-			message.success("owner/debug:SUCCESS_" + status.toUpperCase(), {
-				username: member.user.tag,
-				amount
-			});
-		} else if (action === "add") {
-			if (status === "level") {
-				newValue = memberData.level + parseInt(amount, 10);
-				memberData.level = newValue;
-				memberData.save();
-			} else if (status === "xp") {
-				newValue = memberData.exp + parseInt(amount, 10);
-				memberData.exp = newValue;
-				memberData.save();
-			} else if (status === "rep") {
-				newValue = userData.rep + parseInt(amount, 10);
-				userData.rep = newValue;
-				userData.save();
-			} else if (status === "credits") {
-				newValue = memberData.money + parseInt(amount, 10);
-				memberData.money = newValue;
-				memberData.save();
-			} else if (status === "bank") {
-				newValue = memberData.bankSold + parseInt(amount, 10);
-				memberData.bankSold = newValue;
-				memberData.save();
+			switch (type) {
+				case "level": {
+					data.memberData.level += int;
+					await data.memberData.save();
+					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+						username: member.user.tag,
+						amount: int
+					}, { ephemeral: true });
+				}
+
+				case "xp": {
+					data.memberData.exp += int;
+					await data.memberData.save();
+					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+						username: member.user.tag,
+						amount: int
+					}, { ephemeral: true });
+				}
+
+				case "credits": {
+					data.memberData.money += int;
+					await data.memberData.save();
+					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+						username: member.user.tag,
+						amount: int
+					}, { ephemeral: true });
+				}
+
+				case "bank": {
+					data.memberData.bankSold += int;
+					await data.memberData.save();
+					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+						username: member.user.tag,
+						amount: int
+					}, { ephemeral: true });
+				}
+
+				case "rep": {
+					data.memberData.rep += int;
+					await data.memberData.save();
+					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+						username: member.user.tag,
+						amount: int
+					}, { ephemeral: true });
+				}
 			}
-
-			message.success("owner/debug:SUCCESS_" + status.toUpperCase(), {
-				username: member.user.tag,
-				amount: newValue
-			});
 		}
 	}
 }

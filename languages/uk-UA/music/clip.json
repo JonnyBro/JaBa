@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Відтворити кліп",
-	"USAGE": "{{prefix}}clip [назва-файлу]",
-	"EXAMPLES": "{{prefix}}clip haha",
+	"USAGE": "clip [назва-файлу]",
+	"EXAMPLES": "clip haha",
 	"NO_ARG": "Вкажіть назву файлу!",
 	"NO_FILE": "Файл {{file}} відсутній!",
 	"ACTIVE_QUEUE": "Не можу відтворити кліп, тому що на сервері є активна черга!",

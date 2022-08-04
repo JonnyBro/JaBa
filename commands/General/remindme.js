@@ -1,44 +1,60 @@
-const Command = require("../../base/Command"),
+const { SlashCommandBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand"),
 	ms = require("ms");
 
-class Remindme extends Command {
+class Remindme extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "remindme",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("remindme")
+				.setDescription(client.translate("general/remindme:DESCRIPTION"))
+				.addStringOption(option => option.setName("time")
+					.setDescription(client.translate("owner/remindme:TIME"))
+					.setRequired(true))
+				.addStringOption(option => option.setName("message")
+					.setDescription(client.translate("common:MESSAGE"))
+					.setRequired(true)),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
-			guildOnly: false,
-			aliases: ["reminder", "remind", "rem"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 1000
+			guildOnly: true,
+			ownerOnly: false
 		});
 	}
-
-	async run(message, args, data) {
-		const time = args[0];
-		if (!time || isNaN(ms(time))) return message.error("misc:INVALID_TIME");
-
-		const msg = args.slice(1).join(" ");
-		if (!msg) return message.error("general/remindme:MISSING_MESSAGE");
-
-		const rData = {
-			message: msg,
-			createdAt: Date.now(),
-			sendAt: Date.now() + ms(time)
-		};
-
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction, data) {
+		const time = interaction.options.getString("time");
+		const message = interaction.options.getString("message");
+		const dateNow = Date.now();
 		if (!data.userData.reminds) data.userData.reminds = [];
 
+		const rData = {
+			message: message,
+			createdAt: dateNow,
+			sendAt: dateNow + ms(time)
+		};
 
 		data.userData.reminds.push(rData);
 		data.userData.markModified("reminds");
 		data.userData.save();
-		this.client.databaseCache.usersReminds.set(message.author.id, data.userData);
+		client.databaseCache.usersReminds.set(message.author.id, data.userData);
 
-		message.success("general/remindme:SAVED");
+		interaction.success("general/remindme:SAVED");
 	}
 }
 

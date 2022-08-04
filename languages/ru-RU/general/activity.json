@@ -1,8 +1,7 @@
 {
-	"DESCRIPTION": "Создать активность в голосовом канале!",
-	"USAGE": "{{prefix}}activity (активность)",
-	"EXAMPLES": "{{prefix}}activity\n{{prefix}}activity chess",
-	"TITLE": "Список доступных активностей",
-	"FOOTER": "JaBa | Discord Together",
-	"NO_BOOST": "Необходим первый уровень буста или выше!"
+	"DESCRIPTION": "Создать активность в голосовом канале",
+	"USAGE": "activity (активность)",
+	"EXAMPLES": "activity\nactivity chess",
+	"AVAILABLE_ACTIVITIES": "Доступные активности:",
+	"BOOST_NEEDED": "Необходим первый уровень буста или выше!"
 }

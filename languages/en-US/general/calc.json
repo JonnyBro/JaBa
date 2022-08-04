@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Calculator able to solve complex operations and to convert units!",
-	"USAGE": "{{prefix}}calc [calculation]",
-	"EXAMPLES": "{{prefix}}10*5+sin(3)\n{{prefix}}calc 10cm to m",
+	"USAGE": "calc [calculation]",
+	"EXAMPLES": "10*5+sin(3)\ncalc 10cm to m",
 	"MISSING_CALC": "Please enter a calculation!",
 	"INVALID_CALC": "Please enter a **valid** calculation!",
 	"TITLE": "Calculator",

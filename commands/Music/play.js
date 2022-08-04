@@ -1,40 +1,87 @@
-const Command = require("../../base/Command"),
-	{ Permissions } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField } = require("discord.js"),
+	{ QueryType } = require("discord-player");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Play extends Command {
+class Play extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "play",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("play")
+				.setDescription(client.translate("music/play:DESCRIPTION"))
+				.addStringOption(option => option.setName("query")
+					.setDescription(client.translate("music/play:QUERY"))
+					.setRequired(true)),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
 			guildOnly: true,
-			aliases: ["p"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 3000
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		await interaction.deferReply();
+		const voice = interaction.member.voice.channel;
+		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+		const query = interaction.options.getString("query");
+		const perms = voice.permissionsFor(client.user);
+		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.error("music/play:VOICE_CHANNEL_CONNECT");
 
-	async run(message, args) {
-		const voice = message.member.voice.channel;
-		const name = args.join(" ");
-		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
-		if (!name) return message.error("music/play:MISSING_SONG_NAME");
+		const searchResult = await client.player.search(query, {
+			requestedBy: interaction.user,
+			searchEngine: query.includes("soundcloud") ? QueryType.SOUNDCLOUD_SEARCH : QueryType.AUTO
+		}).catch(() => {});
+		if (!searchResult || !searchResult.tracks.length) return interaction.editReply({
+			content: interaction.translate("music/play:NO_RESULT", {
+				query
+			})
+		});
 
-		// Check my permissions
-		const perms = voice.permissionsFor(this.client.user);
-		if (!perms.has(Permissions.FLAGS.CONNECT) || !perms.has(Permissions.FLAGS.SPEAK)) return message.error("music/play:VOICE_CHANNEL_CONNECT");
+		const queue = client.player.getQueue(interaction.guildId) || client.player.createQueue(interaction.guild, {
+			metadata: {
+				channel: interaction.channel
+			},
+			ytdlOptions: {
+				filter: "audioonly",
+				highWaterMark: 1 << 30,
+				dlChunkSize: 0,
+				liveBuffer: 4900
+			}
+		});
+
+		if (!queue.tracks[0]) {
+			searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
+		} else {
+			searchResult.playlist ? searchResult.tracks.forEach(track => queue.insert(track)) : queue.insert(searchResult.tracks[0]);
+		}
 
 		try {
-			this.client.player.play(message.member.voice.channel, args.join(" "), {
-				member: message.member,
-				textChannel: message.channel,
-				message
+			if (!queue.connection) await queue.connect(interaction.member.voice.channel);
+			if (!queue.playing) await queue.play();
+
+			interaction.editReply({
+				content: interaction.translate("music/play:ADDED_QUEUE", {
+					songName: searchResult.playlist ? searchResult.playlist.title : searchResult.tracks[0].title
+				})
 			});
 		} catch (e) {
-			message.error("music/play:ERR_OCCURRED", {
+			client.player.deleteQueue(interaction.guildId);
+			interaction.error("music/play:ERR_OCCURRED", {
 				error: e
 			});
 			console.error(e);

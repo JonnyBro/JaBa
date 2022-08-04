@@ -11,19 +11,15 @@ const genToken = () => {
 };
 
 const userSchema = new mongoose.Schema({
-	/* REQUIRED */
-	id: { type: String }, // Discord ID of the user
+	id: { type: String },
 
-	/* ECONOMY (GLOBAL) */
-	rep: { type: Number, default: 0 }, // Reputation points of the user
-	bio: { type: String }, // Biography of the user
-	birthdate: { type: Number }, // Birthdate of the user (the timestamp)
-	lover: { type: String }, // The person with whom the user is in a relationship
+	rep: { type: Number, default: 0 },
+	bio: { type: String },
+	birthdate: { type: Number },
+	lover: { type: String },
 
-	/* STATS */
-	registeredAt: { type: Number, default: Date.now() }, // Registered date of the user
+	registeredAt: { type: Number, default: Date.now() },
 
-	/* ACHIEVEMENTS */
 	achievements: { type: Object, default: {
 		married: {
 			achieved: false,
@@ -76,23 +72,14 @@ const userSchema = new mongoose.Schema({
 		}
 	}},
 
-	/* COOLDOWN */
 	cooldowns: { type: Object, default: {
 		rep: 0
 	}},
 
-	/* OTHER INFORMATIONS */
-	afk: { type: String, default: null }, // The AFK reason (if any)
-	reminds: { type: Array, default: [] }, // The reminds of the user
-	playlists: { type: Array, default: [] }, // The playlists of the user
-	logged: { type: Boolean, default: false }, // If the user is logged to the dashboard
-	apiToken: { type: String, default: genToken() } // The API token of the user
-});
-
-userSchema.method("genApiToken", async function() {
-	this.apiToken = genToken();
-	await this.save();
-	return this.apiToken;
+	afk: { type: String, default: null },
+	reminds: { type: Array, default: [] },
+	logged: { type: Boolean, default: false },
+	apiToken: { type: String, default: genToken() }
 });
 
 userSchema.method("getAchievements", async function() {

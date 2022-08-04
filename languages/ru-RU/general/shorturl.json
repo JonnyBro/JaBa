@@ -1,6 +1,6 @@
 {
-	"DESCRIPTION": "Укоротить ссылку!",
-	"USAGE": "{{prefix}}shorturl [URL]",
-	"EXAMPLES": "{{prefix}}shorturl https://google.com",
-	"MISSING_URL": "Введите ссылку!"
+	"DESCRIPTION": "Укоротить ссылку",
+	"USAGE": "shorturl [URL]",
+	"EXAMPLES": "shorturl https://google.com",
+	"URL": "Ссылка"
 }

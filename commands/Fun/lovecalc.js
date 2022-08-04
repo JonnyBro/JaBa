@@ -1,31 +1,46 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js"),
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand"),
 	md5 = require("md5");
 
-class Lovecalc extends Command {
+class Lovecalc extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "lovecalc",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("lovecalc")
+				.setDescription(client.translate("fun/lovecalc:DESCRIPTION"))
+				.addUserOption(option =>
+					option.setName("first_member")
+						.setDescription(client.translate("common:USER"))
+						.setRequired(true))
+				.addUserOption(option =>
+					option.setName("second_member")
+						.setDescription(client.translate("common:USER"))),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
 			guildOnly: true,
-			aliases: ["lc"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 1000
+			ownerOnly: false
 		});
 	}
-
-	async run(message, args, data) {
-		const firstMember = message.mentions.members.filter(m => m.id !== message.author.id).first();
-		if (!firstMember) return message.error("fun/lovecalc:MISSING");
-		const secondMember = message.mentions.members
-			.filter(m => m.id !== firstMember.id)
-			.filter(m => m.id !== message.author.id)
-			.first() || message.member;
-		if (!secondMember) return message.error("fun/lovecalc:MISSING");
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		const firstMember = interaction.options.getMember("first_member");
+		const secondMember = interaction.options.getMember("second_member") || interaction.member;
 
 		const members = [firstMember, secondMember].sort((a, b) => parseInt(a.id, 10) - parseInt(b.id, 10));
 		const hash = md5(`${members[0].id}${members[1].user.username}${members[0].user.username}${members[1].id}`);
@@ -36,21 +51,21 @@ class Lovecalc extends Command {
 			.join("");
 		const percent = parseInt(string.substr(0, 2), 10);
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: `❤️ ${message.translate("fun/lovecalc:DESCRIPTION")}`
+				name: `❤️ ${interaction.translate("fun/lovecalc:DESCRIPTION")}`
 			})
-			.setDescription(message.translate("fun/lovecalc:CONTENT", {
+			.setDescription(interaction.translate("fun/lovecalc:CONTENT", {
 				percent,
-				firstUsername: firstMember.user.username,
-				secondUsername: secondMember.user.username
+				firstMember: firstMember,
+				secondMember: secondMember
 			}))
-			.setColor(data.config.embed.color)
+			.setColor(client.config.embed.color)
 			.setFooter({
-				text: data.config.embed.footer
+				text: client.config.embed.footer
 			});
 
-		message.reply({
+		interaction.reply({
 			embeds: [embed]
 		});
 	}

@@ -1,8 +1,0 @@
-{
-	"DESCRIPTION": "Увімкнути повільний режим у каналі",
-	"USAGE": "{{prefix}}slowmode [#канал] (час)",
-	"EXAMPLES": "{{prefix}}slowmode #основний 10m\n{{prefix}}slowmode #основний",
-	"DISABLED": "**Повільний режим був вимкнений у {{channel}}!**\n\n:arrow_right_hook: *Надіслати `{{prefix}}slowmode [#канал] (час)`, щоб знову ввімкнути повільний режим!*",
-	"ENABLED": "**Повільний режим в `{{time}}` встановлений у каналі `{{channel}}`!**\n\n:arrow_right_hook: *Надішліть `{{prefix}}slowmode {{channel} }`, щоб вимкнути!*",
-	"PLEASE_WAIT": "У {{channel}} увімкнено повільний режим! Зачекайте {{time}} перед надсиланням наступного повідомлення!"
-}

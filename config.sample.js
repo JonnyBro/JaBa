@@ -1,7 +1,11 @@
 module.exports = {
 	/* The token of your Discord Bot */
 	token: "XXXXXXXXXXX",
+	/* ID of Bot's user */
+	user: "XXXXXXXXXXX",
 	/* For the support server */
+	/* Set to true for production */
+	production: true,
 	support: {
 		id: "XXXXXXXXXXX", // The ID of the support server
 		logs: "XXXXXXXXXXX", // And the ID of the logs channel of your server (new servers for example)
@@ -17,7 +21,6 @@ module.exports = {
 		failureURL: "https://dashboard.example.com" // url on which users will be redirected if they click the cancel button (discord authentication)
 	},
 	mongoDB: "mongodb://localhost:27017/discordbot", // The URl of the mongodb database
-	prefix: "*", // The default prefix for the bot
 	/* For the embeds (embeded messages) */
 	embed: {
 		color: "#0091fc", // The default color for the embeds

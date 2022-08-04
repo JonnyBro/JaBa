@@ -1,117 +1,167 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, PermissionsBitField, ComponentType } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Help extends Command {
+class Help extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "help",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("help")
+				.setDescription(client.translate("general/help:DESCRIPTION"))
+				.addStringOption(option =>
+					option.setName("command")
+						.setDescription(client.translate("owner/reload:COMMAND"))),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
-			guildOnly: false,
-			aliases: ["h", "commands"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 1000
+			guildOnly: true,
+			ownerOnly: false
 		});
 	}
-
-	async run(message, args, data) {
-		if (args[0]) {
-			const isCustom = (message.guild && data.guild.customCommands ? data.guild.customCommands.find((c) => c.name === args[0]) : false);
-
-			const cmd = this.client.commands.get(args[0]) || this.client.commands.get(this.client.aliases.get(args[0]));
-			if (!cmd && isCustom) {
-				return message.error("general/help:CUSTOM", {
-					cmd: args[0]
-				});
-			} else if (!cmd) {
-				return message.error("general/help:NOT_FOUND", {
-					search: args[0]
-				});
-			}
-
-			const description = message.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:DESCRIPTION`);
-			const usage = message.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:USAGE`, {
-				prefix: message.guild ? data.guild.prefix : ""
-			});
-			const examples = message.translate(`${cmd.help.category.toLowerCase()}/${cmd.help.name}:EXAMPLES`, {
-				prefix: message.guild ? data.guild.prefix : ""
-			});
-
-			const groupEmbed = new Discord.MessageEmbed()
-				.setAuthor({
-					name: message.translate("general/help:CMD_TITLE", {
-						cmd: cmd.help.name
-					})
-				})
-				.addField(message.translate("general/help:FIELD_DESCRIPTION"), description)
-				.addField(message.translate("general/help:FIELD_USAGE"), usage)
-				.addField(message.translate("general/help:FIELD_EXAMPLES"), examples)
-				.addField(message.translate("general/help:FIELD_ALIASES"), cmd.help.aliases.length > 0 ? cmd.help.aliases.map(a => "`" + a + "`").join("\n") : message.translate("general/help:NO_ALIAS"))
-				.addField(message.translate("general/help:FIELD_PERMISSIONS"), cmd.conf.memberPermissions.length > 0 ? cmd.conf.memberPermissions.map((p) => `\`${p}\``).join("\n") : message.translate("general/help:NO_REQUIRED_PERMISSION"))
-				.setColor(data.config.embed.color)
-				.setFooter({
-					text: data.config.embed.footer
-				});
-
-			return message.reply({
-				embeds: [groupEmbed]
-			});
-		}
-
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		const commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()];
 		const categories = [];
-		const commands = this.client.commands;
+		const command = interaction.options.getString("command");
 
-		commands.forEach((command) => {
-			if (!categories.includes(command.help.category)) {
-				if (command.help.category === "Owner" && message.author.id !== data.config.owner.id) return;
-				categories.push(command.help.category);
+		if (command) {
+			const embed = generateCommandHelp(client, interaction, command);
+
+			return interaction.reply({
+				embeds: [embed]
+			});
+		}
+
+		commands.forEach(c => {
+			if (!categories.includes(c.category)) {
+				if (c.category === "Owner" && interaction.member.id !== client.config.owner.id) return;
+				categories.push(c.category);
 			}
 		});
 
-		const emojis = this.client.customEmojis;
-
-		const embed = new Discord.MessageEmbed()
-			.setDescription(message.translate("general/help:INFO", {
-				prefix: message.guild ? data.guild.prefix : ""
-			}))
-			.setColor(data.config.embed.color)
-			.setFooter({
-				text: data.config.embed.footer
-			});
-		categories.sort().forEach((cat) => {
-			const tCommands = commands.filter((cmd) => cmd.help.category === cat);
-			embed.addField(`${emojis.categories[cat.toLowerCase()]} ${cat} - (${tCommands.size})`, `${tCommands.map((cmd) => `\`${cmd.help.name}\``).join(", ")}`);
+		const categoriesRows = categories.sort().map(c => {
+			return {
+				label: `${c} (${commands.filter(cmd => cmd.category === c).length})`,
+				value: c
+			};
 		});
 
-		if (message.guild) {
-			if (data.guild.customCommands.length > 0) embed.addField(`${emojis.categories.custom} ${message.guild.name} | ${message.translate("general/help:CUSTOM_COMMANDS")} - (${data.guild.customCommands.length})`, data.guild.customCommands.map((cmd) => `\`${cmd.name}\``).join(", "));
-		}
+		const row = new ActionRowBuilder()
+			.addComponents(
+				new SelectMenuBuilder()
+					.setCustomId("help_category_select")
+					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
+					.addOptions(categoriesRows)
+			);
 
-		embed.addField("\u200B", message.translate("misc:STATS_FOOTER", {
-			dashboardLink: this.client.config.dashboard.baseURL,
-			docsLink: `${this.client.config.dashboard.baseURL}/docs/`,
-			inviteLink: this.client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: [Discord.Permissions.FLAGS.ADMINISTRATOR] }),
-			donateLink: "https://qiwi.com/n/JONNYBRO/",
-			owner: data.config.owner.id
-		}));
-		embed.setAuthor({
-			name: message.translate("general/help:TITLE", {
-				name: this.client.user.username
-			}),
-			iconURL: this.client.user.displayAvatarURL({
-				size: 512,
-				dynamic: true,
-				format: "png"
-			})
+		const msg = await interaction.reply({
+			content: interaction.translate("common:AVAILABLE_CATEGORIES"),
+			components: [row],
+			fetchReply: true
 		});
 
-		return message.reply({
-			embeds: [embed]
+		const collector = new InteractionCollector(client, {
+			componentType: ComponentType.SelectMenu,
+			message: msg,
+			idle: 60 * 1000
+		});
+
+		collector.on("collect", async msg => {
+			const arg = msg?.values[0];
+
+			if (categories.find(c => c === arg)) {
+				const categoryCommands = commands.filter(cmd => cmd.category === arg).map(c => {
+					return {
+						label: c.command.name,
+						value: c.command.name
+					};
+				});
+
+				const commandsRow = new ActionRowBuilder()
+					.addComponents(
+						new SelectMenuBuilder()
+							.setCustomId("help_commands_select")
+							.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
+							.addOptions(categoryCommands)
+					);
+
+				await msg.update({
+					content: interaction.translate("general/help:COMMANDS_IN", {
+						category: arg
+					}),
+					components: [commandsRow],
+					fetchReply: true
+				});
+			} else {
+				const embed = generateCommandHelp(client, interaction, arg);
+				await msg.update({
+					content: null,
+					components: [],
+					embeds: [embed]
+				});
+			}
 		});
 	}
+}
+
+function getPermName(bitfield = 0) {
+	for (const key in PermissionsBitField.Flags)
+		if (PermissionsBitField.Flags[key] === BigInt(bitfield)) return key;
+	return null;
+}
+
+function generateCommandHelp(client, interaction, command) {
+	const cmd = client.commands.get(command);
+	if (!cmd) return interaction.error("general/help:NOT_FOUND", { search: command });
+
+	const embed = new EmbedBuilder()
+		.setAuthor({
+			name: interaction.translate("general/help:CMD_TITLE", {
+				cmd: cmd.command.name
+			})
+		})
+		.addFields([
+			{
+				name: interaction.translate("general/help:FIELD_DESCRIPTION"),
+				value: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:DESCRIPTION`)
+			},
+			{
+				name: interaction.translate("general/help:FIELD_USAGE"),
+				value: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`)
+			},
+			{
+				name: interaction.translate("general/help:FIELD_EXAMPLES"),
+				value: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:EXAMPLES`)
+			},
+			{
+				name: interaction.translate("general/help:FIELD_ALIASES"),
+				value: cmd.aliases.length > 0 ? cmd.aliases.map(a => `${a}`).join("\n") : interaction.translate("general/help:NO_ALIAS")
+			},
+			{
+				name: interaction.translate("general/help:FIELD_PERMISSIONS"),
+				value: cmd.command.default_member_permissions > 0 ? interaction.translate(`misc:PERMISSIONS:${getPermName(cmd.command.default_member_permissions)}`) : interaction.translate("general/help:NO_REQUIRED_PERMISSION")
+			}
+		])
+		.setColor(client.config.embed.color)
+		.setFooter({
+			text: client.config.embed.footer
+		});
+
+	return embed;
 }
 
 module.exports = Help;

@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Калькулятор кохання",
-	"USAGE": "{{prefix}}lovecalc [@користувач1] (@користувач2)",
-	"EXAMPLES": "{{prefix}}lovecalc @Jonny_Bro#4226\n{{prefix}}lovecalc @Jonny_Bro#4226 @JaBa#9042",
+	"USAGE": "lovecalc [@користувач1] (@користувач2)",
+	"EXAMPLES": "lovecalc @Jonny_Bro#4226\nlovecalc @Jonny_Bro#4226 @JaBa#9042",
 	"MISSING": "Ви повинні згадати одного або двох користувачів!",
 	"CONTENT": "Я думаю, що **{{firstUsername}}** на **{{percent}}%** кохає **{{secondUsername}}**!"
 	}

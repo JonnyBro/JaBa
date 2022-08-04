@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Пропустить текущий трек",
-	"USAGE": "{{prefix}}skip",
-	"EXAMPLES": "{{prefix}}skip",
+	"USAGE": "skip",
+	"EXAMPLES": "skip",
 	"NO_NEXT_SONG": "Очередь пуста!",
 	"SUCCESS": "Трек пропущен!"
 }

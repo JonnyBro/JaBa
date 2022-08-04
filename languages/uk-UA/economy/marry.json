@@ -1,9 +1,9 @@
 {
 	"DESCRIPTION": "Одружуйтеся з тим, кого кохаєте!",
-	"USAGE": "{{prefix}}marry [@користувач]",
-	"EXAMPLES": "{{prefix}}marry @Jonny_Bro#4226",
+	"USAGE": "marry [@користувач]",
+	"EXAMPLES": "marry @Jonny_Bro#4226",
 	"INVALID_MEMBER": "Ви повинні згадати користувача!",
-	"ALREADY_MARRIED": "Ви вже одружені! Ви можете розлучитися за допомогою команди `{{prefix}}divorce`.",
+	"ALREADY_MARRIED": "Ви вже одружені! Ви можете розлучитися за допомогою команди `divorce`.",
 	"ALREADY_MARRIED_USER": "Місце зайняте! **{{username}}** вже одружений!",
 	"YOURSELF": "Ви не можете одружитися з собою!",
 	"REQUEST_AUTHOR_TO_AMEMBER": "Ви вже надіслали пропозицію **{{username}}**!",

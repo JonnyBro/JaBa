@@ -1,46 +1,71 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, parseEmoji } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
-class EmojiInfo extends Command {
+class Emoji extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "emoji",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("emoji")
+				.setDescription(client.translate("general/emoji:DESCRIPTION"))
+				.addStringOption(option => option.setName("emoji")
+					.setDescription(client.translate("common:EMOJI"))
+					.setRequired(true)),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
-			guildOnly: false,
-			aliases: ["emi"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 2000
+			guildOnly: true,
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		const rawEmoji = interaction.options.getString("emoji");
+		const parsedEmoji = parseEmoji(rawEmoji);
 
-	async run(message, args, data) {
-		const rawEmoji = args[0];
-		if (!rawEmoji) return message.error("administration/stealemoji:MISSING_EMOJI");
-
-		const parsedEmoji = Discord.Util.parseEmoji(rawEmoji);
-
-		const embed = new Discord.MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: message.translate("general/emoji:TITLE", {
+				name: interaction.translate("general/emoji:TITLE", {
 					emoji: parsedEmoji.name
 				})
 			})
-			.setColor(data.config.embed.color)
+			.setColor(client.config.embed.color)
 			.setFooter({
-				text: data.config.embed.footer
+				text: client.config.embed.footer
 			})
-			.addField(message.translate("general/emoji:NAME"), parsedEmoji.name)
-			.addField(message.translate("general/emoji:ANIMATED"), parsedEmoji.animated ? message.translate("common:YES") : message.translate("common:NO"))
-			.addField(message.translate("general/emoji:ID"), parsedEmoji.id ? parsedEmoji.id.toString() : message.translate("general/emoji:STANDART"));
+			.addFields([
+				{
+					name: interaction.translate("general/emoji:NAME"),
+					value: parsedEmoji.name
+				},
+				{
+					name: interaction.translate("general/emoji:ANIMATED"),
+					value: parsedEmoji.animated ? interaction.translate("common:YES") : interaction.translate("common:NO")
+				},
+				{
+					name: interaction.translate("general/emoji:ID"),
+					value: parsedEmoji.id?.toString() || interaction.translate("general/emoji:STANDART")
+				}
+			]);
 
-		message.reply({
+		interaction.reply({
 			embeds: [embed]
 		});
 	}
 }
 
-module.exports = EmojiInfo;
+module.exports = Emoji;

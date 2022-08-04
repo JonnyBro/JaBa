@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Змінити користувачеві досвід, рівень, кредити або банк!",
-	"USAGE": "{{prefix}}set [level/xp/credits/bank] [@користувач] [значення]",
-	"EXAMPLES": "{{prefix}}set level @Jonny_Bro#4226 10",
+	"USAGE": "set [level/xp/credits/bank] [@користувач] [значення]",
+	"EXAMPLES": "set level @Jonny_Bro#4226 10",
 	"INVALID_MEMBER": "Ви повинні згадати користувача!",
 	"NO_STATUS": "Виберіть значення: `level`, `xp`, `credits` або `bank`!",
 	"BOT_USER": "Ви не можете змінити статистику робота!",

@@ -1,39 +1,88 @@
-const Command = require("../../base/Command");
+const { SlashCommandBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, ComponentType } = require("discord.js"),
+	{ QueueRepeatMode } = require("discord-player");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Loop extends Command {
+class Loop extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "loop",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("loop")
+				.setDescription(client.translate("music/loop:DESCRIPTION")),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
 			guildOnly: true,
-			aliases: ["repeat", "l"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 1000
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		const voice = interaction.member.voice.channel;
+		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+		const queue = client.player.getQueue(interaction.guildId);
+		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
-	async run(message, args) {
-		const voice = message.member.voice.channel;
-		const queue = this.client.player.getQueue(message);
+		const row = new ActionRowBuilder()
+			.addComponents(
+				new SelectMenuBuilder()
+					.setCustomId("loop_select")
+					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
+					.addOptions([
+						{
+							label: client.translate("music/loop:AUTOPLAY"),
+							value: QueueRepeatMode.AUTOPLAY.toString()
+						},
+						{
+							label: client.translate("music/loop:QUEUE"),
+							value: QueueRepeatMode.QUEUE.toString()
+						},
+						{
+							label: client.translate("music/loop:TRACK"),
+							value: QueueRepeatMode.TRACK.toString()
+						},
+						{
+							label: client.translate("music/loop:DISABLE"),
+							value: QueueRepeatMode.OFF.toString()
+						}
+					])
+			);
 
-		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
-		if (!queue) return message.error("music/play:NOT_PLAYING");
+		const msg = await interaction.reply({
+			content: interaction.translate("common:AVAILABLE_CATEGORIES"),
+			components: [row],
+			fetchReply: true
+		});
 
-		const type = args[0];
-		let mode = null;
-		if (type === "queue" || type === "all") {
-			mode = this.client.player.setRepeatMode(message, 2);
-		} else if (type === "song" || type === "single") {
-			mode = this.client.player.setRepeatMode(message, 1);
-		} else {
-			mode = this.client.player.setRepeatMode(message, 0);
-		}
+		const collector = new InteractionCollector(client, {
+			componentType: ComponentType.SelectMenu,
+			message: msg,
+			idle: 60 * 1000
+		});
 
-		message.success(`music/loop:${mode ? mode === 2 ? "QUEUE" : "SONG" : "DISABLED"}`);
+		collector.on("collect", async msg => {
+			const type = Number(msg?.values[0]);
+			queue.setRepeatMode(type);
+			await msg.update({
+				content: interaction.translate(`music/loop:${type === 3 ? "AUTOPLAY_ENABLED" :
+					type === 2 ? "QUEUE_ENABLED" : type === 1 ? "TRACK_ENABLED" : "LOOP_DISABLED"}`),
+				components: []
+			});
+		});
 	}
 }
 

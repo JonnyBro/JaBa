@@ -1,6 +1,6 @@
 ﻿{
 	"DESCRIPTION": "Show all available sounds",
-	"USAGE": "{{prefix}}clips",
-	"EXAMPLES": "{{prefix}}clips",
+	"USAGE": "clips",
+	"EXAMPLES": "clips",
 	"EMBED_TITLE": "**Clip list**"
 }

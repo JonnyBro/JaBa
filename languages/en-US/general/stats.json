@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Shows the bot stats!",
-	"USAGE": "{{prefix}}stats",
-	"EXAMPLES": "{{prefix}}stats",
+	"USAGE": "stats",
+	"EXAMPLES": "stats",
 	"COUNTS_TITLE": "• __Statistics__",
 	"COUNTS_CONTENT": "`Servers: {{servers}}`\n`Users: {{users}}`",
 	"VERSIONS_TITLE": "• __Using__",

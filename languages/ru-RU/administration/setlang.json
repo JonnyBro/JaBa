@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Изменить язык бота на сервере!",
-	"USAGE": "{{prefix}}setlang [язык]",
-	"EXAMPLES": "{{prefix}}setlang ru\n{{prefix}}setlang uk",
+	"USAGE": "setlang [язык]",
+	"EXAMPLES": "setlang ru\nsetlang uk",
 	"MISSING_LANG": "Выберите язык из списка: {{list}}",
 	"SUCCESS": ":flag_ru: Язык сервера изменён на **{{lang}}**!"
 }

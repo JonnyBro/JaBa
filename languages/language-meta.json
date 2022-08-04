@@ -4,27 +4,12 @@
 		"nativeName": "Русский",
 		"moment": "ru",
 		"defaultMomentFormat": "Do MMMM YYYY",
-		"default": true,
-		"aliases": [
-			"Русский",
-			"ru",
-			"ru-ru",
-			"ru_ru",
-			"ru_RU"
-		]
+		"default": true
 	},
 	{
 		"name": "uk-UA",
 		"nativeName": "Українська",
 		"moment": "uk",
-		"defaultMomentFormat": "Do MMMM YYYY",
-		"default": false,
-		"aliases": [
-			"Украинский",
-			"uk",
-			"uk-ua",
-			"uk_ua",
-			"uk_UA"
-		]
+		"defaultMomentFormat": "Do MMMM YYYY"
 	}
 ]

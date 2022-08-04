@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Размутить пользователя!",
-	"USAGE": "{{prefix}}unmute [@пользователь]",
-	"EXAMPLES": "{{prefix}}unmute @Jonny_Bro#4226",
-	"MISSING_MEMBER": "Вы должны упомянуть пользователя!",
-	"NOT_MUTED": "**{{username}}** не замучен на данном сервере!",
-	"SUCCESS": "**{{username}}** был размучен на данном сервере!",
-	"SUCCESS_CASE": "{{user}} (`{{usertag}}`) размучен! (Номер #{{count}})"
-}

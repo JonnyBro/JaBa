@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Видалити повідомлення!",
-	"USAGE": "{{prefix}}clear [у_повідомлень] (@користувач)",
-	"EXAMPLES": "{{prefix}}clear 10\n{{prefix}}clear 10 @Jonny_Bro#4226\n{{prefix}}clear all",
+	"USAGE": "clear [у_повідомлень] (@користувач)",
+	"EXAMPLES": "clear 10\nclear 10 @Jonny_Bro#4226\nclear all",
 	"MISSING_AMOUNT": "Вкажіть кількість повідомлень для видалення!",
 	"ALL_CONFIRM": "Всі повідомлення в каналі будуть видалені! Введіть `confirm` для підтвердження",
 	"CHANNEL_CLEARED": "Канал очищений!",

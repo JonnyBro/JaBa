@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Створити зображення \"Clyde\"",
-	"USAGE": "{{prefix}}clyde [текст]",
-	"EXAMPLES": "{{prefix}}clyde Discord закриється 11 грудня 2002 року. Прощайте!.",
-	"MISSING_TEXT": "Введіть текст!"
-}

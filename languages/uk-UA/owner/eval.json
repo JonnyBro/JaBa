@@ -1,5 +1,5 @@
 {
 	"DESCRIPTION": "Виконати код!",
-	"USAGE": "{{prefix}}eval [код]",
-	"EXAMPLES": "{{prefix}}eval message.channel.send({ content: \"Hello World!\" })"
+	"USAGE": "eval [код]",
+	"EXAMPLES": "eval message.channel.send({ content: \"Hello World!\" })"
 }

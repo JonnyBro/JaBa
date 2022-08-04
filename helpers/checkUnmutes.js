@@ -1,67 +1,59 @@
-const Discord = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
-module.exports = {
-	/**
-	 * Check if there is a user to unmute
-	 * @param {object} client The Discord Client instance
-	 */
-	async init(client) {
-		client.membersData
-			.find({ "mute.muted": true })
-			.then((members) => {
-				members.forEach((member) => {
-					client.databaseCache.mutedUsers.set(`${member.id}${member.guildID}`, member);
-				});
-			});
-		setInterval(async () => {
-			client.databaseCache.mutedUsers.filter((m) => m.mute.endDate <= Date.now()).forEach(async (memberData) => {
-				const guild = client.guilds.cache.get(memberData.guildID);
-				if (!guild) return;
-				const member = guild.members.cache.get(memberData.id) || await guild.members.fetch(memberData.id).catch(() => {
-					memberData.mute = {
-						muted: false,
-						endDate: null,
-						case: null
-					};
-					memberData.save();
-					client.logger.log("[unmute] " + memberData.id + " cannot be found.");
+module.exports.init = async function (client) {
+	client.membersData
+		.find({ "mute.muted": true })
+		.then((members) => {
+			members.forEach((member) => client.databaseCache.mutedUsers.set(`${member.id}${member.guildID}`, member));
+		});
+	setInterval(async () => {
+		client.databaseCache.mutedUsers.filter((m) => m.mute.endDate <= Date.now()).forEach(async (memberData) => {
+			const guild = client.guilds.cache.get(memberData.guildID);
+			if (!guild) return;
 
-					return null;
-				});
-				const guildData = await client.findOrCreateGuild({
-					id: guild.id
-				});
-				guild.data = guildData;
-				if (member) {
-					guild.channels.cache.forEach((channel) => {
-						const permOverwrites = channel.permissionOverwrites.cache.get(member.id);
-						if (permOverwrites) permOverwrites.delete();
-					});
-				}
-				const user = member ? member.user : await client.users.fetch(memberData.id);
-				const embed = new Discord.MessageEmbed()
-					.setDescription(guild.translate("moderation/unmute:SUCCESS_CASE", {
-						user: user.toString(),
-						usertag: user.tag,
-						count: memberData.mute.case
-					}))
-					.setColor("#f44271")
-					.setFooter({
-						text: guild.client.config.embed.footer
-					});
-				const channel = guild.channels.cache.get(guildData.plugins.modlogs);
-				if (channel) channel.send({
-					embeds: [embed]
-				});
-
+			const member = guild.members.cache.get(memberData.id) || await guild.members.fetch(memberData.id).catch(() => {
 				memberData.mute = {
 					muted: false,
 					endDate: null,
 					case: null
 				};
-				client.databaseCache.mutedUsers.delete(`${memberData.id}${memberData.guildID}`);
-				await memberData.save();
+				memberData.save();
+				client.logger.log("[unmute] " + memberData.id + " cannot be found.");
+				return null;
 			});
-		}, 1000);
-	}
+
+			const guildData = await client.findOrCreateGuild({
+				id: guild.id
+			});
+
+			if (member) {
+				guild.channels.cache.forEach((channel) => {
+					const permOverwrites = channel.permissionOverwrites.cache.get(member.id);
+					if (permOverwrites) permOverwrites.delete();
+				});
+			}
+			const user = member ? member.user : await client.users.fetch(memberData.id);
+			const embed = new EmbedBuilder()
+				.setDescription(guild.translate("moderation/unmute:SUCCESS_CASE", {
+					user: user.toString(),
+					usertag: user.tag,
+					count: memberData.mute.case
+				}))
+				.setColor("#F44271")
+				.setFooter({
+					text: guild.client.config.embed.footer
+				});
+			const channel = guild.channels.cache.get(guildData.plugins.modlogs);
+			if (channel) channel.send({ embeds: [embed] });
+
+			memberData.mute = {
+				muted: false,
+				endDate: null,
+				case: null
+			};
+
+			client.databaseCache.mutedUsers.delete(`${memberData.id}${memberData.guildID}`);
+			await memberData.save();
+		});
+	}, 1000);
 };

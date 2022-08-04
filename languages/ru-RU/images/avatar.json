@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Возвращает аватар пользователя",
-	"USAGE": "{{prefix}}avatar (@пользователь) (link)",
-	"EXAMPLES": "{{prefix}}avatar\n{{prefix}}avatar @Jonny_Bro#4226\n{{prefix}}avatar link"
-}

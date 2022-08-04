@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Створити зображення \"trash\"",
-	"USAGE": "{{prefix}}trash (@користувач)",
-	"EXAMPLES": "{{prefix}}trash\n{{prefix}}trash @Jonny_Bro#4226"
-}

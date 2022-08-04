@@ -2,7 +2,7 @@ const config = require("../config"),
 	utils = require("./utils"),
 	CheckAuth = require("./auth/CheckAuth");
 
-module.exports.load = async(client) => {
+module.exports.init = async(client) => {
 	/* Init express app */
 	const express = require("express"),
 		session = require("express-session"),
@@ -76,6 +76,6 @@ module.exports.load = async(client) => {
 
 	// Listen
 	app.listen(app.get("port"), () => {
-		console.log(`JaBa Dashboard is listening on port ${app.get("port")}`);
+		require("../helpers/logger").log(`JaBa Dashboard is listening on port ${app.get("port")}`);
 	});
 };

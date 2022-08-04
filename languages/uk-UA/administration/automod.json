@@ -1,9 +1,9 @@
 {
 	"DESCRIPTION": "Увімкнути або вимкнути автовидалення Discord запрошень",
-	"USAGE": "{{prefix}}automod [on/off] (#канал)",
-	"EXAMPLES": "{{prefix}}automod on\n{{prefix}}automod off #general\n{{prefix}}automod off",
+	"USAGE": "automod [on/off] (#канал)",
+	"EXAMPLES": "automod on\nautomod off #general\nautomod off",
 	"MISSING_STATUS": "Вкажіть значення `on` або `off`!",
-	"ENABLED": "**Discord запрошення будуть автоматично видалятися!**\n\n:arrow_right_hook: *Використовуйте `{{prefix}}automod off #channel`, щоб ігнорувати канал!*",
+	"ENABLED": "**Discord запрошення будуть автоматично видалятися!**\n\n:arrow_right_hook: *Використовуйте `automod off #channel`, щоб ігнорувати канал!*",
 	"DISABLED_CHANNEL": "Автомодерація не буде виконуватись в {{channel}}!",
 	"DISABLED": "Автомодерація відключена на цьому сервері!",
 	"DELETED": "Ваше повідомлення видалено, т.к. містило у собі посилання-запрошення!"

@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показати чергу на відтворення",
-	"USAGE": "{{prefix}}queue",
-	"EXAMPLES": "{{prefix}}queue",
+	"USAGE": "queue",
+	"EXAMPLES": "queue",
 	"TITLE": "Черга",
 	"ADDED": "Додав"
 }

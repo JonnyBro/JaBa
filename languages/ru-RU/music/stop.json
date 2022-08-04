@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Остановить воспроизведение очереди",
-	"USAGE": "{{prefix}}stop",
-	"EXAMPLES": "{{prefix}}stop",
+	"USAGE": "stop",
+	"EXAMPLES": "stop",
 	"SUCCESS": "Воспроизведение остановлено!"
 }

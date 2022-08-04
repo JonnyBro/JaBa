@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Увімкнути або вимкнути автовідтворення",
-	"USAGE": "{{prefix}}autoplay",
-	"EXAMPLES": "{{prefix}}autoplay",
+	"USAGE": "autoplay",
+	"EXAMPLES": "autoplay",
 	"SUCCESS_ENABLED": "Автовідтворення увімкнено!",
 	"SUCCESS_DISABLED": "Автовідтворення вимкнено!"
 }

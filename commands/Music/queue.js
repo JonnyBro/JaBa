@@ -1,65 +1,66 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js"),
-	Pagination = require("discord-paginationembed");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Queue extends Command {
+class Queue extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "queue",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("queue")
+				.setDescription(client.translate("music/queue:DESCRIPTION")),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
 			guildOnly: true,
-			aliases: ["q"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 3000
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		const queue = client.player.getQueue(interaction.guildId);
+		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
-	async run(message, args, data) {
-		const voice = message.member.voice.channel;
-		const queue = this.client.player.getQueue(message);
+		const currentTrack = queue.current;
+		const tracks = queue.tracks.slice(0, 10).map(track => {
+			return `${queue.tracks.indexOf(track)}. [${track.title}](${track.url})\n> ${interaction.translate("music/queue:ADDED")} ${track.requestedBy}`;
+		});
 
-		if (!voice) return message.error("music/play:NO_VOICE_CHANNEL");
-		if (!queue) return message.error("music/play:NOT_PLAYING");
-
-		if (queue.songs.length === 1) {
-			const embed = new Discord.MessageEmbed()
-				.setAuthor({
-					name: message.translate("music/queue:TITLE"),
-					iconURL: message.guild.iconURL({
-						dynamic: true
-					})
-				})
-				.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*${message.translate("music/queue:ADDED")} ${queue.songs[0].member}*\n`)
-				.setColor(data.config.embed.color);
-			return message.reply({
-				embeds: [embed]
-			});
-		}
-
-		const FieldsEmbed = new Pagination.FieldsEmbed();
-
-		FieldsEmbed.embed
-			.setColor(data.config.embed.color)
+		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: message.translate("music/queue:TITLE"),
-				iconURL: message.guild.iconURL({
-					dynamic: true
-				})
+				name: interaction.translate("music/queue:TITLE"),
+				iconURL: interaction.guild.iconURL()
 			})
-			.addField(message.translate("music/np:CURRENTLY_PLAYING"), `[${queue.songs[0].name}](${queue.songs[0].url})\n*${message.translate("music/queue:ADDED")} ${queue.songs[0].member}*\n`);
-		FieldsEmbed
-			.setArray(queue.songs[1] ? queue.songs.slice(1, queue.songs.length) : [])
-			.setAuthorizedUsers([message.author.id])
-			.setChannel(message.channel)
-			.setElementsPerPage(5)
-			.setDeleteOnTimeout(true)
-			.setPageIndicator(true)
-			.formatField(message.translate("music/queue:TITLE"), (track) => `**${queue.songs.indexOf(track)}**. [${track.name}](${track.url})\n*${message.translate("music/queue:ADDED")} ${track.member}*\n`)
-			.build();
+			.setColor(client.config.embed.color)
+			.addFields(
+				{
+					name: interaction.translate("music/nowplaying:CURRENTLY_PLAYING"),
+					value: `[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}`
+				},
+				{
+					name: "\u200b",
+					value: `${tracks.join("\n")}\n${interaction.translate("music/nowplaying:MORE", {
+						tracks: `${queue.tracks.length - tracks.length} ${client.getNoun(queue.tracks.length - tracks.length, interaction.translate("misc:NOUNS:TRACKS:1"), interaction.translate("misc:NOUNS:TRACKS:2"), interaction.translate("misc:NOUNS:TRACKS:5"))}`
+					})}`
+				}
+			);
+
+		interaction.reply({
+			embeds: [embed]
+		});
 	}
 }
 

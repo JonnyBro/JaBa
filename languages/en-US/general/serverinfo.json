@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Shows information about the server!",
-	"USAGE": "{{prefix}}serverinfo [ID/Name]",
-	"EXAMPLES": "{{prefix}}serverinfo JaBa\n{{prefix}}serverinfo",
+	"USAGE": "serverinfo [ID/Name]",
+	"EXAMPLES": "serverinfo JaBa\nserverinfo",
 	"AFK_CHANNEL": "AFK channel",
 	"NO_AFK_CHANNEL": "No AFK channel",
 	"MEMBERS": "{{count}} members",

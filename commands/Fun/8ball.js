@@ -1,28 +1,50 @@
-const Command = require("../../base/Command");
+const { SlashCommandBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Eightball extends Command {
+class Eightball extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "8ball",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("8ball")
+				.setDescription(client.translate("fun/8ball:DESCRIPTION"))
+				.addStringOption(option =>
+					option.setName("question")
+						.setDescription(client.translate("fun/8ball:QUESTION"))
+						.setRequired(true)),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
-			guildOnly: false,
-			aliases: ["8b"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 2000
+			guildOnly: true,
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		await interaction.deferReply();
+		const question = interaction.options.getString("question");
 
-	async run(message, args) {
-		if (!args[0] || !message.content.endsWith("?")) return message.error("fun/8ball:ERR_QUESTION");
+		if (!question.endsWith("?")) return interaction.replyT("fun/8ball:ERR_QUESTION", null, { ephemeral: true });
 
-		const answerN = this.client.functions.randomNum(1, 20);
-		const answer = message.translate(`fun/8ball:RESPONSE_${answerN}`);
+		const answerN = client.functions.randomNum(1, 20);
+		const answer = interaction.translate(`fun/8ball:RESPONSE_${answerN}`);
+		await client.wait(2000);
 
-		message.reply({
+		interaction.editReply({
 			content: answer
 		});
 	}

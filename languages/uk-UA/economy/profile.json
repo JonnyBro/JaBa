@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показати профіль користувача",
-	"USAGE": "{{prefix}}profile (@користувач)",
-	"EXAMPLES": "{{prefix}}profile\n{{prefix}}profile @Jonny_Bro#4226",
+	"USAGE": "profile (@користувач)",
+	"EXAMPLES": "profile\nprofile @Jonny_Bro#4226",
 	"BOT_USER": "Боти не мають профілю!",
 	"TITLE": "Профіль {{username}}",
 	"LINK": "Профіль",
@@ -20,5 +20,5 @@
 	"REGISTERED": "📅 Профіль створено",
 	"NO_LOVER": "Вільний",
 	"ACHIEVEMENTS": "🔥 Досягнення",
-	"ACHIEVEMENTS_CONTENT": "Отримайте більше інформації за допомогою `{{prefix}}achievements`!"
+	"ACHIEVEMENTS_CONTENT": "Отримайте більше інформації за допомогою `achievements`!"
 }

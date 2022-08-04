@@ -1,7 +1,7 @@
 {
 "DESCRIPTION": "Встановити канал для логів модерації!",
-"USAGE": "{{prefix}}setmodlogs (#канал)",
-"EXAMPLES": "{{prefix}}setmodlogs #логи\n{{prefix}}setmodlogs",
+"USAGE": "setmodlogs (#канал)",
+"EXAMPLES": "setmodlogs #логи\nsetmodlogs",
 "ENABLED": "Логи модерації включені в канал **{{channel}}**!",
 "DISABLED": "Логи модерації вимкнені!"
 }

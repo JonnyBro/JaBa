@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Встановити канал для скарг!",
-	"USAGE": "{{prefix}}setreports (#канал)",
-	"EXAMPLES": "{{prefix}}setreports #скарги\n{{prefix}}setreports",
+	"USAGE": "setreports (#канал)",
+	"EXAMPLES": "setreports #скарги\nsetreports",
 	"ENABLED": "Скарги надсилатимуться в **{{channel}}**!",
 	"DISABLED": "Скарги відключені!"
 }

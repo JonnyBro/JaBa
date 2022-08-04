@@ -1,42 +1,48 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js"),
+const { SlashCommandBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
-class ShortURL extends Command {
+class Shorturl extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "shorturl",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("shorturl")
+				.setDescription(client.translate("general/shorturl:DESCRIPTION"))
+				.addStringOption(option => option.setName("url")
+					.setDescription(client.translate("general/shorturl:URL"))
+					.setRequired(true)),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
-			guildOnly: false,
-			aliases: ["minimize"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 1000
+			guildOnly: true,
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		const url = interaction.options.getString("url");
+		const res = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURI(url)}`).then(res => res.text());
 
-	async run(message, args, data) {
-		const url = args[0];
-		if (!url) return message.error("general/shorturl:MISSING_URL");
-
-		const res = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURI(url)}`);
-		const body = await res.text();
-
-		if (body === "Error: Please enter a valid URL to shorten") return message.error("general/shorturl:MISSING_URL");
-
-		const embed = new Discord.MessageEmbed()
-			.setColor(data.config.embed.color)
-			.setFooter({
-				text: data.config.embed.footer
-			})
-			.setDescription(body);
-		message.reply({
-			embeds: [embed]
+		interaction.reply({
+			content: `<${res}>`,
+			ephemeral: true
 		});
 	}
 }
 
-module.exports = ShortURL;
+module.exports = Shorturl;

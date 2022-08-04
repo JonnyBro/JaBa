@@ -1,52 +1,76 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, parseEmoji } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Suggest extends Command {
+class Suggest extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "suggest",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("suggest")
+				.setDescription(client.translate("general/suggest:DESCRIPTION"))
+				.addStringOption(option => option.setName("message")
+					.setDescription(client.translate("common:MESSAGE"))
+					.setRequired(true)),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
 			guildOnly: true,
-			aliases: ["sugg"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 2000
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		if (interaction.user.id === "285109105717280768") return interaction.reply({ content: "Пошёл нахуй фахон" });
+		const suggChannel = interaction.guild.channels.cache.get(interaction.guild.data.plugins.suggestions);
+		if (!suggChannel) return interaction.error("general/suggest:MISSING_CHANNEL");
+		const suggestion = interaction.options.getString("message");
 
-	async run(message, args, data) {
-		if (message.author.id === "285109105717280768") return message.reply({ content: "Пошёл нахуй фахон" });
-
-		const suggChannel = message.guild.channels.cache.get(data.guild.plugins.suggestions);
-		if (!suggChannel) return message.error("general/suggest:MISSING_CHANNEL");
-
-		const sugg = args.join(" ");
-		if (!sugg) return message.error("general/suggest:MISSING_CONTENT");
-
-		const embed = new Discord.MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: message.translate("general/suggest:TITLE", {
-					user: message.author.username
+				name: interaction.translate("general/suggest:TITLE", {
+					user: interaction.user.tag
 				}),
-				iconURL: message.author.displayAvatarURL({
-					size: 512,
-					dynamic: true,
-					format: "png"
+				iconURL: interaction.member.displayAvatarURL({
+					size: 512
 				})
 			})
-			.addField(message.translate("common:AUTHOR"), `\`${message.author.username}#${message.author.discriminator}\``, true)
-			.addField(message.translate("common:DATE"), message.printDate(new Date(Date.now())), true)
-			.addField(message.translate("common:CONTENT"), sugg)
-			.setColor(data.config.embed.color)
+			.addFields([
+				{
+					name: interaction.translate("common:DATE"),
+					value: client.printDate(new Date(Date.now()))
+				},
+				{
+					name: interaction.translate("common:AUTHOR"),
+					value: interaction.user.toString(),
+					inline: true
+				},
+				{
+					name: interaction.translate("common:CONTENT"),
+					value: suggestion,
+					inline: true
+				}
+			])
+			.setColor(client.config.embed.color)
 			.setFooter({
-				text: data.config.embed.footer
+				text: client.config.embed.footer
 			});
 
-		const success = Discord.Util.parseEmoji(this.client.customEmojis.cool).id;
-		const error = Discord.Util.parseEmoji(this.client.customEmojis.notcool).id;
+		const success = parseEmoji(client.customEmojis.cool).id;
+		const error = parseEmoji(client.customEmojis.notcool).id;
 
 		suggChannel.send({
 			embeds: [embed]
@@ -55,7 +79,7 @@ class Suggest extends Command {
 			await m.react(error);
 		});
 
-		message.success("general/suggest:SUCCESS", {
+		interaction.success("general/suggest:SUCCESS", {
 			channel: suggChannel.toString()
 		});
 	}

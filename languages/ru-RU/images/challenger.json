@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Создать изображение \"challenger\"",
-	"USAGE": "{{prefix}}challenger (@пользователь)",
-	"EXAMPLES": "{{prefix}}challenger\n{{prefix}}challenger @Jonny_Bro#4226"
-}

@@ -1,16 +1,16 @@
 {
 	"DESCRIPTION": "Увімкнути або вимкнути повідомлення під час входу користувача на сервер!",
-	"USAGE": "{{prefix}}welcome (edit/off/test)",
-	"EXAMPLES": "{{prefix}}welcome\n{{prefix}}welcome test",
+	"USAGE": "welcome (edit/off/test)",
+	"EXAMPLES": "welcome\nwelcome test",
 	"MISSING_STATUS": "Виберіть дію: `edit`, `off` або `test`!",
 	"DEFAULT_MESSAGE": "Ласкаво просимо до {server}, {user}, тепер нас {membercount}! Ваш обліковий запис було створено {createdat}.",
 	"TEST_SUCCESS": "Тест виконано!",
 	"FORM_1": "**У який канал надсилатимуться повідомлення?**\n\n:arrow_right_hook: *Надішліть згадку каналу!*",
 	"FORM_2": "**Вкажіть ваше повідомлення.**\n\n**Якщо необхідно:**\n*-* __Згадати користувача__: {user}\n*-* __Кількість учасників__: {membercount}\n*- * __Назва сервера__: {server}\n\n**Наприклад:**\nЛаскаво просимо на сервер {server}, {user}!Тепер нас {membercount}!\n:fast_forward:\nЛаскаво просимо на сервер {{guildName} }, {{author}}! Тепер нас {{memberCount}}!",
 	"FORM_3": "**Ви хочете додати картку до повідомлення?**\n\n:arrow_right_hook: *Надішліть `так` або `ні`!*",
-	"FORM_SUCCESS": "**Готово!**\n\n:arrow_right_hook: *Використовуйте `{{prefix}}welcome test` для перегляду вашого вітального повідомлення!*",
+	"FORM_SUCCESS": "**Готово!**\n\n:arrow_right_hook: *Використовуйте `welcome test` для перегляду вашого вітального повідомлення!*",
 	"MAX_CHARACT": "Ваше повідомлення не повинно перевищувати 1800 символів!",
-	"DISABLED": "**Повідомлення вимкнено!**\n\n:arrow_right_hook: *Використовуйте `{{prefix}}configuration`, щоб побачити оновлені настройки!*",
+	"DISABLED": "**Повідомлення вимкнено!**\n\n:arrow_right_hook: *Використовуйте `configuration`, щоб побачити оновлені настройки!*",
 	"IMG_WELCOME": "Ласкаво просимо до {{server}}!",
 	"TITLE": "Ласкаво просимо!"
 }

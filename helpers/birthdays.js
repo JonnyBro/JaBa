@@ -1,7 +1,7 @@
-const CronJob = require("cron").CronJob,
-	Discord = require("discord.js");
+const { CronJob } = require("cron"),
+	{ EmbedBuilder } = require("discord.js");
 
-async function init(client) {
+module.exports.init = async function (client) {
 	new CronJob("0 5 * * *", async function () {
 		client.guilds.cache.forEach(async (guild) => {
 			const date = new Date(),
@@ -26,24 +26,28 @@ async function init(client) {
 								const age = currentYear - year;
 
 								if (currentMonth === month && currentDay === day) {
-									const embed = new Discord.MessageEmbed()
+									const embed = new EmbedBuilder()
 										.setAuthor({
 											name: client.user.username,
 											iconURL: client.user.displayAvatarURL({
-												size: 512,
-												dynamic: true,
-												format: "png"
+												extension: "png",
+												size: 512
 											})
 										})
 										.setColor(client.config.embed.color)
 										.setFooter({
 											text: client.config.embed.footer
 										})
-										.addField(client.translate("economy/birthdate:HAPPY_BIRTHDAY"), client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
-											name: user.username,
-											user: user.id,
-											age: `**${age}** ${client.getNoun(age, client.translate("misc:NOUNS:AGE:1"), client.translate("misc:NOUNS:AGE:2"), client.translate("misc:NOUNS:AGE:5"))}`
-										}));
+										.addFields([
+											{
+												name: client.translate("economy/birthdate:HAPPY_BIRTHDAY"),
+												value: client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
+													name: user.username,
+													user: user.id,
+													age: `**${age}** ${client.getNoun(age, client.translate("misc:NOUNS:AGE:1"), client.translate("misc:NOUNS:AGE:2"), client.translate("misc:NOUNS:AGE:5"))}`
+												})
+											}
+										]);
 									const msg = await channel.send({
 										embeds: [embed]
 									});
@@ -55,8 +59,4 @@ async function init(client) {
 			}
 		});
 	}, null, true, "Europe/Moscow");
-}
-
-module.exports = {
-	init
 };

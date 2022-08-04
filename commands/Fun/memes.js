@@ -1,77 +1,81 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js"),
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, ComponentType } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
-class Memes extends Command {
+class Memes extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "memes",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("memes")
+				.setDescription(client.translate("fun/memes:DESCRIPTION")),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
 			guildOnly: true,
-			aliases: ["mem"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 2000
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		const tags = ["memes", "dankmemes", "me_irl", "wholesomememes"].map(tag =>
+			JSON.parse(JSON.stringify({
+				label: tag,
+				value: tag
+			}))
+		);
 
-	async run(message, args, data) {
-		const tag = args[0];
-		const subs = ["memes", "dankmemes", "me_irl", "wholesomememes"];
+		const row = new ActionRowBuilder()
+			.addComponents(
+				new SelectMenuBuilder()
+					.setCustomId("memes_select")
+					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
+					.addOptions(tags)
+			);
 
-		if (tag === "list") {
-			const embed = new Discord.MessageEmbed()
-				.setColor(data.config.embed.color)
-				.setFooter({
-					text: data.config.embed.footer
-				})
-				.setTitle(message.translate("fun/memes:EMBED_TITLE"))
-				.setDescription(subs.join("\n"))
-				.setTimestamp();
+		const msg = await interaction.reply({
+			content: interaction.translate("common:AVAILABLE_CATEGORIES"),
+			components: [row],
+			fetchReply: true
+		});
 
-			message.reply({
-				embeds: [embed]
-			});
-		} else if (!tag) {
-			const m = await message.sendT("fun/memes:SEARCHING_RANDOM");
+		const collector = new InteractionCollector(client, {
+			componentType: ComponentType.SelectMenu,
+			message: msg,
+			idle: 60 * 1000
+		});
 
-			const res = await fetch("https://meme-api.herokuapp.com/gimme/").then(response => response.json());
-			const embed = new Discord.MessageEmbed()
-				.setColor(data.config.embed.color)
-				.setFooter({
-					text: data.config.embed.footer
-				})
-				.setTitle(`${res.title}\n${message.translate("fun/memes:SUBREDDIT")}: ${res.subreddit}\n${message.translate("common:AUTHOR")}: ${res.author}\n${message.translate("fun/memes:UPS")}: ${res.ups}`)
-				.setImage(res.url)
-				.setTimestamp();
-
-			m.edit({
-				content: null,
-				embeds: [embed]
-			});
-		} else if (subs.includes(tag)) {
-			const m = await message.sendT("fun/memes:SEARCHING", {
-				tag
-			});
-
+		collector.on("collect", async msg => {
+			const tag = msg?.values[0];
 			const res = await fetch(`https://meme-api.herokuapp.com/gimme/${tag}`).then(response => response.json());
-			const embed = new Discord.MessageEmbed()
-				.setColor(data.config.embed.color)
+
+			const embed = new EmbedBuilder()
+				.setColor(client.config.embed.color)
 				.setFooter({
-					text: data.config.embed.footer
+					text: client.config.embed.footer
 				})
-				.setTitle(`${res.title}\n${message.translate("fun/memes:SUBREDDIT")}: ${res.subreddit}\n${message.translate("common:AUTHOR")}: ${res.author}\n${message.translate("fun/memes:UPS")}: ${res.ups}`)
+				.setTitle(`${res.title}\n${interaction.translate("fun/memes:SUBREDDIT")}: ${res.subreddit}\n${interaction.translate("common:AUTHOR")}: ${res.author}\n${interaction.translate("fun/memes:UPS")}: ${res.ups}`)
 				.setImage(res.url)
 				.setTimestamp();
 
-			m.edit({
-				content: null,
+			await msg.update({
 				embeds: [embed]
 			});
-		} else return message.error("fun/memes:NOT_FOUND");
+		});
 	}
 }
 

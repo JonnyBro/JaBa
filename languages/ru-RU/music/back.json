@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Включить предыдущий трек",
-	"USAGE": "{{prefix}}back",
-	"EXAMPLES": "{{prefix}}back",
+	"USAGE": "back",
+	"EXAMPLES": "back",
 	"NO_PREV_SONG": "Предыдущий трек отсутствует!",
 	"SUCCESS": "Играет предыдущий трек!"
 }

@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Создать изображение \"crush\"",
-	"USAGE": "{{prefix}}crush (@пользователь)",
-	"EXAMPLES": "{{prefix}}crush\n{{prefix}}crush @Jonny_Bro#4226"
-}

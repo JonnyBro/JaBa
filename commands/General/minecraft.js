@@ -1,82 +1,99 @@
-const Command = require("../../base/Command"),
-	Discord = require("discord.js"),
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand"),
 	gamedig = require("gamedig");
 
-class Minecraft extends Command {
+class Minecraft extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "minecraft",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("minecraft")
+				.setDescription(client.translate("general/minecraft:DESCRIPTION"))
+				.addStringOption(option => option.setName("ip")
+					.setDescription(client.translate("common:IP"))
+					.setRequired(true)),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
-			guildOnly: false,
-			aliases: ["mc"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 1000
+			guildOnly: true,
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Array} data
+	 */
+	async execute(client, interaction) {
+		await interaction.deferReply();
+		const ip = interaction.options.getString("ip");
 
-	async run(message, args, data) {
-		const ip = args[0];
-		if (!ip) return message.error("general/minecraft:MISSING_IP");
-
-		const favicon = `https://eu.mc-api.net/v3/server/favicon/${ip}`;
-		let options = {
+		const options = {
 			type: "minecraft",
 			host: ip
 		};
 
 		if (ip.split(":").length > 1) {
-			const ipp = ip.split(":");
-			options = {
-				type: "minecraft",
-				host: ipp[0],
-				port: ipp[1]
-			};
+			const splitIp = ip.split(":");
+			options.host = splitIp[0];
+			options.port = splitIp[1];
 		}
 
-		const m = await message.sendT("misc:PLEASE_WAIT", null, {
-			prefixEmoji: "loading"
-		});
+		var res = await gamedig.query(options).catch(() => {});
 
-		let json = null;
-
-		await gamedig.query(options).then((res) => {
-			json = res;
-		}).catch((err) => {
-			console.error(err);
-		});
-
-		if (!json) {
+		if (!res) {
 			options.type = "minecraftpe";
-			await gamedig.query(options).then((res) => {
-				json = res;
-			}).catch((err) => {
-				console.error(err);
-			});
+			res = await gamedig.query(options).catch(() => {});
 		}
 
-		if (!json) return m.error("general/minecraft:FAILED", null, { edit: true });
+		if (!res) return interaction.error("general/minecraft:FAILED", null, { edit: true });
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: json.name
+				name: res.name
 			})
-			.addField(message.translate("general/minecraft:FIELD_STATUS"), message.translate("general/minecraft:ONLINE"))
-			.addField(message.translate("general/minecraft:FIELD_CONNECTED"), `**${(json.raw.players ? json.raw.players.online : json.players.length)}** ${message.getNoun((json.raw.players ? json.raw.players.online : json.players.length), message.translate("misc:NOUNS:PLAYERS:1"), message.translate("misc:NOUNS:PLAYERS:2"), message.translate("misc:NOUNS:PLAYERS:5"))} / **${(json.raw.players ? json.raw.players.max : json.maxplayers)}** ${message.getNoun((json.raw.players ? json.raw.players.max : json.maxplayers), message.translate("misc:NOUNS:PLAYERS:1"), message.translate("misc:NOUNS:PLAYERS:2"), message.translate("misc:NOUNS:PLAYERS:5"))}`)
-			.addField(message.translate("general/minecraft:FIELD_IP"), json.connect, true)
-			.addField(message.translate("general/minecraft:FIELD_VERSION"), json.raw.vanilla.raw.version.name, true)
-			.addField(message.translate("general/minecraft:FIELD_PING"), json.raw.vanilla.ping.toString())
-			.setColor(data.config.embed.color)
-			.setThumbnail(favicon)
+			.addFields([
+				{
+					name: interaction.translate("general/minecraft:FIELD_STATUS"),
+					value: interaction.translate("general/minecraft:ONLINE")
+				},
+				{
+					name: interaction.translate("general/minecraft:FIELD_CONNECTED"),
+					value: `**${(res.raw.players ? res.raw.players.online : res.players.length)}** ${client.getNoun((res.raw.players ? res.raw.players.online : res.players.length), interaction.translate("misc:NOUNS:PLAYERS:1"), interaction.translate("misc:NOUNS:PLAYERS:2"), interaction.translate("misc:NOUNS:PLAYERS:5"))} / **${(res.raw.players ? res.raw.players.max : res.maxplayers)}** ${client.getNoun((res.raw.players ? res.raw.players.max : res.maxplayers), interaction.translate("misc:NOUNS:PLAYERS:1"), interaction.translate("misc:NOUNS:PLAYERS:2"), interaction.translate("misc:NOUNS:PLAYERS:5"))}`
+				},
+				{
+					name: interaction.translate("general/minecraft:FIELD_IP"),
+					value: res.connect,
+					inline: true
+				},
+				{
+					name: interaction.translate("general/minecraft:FIELD_VERSION"),
+					value: res.raw.vanilla.raw.version.name,
+					inline: true
+
+				},
+				{
+					name: interaction.translate("general/minecraft:FIELD_PING"),
+					value: res.raw.vanilla.ping.toString()
+				}
+			])
+			.setColor(client.config.embed.color)
+			.setThumbnail(`https://eu.mc-api.net/v3/server/favicon/${ip}`)
 			.setFooter({
-				text: data.config.embed.footer
+				text: client.config.embed.footer
 			});
 
-		m.edit({
-			content: null,
+		interaction.editReply({
 			embeds: [embed]
 		});
 	}

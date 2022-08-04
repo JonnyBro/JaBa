@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показати список ваших досягнень!",
-	"USAGE": "{{prefix}}achievements",
-	"EXAMPLES": "{{prefix}}achievements",
+	"USAGE": "achievements",
+	"EXAMPLES": "achievements",
 	"SEND_CMD": "Використотайте свою першу команду!",
 	"CLAIM_SALARY": "Отримайте зарплату 10 разів!",
 	"MARRY": "Знайдіть свою половинку і одружіться!",
