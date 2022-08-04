@@ -52,7 +52,7 @@ class Queue extends BaseCommand {
 				},
 				{
 					name: "\u200b",
-					value: `${tracks.join("\n")}\n${interaction.translate("music/nowplaying:MORE", {
+					value: `${tracks.join("\n")}\n${interaction.translate("music/queue:MORE", {
 						tracks: `${queue.tracks.length - tracks.length} ${client.getNoun(queue.tracks.length - tracks.length, interaction.translate("misc:NOUNS:TRACKS:1"), interaction.translate("misc:NOUNS:TRACKS:2"), interaction.translate("misc:NOUNS:TRACKS:5"))}`
 					})}`
 				}
