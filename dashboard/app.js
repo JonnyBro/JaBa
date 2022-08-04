@@ -76,6 +76,6 @@ module.exports.init = async(client) => {
 
 	// Listen
 	app.listen(app.get("port"), () => {
-		console.log(`JaBa Dashboard is listening on port ${app.get("port")}`);
+		require("../helpers/logger").log(`JaBa Dashboard is listening on port ${app.get("port")}`);
 	});
 };
