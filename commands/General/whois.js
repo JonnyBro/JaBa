@@ -38,7 +38,7 @@ class Whois extends BaseCommand {
 		await interaction.deferReply();
 		const ip = interaction.options.getString("ip");
 		const whois = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,continent,continentCode,country,countryCode,region,regionName,city,zip,timezone,currency,isp,org,as,mobile,proxy,hosting,query`).then(response => response.json());
-		if (whois.status === "fail") return interaction.reply({ content: interaction.translate("general/whois:ERROR", { ip }) });
+		if (whois.status === "fail") return interaction.editReply({ content: interaction.translate("general/whois:ERROR", { ip }) });
 		const embed = new EmbedBuilder()
 			.setTitle(interaction.translate("general/whois:INFO_ABOUT", {
 				ip
