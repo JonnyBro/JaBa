@@ -74,12 +74,12 @@ class Loop extends BaseCommand {
 			idle: 60 * 1000
 		});
 
-		collector.on("collect", async msg => {
-			const type = Number(msg?.values[0]);
+		collector.on("collect", async i => {
+			const type = QueueRepeatMode[msg?.values[0]];
 			queue.setRepeatMode(type);
-			await msg.update({
-				content: interaction.translate(`music/loop:${type === 3 ? "AUTOPLAY_ENABLED" :
-					type === 2 ? "QUEUE_ENABLED" : type === 1 ? "TRACK_ENABLED" : "LOOP_DISABLED"}`),
+			i.update({
+				content: interaction.translate(`music/loop:${type === QueueRepeatMode.AUTOPLAY ? "AUTOPLAY_ENABLED" :
+					type === QueueRepeatMode.QUEUE ? "QUEUE_ENABLED" : type === QueueRepeatMode.TRACK ? "TRACK_ENABLED" : "LOOP_DISABLED"}`),
 				components: []
 			});
 		});
