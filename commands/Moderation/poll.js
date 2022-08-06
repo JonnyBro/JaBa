@@ -104,7 +104,11 @@ class Poll extends BaseCommand {
 					.setColor(client.config.embed.color)
 					.addFields([
 						{
-							name: question,
+							name: "\u200b",
+							value: question
+						},
+						{
+							name: "\u200b",
 							value: interaction.translate("moderation/poll:REACT", {
 								success: cool.toString(),
 								error: notcool.toString()
