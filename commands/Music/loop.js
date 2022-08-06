@@ -75,9 +75,9 @@ class Loop extends BaseCommand {
 		});
 
 		collector.on("collect", async i => {
-			const type = QueueRepeatMode[msg?.values[0]];
+			const type = QueueRepeatMode[i?.values[0]];
 			queue.setRepeatMode(type);
-			i.update({
+			return i.update({
 				content: interaction.translate(`music/loop:${type === QueueRepeatMode.AUTOPLAY ? "AUTOPLAY_ENABLED" :
 					type === QueueRepeatMode.QUEUE ? "QUEUE_ENABLED" : type === QueueRepeatMode.TRACK ? "TRACK_ENABLED" : "LOOP_DISABLED"}`),
 				components: []
