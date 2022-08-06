@@ -19,9 +19,6 @@ class BaseCommand {
 		 * @type {Boolean}
 		 */
 		this.ownerOnly = options.ownerOnly || false;
-		/**
-		 * @type __dirname
-		 */
 		this.dirname = options.dirname || false;
 		/**
 		 * @type {String}
