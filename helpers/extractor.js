@@ -133,8 +133,7 @@ module.exports = {
 				if (query.startsWith("https") && playdl.yt_validate(query) === "video") {
 					if (query.includes("music.youtube")) {
 						const info = await playdl.video_info(query);
-						if(!info)
-							return resolve({ playlist: null, info: null });
+						if(!info) return resolve({ playlist: null, info: null });
 						const track = {
 							title: info.video_details.title,
 							duration: info.video_details.durationInSec * 1000,
@@ -155,20 +154,19 @@ module.exports = {
 					}
 
 					const info = await playdl.video_info(query);
-					if(!info)
-						return resolve({ playlist: null, info: null });
+					if(!info) return resolve({ playlist: null, info: null });
 
 					const track = {
-						title: info[0].title,
-						duration: info[0].duration,
-						thumbnail: info[0].thumbnail ? info[0].thumbnail.url : null,
+						title: info.video_details.title,
+						duration: info.video_details.durationInSec * 1000,
+						thumbnail: info.video_details.thumbnails[0].url,
 						async engine() {
-							return (await playdl.stream(`https://youtu.be/${info[0].id}`, { discordPlayerCompatibility : true })).stream;
+							return (await playdl.stream(info.video_details.url, { discordPlayerCompatibility : true })).stream;
 						},
-						views: info[0].views,
-						author: info[0].channel.name,
+						views: info.video_details.views,
+						author: info.video_details.channel.name,
 						description: "",
-						url: `https://youtu.be/${info[0].id}`,
+						url: info.video_details.url,
 						related_videos: info.related_videos,
 						raw: info,
 						source: "youtube-custom"
@@ -182,7 +180,7 @@ module.exports = {
 							return {
 								title: track.title,
 								duration: track.durationInSec * 1000,
-								thumbnail: track.thumbnails ? track.thumbnails[0] ? track.thumbnails[0].url : null : null,
+								thumbnail: track.thumbnails[0].url,
 								async engine() {
 									return (await playdl.stream(`https://music.youtube.com/watch?v=${track.id}`, { discordPlayerCompatibility : true })).stream;
 								},
@@ -240,28 +238,28 @@ module.exports = {
 					return resolve({ playlist: playlist, info: tracks });
 				}
 
-				const search = await Youtube.search(query, { limit: 5, type: "video", safeSearch: true });
+				const search = await playdl.search(query, {
+					limit: 1
+				});
 
-				if(search && search.length) {
-					const tracks = search.map(async track => {
-						const related = (await playdl.video_info(track.url)).related_videos;
+				if (search) {
+					const track = {
+						title: search[0].title,
+						duration: search[0].durationInSec * 1000,
+						thumbnail: search[0].thumbnails[0].url,
+						async engine() {
+							return (await playdl.stream(search[0].url, { discordPlayerCompatibility : true })).stream;
+						},
+						views: search[0].views,
+						author: search[0].channel.name,
+						description: "",
+						url: search[0].url,
+						related_videos: search[0].related_videos,
+						raw: search[0],
+						source: "youtube-custom"
+					};
 
-						return {
-							title: track.title,
-							duration: track.duration,
-							thumbnail: track.thumbnail ? track.thumbnail.url : null,
-							async engine() {
-								return (await playdl.stream(`https://youtu.be/${track.id}`, { discordPlayerCompatibility: true })).stream;
-							},
-							views: track.views,
-							author: track.channel.name,
-							description: "",
-							url: `https://youtu.be/${track.id}`,
-							related_videos: related,
-							source: "youtube-custom"
-						};
-					});
-					return resolve({ playlist: null, info: tracks });
+					return resolve({ playlist: null, info: [track] });
 				}
 
 				return resolve({ playlist: null, info: null });
