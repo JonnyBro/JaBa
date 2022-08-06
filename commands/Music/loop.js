@@ -45,19 +45,19 @@ class Loop extends BaseCommand {
 					.addOptions([
 						{
 							label: client.translate("music/loop:AUTOPLAY"),
-							value: 3
+							value: "3"
 						},
 						{
 							label: client.translate("music/loop:QUEUE"),
-							value: 2
+							value: "2"
 						},
 						{
 							label: client.translate("music/loop:TRACK"),
-							value: 1
+							value: "1"
 						},
 						{
 							label: client.translate("music/loop:DISABLE"),
-							value: 0
+							value: "0"
 						}
 					])
 			);
