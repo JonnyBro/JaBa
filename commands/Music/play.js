@@ -36,10 +36,10 @@ class Play extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply();
 		const voice = interaction.member.voice.channel;
-		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+		if (!voice) return interaction.editReply({ content: interaction.translate("music/play:NO_VOICE_CHANNEL") });
 		const query = interaction.options.getString("query");
 		const perms = voice.permissionsFor(client.user);
-		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.error("music/play:VOICE_CHANNEL_CONNECT");
+		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.editReply({ content: interaction.translate("music/play:VOICE_CHANNEL_CONNECT") });
 
 		const searchResult = await client.player.search(query, {
 			requestedBy: interaction.user,
@@ -75,10 +75,12 @@ class Play extends BaseCommand {
 			});
 		} catch (e) {
 			client.player.deleteQueue(interaction.guildId);
-			interaction.error("music/play:ERR_OCCURRED", {
-				error: e
-			});
 			console.error(e);
+			return interaction.editReply({
+				content: interaction.translate("music/play:ERR_OCCURRED", {
+					error: e
+				})
+			});
 		}
 	}
 }

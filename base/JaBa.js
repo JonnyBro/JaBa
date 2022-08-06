@@ -68,7 +68,7 @@ class JaBa extends Client {
 				if (track.durationMS > 1) {
 					setTimeout(() => {
 						if (m.deletable) m.delete();
-					}, track.durationMS * 1000);
+					}, track.durationMS);
 				} else {
 					setTimeout(() => {
 						if (m.deletable) m.delete();
