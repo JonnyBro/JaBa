@@ -146,14 +146,16 @@ module.exports = {
 							author: info.video_details.channel.name,
 							description: "",
 							url: `https://music.youtube.com/watch?v=${info.video_details.id}`,
+							related_videos: info.related_videos,
+							raw: info,
 							source: "youtube-music-custom"
 						};
 
 						return resolve({ playlist: null, info: [track] });
 					}
 
-					const info = await Youtube.search(query, { limit: 1, type: "video", safeSearch: true });
-					if(!info || !info.length)
+					const info = await playdl.video_info(query);
+					if(!info)
 						return resolve({ playlist: null, info: null });
 
 					const track = {
@@ -167,6 +169,8 @@ module.exports = {
 						author: info[0].channel.name,
 						description: "",
 						url: `https://youtu.be/${info[0].id}`,
+						related_videos: info.related_videos,
+						raw: info,
 						source: "youtube-custom"
 					};
 					return resolve({ playlist: null, info: [track] });
@@ -185,6 +189,7 @@ module.exports = {
 							author: track.channel.name,
 							description: "",
 							url: track.url,
+							raw: info,
 							source: "youtube-custom"
 						};
 					});
@@ -205,7 +210,9 @@ module.exports = {
 				const search = await Youtube.search(query, { limit: 5, type: "video", safeSearch: true });
 
 				if(search && search.length) {
-					const tracks = search.map(track => {
+					const tracks = search.map(async track => {
+						const related = (await playdl.video_info(track.url)).related_videos;
+
 						return {
 							title: track.title,
 							duration: track.duration,
@@ -217,6 +224,7 @@ module.exports = {
 							author: track.channel.name,
 							description: "",
 							url: `https://youtu.be/${track.id}`,
+							related_videos: related,
 							source: "youtube-custom"
 						};
 					});
