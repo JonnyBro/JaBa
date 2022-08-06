@@ -137,7 +137,7 @@ module.exports = {
 							return resolve({ playlist: null, info: null });
 						const track = {
 							title: info.video_details.title,
-							duration: info.video_details.durationInSec,
+							duration: info.video_details.durationInSec * 1000,
 							thumbnail: info.video_details.thumbnails[0].url,
 							async engine() {
 								return (await playdl.stream(`https://music.youtube.com/watch?v=${info.video_details.id}`, { discordPlayerCompatibility : true })).stream;
@@ -175,6 +175,39 @@ module.exports = {
 					};
 					return resolve({ playlist: null, info: [track] });
 				} else if (playdl.yt_validate(query) === "playlist") {
+					if (query.includes("music.youtube")) {
+						const info = await playdl.playlist_info(query, { incomplete: true });
+						const trackList = await info.videos;
+						const tracks = trackList.map(track => {
+							return {
+								title: track.title,
+								duration: track.durationInSec * 1000,
+								thumbnail: track.thumbnails ? track.thumbnails[0] ? track.thumbnails[0].url : null : null,
+								async engine() {
+									return (await playdl.stream(`https://music.youtube.com/watch?v=${track.id}`, { discordPlayerCompatibility : true })).stream;
+								},
+								views: track.views,
+								author: track.channel.name,
+								description: "",
+								url: track.url,
+								raw: info,
+								source: "youtube-music-playlist-custom"
+							};
+						});
+						const playlist = {
+							title: info.title,
+							description: "",
+							thumbnail: info.thumbnail ? info.thumbnail.url : null,
+							type: "playlist",
+							source: "youtube-music-playlist-custom",
+							author: info.channel.name,
+							id: info.id,
+							url: info.url,
+							rawPlaylist: info
+						};
+						return resolve({ playlist: playlist, info: tracks });
+					}
+
 					const info = await playdl.playlist_info(query, { incomplete: true });
 					const trackList = await info.all_videos();
 					const tracks = trackList.map(track => {
