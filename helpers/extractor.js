@@ -137,7 +137,7 @@ module.exports = {
 							return resolve({ playlist: null, info: null });
 						const track = {
 							title: info.video_details.title,
-							duration: info.video_details.duration,
+							duration: info.video_details.durationInSec,
 							thumbnail: info.video_details.thumbnails[0].url,
 							async engine() {
 								return (await playdl.stream(`https://music.youtube.com/watch?v=${info.video_details.id}`, { discordPlayerCompatibility : true })).stream;
