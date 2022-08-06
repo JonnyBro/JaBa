@@ -45,19 +45,19 @@ class Loop extends BaseCommand {
 					.addOptions([
 						{
 							label: client.translate("music/loop:AUTOPLAY"),
-							value: QueueRepeatMode.AUTOPLAY.toString()
+							value: 3
 						},
 						{
 							label: client.translate("music/loop:QUEUE"),
-							value: QueueRepeatMode.QUEUE.toString()
+							value: 2
 						},
 						{
 							label: client.translate("music/loop:TRACK"),
-							value: QueueRepeatMode.TRACK.toString()
+							value: 1
 						},
 						{
 							label: client.translate("music/loop:DISABLE"),
-							value: QueueRepeatMode.OFF.toString()
+							value: 0
 						}
 					])
 			);
@@ -75,11 +75,15 @@ class Loop extends BaseCommand {
 		});
 
 		collector.on("collect", async i => {
-			const type = QueueRepeatMode[i?.values[0]];
-			queue.setRepeatMode(type);
+			const type = i?.values[0];
+			const mode = type === 3 ? QueueRepeatMode.AUTOPLAY :
+				type === 2 ? QueueRepeatMode.QUEUE :
+					type === 1 ? QueueRepeatMode.TRACK : QueueRepeatMode.OFF;
+
+			queue.setRepeatMode(mode);
 			return i.update({
-				content: interaction.translate(`music/loop:${type === QueueRepeatMode.AUTOPLAY ? "AUTOPLAY_ENABLED" :
-					type === QueueRepeatMode.QUEUE ? "QUEUE_ENABLED" : type === QueueRepeatMode.TRACK ? "TRACK_ENABLED" : "LOOP_DISABLED"}`),
+				content: interaction.translate(`music/loop:${type === 3 ? "AUTOPLAY_ENABLED" :
+					type === 2 ? "QUEUE_ENABLED" : type === 1 ? "TRACK_ENABLED" : "LOOP_DISABLED"}`),
 				components: []
 			});
 		});
