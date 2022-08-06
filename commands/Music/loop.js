@@ -76,14 +76,14 @@ class Loop extends BaseCommand {
 
 		collector.on("collect", async i => {
 			const type = i?.values[0];
-			const mode = type === 3 ? QueueRepeatMode.AUTOPLAY :
-				type === 2 ? QueueRepeatMode.QUEUE :
-					type === 1 ? QueueRepeatMode.TRACK : QueueRepeatMode.OFF;
+			const mode = type === "3" ? QueueRepeatMode.AUTOPLAY :
+				type === "2" ? QueueRepeatMode.QUEUE :
+					type === "1" ? QueueRepeatMode.TRACK : QueueRepeatMode.OFF;
 
 			queue.setRepeatMode(mode);
 			return i.update({
-				content: interaction.translate(`music/loop:${type === 3 ? "AUTOPLAY_ENABLED" :
-					type === 2 ? "QUEUE_ENABLED" : type === 1 ? "TRACK_ENABLED" : "LOOP_DISABLED"}`),
+				content: interaction.translate(`music/loop:${type === "3" ? "AUTOPLAY_ENABLED" :
+					type === "2" ? "QUEUE_ENABLED" : type === "1" ? "TRACK_ENABLED" : "LOOP_DISABLED"}`),
 				components: []
 			});
 		});
