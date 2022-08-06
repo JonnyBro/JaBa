@@ -34,7 +34,6 @@ class Suggest extends BaseCommand {
 	 * @param {Array} data
 	 */
 	async execute(client, interaction) {
-		if (interaction.user.id === "285109105717280768") return interaction.reply({ content: "Пошёл нахуй фахон" });
 		const suggChannel = interaction.guild.channels.cache.get(interaction.guild.data.plugins.suggestions);
 		if (!suggChannel) return interaction.error("general/suggest:MISSING_CHANNEL");
 		const suggestion = interaction.options.getString("message");
@@ -74,7 +73,7 @@ class Suggest extends BaseCommand {
 
 		suggChannel.send({
 			embeds: [embed]
-		}).then(async (m) => {
+		}).then(async m => {
 			await m.react(success);
 			await m.react(error);
 		});

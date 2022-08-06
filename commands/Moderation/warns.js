@@ -30,7 +30,7 @@ class Warns extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../../base/JaBa")} client
-	 * @param {import("discord.js").UserContextMenuCommandInteraction} interaction
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Array} data
 	 */
 	async execute(client, interaction) {

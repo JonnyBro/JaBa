@@ -56,14 +56,16 @@ class NSFW extends BaseCommand {
 			fetchReply: true
 		});
 
+		const filter = i => i.customId === "nsfw_select" && i.user.id === interaction.user.id;
 		const collector = new InteractionCollector(client, {
+			filter,
 			componentType: ComponentType.SelectMenu,
 			message: msg,
 			idle: 60 * 1000
 		});
 
-		collector.on("collect", async msg => {
-			const tag = msg?.values[0];
+		collector.on("collect", async i => {
+			const tag = i?.values[0];
 			const res = await fetch(`https://meme-api.herokuapp.com/gimme/${tag}`).then(response => response.json());
 
 			const embed = new EmbedBuilder()
@@ -75,7 +77,7 @@ class NSFW extends BaseCommand {
 				.setImage(res.url)
 				.setTimestamp();
 
-			await msg.update({
+			await i.update({
 				embeds: [embed]
 			});
 		});

@@ -59,6 +59,10 @@ class Emoji extends BaseCommand {
 				{
 					name: interaction.translate("general/emoji:ID"),
 					value: parsedEmoji.id?.toString() || interaction.translate("general/emoji:STANDART")
+				},
+				{
+					name: interaction.translate("general/emoji:LINK"),
+					value: `https://cdn.discordapp.com/emojis/${parsedEmoji.id}.${parsedEmoji.animated ? "gif" : "png"}`
 				}
 			]);
 

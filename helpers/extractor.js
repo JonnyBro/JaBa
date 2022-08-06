@@ -14,7 +14,7 @@ const Youtube = require("youtube-sr").default;
 
 	thanks :)
 
-		-nize
+	-nize
 */
 
 module.exports = {
@@ -85,7 +85,7 @@ module.exports = {
 							duration: spotifyTrack.duration_ms,
 							thumbnail: info.image,
 							async engine() {
-								return (await playdl.stream(await Youtube.search(`${info.artist} ${info.title} lyric`, {limit: 1, type: "video", safeSearch: true}).then(x => x[0] ? `https://youtu.be/${x[0].id}` : "https://youtu.be/Wch3gJG2GJ4"), { discordPlayerCompatibility : true })).stream;
+								return (await playdl.stream(await Youtube.search(`${info.artist} ${info.title} lyric`, { limit: 1, type: "video", safeSearch: true }).then(x => x[0] ? `https://youtu.be/${x[0].id}` : "https://youtu.be/Wch3gJG2GJ4"), { discordPlayerCompatibility : true })).stream;
 							},
 							views: 0,
 							author: info.artist,
@@ -102,7 +102,7 @@ module.exports = {
 								duration: track.duration_ms,
 								thumbnail: track.album && track.album.images.length ? track.album.images[0].url : null,
 								async engine() {
-									return (await playdl.stream(await Youtube.search(`${track.artists[0].name} ${track.name} lyric`, {limit: 1, type: "video", safeSearch: true}).then(x => x[0] ? `https://youtu.be/${x[0].id}` : "https://youtu.be/Wch3gJG2GJ4"), { discordPlayerCompatibility : true })).stream;
+									return (await playdl.stream(await Youtube.search(`${track.artists[0].name} ${track.name} lyric`, { limit: 1, type: "video", safeSearch: true }).then(x => x[0] ? `https://youtu.be/${x[0].id}` : "https://youtu.be/Wch3gJG2GJ4"), { discordPlayerCompatibility : true })).stream;
 								},
 								views: 0,
 								author: track.artists ? track.artists[0].name : null,
@@ -131,7 +131,28 @@ module.exports = {
 					query = query.split("&")[0];
 				}
 				if (query.startsWith("https") && playdl.yt_validate(query) === "video") {
-					const info = await Youtube.search(query, {limit: 1, type: "video", safeSearch: true});
+					if (query.includes("music.youtube")) {
+						const info = await playdl.video_info(query);
+						if(!info)
+							return resolve({ playlist: null, info: null });
+						const track = {
+							title: info.video_details.title,
+							duration: info.video_details.duration,
+							thumbnail: info.video_details.thumbnails[0].url,
+							async engine() {
+								return (await playdl.stream(`https://music.youtube.com/watch?v=${info.video_details.id}`, { discordPlayerCompatibility : true })).stream;
+							},
+							views: info.video_details.views,
+							author: info.video_details.channel.name,
+							description: "",
+							url: `https://music.youtube.com/watch?v=${info.video_details.id}`,
+							source: "youtube-music-custom"
+						};
+
+						return resolve({ playlist: null, info: [track] });
+					}
+
+					const info = await Youtube.search(query, { limit: 1, type: "video", safeSearch: true });
 					if(!info || !info.length)
 						return resolve({ playlist: null, info: null });
 
@@ -158,7 +179,7 @@ module.exports = {
 							duration: track.durationInSec * 1000,
 							thumbnail: track.thumbnails ? track.thumbnails[0] ? track.thumbnails[0].url : null : null,
 							async engine() {
-								return (await playdl.stream(await Youtube.search(track.url, {limit: 1, type: "video", safeSearch: true}).then(x => x[0] ? `https://youtu.be/${x[0].id}` : "https://youtu.be/Wch3gJG2GJ4"), { discordPlayerCompatibility : true })).stream;
+								return (await playdl.stream(await Youtube.search(track.url, { limit: 1, type: "video", safeSearch: true }).then(x => x[0] ? `https://youtu.be/${x[0].id}` : "https://youtu.be/Wch3gJG2GJ4"), { discordPlayerCompatibility : true })).stream;
 							},
 							views: track.views,
 							author: track.channel.name,

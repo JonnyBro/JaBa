@@ -59,14 +59,16 @@ class Activity extends BaseCommand {
 			fetchReply: true
 		});
 
+		const filter = i => i.customId === "activity_select" && i.user.id === interaction.user.id;
 		const collector = new InteractionCollector(client, {
+			filter,
 			componentType: ComponentType.SelectMenu,
 			message: msg,
-			idle: 60 * 1000
+			idle: 30 * 1000
 		});
 
-		collector.on("collect", async msg => {
-			const activity = msg?.values[0];
+		collector.on("collect", async i => {
+			const activity = i?.values[0];
 
 			const invite = await client.discordTogether.createTogetherCode(voice.id, activity);
 			const embed = new EmbedBuilder()
@@ -78,7 +80,7 @@ class Activity extends BaseCommand {
 				})
 				.setTimestamp();
 
-			await msg.update({
+			await i.update({
 				embeds: [embed],
 				components: []
 			});

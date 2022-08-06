@@ -37,7 +37,6 @@ class Report extends BaseCommand {
 	 * @param {Array} data
 	 */
 	async execute(client, interaction) {
-		if (interaction.user.id === "285109105717280768") return interaction.reply({ content: "Пошёл нахуй фахон" });
 		const repChannel = interaction.guild.channels.cache.get(interaction.guild.data.plugins.reports);
 		if (!repChannel) return interaction.error("general/report:MISSING_CHANNEL");
 		const member = interaction.options.getMember("user");
@@ -85,7 +84,7 @@ class Report extends BaseCommand {
 
 		repChannel.send({
 			embeds: [embed]
-		}).then(async (m) => {
+		}).then(async m => {
 			await m.react(success);
 			await m.react(error);
 		});

@@ -2,7 +2,7 @@
 	"DESCRIPTION": "Начать воспроизведение трека",
 	"USAGE": "play [название-трека/ссылка]",
 	"EXAMPLES": "play Never Gonna Give You Up",
-	"QUERY": "Название/Прямая ссылка/Ссылка на YouTube, Spotify или SoundCloud",
+	"QUERY": "Название / Прямая ссылка / Ссылка на YouTube, Spotify или SoundCloud",
 	"NO_VOICE_CHANNEL": "Вы должны находиться в голосовом канале!",
 	"VOICE_CHANNEL_CONNECT": "Я не могу присоедениться к вашему голосовому каналу!",
 	"RESULTS_FOOTER": "Укажите число от 1 до 10 (без префикса).",

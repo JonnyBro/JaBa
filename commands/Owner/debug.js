@@ -27,7 +27,7 @@ class Debug extends BaseCommand {
 						.setDescription(client.translate("owner/debug:TARGET"))
 						.setRequired(true))
 					.addIntegerOption(option => option.setName("int")
-						.setDescription(client.translate("owner/debug:INT"))
+						.setDescription(client.translate("common:INT"))
 						.setRequired(true))
 				)
 				.addSubcommand(subcommand => subcommand.setName("add")

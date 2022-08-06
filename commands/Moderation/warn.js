@@ -48,13 +48,11 @@ class Warn extends BaseCommand {
 			.setTitle(interaction.translate("moderation/warn:MODAL_TITLE"));
 
 		const reasonInput = new TextInputBuilder()
-			.setCustomId("reason")
+			.setCustomId("warn_reason")
 			.setLabel(interaction.translate("moderation/warn:REASON"))
 			.setStyle(TextInputStyle.Short);
 
-		const firstActionRow = new ActionRowBuilder().addComponents(reasonInput);
-
-		modal.addComponents(firstActionRow);
+		modal.addComponents(new ActionRowBuilder().addComponents(reasonInput));
 
 		await interaction.showModal(modal);
 
@@ -63,8 +61,8 @@ class Warn extends BaseCommand {
 			filter: i => i.user.id === interaction.member.id,
 		});
 
-		if (submitted) {
-			const reason = submitted.fields.getTextInputValue("reason");
+		if (submitted && submitted.customId === "warn_modal") {
+			const reason = submitted.fields.getTextInputValue("warn_reason");
 
 			const sanctions = memberData.sanctions.filter((s) => s.type === "warn").length;
 			const banCount = data.guildData.plugins.warnsSanctions.ban;
