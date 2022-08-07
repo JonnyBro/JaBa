@@ -52,7 +52,7 @@ class Queue extends BaseCommand {
 				},
 				{
 					name: interaction.translate("music/queue:QUEUE"),
-					value: tracks.join("\n")
+					value: tracks.length > 0 ? tracks.join("\n") : null
 				},
 				{
 					name: "\u200b",
