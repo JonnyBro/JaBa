@@ -3,6 +3,7 @@
 	"USAGE": "queue",
 	"EXAMPLES": "queue",
 	"QUEUE": "Очередь",
+	"NO_QUEUE": "Пусто",
 	"ADDED": "Добавил",
 	"MORE": "и ещё {{tracks}}"
 }

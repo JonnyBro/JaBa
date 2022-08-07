@@ -2,6 +2,5 @@
 	"DESCRIPTION": "Пропустить текущий трек",
 	"USAGE": "skip",
 	"EXAMPLES": "skip",
-	"NO_NEXT_SONG": "Очередь пуста!",
 	"SUCCESS": "Трек пропущен!"
 }
