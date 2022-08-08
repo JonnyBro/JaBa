@@ -20,7 +20,7 @@ class Marry extends Command {
 	}
 
 	async run(message, args, data) {
-		if (data.userData.lover) return message.error("economy/marry:ALREADY_MARRIED", { prefix: data.guild.prefix });
+		if (data.userData.lover) return message.error("economy/marry:ALREADY_MARRIED", { prefix: data.guildData.prefix });
 
 		const member = await this.client.resolveMember(args[0], message.guild);
 		if (!member) return message.error("economy/marry:INVALID_MEMBER");

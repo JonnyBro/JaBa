@@ -1,4 +1,4 @@
-const { ContextMenuCommandBuilder, ApplicationCommandType, PermissionFlagsBits, TextInputStyle, ModalBuilder, EmbedBuilder, ActionRowBuilder, TextInputBuilder } = require("discord.js");
+const { ContextMenuCommandBuilder, ModalBuilder, EmbedBuilder, ActionRowBuilder, TextInputBuilder, ApplicationCommandType, PermissionFlagsBits, TextInputStyle } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Warn extends BaseCommand {
@@ -49,7 +49,7 @@ class Warn extends BaseCommand {
 
 		const reasonInput = new TextInputBuilder()
 			.setCustomId("warn_reason")
-			.setLabel(interaction.translate("moderation/warn:REASON"))
+			.setLabel(interaction.translate("moderation/warn:MODAL_REASON"))
 			.setStyle(TextInputStyle.Short);
 
 		modal.addComponents(new ActionRowBuilder().addComponents(reasonInput));
@@ -58,10 +58,10 @@ class Warn extends BaseCommand {
 
 		const submitted = await interaction.awaitModalSubmit({
 			time: 120000,
-			filter: i => i.user.id === interaction.member.id,
+			filter: i => i.user.id === interaction.member.id && i.customId === "warn_modal",
 		});
 
-		if (submitted && submitted.customId === "warn_modal") {
+		if (submitted) {
 			const reason = submitted.fields.getTextInputValue("warn_reason");
 
 			const sanctions = memberData.sanctions.filter((s) => s.type === "warn").length;

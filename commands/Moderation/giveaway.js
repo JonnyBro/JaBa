@@ -58,7 +58,7 @@ class Giveaway extends BaseCommand {
 			);
 
 		const msg = await interaction.reply({
-			content: interaction.translate("common:AVAILABLE_CATEGORIES"),
+			content: interaction.translate("common:AVAILABLE_OPTIONS"),
 			components: [row],
 			ephemeral: true,
 			fetchReply: true

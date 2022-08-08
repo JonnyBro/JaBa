@@ -63,8 +63,7 @@ class GuildMemberAdd extends BaseEvent {
 				const message = guildData.plugins.welcome.message
 					.replace(/{user}/g, member)
 					.replace(/{server}/g, member.guild.name)
-					.replace(/{membercount}/g, member.guild.memberCount)
-					.replace(/{createdat}/g, client.printDate(member.user.createdAt));
+					.replace(/{membercount}/g, member.guild.memberCount);
 				if (guildData.plugins.welcome.withImage) {
 					const canvas = Canvas.createCanvas(1024, 450),
 						ctx = canvas.getContext("2d");

@@ -3,6 +3,11 @@
 	"NO": "Нет",
 	"ACCEPT": "Принять",
 	"CANCEL": "Отменить",
+	"DECLINE": "Отказаться",
+	"ENABLE": "Включить",
+	"DISABLE": "Выключить",
+	"ENABLED": "Включено",
+	"DISABLED": "Отключено",
 	"NOT_DEFINED": "Не установлено",
 	"AUTHOR": "Автор",
 	"DATE": "Дата",
@@ -18,6 +23,7 @@
 	"OWNER": "Владелец",
 	"USERNAME": "Имя пользователя",
 	"STATS": "Статистика",
+	"STATE": "Состояние",
 	"ROBOT": "Бот",
 	"ACTIVITY": "Активность",
 	"STATUS": "Статус",
@@ -56,12 +62,7 @@
 	"LANGUAGE": "Язык",
 	"CHANNEL": "Канал",
 	"UPDATE": "Обновить",
-	"SUGGESTIONS": "Предложения",
-	"MODLOGS": "Логи модерации",
-	"NO_CHANNEL": "Канал не выбран",
-	"REPORTS": "Жалобы",
 	"UNKNOWN": "Неизвестно",
 	"NOTHING_SELECTED": "Ничего не выбрано",
-	"AVAILABLE_CATEGORIES": "Доступные категории:",
-	"BIRTHDAYS": "Поздравления с днём рождения"
+	"AVAILABLE_OPTIONS": "Доступные параметры:"
 }

@@ -54,7 +54,7 @@ class Number extends Command {
 					participants: participants.map(p => `<@${p}>`).join(", ")
 				});
 
-				if (participants.length > 1 && data.guild.disabledCategories && !data.guild.disabledCategories.includes("Economy")) {
+				if (participants.length > 1 && data.guildData.disabledCategories && !data.guildData.disabledCategories.includes("Economy")) {
 					const won = 100 * (participants.length * 0.5);
 
 					message.sendT("economy/number:WON", {

@@ -119,7 +119,7 @@ class Profile extends Command {
 				{
 					name: message.translate("economy/profile:ACHIEVEMENTS"),
 					value: message.translate("economy/profile:ACHIEVEMENTS_CONTENT", {
-						prefix: data.guild.prefix
+						prefix: data.guildData.prefix
 					})
 				}
 			])

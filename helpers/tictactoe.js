@@ -7,15 +7,15 @@ const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("
  * @param {Array} options
  */
 /**
-  slash => Boolean
-  userSlash => String
-  resultBtn => Boolean
-  embedFoot => String
-  embedColor => HexColor
-  timeoutEmbedColor => HexColor
-  xEmoji => (Emoji ID) String
-  oEmoji => (Emoji ID) String
-  idleEmoji => (Emoji ID) String
+ slash => Boolean
+ userSlash => String
+ resultBtn => Boolean
+ embedFoot => String
+ embedColor => HexColor
+ timeoutEmbedColor => HexColor
+ xEmoji => (Emoji ID) String
+ oEmoji => (Emoji ID) String
+ idleEmoji => (Emoji ID) String
  */
 async function tictactoe(interaction, options = {}) {
 	// eslint-disable-next-line no-async-promise-executor
@@ -79,12 +79,12 @@ async function tictactoe(interaction, options = {}) {
 				.setTimestamp();
 
 			const accept = new ButtonBuilder()
-				.setLabel(interaction.translate("economy/tictactoe:ACCEPT"))
+				.setLabel(interaction.translate("common:ACCEPT"))
 				.setStyle("SUCCESS")
 				.setCustomId("acceptttt");
 
 			const decline = new ButtonBuilder()
-				.setLabel(interaction.translate("economy/tictactoe:DECLINE"))
+				.setLabel(interaction.translate("common:DECLINE"))
 				.setStyle("DANGER")
 				.setCustomId("declinettt");
 

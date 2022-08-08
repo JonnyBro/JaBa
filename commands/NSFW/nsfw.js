@@ -50,7 +50,7 @@ class NSFW extends BaseCommand {
 			);
 
 		const msg = await interaction.reply({
-			content: interaction.translate("common:AVAILABLE_CATEGORIES"),
+			content: interaction.translate("common:AVAILABLE_OPTIONS"),
 			ephemeral: true,
 			components: [row],
 			fetchReply: true

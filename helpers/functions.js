@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require("discord.js"),
+const { PermissionsBitField, ChannelType } = require("discord.js"),
 	langs = require("../languages/language-meta.json").map((l) => l.moment).filter((l) => l !== "en");
 langs.forEach((lang) => {
 	require(`moment/locale/${lang}.js`);
@@ -8,7 +8,7 @@ module.exports = {
 	async createInvite(client, guildId) {
 		const guild = client.guilds.cache.get(guildId);
 		const member = guild.members.me;
-		const channel = guild.channels.cache.find((ch) => ch.permissionsFor(member.id).has(PermissionsBitField.Flags.CreateInstantInvite) && ch.type === "GUILD_TEXT" || ch.type === "GUILD_VOICE");
+		const channel = guild.channels.cache.find(ch => ch.permissionsFor(member.id).has(PermissionsBitField.Flags.CreateInstantInvite) && ch.type === ChannelType.GuildText || ch.type === "GUILD_VOICE");
 		if (channel) {
 			const invite = await channel.createInvite();
 

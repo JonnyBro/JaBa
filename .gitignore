@@ -1,24 +1,17 @@
 # Bot Configuration
-config.js
+/config.js
 
 # DB
-giveaways.json
-
-# Backups
-backups
+/giveaways.json
 
 # commands.md
 **/commands.md
 
 # Clips
-clips
+/clips
 
 # Mac OS files
 .DS_Store
-
-# PM2
-report*.json
-!languages/**/general/report.json
 
 # IDE
 .vscode

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ChannelType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Serverinfo extends BaseCommand {
@@ -85,9 +85,9 @@ class Serverinfo extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.channels + interaction.translate("common:CHANNELS"),
-					value: `${guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size} ${client.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size, interaction.translate("misc:NOUNS:TEXT:1"), interaction.translate("misc:NOUNS:TEXT:2"), interaction.translate("misc:NOUNS:TEXT:5"))}` +
-						"\n" + `${guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size} ${client.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size, interaction.translate("misc:NOUNS:VOICE:1"), interaction.translate("misc:NOUNS:VOICE:2"), interaction.translate("misc:NOUNS:VOICE:5"))}` +
-						"\n" + `${guild.channels.cache.filter(c => c.type === "GUILD_CATEGORY").size} ${client.getNoun(guild.channels.cache.filter(c => c.type === "GUILD_CATEGORY").size, interaction.translate("misc:NOUNS:CATEGORY:1"), interaction.translate("misc:NOUNS:CATEGORY:2"), interaction.translate("misc:NOUNS:CATEGORY:5"))}`,
+					value: `${guild.channels.cache.filter(c => c.type === ChannelType.GuildText).size} ${client.getNoun(guild.channels.cache.filter(c => c.type === ChannelType.GuildText).size, interaction.translate("misc:NOUNS:TEXT:1"), interaction.translate("misc:NOUNS:TEXT:2"), interaction.translate("misc:NOUNS:TEXT:5"))}` +
+						"\n" + `${guild.channels.cache.filter(c => c.type === ChannelType.GuildVoice).size} ${client.getNoun(guild.channels.cache.filter(c => c.type === ChannelType.GuildVoice).size, interaction.translate("misc:NOUNS:VOICE:1"), interaction.translate("misc:NOUNS:VOICE:2"), interaction.translate("misc:NOUNS:VOICE:5"))}` +
+						"\n" + `${guild.channels.cache.filter(c => c.type === ChannelType.GuildCategory).size} ${client.getNoun(guild.channels.cache.filter(c => c.type === ChannelType.GuildCategory).size, interaction.translate("misc:NOUNS:CATEGORY:1"), interaction.translate("misc:NOUNS:CATEGORY:2"), interaction.translate("misc:NOUNS:CATEGORY:5"))}`,
 					inline: true
 				}
 			])

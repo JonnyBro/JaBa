@@ -23,8 +23,8 @@ class Debug extends BaseCommand {
 							{ name: client.translate("economy/transactions:BANK"), value: "bank" },
 							{ name: client.translate("common:REP"), value: "rep" },
 						))
-					.addUserOption(option => option.setName("target")
-						.setDescription(client.translate("owner/debug:TARGET"))
+					.addUserOption(option => option.setName("user")
+						.setDescription(client.translate("common:USER"))
 						.setRequired(true))
 					.addIntegerOption(option => option.setName("int")
 						.setDescription(client.translate("common:INT"))
@@ -69,20 +69,20 @@ class Debug extends BaseCommand {
 	 * @param {Array} data
 	 */
 	async execute(client, interaction, data) {
-		const action = interaction.options.getSubcommand();
+		const command = interaction.options.getSubcommand();
 
-		if (action === "set") {
+		if (command === "set") {
 			const type = interaction.options.getString("type");
 			const member = interaction.options.getMember("user");
+			if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
 			const int = interaction.options.getInteger("int");
-			if (member.user.bot) return interaction.error("misc:BOT_USER");
 
 			switch (type) {
 				case "level": {
 					data.memberData.level = int;
 					await data.memberData.save();
 					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
-						username: member.user.tag,
+						username: member.toString(),
 						amount: int
 					}, { ephemeral: true });
 				}
@@ -91,7 +91,7 @@ class Debug extends BaseCommand {
 					data.memberData.exp = int;
 					await data.memberData.save();
 					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
-						username: member.user.tag,
+						username: member.toString(),
 						amount: int
 					}, { ephemeral: true });
 				}
@@ -100,7 +100,7 @@ class Debug extends BaseCommand {
 					data.memberData.money = int;
 					await data.memberData.save();
 					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
-						username: member.user.tag,
+						username: member.toString(),
 						amount: int
 					}, { ephemeral: true });
 				}
@@ -109,7 +109,7 @@ class Debug extends BaseCommand {
 					data.memberData.bankSold = int;
 					await data.memberData.save();
 					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
-						username: member.user.tag,
+						username: member.toString(),
 						amount: int
 					}, { ephemeral: true });
 				}
@@ -118,7 +118,7 @@ class Debug extends BaseCommand {
 					data.memberData.rep = int;
 					await data.memberData.save();
 					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
-						username: member.user.tag,
+						username: member.toString(),
 						amount: int
 					}, { ephemeral: true });
 				}
@@ -126,15 +126,15 @@ class Debug extends BaseCommand {
 		} else {
 			const type = interaction.options.getString("type");
 			const member = interaction.options.getMember("target");
+			if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
 			const int = interaction.options.getInteger("int");
-			if (member.user.bot) return interaction.error("owner/debug:BOT", { ephemeral: true });
 
 			switch (type) {
 				case "level": {
 					data.memberData.level += int;
 					await data.memberData.save();
 					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
-						username: member.user.tag,
+						username: member.toString(),
 						amount: int
 					}, { ephemeral: true });
 				}
@@ -143,7 +143,7 @@ class Debug extends BaseCommand {
 					data.memberData.exp += int;
 					await data.memberData.save();
 					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
-						username: member.user.tag,
+						username: member.toString(),
 						amount: int
 					}, { ephemeral: true });
 				}
@@ -152,7 +152,7 @@ class Debug extends BaseCommand {
 					data.memberData.money += int;
 					await data.memberData.save();
 					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
-						username: member.user.tag,
+						username: member.toString(),
 						amount: int
 					}, { ephemeral: true });
 				}
@@ -161,7 +161,7 @@ class Debug extends BaseCommand {
 					data.memberData.bankSold += int;
 					await data.memberData.save();
 					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
-						username: member.user.tag,
+						username: member.toString(),
 						amount: int
 					}, { ephemeral: true });
 				}
@@ -170,7 +170,7 @@ class Debug extends BaseCommand {
 					data.memberData.rep += int;
 					await data.memberData.save();
 					return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
-						username: member.user.tag,
+						username: member.toString(),
 						amount: int
 					}, { ephemeral: true });
 				}

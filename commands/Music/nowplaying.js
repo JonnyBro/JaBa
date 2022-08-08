@@ -59,8 +59,9 @@ class Nowplaying extends BaseCommand {
 				{
 					name: "\u200b",
 					value: `${interaction.translate("music/nowplaying:REPEAT")}: \`${
-						queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") : queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") : queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK")
-							: interaction.translate("music/nowplaying:DISABLED")
+						queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") :
+							queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") :
+								queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK") : interaction.translate("common:DISABLED")
 					}\``
 				}
 			])

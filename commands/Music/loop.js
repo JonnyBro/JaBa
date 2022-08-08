@@ -63,7 +63,7 @@ class Loop extends BaseCommand {
 			);
 
 		const msg = await interaction.reply({
-			content: interaction.translate("common:AVAILABLE_CATEGORIES"),
+			content: interaction.translate("common:AVAILABLE_OPTIONS"),
 			components: [row],
 			fetchReply: true
 		});
@@ -82,8 +82,11 @@ class Loop extends BaseCommand {
 
 			queue.setRepeatMode(mode);
 			return i.update({
-				content: interaction.translate(`music/loop:${type === "3" ? "AUTOPLAY_ENABLED" :
-					type === "2" ? "QUEUE_ENABLED" : type === "1" ? "TRACK_ENABLED" : "LOOP_DISABLED"}`),
+				content: interaction.translate(`music/loop:${
+					type === "3" ? "AUTOPLAY_ENABLED" :
+						type === "2" ? "QUEUE_ENABLED" :
+							type === "1" ? "TRACK_ENABLED" : "LOOP_DISABLED"
+				}`),
 				components: []
 			});
 		});

@@ -1,3 +1,4 @@
+const { ChannelType } = require("discord.js");
 const express = require("express"),
 	utils = require("../utils"),
 	CheckAuth = require("../auth/CheckAuth"),
@@ -23,6 +24,7 @@ router.get("/:serverID", CheckAuth, async(req, res) => {
 		user: req.userInfos,
 		memberData: memberData,
 		translate: req.translate,
+		ChannelType,
 		bot: req.client,
 		currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`
 	});
@@ -54,7 +56,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		const welcome = {
 			enabled: true,
 			message: data.message,
-			channel: guild.channels.cache.find((ch) => "#" + ch.name === data.channel).id,
+			channel: guild.channels.cache.find(ch => "#" + ch.name === data.channel).id,
 			withImage: data.withImage === "on"
 		};
 		guildData.plugins.welcome = welcome;
@@ -78,7 +80,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 		const goodbye = {
 			enabled: true,
 			message: data.message,
-			channel: guild.channels.cache.find((ch) => "#" + ch.name === data.channel).id,
+			channel: guild.channels.cache.find(ch => "#" + ch.name === data.channel).id,
 			withImage: data.withImage === "on"
 		};
 		guildData.plugins.goodbye = goodbye;
@@ -101,7 +103,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 	if (Object.prototype.hasOwnProperty.call(data, "autoroleEnable") || Object.prototype.hasOwnProperty.call(data, "autoroleUpdate")) {
 		const autorole = {
 			enabled: true,
-			role: guild.roles.cache.find((r) => "@" + r.name === data.role).id
+			role: guild.roles.cache.find(r => "@" + r.name === data.role).id
 		};
 		guildData.plugins.autorole = autorole;
 		guildData.markModified("plugins.autorole");
@@ -119,17 +121,20 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 	}
 
 	if (Object.prototype.hasOwnProperty.call(data, "suggestions")) {
-		if (data.suggestions === req.translate("common:NO_CHANNEL")) guildData.plugins.suggestions = false;
-		else guildData.plugins.suggestions = guild.channels.cache.find((ch) => "#" + ch.name === data.suggestions).id;
+		if (data.suggestions === req.translate("dashboard:NO_CHANNEL")) guildData.plugins.suggestions = false;
+		else guildData.plugins.suggestions = guild.channels.cache.find(ch => "#" + ch.name === data.suggestions).id;
 
-		if (data.modlogs === req.translate("common:NO_CHANNEL")) guildData.plugins.modlogs = false;
-		else guildData.plugins.modlogs = guild.channels.cache.find((ch) => "#" + ch.name === data.modlogs).id;
+		if (data.modlogs === req.translate("dashboard:NO_CHANNEL")) guildData.plugins.modlogs = false;
+		else guildData.plugins.modlogs = guild.channels.cache.find(ch => "#" + ch.name === data.modlogs).id;
 
-		if (data.reports === req.translate("common:NO_CHANNEL")) guildData.plugins.reports = false;
-		else guildData.plugins.reports = guild.channels.cache.find((ch) => "#" + ch.name === data.reports).id;
+		if (data.reports === req.translate("dashboard:NO_CHANNEL")) guildData.plugins.reports = false;
+		else guildData.plugins.reports = guild.channels.cache.find(ch => "#" + ch.name === data.reports).id;
 
-		if (data.birthdays === req.translate("common:NO_CHANNEL")) guildData.plugins.birthdays = false;
-		else guildData.plugins.birthdays = guild.channels.cache.find((ch) => "#" + ch.name === data.birthdays).id;
+		if (data.birthdays === req.translate("dashboard:NO_CHANNEL")) guildData.plugins.birthdays = false;
+		else guildData.plugins.birthdays = guild.channels.cache.find(ch => "#" + ch.name === data.birthdays).id;
+
+		if (data.news === req.translate("dashboard:NO_CHANNEL")) guildData.plugins.news = false;
+		else guildData.plugins.news = guild.channels.cache.find(ch => "#" + ch.name === data.news).id;
 
 		guildData.markModified("plugins");
 	}

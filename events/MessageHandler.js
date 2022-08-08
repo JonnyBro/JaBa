@@ -31,7 +31,7 @@ class MessageCreate extends BaseEvent {
 			const guild = await client.findOrCreateGuild({
 				id: message.guild.id
 			});
-			message.guild.data = data.guild = guild;
+			message.guild.data = data.guildData = guild;
 		}
 
 		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) return message.replyT("misc:HELLO_SERVER", { username: message.author.username });
@@ -52,7 +52,7 @@ class MessageCreate extends BaseEvent {
 		if (message.guild) {
 			await updateXp(client, message, data);
 
-			if (data.guild.plugins.automod.enabled && !data.guild.plugins.automod.ignored.includes(message.channel.id)) {
+			if (data.guildData.plugins.automod.enabled && !data.guildData.plugins.automod.ignored.includes(message.channel.id)) {
 				if (/(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(message.content)) {
 					if (!message.channel.permissionsFor(message.member).has(PermissionsBitField.Flags.ManageMessages)) {
 						message.delete();

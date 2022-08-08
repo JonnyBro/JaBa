@@ -46,8 +46,7 @@ class GuildMemberRemove extends BaseEvent {
 				const message = guildData.plugins.goodbye.message
 					.replace(/{user}/g, member.user.tag)
 					.replace(/{server}/g, member.guild.name)
-					.replace(/{membercount}/g, member.guild.memberCount)
-					.replace(/{createdat}/g, client.printDate(member.user.createdAt));
+					.replace(/{membercount}/g, member.guild.memberCount);
 				if (guildData.plugins.goodbye.withImage) {
 					const canvas = Canvas.createCanvas(1024, 450),
 						ctx = canvas.getContext("2d");
