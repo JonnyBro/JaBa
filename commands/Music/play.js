@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
-const BaseCommand = require("../../base/BaseCommand");
+const BaseCommand = require("../../base/BaseCommand"),
+	playdl = require("play-dl");
 
 class Play extends BaseCommand {
 	/**
@@ -43,7 +44,7 @@ class Play extends BaseCommand {
 
 		const searchResult = await client.player.search(query, {
 			requestedBy: interaction.user,
-			searchEngine: "jaba"
+			// searchEngine: "jaba"
 		}).catch(() => {});
 		if (!searchResult || !searchResult.tracks.length) return interaction.editReply({
 			content: interaction.translate("music/play:NO_RESULT", {
@@ -59,7 +60,11 @@ class Play extends BaseCommand {
 			leaveOnStop: true,
 			bufferingTimeout: 1000,
 			disableVolume: false,
-			spotifyBridge: false
+			spotifyBridge: false,
+			async onBeforeCreateStream(track, source) {
+				if (source === "youtube" || source === "soundcloud")
+					return (await playdl.stream(track.url, { discordPlayerCompatibility: true })).stream;
+			}
 		});
 
 		searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
