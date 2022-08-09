@@ -5,7 +5,7 @@ const fetch = require("node-fetch");
 
 const fetchMee6 = async args => {
 	const response = await fetch(`https://mee6.xyz/api/plugins/levels/leaderboard/${args}`).then(res => res.json());
-	if (response.statusCode !== 200) {
+	if (response.statusCode) {
 		if (response.error && response.error.message) throw new Error(`${response.statusCode}: ${response.error.message}`);
 		else throw new Error(`${response.statusCode}: ${response.statusMessage}`);
 	}
