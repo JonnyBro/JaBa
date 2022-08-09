@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Показать список нарушений пользователя!",
+	"DESCRIPTION": "Показать список нарушений пользователя",
 	"USAGE": "warns [@пользователь]",
 	"EXAMPLES": "warns @Jonny_Bro#4226",
 	"SANCTIONS_OF": "Нарушения {{member}}",

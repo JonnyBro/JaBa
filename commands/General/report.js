@@ -34,7 +34,7 @@ class Report extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const repChannel = interaction.guild.channels.cache.get(interaction.guild.data.plugins.reports);

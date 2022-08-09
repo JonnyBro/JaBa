@@ -28,7 +28,7 @@ class Config extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
 		const guildData = data.guildData;
@@ -75,7 +75,7 @@ class Config extends BaseCommand {
 				{
 					name: interaction.translate("administration/config:AUTOMOD_TITLE"),
 					value: guildData.plugins.automod.enabled ? interaction.translate("administration/config:AUTOMOD_CONTENT", {
-						channels: guildData.plugins.automod.ignored.map(ch => `<#${ch}>`)
+						channels: guildData.plugins.automod.ignored.map(ch => ` ${ch}`)
 					}) : interaction.translate("common:DISABLED")
 				},
 				{

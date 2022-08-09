@@ -46,7 +46,7 @@ class CommandHandler extends BaseEvent {
 			userData.achievements.firstCommand.achieved = true;
 			userData.markModified("achievements.firstCommand");
 			await userData.save();
-			await interaction.channel.send({
+			await interaction.followUp({
 				files: [{
 					name: "achievement_unlocked2.png",
 					attachment: "./assets/img/achievements/achievement_unlocked2.png"

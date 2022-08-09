@@ -1,10 +1,11 @@
 {
-	"DESCRIPTION": "Показать таблице лидеров по кредитам, уровню или очкам репутации!",
+	"DESCRIPTION": "Показать таблицу лидеров по кредитам, уровню или очкам репутации",
 	"USAGE": "leaderboard [rep/level/credits]",
-	"EXAMPLES": "leaderboard credits\nleaderboard level",
-	"MISSING_TYPE": "Выберите таблицу: `credits`, `level` или `rep`!",
+	"EXAMPLES": "leaderboard credits",
+	"LEVEL": "Уровень",
+	"MONEY": "Кредиты",
+	"REP": "Репутация",
 	"MOBILE": ":confused: Я заметил, что вы онлайн с телефона... Таблица лидеров может отображаться некорректно на маленьких экранах. Попробуйте позже с другого устройства!",
 	"TABLE": "Таблица лидеров {{name}}",
-	"TOP": "Топ 20",
-	"XP": "Опыт"
+	"TOP": "Топ 20"
 }

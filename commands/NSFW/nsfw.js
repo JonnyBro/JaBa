@@ -29,7 +29,7 @@ class NSFW extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		if (!interaction.channel.nsfw) return interaction.replyT("misc:NSFW_COMMAND", null, { ephemeral: true });

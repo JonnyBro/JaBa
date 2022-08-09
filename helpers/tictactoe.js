@@ -1,9 +1,9 @@
 // Thanks to simply-djs for this =)
 
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
+const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
 
 /**
- * @param {require("discord.js").Message} message
+ * @param {import("discord.js").ChatInputCommandInteraction} interaction
  * @param {Array} options
  */
 /**
@@ -80,12 +80,12 @@ async function tictactoe(interaction, options = {}) {
 
 			const accept = new ButtonBuilder()
 				.setLabel(interaction.translate("common:ACCEPT"))
-				.setStyle("SUCCESS")
+				.setStyle(ButtonStyle.Success)
 				.setCustomId("acceptttt");
 
 			const decline = new ButtonBuilder()
 				.setLabel(interaction.translate("common:DECLINE"))
-				.setStyle("DANGER")
+				.setStyle(ButtonStyle.Danger)
 				.setCustomId("declinettt");
 
 			const accep = new ActionRowBuilder().addComponents([
@@ -94,7 +94,6 @@ async function tictactoe(interaction, options = {}) {
 			]);
 
 			let m;
-
 			if (interaction.commandId) {
 				m = await interaction.reply({
 					content: interaction.translate("economy/tictactoe:INVITE_USER", {
@@ -113,10 +112,10 @@ async function tictactoe(interaction, options = {}) {
 				});
 			}
 			const collector = m.createMessageComponentCollector({
-				type: "BUTTON",
+				componentType: ComponentType.Button,
 				time: 30000
 			});
-			collector.on("collect", async (button) => {
+			collector.on("collect", async button => {
 				if (button.user.id !== opponent.id)
 					return button.reply({
 						content: interaction.translate("economy/tictactoe:REQUEST_SEND", {
@@ -129,8 +128,8 @@ async function tictactoe(interaction, options = {}) {
 					button.deferUpdate();
 					return collector.stop("decline");
 				} else if (button.customId == "acceptttt") {
+					button.deferUpdate();
 					collector.stop();
-					if (interaction.commandId) button.message.delete();
 
 					const fighters = [
 						(interaction.user ? interaction.user : interaction.author).id,
@@ -200,11 +199,11 @@ async function tictactoe(interaction, options = {}) {
 
 					let msg;
 					if (interaction.commandId) {
-						msg = await interaction.reply({
+						msg = await interaction.editReply({
 							embeds: [
 								epm.setDescription(
 									interaction.translate("economy/tictactoe:WAITING", {
-										user: Args.userid,
+										user: `<@${Args.userid}>`,
 										emoji: client.emojis.cache.get(o_emoji) || "⭕"
 									})
 								)
@@ -215,7 +214,7 @@ async function tictactoe(interaction, options = {}) {
 							embeds: [
 								epm.setDescription(
 									interaction.translate("economy/tictactoe:WAITING", {
-										user: Args.userid,
+										user: `<@${Args.userid}>`,
 										emoji: client.emojis.cache.get(o_emoji) || "⭕"
 									})
 								)
@@ -342,7 +341,7 @@ async function tictactoe(interaction, options = {}) {
 									return m
 										.edit({
 											content: interaction.translate("economy/tictactoe:WON", {
-												winner: fighters[1],
+												winner: `<@${fighters[1]}>`,
 												emoji: client.emojis.cache.get(o_emoji) || "⭕"
 											}),
 											components: buttons,
@@ -350,27 +349,27 @@ async function tictactoe(interaction, options = {}) {
 											embeds: [
 												epm.setDescription(
 													interaction.translate("economy/tictactoe:WON", {
-														winner: fighters[1],
+														winner: `<@${fighters[1]}>`,
 														emoji: client.emojis.cache.get(o_emoji) || "⭕"
 													})
 												)
 											]
 										})
-										.then((m) => {
+										.then(m => {
 											m.react("⭕");
 										});
 								else if (!options.resultBtn || options.resultBtn === false)
 									return m
 										.edit({
 											content: interaction.translate("economy/tictactoe:WON", {
-												winner: fighters[1],
+												winner: `<@${fighters[1]}>`,
 												emoji: client.emojis.cache.get(o_emoji) || "⭕"
 											}),
 
 											embeds: [
 												epm.setDescription(
 													`${interaction.translate("economy/tictactoe:WON", {
-														winner: fighters[1],
+														winner: `<@${fighters[1]}>`,
 														emoji: client.emojis.cache.get(o_emoji) || "⭕"
 													})}\n\`\`\`\n${Args.a1.emoji
 														.replace(o_emoji, "⭕")
@@ -398,7 +397,7 @@ async function tictactoe(interaction, options = {}) {
 											],
 											components: []
 										})
-										.then((m) => {
+										.then(m => {
 											m.react("⭕");
 										});
 							} else if (Args.user == 1) {
@@ -424,7 +423,7 @@ async function tictactoe(interaction, options = {}) {
 												)
 											]
 										})
-										.then((m) => {
+										.then(m => {
 											m.react("⭕");
 										});
 								else if (!options.resultBtn || options.resultBtn === false)
@@ -466,7 +465,7 @@ async function tictactoe(interaction, options = {}) {
 											],
 											components: []
 										})
-										.then((m) => {
+										.then(m => {
 											m.react("⭕");
 										});
 							}
@@ -530,33 +529,33 @@ async function tictactoe(interaction, options = {}) {
 									return m
 										.edit({
 											content: interaction.translate("economy/tictactoe:WON", {
-												winner: fighters[1],
+												winner: `<@${fighters[1]}>`,
 												emoji: client.emojis.cache.get(o_emoji) || "⭕"
 											}),
 											components: buttons,
 											embeds: [
 												epm.setDescription(
 													interaction.translate("economy/tictactoe:WON", {
-														winner: fighters[1],
+														winner: `<@${fighters[1]}>`,
 														emoji: client.emojis.cache.get(o_emoji) || "⭕"
 													})
 												)
 											]
 										})
-										.then((m) => {
+										.then(m => {
 											m.react("❌");
 										});
 								else if (!options.resultBtn || options.resultBtn === false)
 									return m
 										.edit({
 											content: interaction.translate("economy/tictactoe:WON", {
-												winner: fighters[1],
+												winner: `<@${fighters[1]}>`,
 												emoji: client.emojis.cache.get(o_emoji) || "⭕"
 											}),
 											embeds: [
 												epm.setDescription(
 													`${interaction.translate("economy/tictactoe:WON", {
-														winner: fighters[1],
+														winner: `<@${fighters[1]}>`,
 														emoji: client.emojis.cache.get(o_emoji) || "⭕"
 													})}\n\`\`\`\n${Args.a1.emoji
 														.replace(o_emoji, "⭕")
@@ -584,7 +583,7 @@ async function tictactoe(interaction, options = {}) {
 											],
 											components: []
 										})
-										.then((m) => {
+										.then(m => {
 											m.react("❌");
 										});
 							} else if (Args.user == 1) {
@@ -610,7 +609,7 @@ async function tictactoe(interaction, options = {}) {
 												)
 											]
 										})
-										.then((m) => {
+										.then(m => {
 											m.react("❌");
 										});
 								else
@@ -651,7 +650,7 @@ async function tictactoe(interaction, options = {}) {
 											],
 											components: []
 										})
-										.then((m) => {
+										.then(m => {
 											m.react("❌");
 										});
 							}
@@ -662,7 +661,7 @@ async function tictactoe(interaction, options = {}) {
 							embeds: [
 								epm.setDescription(
 									interaction.translate("economy/tictactoe:WAITING", {
-										user: Args.userid,
+										user: `<@${Args.userid}>`,
 										emoji: Args.user == 0 ? `${client.emojis.cache.get(o_emoji) || "⭕"}` : `${client.emojis.cache.get(x_emoji) || "❌"}`
 									})
 								)
@@ -671,12 +670,12 @@ async function tictactoe(interaction, options = {}) {
 						});
 
 						const collector = m.createMessageComponentCollector({
-							componentType: "BUTTON",
+							componentType: ComponentType.Button,
 							max: 1,
 							time: 30000
 						});
 
-						collector.on("collect", (b) => {
+						collector.on("collect", b => {
 							if (b.user.id !== Args.userid) {
 								b.reply({
 									content: interaction.translate("economy/tictactoe:CANT_PLAY"),
@@ -710,7 +709,7 @@ async function tictactoe(interaction, options = {}) {
 									);
 								const objectFilter = (obj, predicate) =>
 									Object.keys(obj)
-										.filter((key) => predicate(obj[key]))
+										.filter(key => predicate(obj[key]))
 										.reduce((res, key) => ((res[key] = obj[key]), res), {});
 								const Brgs = objectFilter(
 									map(Args, (_, fruit) => fruit.emoji == dashmoji),
@@ -778,7 +777,7 @@ async function tictactoe(interaction, options = {}) {
 													content: interaction.translate("economy/tictactoe:TIE"),
 													embeds: [epm.setDescription(interaction.translate("economy/tictactoe:TIE_DESC"))]
 												})
-												.then((m) => {
+												.then(m => {
 													m.react(dashmoji);
 												});
 										else
@@ -813,7 +812,7 @@ async function tictactoe(interaction, options = {}) {
 													],
 													components: []
 												})
-												.then((m) => {
+												.then(m => {
 													m.react(dashmoji);
 												})
 												.catch(() => {});
@@ -827,7 +826,7 @@ async function tictactoe(interaction, options = {}) {
 							if (collected.size === 0 && reason == "time")
 								m.edit({
 									content: interaction.translate("economy/tictactoe:NO_ANSWER", {
-										user: Args.userid
+										user: `<@${Args.userid}>`
 									}),
 									components: []
 								});

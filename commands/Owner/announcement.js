@@ -13,6 +13,9 @@ class Announcement extends BaseCommand {
 				.setDescription(client.translate("owner/announcement:DESCRIPTION"))
 				.addStringOption(option => option.setName("message")
 					.setDescription(client.translate("common:MESSAGE"))
+					.setRequired(true))
+				.addBooleanOption(option => option.setName("tag")
+					.setDescription(client.translate("owner/announcement:TAG"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
@@ -31,7 +34,7 @@ class Announcement extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });
@@ -53,7 +56,7 @@ class Announcement extends BaseCommand {
 			if (guild.id === "568120814776614924") return;
 			const channel = guild.channels.cache.get(guild?.data.plugins.news);
 			await channel.send({
-				content: "||@everyone|| ВАЖНОЕ ОБЪЯВЛЕНИЕ!",
+				content: `${interaction.options.getBoolean("tag") ? "||@everyone|| " : ""}ВАЖНОЕ ОБЪЯВЛЕНИЕ!`,
 				embeds: [embed]
 			});
 		});

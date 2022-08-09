@@ -18,7 +18,7 @@
 
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1> <%= translate("common:CONFIGURATION") %> <small> Dashboard v1.1 </small> </h1>
+				<h1> <%= translate("common:SETTINGS") %> <small> Dashboard v1.1 </small> </h1>
 				<ol class="breadcrumb">
 					<li><a href="/"><i class="fa fa-home"></i> <%= translate("dashboard:SELECTOR") %></a></li>
 					<li class="active"><%= guild.name %></li>
@@ -44,7 +44,7 @@
 						<div class="info-box">
 							<span class="info-box-icon bg-red"><i class="fa fa-line-chart"></i></span>
 							<div class="info-box-content">
-								<span class="info-box-text"><%= translate("economy/profile:EXP").substr(2) %></span>
+								<span class="info-box-text"><%= translate("economy/profile:XP").substr(2) %></span>
 								<span class="info-box-number"><%= memberData.exp %> / <%= 5 * (memberData.level * memberData.level) + 80 * memberData.level + 100 %></span>
 							</div>
 							<!-- /.info-box-content -->
@@ -115,7 +115,7 @@
 								<!-- /.box-body -->
 								<div class="box-footer">
 									<button type="submit"
-										class="btn btn-primary"><%= translate("common:UPDATE") %></button>
+										class="btn btn-primary"><%= translate("common:APPLY") %></button>
 								</div>
 							</form>
 						</div>
@@ -223,7 +223,7 @@
 								<!-- /.box-body -->
 								<div class="box-footer">
 									<button type="submit"
-										class="btn btn-primary"><%= translate("common:UPDATE") %></button>
+										class="btn btn-primary"><%= translate("common:APPLY") %></button>
 								</div>
 							</form>
 						</div>
@@ -283,12 +283,12 @@
 								<div class="box-footer">
 									<% if (guild.plugins.welcome.enabled) { %>
 									<button type="submit" name="welcomeDisable"
-										class="btn btn-danger"><%= translate("dashboard:DISABLE_MESSAGES") %></button>
+										class="btn btn-danger"><%= translate("common:DISABLE") %></button>
 									<button type="submit" name="welcomeUpdate"
-										class="btn btn-primary pull-right"><%= translate("common:UPDATE") %></button>
+										class="btn btn-primary pull-right"><%= translate("common:APPLY") %></button>
 									<% } else { %>
 									<button type="submit" name="welcomeEnable"
-										class="btn btn-success"><%= translate("dashboard:ENABLE_MESSAGES") %></button>
+										class="btn btn-success"><%= translate("common:ENABLE") %></button>
 									<% } %>
 								</div>
 							</form>
@@ -346,12 +346,12 @@
 								<div class="box-footer">
 									<% if (guild.plugins.goodbye.enabled) { %>
 									<button type="submit" name="goodbyeDisable"
-										class="btn btn-danger"><%= translate("dashboard:DISABLE_MESSAGES") %></button>
+										class="btn btn-danger"><%= translate("common:DISABLE") %></button>
 									<button type="submit" name="goodbyeUpdate"
-										class="btn btn-primary pull-right"><%= translate("common:UPDATE") %></button>
+										class="btn btn-primary pull-right"><%= translate("common:APPLY") %></button>
 									<% } else { %>
 									<button type="submit" name="goodbyeEnable"
-										class="btn btn-success"><%= translate("dashboard:ENABLE_MESSAGES") %></button>
+										class="btn btn-success"><%= translate("common:ENABLE") %></button>
 									<% } %>
 								</div>
 							</form>
@@ -388,12 +388,12 @@
 								<div class="box-footer">
 									<% if (guild.plugins.autorole.enabled) { %>
 									<button type="submit" name="autoroleDisable"
-										class="btn btn-danger"><%= translate("dashboard:DISABLE_AUTOROLE") %></button>
+										class="btn btn-danger"><%= translate("common:DISABLE") %></button>
 									<button type="submit" name="autoroleUpdate"
-										class="btn btn-primary pull-right"><%= translate("common:UPDATE") %></button>
+										class="btn btn-primary pull-right"><%= translate("common:APPLY") %></button>
 									<% } else { %>
 									<button type="submit" name="autoroleEnable"
-										class="btn btn-success"><%= translate("dashboard:ENABLE_AUTOROLE") %></button>
+										class="btn btn-success"><%= translate("common:ENABLE") %></button>
 									<% } %>
 								</div>
 							</form>

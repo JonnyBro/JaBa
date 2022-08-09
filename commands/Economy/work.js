@@ -1,0 +1,132 @@
+const { SlashCommandBuilder, EmbedBuilder, parseEmoji } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
+
+class Work extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
+	constructor(client) {
+		super({
+			command: new SlashCommandBuilder()
+				.setName("work")
+				.setDescription(client.translate("economy/work:DESCRIPTION")),
+			aliases: [],
+			dirname: __dirname,
+			guildOnly: true,
+			ownerOnly: false
+		});
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Object} data
+	 */
+	async execute(client, interaction, data) {
+		const isInCooldown = data.memberData.cooldowns?.work;
+		if (isInCooldown) {
+			if (isInCooldown > Date.now()) return interaction.error("economy/work:COOLDOWN", {
+				time: client.convertTime(isInCooldown, true, true)
+			});
+		}
+		if (Date.now() > data.memberData.cooldowns.work + (24 * 3600000)) data.memberData.workStreak = 0;
+
+		const toWait = Date.now() + 43200000; // 24 hours
+		data.memberData.cooldowns.work = toWait;
+		data.memberData.markModified("cooldowns");
+
+		data.memberData.workStreak = (data.memberData.workStreak || 0) + 1;
+		await data.memberData.save();
+
+		const embed = new EmbedBuilder()
+			.setFooter({
+				text: interaction.translate("economy/work:AWARD"),
+				iconURL: interaction.member.displayAvatarURL()
+			})
+			.setColor(client.config.embed.color);
+
+		const award = [
+			client.customEmojis.letters.a,
+			client.customEmojis.letters.w,
+			client.customEmojis.letters.a,
+			client.customEmojis.letters.r,
+			client.customEmojis.letters.d
+		];
+		let won = 200;
+
+		if (data.memberData.workStreak >= 5) {
+			won += 200;
+			embed.addFields([
+				{
+					name: interaction.translate("economy/work:SALARY"),
+					value: interaction.translate("economy/work:SALARY_CONTENT", {
+						won: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`
+					})
+				},
+				{
+					name: interaction.translate("economy/work:STREAK"),
+					value: interaction.translate("economy/work:STREAK_CONTENT")
+				}
+			]);
+			data.memberData.workStreak = 0;
+		} else {
+			for (let i = 0; i < award.length; i++) {
+				if (data.memberData.workStreak > i) {
+					const letter = parseEmoji(award[i]).name.split("_")[1];
+					award[i] = `:regional_indicator_${letter.toLowerCase()}:`;
+				}
+			}
+			embed.addFields([
+				{
+					name: interaction.translate("economy/work:SALARY"),
+					value: interaction.translate("economy/work:SALARY_CONTENT", {
+						won: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`
+					})
+				},
+				{
+					name: interaction.translate("economy/work:STREAK"),
+					value: award.join("")
+				}
+			]);
+		}
+
+		const info = {
+			user: interaction.translate("economy/work:SALARY"),
+			amount: won,
+			date: Date.now(),
+			type: "got"
+		};
+
+		data.memberData.transactions.push(info);
+		data.memberData.money += won;
+		await data.memberData.save();
+
+		const messageOptions = {
+			embeds: [embed]
+		};
+		if (!data.userData.achievements.work.achieved) {
+			data.userData.achievements.work.progress.now += 1;
+			if (data.userData.achievements.work.progress.now === data.userData.achievements.work.progress.total) {
+				messageOptions.files = [{
+					name: "unlocked.png",
+					attachment: "./assets/img/achievements/achievement_unlocked1.png"
+				}];
+				data.userData.achievements.work.achieved = true;
+			}
+			data.userData.markModified("achievements.work");
+			await data.userData.save();
+		}
+
+		interaction.reply(messageOptions);
+	}
+}
+
+module.exports = Work;

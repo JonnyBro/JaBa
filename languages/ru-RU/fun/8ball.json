@@ -1,5 +1,6 @@
 {
 	"DESCRIPTION": "Я говорю правду",
+	"USAGE": "8ball [вопрос]",
 	"QUESTION": "Вопрос",
 	"EXAMPLES": "8ball JaBa крутой?",
 	"ERR_QUESTION": "Вопрос должен оканчиваться на `?`.",

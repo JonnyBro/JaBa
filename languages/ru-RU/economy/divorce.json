@@ -1,8 +1,8 @@
 {
-	"DESCRIPTION": "Развестись с пользователем!",
+	"DESCRIPTION": "Развестись с пользователем",
 	"USAGE": "divorce",
 	"EXAMPLES": "divorce",
 	"NOT_MARRIED": "Вы не состоите в браке!",
-	"DIVORCED": "Вы развелись с **{{username}}**!",
-	"DIVORCED_U": "**{{username}}** развёлся с вами!"
+	"DIVORCED": "Вы развелись с {{user}}!",
+	"DIVORCED_U": "{{user}} развёлся с вами!"
 }

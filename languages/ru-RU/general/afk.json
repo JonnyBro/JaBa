@@ -4,5 +4,5 @@
 	"EXAMPLES": "afk Сру =)",
 	"SUCCESS": "Теперь вы AFK по причине: **{{reason}}**",
 	"DELETED": "**{{username}}**, ваш AFK статус удалён!",
-	"IS_AFK": "**{{user}}** сейчас AFK, причина:\n**`{{reason}}`**"
+	"IS_AFK": "**{{user}}** сейчас AFK, причина:\n```{{reason}}```"
 }

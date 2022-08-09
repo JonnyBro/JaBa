@@ -28,7 +28,7 @@ class Warn extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").UserContextMenuCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
 		const member = interaction.targetMember;
@@ -164,7 +164,7 @@ class Warn extends BaseCommand {
 
 			submitted.reply({
 				content: interaction.translate("moderation/warn:WARNED", {
-					username: member.user.tag,
+					user: member.toString(),
 					reason
 				})
 			});

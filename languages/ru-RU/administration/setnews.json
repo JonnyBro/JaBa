@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Установить канал для новостей бота",
-	"USAGE": "setnews (#канал)",
-	"EXAMPLES": "setnews #bot-news\nsetnews",
+	"USAGE": "setnews [true/false] (#канал)",
+	"EXAMPLES": "setnews true #bot-news\nsetnews false",
 	"ENABLED": "Новости бота включены в канале **{{channel}}**!",
 	"DISABLED": "Новости бота отключены!"
 }

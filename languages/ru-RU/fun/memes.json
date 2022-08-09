@@ -1,11 +1,7 @@
 {
 	"DESCRIPTION": "Получить мем с выбранного сабреддита",
-	"USAGE": "memes (тег)",
-	"EXAMPLES": "memes\nmemes me_irl",
-	"SEARCHING": "Ищу мем по тегу `{{tag}}`...",
-	"SEARCHING_RANDOM": "Ищу случайный мем...",
-	"EMBED_TITLE": "Доступные категории",
-	"NOT_FOUND": "Данной категории не существует!",
+	"USAGE": "memes",
+	"EXAMPLES": "memes",
 	"SUBREDDIT": "Сабреддит",
 	"UPS": "Апвоуты"
 }

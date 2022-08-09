@@ -29,7 +29,7 @@ class Activity extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const voice = interaction.member.voice.channel;
@@ -74,7 +74,7 @@ class Activity extends BaseCommand {
 			const embed = new EmbedBuilder()
 				.setTitle(activity)
 				.setColor(client.config.embed.color)
-				.setDescription(`**[${interaction.translate("misc:CLICK_HERE", { activity: defaultApplications.find(a => a.id === activity).name, channel: voice.name })}](${invite.code})**`)
+				.setDescription(`**[${interaction.translate("general/activity:CLICK_HERE", { activity: defaultApplications.find(a => a.id === activity).name, channel: voice.name })}](${invite.code})**`)
 				.setFooter({
 					text: client.config.embed.footer
 				})

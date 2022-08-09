@@ -1,10 +1,8 @@
 {
-	"DESCRIPTION": "Запустить опрос в текущем канале!",
+	"DESCRIPTION": "Запустить опрос в текущем канале",
 	"USAGE": "poll [вопрос]",
 	"EXAMPLES": "poll Земля плоская?",
 	"QUESTION": "Текст вопроса",
-	"HERE": "@here",
-	"EVERYONE": "@everyone",
 	"NOTHING": "Без упоминания",
 	"SELECT_MENTION": "Выберите упоминание:",
 	"POLL_SENDED": "Опрос отправлен",

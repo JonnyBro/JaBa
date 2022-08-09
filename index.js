@@ -18,6 +18,6 @@ const client = new JaBa({
 
 client.on("disconnect", () => client.logger.log("Bot is disconnecting...", "warn"))
 	.on("reconnecting", () => client.logger.log("Bot reconnecting...", "warn"))
-	.on("warn", (info) => client.logger.log(info, "warn"));
-//	.on("error", (e) => client.logger.log(e, "error"))
-process.on("unhandledRejection", (err) => console.error(err));
+	.on("warn", warn => client.logger.log(warn, "warn"))
+	.on("error", e => client.logger.log(`${e.message}\n${e.stack}`, "error"));
+process.on("unhandledRejection", e => console.error(e));

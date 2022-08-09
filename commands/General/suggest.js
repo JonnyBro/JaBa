@@ -31,7 +31,7 @@ class Suggest extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const suggChannel = interaction.guild.channels.cache.get(interaction.guild.data.plugins.suggestions);
@@ -43,9 +43,7 @@ class Suggest extends BaseCommand {
 				name: interaction.translate("general/suggest:TITLE", {
 					user: interaction.user.tag
 				}),
-				iconURL: interaction.member.displayAvatarURL({
-					size: 512
-				})
+				iconURL: interaction.member.displayAvatarURL()
 			})
 			.addFields([
 				{

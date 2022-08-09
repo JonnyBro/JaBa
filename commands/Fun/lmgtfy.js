@@ -32,7 +32,7 @@ class LMGTFY extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const question = interaction.options.getString("question").replace(/[' '_]/g, "+");

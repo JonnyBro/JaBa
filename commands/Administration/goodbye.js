@@ -43,7 +43,7 @@ class Goodbye extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
 		const command = interaction.options.getSubcommand();

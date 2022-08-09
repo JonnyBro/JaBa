@@ -1,11 +1,10 @@
 {
-	"DESCRIPTION": "Удалить сообщения!",
+	"DESCRIPTION": "Очистка сообщений в канале",
 	"USAGE": "clear [кол-во_сообщений] (@пользователь)",
 	"EXAMPLES": "clear 10\r 10 @Jonny_Bro#4226\nclear all",
-	"OPTION_NAN": "Укажите целое число больше 0 или `all`",
 	"OPTION": "Целое число / all",
 	"ALL_CONFIRM": "**Все сообщения в канале будут удалены! Вы уверены?**",
 	"CHANNEL_CLEARED": "Канал очищен!",
-	"CLEARED": "Было удалено **{{amount}}**!",
-	"CLEARED_MEMBER": "Было удалено **{{amount}}** от **{{username}}**!"
+	"CLEARED": "Было удалено {{amount}}!",
+	"CLEARED_MEMBER": "Было удалено {{amount}} от {{user}}!"
 }

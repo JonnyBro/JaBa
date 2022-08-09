@@ -1,41 +1,54 @@
-const Command = require("../../base/Command");
+const { SlashCommandBuilder } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
-class Slots extends Command {
+class Slots extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../base/JaBa")} client
+	 */
 	constructor(client) {
-		super(client, {
-			name: "slots",
+		super({
+			command: new SlashCommandBuilder()
+				.setName("slots")
+				.setDescription(client.translate("economy/slots:DESCRIPTION"))
+				.addIntegerOption(option => option.setName("amount")
+					.setDescription(client.translate("common:INT"))
+					.setRequired(true)),
+			aliases: [],
 			dirname: __dirname,
-			enabled: true,
 			guildOnly: true,
-			aliases: ["casino", "slot"],
-			memberPermissions: [],
-			botPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
-			nsfw: false,
-			ownerOnly: false,
-			cooldown: 2000
+			ownerOnly: false
 		});
 	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Object} data
+	 */
+	async execute(client, interaction, data) {
+		await interaction.deferReply();
+		const amount = interaction.options.getInteger("amount");
+		if (amount > data.memberData.money) return interaction.error("economy/slots:NOT_ENOUGH", { money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` });
 
-	async run(message, args, data) {
 		const fruits = ["🍎", "🍐", "🍌", "🍇", "🍉", "🍒", "🍓"];
 
 		let i1 = 0, j1 = 0, k1 = 0,
 			i2 = 1, j2 = 1, k2 = 1,
 			i3 = 2, j3 = 2, k3 = 2;
 
-		// Gets three random fruits array
 		const colonnes = [
-			this.client.functions.shuffle(fruits),
-			this.client.functions.shuffle(fruits),
-			this.client.functions.shuffle(fruits)
+			client.functions.shuffle(fruits),
+			client.functions.shuffle(fruits),
+			client.functions.shuffle(fruits)
 		];
-
-		// Gets the amount provided
-		let amount = args[0];
-		if (!amount || isNaN(amount) || amount < 1) amount = 50;
-		if (amount > data.memberData.money) return message.error("economy/slots:NOT_ENOUGH", { money: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}` });
-
-		amount = Math.round(amount);
 
 		function getCredits(number, isJackpot) {
 			if (!isJackpot) number = number * 1.5;
@@ -44,16 +57,13 @@ class Slots extends Command {
 			return Math.round(number);
 		}
 
-		const tmsg = await message.sendT("misc:PLEASE_WAIT", null, {
-			prefixEmoji: "loading"
-		});
 		editMsg();
 
 		const interval = setInterval(editMsg, 1000);
 
 		setTimeout(() => {
 			clearInterval(interval);
-			end(tmsg);
+			end();
 		}, 4000);
 
 		async function end() {
@@ -74,34 +84,36 @@ class Slots extends Command {
 			msg += colonnes[0][i3] + " : " + colonnes[1][j3] + " : " + colonnes[2][k3] + "\n------------------\n";
 
 			if ((colonnes[0][i2] == colonnes[1][j2]) && (colonnes[1][j2] == colonnes[2][k2])) {
-				msg += "| : : :  **" + (message.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
-				tmsg.edit(msg);
+				msg += "| : : :  **" + (interaction.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
+				await interaction.editReply({
+					content: msg
+				});
+
 				const credits = getCredits(amount, true);
-				message.channel.send({
-					content: "**!! ДЖЕКПОТ !!**\n" + message.translate("economy/slots:VICTORY", {
-						money: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-						won: `**${credits}** ${message.getNoun(credits, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-						username: message.author.username
+				interaction.followUp({
+					content: "**!! ДЖЕКПОТ !!**\n" + interaction.translate("economy/slots:VICTORY", {
+						money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+						won: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+						user: interaction.member.toString()
 					})
 				});
 
 				const toAdd = credits - amount;
 
 				const info = {
-					user: message.translate("economy/slots:DESCRIPTION"),
+					user: interaction.translate("economy/slots:DESCRIPTION"),
 					amount: toAdd,
 					date: Date.now(),
 					type: "got"
 				};
-
 				data.memberData.transactions.push(info);
+				data.memberData.money += toAdd;
 
-				data.memberData.money = data.memberData.money + toAdd;
 				if (!data.userData.achievements.slots.achieved) {
 					data.userData.achievements.slots.progress.now += 1;
 					if (data.userData.achievements.slots.progress.now === data.userData.achievements.slots.progress.total) {
 						data.userData.achievements.slots.achieved = true;
-						message.reply({
+						interaction.followUp({
 							files: [{
 								name: "achievement_unlocked4.png",
 								attachment: "./assets/img/achievements/achievement_unlocked4.png"
@@ -116,33 +128,35 @@ class Slots extends Command {
 			}
 
 			if (colonnes[0][i2] == colonnes[1][j2] || colonnes[1][j2] == colonnes[2][k2] || colonnes[0][i2] == colonnes[2][k2]) {
-				msg += "| : : :  **" + (message.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
-				tmsg.edit(msg);
+				msg += "| : : :  **" + (interaction.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
+				await interaction.editReply({
+					content: msg
+				});
+
 				const credits = getCredits(amount, false);
-				message.channel.send({
-					content: message.translate("economy/slots:VICTORY", {
-						money: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-						won: `**${credits}** ${message.getNoun(credits, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-						username: message.author.username
+				interaction.followUp({
+					content: interaction.translate("economy/slots:VICTORY", {
+						money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+						won: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+						user: interaction.member.toString()
 					})
 				});
 				const toAdd = credits - amount;
 
 				const info = {
-					user: message.translate("economy/slots:DESCRIPTION"),
+					user: interaction.translate("economy/slots:DESCRIPTION"),
 					amount: toAdd,
 					date: Date.now(),
 					type: "got"
 				};
-
 				data.memberData.transactions.push(info);
+				data.memberData.money += toAdd;
 
-				data.memberData.money = data.memberData.money + toAdd;
 				if (!data.userData.achievements.slots.achieved) {
 					data.userData.achievements.slots.progress.now += 1;
 					if (data.userData.achievements.slots.progress.now === data.userData.achievements.slots.progress.total) {
 						data.userData.achievements.slots.achieved = true;
-						message.reply({
+						interaction.followUp({
 							files: [{
 								name: "achievement_unlocked4.png",
 								attachment: "./assets/img/achievements/achievement_unlocked4.png"
@@ -156,24 +170,23 @@ class Slots extends Command {
 				return;
 			}
 
-			msg += "| : : :  **" + (message.translate("common:DEFEAT").toUpperCase()) + "**  : : : |";
-			message.channel.send({
-				content: message.translate("economy/slots:DEFEAT", {
-					money: `**${amount}** ${message.getNoun(amount, message.translate("misc:NOUNS:CREDIT:1"), message.translate("misc:NOUNS:CREDIT:2"), message.translate("misc:NOUNS:CREDIT:5"))}`,
-					username: message.author.username
+			msg += "| : : :  **" + (interaction.translate("common:DEFEAT").toUpperCase()) + "**  : : : |";
+			interaction.followUp({
+				content: interaction.translate("economy/slots:DEFEAT", {
+					money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+					user: interaction.member.toString()
 				})
 			});
 
 			const info = {
-				user: message.translate("economy/slots:DESCRIPTION"),
+				user: interaction.translate("economy/slots:DESCRIPTION"),
 				amount: amount,
 				date: Date.now(),
 				type: "send"
 			};
-
 			data.memberData.transactions.push(info);
+			data.memberData.money -= amount;
 
-			data.memberData.money = data.memberData.money - amount;
 			if (!data.userData.achievements.slots.achieved) {
 				data.userData.achievements.slots.progress.now = 0;
 				data.userData.markModified("achievements.slots");
@@ -183,7 +196,7 @@ class Slots extends Command {
 			return;
 		}
 
-		function editMsg() {
+		async function editMsg() {
 			let msg = "[ :slot_machine: | **СЛОТЫ** ]\n------------------\n";
 
 			i1 = (i1 < fruits.length - 1) ? i1 + 1 : 0;
@@ -200,7 +213,9 @@ class Slots extends Command {
 			msg += colonnes[0][i2] + " : " + colonnes[1][j2] + " : " + colonnes[2][k2] + " **<**\n";
 			msg += colonnes[0][i3] + " : " + colonnes[1][j3] + " : " + colonnes[2][k3] + "\n";
 
-			tmsg.edit(msg);
+			await interaction.editReply({
+				content: msg
+			});
 		}
 	}
 }

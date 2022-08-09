@@ -1,6 +1,5 @@
 {
-	"DESCRIPTION": "Найти NSFW изображение по тэгу",
+	"DESCRIPTION": "Получить NSFW изображение",
 	"USAGE": "nsfw",
-	"EXAMPLES": "nsfw",
-	"TAG": "Тэг"
+	"EXAMPLES": "nsfw"
 }

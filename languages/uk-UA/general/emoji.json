@@ -3,7 +3,6 @@
 	"USAGE": "emoji [емодзі]",
 	"EXAMPLES": "emoji :tada:",
 	"TITLE": "Інформація про {{emoji}}",
-	"NAME": "Назва",
 	"ANIMATED": "Анімований",
 	"ID": "ID",
 	"STANDART": "Стандартний емодзі"

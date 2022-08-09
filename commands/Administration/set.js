@@ -19,8 +19,7 @@ class Set extends BaseCommand {
 						{ name: client.translate("common:LEVEL"), value: "level" },
 						{ name: client.translate("common:XP"), value: "xp" },
 						{ name: client.translate("common:CREDITS"), value: "credits" },
-						{ name: client.translate("economy/transactions:BANK"), value: "bank" },
-						{ name: client.translate("common:REP"), value: "rep" },
+						{ name: client.translate("economy/transactions:BANK"), value: "bank" }
 					))
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
@@ -45,56 +44,50 @@ class Set extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
+	async execute(client, interaction) {
 		const type = interaction.options.getString("type");
 		const member = interaction.options.getMember("user");
 		if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
+		const memberData = await client.findOrCreateMember({
+			id: member.id
+		});
 		const int = interaction.options.getInteger("int");
 		if (int < 0) return interaction.error("administration/set:INVALID_NUMBER", null, { ephemeral: true });
 
 		switch (type) {
 			case "level": {
-				data.memberData.level = int;
-				await data.memberData.save();
-				return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+				memberData.level = int;
+				await memberData.save();
+				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 					username: member.toString(),
 					amount: int
 				}, { ephemeral: true });
 			}
 
 			case "xp": {
-				data.memberData.exp = int;
-				await data.memberData.save();
-				return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+				memberData.exp = int;
+				await memberData.save();
+				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 					username: member.toString(),
 					amount: int
 				}, { ephemeral: true });
 			}
 
 			case "credits": {
-				data.memberData.money = int;
-				await data.memberData.save();
-				return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+				memberData.money = int;
+				await memberData.save();
+				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 					username: member.toString(),
 					amount: int
 				}, { ephemeral: true });
 			}
 
 			case "bank": {
-				data.memberData.bankSold = int;
-				await data.memberData.save();
-				return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
-					username: member.toString(),
-					amount: int
-				}, { ephemeral: true });
-			}
-
-			case "rep": {
-				data.memberData.rep = int;
-				await data.memberData.save();
-				return interaction.success("owner/debug:SUCCESS_" + type.toUpperCase(), {
+				memberData.bankSold = int;
+				await memberData.save();
+				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 					username: member.toString(),
 					amount: int
 				}, { ephemeral: true });

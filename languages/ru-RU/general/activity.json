@@ -1,7 +1,8 @@
 {
 	"DESCRIPTION": "Создать активность в голосовом канале",
-	"USAGE": "activity (активность)",
-	"EXAMPLES": "activity\nactivity chess",
+	"USAGE": "activity",
+	"EXAMPLES": "activity",
 	"AVAILABLE_ACTIVITIES": "Доступные активности:",
+	"CLICK_HERE": "Нажмите сюда, чтобы начать {{activity}} в {{channel}}",
 	"BOOST_NEEDED": "Необходим первый уровень буста или выше!"
 }

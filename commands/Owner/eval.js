@@ -31,14 +31,14 @@ class Eval extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	// eslint-disable-next-line no-unused-vars
 	async execute(client, interaction, data) {
 		const code = interaction.options.getString("code");
-		const result = new Promise((resolve) => resolve(eval(code)));
+		const result = new Promise(resolve => resolve(eval(code)));
 
-		return result.then((output) => {
+		return result.then(output => {
 			if (typeof output != "string") output = require("util").inspect(output, { depth: 0 });
 
 			if (output.includes(client.token)) output = output.replace(client.token, "T0K3N");
@@ -46,7 +46,7 @@ class Eval extends BaseCommand {
 				content: "```js\n" + output + "```",
 				ephemeral: true
 			});
-		}).catch((err) => {
+		}).catch(err => {
 			console.error(err);
 			err = err.toString();
 

@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Установить канал для поздравлений с днём рождения",
-	"USAGE": "setbirthdays (#канал)",
-	"EXAMPLES": "setbirthdays #дни-рождения\nsetbirthdays",
-	"ENABLED": "Поздравления включены в канале **{{channel}}**",
-	"DISABLED": "Поздравления отключены"
+	"USAGE": "setbirthdays [true/false] (#канал)",
+	"EXAMPLES": "setbirthdays true #birthdays\nsetbirthdays false",
+	"ENABLED": "Поздравления включены в канале **{{channel}}**!",
+	"DISABLED": "Поздравления отключены!"
 }

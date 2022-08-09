@@ -30,16 +30,14 @@ class Userinfo extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const member = interaction.options.getMember("user") || interaction.member;
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: `${member.user.tag} (${member.id})`,
-				iconURL: member.displayAvatarURL({
-					size: 512
-				})
+				iconURL: member.displayAvatarURL()
 			})
 			.setThumbnail(member.displayAvatarURL({
 				size: 512
@@ -71,7 +69,7 @@ class Userinfo extends BaseCommand {
 					inline: true
 				},
 				{
-					name: client.customEmojis.calendar2 + " " + interaction.translate("common:JOIN"),
+					name: client.customEmojis.calendar2 + " " + interaction.translate("common:JOINED"),
 					value: client.printDate(member.joinedAt),
 					inline: true
 				},

@@ -31,7 +31,7 @@ class Deletemod extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
 		const state = interaction.options.getBoolean("state");

@@ -33,7 +33,7 @@ class Clear extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const option = interaction.options.getString("option");
@@ -84,7 +84,7 @@ class Clear extends BaseCommand {
 				}
 			});
 		} else {
-			if (isNaN(option) || parseInt(option) < 1) return interaction.error("moderation/clear:OPTION_NAN", null, { ephemeral: true });
+			if (isNaN(option) || parseInt(option) < 1) return interaction.error("misc:OPTION_NAN_ALL", null, { ephemeral: true });
 			let messages = await interaction.channel.messages.fetch({
 				limit: option
 			});
@@ -95,12 +95,12 @@ class Clear extends BaseCommand {
 
 			if (member) {
 				interaction.replyT("moderation/clear:CLEARED_MEMBER", {
-					amount: `${option} ${client.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`,
+					amount: `**${option}** ${client.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`,
 					username: member.user.tag
 				}, { ephemeral: true });
 			} else {
 				interaction.replyT("moderation/clear:CLEARED", {
-					amount: `${option} ${client.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`
+					amount: `**${option}** ${client.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`
 				}, { ephemeral: true });
 			}
 		}

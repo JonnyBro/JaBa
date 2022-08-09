@@ -31,7 +31,7 @@ class Emoji extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const rawEmoji = interaction.options.getString("emoji");
@@ -49,7 +49,7 @@ class Emoji extends BaseCommand {
 			})
 			.addFields([
 				{
-					name: interaction.translate("general/emoji:NAME"),
+					name: interaction.translate("common:NAME"),
 					value: parsedEmoji.name
 				},
 				{

@@ -31,7 +31,7 @@ class Stealemoji extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const parsedEmoji = parseEmoji(interaction.options.getString("emoji"));
@@ -46,9 +46,9 @@ class Stealemoji extends BaseCommand {
 				emoji: emoji.name
 			}, { ephemeral: true }))
 			.catch(e => {
-				console.log(e);
 				interaction.error("administration/stealemoji:ERROR", {
-					emoji: parsedEmoji.name
+					emoji: parsedEmoji.name,
+					e
 				}, { ephemeral: true });
 			});
 	}

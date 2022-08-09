@@ -98,7 +98,7 @@
 							<span class="info-box-icon bg-red"><i class="fa fa-area-chart"></i></span>
 
 							<div class="info-box-content">
-								<span class="info-box-text"><%= translate("economy/profile:EXP").substr(2) %></span>
+								<span class="info-box-text"><%= translate("economy/profile:XP").substr(2) %></span>
 								<span class="info-box-number"><%= guild.members.find(u => u.id === userInfos.id).exp %> / <%= 5 * (guild.members.find(u => u.id === userInfos.id).level * guild.members.find(u => u.id === userInfos.id).level) + 80 * guild.members.find(u => u.id === userInfos.id).level + 100 %></span>
 							</div>
 							<!-- /.info-box-content -->

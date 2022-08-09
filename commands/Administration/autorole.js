@@ -33,13 +33,13 @@ class Autorole extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
 		const state = interaction.options.getBoolean("state");
 
 		if (state) {
-			const role = interaction.options.getRole("role", true);
+			const role = interaction.options.getRole("role");
 			if (!role) return interaction.error("administration/autorole:MISSING_ROLE");
 
 			data.guildData.plugins.autorole = {
@@ -50,13 +50,9 @@ class Autorole extends BaseCommand {
 			await data.guildData.save();
 
 			interaction.success("administration/autorole:SUCCESS_ENABLED", {
-				roleName: role.name
+				roleName: role.toString()
 			});
 		} else {
-			if (!data.guildData.plugins.autorole.enabled) return interaction.success("administration/autorole:ALREADY_DISABLED", {
-				prefix: data.guildData.prefix
-			});
-
 			data.guildData.plugins.autorole = {
 				enabled: false,
 				role: null
@@ -64,9 +60,7 @@ class Autorole extends BaseCommand {
 			data.guildData.markModified("plugins.autorole");
 			await data.guildData.save();
 
-			interaction.success("administration/autorole:SUCCESS_DISABLED", {
-				prefix: data.guildData.prefix
-			});
+			interaction.success("administration/autorole:SUCCESS_DISABLED");
 		}
 	}
 }

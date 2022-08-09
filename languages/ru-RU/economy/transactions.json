@@ -1,12 +1,11 @@
 {
-	"DESCRIPTION": "Посмотреть историю транзакций!",
+	"DESCRIPTION": "Посмотреть историю транзакций",
 	"USAGE": "transactions",
 	"EXAMPLES": "transactions",
 	"NO_TRANSACTIONS": "У вас нет транзакций.",
 	"EMBED_TRANSACTIONS": "Ваши транзакции",
 	"BANK": "Банк",
 	"NUMBERS": "Угадай число",
-	"HORSERACE": "Конные скачки",
 	"TTT": "Крестики-нолики",
 	"T_GOT": "Пополнение",
 	"T_SEND": "Списание",

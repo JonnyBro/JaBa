@@ -1,10 +1,9 @@
 {
-	"DESCRIPTION": "Включить или отключить автоудаление Discord приглашений",
-	"USAGE": "automod [on/off] (#канал)",
-	"EXAMPLES": "automod on\nautomod off #general\nautomod off",
-	"MISSING_STATUS": "Укажите значение `on` или `off`!",
-	"ENABLED": "**Discord приглашения будут автоматически удаляться!**\n\n:arrow_right_hook: *Используйте `automod off #channel`, чтобы игнорировать канал!*",
+	"DESCRIPTION": "Включить или отключить автоудаление ссылок-приглашений",
+	"USAGE": "automod [true/false] (#канал)",
+	"EXAMPLES": "automod true\nautomod false #general\nautomod false",
+	"ENABLED": "Ссылки-приглашения будут удаляться автоматически\nИспользуйте `automod false #channel` для игнорирования канала!",
 	"DISABLED_CHANNEL": "Автомодерация не будет выполняться в {{channel}}!",
-	"DISABLED": "Автомодерация отключена на данном сервере!",
+	"DISABLED": "Автомодерация отключена!",
 	"DELETED": "Ваше сообщение было удалено, т.к. содержало в себе ссылку-приглашение!"
 }

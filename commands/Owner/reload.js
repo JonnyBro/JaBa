@@ -33,12 +33,12 @@ class Reload extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const command = interaction.options.getString("command");
 		const cmd = client.commands.get(command);
-		if (!cmd) return interaction.error("general/help:NOT_FOUND", { search: command }, { ephemeral: true });
+		if (!cmd) return interaction.error("owner/reload:NOT_FOUND", { search: command }, { ephemeral: true });
 
 		await client.unloadCommand(`../commands/${cmd.category}`, cmd.command.name);
 		await client.loadCommand(`../commands/${cmd.category}`, cmd.command.name);

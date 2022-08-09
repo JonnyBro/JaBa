@@ -21,21 +21,15 @@ class MessageCreate extends BaseEvent {
 		if (message.content.includes("bitches") && !message.content.includes("no bitches")) message.reply({ files: [{ name: "nob.png", attachment: "./assets/img/nob.png" }] });
 
 		const data = {};
-		data.config = client.config;
-
 		if (message.author.bot) return;
-
 		if (message.guild && !message.member) await message.guild.members.fetch(message.author.id);
-
 		if (message.guild) {
 			const guild = await client.findOrCreateGuild({
 				id: message.guild.id
 			});
 			message.guild.data = data.guildData = guild;
 		}
-
 		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) return message.replyT("misc:HELLO_SERVER", { username: message.author.username });
-
 		if (message.guild) {
 			const memberData = await client.findOrCreateMember({
 				id: message.author.id,
@@ -56,10 +50,7 @@ class MessageCreate extends BaseEvent {
 				if (/(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(message.content)) {
 					if (!message.channel.permissionsFor(message.member).has(PermissionsBitField.Flags.ManageMessages)) {
 						message.delete();
-						message.author.send("```" + message.content + "```");
-						return message.error("administration/automod:DELETED", {
-							username: message.author.tag
-						});
+						return message.error("administration/automod:DELETED");
 					}
 				}
 			}

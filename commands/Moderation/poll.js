@@ -31,7 +31,7 @@ class Poll extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
+	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const question = interaction.options.getString("question");
@@ -40,11 +40,11 @@ class Poll extends BaseCommand {
 			.addComponents(
 				new ButtonBuilder()
 					.setCustomId("poll_everyone")
-					.setLabel(interaction.translate("moderation/poll:EVERYONE"))
+					.setLabel("@everyone")
 					.setStyle(ButtonStyle.Primary),
 				new ButtonBuilder()
 					.setCustomId("poll_here")
-					.setLabel(interaction.translate("moderation/poll:HERE"))
+					.setLabel("@here")
 					.setStyle(ButtonStyle.Primary),
 				new ButtonBuilder()
 					.setCustomId("poll_nothing")
@@ -70,13 +70,13 @@ class Poll extends BaseCommand {
 		collector.on("collect", async i => {
 			if (i.isButton()) {
 				if (i.customId === "poll_everyone") {
-					mention = "@everyone";
+					mention = "||@everyone||";
 					i.update({
 						content: interaction.translate("moderation/poll:POLL_SENDED"),
 						components: []
 					});
 				} else if (i.customId === "poll_here") {
-					mention = "@here";
+					mention = "||@here||";
 					i.update({
 						content: interaction.translate("moderation/poll:POLL_SENDED"),
 						components: []
