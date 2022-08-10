@@ -42,7 +42,7 @@ class GuildCreate extends BaseEvent {
 				text: client.config.embed.footer
 			})
 			.setTimestamp();
-		messageOptions.embed = thanksEmbed;
+		messageOptions.embeds = [thanksEmbed];
 
 		const owner = await guild.fetchOwner();
 		owner.send(messageOptions);
