@@ -32,9 +32,10 @@ class Crab extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply();
 		const res = await fetch("https://and-here-is-my-code.glitch.me/img/crab").then(response => response.json());
 
-		interaction.reply({
+		interaction.editReply({
 			content: res.Link
 		});
 	}
