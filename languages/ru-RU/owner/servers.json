@@ -1,5 +1,5 @@
 {
 	"DESCRIPTION": "Показать список серверов бота",
-	"USAGE": "servers",
+	"USAGE": "",
 	"EXAMPLES": "servers"
 }

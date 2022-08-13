@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Женитесь на том, кого любите",
-	"USAGE": "marry [@пользователь]",
+	"USAGE": "[@пользователь]",
 	"EXAMPLES": "marry @Jonny_Bro#4226",
 	"ALREADY_MARRIED": "Вы уже состоите в браке! Вы можете развестить с помощью команды `divorce`.",
 	"ALREADY_MARRIED_USER": "Вы опоздали! {{user}} уже состоит в браке!",

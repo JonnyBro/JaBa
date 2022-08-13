@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Включить или отключить сообщения при выходе пользователя с сервера",
-	"USAGE": "goodbye (test)",
+	"USAGE": "(test)",
 	"EXAMPLES": "goodbye\ngoodbye test",
 	"TEST": "Проверить",
 	"TEST_SUCCESS": "Тест выполнен...",

@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Показать список достижений пользователя",
-	"USAGE": "achievements (@пользователь)",
+	"USAGE": "(@пользователь)",
 	"EXAMPLES": "achievements\nachievements @Jonny_Bro#4226",
 	"SEND_CMD": "Используйте свою первую команду!",
 	"CLAIM_SALARY": "Получите зарплату 10 раз!",

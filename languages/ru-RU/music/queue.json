@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Показать очередь на воспроизведение",
-	"USAGE": "queue",
+	"USAGE": "",
 	"EXAMPLES": "queue",
 	"QUEUE": "Очередь",
 	"NO_QUEUE": "Пусто",

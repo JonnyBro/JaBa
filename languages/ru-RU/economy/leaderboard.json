@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Показать таблицу лидеров по кредитам, уровню или очкам репутации",
-	"USAGE": "leaderboard [rep/level/credits]",
+	"USAGE": "[rep/level/credits]",
 	"EXAMPLES": "leaderboard credits",
 	"LEVEL": "Уровень",
 	"MONEY": "Кредиты",

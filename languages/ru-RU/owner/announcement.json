@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Отправить объявление на все сервера где есть JaBa",
-	"USAGE": "announcement [текст] [true/false]",
+	"USAGE": "[текст] [true/false]",
 	"EXAMPLES": "announcement Обновление v1.0! true",
 	"TAG": "Подставить @everyone в сообщение?",
 	"TOO_LONG": "Текст должен быть короче 1000 символов!",

@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Пропустить текущий трек",
-	"USAGE": "skip",
+	"USAGE": "",
 	"EXAMPLES": "skip",
 	"SUCCESS": "Трек пропущен!"
 }

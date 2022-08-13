@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Начать воспроизведение трека",
-	"USAGE": "play [название-трека/ссылка]",
+	"USAGE": "[название-трека/ссылка]",
 	"EXAMPLES": "play Never Gonna Give You Up",
 	"QUERY": "Название / Прямая ссылка / Ссылка на YouTube или SoundCloud",
 	"NO_VOICE_CHANNEL": "Вы должны находиться в голосовом канале!",

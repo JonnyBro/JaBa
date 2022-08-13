@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Показать статистику бота",
-	"USAGE": "stats",
+	"USAGE": "",
 	"EXAMPLES": "stats",
 	"COUNTS_TITLE": "• __Статистика__",
 	"COUNTS_CONTENT": "`Сервера: {{servers}}`\n`Пользователи: {{users}}`",

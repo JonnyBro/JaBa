@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Показать информацию о играющем сейчас треке",
-	"USAGE": "nowplaying",
+	"USAGE": "",
 	"EXAMPLES": "nowplaying",
 	"CURRENTLY_PLAYING": "Сейчас играет",
 	"T_TITLE": "Название",

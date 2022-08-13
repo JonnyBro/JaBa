@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Показать информацию о сервере",
-	"USAGE": "serverinfo",
+	"USAGE": "",
 	"EXAMPLES": "serverinfo",
 	"AFK_CHANNEL": "AFK канал",
 	"BOOSTS": "Кол-во бустов",

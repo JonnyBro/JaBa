@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Казино \"Casino JaBa\"",
-	"USAGE": "slots [сумма]",
+	"USAGE": "[сумма]",
 	"EXAMPLES": "slots 100",
 	"DEFEAT": "{{user}} поставил {{money}} и всё проиграл.",
 	"VICTORY": "{{user}} поставил {{money}} и выиграл {{won}}!",

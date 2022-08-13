@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Крестики-нолики",
-	"USAGE": "tictactoe [@пользователь]",
+	"USAGE": "[@пользователь]",
 	"EXAMPLES": "tictactoe  @Jonny_Bro#4226",
 	"BOT_USER": "Вы не можете играть против бота!",
 	"YOURSELF": "Вы не можете играть с самим собой!",

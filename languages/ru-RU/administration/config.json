@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Показать настройки сервера",
-	"USAGE": "config",
+	"USAGE": "",
 	"EXAMPLES": "config",
 	"AUTOROLE_TITLE": "Автоназначение роли при входе",
 	"WELCOME_TITLE": "Приветствие",

@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Получить мем с выбранного сабреддита",
-	"USAGE": "memes",
+	"USAGE": "",
 	"EXAMPLES": "memes",
 	"SUBREDDIT": "Сабреддит",
 	"UPS": "Апвоуты"

@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Снять все предупреждения с пользователя",
-	"USAGE": "clearwarns [@пользователь]",
+	"USAGE": "[@пользователь]",
 	"EXAMPLES": "clearwarns @Jonny_Bro#4226",
 	"SUCCESS": "Предупреждения пользователя {{user}} удалены!"
 }

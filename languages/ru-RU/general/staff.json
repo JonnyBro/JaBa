@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Показать список администрации сервера",
-	"USAGE": "staff",
+	"USAGE": "",
 	"EXAMPLES": "staff",
 	"TITLE": "Персонал {{guild}}",
 	"ADMINS": "Администраторы",

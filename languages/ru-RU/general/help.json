@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Показать список команд или помощь по данной команде",
-	"USAGE": "help (команда)",
+	"USAGE": "(команда)",
 	"EXAMPLES": "help\nhelp ping",
 	"COMMANDS_IN": "Доступные команды в категории `{{category}}`:",
 	"FIELD_USAGE": "Использование",

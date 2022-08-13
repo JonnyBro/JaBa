@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Показать информацию о пользователе",
-	"USAGE": "userinfo (@пользователь)",
+	"USAGE": "(@пользователь)",
 	"EXAMPLES": "userinfo\nuserinfo @Jonny_Bro#4226",
 	"CUSTOM": "Пользовательский статус",
 	"NO_ACTIVITY": "Не играет",

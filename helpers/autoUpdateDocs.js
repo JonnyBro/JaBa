@@ -5,7 +5,8 @@ module.exports.update = function (client) {
 	const commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()],
 		categories = [];
 
-	commands.forEach((cmd) => {
+	commands.forEach(cmd => {
+		if (cmd.category === "Owner") return;
 		if (!categories.includes(cmd.category)) categories.push(cmd.category);
 	});
 
@@ -28,7 +29,7 @@ module.exports.update = function (client) {
 		cmds.sort(function (a, b) {
 			if (a.command.name < b.command.name) return -1;
 			else return 1;
-		}).forEach((cmd) => {
+		}).forEach(cmd => {
 			categoriesArray.push([
 				`**${cmd.command.name}** ${cmd.aliases.length ? `**(${cmd.aliases.join(", ")})**` : ""}`,
 				client.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:DESCRIPTION`),
