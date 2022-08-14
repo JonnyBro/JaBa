@@ -50,7 +50,7 @@ class Autorole extends BaseCommand {
 			await data.guildData.save();
 
 			interaction.success("administration/autorole:SUCCESS_ENABLED", {
-				roleName: role.toString()
+				role: role.toString()
 			});
 		} else {
 			data.guildData.plugins.autorole = {
