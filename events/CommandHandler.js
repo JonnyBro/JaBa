@@ -21,7 +21,7 @@ class CommandHandler extends BaseEvent {
 		const data = [];
 
 		const userData = await client.findOrCreateUser({
-			id: interaction.member.id
+			id: interaction.user.id
 		});
 		data.userData = userData;
 
