@@ -37,9 +37,7 @@ class Stop extends BaseCommand {
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
 		queue.destroy();
-		interaction.reply({
-			content: interaction.translate("music/stop:SUCCESS")
-		});
+		interaction.success("music/stop:SUCCESS");
 	}
 }
 

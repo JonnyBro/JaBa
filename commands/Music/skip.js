@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Skip extends BaseCommand {
@@ -36,25 +36,8 @@ class Skip extends BaseCommand {
 		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
-		const skipped = queue.skip();
-		if (skipped) {
-			const embed = new EmbedBuilder()
-				.setAuthor({
-					name: interaction.translate("music/skip:SUCCESS")
-				})
-				.setThumbnail(queue.current.thumbnail || null)
-				.setDescription(interaction.translate("music/play:NOW_PLAYING", {
-					songName: queue.current.title
-				}))
-				.setFooter({
-					text: client.config.embed.footer
-				})
-				.setColor(client.config.embed.color);
-
-			interaction.reply({
-				embeds: [embed]
-			});
-		}
+		queue.skip();
+		interaction.success("music/skip:SUCCESS");
 	}
 }
 

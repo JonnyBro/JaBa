@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Back extends BaseCommand {
@@ -37,19 +37,8 @@ class Back extends BaseCommand {
 		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { ephemeral: true });
 		if (!queue.previousTracks[0]) return interaction.error("music/back:NO_PREV_SONG", null, { ephemeral: true });
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
-				name: interaction.translate("music/back:SUCCESS")
-			})
-			.setThumbnail(queue.current.thumbnail)
-			.setDescription(`[${queue.current.title}](${queue.current.url})`)
-			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.config.embed.footer
-			});
-
-		queue.back()
-			.then(() => interaction.reply({ embeds: [embed] }));
+		queue.back();
+		interaction.success("music/back:SUCCESS");
 	}
 }
 
