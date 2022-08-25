@@ -11,7 +11,7 @@ const BaseEvent = require("./BaseEvent.js"),
 	path = require("path"),
 	fs = require("fs").promises,
 	mongoose = require("mongoose"),
-	// extractor = require("../helpers/extractor"),
+	extractor = require("../helpers/extractor"),
 	playdl = require("play-dl"),
 	moment = require("moment");
 
@@ -60,7 +60,7 @@ class JaBa extends Client {
 		});
 
 		this.player = new Player(this);
-		// this.player.use("jaba", extractor);
+		this.player.use("jaba", extractor);
 
 		this.player
 			.on("trackStart", async (queue, track) => {

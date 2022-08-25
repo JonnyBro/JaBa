@@ -1,7 +1,6 @@
 const playdl = require("play-dl");
-const fetch = require("node-fetch");
-const { getData, getPreview, getTracks } = require("spotify-url-info")(fetch);
-const Youtube = require("youtube-sr").default;
+// const fetch = require("node-fetch");
+// const { getData, getPreview, getTracks } = require("spotify-url-info")(fetch);
 
 /*
 	Thanks to: https://github.com/nizewn/Dodong
@@ -20,6 +19,11 @@ const Youtube = require("youtube-sr").default;
 module.exports = {
 	important: true,
 	validate: () => true, // true, since we're also using this for searches when query isnt a valid link
+	/**
+	 *
+	 * @param {String} query
+	 * @returns
+	 */
 	getInfo: async (query) => {
 		// eslint-disable-next-line no-async-promise-executor, no-unused-vars
 		return new Promise(async (resolve, reject) => {
@@ -38,7 +42,7 @@ module.exports = {
 							views: 0,
 							author: info.publisher ? info.publisher.name ?? info.publisher.artist ?? info.publisher.writer_composer ?? null : null,
 							description: "",
-							url: info.permalink,
+							url: info.url,
 							source: "soundcloud-custom"
 						};
 						return resolve({ playlist: null, info: [track] });
@@ -55,17 +59,17 @@ module.exports = {
 								views: 0,
 								author: track.publisher ? track.publisher.name ?? track.publisher.artist ?? track.publisher.writer_composer ?? null : null,
 								description: "",
-								url: track.permalink,
+								url: track.url,
 								source: "soundcloud-custom"
 							};
 						});
 						const playlist = {
 							title: info.name,
 							description: "",
-							thumbnail: null,
+							thumbnail: info.user.thumbnail,
 							type: "playlist",
 							source: "soundcloud-custom",
-							author: info.user,
+							author: info.user.name,
 							id: info.id,
 							url: info.url,
 							rawPlaylist: info
@@ -74,7 +78,7 @@ module.exports = {
 					}
 				}
 				// ---- end soundcloud ----
-
+				/*
 				// ---- start spotify ----
 				if (query.includes("open.spotify.com") || query.includes("play.spotify.com")) {
 					const info = await getPreview(query);
@@ -85,7 +89,7 @@ module.exports = {
 							duration: spotifyTrack.duration_ms,
 							thumbnail: info.image,
 							async engine() {
-								return (await playdl.stream(await Youtube.search(`${info.artist} ${info.title} lyric`, { limit: 1, type: "video", safeSearch: true }).then(x => x[0] ? `https://youtu.be/${x[0].id}` : "https://youtu.be/Wch3gJG2GJ4"), { discordPlayerCompatibility : true })).stream;
+								return (await playdl.stream(await Youtube.search(`${info.artist} ${info.title} lyric`, { limit: 1, type: "video", safeSearch: true }).then(x => x[0] ? `https://youtu.be/${x[0].id}` : "https://youtu.be/Wch3gJG2GJ4"), { discordPlayerCompatibility: true })).stream;
 							},
 							views: 0,
 							author: info.artist,
@@ -102,7 +106,7 @@ module.exports = {
 								duration: track.duration_ms,
 								thumbnail: track.album && track.album.images.length ? track.album.images[0].url : null,
 								async engine() {
-									return (await playdl.stream(await Youtube.search(`${track.artists[0].name} ${track.name} lyric`, { limit: 1, type: "video", safeSearch: true }).then(x => x[0] ? `https://youtu.be/${x[0].id}` : "https://youtu.be/Wch3gJG2GJ4"), { discordPlayerCompatibility : true })).stream;
+									return (await playdl.stream(await Youtube.search(`${track.artists[0].name} ${track.name} lyric`, { limit: 1, type: "video", safeSearch: true }).then(x => x[0] ? `https://youtu.be/${x[0].id}` : "https://youtu.be/Wch3gJG2GJ4"), { discordPlayerCompatibility: true })).stream;
 								},
 								views: 0,
 								author: track.artists ? track.artists[0].name : null,
@@ -126,20 +130,19 @@ module.exports = {
 					}
 				}
 				// ---- end spotify ----
+				*/
+				if (query.startsWith("http") && !query.includes("&list")) query = query.split("&")[0];
 
-				if (query.startsWith("https")) {
-					query = query.split("&")[0];
-				}
-				if (query.startsWith("https") && playdl.yt_validate(query) === "video") {
+				if (query.startsWith("http") && playdl.yt_validate(query) === "video") {
 					if (query.includes("music.youtube")) {
 						const info = await playdl.video_info(query);
-						if(!info) return resolve({ playlist: null, info: null });
+						if (!info) return resolve({ playlist: null, info: null });
 						const track = {
 							title: info.video_details.title,
 							duration: info.video_details.durationInSec * 1000,
 							thumbnail: info.video_details.thumbnails[0].url,
 							async engine() {
-								return (await playdl.stream(`https://music.youtube.com/watch?v=${info.video_details.id}`, { discordPlayerCompatibility : true })).stream;
+								return (await playdl.stream(`https://music.youtube.com/watch?v=${info.video_details.id}`, { discordPlayerCompatibility: true })).stream;
 							},
 							views: info.video_details.views,
 							author: info.video_details.channel.name,
@@ -154,14 +157,14 @@ module.exports = {
 					}
 
 					const info = await playdl.video_info(query);
-					if(!info) return resolve({ playlist: null, info: null });
+					if (!info) return resolve({ playlist: null, info: null });
 
 					const track = {
 						title: info.video_details.title,
 						duration: info.video_details.durationInSec * 1000,
 						thumbnail: info.video_details.thumbnails[0].url,
 						async engine() {
-							return (await playdl.stream(info.video_details.url, { discordPlayerCompatibility : true })).stream;
+							return (await playdl.stream(info.video_details.url, { discordPlayerCompatibility: true })).stream;
 						},
 						views: info.video_details.views,
 						author: info.video_details.channel.name,
@@ -182,7 +185,7 @@ module.exports = {
 								duration: track.durationInSec * 1000,
 								thumbnail: track.thumbnails[0].url,
 								async engine() {
-									return (await playdl.stream(`https://music.youtube.com/watch?v=${track.id}`, { discordPlayerCompatibility : true })).stream;
+									return (await playdl.stream(`https://music.youtube.com/watch?v=${track.id}`, { discordPlayerCompatibility: true })).stream;
 								},
 								views: track.views,
 								author: track.channel.name,
@@ -197,10 +200,10 @@ module.exports = {
 							description: "",
 							thumbnail: info.thumbnail ? info.thumbnail.url : null,
 							type: "playlist",
-							source: "youtube-music-playlist-custom",
 							author: info.channel.name,
 							id: info.id,
 							url: info.url,
+							source: "youtube-music-playlist-custom",
 							rawPlaylist: info
 						};
 						return resolve({ playlist: playlist, info: tracks });
@@ -214,7 +217,7 @@ module.exports = {
 							duration: track.durationInSec * 1000,
 							thumbnail: track.thumbnails ? track.thumbnails[0] ? track.thumbnails[0].url : null : null,
 							async engine() {
-								return (await playdl.stream(await Youtube.search(track.url, { limit: 1, type: "video", safeSearch: true }).then(x => x[0] ? `https://youtu.be/${x[0].id}` : "https://youtu.be/Wch3gJG2GJ4"), { discordPlayerCompatibility : true })).stream;
+								return (await playdl.stream(track.url, { discordPlayerCompatibility: true })).stream;
 							},
 							views: track.views,
 							author: track.channel.name,
@@ -238,24 +241,24 @@ module.exports = {
 					return resolve({ playlist: playlist, info: tracks });
 				}
 
-				const search = await playdl.search(query, {
-					limit: 1
-				});
+				// search on youtube
+				const search = await playdl.search(query, { limit: 1 });
 
 				if (search) {
+					const found = search[0];
 					const track = {
-						title: search[0].title,
-						duration: search[0].durationInSec * 1000,
-						thumbnail: search[0].thumbnails[0].url,
+						title: found.title,
+						duration: found.durationInSec * 1000,
+						thumbnail: found.thumbnails[0].url,
 						async engine() {
-							return (await playdl.stream(search[0].url, { discordPlayerCompatibility : true })).stream;
+							return (await playdl.stream(found.url, { discordPlayerCompatibility: true })).stream;
 						},
-						views: search[0].views,
-						author: search[0].channel.name,
+						views: found.views,
+						author: found.channel.name,
 						description: "",
-						url: search[0].url,
-						related_videos: search[0].related_videos,
-						raw: search[0],
+						url: found.url,
+						related_videos: found.related_videos,
+						raw: found,
 						source: "youtube-custom"
 					};
 
@@ -263,7 +266,7 @@ module.exports = {
 				}
 
 				return resolve({ playlist: null, info: null });
-			} catch(error) {
+			} catch (error) {
 				console.log(`Extractor: An error occurred while attempting to resolve ${query} :\n${error}`);
 				return resolve({ playlist: null, info: null });
 			}
