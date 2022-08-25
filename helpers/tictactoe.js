@@ -835,7 +835,7 @@ async function tictactoe(interaction, options = {}) {
 				}
 			});
 
-			collector.on("end", (collected, reason) => {
+			collector.on("end", (_, reason) => {
 				if (reason == "time") {
 					const embed = new EmbedBuilder()
 						.setTitle(interaction.translate("economy/tictactoe:NO_ANSWER_TITLE"))

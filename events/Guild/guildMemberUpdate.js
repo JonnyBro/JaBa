@@ -17,9 +17,9 @@ class GuildMemberUpdate extends BaseEvent {
 	async execute(client, oldMember, newMember) {
 		if (oldMember.guild && oldMember.guild.id === "568120814776614924") return;
 		if (oldMember.guild.id !== client.config.support.id) return;
-		if (oldMember.roles.cache.some((r) => r.name === "Поддержавшие JaBa")) return;
+		if (oldMember.roles.cache.some(r => r.name === "Поддержавшие JaBa")) return;
 
-		if (newMember?.roles.cache.some((r) => r.name === "Поддержавшие JaBa")) {
+		if (newMember?.roles.cache.some(r => r.name === "Поддержавшие JaBa")) {
 			const userData = await client.findOrCreateUser({
 				id: newMember.id
 			});

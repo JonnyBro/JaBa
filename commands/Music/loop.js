@@ -71,7 +71,7 @@ class Loop extends BaseCommand {
 		const collector = new InteractionCollector(client, {
 			componentType: ComponentType.SelectMenu,
 			message: msg,
-			idle: 60 * 1000
+			idle: (2 * 1000)
 		});
 
 		collector.on("collect", async i => {
@@ -89,6 +89,14 @@ class Loop extends BaseCommand {
 				}`),
 				components: []
 			});
+		});
+
+		collector.on("end", (_, reason) => {
+			if (reason === "idle") {
+				if (msg) msg.update({
+					components: []
+				});
+			}
 		});
 	}
 }

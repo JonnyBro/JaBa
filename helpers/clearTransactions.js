@@ -1,7 +1,6 @@
 module.exports.init = async function (client) {
 	setInterval(async () => {
-		// Date.now() + days * hours * mins * secs * msecs / 1 month
-		const timestamp = Date.now() + 30 * 24 * 60 * 60 * 1000;
+		const timestamp = Date.now() + (30 * 24 * 60 * 60 * 1000); // 1 month
 		const members = client.membersData.find({ transactions: { $gt: [] } });
 
 		for (const member of members) {
@@ -14,5 +13,5 @@ module.exports.init = async function (client) {
 				}
 			}
 		}
-	}, 7 * 24 * 60 * 60 * 1000); // every 7 days
+	}, (7 * 24 * 60 * 60 * 1000)); // every 7 days
 };

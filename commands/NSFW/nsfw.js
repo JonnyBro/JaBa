@@ -61,7 +61,7 @@ class NSFW extends BaseCommand {
 			filter,
 			componentType: ComponentType.SelectMenu,
 			message: msg,
-			idle: 60 * 1000
+			idle: (60 * 1000)
 		});
 
 		collector.on("collect", async i => {
@@ -80,6 +80,14 @@ class NSFW extends BaseCommand {
 			await i.update({
 				embeds: [embed]
 			});
+		});
+
+		collector.on("end", (_, reason) => {
+			if (reason === "idle") {
+				if (msg) msg.update({
+					components: []
+				});
+			}
 		});
 	}
 }

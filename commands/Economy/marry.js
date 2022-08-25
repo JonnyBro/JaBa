@@ -79,13 +79,12 @@ class Marry extends BaseCommand {
 				new ButtonBuilder()
 					.setCustomId("marry_confirm_yes")
 					.setLabel(interaction.translate("common:ACCEPT"))
-					.setStyle(ButtonStyle.Danger),
+					.setStyle(ButtonStyle.Success),
 				new ButtonBuilder()
 					.setCustomId("marry_confirm_no")
 					.setLabel(interaction.translate("common:CANCEL"))
-					.setStyle(ButtonStyle.Secondary),
+					.setStyle(ButtonStyle.Danger),
 			);
-
 
 		await interaction.reply({
 			content: interaction.translate("economy/marry:REQUEST", {
@@ -96,7 +95,7 @@ class Marry extends BaseCommand {
 		});
 
 		const filter = i => i.user.id === member.id;
-		const collector = interaction.channel.createMessageComponentCollector({ filter, time: 120000 });
+		const collector = interaction.channel.createMessageComponentCollector({ filter, time: (10 * 60 * 1000) });
 
 		collector.on("collect", async i => {
 			if (i.isButton()) {
@@ -107,7 +106,25 @@ class Marry extends BaseCommand {
 
 		collector.on("end", async (_, reason) => {
 			delete pendings[interaction.member.id];
-			if (reason === "time") return interaction.error("economy/marry:TIMEOUT");
+			if (reason === "time") {
+				const row = new ActionRowBuilder()
+					.addComponents(
+						new ButtonBuilder()
+							.setCustomId("marry_confirm_yes")
+							.setLabel(interaction.translate("common:ACCEPT"))
+							.setStyle(ButtonStyle.Success)
+							.setDisabled(true),
+						new ButtonBuilder()
+							.setCustomId("marry_confirm_no")
+							.setLabel(interaction.translate("common:CANCEL"))
+							.setStyle(ButtonStyle.Danger)
+							.setDisabled(true),
+					);
+				return interaction.editReply({
+					components: [row]
+				});
+			}
+
 			if (reason) {
 				data.userData.lover = member.id;
 				await data.userData.save();
@@ -131,6 +148,7 @@ class Marry extends BaseCommand {
 					userData.markModified("achievements.married");
 					await userData.save();
 				}
+
 				if (!data.userData.achievements.married.achieved) {
 					if (!sent) interaction.followUp(messageOptions);
 					data.userData.achievements.married.achieved = true;
@@ -139,14 +157,20 @@ class Marry extends BaseCommand {
 					await data.userData.save();
 				}
 
-				return interaction.success("economy/marry:SUCCESS", {
-					creator: interaction.member.toString(),
-					partner: member.toString()
+				return interaction.editReply({
+					content: interaction.translate("economy/marry:SUCCESS", {
+						creator: interaction.member.toString(),
+						partner: member.toString()
+					}),
+					components: []
 				});
 			} else {
-				return interaction.success("economy/marry:DENIED", {
-					creator: interaction.member.toString(),
-					partner: member.toString()
+				return interaction.editReply({
+					content: interaction.translate("economy/marry:DENIED", {
+						creator: interaction.member.toString(),
+						partner: member.toString()
+					}),
+					components: []
 				});
 			}
 		});

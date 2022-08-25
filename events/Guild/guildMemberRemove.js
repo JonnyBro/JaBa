@@ -3,7 +3,6 @@ const Canvas = require("canvas"),
 	{ AttachmentBuilder } = require("discord.js"),
 	{ resolve } = require("path");
 
-// Register assets fonts
 Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "RubikMonoOne"  });
 Canvas.registerFont(resolve("./assets/fonts/KeepCalm-Medium.ttf"), { family: "KeepCalm" });
 
@@ -39,7 +38,6 @@ class GuildMemberRemove extends BaseEvent {
 		});
 		member.guild.data = guildData;
 
-		// Check if goodbye message is enabled
 		if (guildData.plugins.goodbye.enabled) {
 			const channel = member.guild.channels.cache.get(guildData.plugins.goodbye.channel);
 			if (channel) {

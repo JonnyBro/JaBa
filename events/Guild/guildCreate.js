@@ -36,7 +36,7 @@ class GuildCreate extends BaseEvent {
 			.setAuthor({
 				name: "Спасибо что добавили меня на свой сервер!"
 			})
-			.setDescription("Чтобы получить список команд использууйуте `/help` и посмотрите на административные команды!.")
+			.setDescription("Чтобы получить список команд, используйте `/help`!.")
 			.setColor(client.config.embed.color)
 			.setFooter({
 				text: client.config.embed.footer
@@ -47,8 +47,8 @@ class GuildCreate extends BaseEvent {
 		const owner = await guild.fetchOwner();
 		owner.send(messageOptions);
 
-		const users = guild.members.cache.filter((m) => !m.user.bot).size;
-		const bots = guild.members.cache.filter((m) => m.user.bot).size;
+		const users = guild.members.cache.filter(m => !m.user.bot).size;
+		const bots = guild.members.cache.filter(m => m.user.bot).size;
 
 		const embed = new EmbedBuilder()
 			.setAuthor({

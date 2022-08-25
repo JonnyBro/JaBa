@@ -3,7 +3,7 @@ const { EmbedBuilder } = require("discord.js");
 module.exports.init = function (client) {
 	client.usersData
 		.find({ reminds: { $gt: [] } })
-		.then((users) => {
+		.then(users => {
 			for (const user of users) {
 				if (!client.users.cache.has(user.id)) client.users.fetch(user.id);
 				client.databaseCache.usersReminds.set(user.id, user);

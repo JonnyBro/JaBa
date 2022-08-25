@@ -36,24 +36,25 @@ class Skip extends BaseCommand {
 		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
-				name: interaction.translate("music/skip:SUCCESS")
-			})
-			.setThumbnail(queue.tracks[1].thumbnail || null)
-			.setDescription(interaction.translate("music/play:NOW_PLAYING", {
-				songName: queue.tracks[1].title
-			}))
-			.setFooter({
-				text: client.config.embed.footer
-			})
-			.setColor(client.config.embed.color);
+		const skipped = queue.skip();
+		if (skipped) {
+			const embed = new EmbedBuilder()
+				.setAuthor({
+					name: interaction.translate("music/skip:SUCCESS")
+				})
+				.setThumbnail(queue.current.thumbnail || null)
+				.setDescription(interaction.translate("music/play:NOW_PLAYING", {
+					songName: queue.current.title
+				}))
+				.setFooter({
+					text: client.config.embed.footer
+				})
+				.setColor(client.config.embed.color);
 
-		queue.skip();
-
-		interaction.reply({
-			embeds: [embed]
-		});
+			interaction.reply({
+				embeds: [embed]
+			});
+		}
 	}
 }
 

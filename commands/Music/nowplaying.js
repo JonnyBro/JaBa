@@ -42,7 +42,7 @@ class Nowplaying extends BaseCommand {
 			.setAuthor({
 				name: interaction.translate("music/queue:TITLE")
 			})
-			.setThumbnail(track.thumbnail)
+			.setThumbnail(track.thumbnail || "https://cdn.discordapp.com/attachments/708642702602010684/1012418217660121089/noimage.png")
 			.addFields([
 				{
 					name: interaction.translate("music/nowplaying:T_TITLE"),

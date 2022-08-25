@@ -72,7 +72,7 @@ class JaBa extends Client {
 				} else {
 					setTimeout(() => {
 						if (m.deletable) m.delete();
-					}, 10 * 60 * 1000); // m * s * ms
+					}, (10 * 60 * 1000)); // m * s * ms
 				}
 			})
 			.on("queueEnd", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)))

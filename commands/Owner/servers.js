@@ -69,7 +69,7 @@ class Servers extends BaseCommand {
 		await msg.react("❌");
 
 		const collector = msg.createReactionCollector({
-			time: 60 * 1000
+			time: (2 * 1000)
 		});
 
 		collector.on("collect", async reaction => {

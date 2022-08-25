@@ -3,7 +3,6 @@ const Canvas = require("canvas"),
 	{ AttachmentBuilder } = require("discord.js"),
 	{ resolve } = require("path");
 
-// Register assets fonts
 Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "RubikMonoOne" });
 Canvas.registerFont(resolve("./assets/fonts/KeepCalm-Medium.ttf"), { family: "KeepCalm" });
 
@@ -53,10 +52,8 @@ class GuildMemberAdd extends BaseEvent {
 			});
 		}
 
-		// Check if the autorole is enabled
 		if (guildData.plugins.autorole.enabled) member.roles.add(guildData.plugins.autorole.role);
 
-		// Check if welcome message is enabled
 		if (guildData.plugins.welcome.enabled) {
 			const channel = member.guild.channels.cache.get(guildData.plugins.welcome.channel);
 			if (channel) {
@@ -134,8 +131,7 @@ class GuildMemberAdd extends BaseEvent {
 					ctx.closePath();
 					ctx.clip();
 					const avatar = await Canvas.loadImage(member.displayAvatarURL({
-						extension: "jpg",
-						size: 512
+						extension: "jpg"
 					}));
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 

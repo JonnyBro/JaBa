@@ -37,9 +37,9 @@ class Work extends BaseCommand {
 				time: client.convertTime(isInCooldown, true, true)
 			});
 		}
-		if (Date.now() > data.memberData.cooldowns.work + (24 * 3600000)) data.memberData.workStreak = 0;
+		if (Date.now() > data.memberData.cooldowns.work + (24 * 60 * 60 * 1000)) data.memberData.workStreak = 0;
 
-		const toWait = Date.now() + 43200000; // 24 hours
+		const toWait = Date.now() + (24 * 60 * 60 * 1000); // 24 hours
 		data.memberData.cooldowns.work = toWait;
 		data.memberData.markModified("cooldowns");
 

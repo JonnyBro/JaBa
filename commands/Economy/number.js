@@ -105,7 +105,7 @@ class Number extends BaseCommand {
 			});
 		});
 
-		collector.on("end", (_collected, reason) => {
+		collector.on("end", (_, reason) => {
 			delete currentGames[interaction.guildId];
 			if (reason === "time") return interaction.editReply({ content: interaction.translate("economy/number:DEFEAT", { number }) });
 			else if (reason === "force") return interaction.editReply({ content: interaction.translate("misc:FORCE_STOP", { user: interaction.member.toString() }) });

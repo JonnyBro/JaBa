@@ -64,7 +64,7 @@ class Activity extends BaseCommand {
 			filter,
 			componentType: ComponentType.SelectMenu,
 			message: msg,
-			idle: 30 * 1000
+			idle: (2 * 1000)
 		});
 
 		collector.on("collect", async i => {
@@ -84,6 +84,14 @@ class Activity extends BaseCommand {
 				embeds: [embed],
 				components: []
 			});
+		});
+
+		collector.on("end", (_, reason) => {
+			if (reason === "idle") {
+				if (msg) msg.update({
+					components: []
+				});
+			}
 		});
 	}
 }

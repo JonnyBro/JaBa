@@ -3,7 +3,7 @@ const { EmbedBuilder } = require("discord.js");
 module.exports.init = async function (client) {
 	client.membersData
 		.find({ "mute.muted": true })
-		.then((members) => {
+		.then(members => {
 			members.forEach((member) => client.databaseCache.mutedUsers.set(`${member.id}${member.guildID}`, member));
 		});
 	setInterval(async () => {
