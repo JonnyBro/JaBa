@@ -35,7 +35,7 @@ class Queue extends BaseCommand {
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
 		let currentPage = 0;
-		const embeds = generateQueueEmbed(interaction, queue);
+		let embeds = generateQueueEmbed(interaction, queue);
 
 		const row = new ActionRowBuilder()
 			.addComponents(
@@ -77,6 +77,7 @@ class Queue extends BaseCommand {
 			if (i.isButton()) {
 				if (i.customId === "queue_prev_page") {
 					i.deferUpdate();
+					if (embeds != generateQueueEmbed(interaction, queue)) embeds = generateQueueEmbed(interaction, queue);
 
 					if (currentPage !== 0) {
 						--currentPage;
@@ -91,6 +92,7 @@ class Queue extends BaseCommand {
 					}
 				} else if (i.customId === "queue_next_page") {
 					i.deferUpdate();
+					if (embeds != generateQueueEmbed(interaction, queue)) embeds = generateQueueEmbed(interaction, queue);
 
 					if (currentPage < embeds.length - 1) {
 						currentPage++;
@@ -105,6 +107,7 @@ class Queue extends BaseCommand {
 					}
 				} else if (i.customId === "queue_jump_page") {
 					i.deferUpdate();
+					if (embeds != generateQueueEmbed(interaction, queue)) embeds = generateQueueEmbed(interaction, queue);
 
 					const msg = await interaction.followUp({
 						content: interaction.translate("music/queue:PAGE_TO_JUMP", {
