@@ -29,18 +29,11 @@ module.exports = {
 	/* Bot's owner informations */
 	owner: {
 		id: "XXXXXXXXXXX", // The ID of the bot's owner
-		name: "@XXXXXXXXXXX#1234" // And the name of the bot's owner
+		name: "XXXXXXXXXXX#1234" // And the name of the bot's owner
 	},
 	/* The API keys that are required for certain commands */
 	apiKeys: {
-		// BLAGUE.XYZ: https://blague.xyz/
-		blagueXYZ: "XXXXXXXXXXX",
 		// AMETHYSTE: https://api.amethyste.moe
 		amethyste: "XXXXXXXXXXX"
-	},
-	/* The others utils links */
-	others: {
-		github: "https://github.com/XXXXXXXXXXX", // Founder's github account
-		donate: "https://patreon.com/XXXXXXXXXXX" // Donate link
 	}
 };

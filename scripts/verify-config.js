@@ -79,21 +79,6 @@ const checks = [
 					success("Valid Amethyste API key");
 				}
 			}
-			if (!config.apiKeys.blagueXYZ) {
-				ignore("blague.xyz API is not configured, skipping check.");
-			} else {
-				const res = await fetch("https://blague.xyz/api/joke/random", {
-					headers: {
-						Authorization: config.apiKeys.blagueXYZ
-					}
-				});
-				const result = await res.json();
-				if (result.status === 401) {
-					error("Not valid blague.xyz key", "get your key here: https://blague.xyz/");
-				} else {
-					success("Valid blague.xyz key");
-				}
-			}
 			resolve();
 		});
 	},
