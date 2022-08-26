@@ -195,7 +195,7 @@ function generateQueueEmbed(interaction, queue) {
 
 		const embed = new EmbedBuilder()
 			.setTitle(interaction.translate("music/nowplaying:CURRENTLY_PLAYING"))
-			.setThumbnail(currentTrack.thumbnail)
+			.setThumbnail(currentTrack.thumbnail || "https://cdn.discordapp.com/attachments/708642702602010684/1012418217660121089/noimage.png")
 			.setColor(interaction.client.config.embed.color)
 			.setDescription(`[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${info}`)
 			.setTimestamp();
