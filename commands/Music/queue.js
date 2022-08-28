@@ -1,4 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js"),
+	{ QueueRepeatMode } = require("discord-player");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Queue extends BaseCommand {
@@ -121,8 +122,8 @@ class Queue extends BaseCommand {
 					};
 
 					interaction.channel.awaitMessages({ filter, max: 1, time: (30 * 1000) }).then(collected => {
-						if (embeds[Number(collected.first().content) - 1]) {
-							currentPage = Number(collected.first().content) - 1;
+						if (embeds[collected.first().content - 1]) {
+							currentPage = collected.first().content - 1;
 							interaction.editReply({
 								content: interaction.translate("music/queue:PAGE", {
 									current: currentPage + 1,
@@ -149,33 +150,10 @@ class Queue extends BaseCommand {
 
 		collector.on("end", async (_, reason) => {
 			if (reason) {
-				const row = new ActionRowBuilder()
-					.addComponents(
-						new ButtonBuilder()
-							.setCustomId("queue_prev_page")
-							.setLabel(interaction.translate("music/queue:PREV_PAGE"))
-							.setStyle(ButtonStyle.Primary)
-							.setEmoji("⬅️")
-							.setDisabled(true),
-						new ButtonBuilder()
-							.setCustomId("queue_next_page")
-							.setLabel(interaction.translate("music/queue:NEXT_PAGE"))
-							.setStyle(ButtonStyle.Primary)
-							.setEmoji("➡️")
-							.setDisabled(true),
-						new ButtonBuilder()
-							.setCustomId("queue_jump_page")
-							.setLabel(interaction.translate("music/queue:JUMP_PAGE"))
-							.setStyle(ButtonStyle.Secondary)
-							.setEmoji("↗️")
-							.setDisabled(true),
-						new ButtonBuilder()
-							.setCustomId("queue_stop")
-							.setLabel(interaction.translate("common:CANCEL"))
-							.setStyle(ButtonStyle.Danger)
-							.setEmoji("⏹️")
-							.setDisabled(true),
-					);
+				row.components.forEach(component => {
+					component.setDisabled(true);
+				});
+
 				return interaction.editReply({
 					components: [row]
 				});
@@ -184,10 +162,32 @@ class Queue extends BaseCommand {
 	}
 }
 
+/**
+ *
+ * @param {import("discord.js").ChatInputCommandInteraction} interaction
+ * @param {import("discord-player").Queue} queue
+ * @returns
+ */
 function generateQueueEmbed(interaction, queue) {
 	const embeds = [];
 	const currentTrack = queue.current;
 	let k = 10;
+
+	if (!queue.tracks.length) {
+		const embed = new EmbedBuilder()
+			.setTitle(interaction.translate("music/nowplaying:CURRENTLY_PLAYING"))
+			.setThumbnail(currentTrack.thumbnail)
+			.setColor(interaction.client.config.embed.color)
+			.setDescription(`${interaction.translate("music/nowplaying:REPEAT")}: \`${
+				queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") :
+					queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") :
+						queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK") : interaction.translate("common:DISABLED")
+			}\`\n${interaction.translate("music/queue:DURATION")}: \`${interaction.client.convertTime(Date.now() + queue.totalTime, false, true, interaction.guild.data.language)}\`\n[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${interaction.translate("music/queue:NO_QUEUE")}`)
+			.setTimestamp();
+		embeds.push(embed);
+
+		return embeds;
+	}
 
 	for (let i = 0; i < queue.tracks.length; i += 10) {
 		const current = queue.tracks.slice(i, k);
@@ -198,9 +198,13 @@ function generateQueueEmbed(interaction, queue) {
 
 		const embed = new EmbedBuilder()
 			.setTitle(interaction.translate("music/nowplaying:CURRENTLY_PLAYING"))
-			.setThumbnail(currentTrack.thumbnail || "https://cdn.discordapp.com/attachments/708642702602010684/1012418217660121089/noimage.png")
+			.setThumbnail(currentTrack.thumbnail)
 			.setColor(interaction.client.config.embed.color)
-			.setDescription(`[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${info}`)
+			.setDescription(`${interaction.translate("music/nowplaying:REPEAT")}: \`${
+				queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") :
+					queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") :
+						queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK") : interaction.translate("common:DISABLED")
+			}\`\n${interaction.translate("music/queue:DURATION")}: \`${interaction.client.convertTime(Date.now() + queue.totalTime, false, true, interaction.guild.data.language)}\`\n[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${info}`)
 			.setTimestamp();
 		embeds.push(embed);
 	}

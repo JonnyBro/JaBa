@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, ComponentType } = require("discord.js"),
+const { SlashCommandBuilder, ActionRowBuilder, SelectMenuBuilder } = require("discord.js"),
 	{ QueueRepeatMode } = require("discord-player");
 const BaseCommand = require("../../base/BaseCommand");
 
@@ -32,6 +32,8 @@ class Loop extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply();
+
 		const voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
 		const queue = client.player.getQueue(interaction.guildId);
@@ -62,41 +64,35 @@ class Loop extends BaseCommand {
 					])
 			);
 
-		const msg = await interaction.reply({
+		await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
-			components: [row],
-			fetchReply: true
+			components: [row]
 		});
 
-		const collector = new InteractionCollector(client, {
-			componentType: ComponentType.SelectMenu,
-			message: msg,
-			idle: (2 * 1000)
-		});
+		const filter = i => i.user.id === interaction.user.id;
+		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (15 * 1000) });
 
 		collector.on("collect", async i => {
-			const type = i?.values[0];
-			const mode = type === "3" ? QueueRepeatMode.AUTOPLAY :
-				type === "2" ? QueueRepeatMode.QUEUE :
-					type === "1" ? QueueRepeatMode.TRACK : QueueRepeatMode.OFF;
+			if (i.isSelectMenu()) {
+				const type = i?.values[0];
+				const mode = type === "3" ? QueueRepeatMode.AUTOPLAY :
+					type === "2" ? QueueRepeatMode.QUEUE :
+						type === "1" ? QueueRepeatMode.TRACK : QueueRepeatMode.OFF;
 
-			queue.setRepeatMode(mode);
-			return i.update({
-				content: interaction.translate(`music/loop:${
-					type === "3" ? "AUTOPLAY_ENABLED" :
-						type === "2" ? "QUEUE_ENABLED" :
-							type === "1" ? "TRACK_ENABLED" : "LOOP_DISABLED"
-				}`),
-				components: []
-			});
-		});
-
-		collector.on("end", (_, reason) => {
-			if (reason === "idle") {
-				if (msg) msg.update({
+				queue.setRepeatMode(mode);
+				return interaction.editReply({
+					content: interaction.translate(`music/loop:${
+						type === "3" ? "AUTOPLAY_ENABLED" :
+							type === "2" ? "QUEUE_ENABLED" :
+								type === "1" ? "TRACK_ENABLED" : "LOOP_DISABLED"
+					}`),
 					components: []
 				});
 			}
+		});
+
+		collector.on("end", (_, reason) => {
+			if (reason) interaction.deleteReply();
 		});
 	}
 }

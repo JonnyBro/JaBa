@@ -1,4 +1,5 @@
-const playdl = require("play-dl");
+const playdl = require("play-dl"),
+	fallbackImage = "https://cdn.discordapp.com/attachments/708642702602010684/1012418217660121089/noimage.png";
 // const fetch = require("node-fetch");
 // const { getData, getPreview, getTracks } = require("spotify-url-info")(fetch);
 
@@ -35,7 +36,7 @@ module.exports = {
 						const track = {
 							title: info.name,
 							duration: info.durationInMs,
-							thumbnail: info.thumbnail,
+							thumbnail: info.thumbnail || fallbackImage,
 							async engine() {
 								return (await playdl.stream(info.url, { discordPlayerCompatibility: true })).stream;
 							},
@@ -52,7 +53,7 @@ module.exports = {
 							return {
 								title: track.name,
 								duration: track.durationInMs,
-								thumbnail: track.thumbnail,
+								thumbnail: track.thumbnail || fallbackImage,
 								async engine() {
 									return (await playdl.stream(track.url, { discordPlayerCompatibility: true })).stream;
 								},
@@ -66,7 +67,7 @@ module.exports = {
 						const playlist = {
 							title: info.name,
 							description: "",
-							thumbnail: info.user.thumbnail,
+							thumbnail: info.user.thumbnail || fallbackImage,
 							type: "playlist",
 							source: "soundcloud-custom",
 							author: info.user.name,
@@ -140,7 +141,7 @@ module.exports = {
 						const track = {
 							title: info.video_details.title,
 							duration: info.video_details.durationInSec * 1000,
-							thumbnail: info.video_details.thumbnails[0].url,
+							thumbnail: info.video_details.thumbnails[0].url || fallbackImage,
 							async engine() {
 								return (await playdl.stream(`https://music.youtube.com/watch?v=${info.video_details.id}`, { discordPlayerCompatibility: true })).stream;
 							},
@@ -148,9 +149,8 @@ module.exports = {
 							author: info.video_details.channel.name,
 							description: "",
 							url: `https://music.youtube.com/watch?v=${info.video_details.id}`,
-							related_videos: info.related_videos,
 							raw: info,
-							source: "youtube-music-custom"
+							source: "youtube"
 						};
 
 						return resolve({ playlist: null, info: [track] });
@@ -162,7 +162,7 @@ module.exports = {
 					const track = {
 						title: info.video_details.title,
 						duration: info.video_details.durationInSec * 1000,
-						thumbnail: info.video_details.thumbnails[0].url,
+						thumbnail: info.video_details.thumbnails[0].url || fallbackImage,
 						async engine() {
 							return (await playdl.stream(info.video_details.url, { discordPlayerCompatibility: true })).stream;
 						},
@@ -170,9 +170,8 @@ module.exports = {
 						author: info.video_details.channel.name,
 						description: "",
 						url: info.video_details.url,
-						related_videos: info.related_videos,
 						raw: info,
-						source: "youtube-custom"
+						source: "youtube"
 					};
 					return resolve({ playlist: null, info: [track] });
 				} else if (playdl.yt_validate(query) === "playlist") {
@@ -183,7 +182,7 @@ module.exports = {
 							return {
 								title: track.title,
 								duration: track.durationInSec * 1000,
-								thumbnail: track.thumbnails[0].url,
+								thumbnail: track.thumbnails[0].url || fallbackImage,
 								async engine() {
 									return (await playdl.stream(`https://music.youtube.com/watch?v=${track.id}`, { discordPlayerCompatibility: true })).stream;
 								},
@@ -192,18 +191,18 @@ module.exports = {
 								description: "",
 								url: track.url,
 								raw: info,
-								source: "youtube-music-playlist-custom"
+								source: "youtube"
 							};
 						});
 						const playlist = {
 							title: info.title,
 							description: "",
-							thumbnail: info.thumbnail ? info.thumbnail.url : null,
+							thumbnail: info.thumbnail ? info.thumbnail.url : fallbackImage,
 							type: "playlist",
 							author: info.channel.name,
 							id: info.id,
 							url: info.url,
-							source: "youtube-music-playlist-custom",
+							source: "youtube",
 							rawPlaylist: info
 						};
 						return resolve({ playlist: playlist, info: tracks });
@@ -215,7 +214,7 @@ module.exports = {
 						return {
 							title: track.title,
 							duration: track.durationInSec * 1000,
-							thumbnail: track.thumbnails ? track.thumbnails[0] ? track.thumbnails[0].url : null : null,
+							thumbnail: track.thumbnails[0].url || fallbackImage,
 							async engine() {
 								return (await playdl.stream(track.url, { discordPlayerCompatibility: true })).stream;
 							},
@@ -224,7 +223,7 @@ module.exports = {
 							description: "",
 							url: track.url,
 							raw: info,
-							source: "youtube-custom"
+							source: "youtube"
 						};
 					});
 					const playlist = {
@@ -232,7 +231,7 @@ module.exports = {
 						description: "",
 						thumbnail: info.thumbnail ? info.thumbnail.url : null,
 						type: "playlist",
-						source: "youtube-custom",
+						source: "youtube",
 						author: info.channel.name,
 						id: info.id,
 						url: info.url,
@@ -242,27 +241,27 @@ module.exports = {
 				}
 
 				// search on youtube
-				const search = await playdl.search(query, { limit: 1 });
+				const search = await playdl.search(query, { limit: 10 });
 
 				if (search) {
-					const found = search[0];
-					const track = {
-						title: found.title,
-						duration: found.durationInSec * 1000,
-						thumbnail: found.thumbnails[0].url,
-						async engine() {
-							return (await playdl.stream(found.url, { discordPlayerCompatibility: true })).stream;
-						},
-						views: found.views,
-						author: found.channel.name,
-						description: "",
-						url: found.url,
-						related_videos: found.related_videos,
-						raw: found,
-						source: "youtube-custom"
-					};
+					const found = search.map(track => {
+						return {
+							title: track.title,
+							duration: track.durationInSec * 1000,
+							thumbnail: track.thumbnails[0].url || fallbackImage,
+							async engine() {
+								return (await playdl.stream(track.url, { discordPlayerCompatibility: true })).stream;
+							},
+							views: track.views,
+							author: track.channel.name,
+							description: "search",
+							url: track.url,
+							raw: track,
+							source: "youtube"
+						};
+					});
 
-					return resolve({ playlist: null, info: [track] });
+					return resolve({ playlist: null, info: found });
 				}
 
 				return resolve({ playlist: null, info: null });

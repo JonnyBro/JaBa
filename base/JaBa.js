@@ -248,16 +248,14 @@ class JaBa extends Client {
 	 * @param {Array} args
 	 * @param {String} locale
 	 */
-	translate(key, args, locale) {
-		if (!locale) locale = this.defaultLanguage;
+	translate(key, args, locale = this.defaultLanguage) {
 		const language = this.translations.get(locale);
 		if (!language) throw "Invalid language set in data.";
 
 		return language(key, args);
 	}
 
-	printDate(date, format, locale) {
-		if (!locale) locale = this.defaultLanguage;
+	printDate(date, format = false, locale = this.defaultLanguage) {
 		const languageData = this.languages.find((language) => language.name === locale || language.aliases.includes(locale));
 		if (!format) format = languageData.defaultMomentFormat;
 
@@ -266,9 +264,7 @@ class JaBa extends Client {
 			.format(format);
 	}
 
-	convertTime(time, type, noPrefix, locale) {
-		if (!type) type = false;
-		if (!locale) locale = this.defaultLanguage;
+	convertTime(time, type = false, noPrefix = false, locale = this.defaultLanguage) {
 		const languageData = this.languages.find((language) => language.name === locale || language.aliases.includes(locale));
 		const m = moment(time).locale(languageData.moment);
 
