@@ -79,10 +79,6 @@ class Config extends BaseCommand {
 					}) : interaction.translate("common:DISABLED")
 				},
 				{
-					name: interaction.translate("administration/config:AUTODELETEMOD"),
-					value: guildData.autoDeleteModCommands ? interaction.translate("administration/config:AUTODELETEMOD_ENABLED") : interaction.translate("administration/config:AUTODELETEMOD_DISABLED")
-				},
-				{
 					name: interaction.translate("administration/config:SPECIAL_CHANNELS"),
 					value: interaction.translate("administration/config:NEWS", {
 						channel: guildData.plugins.news ? `<#${guildData.plugins.news}>` : `*${interaction.translate("common:NOT_DEFINED")}*`

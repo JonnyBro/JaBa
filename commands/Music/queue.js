@@ -72,7 +72,7 @@ class Queue extends BaseCommand {
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (60 * 1000) });
+		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (20 * 1000) });
 
 		collector.on("collect", async i => {
 			if (i.isButton()) {
@@ -143,21 +143,19 @@ class Queue extends BaseCommand {
 					});
 				} else if (i.customId === "queue_stop") {
 					i.deferUpdate();
-					collector.stop(true);
+					collector.stop();
 				}
 			}
 		});
 
-		collector.on("end", async (_, reason) => {
-			if (reason) {
-				row.components.forEach(component => {
-					component.setDisabled(true);
-				});
+		collector.on("end", () => {
+			row.components.forEach(component => {
+				component.setDisabled(true);
+			});
 
-				return interaction.editReply({
-					components: [row]
-				});
-			}
+			return interaction.editReply({
+				components: [row]
+			});
 		});
 	}
 }

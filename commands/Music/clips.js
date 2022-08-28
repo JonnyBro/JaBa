@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, ComponentType } = require("discord.js"),
+const { SlashCommandBuilder, ActionRowBuilder, SelectMenuBuilder, } = require("discord.js"),
 	{ joinVoiceChannel, createAudioResource, createAudioPlayer, getVoiceConnection, AudioPlayerStatus } = require("@discordjs/voice");
 const BaseCommand = require("../../base/BaseCommand"),
 	fs = require("fs");
@@ -34,6 +34,8 @@ class Clips extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		fs.readdir("./clips", async function (err, files) {
+			await interaction.deferReply();
+
 			if (err) return console.log("Unable to read directory: " + err);
 
 			const clips = files.map(file => {
@@ -52,67 +54,61 @@ class Clips extends BaseCommand {
 						.addOptions(clips)
 				);
 
-			const msg = await interaction.reply({
+			await interaction.editReply({
 				content: interaction.translate("music/clips:AVAILABLE_CLIPS"),
-				components: [row],
-				fetchReply: true
+				components: [row]
 			});
 
-			const filter = i => i.customId === "clips_select" && i.user.id === interaction.user.id;
-			const collector = new InteractionCollector(client, {
-				filter,
-				componentType: ComponentType.SelectMenu,
-				message: msg,
-				idle: (2 * 1000)
-			});
+			const filter = i => i.user.id === interaction.user.id;
+			const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (15 * 1000) });
 
 			collector.on("collect", async i => {
-				const clip = i?.values[0];
-				const voice = i.member.voice.channel;
-				if (!voice) return i.update({ content: interaction.translate("music/play:NO_VOICE_CHANNEL"), components: [] });
-				const queue = client.player.getQueue(i.guild.id);
-				if (queue) return i.update({ content: interaction.translate("music/clips:ACTIVE_QUEUE"), components: [] });
-				if (getVoiceConnection(i.guild.id)) return i.update({ content: interaction.translate("music/clips:ACTIVE_CLIP"), components: [] });
-				if (!fs.existsSync(`./clips/${clip}.mp3`)) return i.update({ content: interaction.translate("music/clips:NO_FILE", { file: clip }), components: [] });
+				if (i.isSelectMenu() && i.customId === "clips_select") {
+					const clip = i?.values[0];
+					const voice = i.member.voice.channel;
+					if (!voice) return i.update({ content: interaction.translate("music/play:NO_VOICE_CHANNEL"), components: [] });
+					const queue = client.player.getQueue(i.guild.id);
+					if (queue) return i.update({ content: interaction.translate("music/clips:ACTIVE_QUEUE"), components: [] });
+					if (getVoiceConnection(i.guild.id)) return i.update({ content: interaction.translate("music/clips:ACTIVE_CLIP"), components: [] });
+					if (!fs.existsSync(`./clips/${clip}.mp3`)) return i.update({ content: interaction.translate("music/clips:NO_FILE", { file: clip }), components: [] });
 
-				try {
-					const connection = joinVoiceChannel({
-						channelId: voice.id,
-						guildId: i.guild.id,
-						adapterCreator: i.guild.voiceAdapterCreator
-					});
-
-					const resource = createAudioResource(fs.createReadStream(`./clips/${clip}.mp3`));
-					const player = createAudioPlayer()
-						.on("error", err => {
-							connection.destroy();
-							console.error(err.message);
+					try {
+						const connection = joinVoiceChannel({
+							channelId: voice.id,
+							guildId: interaction.guild.id,
+							adapterCreator: interaction.guild.voiceAdapterCreator
 						});
 
-					player.play(resource);
-					connection.subscribe(player);
+						const resource = createAudioResource(fs.createReadStream(`./clips/${clip}.mp3`));
+						const player = createAudioPlayer()
+							.on("error", err => {
+								connection.destroy();
+								console.error(err.message);
+							});
 
-					player.on(AudioPlayerStatus.Idle, () => {
-						connection.destroy();
-					});
-				} catch (error) {
-					console.error(error);
-				}
+						player.play(resource);
+						connection.subscribe(player);
 
-				await i.update({
-					content: interaction.translate("music/clips:PLAYING", {
-						clip
-					}),
-					components: []
-				});
-			});
+						player.on(AudioPlayerStatus.Idle, () => {
+							connection.destroy();
+						});
+					} catch (error) {
+						console.error(error);
+					}
 
-			collector.on("end", (_, reason) => {
-				if (reason === "idle") {
-					if (msg) msg.update({
+					await interaction.editReply({
+						content: interaction.translate("music/clips:PLAYING", {
+							clip
+						}),
 						components: []
 					});
 				}
+			});
+
+			collector.on("end", () => {
+				return interaction.editReply({
+					components: []
+				});
 			});
 		});
 	}

@@ -65,7 +65,7 @@ class Poll extends BaseCommand {
 
 		let mention = null;
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = interaction.channel.createMessageComponentCollector({ filter, time: 15000 });
+		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (15 * 1000) });
 
 		collector.on("collect", async i => {
 			if (i.isButton()) {

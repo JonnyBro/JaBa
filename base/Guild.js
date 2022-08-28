@@ -41,5 +41,4 @@ module.exports = mongoose.model("Guild", new Schema({
 		reports: false
 	}},
 	casesCount: { type: Number, default: 0 },
-	autoDeleteModCommands: { type: Boolean, default: false },
 }));

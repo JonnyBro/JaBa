@@ -84,7 +84,7 @@ class Servers extends BaseCommand {
 				description = `${interaction.translate("common:SERVERS")}: ${client.guilds.cache.size}\n\n` +
 					client.guilds.cache
 						.sort((a, b) => b.memberCount - a.memberCount)
-						.map((r) => r)
+						.map(r => r)
 						.map((r, i) => `**${i + 1}** - ${r.name} | ${r.memberCount} ${client.getNoun(r.memberCount, interaction.translate("misc:NOUNS:MEMBERS:1"), interaction.translate("misc:NOUNS:MEMBERS:2"), interaction.translate("misc:NOUNS:MEMBERS:5"))}`)
 						.slice(i0, i1)
 						.join("\n");

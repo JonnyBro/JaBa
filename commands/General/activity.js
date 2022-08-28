@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, PermissionsBitField, ComponentType } = require("discord.js"),
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, PermissionsBitField } = require("discord.js"),
 	{ defaultApplications } = require("../../helpers/discordTogether");
 const BaseCommand = require("../../base/BaseCommand");
 
@@ -32,6 +32,8 @@ class Activity extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply();
+
 		const voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
 
@@ -53,45 +55,42 @@ class Activity extends BaseCommand {
 					.addOptions(activities)
 			);
 
-		const msg = await interaction.reply({
+		await interaction.reply({
 			content: interaction.translate("general/activity:AVAILABLE_ACTIVITIES"),
-			components: [row],
-			fetchReply: true
+			components: [row]
 		});
 
-		const filter = i => i.customId === "activity_select" && i.user.id === interaction.user.id;
-		const collector = new InteractionCollector(client, {
-			filter,
-			componentType: ComponentType.SelectMenu,
-			message: msg,
-			idle: (2 * 1000)
-		});
+		const filter = i => i.user.id === interaction.user.id;
+		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (15 * 1000) });
 
 		collector.on("collect", async i => {
-			const activity = i?.values[0];
+			if (i.isSelectMenu() && i.customId === "activity_select") {
+				const activity = i?.values[0];
 
-			const invite = await client.discordTogether.createTogetherCode(voice.id, activity);
-			const embed = new EmbedBuilder()
-				.setTitle(activity)
-				.setColor(client.config.embed.color)
-				.setDescription(`**[${interaction.translate("general/activity:CLICK_HERE", { activity: defaultApplications.find(a => a.id === activity).name, channel: voice.name })}](${invite.code})**`)
-				.setFooter({
-					text: client.config.embed.footer
-				})
-				.setTimestamp();
+				const invite = await client.discordTogether.createTogetherCode(voice.id, activity);
+				const embed = new EmbedBuilder()
+					.setTitle(defaultApplications.find(a => a.id === activity).name)
+					.setColor(client.config.embed.color)
+					.setDescription(`**[${interaction.translate("general/activity:CLICK_HERE", {
+						activity: defaultApplications.find(a => a.id === activity).name,
+						channel: voice.name
+					})}](${invite.code})**`)
+					.setFooter({
+						text: client.config.embed.footer
+					})
+					.setTimestamp();
 
-			await i.update({
-				embeds: [embed],
-				components: []
-			});
-		});
-
-		collector.on("end", (_, reason) => {
-			if (reason === "idle") {
-				if (msg) msg.update({
+				await interaction.editReply({
+					embeds: [embed],
 					components: []
 				});
 			}
+		});
+
+		collector.on("end", () => {
+			return interaction.editReply({
+				components: []
+			});
 		});
 	}
 }

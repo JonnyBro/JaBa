@@ -73,7 +73,7 @@ class Loop extends BaseCommand {
 		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (15 * 1000) });
 
 		collector.on("collect", async i => {
-			if (i.isSelectMenu()) {
+			if (i.isSelectMenu() && i.customId === "loop_select") {
 				const type = i?.values[0];
 				const mode = type === "3" ? QueueRepeatMode.AUTOPLAY :
 					type === "2" ? QueueRepeatMode.QUEUE :

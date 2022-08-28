@@ -69,7 +69,7 @@ class Giveaway extends BaseCommand {
 			filter,
 			componentType: ComponentType.SelectMenu,
 			message: msg,
-			idle: 30 * 1000
+			idle: (30 * 1000)
 		});
 
 		collector.on("collect", async i => {

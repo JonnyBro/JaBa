@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, PermissionsBitField, ComponentType } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Help extends BaseCommand {
@@ -34,14 +34,16 @@ class Help extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply();
+
 		const commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()];
 		const categories = [];
 		const command = interaction.options.getString("command");
 
 		if (command) {
-			const embed = generateCommandHelp(client, interaction, command);
+			const embed = generateCommandHelp(interaction, command);
 
-			return interaction.reply({
+			return interaction.editReply({
 				embeds: [embed]
 			});
 		}
@@ -68,60 +70,57 @@ class Help extends BaseCommand {
 					.addOptions(categoriesRows)
 			);
 
-		const msg = await interaction.reply({
+		await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
-			components: [row],
-			fetchReply: true
+			components: [row]
 		});
 
-		const collector = new InteractionCollector(client, {
-			componentType: ComponentType.SelectMenu,
-			message: msg,
-			idle: (2 * 1000)
-		});
+		const filter = i => i.user.id === interaction.user.id;
+		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (15 * 1000) });
 
-		collector.on("collect", async msg => {
-			const arg = msg?.values[0];
+		collector.on("collect", async i => {
+			if (i.isSelectMenu() && (i.customId === "help_category_select" || i.customId === "help_commands_select")) {
+				i.deferUpdate();
 
-			if (categories.find(c => c === arg)) {
-				const categoryCommands = commands.filter(cmd => cmd.category === arg).map(c => {
-					return {
-						label: c.command.name,
-						value: c.command.name
-					};
-				});
+				const arg = i?.values[0];
 
-				const commandsRow = new ActionRowBuilder()
-					.addComponents(
-						new SelectMenuBuilder()
-							.setCustomId("help_commands_select")
-							.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
-							.addOptions(categoryCommands)
-					);
+				if (categories.includes(arg)) {
+					const categoryCommands = commands.filter(cmd => cmd.category === arg).map(c => {
+						return {
+							label: c.command.name,
+							value: c.command.name
+						};
+					});
 
-				await msg.update({
-					content: interaction.translate("general/help:COMMANDS_IN", {
-						category: arg
-					}),
-					components: [commandsRow],
-					fetchReply: true
-				});
-			} else {
-				const embed = generateCommandHelp(client, interaction, arg);
-				await msg.update({
-					content: null,
-					components: [],
-					embeds: [embed]
-				});
+					const commandsRow = new ActionRowBuilder()
+						.addComponents(
+							new SelectMenuBuilder()
+								.setCustomId("help_commands_select")
+								.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
+								.addOptions(categoryCommands)
+						);
+
+					return await interaction.editReply({
+						content: interaction.translate("general/help:COMMANDS_IN", {
+							category: arg
+						}),
+						components: [commandsRow]
+					});
+				} else {
+					const embed = generateCommandHelp(interaction, arg);
+					return interaction.editReply({
+						content: null,
+						components: [],
+						embeds: [embed]
+					});
+				}
 			}
 		});
 
-		collector.on("end", (_, reason) => {
-			if (reason === "idle") {
-				if (msg) msg.update({
-					components: []
-				});
-			}
+		collector.on("end", () => {
+			return interaction.editReply({
+				components: []
+			});
 		});
 	}
 }
@@ -132,9 +131,9 @@ function getPermName(bitfield = 0) {
 	return null;
 }
 
-function generateCommandHelp(client, interaction, command) {
-	const cmd = client.commands.get(command);
-	if (!cmd) return interaction.error("general/help:NOT_FOUND", { search: command });
+function generateCommandHelp(interaction, command) {
+	const cmd = interaction.client.commands.get(command);
+	if (!cmd) return interaction.error("general/help:NOT_FOUND", { search: command }, { edit: true });
 
 	const embed = new EmbedBuilder()
 		.setAuthor({
@@ -164,9 +163,9 @@ function generateCommandHelp(client, interaction, command) {
 				value: cmd.command.default_member_permissions > 0 ? interaction.translate(`misc:PERMISSIONS:${getPermName(cmd.command.default_member_permissions)}`) : interaction.translate("general/help:NO_REQUIRED_PERMISSION")
 			}
 		])
-		.setColor(client.config.embed.color)
+		.setColor(interaction.client.config.embed.color)
 		.setFooter({
-			text: client.config.embed.footer
+			text: interaction.client.config.embed.footer
 		});
 
 	return embed;

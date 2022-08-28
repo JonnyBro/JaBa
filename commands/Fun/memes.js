@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, InteractionCollector, ComponentType } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
@@ -32,6 +32,8 @@ class Memes extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply();
+
 		const tags = ["memes", "dankmemes", "me_irl", "wholesomememes"].map(tag =>
 			JSON.parse(JSON.stringify({
 				label: tag,
@@ -47,44 +49,41 @@ class Memes extends BaseCommand {
 					.addOptions(tags)
 			);
 
-		const msg = await interaction.reply({
+		await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
-			components: [row],
-			fetchReply: true
+			components: [row]
 		});
 
-		const filter = i => i.customId === "memes_select" && i.user.id === interaction.user.id;
-		const collector = new InteractionCollector(client, {
-			filter,
-			componentType: ComponentType.SelectMenu,
-			message: msg,
-			idle: (60 * 1000)
-		});
+		const filter = i => i.user.id === interaction.user.id;
+		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (2 * 60 * 1000) });
 
 		collector.on("collect", async i => {
-			const tag = i?.values[0];
-			const res = await fetch(`https://meme-api.herokuapp.com/gimme/${tag}`).then(response => response.json());
+			if (i.isSelectMenu() && i.customId === "memes_select") {
+				i.deferUpdate();
 
-			const embed = new EmbedBuilder()
-				.setColor(client.config.embed.color)
-				.setFooter({
-					text: client.config.embed.footer
-				})
-				.setTitle(`${res.title}\n${interaction.translate("fun/memes:SUBREDDIT")}: ${res.subreddit}\n${interaction.translate("common:AUTHOR")}: ${res.author}\n${interaction.translate("fun/memes:UPS")}: ${res.ups}`)
-				.setImage(res.url)
-				.setTimestamp();
+				const tag = i.values[0];
+				const res = await fetch(`https://meme-api.herokuapp.com/gimme/${tag}`).then(response => response.json());
 
-			await i.update({
-				embeds: [embed]
-			});
-		});
+				const embed = new EmbedBuilder()
+					.setColor(client.config.embed.color)
+					.setFooter({
+						text: client.config.embed.footer
+					})
+					.setTitle(res.title)
+					.setDescription(`${interaction.translate("fun/memes:SUBREDDIT")}: **${res.subreddit}**\n${interaction.translate("common:AUTHOR")}: **${res.author}**\n${interaction.translate("fun/memes:UPS")}: **${res.ups}**`)
+					.setImage(res.url)
+					.setTimestamp();
 
-		collector.on("end", (_, reason) => {
-			if (reason === "idle") {
-				if (msg) msg.update({
-					components: []
+				await interaction.editReply({
+					embeds: [embed]
 				});
 			}
+		});
+
+		collector.on("end", () => {
+			return interaction.editReply({
+				components: []
+			});
 		});
 	}
 }

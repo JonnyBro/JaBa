@@ -95,7 +95,7 @@ class Marry extends BaseCommand {
 		});
 
 		const filter = i => i.user.id === member.id;
-		const collector = interaction.channel.createMessageComponentCollector({ filter, time: (10 * 60 * 1000) });
+		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (10 * 60 * 1000) });
 
 		collector.on("collect", async i => {
 			if (i.isButton()) {
@@ -107,19 +107,10 @@ class Marry extends BaseCommand {
 		collector.on("end", async (_, reason) => {
 			delete pendings[interaction.member.id];
 			if (reason === "time") {
-				const row = new ActionRowBuilder()
-					.addComponents(
-						new ButtonBuilder()
-							.setCustomId("marry_confirm_yes")
-							.setLabel(interaction.translate("common:ACCEPT"))
-							.setStyle(ButtonStyle.Success)
-							.setDisabled(true),
-						new ButtonBuilder()
-							.setCustomId("marry_confirm_no")
-							.setLabel(interaction.translate("common:CANCEL"))
-							.setStyle(ButtonStyle.Danger)
-							.setDisabled(true),
-					);
+				row.components.forEach(component => {
+					component.setDisabled(true);
+				});
+
 				return interaction.editReply({
 					components: [row]
 				});

@@ -36,6 +36,8 @@ class Clear extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		const option = interaction.options.getString("option");
 		const member = interaction.options.getMember("user");
 
@@ -52,35 +54,52 @@ class Clear extends BaseCommand {
 						.setStyle(ButtonStyle.Secondary),
 				);
 
-
-			await interaction.reply({
+			await interaction.editReply({
 				content: interaction.translate("moderation/clear:ALL_CONFIRM"),
-				ephemeral: true,
 				components: [row]
 			});
 
 			const filter = i => i.user.id === interaction.user.id;
-			const collector = interaction.channel.createMessageComponentCollector({ filter, time: 15000 });
+			const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (15 * 1000) });
 
 			collector.on("collect", async i => {
 				if (i.isButton()) {
 					if (i.customId === "clear_confirm_yes") {
+						i.deferUpdate();
+
 						const position = interaction.channel.position;
 						const newChannel = await interaction.channel.clone();
 						await interaction.channel.delete();
 						newChannel.setPosition(position);
 
-						await newChannel.send({
+						return newChannel.send({
 							content: interaction.translate("moderation/clear:CHANNEL_CLEARED")
 						});
 					} else if (i.customId === "clear_confirm_no") {
-						row.components[0].setDisabled(true);
-						row.components[1].setDisabled(true);
-
-						i.update({
-							content: interaction.translate("misc:SELECT_CANCELED")
-						});
+						i.deferUpdate();
+						collector.stop("cancel");
 					}
+				}
+			});
+
+			collector.on("end", async (_, reason) => {
+				if (reason === "cancel") {
+					row.components.forEach(component => {
+						component.setDisabled(true);
+					});
+
+					interaction.editReply({
+						content: interaction.translate("misc:SELECT_CANCELED"),
+						components: [row]
+					});
+				} else if (reason === "idle") {
+					row.components.forEach(component => {
+						component.setDisabled(true);
+					});
+
+					interaction.editReply({
+						components: [row]
+					});
 				}
 			});
 		} else {
