@@ -130,7 +130,7 @@ class Play extends BaseCommand {
 						notation: "compact", compactDisplay: "short"
 					}).format(track.views);
 
-					return `${searchResult.tracks.indexOf(track) + 1}. [${track.title}](${track.url})\n> ${interaction.translate("common:VIEWS")}: **${views}**`;
+					return `${searchResult.tracks.indexOf(track) + 1}. [${track.title}](${track.url})\n> ${interaction.translate("common:VIEWS")}: **${views}**\n`;
 				}).join("\n"))
 				.setTimestamp();
 
