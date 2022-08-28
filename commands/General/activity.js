@@ -55,7 +55,7 @@ class Activity extends BaseCommand {
 					.addOptions(activities)
 			);
 
-		await interaction.reply({
+		await interaction.editReply({
 			content: interaction.translate("general/activity:AVAILABLE_ACTIVITIES"),
 			components: [row]
 		});
