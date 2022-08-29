@@ -12,7 +12,7 @@ class Transactions extends BaseCommand {
 				.setName("transactions")
 				.setDescription(client.translate("economy/transactions:DESCRIPTION"))
 				.addBooleanOption(option => option.setName("clear")
-					.setDescription(client.translate("economy/translactions:CLEAR"))),
+					.setDescription(client.translate("economy/transactions:CLEAR"))),
 			aliases: [],
 			dirname: __dirname,
 			guildOnly: true,
