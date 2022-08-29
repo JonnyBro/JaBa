@@ -7,7 +7,6 @@ const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = r
 
 const BaseEvent = require("./BaseEvent.js"),
 	BaseCommand = require("./BaseCommand.js"),
-	// AmeClient = require("amethyste-api"),
 	path = require("path"),
 	fs = require("fs").promises,
 	mongoose = require("mongoose"),
@@ -44,10 +43,8 @@ class JaBa extends Client {
 		this.databaseCache.users = new Collection();
 		this.databaseCache.guilds = new Collection();
 		this.databaseCache.members = new Collection();
-		this.databaseCache.usersReminds = new Collection(); // members with active reminds
-		this.databaseCache.mutedUsers = new Collection(); // members who are currently muted
-
-		// if (this.config.apiKeys.amethyste) this.AmeAPI = new AmeClient(this.config.apiKeys.amethyste);
+		this.databaseCache.usersReminds = new Collection();
+		this.databaseCache.mutedUsers = new Collection();
 
 		this.discordTogether = new DiscordTogether(this);
 

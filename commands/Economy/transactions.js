@@ -10,7 +10,9 @@ class Transactions extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("transactions")
-				.setDescription(client.translate("economy/transactions:DESCRIPTION")),
+				.setDescription(client.translate("economy/transactions:DESCRIPTION"))
+				.addBooleanOption(option => option.setName("clear")
+					.setDescription(client.translate("economy/translactions:CLEAR"))),
 			aliases: [],
 			dirname: __dirname,
 			guildOnly: true,
@@ -31,6 +33,13 @@ class Transactions extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
+		if (interaction.options.getBoolean("clear")) {
+			data.memberData.transactions = [];
+			await data.memberData.save();
+
+			return interaction.success("economy/transactions:CLEARED", null, { ephemeral: true });
+		}
+
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("economy/transactions:EMBED_TRANSACTIONS"),

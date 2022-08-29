@@ -267,7 +267,7 @@ module.exports = {
 				return resolve({ playlist: null, info: null });
 			} catch (error) {
 				console.log(`Extractor: An error occurred while attempting to resolve ${query} :\n${error}`);
-				return resolve({ playlist: null, info: null });
+				return reject(error);
 			}
 		});
 	}

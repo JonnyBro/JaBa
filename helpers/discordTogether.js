@@ -88,9 +88,8 @@ class DiscordTogether {
 		/**
 		 * @param {String} code The invite link (only use the blue link)
 		 */
-		const returnData = {
-			code: "none",
-		};
+		const returnData = { code: "none" };
+
 		if (option && this.applications.find(apps => apps.id === option).id) {
 			const applicationID = this.applications.find(apps => apps.id === option).id;
 			try {
@@ -107,9 +106,9 @@ class DiscordTogether {
 						Authorization: `Bot ${this.client.config.token}`,
 						"Content-Type": "application/json",
 					},
-				}).then((res) => res.json())
-					.then((invite) => {
-						if (invite.error || !invite.code) throw new Error("An error occured while retrieving data !");
+				}).then(res => res.json())
+					.then(invite => {
+						if (invite.error || !invite.code) throw new Error("An error occured while retrieving data!");
 						if (Number(invite.code) === 50013) console.warn("Your bot lacks permissions to perform that action");
 						returnData.code = `https://discord.com/invite/${invite.code}`;
 					});
@@ -118,12 +117,9 @@ class DiscordTogether {
 			}
 			return returnData;
 		} else {
-			throw new SyntaxError("Invalid option !");
+			throw new SyntaxError("Invalid option!");
 		}
 	}
 }
 
-module.exports = {
-	DiscordTogether,
-	defaultApplications
-};
+module.exports = { DiscordTogether, defaultApplications };

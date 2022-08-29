@@ -35,22 +35,26 @@ class Play extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply();
+
 		const voice = interaction.member.voice.channel;
 		if (!voice) return interaction.editReply({ content: interaction.translate("music/play:NO_VOICE_CHANNEL") });
 		const query = interaction.options.getString("query");
 		const perms = voice.permissionsFor(client.user);
 		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.editReply({ content: interaction.translate("music/play:VOICE_CHANNEL_CONNECT") });
 
-		const searchResult = await client.player.search(query, {
-			requestedBy: interaction.user,
-			searchEngine: "jaba"
-		}).catch(() => {});
-
-		if (!searchResult || !searchResult.tracks.length) return interaction.editReply({
-			content: interaction.translate("music/play:NO_RESULT", {
-				query
-			})
-		});
+		try {
+			var searchResult = await client.player.search(query, {
+				requestedBy: interaction.user,
+				searchEngine: "jaba"
+			});
+		} catch (error) {
+			return interaction.editReply({
+				content: interaction.translate("music/play:NO_RESULT", {
+					query,
+					error
+				})
+			});
+		}
 
 		const queue = client.player.getQueue(interaction.guildId) || client.player.createQueue(interaction.guild, {
 			metadata: { channel: interaction.channel },
@@ -123,7 +127,6 @@ class Play extends BaseCommand {
 				.setTitle(interaction.translate("music/play:RESULTS_TITLE", {
 					query
 				}))
-				.setThumbnail(interaction.client.user.avatarURL())
 				.setColor(client.config.embed.color)
 				.setDescription(searchResult.tracks.map(track => {
 					const views = new Intl.NumberFormat(interaction.client.languages.find(language => language.name === interaction.guild.data.language).moment, {
@@ -155,24 +158,19 @@ class Play extends BaseCommand {
 							if (!queue.connection) await queue.connect(interaction.member.voice.channel);
 							if (!queue.playing) await queue.play();
 
-							rows.forEach(row => {
-								row.components.forEach(component => {
-									component.setDisabled(true);
-								});
-							});
-
 							return interaction.editReply({
 								content: interaction.translate("music/play:ADDED_QUEUE", {
 									songName: selected.title
 								}),
-								components: [row1, row2, row3]
+								components: [],
+								embeds: []
 							});
-						} catch (e) {
+						} catch (error) {
 							client.player.deleteQueue(interaction.guildId);
-							console.error(e);
+							console.log(error);
 							return interaction.editReply({
 								content: interaction.translate("music/play:ERR_OCCURRED", {
-									error: e
+									error
 								})
 							});
 						}
@@ -220,12 +218,12 @@ class Play extends BaseCommand {
 					songName: searchResult.playlist ? searchResult.playlist.title : searchResult.tracks[0].title
 				})
 			});
-		} catch (e) {
+		} catch (error) {
 			client.player.deleteQueue(interaction.guildId);
-			console.error(e);
+			console.log(error);
 			return interaction.editReply({
 				content: interaction.translate("music/play:ERR_OCCURRED", {
-					error: e
+					error
 				})
 			});
 		}

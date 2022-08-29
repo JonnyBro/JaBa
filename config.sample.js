@@ -32,8 +32,6 @@ module.exports = {
 		name: "XXXXXXXXXXX#1234" // And the name of the bot's owner
 	},
 	/* The API keys that are required for certain commands */
-	apiKeys: {
-		// AMETHYSTE: https://api.amethyste.moe
-		amethyste: "XXXXXXXXXXX"
-	}
+	/* Not used right now */
+	apiKeys: {}
 };
