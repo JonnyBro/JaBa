@@ -158,13 +158,16 @@ class Play extends BaseCommand {
 							if (!queue.connection) await queue.connect(interaction.member.voice.channel);
 							if (!queue.playing) await queue.play();
 
-							return interaction.editReply({
+							interaction.editReply({
 								content: interaction.translate("music/play:ADDED_QUEUE", {
 									songName: selected.title
 								}),
 								components: [],
 								embeds: []
 							});
+
+							collector.stop();
+							return;
 						} catch (error) {
 							client.player.deleteQueue(interaction.guildId);
 							console.log(error);
@@ -191,7 +194,7 @@ class Play extends BaseCommand {
 			});
 
 			collector.on("end", async (_, reason) => {
-				if (reason) {
+				if (reason === "idle") {
 					rows.forEach(row => {
 						row.components.forEach(component => {
 							component.setDisabled(true);
