@@ -90,10 +90,6 @@ class Loop extends BaseCommand {
 				});
 			}
 		});
-
-		collector.on("end", (_, reason) => {
-			if (reason) interaction.deleteReply();
-		});
 	}
 }
 
