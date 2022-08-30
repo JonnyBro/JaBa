@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Servers extends BaseCommand {
@@ -31,102 +31,151 @@ class Servers extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		let i0 = 0,
-			i1 = 10,
-			page = 1;
+		await interaction.deferReply({ ephemeral: true });
 
-		let description = `${interaction.translate("common:SERVERS")}: ${client.guilds.cache.size}\n\n` +
-			client.guilds.cache
-				.sort((a, b) => b.memberCount - a.memberCount)
-				.map((r) => r)
-				.map((r, i) => `**${i + 1}** - ${r.name} | ${r.memberCount} ${client.getNoun(r.memberCount, interaction.translate("misc:NOUNS:MEMBERS:1"), interaction.translate("misc:NOUNS:MEMBERS:2"), interaction.translate("misc:NOUNS:MEMBERS:5"))}`)
-				.slice(0, 10)
-				.join("\n");
+		let currentPage = 0;
+		const embeds = generateServersEmbeds(interaction, client.guilds.cache);
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
-				name: interaction.user.tag,
-				iconURL: interaction.member.displayAvatarURL({
-					extension: "png",
-					size: 512
-				})
-			})
-			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.user.username
-			})
-			.setTitle(`${interaction.translate("common:PAGE")}: ${page}/${client.guilds.cache.size}`)
-			.setDescription(description);
+		const row = new ActionRowBuilder()
+			.addComponents(
+				new ButtonBuilder()
+					.setCustomId("servers_prev_page")
+					.setStyle(ButtonStyle.Primary)
+					.setEmoji("⬅️"),
+				new ButtonBuilder()
+					.setCustomId("servers_next_page")
+					.setStyle(ButtonStyle.Primary)
+					.setEmoji("➡️"),
+				new ButtonBuilder()
+					.setCustomId("servers_jump_page")
+					.setStyle(ButtonStyle.Secondary)
+					.setEmoji("↗️"),
+				new ButtonBuilder()
+					.setCustomId("servers_stop")
+					.setStyle(ButtonStyle.Danger)
+					.setEmoji("⏹️"),
+			);
 
-		await interaction.reply({
-			embeds: [embed],
+		await interaction.editReply({
+			content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
+			embeds: [embeds[currentPage]],
+			components: [row]
 		});
 
-		const msg = await interaction.fetchReply();
+		const filter = i => i.user.id === interaction.user.id;
+		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (20 * 1000) });
 
-		await msg.react("⬅");
-		await msg.react("➡");
-		await msg.react("❌");
+		collector.on("collect", async i => {
+			if (i.isButton()) {
+				if (i.customId === "servers_prev_page") {
+					i.deferUpdate();
 
-		const collector = msg.createReactionCollector({
-			time: (2 * 1000)
+					if (currentPage !== 0) {
+						--currentPage;
+						interaction.editReply({
+							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/${embeds.length}`,
+							embeds: [embeds[currentPage]],
+							components: [row]
+						});
+					}
+				} else if (i.customId === "servers_next_page") {
+					i.deferUpdate();
+
+					if (currentPage < embeds.length - 1) {
+						currentPage++;
+						interaction.editReply({
+							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/${embeds.length}`,
+							embeds: [embeds[currentPage]],
+							components: [row]
+						});
+					}
+				} else if (i.customId === "servers_jump_page") {
+					i.deferUpdate();
+
+					const msg = await interaction.followUp({
+						content: interaction.translate("music/queue:PAGE_TO_JUMP", {
+							length: embeds.length
+						}),
+						fetchReply: true
+					});
+
+					const filter = res => {
+						return res.author.id === interaction.user.id && !isNaN(res.content);
+					};
+
+					interaction.channel.awaitMessages({ filter, max: 1, time: (10 * 1000) }).then(collected => {
+						if (embeds[collected.first().content - 1]) {
+							currentPage = collected.first().content - 1;
+							interaction.editReply({
+								content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/${embeds.length}`,
+								embeds: [embeds[currentPage]],
+								components: [row]
+							});
+
+							if (collected.first().deletable) collected.first().delete();
+							if (msg.deletable) msg.delete();
+						} else {
+							if (collected.first().deletable) collected.first().delete();
+							if (msg.deletable) msg.delete();
+							return;
+						}
+					});
+				} else if (i.customId === "servers_stop") {
+					i.deferUpdate();
+					collector.stop();
+				}
+			}
 		});
 
-		collector.on("collect", async reaction => {
-			if (reaction._emoji.name === "⬅") {
-				i0 = i0 - 10;
-				i1 = i1 - 10;
-				page = page - 1;
+		collector.on("end", () => {
+			row.components.forEach(component => {
+				component.setDisabled(true);
+			});
 
-				if (i0 < 0) return msg.delete();
-				if (!i0 || !i1) return msg.delete();
-
-				description = `${interaction.translate("common:SERVERS")}: ${client.guilds.cache.size}\n\n` +
-					client.guilds.cache
-						.sort((a, b) => b.memberCount - a.memberCount)
-						.map(r => r)
-						.map((r, i) => `**${i + 1}** - ${r.name} | ${r.memberCount} ${client.getNoun(r.memberCount, interaction.translate("misc:NOUNS:MEMBERS:1"), interaction.translate("misc:NOUNS:MEMBERS:2"), interaction.translate("misc:NOUNS:MEMBERS:5"))}`)
-						.slice(i0, i1)
-						.join("\n");
-
-				embed
-					.setTitle(`${interaction.translate("common:PAGE")}: ${page}/${client.guilds.cache.size}`)
-					.setDescription(description);
-
-				msg.edit({
-					embeds: [embed]
-				});
-			}
-
-			if (reaction._emoji.name === "➡") {
-				i0 = i0 + 10;
-				i1 = i1 + 10;
-				page = page + 1;
-
-				if (i1 > client.guilds.cache.size + 10) return msg.delete();
-				if (!i0 || !i1) return msg.delete();
-
-				description = `${interaction.translate("common:SERVERS")}: ${client.guilds.cache.size}\n\n` +
-					client.guilds.cache
-						.sort((a, b) => b.memberCount - a.memberCount)
-						.map((r) => r)
-						.map((r, i) => `**${i + 1}** - ${r.name} | ${r.memberCount} ${client.getNoun(r.memberCount, interaction.translate("misc:NOUNS:MEMBERS:1"), interaction.translate("misc:NOUNS:MEMBERS:2"), interaction.translate("misc:NOUNS:MEMBERS:5"))}`)
-						.slice(i0, i1)
-						.join("\n");
-
-				embed.setTitle(`${interaction.translate("common:PAGE")}: ${page}/${Math.round(client.guilds.cache.size / 10)}`)
-					.setDescription(description);
-
-				msg.edit({
-					embeds: [embed]
-				});
-			}
-
-			if (reaction._emoji.name === "❌") return msg.delete();
-
-			await reaction.users.remove(interaction.member.id);
+			return interaction.editReply({
+				components: [row]
+			});
 		});
 	}
 }
+
+/**
+ *
+ * @param {import("discord.js").ChatInputCommandInteraction} interaction
+ * @param {*} servers
+ * @returns
+ */
+function generateServersEmbeds(interaction, servers) {
+	const embeds = [];
+	let k = 10;
+
+	for (let i = 0; i < servers.size; i += 10) {
+		const current = servers.map(g => g).slice(i, k).sort((a, b) => b.memberCount - a.memberCount);
+		let j = i;
+		k += 10;
+
+		const info = current.map(server => `${++j}. ${server.name} | ${server.memberCount} ${interaction.client.getNoun(server.memberCount, interaction.translate("misc:NOUNS:MEMBERS:1"), interaction.translate("misc:NOUNS:MEMBERS:2"), interaction.translate("misc:NOUNS:MEMBERS:5"))}`).join("\n");
+
+		const embed = new EmbedBuilder()
+			.setColor(interaction.client.config.embed.color)
+			.setFooter({
+				text: interaction.client.config.embed.footer
+			})
+			.setTitle(interaction.translate("owner/servers:SERVERS_LIST"))
+			.setDescription(info)
+			.setTimestamp();
+		embeds.push(embed);
+	}
+
+	return embeds;
+}
+
+// `${interaction.translate("common:SERVERS")}: ${interaction.client.guilds.cache.size}\n\n` +
+// 	interaction.client.guilds.cache
+// 		.sort((a, b) => b.memberCount - a.memberCount)
+// 		.map(g => g)
+// 		.map((g, i) => `${i + 1}. ${g.name} | ${g.memberCount} ${interaction.client.getNoun(g.memberCount, interaction.translate("misc:NOUNS:MEMBERS:1"), interaction.translate("misc:NOUNS:MEMBERS:2"), interaction.translate("misc:NOUNS:MEMBERS:5"))}`)
+// 		.slice(i, k)
+// 		.join("\n")
 
 module.exports = Servers;

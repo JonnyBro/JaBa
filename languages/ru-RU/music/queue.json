@@ -3,7 +3,6 @@
 	"USAGE": "",
 	"EXAMPLES": "queue",
 	"QUEUE": "Очередь",
-	"PAGE": "Страница **{{current}}**/**{{length}}**",
 	"NO_QUEUE": "Пусто",
 	"DURATION": "Длительность очереди",
 	"ADDED": "Добавил",

@@ -36,7 +36,7 @@ class Queue extends BaseCommand {
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
 		let currentPage = 0;
-		let embeds = generateQueueEmbed(interaction, queue);
+		let embeds = generateQueueEmbeds(interaction, queue);
 
 		const row = new ActionRowBuilder()
 			.addComponents(
@@ -63,10 +63,7 @@ class Queue extends BaseCommand {
 			);
 
 		await interaction.reply({
-			content: interaction.translate("music/queue:PAGE", {
-				current: currentPage + 1,
-				length: embeds.length
-			}),
+			content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/${embeds.length}`,
 			embeds: [embeds[currentPage]],
 			components: [row]
 		});
@@ -78,37 +75,31 @@ class Queue extends BaseCommand {
 			if (i.isButton()) {
 				if (i.customId === "queue_prev_page") {
 					i.deferUpdate();
-					if (embeds != generateQueueEmbed(interaction, queue)) embeds = generateQueueEmbed(interaction, queue);
+					if (embeds != generateQueueEmbeds(interaction, queue)) embeds = generateQueueEmbeds(interaction, queue);
 
 					if (currentPage !== 0) {
 						--currentPage;
 						interaction.editReply({
-							content: interaction.translate("music/queue:PAGE", {
-								current: currentPage + 1,
-								length: embeds.length
-							}),
+							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/${embeds.length}`,
 							embeds: [embeds[currentPage]],
 							components: [row]
 						});
 					}
 				} else if (i.customId === "queue_next_page") {
 					i.deferUpdate();
-					if (embeds != generateQueueEmbed(interaction, queue)) embeds = generateQueueEmbed(interaction, queue);
+					if (embeds != generateQueueEmbeds(interaction, queue)) embeds = generateQueueEmbeds(interaction, queue);
 
 					if (currentPage < embeds.length - 1) {
 						currentPage++;
 						interaction.editReply({
-							content: interaction.translate("music/queue:PAGE", {
-								current: currentPage + 1,
-								length: embeds.length
-							}),
+							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/${embeds.length}`,
 							embeds: [embeds[currentPage]],
 							components: [row]
 						});
 					}
 				} else if (i.customId === "queue_jump_page") {
 					i.deferUpdate();
-					if (embeds != generateQueueEmbed(interaction, queue)) embeds = generateQueueEmbed(interaction, queue);
+					if (embeds != generateQueueEmbeds(interaction, queue)) embeds = generateQueueEmbeds(interaction, queue);
 
 					const msg = await interaction.followUp({
 						content: interaction.translate("music/queue:PAGE_TO_JUMP", {
@@ -121,14 +112,11 @@ class Queue extends BaseCommand {
 						return res.author.id === interaction.user.id && !isNaN(res.content);
 					};
 
-					interaction.channel.awaitMessages({ filter, max: 1, time: (30 * 1000) }).then(collected => {
+					interaction.channel.awaitMessages({ filter, max: 1, time: (10 * 1000) }).then(collected => {
 						if (embeds[collected.first().content - 1]) {
 							currentPage = collected.first().content - 1;
 							interaction.editReply({
-								content: interaction.translate("music/queue:PAGE", {
-									current: currentPage + 1,
-									length: embeds.length
-								}),
+								content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/${embeds.length}`,
 								embeds: [embeds[currentPage]],
 								components: [row]
 							});
@@ -166,7 +154,7 @@ class Queue extends BaseCommand {
  * @param {import("discord-player").Queue} queue
  * @returns
  */
-function generateQueueEmbed(interaction, queue) {
+function generateQueueEmbeds(interaction, queue) {
 	const embeds = [];
 	const currentTrack = queue.current;
 	let k = 10;
