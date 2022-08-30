@@ -73,7 +73,7 @@ class Servers extends BaseCommand {
 					if (currentPage !== 0) {
 						--currentPage;
 						interaction.editReply({
-							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/${embeds.length}`,
+							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 							embeds: [embeds[currentPage]],
 							components: [row]
 						});
@@ -84,7 +84,7 @@ class Servers extends BaseCommand {
 					if (currentPage < embeds.length - 1) {
 						currentPage++;
 						interaction.editReply({
-							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/${embeds.length}`,
+							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 							embeds: [embeds[currentPage]],
 							components: [row]
 						});
@@ -107,7 +107,7 @@ class Servers extends BaseCommand {
 						if (embeds[collected.first().content - 1]) {
 							currentPage = collected.first().content - 1;
 							interaction.editReply({
-								content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/${embeds.length}`,
+								content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 								embeds: [embeds[currentPage]],
 								components: [row]
 							});

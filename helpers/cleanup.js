@@ -1,3 +1,7 @@
+/**
+ *
+ * @param {import("../base/JaBa")} client
+ */
 module.exports.init = async function (client) {
 	setInterval(async () => {
 		const timestamp = Date.now() + (30 * 24 * 60 * 60 * 1000); // 1 month
@@ -14,4 +18,20 @@ module.exports.init = async function (client) {
 			}
 		}
 	}, (7 * 24 * 60 * 60 * 1000)); // every 7 days
+
+	/*
+	setInterval(async () => {
+		client.usersData.find({}, function (err, res) {
+			for (const user of res) {
+				client.users.fetch(user.id).then(u => {
+					if (u.username.match(/.*Deleted User.* [A-z0-9]+/g)) {
+						client.databaseCache.users.delete(user.id);
+						client.usersData.deleteOne({ id: user.id });
+						console.log(`Removed from database deleted user - ID: ${u.id} Username: ${u.username}`);
+					}
+				});
+			}
+		});
+	}, (7 * 24 * 60 * 60 * 1000)); // every 7 days
+	*/
 };

@@ -1,6 +1,10 @@
 const { CronJob } = require("cron"),
 	{ EmbedBuilder } = require("discord.js");
 
+/**
+ *
+ * @param {import("../base/JaBa")} client
+ */
 module.exports.init = async function (client) {
 	new CronJob("0 5 * * *", async function () {
 		client.guilds.cache.forEach(async (guild) => {

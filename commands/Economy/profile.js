@@ -41,6 +41,7 @@ class Profile extends BaseCommand {
 	 */
 	async execute(client, interaction, data) {
 		await interaction.deferReply();
+
 		const member = interaction.options.getMember("user") || interaction.member;
 		if (member.user.bot) return interaction.error("economy/profile:BOT_USER");
 
@@ -66,7 +67,7 @@ class Profile extends BaseCommand {
 		const profileEmbed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("economy/profile:TITLE", {
-					username: member.user.tag
+					user: member.nickname
 				}),
 				iconURL: member.displayAvatarURL()
 			})

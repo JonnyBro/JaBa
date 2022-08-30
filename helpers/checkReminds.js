@@ -1,5 +1,9 @@
 const { EmbedBuilder } = require("discord.js");
 
+/**
+ *
+ * @param {import("../base/JaBa")} client
+ */
 module.exports.init = function (client) {
 	client.usersData
 		.find({ reminds: { $gt: [] } })

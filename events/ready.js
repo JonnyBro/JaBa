@@ -36,8 +36,8 @@ class Ready extends BaseEvent {
 		checkReminds.init(client);
 
 		// Clear transactions
-		const clearTransactions = require("../helpers/clearTransactions");
-		clearTransactions.init(client);
+		const cleanup = require("../helpers/cleanup");
+		cleanup.init(client);
 
 		// Start the dashboard
 		if (client.config.dashboard.enabled) client.dashboard.init(client);
