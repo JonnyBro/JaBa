@@ -116,11 +116,11 @@ class Clear extends BaseCommand {
 				interaction.replyT("moderation/clear:CLEARED_MEMBER", {
 					amount: `**${option}** ${client.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`,
 					username: member.user.tag
-				}, { ephemeral: true });
+				}, { ephemeral: true, edit: true });
 			} else {
 				interaction.replyT("moderation/clear:CLEARED", {
 					amount: `**${option}** ${client.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`
-				}, { ephemeral: true });
+				}, { ephemeral: true, edit: true });
 			}
 		}
 	}
