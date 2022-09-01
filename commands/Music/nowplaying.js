@@ -40,7 +40,7 @@ class Nowplaying extends BaseCommand {
 
 		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: interaction.translate("music/queue:TITLE")
+				name: interaction.translate("music/nowplaying:CURRENTLY_PLAYING")
 			})
 			.setThumbnail(track.thumbnail)
 			.addFields([
