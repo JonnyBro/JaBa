@@ -151,7 +151,7 @@ class Play extends BaseCommand {
 				.addComponents(
 					new ButtonBuilder()
 						.setCustomId("search_cancel")
-						.setStyle(ButtonStyle.Primary)
+						.setStyle(ButtonStyle.Secondary)
 						.setEmoji("❌"),
 				);
 			const rows = [row1, row2, row3];
