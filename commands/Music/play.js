@@ -1,5 +1,7 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js");
-const BaseCommand = require("../../base/BaseCommand");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js"),
+	{ Track, Util } = require("discord-player");
+const BaseCommand = require("../../base/BaseCommand"),
+	playdl = require("play-dl");
 
 class Play extends BaseCommand {
 	/**
@@ -43,10 +45,31 @@ class Play extends BaseCommand {
 		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.editReply({ content: interaction.translate("music/play:VOICE_CHANNEL_CONNECT") });
 
 		try {
-			var searchResult = await client.player.search(query, {
-				requestedBy: interaction.user,
-				searchEngine: "jaba"
-			});
+			var searchResult;
+			if (!query.includes("http")) {
+				const search = await playdl.search(query, { limit: 10 });
+
+				if (search) {
+					const found = search.map(track => new Track(client.player, {
+						title: track.title,
+						duration:  Util.buildTimeCode(Util.parseMS(track.durationInSec * 1000)),
+						thumbnail: track.thumbnails[0].url || "https://cdn.discordapp.com/attachments/708642702602010684/1012418217660121089/noimage.png",
+						views: track.views,
+						author: track.channel.name,
+						description: "search",
+						url: track.url,
+						requestedBy: interaction.user,
+						playlist: null,
+						source: "youtube"
+					}));
+
+					searchResult = { playlist: null, tracks: found, searched: true };
+				}
+			} else {
+				searchResult = await client.player.search(query, {
+					requestedBy: interaction.user
+				});
+			}
 		} catch (error) {
 			return interaction.editReply({
 				content: interaction.translate("music/play:NO_RESULT", {
@@ -62,11 +85,22 @@ class Play extends BaseCommand {
 			leaveOnStop: true,
 			bufferingTimeout: 1000,
 			disableVolume: false,
-			spotifyBridge: false
+			spotifyBridge: false,
+			/**
+			 *
+			 * @param {import("discord-player").Track} track
+			 * @param {import("discord-player").TrackSource} source
+			 * @param {import("discord-player").Queue} queue
+			 * @returns
+			 */
+			async onBeforeCreateStream(track, source) {
+				console.log(track, source);
+				if (source === "youtube" || source === "soundcloud")
+					return (await playdl.stream(track.url, { discordPlayerCompatibility: true })).stream;
+			}
 		});
 
-		const searched = searchResult.tracks[0].description === "search";
-		if (searched) {
+		if (searchResult.searched) {
 			const row1 = new ActionRowBuilder()
 				.addComponents(
 					new ButtonBuilder()
@@ -117,7 +151,6 @@ class Play extends BaseCommand {
 				.addComponents(
 					new ButtonBuilder()
 						.setCustomId("search_cancel")
-						.setLabel(interaction.translate("common:CANCEL"))
 						.setStyle(ButtonStyle.Danger)
 						.setEmoji("❌"),
 				);
