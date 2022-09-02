@@ -105,53 +105,53 @@ class Play extends BaseCommand {
 				.addComponents(
 					new ButtonBuilder()
 						.setCustomId("1")
-						.setStyle(ButtonStyle.Primary)
+						.setStyle(ButtonStyle.Secondary)
 						.setEmoji("1️⃣"),
 					new ButtonBuilder()
 						.setCustomId("2")
-						.setStyle(ButtonStyle.Primary)
+						.setStyle(ButtonStyle.Secondary)
 						.setEmoji("2️⃣"),
 					new ButtonBuilder()
 						.setCustomId("3")
-						.setStyle(ButtonStyle.Primary)
+						.setStyle(ButtonStyle.Secondary)
 						.setEmoji("3️⃣"),
 					new ButtonBuilder()
 						.setCustomId("4")
-						.setStyle(ButtonStyle.Primary)
+						.setStyle(ButtonStyle.Secondary)
 						.setEmoji("4️⃣"),
 					new ButtonBuilder()
 						.setCustomId("5")
-						.setStyle(ButtonStyle.Primary)
+						.setStyle(ButtonStyle.Secondary)
 						.setEmoji("5️⃣"),
 				);
 			const row2 = new ActionRowBuilder()
 				.addComponents(
 					new ButtonBuilder()
 						.setCustomId("6")
-						.setStyle(ButtonStyle.Primary)
+						.setStyle(ButtonStyle.Secondary)
 						.setEmoji("6️⃣"),
 					new ButtonBuilder()
 						.setCustomId("7")
-						.setStyle(ButtonStyle.Primary)
+						.setStyle(ButtonStyle.Secondary)
 						.setEmoji("7️⃣"),
 					new ButtonBuilder()
 						.setCustomId("8")
-						.setStyle(ButtonStyle.Primary)
+						.setStyle(ButtonStyle.Secondary)
 						.setEmoji("8️⃣"),
 					new ButtonBuilder()
 						.setCustomId("9")
-						.setStyle(ButtonStyle.Primary)
+						.setStyle(ButtonStyle.Secondary)
 						.setEmoji("9️⃣"),
 					new ButtonBuilder()
 						.setCustomId("10")
-						.setStyle(ButtonStyle.Primary)
+						.setStyle(ButtonStyle.Secondary)
 						.setEmoji("🔟"),
 				);
 			const row3 = new ActionRowBuilder()
 				.addComponents(
 					new ButtonBuilder()
 						.setCustomId("search_cancel")
-						.setStyle(ButtonStyle.Danger)
+						.setStyle(ButtonStyle.Primary)
 						.setEmoji("❌"),
 				);
 			const rows = [row1, row2, row3];
