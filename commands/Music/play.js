@@ -91,7 +91,6 @@ class Play extends BaseCommand {
 			 * @param {import("discord-player").Track} track
 			 * @param {import("discord-player").TrackSource} source
 			 * @param {import("discord-player").Queue} queue
-			 * @returns
 			 */
 			async onBeforeCreateStream(track, source) {
 				console.log(track, source);
