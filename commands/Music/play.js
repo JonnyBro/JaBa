@@ -93,7 +93,6 @@ class Play extends BaseCommand {
 			 * @param {import("discord-player").Queue} queue
 			 */
 			async onBeforeCreateStream(track, source) {
-				console.log(track, source);
 				if (source === "youtube" || source === "soundcloud")
 					return (await playdl.stream(track.url, { discordPlayerCompatibility: true })).stream;
 			}
