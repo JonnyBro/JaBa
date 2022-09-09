@@ -217,9 +217,12 @@ class Play extends BaseCommand {
 							});
 						});
 
-						return interaction.editReply({
+						interaction.editReply({
 							components: [row1, row2, row3]
 						});
+
+						collector.end();
+						return;
 					}
 				}
 			});
