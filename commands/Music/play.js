@@ -69,6 +69,9 @@ class Play extends BaseCommand {
 				searchResult = await client.player.search(query, {
 					requestedBy: interaction.user
 				});
+
+				if (!searchResult.tracks[0] || !searchResult)
+					return interaction.editReply({ content: interaction.translate("music/play:NO_RESULT", { query }) });
 			}
 		} catch (error) {
 			return interaction.editReply({
