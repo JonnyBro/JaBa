@@ -1,7 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js"),
-	{ Track, Util } = require("discord-player");
-const BaseCommand = require("../../base/BaseCommand"),
-	playdl = require("play-dl");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
 class Play extends BaseCommand {
 	/**
@@ -74,6 +72,7 @@ class Play extends BaseCommand {
 					return interaction.editReply({ content: interaction.translate("music/play:NO_RESULT", { query, error: "Unknown Error" }) });
 			}
 		} catch (error) {
+			console.log(error);
 			return interaction.editReply({
 				content: interaction.translate("music/play:NO_RESULT", {
 					query,
@@ -101,7 +100,7 @@ class Play extends BaseCommand {
 			}
 		});
 
-		if (searchResult.searched) {
+		if (searchResult.tracks.searched) {
 			const row1 = new ActionRowBuilder()
 				.addComponents(
 					new ButtonBuilder()

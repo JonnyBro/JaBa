@@ -1,6 +1,6 @@
 const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
 	{ GiveawaysManager } = require("discord-giveaways"),
-	{ Player } = require("discord-player"),
+	Player = require("../helpers/Music/Player"),
 	{ REST } = require("@discordjs/rest"),
 	{ Routes } = require("discord-api-types/v10"),
 	{ DiscordTogether } = require("../helpers/discordTogether");
@@ -57,29 +57,28 @@ class JaBa extends Client {
 
 		this.player = new Player(this);
 
-		this.player
-			.on("trackStart", async (queue, track) => {
-				const m = await queue.metadata.channel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language) });
-				if (track.durationMS > 1) {
-					setTimeout(() => {
-						if (m.deletable) m.delete();
-					}, track.durationMS);
-				} else {
-					setTimeout(() => {
-						if (m.deletable) m.delete();
-					}, (10 * 60 * 1000)); // m * s * ms
-				}
-			})
-			.on("queueEnd", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)))
-			.on("channelEmpty", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.channel.guild.data.language)))
-			.on("connectionError", (queue, e) => {
-				console.error(e);
-				queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
-			})
-			.on("error", (queue, e) => {
-				console.error(e);
-				queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
-			});
+		this.player.on("trackStart", async (queue, track) => {
+			const m = await queue.metadata.channel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language) });
+			if (track.durationMS > 1) {
+				setTimeout(() => {
+					if (m.deletable) m.delete();
+				}, track.durationMS);
+			} else {
+				setTimeout(() => {
+					if (m.deletable) m.delete();
+				}, (10 * 60 * 1000)); // m * s * ms
+			}
+		});
+		this.player.on("queueEnd", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)));
+		this.player.on("channelEmpty", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.channel.guild.data.language)));
+		this.player.on("connectionError", (queue, e) => {
+			console.error(e);
+			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
+		});
+		this.player.on("error", (queue, e) => {
+			console.error(e);
+			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
+		});
 
 		this.giveawaysManager = new GiveawaysManager(this, {
 			storage: "./giveaways.json",
