@@ -50,7 +50,7 @@ class Play extends BaseCommand {
 			});
 
 			if (!searchResult.tracks[0] || !searchResult)
-				return interaction.editReply({ content: interaction.translate("music/play:NO_RESULT", { query, error: "Unknown Error" }) });
+				return interaction.editReply({ content: interaction.translate("music/play:NO_RESULT", { query, error: "Скорее всего видео заблокировано по региону" }) });
 		} catch (error) {
 			console.log(error);
 			return interaction.editReply({
