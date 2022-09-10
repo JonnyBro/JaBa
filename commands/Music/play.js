@@ -52,7 +52,7 @@ class Play extends BaseCommand {
 				if (search) {
 					const found = search.map(track => new Track(client.player, {
 						title: track.title,
-						duration:  Util.buildTimeCode(Util.parseMS(track.durationInSec * 1000)),
+						duration: Util.buildTimeCode(Util.parseMS(track.durationInSec * 1000)),
 						thumbnail: track.thumbnails[0].url || "https://cdn.discordapp.com/attachments/708642702602010684/1012418217660121089/noimage.png",
 						views: track.views,
 						author: track.channel.name,
@@ -71,7 +71,7 @@ class Play extends BaseCommand {
 				});
 
 				if (!searchResult.tracks[0] || !searchResult)
-					return interaction.editReply({ content: interaction.translate("music/play:NO_RESULT", { query }) });
+					return interaction.editReply({ content: interaction.translate("music/play:NO_RESULT", { query, error: "Unknown Error" }) });
 			}
 		} catch (error) {
 			return interaction.editReply({
