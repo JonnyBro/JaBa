@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js"),
-	{ Track, Util } = require("discord-player");
-const BaseCommand = require("../../base/BaseCommand"),
-	playdl = require("play-dl");
+	{ QueryType } = require("../../helpers/Music/dist/index");
+const BaseCommand = require("../../base/BaseCommand");
 
 class Play extends BaseCommand {
 	/**
@@ -74,6 +73,7 @@ class Play extends BaseCommand {
 					return interaction.editReply({ content: interaction.translate("music/play:NO_RESULT", { query, error: "Unknown Error" }) });
 			}
 		} catch (error) {
+			console.log(error);
 			return interaction.editReply({
 				content: interaction.translate("music/play:NO_RESULT", {
 					query,
@@ -82,23 +82,12 @@ class Play extends BaseCommand {
 			});
 		}
 
-		const queue = client.player.getQueue(interaction.guildId) || client.player.createQueue(interaction.guild, {
+		const queue = await client.player.getQueue(interaction.guildId) || client.player.createQueue(interaction.guild, {
 			metadata: { channel: interaction.channel },
+			autoSelfDeaf: true,
 			leaveOnEnd: true,
 			leaveOnStop: true,
 			bufferingTimeout: 1000,
-			disableVolume: false,
-			spotifyBridge: false,
-			/**
-			 *
-			 * @param {import("discord-player").Track} track
-			 * @param {import("discord-player").TrackSource} source
-			 * @param {import("discord-player").Queue} queue
-			 */
-			async onBeforeCreateStream(track, source) {
-				if (source === "youtube" || source === "soundcloud")
-					return (await playdl.stream(track.url, { discordPlayerCompatibility: true })).stream;
-			}
 		});
 
 		if (searchResult.searched) {
@@ -163,7 +152,9 @@ class Play extends BaseCommand {
 				}))
 				.setColor(client.config.embed.color)
 				.setDescription(searchResult.tracks.map(track => {
-					const views = new Intl.NumberFormat(interaction.client.languages.find(language => language.name === interaction.guild.data.language).moment, {
+					var views;
+					if (track.raw.live) views = "🔴 LIVE";
+					else views = new Intl.NumberFormat(interaction.client.languages.find(language => language.name === interaction.guild.data.language).moment, {
 						notation: "compact", compactDisplay: "short"
 					}).format(track.views);
 

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js"),
-	{ QueueRepeatMode } = require("discord-player");
+	{ QueueRepeatMode } = require("../../helpers/Music/dist/index");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Nowplaying extends BaseCommand {
@@ -46,11 +46,24 @@ class Nowplaying extends BaseCommand {
 			.addFields([
 				{
 					name: interaction.translate("music/nowplaying:T_TITLE"),
-					value: `[${track.title}](${track.url})`
+					value: `[${track.title}](${track.url})`,
+					inline: true
 				},
 				{
 					name: interaction.translate("music/nowplaying:T_AUTHOR"),
-					value: track.author || interaction.translate("common:UNKNOWN")
+					value: track.author || interaction.translate("common:UNKNOWN"),
+					inline: true
+				},
+				{ name: "\u200B", value: "\u200B", inline: true },
+				{
+					name: interaction.translate("common:VIEWS"),
+					value: new Intl.NumberFormat(interaction.client.languages.find(language => language.name === interaction.guild.data.language).moment, { notation: "standard" }).format(track.views),
+					inline: true
+				},
+				{
+					name: interaction.translate("music/queue:ADDED"),
+					value: track.requestedBy.toString(),
+					inline: true
 				},
 				{
 					name: interaction.translate("music/nowplaying:T_DURATION"),
