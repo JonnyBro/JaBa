@@ -44,13 +44,34 @@ class Play extends BaseCommand {
 		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.editReply({ content: interaction.translate("music/play:VOICE_CHANNEL_CONNECT") });
 
 		try {
-			var searchResult = await client.player.search(query, {
-				requestedBy: interaction.user,
-				searchEngine: QueryType.AUTO
-			});
+			var searchResult;
+			if (!query.includes("http")) {
+				const search = await playdl.search(query, { limit: 10 });
 
-			if (!searchResult.tracks[0] || !searchResult)
-				return interaction.editReply({ content: interaction.translate("music/play:NO_RESULT", { query, error: "Ничего не найдено" }) });
+				if (search) {
+					const found = search.map(track => new Track(client.player, {
+						title: track.title,
+						duration: Util.buildTimeCode(Util.parseMS(track.durationInSec * 1000)),
+						thumbnail: track.thumbnails[0].url || "https://cdn.discordapp.com/attachments/708642702602010684/1012418217660121089/noimage.png",
+						views: track.views,
+						author: track.channel.name,
+						description: "search",
+						url: track.url,
+						requestedBy: interaction.user,
+						playlist: null,
+						source: "youtube"
+					}));
+
+					searchResult = { playlist: null, tracks: found, searched: true };
+				}
+			} else {
+				searchResult = await client.player.search(query, {
+					requestedBy: interaction.user
+				});
+
+				if (!searchResult.tracks[0] || !searchResult)
+					return interaction.editReply({ content: interaction.translate("music/play:NO_RESULT", { query, error: "Unknown Error" }) });
+			}
 		} catch (error) {
 			console.log(error);
 			return interaction.editReply({
