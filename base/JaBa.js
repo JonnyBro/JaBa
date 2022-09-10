@@ -1,9 +1,9 @@
 const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
+	{ Player } = require("../helpers/Music/dist/index"),
+	{ DiscordTogether } = require("../helpers/discordTogether"),
 	{ GiveawaysManager } = require("discord-giveaways"),
-	Player = require("../helpers/Music/Player"),
 	{ REST } = require("@discordjs/rest"),
-	{ Routes } = require("discord-api-types/v10"),
-	{ DiscordTogether } = require("../helpers/discordTogether");
+	{ Routes } = require("discord-api-types/v10");
 
 const BaseEvent = require("./BaseEvent.js"),
 	BaseCommand = require("./BaseCommand.js"),
@@ -20,7 +20,6 @@ moment.relativeTimeThreshold("h", 60);
 moment.relativeTimeThreshold("d", 24);
 moment.relativeTimeThreshold("M", 12);
 
-// Creates JaBa class
 class JaBa extends Client {
 	constructor(options) {
 		super(options);

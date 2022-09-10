@@ -1,4 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js"),
+	{ QueryType } = require("../../helpers/Music/dist/index");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Play extends BaseCommand {
@@ -43,34 +44,13 @@ class Play extends BaseCommand {
 		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.editReply({ content: interaction.translate("music/play:VOICE_CHANNEL_CONNECT") });
 
 		try {
-			var searchResult;
-			if (!query.includes("http")) {
-				const search = await playdl.search(query, { limit: 10 });
+			var searchResult = await client.player.search(query, {
+				requestedBy: interaction.user,
+				searchEngine: QueryType.AUTO
+			});
 
-				if (search) {
-					const found = search.map(track => new Track(client.player, {
-						title: track.title,
-						duration: Util.buildTimeCode(Util.parseMS(track.durationInSec * 1000)),
-						thumbnail: track.thumbnails[0].url || "https://cdn.discordapp.com/attachments/708642702602010684/1012418217660121089/noimage.png",
-						views: track.views,
-						author: track.channel.name,
-						description: "search",
-						url: track.url,
-						requestedBy: interaction.user,
-						playlist: null,
-						source: "youtube"
-					}));
-
-					searchResult = { playlist: null, tracks: found, searched: true };
-				}
-			} else {
-				searchResult = await client.player.search(query, {
-					requestedBy: interaction.user
-				});
-
-				if (!searchResult.tracks[0] || !searchResult)
-					return interaction.editReply({ content: interaction.translate("music/play:NO_RESULT", { query, error: "Unknown Error" }) });
-			}
+			if (!searchResult.tracks[0] || !searchResult)
+				return interaction.editReply({ content: interaction.translate("music/play:NO_RESULT", { query, error: "Ничего не найдено" }) });
 		} catch (error) {
 			console.log(error);
 			return interaction.editReply({
@@ -81,26 +61,15 @@ class Play extends BaseCommand {
 			});
 		}
 
-		const queue = client.player.getQueue(interaction.guildId) || client.player.createQueue(interaction.guild, {
+		const queue = await client.player.getQueue(interaction.guildId) || client.player.createQueue(interaction.guild, {
 			metadata: { channel: interaction.channel },
+			autoSelfDeaf: true,
 			leaveOnEnd: true,
 			leaveOnStop: true,
 			bufferingTimeout: 1000,
-			disableVolume: false,
-			spotifyBridge: false,
-			/**
-			 *
-			 * @param {import("discord-player").Track} track
-			 * @param {import("discord-player").TrackSource} source
-			 * @param {import("discord-player").Queue} queue
-			 */
-			async onBeforeCreateStream(track, source) {
-				if (source === "youtube" || source === "soundcloud")
-					return (await playdl.stream(track.url, { discordPlayerCompatibility: true })).stream;
-			}
 		});
 
-		if (searchResult.tracks.searched) {
+		if (searchResult.searched) {
 			const row1 = new ActionRowBuilder()
 				.addComponents(
 					new ButtonBuilder()
@@ -162,7 +131,9 @@ class Play extends BaseCommand {
 				}))
 				.setColor(client.config.embed.color)
 				.setDescription(searchResult.tracks.map(track => {
-					const views = new Intl.NumberFormat(interaction.client.languages.find(language => language.name === interaction.guild.data.language).moment, {
+					var views;
+					if (track.raw.live) views = "🔴 LIVE";
+					else views = new Intl.NumberFormat(interaction.client.languages.find(language => language.name === interaction.guild.data.language).moment, {
 						notation: "compact", compactDisplay: "short"
 					}).format(track.views);
 
