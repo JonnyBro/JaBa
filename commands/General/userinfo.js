@@ -91,7 +91,7 @@ class Userinfo extends BaseCommand {
 				text: client.config.embed.footer
 			});
 
-		if (member.presence.activities[0].name === "Custom Status") {
+		if (member.presence.activities[0]?.name === "Custom Status") {
 			embed.addFields([
 				{
 					name: client.customEmojis.games + " " + interaction.translate("common:ACTIVITY"),
@@ -103,7 +103,7 @@ class Userinfo extends BaseCommand {
 			embed.addFields([
 				{
 					name: client.customEmojis.games + " " + interaction.translate("common:ACTIVITY"),
-					value: member.presence.activities[0] ? `${member.presence.activities[0].name}\n${member.presence.activities[0].details}\n${member.presence.activities[0].state}` : interaction.translate("general/userinfo:NO_GAME"),
+					value: member.presence.activities[0] ? `${member.presence.activities[0].name}\n${member.presence.activities[0].details}\n${member.presence.activities[0].state}` : interaction.translate("general/userinfo:NO_ACTIVITY"),
 					inline: true
 				}
 			]);
