@@ -46,7 +46,7 @@ class Warn extends BaseCommand {
 		const modal = new ModalBuilder()
 			.setCustomId("warn_modal")
 			.setTitle(interaction.translate("moderation/warn:MODAL_TITLE", {
-				nickname: member.nick
+				nickname: member.user.tag
 			}));
 
 		const reasonInput = new TextInputBuilder()
