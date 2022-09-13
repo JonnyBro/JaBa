@@ -1,3 +1,7 @@
+### JaBa v4.1.4
+* Исправления
+	* Ошибки в clips, loop, nowplaying и play.
+
 ### JaBa v4.1.3
 * Добавлено
 	* Возможность принудительной очистки транзакций с помощью *transactions clear:True*
