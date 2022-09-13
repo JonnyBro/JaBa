@@ -134,6 +134,9 @@ function getPermName(bitfield = 0) {
 function generateCommandHelp(interaction, command) {
 	const cmd = interaction.client.commands.get(command);
 	if (!cmd) return interaction.error("general/help:NOT_FOUND", { search: command }, { edit: true });
+	const usage = interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`) === "" ?
+		interaction.translate("misc:NO_ARGS")
+		: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`);
 
 	const embed = new EmbedBuilder()
 		.setAuthor({
@@ -148,7 +151,7 @@ function generateCommandHelp(interaction, command) {
 			},
 			{
 				name: interaction.translate("general/help:FIELD_USAGE"),
-				value: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`)
+				value: usage
 			},
 			{
 				name: interaction.translate("general/help:FIELD_EXAMPLES"),
