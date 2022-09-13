@@ -38,10 +38,10 @@ class Play extends BaseCommand {
 		await interaction.deferReply();
 
 		const voice = interaction.member.voice.channel;
-		if (!voice) return interaction.editReply({ content: interaction.translate("music/play:NO_VOICE_CHANNEL") });
+		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { edit: true });
 		const query = interaction.options.getString("query");
 		const perms = voice.permissionsFor(client.user);
-		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.editReply({ content: interaction.translate("music/play:VOICE_CHANNEL_CONNECT") });
+		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.error("music/play:VOICE_CHANNEL_CONNECT", null, { edit: true });
 
 		try {
 			var searchResult = await client.player.search(query, {
@@ -50,7 +50,7 @@ class Play extends BaseCommand {
 			});
 
 			if (!searchResult.tracks[0] || !searchResult)
-				return interaction.editReply({ content: interaction.translate("music/play:NO_RESULT", { query, error: "Скорее всего видео заблокировано по региону" }) });
+				return interaction.error("music/play:NO_RESULT", { query, error: "Скорее всего видео заблокировано по региону" }, { edit: true });
 		} catch (error) {
 			console.log(error);
 			return interaction.editReply({

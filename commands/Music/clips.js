@@ -36,7 +36,12 @@ class Clips extends BaseCommand {
 		fs.readdir("./clips", async function (err, files) {
 			await interaction.deferReply();
 
-			if (err) return console.log("Unable to read directory: " + err);
+			if (err) {
+				interaction.editReply({
+					content: "```js\n" + err + "```"
+				});
+				return console.log("Unable to read directory: " + err);
+			}
 
 			const clips = files.map(file => {
 				const fileName = file.substring(0, file.length - 4);

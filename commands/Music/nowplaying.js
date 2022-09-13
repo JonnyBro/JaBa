@@ -33,8 +33,9 @@ class Nowplaying extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply();
+
 		const queue = client.player.getQueue(interaction.guildId);
-		if (!queue) return interaction.error("music/play:NOT_PLAYING");
+		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { edit: true });
 		const progressBar = queue.createProgressBar();
 		const track = queue.current;
 

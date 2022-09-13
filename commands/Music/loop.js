@@ -35,9 +35,9 @@ class Loop extends BaseCommand {
 		await interaction.deferReply();
 
 		const voice = interaction.member.voice.channel;
-		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { edit: true });
 		const queue = client.player.getQueue(interaction.guildId);
-		if (!queue) return interaction.error("music/play:NOT_PLAYING");
+		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { edit: true });
 
 		const row = new ActionRowBuilder()
 			.addComponents(
