@@ -1,5 +1,5 @@
 const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
-	{ Player } = require("../helpers/Music/dist/index"),
+	{ Player } = require("discord-player-play-dl"),
 	{ DiscordTogether } = require("../helpers/discordTogether"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ REST } = require("@discordjs/rest"),

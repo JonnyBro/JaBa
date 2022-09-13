@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js"),
-	{ QueueRepeatMode } = require("../../helpers/Music/dist/index");
+	{ QueueRepeatMode } = require("discord-player-play-dl");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Queue extends BaseCommand {
@@ -151,7 +151,7 @@ class Queue extends BaseCommand {
 /**
  *
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
- * @param {import("../../helpers/Music/dist/index").Queue} queue
+ * @param {import("discord-player-play-dl").Queue} queue
  * @returns
  */
 function generateQueueEmbeds(interaction, queue) {

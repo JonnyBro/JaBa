@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js"),
-	{ QueueRepeatMode } = require("../../helpers/Music/dist/index");
+	{ QueueRepeatMode } = require("discord-player-play-dl");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Nowplaying extends BaseCommand {

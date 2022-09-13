@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js"),
-	{ QueryType } = require("../../helpers/Music/dist/index");
+	{ QueryType } = require("discord-player-play-dl");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Play extends BaseCommand {

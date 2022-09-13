@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, SelectMenuBuilder } = require("discord.js"),
-	{ QueueRepeatMode } = require("../../helpers/Music/dist/index");
+	{ QueueRepeatMode } = require("discord-player-play-dl");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Loop extends BaseCommand {
