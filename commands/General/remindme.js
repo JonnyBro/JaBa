@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
-	ms = require("ms");
+	ms = require("ms"),
+	moment = require("moment");
 
 class Remindme extends BaseCommand {
 	/**
@@ -20,7 +21,7 @@ class Remindme extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
+			guildOnly: false,
 			ownerOnly: false
 		});
 	}
@@ -38,6 +39,8 @@ class Remindme extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
+		await interaction.deferReply({ ephemeral: true });
+
 		const time = interaction.options.getString("time");
 		const message = interaction.options.getString("message");
 		const dateNow = Date.now();
@@ -54,7 +57,10 @@ class Remindme extends BaseCommand {
 		data.userData.save();
 		client.databaseCache.usersReminds.set(interaction.member.id, data.userData);
 
-		interaction.success("general/remindme:SAVED");
+		interaction.success("general/remindme:SAVED", {
+			message,
+			time: moment(rData.createdAt).locale(interaction.guild.data.language).format("dddd, Do MMMM YYYY, HH:mm:ss")
+		}, { edit: true });
 	}
 }
 

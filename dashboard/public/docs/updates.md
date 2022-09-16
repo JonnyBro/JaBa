@@ -1,3 +1,7 @@
+### JaBa v4.1.5
+* Изменения
+	* Более подробные сообщения в *remindme*.
+
 ### JaBa v4.1.4
 * Исправления
 	* Ошибки в clips, loop, nowplaying и play.
