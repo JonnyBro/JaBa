@@ -35,8 +35,9 @@ class Slots extends BaseCommand {
 	 */
 	async execute(client, interaction, data) {
 		await interaction.deferReply();
+
 		const amount = interaction.options.getInteger("amount");
-		if (amount > data.memberData.money) return interaction.error("economy/slots:NOT_ENOUGH", { money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` });
+		if (amount > data.memberData.money) return interaction.error("economy/slots:NOT_ENOUGH", { money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` }, { edit: true });
 
 		const fruits = ["🍎", "🍐", "🍌", "🍇", "🍉", "🍒", "🍓"];
 
