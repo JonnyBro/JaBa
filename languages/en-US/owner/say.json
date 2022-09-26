@@ -1,5 +1,0 @@
-﻿{
-	"DESCRIPTION": "Send a message on behalf of the bot!",
-	"USAGE": "say [text] ++ (ID/channel-name) ++ (ID/server-name)",
-	"EXAMPLES": "say Hello World!\nsay Hello World! ++ 123456789098765432"
-}

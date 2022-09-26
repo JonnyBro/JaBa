@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Generates a \"challenger\" image",
-	"USAGE": "challenger (@member)",
-	"EXAMPLES": "challenger\nchallenger @Jonny_Bro#4226"
-}

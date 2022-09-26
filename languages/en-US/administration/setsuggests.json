@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Set the suggestions channel!",
-	"USAGE": "setsuggests (#channel)",
-	"EXAMPLES": "setsuggests #suggestions\nsetsuggests",
-	"SUCCESS_ENABLED": "Suggestions will be sent in **{{channel}}**!",
-	"SUCCESS_DISABLED": "Suggestions channel deleted!"
-}

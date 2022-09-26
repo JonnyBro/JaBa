@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Translate your text!",
-	"USAGE": "translate [language] [message]",
-	"EXAMPLES": "translate russian How are you ?",
-	"LIST_SENT": "The languages list has just been sent to you by private messages!",
-	"MISSING_LANGUAGE": "Please enter a language! To display the languages list, type `translate langs-list`!",
-	"INVALID_LANGUAGE": "The language `{{search}}` does not exist! To display the languages list, type `translate langs-list`!",
-	"MISSING_CONTENT": "Please enter a text to be translated!"
-}

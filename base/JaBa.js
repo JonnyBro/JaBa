@@ -90,6 +90,9 @@ class JaBa extends Client {
 		});
 	}
 
+	/**
+	 * Login into bot account, connect to DB and update docs
+	 */
 	async init() {
 		this.login(this.config.token);
 
@@ -107,8 +110,8 @@ class JaBa extends Client {
 	}
 
 	/**
-	 *
-	 * @param {String} dir
+	 * Load commands from directory
+	 * @param {String} dir Directory where's all commands/subdirectories located
 	 * @returns
 	 */
 	async loadCommands(dir) {
@@ -169,9 +172,9 @@ class JaBa extends Client {
 	}
 
 	/**
-	 *
-	 * @param {String} dir
-	 * @param {String} file
+	 * Load single command in directory
+	 * @param {String} dir Directory where command is
+	 * @param {String} file Filename of the command
 	 */
 	async loadCommand(dir, file) {
 		const Command = require(path.join(dir, `${file}.js`));
@@ -196,9 +199,9 @@ class JaBa extends Client {
 	}
 
 	/**
-	 *
-	 * @param {String} dir
-	 * @param {String} name
+	 * Unload command from cache
+	 * @param {String} dir Directory of the command
+	 * @param {String} name Name of the command
 	 */
 	async unloadCommand(dir, name) {
 		delete require.cache[require.resolve(`${dir}${path.sep}${name}.js`)];
@@ -207,8 +210,8 @@ class JaBa extends Client {
 	}
 
 	/**
-	 *
-	 * @param {String} dir
+	 * Load events from directory
+	 * @param {String} dir Directory where's all events/subdirectories located
 	 * @returns
 	 */
 	async loadEvents(dir) {
@@ -231,15 +234,18 @@ class JaBa extends Client {
 		}
 	}
 
+	/**
+	 * Get default language
+	 */
 	get defaultLanguage() {
 		return this.languages.find(language => language.default).name;
 	}
 
 	/**
-	 *
-	 * @param {String} key
-	 * @param {Array} args
-	 * @param {String} locale
+	 * Translate from key to language
+	 * @param {String} key Key
+	 * @param {Array} args Arguments for translation
+	 * @param {String} locale Language
 	 */
 	translate(key, args, locale = this.defaultLanguage) {
 		const language = this.translations.get(locale);
@@ -248,6 +254,13 @@ class JaBa extends Client {
 		return language(key, args);
 	}
 
+	/**
+	 * Returns beautified date
+	 * @param {Date} date Date
+	 * @param {String | null} format Format for moment
+	 * @param {String} locale Language
+	 * @returns {String} Beautified date
+	 */
 	printDate(date, format = "", locale = this.defaultLanguage) {
 		const languageData = this.languages.find(language => language.name === locale || language.aliases.includes(locale));
 		if (format === "" || format === null) format = languageData.defaultMomentFormat;
@@ -257,6 +270,14 @@ class JaBa extends Client {
 			.format(format);
 	}
 
+	/**
+	 * Convert given time
+	 * @param {String} time Time
+	 * @param {Boolean} type Type (To now = true or from now = false)
+	 * @param {Boolean} noPrefix Use prefix?
+	 * @param {String} locale Language
+	 * @returns {String} Time
+	 */
 	convertTime(time, type = false, noPrefix = false, locale = this.defaultLanguage) {
 		const languageData = this.languages.find(language => language.name === locale || language.aliases.includes(locale));
 		const m = moment(time).locale(languageData.moment);
@@ -264,6 +285,14 @@ class JaBa extends Client {
 		return (type ? m.toNow(noPrefix) : m.fromNow(noPrefix));
 	}
 
+	/**
+	 * Get noun for number
+	 * @param {Number} number Number
+	 * @param {String} one String for one
+	 * @param {String} two String for two
+	 * @param {String} five String for five
+	 * @returns
+	 */
 	getNoun(number, one, two, five) {
 		let n = Math.abs(number);
 		n %= 100;
@@ -275,6 +304,12 @@ class JaBa extends Client {
 		return five;
 	}
 
+	/**
+	 * Find or create user in DB
+	 * @param {Array} param0 { id: User ID }
+	 * @param {Boolean} isLean Return JSON instead Mongoose model?
+	 * @returns {import("./User")} Mongoose model or JSON of this user
+	 */
 	async findOrCreateUser({ id: userID }, isLean) {
 		if (this.databaseCache.users.get(userID)) return isLean ? this.databaseCache.users.get(userID).toJSON() : this.databaseCache.users.get(userID);
 		else {
@@ -299,6 +334,12 @@ class JaBa extends Client {
 		}
 	}
 
+	/**
+	 * Find or create member in DB
+	 * @param {Array} param0 { id: Member ID }
+	 * @param {Boolean} isLean Return JSON instead Mongoose model?
+	 * @returns {import("./Member")} Mongoose model or JSON of this member
+	 */
 	async findOrCreateMember({ id: memberID, guildID }, isLean) {
 		if (this.databaseCache.members.get(`${memberID}${guildID}`)) return isLean ? this.databaseCache.members.get(`${memberID}${guildID}`).toJSON() : this.databaseCache.members.get(`${memberID}${guildID}`);
 		else {
@@ -333,6 +374,12 @@ class JaBa extends Client {
 		}
 	}
 
+	/**
+	 * Find or create guild in DB
+	 * @param {Array} param0 { id: Guild ID }
+	 * @param {Boolean} isLean Return JSON instead Mongoose model?
+	 * @returns {import("./Guild")} Mongoose model or JSON of this guild
+	 */
 	async findOrCreateGuild({ id: guildID }, isLean) {
 		if (this.databaseCache.guilds.get(guildID)) return isLean ? this.databaseCache.guilds.get(guildID).toJSON() : this.databaseCache.guilds.get(guildID);
 		else {

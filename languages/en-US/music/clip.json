@@ -1,8 +1,0 @@
-﻿{
-	"DESCRIPTION": "Play clip",
-	"USAGE": "clip [file-name]",
-	"EXAMPLES": "clip haha",
-	"NO_ARG": "Set file name",
-	"NO_FILE": "File {{file}} is missing!",
-	"ACTIVE_QUEUE": "Can't play clip, another queue is active at the moment"
-}

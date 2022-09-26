@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Shows your credits",
-	"USAGE": "money (@member)",
-	"EXAMPLES": "money\nmoney @user#0000",
-	"TITLE": "{{username}}'s money"
-}

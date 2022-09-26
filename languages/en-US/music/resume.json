@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Resume the current song!",
-	"USAGE": "resume",
-	"EXAMPLES": "resume",
-	"SUCCESS": "▶️ Music resumed!"
-}

@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Start activity in voice channel!",
-	"USAGE": "activity (activity)",
-	"EXAMPLES": "activity\nactivity chess",
-	"TITLE": "All available activities",
-	"FOOTER": "JaBa | Discord Together"
-}

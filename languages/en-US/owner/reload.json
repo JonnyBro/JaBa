@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Reload a command!",
-	"USAGE": "reload",
-	"EXAMPLES": "reload",
-	"NOT_FOUND": "`{{search}}` is not an available command!",
-	"SUCCESS": "Command successfully reloaded!"
-}

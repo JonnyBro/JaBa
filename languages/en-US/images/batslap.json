@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Generates a \"batslap\" image",
-	"USAGE": "batslap (@member1) (@member2)",
-	"EXAMPLES": "batslap\nbatslap @Jonny_Bro#4226 @Jonny_Bro#4226"
-}

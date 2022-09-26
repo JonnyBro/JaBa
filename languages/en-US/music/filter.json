@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Enable or disable a filter",
-	"USAGE": "filter [filter]",
-	"EXAMPLES": "filter vaporwave",
-	"MISSING_FILTER": "Please specify a valid filter to enable it! (or send `filters` to get the statuses of the filters)",
-	"UNKNOWN_FILTER": "This filter doesn't exist! Send `filters` to get the list!",
-	"ADDING_FILTER": "I'm adding the filter to the music, please wait...",
-	"REMOVING_FILTER": "I'm removing the filters from music, please wait..."
-}

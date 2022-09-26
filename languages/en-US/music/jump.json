@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Jump to the given track in the queue",
-	"USAGE": "jump [number]",
-	"EXAMPLES": "jump 3",
-	"NO_PREV_SONG": "You can't go back, use `back`!",
-	"SUCCESS": "Playing selected track!"
-}

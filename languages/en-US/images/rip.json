@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Generates a \"rip\" image using Nekobot API",
-	"USAGE": "rip (@member)",
-	"EXAMPLES": "rip\nrip @Jonny_Bro#4226"
-}
