@@ -23,7 +23,7 @@ module.exports.init = async function (client) {
 					client.usersData.find({ birthdate: { $gt: 1 } })
 						.then(async users => {
 							for (const user of users) {
-								if (guild.members.find(m => m.id === user.id)) {
+								if (guild.members.cache.find(m => m.id === user.id)) {
 									const userDate = new Date(user.birthdate);
 									const day = userDate.getDate();
 									const month = userDate.getMonth();
