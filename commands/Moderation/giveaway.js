@@ -17,7 +17,7 @@ class Giveaway extends BaseCommand {
 					.setDescription(client.translate("moderation/giveaway:GIVEAWAY_ID")))
 				.addStringOption(option => option.setName("duration")
 					.setDescription(client.translate("common:DURATION")))
-				.addStringOption(option => option.setName("winners_count")
+				.addIntegerOption(option => option.setName("winners_count")
 					.setDescription(client.translate("moderation/giveaway:WINNERS_COUNT")))
 				.addStringOption(option => option.setName("prize")
 					.setDescription(client.translate("moderation/giveaway:PRIZE")))
@@ -42,19 +42,29 @@ class Giveaway extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		const options = ["create", "reroll", "delete", "end"].map(tag =>
-			JSON.parse(JSON.stringify({
-				label: tag,
-				value: tag
-			}))
-		);
-
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new SelectMenuBuilder()
 					.setCustomId("giveaway_select")
 					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
-					.addOptions(options)
+					.addOptions([
+						{
+							label: interaction.translate("moderation/giveaway:CREATE"),
+							value: "create"
+						},
+						{
+							label: interaction.translate("moderation/giveaway:REROLL"),
+							value: "reroll"
+						},
+						{
+							label: interaction.translate("moderation/giveaway:DELETE"),
+							value: "delete"
+						},
+						{
+							label: interaction.translate("moderation/giveaway:END"),
+							value: "end"
+						}
+					])
 			);
 
 		const msg = await interaction.reply({
@@ -83,13 +93,13 @@ class Giveaway extends BaseCommand {
 				if (!duration) return i.update({ content: interaction.translate("moderation/giveaway:INVALID_CREATE") });
 				if (ms(duration) > ms("10d")) return i.update({ content: interaction.translate("moderation/giveaway:MAX_DURATION") });
 
-				const winnersCount = interaction.options.getString("winners_count");
+				const winnersCount = interaction.options.getInteger("winners_count");
 				if (!winnersCount) return i.update({ content: interaction.translate("moderation/giveaway:INVALID_CREATE") });
-				if (isNaN(winnersCount) || winnersCount > 10 || winnersCount < 1) return i.update({ content: interaction.translate("misc:INVALID_NUMBER_RANGE", { min: 1, max: 10 }) });
+				if (winnersCount > 10 || winnersCount < 1) return i.update({ content: interaction.translate("misc:INVALID_NUMBER_RANGE", { min: 1, max: 10 }) });
 
 				const prize = interaction.options.getString("prize");
 				if (!prize) return i.update({ content: interaction.translate("moderation/giveaway:INVALID_CREATE") });
-				const isdrop = interaction.options.getString("isdrop");
+				const isdrop = interaction.options.getBoolean("isdrop");
 
 				client.giveawaysManager.start(interaction.channel, {
 					duration: ms(duration),
