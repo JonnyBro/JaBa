@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
+
 const asyncForEach = async (collection, callback) => {
 	const allPromises = collection.map(async key => {
 		await callback(key);
