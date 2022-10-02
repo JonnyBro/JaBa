@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Создать напоминание",
-	"USAGE": "[время] [сообщение]",
-	"EXAMPLES": "remindme 12h Использовать команду work\nremindme 5m Достать курицу из морозилки!",
+	"USAGE": "[time] [message]",
+	"EXAMPLES": "remindme time:12h message:Использовать команду work\nremindme time:5m message:Достать курицу из морозилки!",
 	"TIME": "Время (Например: 10s, 5m, 2h, 1d, 3w)",
 	"SAVED": "Напоминание `{{message}}` сохранено **{{time}}**",
 	"TITLE": "Напоминание от JaBa",

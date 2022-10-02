@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Установить дату рождения",
-	"USAGE": "[ДД] [ММ] [ГГГГ]",
-	"EXAMPLES": "birthdate 17 03 2002",
+	"USAGE": "[day] [month] [year]",
+	"EXAMPLES": "birthdate day:17 month:03 year:2000",
 	"DAY": "День",
 	"MONTH": "Месяц",
 	"YEAR": "Год",

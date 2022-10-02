@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
-const BaseCommand = require("../../base/BaseCommand");
+const BaseCommand = require("../../base/BaseCommand"),
+	fetch = require("node-fetch");
 
 class LMGTFY extends BaseCommand {
 	/**
@@ -11,10 +12,12 @@ class LMGTFY extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("lmgtfy")
 				.setDescription(client.translate("fun/lmgtfy:DESCRIPTION"))
-				.addStringOption(option =>
-					option.setName("question")
-						.setDescription(client.translate("fun/8ball:QUESTION"))
-						.setRequired(true)),
+				.addStringOption(option => option.setName("query")
+					.setDescription(client.translate("fun/lmgtfy:QUERY"))
+					.setRequired(true))
+				.addBooleanOption(option => option.setName("short")
+					.setDescription(client.translate("fun/lmgtfy:SHORT"))
+					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
 			guildOnly: true,
@@ -35,12 +38,23 @@ class LMGTFY extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		const question = interaction.options.getString("question").replace(/[' '_]/g, "+");
+		const query = interaction.options.getString("query").replace(/[' '_]/g, "+"),
+			short = interaction.options.getBoolean("short"),
+			url = `https://letmegooglethat.com/?q=${query}`;
 
-		interaction.reply({
-			content: `<https://letmegooglethat.com/?q=${question}>`,
-			ephemeral: true
-		});
+		if (short) {
+			const res = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`).then(res => res.text());
+
+			interaction.reply({
+				content: `<${res}>`,
+				ephemeral: true
+			});
+		} else {
+			interaction.reply({
+				content: `<${url}>`,
+				ephemeral: true
+			});
+		}
 	}
 }
 

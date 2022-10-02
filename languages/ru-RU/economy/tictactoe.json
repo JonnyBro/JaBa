@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Крестики-нолики",
-	"USAGE": "[@пользователь]",
-	"EXAMPLES": "tictactoe  @Jonny_Bro#4226",
+	"USAGE": "[@user]",
+	"EXAMPLES": "tictactoe user:@Jonny_Bro#4226",
 	"BOT_USER": "Вы не можете играть против бота!",
 	"YOURSELF": "Вы не можете играть с самим собой!",
 	"INVITE_USER": "<@{{opponent}}>, вам предложили сыграть в крестики-нолики!",

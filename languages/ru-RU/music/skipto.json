@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Перейти на заданный трек",
-	"USAGE": "[номер]",
-	"EXAMPLES": "skipto 3",
+	"USAGE": "[position]",
+	"EXAMPLES": "skipto position:3",
 	"POSITION": "Номер трека в очереди",
 	"SUCCESS": "Выполнен переход на трек под номером **{{position}}**",
 	"ERROR": "На позиции {{position}} ничего не найдено",

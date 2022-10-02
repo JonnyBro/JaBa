@@ -73,9 +73,8 @@ class Leaderboard extends BaseCommand {
 			let money = "";
 			for (let i = 0; i < membersLeaderboard.length; i++) {
 				const data = membersLeaderboard[i];
-				const user = await client.users.fetch(data.id);
 
-				userNames += `**${i + 1}**. ${user}\n`;
+				userNames += `**${i + 1}**. <@${data.id}>\n`;
 				money += `${data.money}\n`;
 			}
 
@@ -88,7 +87,7 @@ class Leaderboard extends BaseCommand {
 				})
 				.setColor(client.config.embed.color)
 				.addFields({
-					name: interaction.translate("economy/leaderboard:TOP"),
+					name: interaction.translate("common:USER"),
 					value: userNames,
 					inline: true
 				}, {
@@ -119,9 +118,8 @@ class Leaderboard extends BaseCommand {
 			const xp = [];
 			for (let i = 0; i < membersLeaderboard.length; i++) {
 				const data = membersLeaderboard[i];
-				const user = await client.users.fetch(data.id);
 
-				userNames.push(`**${i + 1}**. ${user.tag}`);
+				userNames.push(`**${i + 1}**. <@${data.id}>`);
 				level.push(`${data.level}`);
 				xp.push(`${data.xp} / ${5 * (data.level * data.level) + 80 * data.level + 100}`);
 			}
@@ -136,7 +134,7 @@ class Leaderboard extends BaseCommand {
 				.setColor(client.config.embed.color)
 				.addFields([
 					{
-						name: interaction.translate("economy/leaderboard:TOP"),
+						name: interaction.translate("common:USER"),
 						value: userNames.join("\n"),
 						inline: true
 					},
@@ -172,9 +170,8 @@ class Leaderboard extends BaseCommand {
 			let rep = "";
 			for (let i = 0; i < usersLeaderboard.length; i++) {
 				const data = usersLeaderboard[i];
-				const user = await client.users.fetch(data.id);
 
-				userNames += `**${i + 1}**. ${user}\n`;
+				userNames += `**${i + 1}**. <@${data.id}>\n`;
 				rep += `${data.rep}\n`;
 			}
 
@@ -187,7 +184,7 @@ class Leaderboard extends BaseCommand {
 				})
 				.setColor(client.config.embed.color)
 				.addFields({
-					name: interaction.translate("economy/leaderboard:TOP"),
+					name: interaction.translate("common:USER"),
 					value: userNames,
 					inline: true
 				}, {

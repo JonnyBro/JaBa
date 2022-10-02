@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Включить или отключить сообщения при выходе пользователя с сервера",
-	"USAGE": "(test)",
-	"EXAMPLES": "goodbye\ngoodbye test",
+	"USAGE": "config [state] [#channel] [message] [image] \nИли [test]",
+	"EXAMPLES": "goodbye state:True channel:#welcome Прощай! image:True\ngoodbye test",
 	"TEST": "Проверить",
 	"TEST_SUCCESS": "Тест выполнен...",
 	"CONFIG": "Настроить",

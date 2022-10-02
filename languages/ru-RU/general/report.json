@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Отправить жалобу в специальный канал",
-	"USAGE": "[@пользователь] (причина)",
-	"EXAMPLES": "report @Jonny_Bro#4226 Нарушение правил",
+	"USAGE": "[@user] (message)",
+	"EXAMPLES": "report user:@Jonny_Bro#4226 message:Нарушение правил",
 	"MISSING_CHANNEL": "Канал для жалоб не настроен!",
 	"INVALID_USER": "Вы не можете пожаловаться на себя",
 	"SUCCESS": "Ваша жалоба отправлена в {{channel}}!",
