@@ -46,12 +46,12 @@ class Set extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
+	async execute(client, interaction) {
 		const type = interaction.options.getString("type");
 		const member = interaction.options.getMember("user");
 		if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
 
-		const memberData = member.id === interaction.user.id ? data : await client.findOrCreateMember({
+		const memberData = await client.findOrCreateMember({
 			id: member.id,
 			guildId: interaction.guildId
 		});
