@@ -45,9 +45,9 @@ class Money extends BaseCommand {
 		const member = interaction.options.getMember("user") || interaction.member;
 		if (member.user.bot) return interaction.error("economy/money:BOT_USER");
 
-		const memberData = (member.id === interaction.user.id) ? data.memberData : await client.findOrCreateMember({
+		const memberData = member.id === interaction.user.id ? data.memberData : await client.findOrCreateMember({
 			id: member.id,
-			guildID: interaction.guildId
+			guildId: interaction.guildId
 		});
 
 		const guilds = client.guilds.cache.filter(g => g.members.cache.find(m => m.id === member.id));
@@ -55,7 +55,7 @@ class Money extends BaseCommand {
 		await asyncForEach(guilds, async guild => {
 			const data = await client.findOrCreateMember({
 				id: member.id,
-				guildID: guild.id
+				guildId: guild.id
 			});
 			globalMoney += data.money + data.bankSold;
 		});

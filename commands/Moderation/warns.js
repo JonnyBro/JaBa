@@ -39,7 +39,7 @@ class Warns extends BaseCommand {
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildID: interaction.guildId
+			guildId: interaction.guildId
 		});
 
 		const embed = new EmbedBuilder()

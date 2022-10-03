@@ -25,9 +25,9 @@ module.exports.init = async function (client) {
 			for (const user of res) {
 				client.users.fetch(user.id).then(u => {
 					if (u.username.match(/.*Deleted User.* [A-z0-9]+/g)) {
-						client.databaseCache.users.delete(user.id);
-						client.usersData.deleteOne({ id: user.id });
-						console.log(`Removed from database deleted user - ID: ${u.id} Username: ${u.username}`);
+						client.databaseCache.users.delete(u.id);
+						client.usersData.deleteOne({ id: u.id });
+						client.logger.log(`Removed from database deleted user - ID: ${u.id} Username: ${u.username}`);
 					}
 				});
 			}

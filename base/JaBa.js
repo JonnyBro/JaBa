@@ -111,7 +111,7 @@ class JaBa extends Client {
 
 	/**
 	 * Load commands from directory
-	 * @param {String} dir Directory where's all commands/subdirectories located
+	 * @param {String} dir Directory where's all commands located
 	 * @returns
 	 */
 	async loadCommands(dir) {
@@ -211,7 +211,7 @@ class JaBa extends Client {
 
 	/**
 	 * Load events from directory
-	 * @param {String} dir Directory where's all events/subdirectories located
+	 * @param {String} dir Directory where's all events located
 	 * @returns
 	 */
 	async loadEvents(dir) {
@@ -340,34 +340,34 @@ class JaBa extends Client {
 	 * @param {Boolean} isLean Return JSON instead Mongoose model?
 	 * @returns {import("./Member")} Mongoose model or JSON of this member
 	 */
-	async findOrCreateMember({ id: memberID, guildID }, isLean) {
-		if (this.databaseCache.members.get(`${memberID}${guildID}`)) return isLean ? this.databaseCache.members.get(`${memberID}${guildID}`).toJSON() : this.databaseCache.members.get(`${memberID}${guildID}`);
+	async findOrCreateMember({ id: memberID, guildId }, isLean) {
+		if (this.databaseCache.members.get(`${memberID}${guildId}`)) return isLean ? this.databaseCache.members.get(`${memberID}${guildId}`).toJSON() : this.databaseCache.members.get(`${memberID}${guildId}`);
 		else {
 			let memberData = (isLean ? await this.membersData.findOne({
-				guildID,
+				guildID: guildId,
 				id: memberID
 			}).lean() : await this.membersData.findOne({
-				guildID,
+				guildID: guildId,
 				id: memberID
 			}));
 			if (memberData) {
-				if (!isLean) this.databaseCache.members.set(`${memberID}${guildID}`, memberData);
+				if (!isLean) this.databaseCache.members.set(`${memberID}${guildId}`, memberData);
 
 				return memberData;
 			} else {
 				memberData = new this.membersData({
 					id: memberID,
-					guildID: guildID
+					guildID: guildId
 				});
 				await memberData.save();
 				const guild = await this.findOrCreateGuild({
-					id: guildID
+					id: guildId
 				});
 				if (guild) {
 					guild.members.push(memberData._id);
 					await guild.save();
 				}
-				this.databaseCache.members.set(`${memberID}${guildID}`, memberData);
+				this.databaseCache.members.set(`${memberID}${guildId}`, memberData);
 
 				return isLean ? memberData.toJSON() : memberData;
 			}
@@ -380,24 +380,24 @@ class JaBa extends Client {
 	 * @param {Boolean} isLean Return JSON instead Mongoose model?
 	 * @returns {import("./Guild")} Mongoose model or JSON of this guild
 	 */
-	async findOrCreateGuild({ id: guildID }, isLean) {
-		if (this.databaseCache.guilds.get(guildID)) return isLean ? this.databaseCache.guilds.get(guildID).toJSON() : this.databaseCache.guilds.get(guildID);
+	async findOrCreateGuild({ id: guildId }, isLean) {
+		if (this.databaseCache.guilds.get(guildId)) return isLean ? this.databaseCache.guilds.get(guildId).toJSON() : this.databaseCache.guilds.get(guildId);
 		else {
 			let guildData = (isLean ? await this.guildsData.findOne({
-				id: guildID
+				id: guildId
 			}).populate("members").lean() : await this.guildsData.findOne({
-				id: guildID
+				id: guildId
 			}).populate("members"));
 			if (guildData) {
-				if (!isLean) this.databaseCache.guilds.set(guildID, guildData);
+				if (!isLean) this.databaseCache.guilds.set(guildId, guildData);
 
 				return guildData;
 			} else {
 				guildData = new this.guildsData({
-					id: guildID
+					id: guildId
 				});
 				await guildData.save();
-				this.databaseCache.guilds.set(guildID, guildData);
+				this.databaseCache.guilds.set(guildId, guildData);
 
 				return isLean ? guildData.toJSON() : guildData;
 			}

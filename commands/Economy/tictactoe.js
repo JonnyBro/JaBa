@@ -42,7 +42,7 @@ class TicTacToe extends BaseCommand {
 		}).then(async winner => {
 			const memberData = await client.findOrCreateMember({
 				id: winner.id,
-				guildID: interaction.guildId
+				guildId: interaction.guildId
 			});
 
 			const info = {

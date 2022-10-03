@@ -48,7 +48,7 @@ class Profile extends BaseCommand {
 
 		const memberData = (member.id === interaction.user.id ? data.memberData : await client.findOrCreateMember({
 			id: member.id,
-			guildID: interaction.guildId
+			guildId: interaction.guildId
 		}));
 		const userData = (member.id === interaction.user.id ? data.userData : await client.findOrCreateUser({
 			id: member.id
@@ -60,7 +60,7 @@ class Profile extends BaseCommand {
 		await asyncForEach(guilds, async guild => {
 			const data = await client.findOrCreateMember({
 				id: member.id,
-				guildID: guild.id
+				guildId: guild.id
 			});
 			globalMoney += data.money + data.bankSold;
 		});

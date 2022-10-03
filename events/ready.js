@@ -18,31 +18,24 @@ class Ready extends BaseEvent {
 		let tUsers = client.users.cache.size - hiddenGuild.memberCount;
 		let tServers = client.guilds.cache.size - 1;
 
-		// Logs some informations using logger
 		client.logger.log(`Loaded a total of ${commands.length} command(s).`, "ready");
 		client.logger.log(`${client.user.tag}, ready to serve ${tUsers} users in ${tServers} servers.`, "ready");
 		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"] , permissions: [ PermissionsBitField.Flags.Administrator ] })}`, "ready");
 
-		// Birthday Announce
 		const birthdays = require("../helpers/birthdays");
 		birthdays.init(client);
 
-		// Unmute users
 		const checkUnmutes = require("../helpers/checkUnmutes");
 		checkUnmutes.init(client);
 
-		// Send reminds
 		const checkReminds = require("../helpers/checkReminds");
 		checkReminds.init(client);
 
-		// Clear transactions
 		const cleanup = require("../helpers/cleanup");
 		cleanup.init(client);
 
-		// Start the dashboard
 		if (client.config.dashboard.enabled) client.dashboard.init(client);
 
-		// Update status
 		const version = require("../package.json").version;
 		const status = [
 			{ name: "help", type: ActivityType.Watching },

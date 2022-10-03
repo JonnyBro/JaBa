@@ -1,25 +1,12 @@
 const { Message, CommandInteraction } = require("discord.js");
 
-/**
- *
- * @param {String} key
- * @param {Array} args
- * @returns {String}
- */
 CommandInteraction.prototype.translate = function (key, args) {
 	const language = this.client.translations.get(this.guild ? this.guild.data.language : "ru-RU");
-	if (!language) throw "Message: Invalid language set in data.";
+	if (!language) throw "Interaction: Invalid language set in data.";
 
 	return language(key, args);
 };
 
-/**
- *
- * @param {String} key
- * @param {Array} args
- * @param {Array} options
- * @returns {import("discord.js").BaseCommandInteraction}
- */
 CommandInteraction.prototype.replyT = function (key, args, options = {}) {
 	let string = this.translate(key, args, this.guild ? this.guild.data.language : "ru-RU");
 	if (options.prefixEmoji) string = `${this.client.customEmojis[options.prefixEmoji]} | ${string}`;
@@ -28,26 +15,12 @@ CommandInteraction.prototype.replyT = function (key, args, options = {}) {
 	else return this.reply({ content: string, ephemeral: options.ephemeral || false });
 };
 
-/**
- *
- * @param {String} key
- * @param {Array} args
- * @param {Array} options
- * @returns {import("discord.js").BaseCommandInteraction}
- */
 CommandInteraction.prototype.error = function (key, args, options = {}) {
 	options.prefixEmoji = "error";
 
 	return this.replyT(key, args, options);
 };
 
-/**
- *
- * @param {String} key
- * @param {Array} args
- * @param {Array} options
- * @returns {import("discord.js").BaseCommandInteraction}
- */
 CommandInteraction.prototype.success = function (key, args, options = {}) {
 	options.prefixEmoji = "success";
 
@@ -65,8 +38,8 @@ Message.prototype.replyT = function (key, args, options = {}) {
 	let string = this.translate(key, args, this.guild ? this.guild.data.language : "ru-RU");
 	if (options.prefixEmoji) string = `${this.client.customEmojis[options.prefixEmoji]} | ${string}`;
 
-	if (options.edit) return this.edit({ content: string });
-	else return this.reply({ content: string });
+	if (options.edit) return this.edit({ content: string, allowedMentions: { repliedUser: options.mention || true } });
+	else return this.reply({ content: string, allowedMentions: { repliedUser: options.mention || true } });
 };
 
 Message.prototype.error = function (key, args, options = {}) {

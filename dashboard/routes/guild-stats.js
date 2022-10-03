@@ -14,7 +14,7 @@ router.get("/:serverID", CheckAuth, async (req, res) => {
 		});
 	}
 
-	const memberData = await req.client.findOrCreateMember({ id: req.userInfos.id, guildID: guild.id });
+	const memberData = await req.client.findOrCreateMember({ id: req.userInfos.id, guildId: guild.id });
 
 	// Fetch guild informations
 	const membersData = await req.client.membersData.find({

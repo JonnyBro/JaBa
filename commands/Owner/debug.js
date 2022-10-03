@@ -68,7 +68,7 @@ class Debug extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Array} data
 	 */
-	async execute(client, interaction) {
+	async execute(client, interaction, data) {
 		const command = interaction.options.getSubcommand();
 
 		if (command === "set") {
@@ -78,8 +78,9 @@ class Debug extends BaseCommand {
 			const userData = await client.findOrCreateUser({
 				id: member.id
 			});
-			const memberData = await client.findOrCreateMember({
-				id: member.id
+			const memberData = member.id === interaction.user.id ? data : await client.findOrCreateMember({
+				id: member.id,
+				guildId: interaction.guildId
 			});
 			const int = interaction.options.getInteger("int");
 
@@ -136,8 +137,9 @@ class Debug extends BaseCommand {
 			const userData = await client.findOrCreateUser({
 				id: member.id
 			});
-			const memberData = await client.findOrCreateMember({
-				id: member.id
+			const memberData = member.id === interaction.user.id ? data : await client.findOrCreateMember({
+				id: member.id,
+				guildId: interaction.guildId
 			});
 			const int = interaction.options.getInteger("int");
 

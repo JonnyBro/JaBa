@@ -79,7 +79,7 @@ class Number extends BaseCommand {
 
 					const memberData = await client.findOrCreateMember({
 						id: msg.author.id,
-						guildID: interaction.guildId
+						guildId: interaction.guildId
 					});
 
 					const info = {

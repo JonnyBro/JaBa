@@ -45,7 +45,7 @@ class Rob extends BaseCommand {
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildID: interaction.guildId
+			guildId: interaction.guildId
 		});
 		if (amount > memberData.money) return interaction.error("economy/rob:NOT_ENOUGH_MEMBER", { user: member.toString() });
 		const isInCooldown = memberData.cooldowns.rob || 0;

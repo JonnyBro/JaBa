@@ -33,7 +33,7 @@ class MessageCreate extends BaseEvent {
 		if (message.guild) {
 			const memberData = await client.findOrCreateMember({
 				id: message.author.id,
-				guildID: message.guild.id
+				guildId: message.guild.id
 			});
 			data.memberData = memberData;
 		}
@@ -75,24 +75,37 @@ class MessageCreate extends BaseEvent {
 	}
 }
 
+/**
+ *
+ * @param {import("../base/JaBa")} client
+ * @param {import("discord.js").Message} msg
+ * @param {*} data
+ * @returns
+ */
 async function updateXp(client, msg, data) {
-	const points = parseInt(data.memberData.exp);
-	const level = parseInt(data.memberData.level);
-	const isInCooldown = xpCooldown[msg.author.id];
+	const points = parseInt(data.memberData.exp),
+		level = parseInt(data.memberData.level),
+		isInCooldown = xpCooldown[msg.author.id];
+
 	if (isInCooldown) {
 		if (isInCooldown > Date.now()) return;
 	}
 
-	const toWait = Date.now() + 60000; // 1 min
+	const toWait = Date.now() + (60 * 1000); // 1 min
 	xpCooldown[msg.author.id] = toWait;
 
-	const won = client.functions.randomNum(1, 4);
+	const won = client.functions.randomNum(1, 2);
 	const newXp = parseInt(points + won, 10);
 	const neededXp = 5 * (level * level) + 80 * level + 100;
 
-	if (newXp > neededXp) data.memberData.level = parseInt(level + 1, 10);
+	if (newXp > neededXp) {
+		data.memberData.level = parseInt(level + 1, 10);
+		data.memberData.exp = 0;
+		msg.replyT("misc:LEVEL_UP", {
+			level: data.memberData.level
+		}, { mention: false });
+	} else data.memberData.exp = parseInt(newXp, 10);
 
-	data.memberData.exp = parseInt(newXp, 10);
 	await data.memberData.save();
 }
 

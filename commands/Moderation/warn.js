@@ -40,7 +40,7 @@ class Warn extends BaseCommand {
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildID: interaction.guildId
+			guildId: interaction.guildId
 		});
 
 		const modal = new ModalBuilder()
