@@ -16,7 +16,7 @@ class Help extends BaseCommand {
 						.setDescription(client.translate("owner/reload:COMMAND"))),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
+			guildOnly: false,
 			ownerOnly: false
 		});
 	}
