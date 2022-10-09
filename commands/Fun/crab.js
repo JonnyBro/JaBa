@@ -14,7 +14,7 @@ class Crab extends BaseCommand {
 				.setDescription(client.translate("fun/crab:DESCRIPTION")),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
+			guildOnly: false,
 			ownerOnly: false
 		});
 	}

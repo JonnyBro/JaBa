@@ -13,7 +13,7 @@ class Ping extends BaseCommand {
 				.setDescription(client.translate("general/ping:DESCRIPTION")),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
+			guildOnly: false,
 			ownerOnly: false
 		});
 	}

@@ -14,7 +14,7 @@ class Stats extends BaseCommand {
 				.setDescription(client.translate("general/stats:DESCRIPTION")),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
+			guildOnly: false,
 			ownerOnly: false
 		});
 	}

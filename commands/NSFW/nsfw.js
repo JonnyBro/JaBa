@@ -14,7 +14,7 @@ class NSFW extends BaseCommand {
 				.setDescription(client.translate("nsfw/nsfw:DESCRIPTION")),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
+			guildOnly: false,
 			ownerOnly: false
 		});
 	}

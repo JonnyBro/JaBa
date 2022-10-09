@@ -14,7 +14,7 @@ class Memes extends BaseCommand {
 				.setDescription(client.translate("fun/memes:DESCRIPTION")),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
+			guildOnly: false,
 			ownerOnly: false
 		});
 	}

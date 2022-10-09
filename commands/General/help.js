@@ -151,7 +151,7 @@ function generateCommandHelp(interaction, command) {
 			},
 			{
 				name: interaction.translate("general/help:FIELD_USAGE"),
-				value: usage
+				value: `*${cmd.guildOnly ? interaction.translate("general/help:GUILD_ONLY") : interaction.translate("general/help:NOT_GUILD_ONLY")}*\n\n` + usage
 			},
 			{
 				name: interaction.translate("general/help:FIELD_EXAMPLES"),

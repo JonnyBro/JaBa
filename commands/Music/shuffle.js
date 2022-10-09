@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
-class Avatar extends BaseCommand {
+class Shuffle extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../base/JaBa")} client
@@ -9,13 +9,11 @@ class Avatar extends BaseCommand {
 	constructor(client) {
 		super({
 			command: new SlashCommandBuilder()
-				.setName("avatar")
-				.setDescription(client.translate("general/avatar:DESCRIPTION"))
-				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))),
+				.setName("shuffle")
+				.setDescription(client.translate("music/shuffle:DESCRIPTION")),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: false,
+			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -33,17 +31,14 @@ class Avatar extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		const user = interaction.options.getUser("user") || interaction.user;
-		const avatarURL = user.displayAvatarURL({
-			size: 512
-		});
+		const voice = interaction.member.voice.channel;
+		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { ephemeral: true });
+		const queue = client.player.getQueue(interaction.guildId);
+		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { ephemeral: true });
 
-		interaction.reply({
-			files: [{
-				attachment: avatarURL
-			}]
-		});
+		const shuffled = queue.shuffle();
+		if (shuffled) interaction.success("music/shuffle:SUCCESS");
 	}
 }
 
-module.exports = Avatar;
+module.exports = Shuffle;
