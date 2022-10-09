@@ -53,19 +53,27 @@ class Pay extends BaseCommand {
 			guildId: interaction.guildId
 		});
 
-		const info = {
-			user: member.user.tag,
-			amount: amount,
-			date: Date.now(),
-			type: "send"
-		};
-
-		data.memberData.transactions.push(info);
 		data.memberData.money -= amount;
 		await data.memberData.save();
 
 		memberData.money += amount;
 		memberData.save();
+
+		const info1 = {
+			user: member.user.tag,
+			amount: amount,
+			date: Date.now(),
+			type: "send"
+		};
+		data.memberData.transactions.push(info1);
+
+		const info2 = {
+			user: member.user.tag,
+			amount: amount,
+			date: Date.now(),
+			type: "got"
+		};
+		data.memberData.transactions.push(info2);
 
 		interaction.success("economy/pay:SUCCESS", {
 			user: member.toString(),

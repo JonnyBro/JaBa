@@ -61,7 +61,7 @@ class MessageCreate extends BaseEvent {
 				await data.userData.save();
 				message.replyT("general/afk:DELETED", {
 					username: message.author.username
-				});
+				}, { mention: true });
 			}
 
 			message.mentions.users.forEach(async (u) => {

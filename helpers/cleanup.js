@@ -1,10 +1,26 @@
+// Thanks Stackoverflow <3
+function setDaysTimeout(callback, days) {
+	// 86400 seconds in a day
+	const msInDay = 86400 * 1000;
+
+	let dayCount = 0;
+	const timer = setInterval(function () {
+		dayCount++; // a day has passed
+
+		if (dayCount === days) {
+			clearInterval(timer);
+			callback.apply(this, []);
+		}
+	}, msInDay);
+}
+
 /**
  *
  * @param {import("../base/JaBa")} client
  */
 module.exports.init = async function (client) {
-	setInterval(async () => {
-		const timestamp = Date.now() + (30 * 24 * 60 * 60 * 1000); // 1 month
+	setDaysTimeout(async () => {
+		const timestamp = Date.now() + (29 * 24 * 60 * 60 * 1000); // 29 days
 		const members = client.membersData.find({ transactions: { $gt: [] } });
 
 		for (const member of members) {
@@ -17,10 +33,9 @@ module.exports.init = async function (client) {
 				}
 			}
 		}
-	}, (7 * 24 * 60 * 60 * 1000)); // every 7 days
+	}, 14);
 
-	/*
-	setInterval(async () => {
+	setDaysTimeout(async () => {
 		client.usersData.find({}, function (err, res) {
 			for (const user of res) {
 				client.users.fetch(user.id).then(u => {
@@ -32,6 +47,5 @@ module.exports.init = async function (client) {
 				});
 			}
 		});
-	}, (7 * 24 * 60 * 60 * 1000)); // every 7 days
-	*/
+	}, 30);
 };

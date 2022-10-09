@@ -101,6 +101,8 @@ class Slots extends BaseCommand {
 
 				const toAdd = credits - amount;
 
+				data.memberData.money += toAdd;
+
 				const info = {
 					user: interaction.translate("economy/slots:DESCRIPTION"),
 					amount: toAdd,
@@ -108,7 +110,6 @@ class Slots extends BaseCommand {
 					type: "got"
 				};
 				data.memberData.transactions.push(info);
-				data.memberData.money += toAdd;
 
 				if (!data.userData.achievements.slots.achieved) {
 					data.userData.achievements.slots.progress.now += 1;

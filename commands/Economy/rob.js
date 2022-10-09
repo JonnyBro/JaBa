@@ -48,6 +48,7 @@ class Rob extends BaseCommand {
 			guildId: interaction.guildId
 		});
 		if (amount > memberData.money) return interaction.error("economy/rob:NOT_ENOUGH_MEMBER", { user: member.toString() });
+
 		const isInCooldown = memberData.cooldowns.rob || 0;
 		if (isInCooldown) {
 			if (isInCooldown > Date.now()) return interaction.error("economy/rob:COOLDOWN", { user: member.toString() });

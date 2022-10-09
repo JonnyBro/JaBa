@@ -45,6 +45,9 @@ class TicTacToe extends BaseCommand {
 				guildId: interaction.guildId
 			});
 
+			memberData.money += 100;
+			await memberData.save();
+
 			const info = {
 				user: interaction.translate("economy/transactions:TTT"),
 				amount: 100,
@@ -52,9 +55,6 @@ class TicTacToe extends BaseCommand {
 				type: "got"
 			};
 			memberData.transactions.push(info);
-
-			memberData.money += 100;
-			await memberData.save();
 		});
 	}
 }

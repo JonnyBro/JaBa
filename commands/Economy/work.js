@@ -98,16 +98,16 @@ class Work extends BaseCommand {
 			]);
 		}
 
+		data.memberData.money += won;
+		await data.memberData.save();
+
 		const info = {
 			user: interaction.translate("economy/work:SALARY"),
 			amount: won,
 			date: Date.now(),
 			type: "got"
 		};
-
 		data.memberData.transactions.push(info);
-		data.memberData.money += won;
-		await data.memberData.save();
 
 		const messageOptions = {
 			embeds: [embed]

@@ -82,16 +82,16 @@ class Number extends BaseCommand {
 						guildId: interaction.guildId
 					});
 
+					memberData.money += won;
+
 					const info = {
 						user: interaction.translate("economy/transactions:NUMBERS"),
 						amount: won,
 						date: Date.now(),
 						type: "got"
 					};
-
 					data.memberData.transactions.push(info);
 
-					memberData.money += won;
 					await memberData.save();
 				}
 				collector.stop();
