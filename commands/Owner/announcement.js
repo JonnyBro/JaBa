@@ -19,7 +19,7 @@ class Announcement extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
+			guildOnly: false,
 			ownerOnly: true
 		});
 	}

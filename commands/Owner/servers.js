@@ -13,7 +13,7 @@ class Servers extends BaseCommand {
 				.setDescription(client.translate("owner/servers:DESCRIPTION")),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
+			guildOnly: false,
 			ownerOnly: true
 		});
 	}
