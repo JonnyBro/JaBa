@@ -151,15 +151,15 @@ class JaBa extends Client {
 		}
 
 		try {
-			if (!this.config.production) {
+			if (this.config.production) {
 				await rest.put(
-					Routes.applicationGuildCommands(this.config.user, this.config.support.id), {
+					Routes.applicationCommands(this.config.user), {
 						body: commands
 					}
 				);
 			} else {
 				await rest.put(
-					Routes.applicationCommands(this.config.user), {
+					Routes.applicationGuildCommands(this.config.user, this.config.support.id), {
 						body: commands
 					}
 				);
