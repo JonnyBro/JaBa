@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, ChannelType } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
@@ -14,7 +14,7 @@ class NSFW extends BaseCommand {
 				.setDescription(client.translate("nsfw/nsfw:DESCRIPTION")),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: false,
+			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -34,60 +34,60 @@ class NSFW extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });
 
-		if (interaction.channel.type === ChannelType.DM || interaction.channel.nsfw) {
-			const tags = ["hentai", "ecchi", "lewdanimegirls", "hentaifemdom", "animefeets", "animebooty", "biganimetiddies", "sideoppai", "ahegao"].map(tag =>
-				JSON.parse(JSON.stringify({
-					label: tag,
-					value: tag
-				}))
+		if (!interaction.channel.nsfw) return interaction.replyT("misc:NSFW_COMMAND", null, { ephemeral: true, edit: true });
+
+		const tags = ["hentai", "ecchi", "lewdanimegirls", "hentaifemdom", "animefeets", "animebooty", "biganimetiddies", "sideoppai", "ahegao"].map(tag =>
+			JSON.parse(JSON.stringify({
+				label: tag,
+				value: tag
+			}))
+		);
+
+		const row = new ActionRowBuilder()
+			.addComponents(
+				new SelectMenuBuilder()
+					.setCustomId("nsfw_select")
+					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
+					.addOptions(tags)
 			);
 
-			const row = new ActionRowBuilder()
-				.addComponents(
-					new SelectMenuBuilder()
-						.setCustomId("nsfw_select")
-						.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
-						.addOptions(tags)
-				);
+		await interaction.editReply({
+			content: interaction.translate("common:AVAILABLE_OPTIONS"),
+			ephemeral: true,
+			components: [row]
+		});
 
-			await interaction.editReply({
-				content: interaction.translate("common:AVAILABLE_OPTIONS"),
-				ephemeral: true,
-				components: [row]
-			});
+		const filter = i => i.user.id === interaction.user.id;
+		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (2 * 60 * 1000) });
 
-			const filter = i => i.user.id === interaction.user.id;
-			const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (2 * 60 * 1000) });
+		collector.on("collect", async i => {
+			if (i.isSelectMenu() && i.customId === "nsfw_select") {
+				i.deferUpdate();
 
-			collector.on("collect", async i => {
-				if (i.isSelectMenu() && i.customId === "nsfw_select") {
-					i.deferUpdate();
+				const tag = i?.values[0];
+				const res = await fetch(`https://meme-api.herokuapp.com/gimme/${tag}`).then(response => response.json());
 
-					const tag = i?.values[0];
-					const res = await fetch(`https://meme-api.herokuapp.com/gimme/${tag}`).then(response => response.json());
+				const embed = new EmbedBuilder()
+					.setColor(client.config.embed.color)
+					.setFooter({
+						text: client.config.embed.footer
+					})
+					.setTitle(res.title)
+					.setDescription(`${interaction.translate("fun/memes:SUBREDDIT")}: **${res.subreddit}**\n${interaction.translate("common:AUTHOR")}: **${res.author}**\n${interaction.translate("fun/memes:UPS")}: **${res.ups}**`)
+					.setImage(res.url)
+					.setTimestamp();
 
-					const embed = new EmbedBuilder()
-						.setColor(client.config.embed.color)
-						.setFooter({
-							text: client.config.embed.footer
-						})
-						.setTitle(res.title)
-						.setDescription(`${interaction.translate("fun/memes:SUBREDDIT")}: **${res.subreddit}**\n${interaction.translate("common:AUTHOR")}: **${res.author}**\n${interaction.translate("fun/memes:UPS")}: **${res.ups}**`)
-						.setImage(res.url)
-						.setTimestamp();
-
-					await interaction.editReply({
-						embeds: [embed]
-					});
-				}
-			});
-
-			collector.on("end", () => {
-				return interaction.editReply({
-					components: []
+				await interaction.editReply({
+					embeds: [embed]
 				});
+			}
+		});
+
+		collector.on("end", () => {
+			return interaction.editReply({
+				components: []
 			});
-		} else return interaction.replyT("misc:NSFW_COMMAND", null, { ephemeral: true, edit: true });
+		});
 	}
 }
 
