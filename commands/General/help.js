@@ -50,7 +50,7 @@ class Help extends BaseCommand {
 
 		commands.forEach(c => {
 			if (!categories.includes(c.category)) {
-				if (c.category === "Owner" && interaction.member.id !== client.config.owner.id) return;
+				if (c.category === "Owner" && interaction.user.id !== client.config.owner.id) return;
 				categories.push(c.category);
 			}
 		});
