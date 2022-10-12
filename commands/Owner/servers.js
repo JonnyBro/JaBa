@@ -151,7 +151,7 @@ function generateServersEmbeds(interaction, servers) {
 	let k = 10;
 
 	for (let i = 0; i < servers.size; i += 10) {
-		const current = servers.map(g => g).slice(i, k).sort((a, b) => b.memberCount - a.memberCount);
+		const current = servers.sort((a, b) => b.memberCount - a.memberCount).map(g => g).slice(i, k);
 		let j = i;
 		k += 10;
 
@@ -170,13 +170,5 @@ function generateServersEmbeds(interaction, servers) {
 
 	return embeds;
 }
-
-// `${interaction.translate("common:SERVERS")}: ${interaction.client.guilds.cache.size}\n\n` +
-// 	interaction.client.guilds.cache
-// 		.sort((a, b) => b.memberCount - a.memberCount)
-// 		.map(g => g)
-// 		.map((g, i) => `${i + 1}. ${g.name} | ${g.memberCount} ${interaction.client.getNoun(g.memberCount, interaction.translate("misc:NOUNS:MEMBERS:1"), interaction.translate("misc:NOUNS:MEMBERS:2"), interaction.translate("misc:NOUNS:MEMBERS:5"))}`)
-// 		.slice(i, k)
-// 		.join("\n")
 
 module.exports = Servers;
