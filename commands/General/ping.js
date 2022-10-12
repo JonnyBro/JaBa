@@ -10,10 +10,10 @@ class Ping extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("ping")
-				.setDescription(client.translate("general/ping:DESCRIPTION")),
+				.setDescription(client.translate("general/ping:DESCRIPTION"))
+				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: false,
 			ownerOnly: false
 		});
 	}

@@ -11,6 +11,7 @@ class Setlang extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("setlang")
 				.setDescription(client.translate("administration/setlang:DESCRIPTION"))
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addStringOption(option => option.setName("language")
 					.setDescription(client.translate("common:LANGUAGE"))
@@ -21,7 +22,7 @@ class Setlang extends BaseCommand {
 					)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**

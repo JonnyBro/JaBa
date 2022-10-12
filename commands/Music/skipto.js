@@ -11,12 +11,12 @@ class Skipto extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("skipto")
 				.setDescription(client.translate("music/skipto:DESCRIPTION"))
+				.setDMPermission(false)
 				.addIntegerOption(option => option.setName("position")
 					.setDescription(client.translate("music/skipto:POSITION"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

@@ -19,11 +19,11 @@ class Profile extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("profile")
 				.setDescription(client.translate("economy/profile:DESCRIPTION"))
+				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

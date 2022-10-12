@@ -12,12 +12,12 @@ class Whois extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("whois")
 				.setDescription(client.translate("general/whois:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option => option.setName("ip")
 					.setDescription(client.translate("common:IP"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: false,
 			ownerOnly: false
 		});
 	}

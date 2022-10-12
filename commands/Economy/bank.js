@@ -11,6 +11,7 @@ class Bank extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("bank")
 				.setDescription(client.translate("economy/bank:DESCRIPTION"))
+				.setDMPermission(false)
 				.addStringOption(option => option.setName("option")
 					.setDescription(client.translate("economy/bank:OPTION"))
 					.setRequired(true)
@@ -23,7 +24,6 @@ class Bank extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

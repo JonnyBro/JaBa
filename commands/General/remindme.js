@@ -13,6 +13,7 @@ class Remindme extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("remindme")
 				.setDescription(client.translate("general/remindme:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option => option.setName("time")
 					.setDescription(client.translate("owner/remindme:TIME"))
 					.setRequired(true))
@@ -21,7 +22,6 @@ class Remindme extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: false,
 			ownerOnly: false
 		});
 	}

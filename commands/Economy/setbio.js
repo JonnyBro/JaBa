@@ -11,12 +11,12 @@ class Setbio extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("setbio")
 				.setDescription(client.translate("economy/setbio:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option => option.setName("text")
 					.setDescription(client.translate("economy/profile:BIO"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

@@ -11,10 +11,10 @@ class Nowplaying extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("nowplaying")
-				.setDescription(client.translate("music/nowplaying:DESCRIPTION")),
+				.setDescription(client.translate("music/nowplaying:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

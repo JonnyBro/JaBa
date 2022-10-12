@@ -11,12 +11,12 @@ class Emoji extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("emoji")
 				.setDescription(client.translate("general/emoji:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option => option.setName("emoji")
 					.setDescription(client.translate("common:EMOJI"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: false,
 			ownerOnly: false
 		});
 	}

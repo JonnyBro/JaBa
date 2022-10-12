@@ -11,6 +11,7 @@ class Say extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("say")
 				.setDescription(client.translate("owner/say:DESCRIPTION"))
+				.setDMPermission(false)
 				.addStringOption(option => option.setName("message")
 					.setDescription(client.translate("common:MESSAGE"))
 					.setRequired(true))
@@ -18,7 +19,6 @@ class Say extends BaseCommand {
 					.setDescription(client.translate("common:CHANNEL"))),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: true
 		});
 	}

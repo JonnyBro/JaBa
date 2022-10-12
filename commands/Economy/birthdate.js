@@ -11,6 +11,7 @@ class Birthdate extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("birthdate")
 				.setDescription(client.translate("economy/birthdate:DESCRIPTION"))
+				.setDMPermission(false)
 				.addIntegerOption(option => option.setName("day")
 					.setDescription(client.translate("economy/birthdate:DAY"))
 					.setRequired(true))
@@ -36,7 +37,6 @@ class Birthdate extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

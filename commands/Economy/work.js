@@ -10,10 +10,10 @@ class Work extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("work")
-				.setDescription(client.translate("economy/work:DESCRIPTION")),
+				.setDescription(client.translate("economy/work:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

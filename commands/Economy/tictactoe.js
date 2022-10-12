@@ -12,12 +12,12 @@ class TicTacToe extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("tictactoe")
 				.setDescription(client.translate("economy/tictactoe:DESCRIPTION"))
+				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

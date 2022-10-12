@@ -10,10 +10,10 @@ class Serverinfo extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("serverinfo")
-				.setDescription(client.translate("general/serverinfo:DESCRIPTION")),
+				.setDescription(client.translate("general/serverinfo:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

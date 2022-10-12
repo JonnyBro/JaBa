@@ -11,10 +11,10 @@ class Number extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("number")
-				.setDescription(client.translate("economy/number:DESCRIPTION")),
+				.setDescription(client.translate("economy/number:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

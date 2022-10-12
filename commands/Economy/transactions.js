@@ -11,11 +11,11 @@ class Transactions extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("transactions")
 				.setDescription(client.translate("economy/transactions:DESCRIPTION"))
+				.setDMPermission(false)
 				.addBooleanOption(option => option.setName("clear")
 					.setDescription(client.translate("economy/transactions:CLEAR"))),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

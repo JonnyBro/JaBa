@@ -11,13 +11,14 @@ class Stealemoji extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("stealemoji")
 				.setDescription(client.translate("administration/stealemoji:DESCRIPTION"))
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addStringOption(option => option.setName("emoji")
 					.setDescription(client.translate("common:EMOJI"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**

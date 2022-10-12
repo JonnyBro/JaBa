@@ -11,10 +11,10 @@ class Memes extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("memes")
-				.setDescription(client.translate("fun/memes:DESCRIPTION")),
+				.setDescription(client.translate("fun/memes:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: false,
 			ownerOnly: false
 		});
 	}
@@ -49,13 +49,14 @@ class Memes extends BaseCommand {
 					.addOptions(tags)
 			);
 
-		await interaction.editReply({
+		const msg = await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
+			fetchReply: true,
 			components: [row]
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (2 * 60 * 1000) });
+		const collector = msg.createMessageComponentCollector({ filter, idle: (2 * 60 * 1000) });
 
 		collector.on("collect", async i => {
 			if (i.isSelectMenu() && i.customId === "memes_select") {

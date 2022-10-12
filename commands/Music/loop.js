@@ -12,6 +12,7 @@ class Loop extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("loop")
 				.setDescription(client.translate("music/loop:DESCRIPTION"))
+				.setDMPermission(false)
 				.addStringOption(option => option.setName("option")
 					.setDescription(client.translate("economy/bank:OPTION"))
 					.setRequired(true)
@@ -23,7 +24,6 @@ class Loop extends BaseCommand {
 					)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

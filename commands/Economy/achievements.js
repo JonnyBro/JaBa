@@ -11,11 +11,11 @@ class Achievements extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("achievements")
 				.setDescription(client.translate("economy/achievements:DESCRIPTION"))
+				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

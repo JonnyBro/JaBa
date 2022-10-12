@@ -12,10 +12,10 @@ class Clips extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("clips")
-				.setDescription(client.translate("music/clips:DESCRIPTION")),
+				.setDescription(client.translate("music/clips:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

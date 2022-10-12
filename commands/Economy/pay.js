@@ -11,6 +11,7 @@ class Pay extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("pay")
 				.setDescription(client.translate("economy/pay:DESCRIPTION"))
+				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
 					.setRequired(true))
@@ -19,7 +20,6 @@ class Pay extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

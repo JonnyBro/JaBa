@@ -11,12 +11,12 @@ class Help extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("help")
 				.setDescription(client.translate("general/help:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option =>
 					option.setName("command")
 						.setDescription(client.translate("owner/reload:COMMAND"))),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: false,
 			ownerOnly: false
 		});
 	}

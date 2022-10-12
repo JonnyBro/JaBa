@@ -11,10 +11,11 @@ class Config extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("config")
 				.setDescription(client.translate("administration/config:DESCRIPTION"))
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**

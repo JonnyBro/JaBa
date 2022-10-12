@@ -11,10 +11,10 @@ class Queue extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("queue")
-				.setDescription(client.translate("music/queue:DESCRIPTION")),
+				.setDescription(client.translate("music/queue:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

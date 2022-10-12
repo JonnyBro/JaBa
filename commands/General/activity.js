@@ -11,10 +11,10 @@ class Activity extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("activity")
-				.setDescription(client.translate("general/activity:DESCRIPTION")),
+				.setDescription(client.translate("general/activity:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

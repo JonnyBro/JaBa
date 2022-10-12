@@ -12,12 +12,12 @@ class Shorturl extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("shorturl")
 				.setDescription(client.translate("general/shorturl:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option => option.setName("url")
 					.setDescription(client.translate("general/shorturl:URL"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: false,
 			ownerOnly: false
 		});
 	}

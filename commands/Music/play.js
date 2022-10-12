@@ -12,12 +12,12 @@ class Play extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("play")
 				.setDescription(client.translate("music/play:DESCRIPTION"))
+				.setDMPermission(false)
 				.addStringOption(option => option.setName("query")
 					.setDescription(client.translate("music/play:QUERY"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

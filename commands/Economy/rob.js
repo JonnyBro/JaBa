@@ -11,6 +11,7 @@ class Rob extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("rob")
 				.setDescription(client.translate("economy/rob:DESCRIPTION"))
+				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
 					.setRequired(true))
@@ -19,7 +20,6 @@ class Rob extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

@@ -10,10 +10,10 @@ class Stop extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("stop")
-				.setDescription(client.translate("music/stop:DESCRIPTION")),
+				.setDescription(client.translate("music/stop:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

@@ -11,6 +11,7 @@ class Goodbye extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("goodbye")
 				.setDescription(client.translate("administration/goodbye:DESCRIPTION"))
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addSubcommand(subcommand => subcommand.setName("test")
 					.setDescription(client.translate("administration/goodbye:TEST"))
@@ -29,7 +30,7 @@ class Goodbye extends BaseCommand {
 				),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**

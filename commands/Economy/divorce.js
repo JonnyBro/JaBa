@@ -10,10 +10,10 @@ class Divorce extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("divorce")
-				.setDescription(client.translate("economy/divorce:DESCRIPTION")),
+				.setDescription(client.translate("economy/divorce:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

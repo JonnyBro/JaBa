@@ -10,10 +10,10 @@ class Shuffle extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("shuffle")
-				.setDescription(client.translate("music/shuffle:DESCRIPTION")),
+				.setDescription(client.translate("music/shuffle:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

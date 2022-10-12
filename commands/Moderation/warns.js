@@ -11,13 +11,14 @@ class Warns extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("warns")
 				.setDescription(client.translate("moderation/warns:DESCRIPTION"))
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**

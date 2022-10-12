@@ -10,10 +10,10 @@ class Staff extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("staff")
-				.setDescription(client.translate("general/staff:DESCRIPTION")),
+				.setDescription(client.translate("general/staff:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

@@ -19,6 +19,7 @@ class Leaderboard extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("leaderboard")
 				.setDescription(client.translate("economy/leaderboard:DESCRIPTION"))
+				.setDMPermission(false)
 				.addStringOption(option => option.setName("type")
 					.setDescription(client.translate("owner/debug:TYPE"))
 					.setRequired(true)
@@ -29,7 +30,6 @@ class Leaderboard extends BaseCommand {
 					)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

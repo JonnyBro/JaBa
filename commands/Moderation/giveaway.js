@@ -12,6 +12,7 @@ class Giveaway extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("giveaway")
 				.setDescription(client.translate("moderation/giveaway:DESCRIPTION"))
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
 				.addSubcommand(subcommand => subcommand.setName("create")
 					.setDescription(client.translate("moderation/giveaway:CREATE"))
@@ -48,7 +49,7 @@ class Giveaway extends BaseCommand {
 				),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**

@@ -11,10 +11,11 @@ class Warn extends BaseCommand {
 			command: new ContextMenuCommandBuilder()
 				.setName("warn")
 				.setType(ApplicationCommandType.User)
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**

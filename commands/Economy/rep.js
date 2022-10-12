@@ -11,12 +11,12 @@ class Rep extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("rep")
 				.setDescription(client.translate("economy/rep:DESCRIPTION"))
+				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

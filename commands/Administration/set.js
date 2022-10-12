@@ -11,6 +11,7 @@ class Set extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("set")
 				.setDescription(client.translate("administration/set:DESCRIPTION"))
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addStringOption(option => option.setName("type")
 					.setDescription(client.translate("owner/debug:TYPE"))
@@ -29,7 +30,6 @@ class Set extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

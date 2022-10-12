@@ -11,11 +11,11 @@ class Userinfo extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("userinfo")
 				.setDescription(client.translate("general/userinfo:DESCRIPTION"))
+				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

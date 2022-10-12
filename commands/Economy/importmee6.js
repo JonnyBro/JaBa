@@ -11,10 +11,10 @@ class ImportMee6 extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("importmee6")
-				.setDescription(client.translate("economy/importmee6:DESCRIPTION")),
+				.setDescription(client.translate("economy/importmee6:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

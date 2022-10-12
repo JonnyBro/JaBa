@@ -12,6 +12,7 @@ class LMGTFY extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("lmgtfy")
 				.setDescription(client.translate("fun/lmgtfy:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option => option.setName("query")
 					.setDescription(client.translate("fun/lmgtfy:QUERY"))
 					.setRequired(true))
@@ -20,7 +21,6 @@ class LMGTFY extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: false,
 			ownerOnly: false
 		});
 	}

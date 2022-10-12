@@ -11,12 +11,12 @@ class Eightball extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("8ball")
 				.setDescription(client.translate("fun/8ball:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option => option.setName("question")
 					.setDescription(client.translate("fun/8ball:QUESTION"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

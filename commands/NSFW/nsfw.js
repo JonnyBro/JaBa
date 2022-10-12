@@ -11,10 +11,10 @@ class NSFW extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("nsfw")
-				.setDescription(client.translate("nsfw/nsfw:DESCRIPTION")),
+				.setDescription(client.translate("nsfw/nsfw:DESCRIPTION"))
+				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -34,7 +34,7 @@ class NSFW extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });
 
-		if (!interaction.channel.nsfw) return interaction.replyT("misc:NSFW_COMMAND", null, { ephemeral: true, edit: true });
+		if ((interaction.guildId && !interaction.channel.nsfw)) return interaction.replyT("misc:NSFW_COMMAND", null, { ephemeral: true, edit: true });
 
 		const tags = ["hentai", "ecchi", "lewdanimegirls", "hentaifemdom", "animefeets", "animebooty", "biganimetiddies", "sideoppai", "ahegao"].map(tag =>
 			JSON.parse(JSON.stringify({
@@ -51,14 +51,15 @@ class NSFW extends BaseCommand {
 					.addOptions(tags)
 			);
 
-		await interaction.editReply({
+		const msg = await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
 			ephemeral: true,
+			fetchReply: true,
 			components: [row]
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (2 * 60 * 1000) });
+		const collector = msg.createMessageComponentCollector({ filter, idle: (2 * 60 * 1000) });
 
 		collector.on("collect", async i => {
 			if (i.isSelectMenu() && i.customId === "nsfw_select") {

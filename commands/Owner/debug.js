@@ -11,6 +11,7 @@ class Debug extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("debug")
 				.setDescription(client.translate("owner/debug:DESCRIPTION"))
+				.setDMPermission(false)
 				.addSubcommand(subcommand => subcommand.setName("set")
 					.setDescription(client.translate("owner/debug:SET"))
 					.addStringOption(option => option.setName("type")
@@ -51,7 +52,6 @@ class Debug extends BaseCommand {
 				),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: true
 		});
 	}

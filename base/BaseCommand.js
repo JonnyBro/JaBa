@@ -14,10 +14,6 @@ class BaseCommand {
 		/**
 		 * @type {Boolean}
 		 */
-		this.guildOnly = (options.guildOnly === true ? true : false) || false;
-		/**
-		 * @type {Boolean}
-		 */
 		this.ownerOnly = (options.ownerOnly === true ? true : false) || false;
 		this.dirname = options.dirname || false;
 		/**

@@ -12,12 +12,12 @@ class Minecraft extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("minecraft")
 				.setDescription(client.translate("general/minecraft:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option => option.setName("ip")
 					.setDescription(client.translate("common:IP"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: false,
 			ownerOnly: false
 		});
 	}

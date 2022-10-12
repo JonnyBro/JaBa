@@ -11,12 +11,12 @@ class Slots extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("slots")
 				.setDescription(client.translate("economy/slots:DESCRIPTION"))
+				.setDMPermission(false)
 				.addIntegerOption(option => option.setName("amount")
 					.setDescription(client.translate("common:INT"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
