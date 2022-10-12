@@ -70,13 +70,14 @@ class Help extends BaseCommand {
 					.addOptions(categoriesRows)
 			);
 
-		await interaction.editReply({
+		const msg = await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
+			fetchReply: true,
 			components: [row]
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (15 * 1000) });
+		const collector = msg.createMessageComponentCollector({ filter, idle: (15 * 1000) });
 
 		collector.on("collect", async i => {
 			if (i.isSelectMenu() && (i.customId === "help_category_select" || i.customId === "help_commands_select")) {
