@@ -1,5 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js"),
-	{ QueryType } = require("discord-player-play-dl");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Play extends BaseCommand {
@@ -45,8 +44,7 @@ class Play extends BaseCommand {
 
 		try {
 			var searchResult = await client.player.search(query, {
-				requestedBy: interaction.user,
-				searchEngine: QueryType.AUTO
+				requestedBy: interaction.user
 			});
 
 			if (!searchResult.tracks[0] || !searchResult)
@@ -194,7 +192,7 @@ class Play extends BaseCommand {
 							components: [row1, row2, row3]
 						});
 
-						collector.end();
+						collector.stop();
 						return;
 					}
 				}
