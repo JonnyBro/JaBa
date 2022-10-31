@@ -46,15 +46,13 @@ class JaBa extends Client {
 
 		this.discordTogether = new DiscordTogether(this);
 
-		playdl.getFreeClientID().then(clientID => {
-			playdl.setToken({
-				soundcloud: {
-					client_id: clientID
-				}
-			});
-		});
-
 		this.player = new Player(this);
+
+		playdl.getFreeClientID().then(id => playdl.setToken({
+			soundcloud: {
+				client_id: id
+			}
+		}));
 
 		this.player.on("trackStart", async (queue, track) => {
 			const m = await queue.metadata.channel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language) });
