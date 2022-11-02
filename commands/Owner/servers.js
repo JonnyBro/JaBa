@@ -56,15 +56,14 @@ class Servers extends BaseCommand {
 					.setEmoji("⏹️"),
 			);
 
-		const msg = await interaction.editReply({
+		await interaction.editReply({
 			content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
-			fetchReply: true,
 			embeds: [embeds[currentPage]],
 			components: [row]
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = msg.createMessageComponentCollector({ filter, idle: (20 * 1000) });
+		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (20 * 1000) });
 
 		collector.on("collect", async i => {
 			if (i.isButton()) {
@@ -143,7 +142,7 @@ class Servers extends BaseCommand {
 /**
  *
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
- * @param {*} servers
+ * @param {Array} servers
  * @returns
  */
 function generateServersEmbeds(interaction, servers) {
