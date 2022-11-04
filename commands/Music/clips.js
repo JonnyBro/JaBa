@@ -110,7 +110,7 @@ class Clips extends BaseCommand {
 							i.deferUpdate();
 
 							const msg = await interaction.followUp({
-								content: interaction.translate("music/queue:PAGE_TO_JUMP", {
+								content: interaction.translate("misc:JUMP_TO_PAGE", {
 									length: embeds.length
 								}),
 								fetchReply: true

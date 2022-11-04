@@ -102,7 +102,7 @@ class Queue extends BaseCommand {
 					if (embeds != generateQueueEmbeds(interaction, queue)) embeds = generateQueueEmbeds(interaction, queue);
 
 					const msg = await interaction.followUp({
-						content: interaction.translate("music/queue:PAGE_TO_JUMP", {
+						content: interaction.translate("misc:JUMP_TO_PAGE", {
 							length: embeds.length
 						}),
 						fetchReply: true
