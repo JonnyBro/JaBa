@@ -51,7 +51,7 @@ class Goodbye extends BaseCommand {
 
 		if (command === "test") {
 			client.emit("guildMemberRemove", interaction.member);
-			return interaction.success("administration/goodbye:TEST_SUCCESS");
+			return interaction.success("administration/goodbye:TEST_SUCCESS", null, { ephemeral: true });
 		} else {
 			const state = interaction.options.getBoolean("state");
 
@@ -82,7 +82,7 @@ class Goodbye extends BaseCommand {
 
 				interaction.success("administration/goodbye:ENABLED", {
 					channel: `<#${data.guildData.plugins.goodbye.channel}>`
-				});
+				}, { ephemeral: true });
 			}
 		}
 	}

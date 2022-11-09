@@ -51,7 +51,7 @@ class Welcome extends BaseCommand {
 
 		if (command === "test") {
 			client.emit("guildMemberAdd", interaction.member);
-			return interaction.success("administration/goodbye:TEST_SUCCESS");
+			return interaction.success("administration/goodbye:TEST_SUCCESS", null, { ephemeral: true });
 		} else {
 			const state = interaction.options.getBoolean("state");
 
@@ -82,7 +82,7 @@ class Welcome extends BaseCommand {
 
 				interaction.success("administration/welcome:ENABLED", {
 					channel: `<#${data.guildData.plugins.welcome.channel}>`
-				});
+				}, { ephemeral: true });
 			}
 		}
 	}
