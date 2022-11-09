@@ -1,13 +1,13 @@
-const { Message, CommandInteraction } = require("discord.js");
+const { Message, BaseInteraction } = require("discord.js");
 
-CommandInteraction.prototype.translate = function (key, args) {
+BaseInteraction.prototype.translate = function (key, args) {
 	const language = this.client.translations.get(this.guild.data ? this.guild.data.language ? this.guild.data.language : "ru-RU" : "ru-RU");
 	if (!language) throw "Interaction: Invalid language set in data.";
 
 	return language(key, args);
 };
 
-CommandInteraction.prototype.replyT = function (key, args, options = {}) {
+BaseInteraction.prototype.replyT = function (key, args, options = {}) {
 	let string = this.translate(key, args, this.guild.data ? this.guild.data.language ? this.guild.data.language : "ru-RU" : "ru-RU");
 	if (options.prefixEmoji) string = `${this.client.customEmojis[options.prefixEmoji]} | ${string}`;
 
@@ -15,13 +15,13 @@ CommandInteraction.prototype.replyT = function (key, args, options = {}) {
 	else return this.reply({ content: string, ephemeral: options.ephemeral || false });
 };
 
-CommandInteraction.prototype.error = function (key, args, options = {}) {
+BaseInteraction.prototype.error = function (key, args, options = {}) {
 	options.prefixEmoji = "error";
 
 	return this.replyT(key, args, options);
 };
 
-CommandInteraction.prototype.success = function (key, args, options = {}) {
+BaseInteraction.prototype.success = function (key, args, options = {}) {
 	options.prefixEmoji = "success";
 
 	return this.replyT(key, args, options);
