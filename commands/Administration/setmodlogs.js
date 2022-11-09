@@ -12,7 +12,7 @@ class Setmodlogs extends BaseCommand {
 				.setName("setmodlogs")
 				.setDescription(client.translate("administration/setmodlogs:DESCRIPTION"))
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addBooleanOption(option => option.setName("state")
 					.setDescription(client.translate("common:STATE"))
 					.setRequired(true))

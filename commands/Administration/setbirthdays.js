@@ -12,7 +12,7 @@ class Setbirthdays extends BaseCommand {
 				.setName("setbirthdays")
 				.setDescription(client.translate("administration/setbirthdays:DESCRIPTION"))
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addBooleanOption(option => option.setName("state")
 					.setDescription(client.translate("common:STATE"))
 					.setRequired(true))

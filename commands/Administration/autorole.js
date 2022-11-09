@@ -12,7 +12,7 @@ class Autorole extends BaseCommand {
 				.setName("autorole")
 				.setDescription(client.translate("administration/autorole:DESCRIPTION"))
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addBooleanOption(option => option.setName("state")
 					.setDescription(client.translate("common:STATE"))
 					.setRequired(true))

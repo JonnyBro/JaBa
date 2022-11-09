@@ -12,7 +12,7 @@ class Setreports extends BaseCommand {
 				.setName("setreports")
 				.setDescription(client.translate("administration/setreports:DESCRIPTION"))
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addBooleanOption(option => option.setName("state")
 					.setDescription(client.translate("common:STATE"))
 					.setRequired(true))
