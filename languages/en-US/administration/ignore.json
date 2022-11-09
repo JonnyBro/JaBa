@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Toggle commands in a channel",
-	"USAGE": "ignore [channel]",
-	"EXAMPLES": "ignore #channel",
-	"ALLOWED": "Commands are now allowed in {{channel}}!",
-	"IGNORED": "Commands are now forbidden in {{channel}}!"
-}

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js"),
-	{ QueueRepeatMode } = require("../../helpers/Music/dist/index");
+	{ QueueRepeatMode } = require("discord-player-play-dl");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Nowplaying extends BaseCommand {
@@ -11,10 +11,10 @@ class Nowplaying extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("nowplaying")
-				.setDescription(client.translate("music/nowplaying:DESCRIPTION")),
+				.setDescription(client.translate("music/nowplaying:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -33,8 +33,9 @@ class Nowplaying extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply();
+
 		const queue = client.player.getQueue(interaction.guildId);
-		if (!queue) return interaction.error("music/play:NOT_PLAYING");
+		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { edit: true });
 		const progressBar = queue.createProgressBar();
 		const track = queue.current;
 

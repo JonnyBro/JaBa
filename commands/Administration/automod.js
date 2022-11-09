@@ -11,6 +11,7 @@ class Automod extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("automod")
 				.setDescription(client.translate("administration/automod:DESCRIPTION"))
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addBooleanOption(option => option.setName("state")
 					.setDescription(client.translate("common:STATE"))
@@ -20,7 +21,7 @@ class Automod extends BaseCommand {
 					.addChannelTypes(ChannelType.GuildText)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**

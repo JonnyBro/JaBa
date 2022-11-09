@@ -11,6 +11,7 @@ class Welcome extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("welcome")
 				.setDescription(client.translate("administration/welcome:DESCRIPTION"))
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addSubcommand(subcommand => subcommand.setName("test")
 					.setDescription(client.translate("administration/goodbye:TEST"))
@@ -29,7 +30,7 @@ class Welcome extends BaseCommand {
 				),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**

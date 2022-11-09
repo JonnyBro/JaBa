@@ -11,13 +11,14 @@ class Poll extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("poll")
 				.setDescription(client.translate("moderation/poll:DESCRIPTION"))
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
 				.addStringOption(option => option.setName("question")
 					.setDescription(client.translate("moderation/poll:QUESTION"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**

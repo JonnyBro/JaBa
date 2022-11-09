@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Generates a \"Clyde\" message image using the Nekobot API",
-	"USAGE": "clyde [text]",
-	"EXAMPLES": "clyde Discord will close on December 11, 2002. Goodbye.",
-	"MISSING_TEXT": "Please specify the message text!"
-}

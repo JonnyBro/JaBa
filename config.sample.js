@@ -3,9 +3,9 @@ module.exports = {
 	token: "XXXXXXXXXXX",
 	/* ID of Bot's user */
 	user: "XXXXXXXXXXX",
-	/* For the support server */
 	/* Set to true for production */
 	production: true,
+	/* For the support server */
 	support: {
 		id: "XXXXXXXXXXX", // The ID of the support server
 		logs: "XXXXXXXXXXX", // And the ID of the logs channel of your server (new servers for example)

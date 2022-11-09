@@ -11,12 +11,12 @@ class Help extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("help")
 				.setDescription(client.translate("general/help:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option =>
 					option.setName("command")
 						.setDescription(client.translate("owner/reload:COMMAND"))),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -50,7 +50,7 @@ class Help extends BaseCommand {
 
 		commands.forEach(c => {
 			if (!categories.includes(c.category)) {
-				if (c.category === "Owner" && interaction.member.id !== client.config.owner.id) return;
+				if (c.category === "Owner" && interaction.user.id !== client.config.owner.id) return;
 				categories.push(c.category);
 			}
 		});
@@ -70,13 +70,14 @@ class Help extends BaseCommand {
 					.addOptions(categoriesRows)
 			);
 
-		await interaction.editReply({
+		const msg = await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
+			fetchReply: true,
 			components: [row]
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (15 * 1000) });
+		const collector = msg.createMessageComponentCollector({ filter, idle: (15 * 1000) });
 
 		collector.on("collect", async i => {
 			if (i.isSelectMenu() && (i.customId === "help_category_select" || i.customId === "help_commands_select")) {
@@ -133,7 +134,10 @@ function getPermName(bitfield = 0) {
 
 function generateCommandHelp(interaction, command) {
 	const cmd = interaction.client.commands.get(command);
-	if (!cmd) return interaction.error("general/help:NOT_FOUND", { search: command }, { edit: true });
+	if (!cmd) return interaction.error("general/help:NOT_FOUND", { command }, { edit: true });
+	const usage = interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`) === "" ?
+		interaction.translate("misc:NO_ARGS")
+		: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`);
 
 	const embed = new EmbedBuilder()
 		.setAuthor({
@@ -148,7 +152,7 @@ function generateCommandHelp(interaction, command) {
 			},
 			{
 				name: interaction.translate("general/help:FIELD_USAGE"),
-				value: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`)
+				value: `*${cmd.guildOnly ? interaction.translate("general/help:GUILD_ONLY") : interaction.translate("general/help:NOT_GUILD_ONLY")}*\n\n` + usage
 			},
 			{
 				name: interaction.translate("general/help:FIELD_EXAMPLES"),

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js"),
-	{ QueueRepeatMode } = require("../../helpers/Music/dist/index");
+	{ QueueRepeatMode } = require("discord-player-play-dl");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Queue extends BaseCommand {
@@ -11,10 +11,10 @@ class Queue extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("queue")
-				.setDescription(client.translate("music/queue:DESCRIPTION")),
+				.setDescription(client.translate("music/queue:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -102,7 +102,7 @@ class Queue extends BaseCommand {
 					if (embeds != generateQueueEmbeds(interaction, queue)) embeds = generateQueueEmbeds(interaction, queue);
 
 					const msg = await interaction.followUp({
-						content: interaction.translate("music/queue:PAGE_TO_JUMP", {
+						content: interaction.translate("misc:JUMP_TO_PAGE", {
 							length: embeds.length
 						}),
 						fetchReply: true
@@ -151,7 +151,7 @@ class Queue extends BaseCommand {
 /**
  *
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
- * @param {import("../../helpers/Music/dist/index").Queue} queue
+ * @param {import("discord-player-play-dl").Queue} queue
  * @returns
  */
 function generateQueueEmbeds(interaction, queue) {

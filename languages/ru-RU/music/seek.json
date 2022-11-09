@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Перемотать вперед или назад на данное время в текущем треке",
-	"USAGE": "[время]",
-	"EXAMPLES": "seek 10s\nseek -10s",
+	"USAGE": "[time]",
+	"EXAMPLES": "seek time:10s\nseek time:-10s",
 	"TIME": "Время в секундах",
-	"SUCCESS": "Трек перемотан на {{time}}!"
+	"SUCCESS": "Трек перемотан на {{time}}"
 }

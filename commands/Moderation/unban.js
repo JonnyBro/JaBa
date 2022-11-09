@@ -11,13 +11,14 @@ class Unban extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("unban")
 				.setDescription(client.translate("moderation/unban:DESCRIPTION"))
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
 				.addStringOption(option => option.setName("user_id")
 					.setDescription(client.translate("moderation/unban:ID"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**

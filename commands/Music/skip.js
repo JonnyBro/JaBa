@@ -10,10 +10,10 @@ class Skip extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("skip")
-				.setDescription(client.translate("music/skip:DESCRIPTION")),
+				.setDescription(client.translate("music/skip:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

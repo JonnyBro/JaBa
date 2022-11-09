@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Set the birthdays announcements channel!",
-	"USAGE": "setbirthdays (#channel)",
-	"EXAMPLES": "setbirthdays #birthdays\nsetbirthdays",
-	"SUCCESS_ENABLED": "Birthdays announcements will be sent in **{{channel}}**!",
-	"SUCCESS_DISABLED": "Birthdays announcements disabled!"
-}

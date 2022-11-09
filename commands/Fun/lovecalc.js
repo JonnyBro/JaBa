@@ -12,6 +12,7 @@ class Lovecalc extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("lovecalc")
 				.setDescription(client.translate("fun/lovecalc:DESCRIPTION"))
+				.setDMPermission(false)
 				.addUserOption(option =>
 					option.setName("first_member")
 						.setDescription(client.translate("common:USER"))
@@ -21,7 +22,6 @@ class Lovecalc extends BaseCommand {
 						.setDescription(client.translate("common:USER"))),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

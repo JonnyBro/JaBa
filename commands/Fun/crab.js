@@ -11,10 +11,10 @@ class Crab extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("crab")
-				.setDescription(client.translate("fun/crab:DESCRIPTION")),
+				.setDescription(client.translate("fun/crab:DESCRIPTION"))
+				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

@@ -11,6 +11,7 @@ class Rob extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("rob")
 				.setDescription(client.translate("economy/rob:DESCRIPTION"))
+				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
 					.setRequired(true))
@@ -19,7 +20,6 @@ class Rob extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -45,9 +45,10 @@ class Rob extends BaseCommand {
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildID: interaction.guildId
+			guildId: interaction.guildId
 		});
 		if (amount > memberData.money) return interaction.error("economy/rob:NOT_ENOUGH_MEMBER", { user: member.toString() });
+
 		const isInCooldown = memberData.cooldowns.rob || 0;
 		if (isInCooldown) {
 			if (isInCooldown > Date.now()) return interaction.error("economy/rob:COOLDOWN", { user: member.toString() });

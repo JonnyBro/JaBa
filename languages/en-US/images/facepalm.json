@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Generates a \"facepalm\" image using canvas",
-	"USAGE": "facepalm (@member)",
-	"EXAMPLES": "facepalm\nfacepalm @Jonny_Bro#4226"
-}

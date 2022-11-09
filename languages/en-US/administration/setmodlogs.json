@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Set the moderation logs channel!",
-	"USAGE": "setmodlogs (#channel)",
-	"EXAMPLES": "setmodlogs #modlogs\nsetmodlogs",
-	"SUCCESS_ENABLED": "Moderation logs will be sent in **{{channel}}**!",
-	"SUCCESS_DISABLED": "Moderation logs channel deleted!"
-}

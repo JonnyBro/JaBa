@@ -11,11 +11,11 @@ class Avatar extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("avatar")
 				.setDescription(client.translate("general/avatar:DESCRIPTION"))
+				.setDMPermission(true)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

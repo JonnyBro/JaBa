@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Shows the avatar of the mentionned member",
-	"USAGE": "avatar (@member)",
-	"EXAMPLES": "avatar\navatar @Jonny_Bro#4226\navatar link"
-}

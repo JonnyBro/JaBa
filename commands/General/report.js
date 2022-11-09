@@ -11,6 +11,7 @@ class Report extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("report")
 				.setDescription(client.translate("general/report:DESCRIPTION"))
+				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
 					.setRequired(true))
@@ -19,7 +20,6 @@ class Report extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

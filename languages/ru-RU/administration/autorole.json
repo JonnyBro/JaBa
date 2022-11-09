@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Включить или отключить автоназначение роли при входе на сервер",
-	"USAGE": "[true/false] (@роль)",
-	"EXAMPLES": "autorole true @новенький\nautorole false",
+	"USAGE": "[state] (@role)",
+	"EXAMPLES": "autorole state:True role:@новенький\nautorole state:False",
 	"MISSING_ROLE": "Укажите роль!",
 	"SUCCESS_ENABLED": "Автоназначение роли включено!\nНовые пользователи будут автоматически получать {{role}} при входе на сервер.",
 	"SUCCESS_DISABLED": "Автоназначение роли отключено!"

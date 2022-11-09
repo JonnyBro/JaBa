@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Установить канал для жалоб",
-	"USAGE": "[true/false] (#канал)",
-	"EXAMPLES": "setreports true #жалобы\nsetreports false",
+	"USAGE": "[state] (#channel)",
+	"EXAMPLES": "setreports state:True channel:#жалобы\nsetreports state:False",
 	"ENABLED": "Жалобы будут отправляться в **{{channel}}**!",
 	"DISABLED": "Жалобы отключены!"
 }

@@ -11,6 +11,7 @@ class Autorole extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("autorole")
 				.setDescription(client.translate("administration/autorole:DESCRIPTION"))
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addBooleanOption(option => option.setName("state")
 					.setDescription(client.translate("common:STATE"))
@@ -19,7 +20,7 @@ class Autorole extends BaseCommand {
 					.setDescription(client.translate("common:ROLE"))),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**

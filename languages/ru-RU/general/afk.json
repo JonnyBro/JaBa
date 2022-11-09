@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Установить AFK статус (пользователь который упомянет вас получит сообщение)",
-	"USAGE": "[причина]",
-	"EXAMPLES": "afk Сру =)",
+	"USAGE": "[message]",
+	"EXAMPLES": "afk message:Сру =)",
 	"SUCCESS": "Теперь вы AFK по причине: **{{reason}}**",
 	"DELETED": "**{{username}}**, ваш AFK статус удалён!",
 	"IS_AFK": "**{{user}}** сейчас AFK, причина:\n```{{reason}}```"

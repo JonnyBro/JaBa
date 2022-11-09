@@ -11,6 +11,7 @@ class Bank extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("bank")
 				.setDescription(client.translate("economy/bank:DESCRIPTION"))
+				.setDMPermission(false)
 				.addStringOption(option => option.setName("option")
 					.setDescription(client.translate("economy/bank:OPTION"))
 					.setRequired(true)
@@ -23,7 +24,6 @@ class Bank extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -48,18 +48,17 @@ class Bank extends BaseCommand {
 			if (isNaN(credits) || credits < 1) return interaction.error("misc:OPTION_NAN_ALL");
 			if (data.memberData.money < credits) return interaction.error("economy/bank:NOT_ENOUGH_CREDIT", { money: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` });
 
+			data.memberData.money -= credits;
+			data.memberData.bankSold += credits;
+			await data.memberData.save();
+
 			const info = {
 				user: interaction.translate("economy/transactions:BANK"),
 				amount: credits,
 				date: Date.now(),
 				type: "send"
 			};
-
 			data.memberData.transactions.push(info);
-
-			data.memberData.money -= credits;
-			data.memberData.bankSold += credits;
-			await data.memberData.save();
 
 			interaction.success("economy/bank:SUCCESS_DEP", {
 				money: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`

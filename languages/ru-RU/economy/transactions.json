@@ -1,7 +1,7 @@
 {
-	"DESCRIPTION": "Посмотреть историю транзакций",
-	"USAGE": "",
-	"EXAMPLES": "transactions",
+	"DESCRIPTION": "Посмотреть или очистить историю своих транзакций",
+	"USAGE": "(clear)",
+	"EXAMPLES": "transactions\n transactions clear:True",
 	"CLEAR": "Очистить список транзакций?",
 	"CLEARED": "Список транзакций очищен",
 	"NO_TRANSACTIONS": "У вас нет транзакций",

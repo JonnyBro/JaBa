@@ -1,8 +1,0 @@
-﻿{
-	"DESCRIPTION": "Get NSFW gif",
-	"USAGE": "hentai (category/help)",
-	"EXAMPLES": "hentai\nhentai help",
-	"NOCATEGORY": "If you want to see something from certain category, type its name after command.\nUse **`hentai help`** to see all categories\n",
-	"HELP_1": "Available categories (You can also use command without any arguments)",
-	"HELP_2": "```neko\ncum\nsolo\nanal\nyuri\nblowjob - bj\npussy\nclassic\nfutanari - futa\n```"
-}

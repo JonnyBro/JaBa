@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Generates a \"mission\" image using Amethyste API",
-	"USAGE": "mission (@member)",
-	"EXAMPLES": "mission\nmission @Jonny_Bro#4226"
-}

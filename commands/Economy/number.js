@@ -11,10 +11,10 @@ class Number extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("number")
-				.setDescription(client.translate("economy/number:DESCRIPTION")),
+				.setDescription(client.translate("economy/number:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -79,8 +79,10 @@ class Number extends BaseCommand {
 
 					const memberData = await client.findOrCreateMember({
 						id: msg.author.id,
-						guildID: interaction.guildId
+						guildId: interaction.guildId
 					});
+
+					memberData.money += won;
 
 					const info = {
 						user: interaction.translate("economy/transactions:NUMBERS"),
@@ -88,10 +90,8 @@ class Number extends BaseCommand {
 						date: Date.now(),
 						type: "got"
 					};
-
 					data.memberData.transactions.push(info);
 
-					memberData.money += won;
 					await memberData.save();
 				}
 				collector.stop();

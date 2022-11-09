@@ -1,5 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js"),
-	{ QueryType } = require("../../helpers/Music/dist/index");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Play extends BaseCommand {
@@ -12,12 +11,12 @@ class Play extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("play")
 				.setDescription(client.translate("music/play:DESCRIPTION"))
+				.setDMPermission(false)
 				.addStringOption(option => option.setName("query")
 					.setDescription(client.translate("music/play:QUERY"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -38,40 +37,18 @@ class Play extends BaseCommand {
 		await interaction.deferReply();
 
 		const voice = interaction.member.voice.channel;
-		if (!voice) return interaction.editReply({ content: interaction.translate("music/play:NO_VOICE_CHANNEL") });
+		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { edit: true });
 		const query = interaction.options.getString("query");
 		const perms = voice.permissionsFor(client.user);
-		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.editReply({ content: interaction.translate("music/play:VOICE_CHANNEL_CONNECT") });
+		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.error("music/play:VOICE_CHANNEL_CONNECT", null, { edit: true });
 
 		try {
-			var searchResult;
-			if (!query.includes("http")) {
-				const search = await playdl.search(query, { limit: 10 });
+			var searchResult = await client.player.search(query, {
+				requestedBy: interaction.user
+			});
 
-				if (search) {
-					const found = search.map(track => new Track(client.player, {
-						title: track.title,
-						duration: Util.buildTimeCode(Util.parseMS(track.durationInSec * 1000)),
-						thumbnail: track.thumbnails[0].url || "https://cdn.discordapp.com/attachments/708642702602010684/1012418217660121089/noimage.png",
-						views: track.views,
-						author: track.channel.name,
-						description: "search",
-						url: track.url,
-						requestedBy: interaction.user,
-						playlist: null,
-						source: "youtube"
-					}));
-
-					searchResult = { playlist: null, tracks: found, searched: true };
-				}
-			} else {
-				searchResult = await client.player.search(query, {
-					requestedBy: interaction.user
-				});
-
-				if (!searchResult.tracks[0] || !searchResult)
-					return interaction.editReply({ content: interaction.translate("music/play:NO_RESULT", { query, error: "Unknown Error" }) });
-			}
+			if (!searchResult.tracks[0] || !searchResult)
+				return interaction.error("music/play:NO_RESULT", { query, error: "Скорее всего видео заблокировано по региону" }, { edit: true });
 		} catch (error) {
 			console.log(error);
 			return interaction.editReply({
@@ -87,7 +64,7 @@ class Play extends BaseCommand {
 			autoSelfDeaf: true,
 			leaveOnEnd: true,
 			leaveOnStop: true,
-			bufferingTimeout: 1000,
+			bufferingTimeout: 1000
 		});
 
 		if (searchResult.searched) {
@@ -215,7 +192,7 @@ class Play extends BaseCommand {
 							components: [row1, row2, row3]
 						});
 
-						collector.end();
+						collector.stop();
 						return;
 					}
 				}

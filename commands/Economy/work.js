@@ -10,10 +10,10 @@ class Work extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("work")
-				.setDescription(client.translate("economy/work:DESCRIPTION")),
+				.setDescription(client.translate("economy/work:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -98,16 +98,16 @@ class Work extends BaseCommand {
 			]);
 		}
 
+		data.memberData.money += won;
+		await data.memberData.save();
+
 		const info = {
 			user: interaction.translate("economy/work:SALARY"),
 			amount: won,
 			date: Date.now(),
 			type: "got"
 		};
-
 		data.memberData.transactions.push(info);
-		data.memberData.money += won;
-		await data.memberData.save();
 
 		const messageOptions = {
 			embeds: [embed]

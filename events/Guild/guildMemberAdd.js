@@ -40,7 +40,7 @@ class GuildMemberAdd extends BaseEvent {
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildID: member.guild.id
+			guildId: member.guild.id
 		});
 		if (memberData.mute.muted && memberData.mute.endDate > Date.now()) {
 			member.guild.channels.cache.forEach((channel) => {

@@ -13,12 +13,12 @@ class Reload extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("reload")
 				.setDescription(client.translate("owner/reload:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option => option.setName("command")
 					.setDescription(client.translate("owner/reload:COMMAND"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: true
 		});
 	}

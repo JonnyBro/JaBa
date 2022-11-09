@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Generates a \"tobecontinued\" image using Nekobot API",
-	"USAGE": "tobecontinued (@member)",
-	"EXAMPLES": "tobecontinued\ntobecontinued @Jonny_Bro#4226"
-}

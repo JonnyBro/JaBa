@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Очистка сообщений в канале",
-	"USAGE": "[кол-во_сообщений] (@пользователь)",
-	"EXAMPLES": "clear 10\r 10 @Jonny_Bro#4226\nclear all",
+	"USAGE": "[option] (@user)",
+	"EXAMPLES": "clear option:10\nclear option:10 user:@Jonny_Bro#4226\nclear option:all",
 	"OPTION": "Целое число / all",
 	"ALL_CONFIRM": "**Все сообщения в канале будут удалены! Вы уверены?**",
 	"CHANNEL_CLEARED": "Канал очищен!",

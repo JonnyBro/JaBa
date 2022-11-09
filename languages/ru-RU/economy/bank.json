@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Управление банковским счётом",
-	"USAGE": "[deposit/withdraw] [сумма/all]",
-	"EXAMPLES": "bank deposit 1000\nbank withdraw all",
+	"USAGE": "[option] [credits/all]",
+	"EXAMPLES": "bank option:deposit credits:1000\nbank option:withdraw credits:all",
 	"OPTION": "Действие",
 	"DEPOSIT": "Внести",
 	"WITHDRAW": "Снять",

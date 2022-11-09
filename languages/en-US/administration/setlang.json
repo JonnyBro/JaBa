@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Change the server language!",
-	"USAGE": "setlang [language]",
-	"EXAMPLES": "setlang french\nsetlang english",
-	"MISSING_LANG": "Please enter a valid language between theses: {{list}}",
-	"SUCCESS": ":flag_us: The language of this server is now **{{lang}}**!"
-}

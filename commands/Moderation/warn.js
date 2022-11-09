@@ -11,10 +11,11 @@ class Warn extends BaseCommand {
 			command: new ContextMenuCommandBuilder()
 				.setName("warn")
 				.setType(ApplicationCommandType.User)
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**
@@ -40,12 +41,14 @@ class Warn extends BaseCommand {
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildID: interaction.guildId
+			guildId: interaction.guildId
 		});
 
 		const modal = new ModalBuilder()
 			.setCustomId("warn_modal")
-			.setTitle(interaction.translate("moderation/warn:MODAL_TITLE"));
+			.setTitle(interaction.translate("moderation/warn:MODAL_TITLE", {
+				nickname: member.user.tag
+			}));
 
 		const reasonInput = new TextInputBuilder()
 			.setCustomId("warn_reason")

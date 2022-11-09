@@ -11,6 +11,7 @@ class Announcement extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("announcement")
 				.setDescription(client.translate("owner/announcement:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option => option.setName("message")
 					.setDescription(client.translate("common:MESSAGE"))
 					.setRequired(true))
@@ -19,7 +20,6 @@ class Announcement extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: true
 		});
 	}

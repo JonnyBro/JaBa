@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Generates a \"captcha\" image using the Nekobot API",
-	"USAGE": "captcha (@member)",
-	"EXAMPLES": "captcha\ncaptcha @Jonny_Bro#4226"
-}

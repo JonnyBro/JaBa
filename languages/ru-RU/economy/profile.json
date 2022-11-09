@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показать профиль пользователя",
-	"USAGE": "(@пользователь)",
-	"EXAMPLES": "profile\nprofile @Jonny_Bro#4226",
+	"USAGE": "(@user)",
+	"EXAMPLES": "profile\nprofile user:@Jonny_Bro#4226",
 	"BOT_USER": "У ботов нет профиля!",
 	"TITLE": "Профиль {{user}}",
 	"LINK": "Профиль",

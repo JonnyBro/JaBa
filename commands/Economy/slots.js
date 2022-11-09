@@ -11,12 +11,12 @@ class Slots extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("slots")
 				.setDescription(client.translate("economy/slots:DESCRIPTION"))
+				.setDMPermission(false)
 				.addIntegerOption(option => option.setName("amount")
 					.setDescription(client.translate("common:INT"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -35,8 +35,9 @@ class Slots extends BaseCommand {
 	 */
 	async execute(client, interaction, data) {
 		await interaction.deferReply();
+
 		const amount = interaction.options.getInteger("amount");
-		if (amount > data.memberData.money) return interaction.error("economy/slots:NOT_ENOUGH", { money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` });
+		if (amount > data.memberData.money) return interaction.error("economy/slots:NOT_ENOUGH", { money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` }, { edit: true });
 
 		const fruits = ["🍎", "🍐", "🍌", "🍇", "🍉", "🍒", "🍓"];
 
@@ -100,6 +101,8 @@ class Slots extends BaseCommand {
 
 				const toAdd = credits - amount;
 
+				data.memberData.money += toAdd;
+
 				const info = {
 					user: interaction.translate("economy/slots:DESCRIPTION"),
 					amount: toAdd,
@@ -107,7 +110,6 @@ class Slots extends BaseCommand {
 					type: "got"
 				};
 				data.memberData.transactions.push(info);
-				data.memberData.money += toAdd;
 
 				if (!data.userData.achievements.slots.achieved) {
 					data.userData.achievements.slots.progress.now += 1;

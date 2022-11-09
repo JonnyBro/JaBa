@@ -12,12 +12,12 @@ class TicTacToe extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("tictactoe")
 				.setDescription(client.translate("economy/tictactoe:DESCRIPTION"))
+				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -42,8 +42,11 @@ class TicTacToe extends BaseCommand {
 		}).then(async winner => {
 			const memberData = await client.findOrCreateMember({
 				id: winner.id,
-				guildID: interaction.guildId
+				guildId: interaction.guildId
 			});
+
+			memberData.money += 100;
+			await memberData.save();
 
 			const info = {
 				user: interaction.translate("economy/transactions:TTT"),
@@ -52,9 +55,6 @@ class TicTacToe extends BaseCommand {
 				type: "got"
 			};
 			memberData.transactions.push(info);
-
-			memberData.money += 100;
-			await memberData.save();
 		});
 	}
 }

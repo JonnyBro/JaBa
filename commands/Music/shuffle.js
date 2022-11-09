@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
-class Stop extends BaseCommand {
+class Shuffle extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../base/JaBa")} client
@@ -9,8 +9,8 @@ class Stop extends BaseCommand {
 	constructor(client) {
 		super({
 			command: new SlashCommandBuilder()
-				.setName("stop")
-				.setDescription(client.translate("music/stop:DESCRIPTION"))
+				.setName("shuffle")
+				.setDescription(client.translate("music/shuffle:DESCRIPTION"))
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
@@ -32,13 +32,13 @@ class Stop extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const voice = interaction.member.voice.channel;
-		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { ephemeral: true });
 		const queue = client.player.getQueue(interaction.guildId);
-		if (!queue) return interaction.error("music/play:NOT_PLAYING");
+		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { ephemeral: true });
 
-		queue.destroy();
-		interaction.success("music/stop:SUCCESS");
+		const shuffled = queue.shuffle();
+		if (shuffled) interaction.success("music/shuffle:SUCCESS");
 	}
 }
 
-module.exports = Stop;
+module.exports = Shuffle;

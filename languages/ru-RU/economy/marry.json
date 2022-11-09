@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Женитесь на том, кого любите",
-	"USAGE": "[@пользователь]",
-	"EXAMPLES": "marry @Jonny_Bro#4226",
+	"USAGE": "[@user]",
+	"EXAMPLES": "marry user:@Jonny_Bro#4226",
 	"ALREADY_MARRIED": "Вы уже состоите в браке! Вы можете развестить с помощью команды `divorce`.",
 	"ALREADY_MARRIED_USER": "Вы опоздали! {{user}} уже состоит в браке!",
 	"YOURSELF": "Вы не можете жениться на себе!",

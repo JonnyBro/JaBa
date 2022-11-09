@@ -12,12 +12,12 @@ class Shorturl extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("shorturl")
 				.setDescription(client.translate("general/shorturl:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option => option.setName("url")
 					.setDescription(client.translate("general/shorturl:URL"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -36,7 +36,7 @@ class Shorturl extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const url = interaction.options.getString("url");
-		const res = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURI(url)}`).then(res => res.text());
+		const res = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`).then(res => res.text());
 
 		interaction.reply({
 			content: `<${res}>`,

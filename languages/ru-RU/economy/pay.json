@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Отправить кредиты пользователю",
-	"USAGE": "[@пользователь] [сумма]",
-	"EXAMPLES": "pay @Jonny_Bro#4226 1000",
+	"USAGE": "[@user] [amount]",
+	"EXAMPLES": "pay user:@Jonny_Bro#4226 amount:1000",
 	"BOT_USER": "Ботам не нужны деньги B)!",
 	"YOURSELF": "Вы не можете перевести кредиты самому себе!",
 	"INVALID_AMOUNT": "Укажите сумму",

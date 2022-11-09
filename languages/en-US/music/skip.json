@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Skip the current song",
-	"USAGE": "skip",
-	"EXAMPLES": "skip",
-	"NO_NEXT_SONG": "There's no song after this one!",
-	"SUCCESS": "Song skipped!"
-}

@@ -11,12 +11,12 @@ class Afk extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("afk")
 				.setDescription(client.translate("general/afk:DESCRIPTION"))
+				.setDMPermission(true)
 				.addStringOption(option => option.setName("message")
 					.setDescription(client.translate("common:MESSAGE"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

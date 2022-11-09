@@ -26,7 +26,7 @@ class CommandHandler extends BaseEvent {
 		data.userData = userData;
 
 		if (command.guildOnly && !interaction.inGuild()) return interaction.replyT("misc:GUILD_ONLY", { ephemeral: true });
-		if (command.ownerOnly && interaction.member.id !== client.config.owner.id) return interaction.replyT("misc:OWNER_ONLY", { ephemeral: true });
+		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.replyT("misc:OWNER_ONLY", { ephemeral: true });
 
 		if (interaction.inGuild()) {
 			const guildData = await client.findOrCreateGuild({
@@ -36,7 +36,7 @@ class CommandHandler extends BaseEvent {
 
 			const memberData = await client.findOrCreateMember({
 				id: interaction.member.id,
-				guildID: interaction.guildId
+				guildId: interaction.guildId
 			});
 			data.memberData = memberData;
 		}
@@ -46,7 +46,8 @@ class CommandHandler extends BaseEvent {
 			userData.achievements.firstCommand.achieved = true;
 			userData.markModified("achievements.firstCommand");
 			await userData.save();
-			await interaction.followUp({
+			await interaction.channel.send({
+				content: interaction.user.toString(),
 				files: [{
 					name: "achievement_unlocked2.png",
 					attachment: "./assets/img/achievements/achievement_unlocked2.png"

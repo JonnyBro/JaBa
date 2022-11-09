@@ -1,9 +1,10 @@
 {
 	"DESCRIPTION": "Я говорю правду",
-	"USAGE": "[вопрос]",
+	"USAGE": "[question]",
 	"QUESTION": "Вопрос",
-	"EXAMPLES": "8ball JaBa крутой?",
-	"ERR_QUESTION": "Вопрос должен оканчиваться на `?`.",
+	"EXAMPLES": "8ball question:JaBa крутой?",
+	"ERR_QUESTION": "Вопрос должен оканчиваться на `?`",
+	"ANSWER": "**Вопрос:** {{question}}\n**Ответ:** {{answer}}",
 	"RESPONSE_1": "Бесспорно",
 	"RESPONSE_2": "Предрешено",
 	"RESPONSE_3": "Никаких сомнений",

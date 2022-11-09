@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Generates a \"love\" image using the Nekobot API",
-	"USAGE": "love [@member1] (@member2)",
-	"EXAMPLES": "love @Jonny_Bro#4226\nlove @Jonny_Bro#4226 @Marty#0303"
-}

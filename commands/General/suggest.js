@@ -11,12 +11,12 @@ class Suggest extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("suggest")
 				.setDescription(client.translate("general/suggest:DESCRIPTION"))
+				.setDMPermission(false)
 				.addStringOption(option => option.setName("message")
 					.setDescription(client.translate("common:MESSAGE"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

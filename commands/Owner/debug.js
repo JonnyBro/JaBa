@@ -11,6 +11,7 @@ class Debug extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("debug")
 				.setDescription(client.translate("owner/debug:DESCRIPTION"))
+				.setDMPermission(false)
 				.addSubcommand(subcommand => subcommand.setName("set")
 					.setDescription(client.translate("owner/debug:SET"))
 					.addStringOption(option => option.setName("type")
@@ -51,7 +52,6 @@ class Debug extends BaseCommand {
 				),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: true
 		});
 	}
@@ -68,7 +68,7 @@ class Debug extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Array} data
 	 */
-	async execute(client, interaction,) {
+	async execute(client, interaction) {
 		const command = interaction.options.getSubcommand();
 
 		if (command === "set") {
@@ -79,7 +79,8 @@ class Debug extends BaseCommand {
 				id: member.id
 			});
 			const memberData = await client.findOrCreateMember({
-				id: member.id
+				id: member.id,
+				guildId: interaction.guildId
 			});
 			const int = interaction.options.getInteger("int");
 
@@ -137,7 +138,8 @@ class Debug extends BaseCommand {
 				id: member.id
 			});
 			const memberData = await client.findOrCreateMember({
-				id: member.id
+				id: member.id,
+				guildId: interaction.guildId
 			});
 			const int = interaction.options.getInteger("int");
 

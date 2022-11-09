@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Love calculator",
-	"USAGE": "lovecalc [@member1] (@member2)",
-	"EXAMPLES": "lovecalc @Jonny_Bro#4226\nlovecalc @Jonny_Bro#4226 @JaBa#9042",
-	"MISSING": "You must mention two members!",
-	"CONTENT": "There's **{{percent}}%** of love between **{{firstUsername}}** and **{{secondUsername}}**!\n**Congrats!**"
-}

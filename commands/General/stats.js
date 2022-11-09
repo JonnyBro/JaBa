@@ -11,10 +11,10 @@ class Stats extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("stats")
-				.setDescription(client.translate("general/stats:DESCRIPTION")),
+				.setDescription(client.translate("general/stats:DESCRIPTION"))
+				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

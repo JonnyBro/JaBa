@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Set the reports channel!",
-	"USAGE": "setreports (#channel)",
-	"EXAMPLES": "setreports #reports\nsetreports",
-	"SUCCESS_ENABLED": "Reports will be sent in **{{channel}}**!",
-	"SUCCESS_DISABLED": "Reports channel deleted!"
-}

@@ -1,6 +1,14 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
+const asyncForEach = async (collection, callback) => {
+	const allPromises = collection.map(async key => {
+		await callback(key);
+	});
+
+	return await Promise.all(allPromises);
+};
+
 class Leaderboard extends BaseCommand {
 	/**
 	 *
@@ -11,6 +19,7 @@ class Leaderboard extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("leaderboard")
 				.setDescription(client.translate("economy/leaderboard:DESCRIPTION"))
+				.setDMPermission(false)
 				.addStringOption(option => option.setName("type")
 					.setDescription(client.translate("owner/debug:TYPE"))
 					.setRequired(true)
@@ -21,7 +30,6 @@ class Leaderboard extends BaseCommand {
 					)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -40,6 +48,7 @@ class Leaderboard extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply();
+
 		const type = interaction.options.getString("type");
 		const isOnMobile = JSON.stringify(Object.keys(interaction.member.presence.clientStatus)) === JSON.stringify(["mobile"]);
 		if (isOnMobile) interaction.followUp({
@@ -48,24 +57,24 @@ class Leaderboard extends BaseCommand {
 		});
 
 		if (type === "money") {
-			const members = await client.membersData.find({
-					guildID: interaction.guildId
-				}).lean(),
-				membersLeaderboard = members.map(m => {
-					return {
-						id: m.id,
-						money: m.money + m.bankSold
-					};
-				}).sort((a, b) => b.money - a.money);
+			const membersLeaderboard = [],
+				membersData = await client.membersData.find({ guildID: interaction.guildId }).lean();
+
+			await asyncForEach(membersData, async member => {
+				membersLeaderboard.push({
+					id: member.id,
+					money: member.money + member.bankSold
+				});
+			});
+			membersLeaderboard.sort((a, b) => b.money - a.money);
 			if (membersLeaderboard.length > 20) membersLeaderboard.length = 20;
 
 			let userNames = "";
 			let money = "";
 			for (let i = 0; i < membersLeaderboard.length; i++) {
 				const data = membersLeaderboard[i];
-				const user = await client.users.fetch(data.id);
 
-				userNames += `**${i + 1}**. ${user}\n`;
+				userNames += `**${i + 1}**. <@${data.id}>\n`;
 				money += `${data.money}\n`;
 			}
 
@@ -78,7 +87,7 @@ class Leaderboard extends BaseCommand {
 				})
 				.setColor(client.config.embed.color)
 				.addFields({
-					name: interaction.translate("economy/leaderboard:TOP"),
+					name: interaction.translate("common:USER"),
 					value: userNames,
 					inline: true
 				}, {
@@ -91,14 +100,14 @@ class Leaderboard extends BaseCommand {
 				embeds: [embed]
 			});
 		} else if (type === "level") {
-			const membersLeaderboard = [];
-			client.membersData.find({
-				guildID: interaction.guildId
-			}).lean().then(async m => {
-				await membersLeaderboard.push({
-					id: m.id,
-					level: m.level,
-					xp: m.exp
+			const membersLeaderboard = [],
+				membersData = await client.membersData.find({ guildID: interaction.guildId }).lean();
+
+			await asyncForEach(membersData, async member => {
+				membersLeaderboard.push({
+					id: member.id,
+					level: member.level,
+					xp: member.exp
 				});
 			});
 			membersLeaderboard.sort((a, b) => b.level - a.level);
@@ -109,9 +118,8 @@ class Leaderboard extends BaseCommand {
 			const xp = [];
 			for (let i = 0; i < membersLeaderboard.length; i++) {
 				const data = membersLeaderboard[i];
-				const user = await client.users.fetch(data.id);
 
-				userNames.push(`**${i + 1}**. ${user.tag}`);
+				userNames.push(`**${i + 1}**. <@${data.id}>`);
 				level.push(`${data.level}`);
 				xp.push(`${data.xp} / ${5 * (data.level * data.level) + 80 * data.level + 100}`);
 			}
@@ -126,7 +134,7 @@ class Leaderboard extends BaseCommand {
 				.setColor(client.config.embed.color)
 				.addFields([
 					{
-						name: interaction.translate("economy/leaderboard:TOP"),
+						name: interaction.translate("common:USER"),
 						value: userNames.join("\n"),
 						inline: true
 					},
@@ -146,24 +154,24 @@ class Leaderboard extends BaseCommand {
 				embeds: [embed]
 			});
 		} else if (type === "rep") {
-			const users = await client.usersData.find({
-					rep: { $gt: 0 }
-				}).lean(),
-				usersLeaderboard = users.map(u => {
-					return {
-						id: u.id,
-						rep: u.rep
-					};
-				}).sort((a, b) => b.rep - a.rep);
+			const usersLeaderboard = [],
+				usersData = await client.usersData.find({ rep: { $gt: 0 } }).lean();
+
+			await asyncForEach(usersData, async user => {
+				usersLeaderboard.push({
+					id: user.id,
+					rep: user.rep
+				});
+			});
+			usersLeaderboard.sort((a, b) => b.rep - a.rep);
 			if (usersLeaderboard.length > 20) usersLeaderboard.length = 20;
 
 			let userNames = "";
 			let rep = "";
 			for (let i = 0; i < usersLeaderboard.length; i++) {
 				const data = usersLeaderboard[i];
-				const user = await client.users.fetch(data.id);
 
-				userNames += `**${i + 1}**. ${user}\n`;
+				userNames += `**${i + 1}**. <@${data.id}>\n`;
 				rep += `${data.rep}\n`;
 			}
 
@@ -176,7 +184,7 @@ class Leaderboard extends BaseCommand {
 				})
 				.setColor(client.config.embed.color)
 				.addFields({
-					name: interaction.translate("economy/leaderboard:TOP"),
+					name: interaction.translate("common:USER"),
 					value: userNames,
 					inline: true
 				}, {

@@ -1,5 +1,0 @@
-z{
-	"DESCRIPTION": "Generates a \"dictator\" image",
-	"USAGE": "dictator (@member)",
-	"EXAMPLES": "dictator\ndictator @Jonny_Bro#4226"
-}

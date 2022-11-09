@@ -10,10 +10,10 @@ class Back extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("back")
-				.setDescription(client.translate("music/back:DESCRIPTION")),
+				.setDescription(client.translate("music/back:DESCRIPTION"))
+				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}

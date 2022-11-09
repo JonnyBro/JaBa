@@ -11,6 +11,7 @@ class Clear extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("clear")
 				.setDescription(client.translate("moderation/clear:DESCRIPTION"))
+				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
 				.addStringOption(option => option.setName("option")
 					.setDescription(client.translate("moderation/clear:OPTION"))
@@ -19,7 +20,7 @@ class Clear extends BaseCommand {
 					.setDescription(client.translate("common:USER"))),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true
+			ownerOnly: false
 		});
 	}
 	/**

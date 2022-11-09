@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Stop the music",
-	"USAGE": "stop",
-	"EXAMPLES": "stop",
-	"SUCCESS": "Music stopped!"
-}

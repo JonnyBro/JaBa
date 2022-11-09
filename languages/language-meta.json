@@ -10,6 +10,7 @@
 		"name": "uk-UA",
 		"nativeName": "Українська",
 		"moment": "uk",
-		"defaultMomentFormat": "Do MMMM YYYY"
+		"defaultMomentFormat": "Do MMMM YYYY",
+		"default": false
 	}
 ]

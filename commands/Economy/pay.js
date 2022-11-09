@@ -11,6 +11,7 @@ class Pay extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("pay")
 				.setDescription(client.translate("economy/pay:DESCRIPTION"))
+				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
 					.setRequired(true))
@@ -19,7 +20,6 @@ class Pay extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			guildOnly: true,
 			ownerOnly: false
 		});
 	}
@@ -50,22 +50,30 @@ class Pay extends BaseCommand {
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildID: interaction.guildId
+			guildId: interaction.guildId
 		});
 
-		const info = {
-			user: member.user.tag,
-			amount: amount,
-			date: Date.now(),
-			type: "send"
-		};
-
-		data.memberData.transactions.push(info);
 		data.memberData.money -= amount;
 		await data.memberData.save();
 
 		memberData.money += amount;
 		memberData.save();
+
+		const info1 = {
+			user: member.user.tag,
+			amount: amount,
+			date: Date.now(),
+			type: "send"
+		};
+		data.memberData.transactions.push(info1);
+
+		const info2 = {
+			user: member.user.tag,
+			amount: amount,
+			date: Date.now(),
+			type: "got"
+		};
+		data.memberData.transactions.push(info2);
 
 		interaction.success("economy/pay:SUCCESS", {
 			user: member.toString(),
