@@ -1,11 +1,10 @@
 {
-	"DESCRIPTION": "Надіслати кредити користувачу!",
-	"USAGE": "pay [@користувач] [сума]",
-	"EXAMPLES": "pay @Jonny_Bro#4226 1000",
-	"INVALID_MEMBER": "Ви повинні згадати користувача!",
-	"BOT_USER": "Ботам не потрібні кредити!",
-	"YOURSELF": "Ви не можете заплатити самому собі!",
+	"DESCRIPTION": "Надіслати кредити користувачу",
+	"USAGE": "[@user] [amount]",
+	"EXAMPLES": "pay user:@Jonny_Bro#4226 amount:1000",
+	"BOT_USER": "Ботам не потрібні гроші B)!",
+	"YOURSELF": "Ви не можете переказати кредити самому собі!",
 	"INVALID_AMOUNT": "Вкажіть суму",
 	"ENOUGH_MONEY": "У вас немає {{amount}}",
-	"SUCCESS": "Ви відправили {{amount}} користувачу **{{username}}**!"
+	"SUCCESS": "Ви відправили {{user}} {{amount}}!"
 }

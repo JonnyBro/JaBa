@@ -1,8 +1,8 @@
 {
-	"DESCRIPTION": "Розбанити користувача на сервері!",
-	"USAGE": "unban [ID]",
-	"EXAMPLES": "unban 281361531411890186",
-	"MISSING_ID": "Вкажіть ID користувача!",
-	"NOT_BANNED": "**{{username}}** не забанен!",
-	"UNBANNED": "**{{username}}** був розбанений на сервері **{{server}}**!"
-	}
+	"DESCRIPTION": "Розбанити користувача на сервері",
+	"USAGE": "[user_id]",
+	"EXAMPLES": "unban user_id:281361531411890186",
+	"ID": "ID користувача",
+	"NOT_BANNED": "Користувач з ID **{{id}}** не знайдено",
+	"UNBANNED": "**{{id}}** розбанений!"
+}

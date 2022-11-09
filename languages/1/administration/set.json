@@ -1,0 +1,13 @@
+{
+	"DESCRIPTION": "Змінити користувачеві досвід, рівень, кредити або банк!",
+	"USAGE": "set [level/xp/credits/bank] [@користувач] [значення]",
+	"EXAMPLES": "set level @Jonny_Bro#4226 10",
+	"INVALID_MEMBER": "Ви повинні згадати користувача!",
+	"NO_STATUS": "Виберіть значення: `level`, `xp`, `credits` або `bank`!",
+	"BOT_USER": "Ви не можете змінити статистику робота!",
+	"INVALID_AMOUNT": "Вкажіть нове значення!",
+	"SUCCESS_LEVEL": "Рівень користувача **{{username}}** змінено на **{{amount}}**!",
+	"SUCCESS_XP": "XP користувача **{{username}}** змінено на **{{amount}}**!",
+	"SUCCESS_CREDITS": "Кредити користувача **{{username}}** змінені на **{{amount}}**!",
+	"SUCCESS_BANK": "Банк користувача **{{username}}** змінено на **{{amount}}**!"
+}

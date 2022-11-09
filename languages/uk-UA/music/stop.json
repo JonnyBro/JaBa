@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Зупинити відтворення черги",
-	"USAGE": "stop",
+	"USAGE": "",
 	"EXAMPLES": "stop",
-	"SUCCESS": "Відтворення зупинено!"
+	"SUCCESS": "Відтворення зупинено"
 }

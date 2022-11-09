@@ -1,8 +1,13 @@
 {
-	"DESCRIPTION": "Увімкнути або вимкнути повтор черги/одного треку!",
-	"USAGE": "loop (queue/all/song/single)",
-	"EXAMPLES": "loop queue\nloop single",
-	"QUEUE": "Повтор черги **включено**!",
-	"SONG": "Повтор поточного треку **включено**!",
-	"DISABLED": "Повтор **відключено**!"
+	"DESCRIPTION": "Вибір режиму повтору",
+	"USAGE": "",
+	"EXAMPLES": "loop",
+	"AUTOPLAY": "Автовідтворення",
+	"QUEUE": "Черга",
+	"TRACK": "Поточний трек",
+	"DISABLE": "Вимкнути",
+	"AUTOPLAY_ENABLED": "Автовідтворення **увімкнено**",
+	"QUEUE_ENABLED": "Повтор черги **включено**",
+	"TRACK_ENABLED": "Повтор поточного треку **включено**",
+	"LOOP_DISABLED": "Повтор **відключено**"
 }

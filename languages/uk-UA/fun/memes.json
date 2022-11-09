@@ -1,11 +1,7 @@
 {
-	"DESCRIPTION": "Отримати мем із вибраного або випадкового сабреддита",
-	"USAGE": "memes (тег)",
-	"EXAMPLES": "memes\nmemes me_irl",
-	"SEARCHING": "Шукаю мем за тегом `{{tag}}`...",
-	"SEARCHING_RANDOM": "Шукаю випадковий мем...",
-	"EMBED_TITLE": "Доступні категорії",
-	"NOT_FOUND": "Цей категорії не існує!",
+	"DESCRIPTION": "Отримати мем з обраного сабреддиту",
+	"USAGE": "",
+	"EXAMPLES": "memes",
 	"SUBREDDIT": "Сабреддіт",
 	"UPS": "Апвоути"
 }

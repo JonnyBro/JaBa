@@ -1,6 +1,6 @@
 {
-	"DESCRIPTION": "Укоротити посилання!",
-	"USAGE": "shorturl [URL]",
-	"EXAMPLES": "shorturl https://google.com",
-	"MISSING_URL": "Введіть посилання!"
+	"DESCRIPTION": "Укоротити посилання",
+	"USAGE": "[url]",
+	"EXAMPLES": "shorturl url:https://google.com",
+	"URL": "Посилання"
 }

@@ -1,0 +1,6 @@
+{
+	"DESCRIPTION": "Показати кількість кредитів у користувача",
+	"USAGE": "money (@користувач)",
+	"EXAMPLES": "money\nmoney @Jonny_Bro#4226",
+	"TITLE": "{{username}} Кредити"
+}
