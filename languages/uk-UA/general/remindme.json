@@ -1,9 +1,9 @@
 {
 	"DESCRIPTION": "Створити нагадування",
-	"USAGE": "remindme [час] [повідомлення]",
-	"EXAMPLES": "remindme 24h Використати команду work\nremindme 3m Дістати курку з морозилки!",
-	"MISSING_MESSAGE": "Введіть повідомлення!",
-	"SAVED": "Нагадування збережено!",
+	"USAGE": "[time] [message]",
+	"EXAMPLES": "remindme time:12h message:Використовувати команду work\nremindme time:5m message:Дістати курку з морозилки!",
+	"TIME": "Час (Наприклад: 10s, 5m, 2h, 1d, 3w)",
+	"SAVED": "Нагадування `{{message}}` збережено **{{time}}**",
 	"TITLE": "Нагадування від JaBa",
-	"CREATED": "Повідомлення створено {{time}}"
+	"CREATED": "Нагадування створено: **{{time}}**"
 }

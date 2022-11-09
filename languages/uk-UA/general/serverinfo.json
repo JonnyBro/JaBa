@@ -1,10 +1,9 @@
 {
-	"DESCRIPTION": "Показати інформацію про сервер!",
-	"USAGE": "serverinfo [ID/назва]",
-	"EXAMPLES": "serverinfo кик\nserverinfo",
+	"DESCRIPTION": "Показати інформацію про сервер",
+	"USAGE": "",
+	"EXAMPLES": "serverinfo",
 	"AFK_CHANNEL": "AFK канал",
-	"NO_AFK_CHANNEL": "Немає AFK каналу",
 	"BOOSTS": "К-сть бустів",
 	"LINK": "Статистика сервера",
-	"LINK_TEXT": "Натисніть тут, щоб відкрити статистику сервера!"
-}
+	"LINK_TEXT": "Натисніть сюди, щоб відкрити статистику сервера на панелі керування!"
+	}

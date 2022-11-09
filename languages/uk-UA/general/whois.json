@@ -1,8 +1,7 @@
 {
-	"DESCRIPTION": "Отримати інформацію про IP адресу!",
-	"USAGE": "whois (IP)",
-	"EXAMPLES": "whois 1.1.1.1",
-	"NO_IP": "Вкажіть IP адресу!",
+	"DESCRIPTION": "Отримати інформацію про IP адресу",
+	"USAGE": "[IP]",
+	"EXAMPLES": "whois IP:8.8.8.8",
 	"ERROR": "Відбулася помилка при отриманні даних про {{ip}}",
 	"INFO_ABOUT": "Інформація про {{ip}}",
 	"COUNTRY": "Країна",

@@ -1,5 +1,6 @@
 {
-	"DESCRIPTION": "Виконати код!",
-	"USAGE": "eval [код]",
-	"EXAMPLES": "eval message.channel.send({ content: \"Hello World!\" })"
+	"DESCRIPTION": "Виконати код",
+	"USAGE": "[code]",
+	"EXAMPLES": "eval code:interaction.channel.send({ content: \"Hello World!\" })",
+	"CODE": "Виконуваний код"
 }

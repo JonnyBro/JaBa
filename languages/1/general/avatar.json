@@ -1,0 +1,5 @@
+{
+	"DESCRIPTION": "Повертає аватар користувача",
+	"USAGE": "avatar (@користувач) (link)",
+	"EXAMPLES": "avatar\navatar @Jonny_Bro#4226\navatar link"
+}

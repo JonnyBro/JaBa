@@ -1,8 +1,7 @@
 {
-	"DESCRIPTION": "Вкрасти емодзі на даний сервер з іншого!",
-	"USAGE": "stealemoji [емодзі]",
-	"EXAMPLES": "stealemoji :coolstorybob:",
-	"MISSING_EMOJI": "Вкажіть емодзі!",
+	"DESCRIPTION": "Скопіювати емодзі на поточний сервер",
+	"USAGE": "[emoji]",
+	"EXAMPLES": "stealemoji emoji::coolstorybob:",
 	"SUCCESS": "{{emoji}} додано!",
-	"ERROR": "{{emoji}} не було додано. Перевірте, чи є місце для додавання емоди!"
+	"ERROR": "Відбулася помилка при додаванні {{emoji}}.\n```{{e}}```"
 }

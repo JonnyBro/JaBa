@@ -1,7 +1,13 @@
 {
 	"DESCRIPTION": "Показати чергу на відтворення",
-	"USAGE": "queue",
+	"USAGE": "",
 	"EXAMPLES": "queue",
-	"TITLE": "Черга",
-	"ADDED": "Додав"
+	"QUEUE": "Черга",
+	"NO_QUEUE": "Пусто",
+	"DURATION": "Тривалість черги",
+	"ADDED": "Додав",
+	"NEXT_PAGE": "Наступна сторінка",
+	"PREV_PAGE": "Попередня сторінка",
+	"JUMP_PAGE": "Перейти до сторінки",
+	"NEXT": "Далі"
 }
