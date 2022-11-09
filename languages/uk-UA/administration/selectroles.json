@@ -1,0 +1,13 @@
+{
+	"DESCRIPTION": "Видача ролей на вибір користувачів",
+	"USAGE": "message [text]\naddrole [#channel] [message_id] [@role]",
+	"EXAMPLES": "selectroles message text:Виберіть роль!\nselectroles addrole role:@Оновлення",
+	"MESSAGE": "Надіслати повідомлення до поточного каналу",
+	"ADDROLE": "Додати/прибрати роль у повідомленні",
+	"MESSAGE_ERROR": "Повідомлення не існує або надіслано не мною",
+	"ALREADY_IN_MENU": "Роль вже є у списку",
+	"NO_ROLES": "Повідомлення не має списку авторолей",
+	"SUCCESS_ADDED": "Роль **{{role}}** додана до списку",
+	"MESSAGE_SENT": "Повідомлення надіслано в поточний голосовий чат, використовуйте /selectroles addrole channel:{{channel}} message_id:{{message_id}} role:@роль",
+	"ROLES_UPDATED": "Ролі оновлено"
+}

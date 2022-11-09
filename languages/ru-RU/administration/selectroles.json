@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Выдача ролей по выбору пользователей",
-	"USAGE": "message [text]\naddrole [@role]",
+	"USAGE": "message [text]\naddrole [#channel] [message_id] [@role]",
 	"EXAMPLES": "selectroles message text:Выберите роль!\nselectroles addrole role:@Обновления",
 	"MESSAGE": "Отправить сообщение в текущий канал",
 	"ADDROLE": "Добавить/убрать роль в сообщении",

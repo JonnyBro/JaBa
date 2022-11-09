@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Змінити мову бота на сервері",
-	"USAGE": "[languagee]",
+	"USAGE": "[language]",
 	"EXAMPLES": "setlang language:Українська",
 	"SUCCESS": ":flag_ua: Мова сервера змінена на **{{lang}}**!"
 	}
