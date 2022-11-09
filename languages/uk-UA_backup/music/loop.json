@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Увімкнути або вимкнути повтор черги/одного треку!",
+	"USAGE": "loop (queue/all/song/single)",
+	"EXAMPLES": "loop queue\nloop single",
+	"QUEUE": "Повтор черги **включено**!",
+	"SONG": "Повтор поточного треку **включено**!",
+	"DISABLED": "Повтор **відключено**!"
+}

@@ -1,0 +1,5 @@
+{
+	"DESCRIPTION": "Виконати код!",
+	"USAGE": "eval [код]",
+	"EXAMPLES": "eval message.channel.send({ content: \"Hello World!\" })"
+}

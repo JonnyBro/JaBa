@@ -12,7 +12,7 @@ class Setnews extends BaseCommand {
 				.setName("setnews")
 				.setDescription(client.translate("administration/setnews:DESCRIPTION"))
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addBooleanOption(option => option.setName("state")
 					.setDescription(client.translate("common:STATE"))
 					.setRequired(true))

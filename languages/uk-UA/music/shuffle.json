@@ -1,0 +1,6 @@
+{
+	"DESCRIPTION": "Перемішати чергу",
+	"USAGE": "",
+	"EXAMPLES": "shuffle",
+	"SUCCESS": "Черга успішно перемішана"
+}

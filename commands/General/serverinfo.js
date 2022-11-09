@@ -69,7 +69,7 @@ class Serverinfo extends BaseCommand {
 					inline: true
 				},
 				{
-					name: client.customEmojis.id + interaction.translate("common:ID"),
+					name: client.customEmojis.id + interaction.translate("common:SERVER_ID"),
 					value: guild.id,
 					inline: true
 				},

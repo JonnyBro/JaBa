@@ -1,8 +1,10 @@
 {
-	"DESCRIPTION": "Подивитися історію транзакцій!",
-	"USAGE": "transactions",
-	"EXAMPLES": "transactions",
-	"NO_TRANSACTIONS": "У вас немає транзакцій.",
+	"DESCRIPTION": "Подивитися чи очистити історію своїх транзакцій",
+	"USAGE": "(clear)",
+	"EXAMPLES": "transactions\n transactions clear:True",
+	"CLEAR": "Очистити список транзакцій?",
+	"CLEARED": "Список транзакцій очищений",
+	"NO_TRANSACTIONS": "У вас немає транзакцій",
 	"EMBED_TRANSACTIONS": "Ваші транзакції",
 	"BANK": "Банк",
 	"NUMBERS": "Вгадай число",
@@ -10,7 +12,7 @@
 	"T_GOT": "Поповнення",
 	"T_SEND": "Списання",
 	"T_USER_GOT": "Джерело",
-	"T_USER_SEND": "Отримувач",
+	"T_USER_SEND": "Одержувач",
 	"T_AMOUNT": "Сума",
 	"T_DATE": "Дата"
 }

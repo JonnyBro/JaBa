@@ -14,7 +14,7 @@ class Unban extends BaseCommand {
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
 				.addStringOption(option => option.setName("user_id")
-					.setDescription(client.translate("moderation/unban:ID"))
+					.setDescription(client.translate("common:USER_ID"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

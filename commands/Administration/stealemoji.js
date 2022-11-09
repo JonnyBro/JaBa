@@ -12,7 +12,7 @@ class Stealemoji extends BaseCommand {
 				.setName("stealemoji")
 				.setDescription(client.translate("administration/stealemoji:DESCRIPTION"))
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addStringOption(option => option.setName("emoji")
 					.setDescription(client.translate("common:EMOJI"))
 					.setRequired(true)),

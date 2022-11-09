@@ -1,8 +1,7 @@
 {
-	"DESCRIPTION": "Увімкнути або вимкнути автовидалення команд модерації!",
-	"USAGE": "deletemod [on/off]",
-	"EXAMPLES": "deletemod on",
-	"MISSING_STATUS": "Укажыть значення `on` або `off`!",
-	"ENABLED": "Автовидалення команд модерації увімкнено!",
+	"DESCRIPTION": "Увімкнути або вимкнути видалення команд модерації",
+	"USAGE": "[state]",
+	"EXAMPLES": "deletemod state:True\ndeletemod state:False",
+	"ENABLED": "Автовидалення команд модерації включено!",
 	"DISABLED": "Автовидалення команд модерації вимкнено!"
 }

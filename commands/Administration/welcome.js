@@ -12,7 +12,7 @@ class Welcome extends BaseCommand {
 				.setName("welcome")
 				.setDescription(client.translate("administration/welcome:DESCRIPTION"))
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addSubcommand(subcommand => subcommand.setName("test")
 					.setDescription(client.translate("administration/goodbye:TEST"))
 				)

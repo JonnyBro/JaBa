@@ -12,7 +12,7 @@ class Setsuggests extends BaseCommand {
 				.setName("setsuggests")
 				.setDescription(client.translate("administration/setsuggests:DESCRIPTION"))
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addBooleanOption(option => option.setName("state")
 					.setDescription(client.translate("common:STATE"))
 					.setRequired(true))

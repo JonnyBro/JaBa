@@ -12,7 +12,7 @@ class Config extends BaseCommand {
 				.setName("config")
 				.setDescription(client.translate("administration/config:DESCRIPTION"))
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
+				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false

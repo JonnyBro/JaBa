@@ -12,7 +12,7 @@ class Set extends BaseCommand {
 				.setName("set")
 				.setDescription(client.translate("administration/set:DESCRIPTION"))
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addStringOption(option => option.setName("type")
 					.setDescription(client.translate("owner/debug:TYPE"))
 					.setRequired(true)

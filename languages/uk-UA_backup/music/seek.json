@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Перемотати вперед або назад у поточному треку!",
+	"USAGE": "seek [час]",
+	"EXAMPLES": "seek 10s\nseek -10s",
+	"INVALID_TIME": "Вкажіть час!",
+	"SUCCESS": "▶️ Трек перемотаний!"
+}
