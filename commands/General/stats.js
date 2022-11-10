@@ -78,10 +78,7 @@ class Stats extends BaseCommand {
 				},
 				{
 					name: interaction.translate("general/stats:CREDITS_TITLE"),
-					value: interaction.translate("general/stats:CREDITS_CONTENT", {
-						donators: ["**`Добрый Спецназ#8801`** - Тестер, генератор идей"].join("\n"),
-						translators: ["**`[ДАННЫЕ УДАЛЕНЫ]#4507`** - :flag_ua: (НЕ ОБНОВЛЕН!)"].join("\n")
-					})
+					value: interaction.translate("general/stats:CREDITS_CONTENT")
 				},
 				{
 					name: client.customEmojis.link + " " + interaction.translate("general/stats:LINKS_TITLE"),
