@@ -260,7 +260,7 @@ class JaBa extends Client {
 	 * @returns {String} Beautified date
 	 */
 	printDate(date, format = "", locale = this.defaultLanguage) {
-		const languageData = this.languages.find(language => language.name === locale || language.aliases.includes(locale));
+		const languageData = this.languages.find(language => language.name === locale);
 		if (format === "" || format === null) format = languageData.defaultMomentFormat;
 
 		return moment(new Date(date))
@@ -277,7 +277,7 @@ class JaBa extends Client {
 	 * @returns {String} Time
 	 */
 	convertTime(time, type = false, noPrefix = false, locale = this.defaultLanguage) {
-		const languageData = this.languages.find(language => language.name === locale || language.aliases.includes(locale));
+		const languageData = this.languages.find(language => language.name === locale);
 		const m = moment(time).locale(languageData.moment);
 
 		return (type ? m.toNow(noPrefix) : m.fromNow(noPrefix));
