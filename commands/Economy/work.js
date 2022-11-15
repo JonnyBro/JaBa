@@ -34,7 +34,7 @@ class Work extends BaseCommand {
 		const isInCooldown = data.memberData.cooldowns?.work;
 		if (isInCooldown) {
 			if (isInCooldown > Date.now()) return interaction.error("economy/work:COOLDOWN", {
-				time: client.convertTime(isInCooldown, true, true)
+				time: client.convertTime(isInCooldown, true, true, data.guildData.language)
 			});
 		}
 		if (Date.now() > data.memberData.cooldowns.work + (24 * 60 * 60 * 1000)) data.memberData.workStreak = 0;

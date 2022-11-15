@@ -31,7 +31,7 @@ class Stats extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
-	async execute(client, interaction) {
+	async execute(client, interaction, data) {
 		const hiddenGuild = await client.guilds.fetch("568120814776614924");
 		const users = client.users.cache.size - hiddenGuild.memberCount;
 		const servers = client.guilds.cache.size - 1;
@@ -67,7 +67,7 @@ class Stats extends BaseCommand {
 				{
 					name: client.customEmojis.status.online + " " + interaction.translate("general/stats:ONLINE_TITLE"),
 					value: interaction.translate("general/stats:ONLINE_CONTENT", {
-						time: client.convertTime(Date.now() + client.uptime, true, true)
+						time: client.convertTime(Date.now() + client.uptime, true, true, data.guildData.language)
 					})
 				},
 				{
