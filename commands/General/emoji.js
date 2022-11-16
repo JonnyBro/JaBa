@@ -57,7 +57,7 @@ class Emoji extends BaseCommand {
 					value: parsedEmoji.animated ? interaction.translate("common:YES") : interaction.translate("common:NO")
 				},
 				{
-					name: interaction.translate("general/emoji:SERVER_ID"),
+					name: interaction.translate("common:ID"),
 					value: parsedEmoji.id?.toString() || interaction.translate("general/emoji:STANDART")
 				},
 				{
