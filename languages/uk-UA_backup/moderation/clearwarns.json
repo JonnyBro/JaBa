@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Зняти усі попередження з користувача!",
-	"USAGE": "clearwarns [@користувач]",
-	"EXAMPLES": "clearwarns @Jonny_Bro#4226",
-	"MISSING_MEMBER": "Ви повинні згадати користувача!",
-	"SUCCESS": "Попередження користувача **{{username}}** видалено!"
-	}

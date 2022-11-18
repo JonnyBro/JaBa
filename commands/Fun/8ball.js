@@ -37,10 +37,7 @@ class Eightball extends BaseCommand {
 		await interaction.deferReply();
 
 		const question = interaction.options.getString("question");
-		if (!question.endsWith("?")) return interaction.error("fun/8ball:ERR_QUESTION", null, { ephemeral: true });
-
-		const answerN = client.functions.randomNum(1, 20);
-		const answer = interaction.translate(`fun/8ball:RESPONSE_${answerN}`);
+		const answer = interaction.translate(`fun/8ball:RESPONSE_${client.functions.randomNum(1, 20)}`);
 		await client.wait(5000);
 
 		interaction.replyT("fun/8ball:ANSWER", {

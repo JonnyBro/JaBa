@@ -42,6 +42,7 @@ class Money extends BaseCommand {
 	 */
 	async execute(client, interaction, data) {
 		await interaction.deferReply();
+
 		const member = interaction.options.getMember("user") || interaction.member;
 		if (member.user.bot) return interaction.error("economy/money:BOT_USER");
 

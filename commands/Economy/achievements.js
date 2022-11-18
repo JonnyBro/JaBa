@@ -33,10 +33,10 @@ class Achievements extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
-		const member = interaction.options.getMember("user") || interaction.member;
-		if (member.user.bot) return interaction.error("economy/profile:BOT_USER");
-		const userData = (member.id === interaction.member.id ? data.userData : await client.findOrCreateUser({
-			id: member.id
+		const user = interaction.options.getUser("user") || interaction.member;
+		if (user.bot) return interaction.error("economy/profile:BOT_USER");
+		const userData = (user.id === interaction.user.id ? data.userData : await client.findOrCreateUser({
+			id: user.id
 		}));
 
 		const embed = new EmbedBuilder()

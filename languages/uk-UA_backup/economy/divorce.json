@@ -1,8 +1,0 @@
-{
-	"DESCRIPTION": "Розлучитися з користувачем!",
-	"USAGE": "divorce",
-	"EXAMPLES": "divorce",
-	"NOT_MARRIED": "Ви не одружені!",
-	"DIVORCED": "Ви розлучилися з **{{username}}**!",
-	"DIVORCED_U": "**{{username}}** розлучився з вами!"
-}

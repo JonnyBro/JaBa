@@ -36,8 +36,8 @@ class Minecraft extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply();
-		const ip = interaction.options.getString("ip");
 
+		const ip = interaction.options.getString("ip");
 		const options = {
 			type: "minecraft",
 			host: ip

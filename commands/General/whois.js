@@ -36,6 +36,7 @@ class Whois extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply();
+
 		const ip = interaction.options.getString("ip");
 		const whois = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,continent,continentCode,country,countryCode,region,regionName,city,zip,timezone,currency,isp,org,as,mobile,proxy,hosting,query`).then(response => response.json());
 		if (whois.status === "fail") return interaction.editReply({ content: interaction.translate("general/whois:ERROR", { ip }) });

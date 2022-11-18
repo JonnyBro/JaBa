@@ -152,16 +152,16 @@ function generateCommandHelp(interaction, command) {
 			},
 			{
 				name: interaction.translate("general/help:FIELD_USAGE"),
-				value: `*${cmd.guildOnly ? interaction.translate("general/help:GUILD_ONLY") : interaction.translate("general/help:NOT_GUILD_ONLY")}*\n\n` + usage
+				value: `*${cmd.command.dm_permission === false ? interaction.translate("general/help:GUILD_ONLY") : interaction.translate("general/help:NOT_GUILD_ONLY")}*\n\n` + usage
 			},
 			{
 				name: interaction.translate("general/help:FIELD_EXAMPLES"),
 				value: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:EXAMPLES`)
 			},
-			{
-				name: interaction.translate("general/help:FIELD_ALIASES"),
-				value: cmd.aliases.length > 0 ? cmd.aliases.map(a => `${a}`).join("\n") : interaction.translate("general/help:NO_ALIAS")
-			},
+			// {
+			// 	name: interaction.translate("general/help:FIELD_ALIASES"),
+			// 	value: cmd.aliases.length > 0 ? cmd.aliases.map(a => `${a}`).join("\n") : interaction.translate("general/help:NO_ALIAS")
+			// },
 			{
 				name: interaction.translate("general/help:FIELD_PERMISSIONS"),
 				value: cmd.command.default_member_permissions > 0 ? interaction.translate(`misc:PERMISSIONS:${getPermName(cmd.command.default_member_permissions)}`) : interaction.translate("general/help:NO_REQUIRED_PERMISSION")

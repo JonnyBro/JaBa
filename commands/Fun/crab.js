@@ -33,6 +33,7 @@ class Crab extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply();
+
 		const res = await fetch("https://and-here-is-my-code.glitch.me/img/crab").then(response => response.json());
 
 		interaction.editReply({

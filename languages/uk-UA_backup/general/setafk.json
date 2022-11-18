@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Встановити AFK статус (користувач, який згадає вас отримає повідомлення)",
-	"USAGE": "setafk [причина/delete]",
-	"EXAMPLES": "setafk Сру =)",
-	"MISSING_REASON": "Вкажіть причину AFK! (не більше 250 символів)",
-	"SUCCESS": "Тепер ви AFK через: **{{reason}}**\nНапишіть afk delete, щоб примусово вимкнути AFK",
-	"DELETED": "**{{username}}**, AFK статус видалено!",
-	"IS_AFK": "**{{user}}** зараз AFK, причина:\n**`{{reason}}`**"
-}

@@ -3,7 +3,6 @@
 	"USAGE": "[question]",
 	"QUESTION": "Питання",
 	"EXAMPLES": "8ball question:JaBa крутий?",
-	"ERR_QUESTION": "Питання має закінчуватися на `?`",
 	"ANSWER": "**Питання:** {{question}}\n**Відповідь:** {{answer}}",
 	"RESPONSE_1": "Безперечно",
 	"RESPONSE_2": "Вирішено",

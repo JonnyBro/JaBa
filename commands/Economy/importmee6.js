@@ -33,6 +33,7 @@ class ImportMee6 extends BaseCommand {
 	 */
 	async execute(client, interaction, data) {
 		await interaction.deferReply();
+
 		const level = (await Mee6Api.getUserXp(interaction.guildId, interaction.member)).level;
 
 		data.memberData.level = level;

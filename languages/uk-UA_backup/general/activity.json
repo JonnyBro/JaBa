@@ -1,8 +1,0 @@
-{
-	"DESCRIPTION": "Створити активність у голосовому каналі!",
-	"USAGE": "activity (активність)",
-	"EXAMPLES": "activity\nactivity chess",
-	"TITLE": "Список доступних активностей",
-	"FOOTER": "JaBa | Discord Together",
-	"NO_BOOST": "Необхідний перший рівень буста або вище!"
-}

@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Показати інформацію про емодзі!",
-	"USAGE": "emoji [емодзі]",
-	"EXAMPLES": "emoji :tada:",
-	"TITLE": "Інформація про {{emoji}}",
-	"ANIMATED": "Анімований",
-	"ID": "ID",
-	"STANDART": "Стандартний емодзі"
-}

@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Підкинути монетку!",
-	"USAGE": "flip",
-	"EXAMPLES": "flip",
-	"HEADS": ":coin: | Чіт!",
-	"TAILS": ":coin: | Лишка!"
-}
