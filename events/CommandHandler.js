@@ -55,7 +55,7 @@ class CommandHandler extends BaseEvent {
 			});
 		}
 
-		client.logger.log(`User ${interaction.user.tag} used ${command.command.name} in ${interaction.guild.name} with arguments: ${interaction.options.data.map(arg => { return `${arg.name}: ${arg.value}`; }).join(", ")}`, "cmd");
+		client.logger.log(`User ${interaction.user.tag} used ${command.command.name} in ${interaction.guild.name} with arguments: ${interaction.options.data ? interaction.options.data.map(arg => { return `${arg.name}: ${arg.value}`; }).join(", ") : "no args"}`, "cmd");
 
 		return command.execute(client, interaction, data);
 	}
