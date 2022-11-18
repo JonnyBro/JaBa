@@ -41,7 +41,7 @@ class Selectroles extends BaseCommand {
 	 * @param {import("../../base/JaBa")} client
 	 */
 	async onLoad(client) {
-		client.on("interactionCreate", interaction => {
+		client.on("interactionCreate", async interaction => {
 			if (!interaction.isSelectMenu()) return;
 
 			if (interaction.customId === "auto_roles") {
@@ -50,11 +50,11 @@ class Selectroles extends BaseCommand {
 				});
 
 				for (const id of removed) {
-					interaction.member.roles.remove(id.value);
+					await interaction.member.roles.remove(id.value);
 				}
 
 				for (const id of interaction.values) {
-					interaction.member.roles.add(id);
+					await interaction.member.roles.add(id);
 				}
 
 				interaction.reply({
