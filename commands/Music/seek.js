@@ -39,8 +39,10 @@ class Seek extends BaseCommand {
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 		const time = interaction.options.getInteger("time");
 
-		queue.seek(time)
-			.then(() => interaction.replyT("music/seek:SUCCESS", { time: `${time} ${client.getNoun(time, interaction.translate("misc:NOUNS:SECONDS:1"), interaction.translate("misc:NOUNS:SECONDS:2"), interaction.translate("misc:NOUNS:SECONDS:5"))}` }));
+		queue.seek(time * 1000);
+		interaction.success("music/seek:SUCCESS", {
+			time: `**${time}** ${client.getNoun(time, interaction.translate("misc:NOUNS:SECONDS:1"), interaction.translate("misc:NOUNS:SECONDS:2"), interaction.translate("misc:NOUNS:SECONDS:5"))}`
+		});
 	}
 }
 

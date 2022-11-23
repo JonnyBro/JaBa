@@ -36,8 +36,8 @@ class Shuffle extends BaseCommand {
 		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { ephemeral: true });
 
-		const shuffled = queue.shuffle();
-		if (shuffled) interaction.success("music/shuffle:SUCCESS");
+		queue.shuffle();
+		interaction.success("music/shuffle:SUCCESS");
 	}
 }
 
