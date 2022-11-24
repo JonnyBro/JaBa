@@ -29,7 +29,7 @@ class MessageCreate extends BaseEvent {
 			});
 			message.guild.data = data.guildData = guild;
 		}
-		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) return message.replyT("misc:HELLO_SERVER", { username: message.author.username });
+		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) return message.replyT("misc:HELLO_SERVER", null, { mention: true });
 		if (message.guild) {
 			const memberData = await client.findOrCreateMember({
 				id: message.author.id,
