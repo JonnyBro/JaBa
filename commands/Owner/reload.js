@@ -15,7 +15,7 @@ class Reload extends BaseCommand {
 				.setDescription(client.translate("owner/reload:DESCRIPTION"))
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("command")
-					.setDescription(client.translate("owner/reload:COMMAND"))
+					.setDescription(client.translate("common:COMMAND"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

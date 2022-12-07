@@ -22,3 +22,6 @@
 # Node modules
 node_modules
 yarn.lock
+
+# Backups
+/.backup

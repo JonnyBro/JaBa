@@ -35,9 +35,9 @@ class Warn extends BaseCommand {
 		const member = interaction.targetMember;
 		const memberPosition = member.roles.highest.position;
 		const moderationPosition = interaction.member.roles.highest.position;
-		if (member.user.bot) return;
-		if (member.id === interaction.member.id) return interaction.error("moderation/warn:YOURSELF");
-		if (interaction.guild.ownerId !== interaction.member.id && !(moderationPosition > memberPosition)) return interaction.error("moderation/ban:SUPERIOR");
+		if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
+		if (member.id === interaction.member.id) return interaction.error("moderation/warn:YOURSELF", null, { ephemeral: true });
+		if (interaction.guild.ownerId !== interaction.member.id && !(moderationPosition > memberPosition)) return interaction.error("moderation/ban:SUPERIOR", null, { ephemeral: true });
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
@@ -46,9 +46,7 @@ class Warn extends BaseCommand {
 
 		const modal = new ModalBuilder()
 			.setCustomId("warn_modal")
-			.setTitle(interaction.translate("moderation/warn:MODAL_TITLE", {
-				nickname: member.user.tag
-			}));
+			.setTitle(interaction.translate("moderation/warn:MODAL_TITLE", { nickname: member.user.tag }).normalize("NFKD"));
 
 		const reasonInput = new TextInputBuilder()
 			.setCustomId("warn_reason")
@@ -115,7 +113,7 @@ class Warn extends BaseCommand {
 							count: data.guildData.casesCount
 						})
 					})
-						.setColor("#e02316");
+						.setColor(client.config.embed.color);
 					interaction.guild.members.ban(member);
 					interaction.success("moderation/setwarns:AUTO_BAN", {
 						username: member.user.tag,
@@ -140,7 +138,7 @@ class Warn extends BaseCommand {
 							count: data.guildData.casesCount
 						})
 					})
-						.setColor("#e88709");
+						.setColor(client.config.embed.color);
 					member.kick().catch(() => {});
 					interaction.success("moderation/setwarns:AUTO_KICK", {
 						username: member.user.tag,
@@ -163,7 +161,7 @@ class Warn extends BaseCommand {
 				name: interaction.translate("moderation/warn:CASE", {
 					caseNumber: data.guildData.casesCount
 				})
-			}).setColor("#8c14e2");
+			}).setColor(client.config.embed.color);
 
 			submitted.reply({
 				content: interaction.translate("moderation/warn:WARNED", {

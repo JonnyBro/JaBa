@@ -14,7 +14,7 @@ class Help extends BaseCommand {
 				.setDMPermission(true)
 				.addStringOption(option =>
 					option.setName("command")
-						.setDescription(client.translate("owner/reload:COMMAND"))),
+						.setDescription(client.translate("common:COMMAND"))),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false
@@ -40,13 +40,7 @@ class Help extends BaseCommand {
 		const categories = [];
 		const command = interaction.options.getString("command");
 
-		if (command) {
-			const embed = generateCommandHelp(interaction, command);
-
-			return interaction.editReply({
-				embeds: [embed]
-			});
-		}
+		if (command) return interaction.editReply({ embeds: [ generateCommandHelp(interaction, command) ] });
 
 		commands.forEach(c => {
 			if (!categories.includes(c.category)) {
@@ -80,41 +74,37 @@ class Help extends BaseCommand {
 		const collector = msg.createMessageComponentCollector({ filter, idle: (15 * 1000) });
 
 		collector.on("collect", async i => {
-			if (i.isSelectMenu() && (i.customId === "help_category_select" || i.customId === "help_commands_select")) {
+			if (i.isSelectMenu() && i.customId === "help_category_select") {
 				i.deferUpdate();
 
 				const arg = i?.values[0];
+				const categoryCommands = commands.filter(cmd => cmd.category === arg).map(c => {
+					return {
+						name: `**${c.command.name}**`,
+						value: interaction.translate(`${arg.toLowerCase()}/${c.command.name}:DESCRIPTION`)
+					};
+				});
 
-				if (categories.includes(arg)) {
-					const categoryCommands = commands.filter(cmd => cmd.category === arg).map(c => {
-						return {
-							label: c.command.name,
-							value: c.command.name
-						};
-					});
+				const embed = new EmbedBuilder()
+					.setColor(client.config.embed.color)
+					.setFooter({
+						text: client.config.embed.footer
+					})
+					.setAuthor({
+						name: interaction.translate("general/help:COMMANDS_IN", { category: arg })
+					})
+					.addFields(categoryCommands)
+					.addFields([
+						{
+							name: "\u200B",
+							value: interaction.translate("general/help:INFO")
+						}
+					]);
 
-					const commandsRow = new ActionRowBuilder()
-						.addComponents(
-							new SelectMenuBuilder()
-								.setCustomId("help_commands_select")
-								.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
-								.addOptions(categoryCommands)
-						);
-
-					return await interaction.editReply({
-						content: interaction.translate("general/help:COMMANDS_IN", {
-							category: arg
-						}),
-						components: [commandsRow]
-					});
-				} else {
-					const embed = generateCommandHelp(interaction, arg);
-					return interaction.editReply({
-						content: null,
-						components: [],
-						embeds: [embed]
-					});
-				}
+				return interaction.editReply({
+					content: null,
+					embeds: [embed]
+				});
 			}
 		});
 
