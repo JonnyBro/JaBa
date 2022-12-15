@@ -5,7 +5,7 @@ const { GatewayIntentBits } = require("discord.js"),
 
 const client = new JaBa({
 	intents: [ GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildBans, GatewayIntentBits.GuildEmojisAndStickers, GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildInvites, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildMessageTyping, GatewayIntentBits.MessageContent, GatewayIntentBits.DirectMessageTyping, GatewayIntentBits.DirectMessages, GatewayIntentBits.DirectMessageReactions ],
-	allowedMentions: { parse: ["everyone", "roles", "users"] }
+	allowedMentions: { parse: ["everyone", "roles", "users"] },
 });
 
 (async () => {

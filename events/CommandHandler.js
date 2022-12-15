@@ -5,7 +5,7 @@ class CommandHandler extends BaseEvent {
 	constructor() {
 		super({
 			name: "interactionCreate",
-			once: false
+			once: false,
 		});
 	}
 
@@ -21,7 +21,7 @@ class CommandHandler extends BaseEvent {
 		const data = [];
 
 		const userData = await client.findOrCreateUser({
-			id: interaction.user.id
+			id: interaction.user.id,
 		});
 		data.userData = userData;
 
@@ -30,13 +30,13 @@ class CommandHandler extends BaseEvent {
 
 		if (interaction.inGuild()) {
 			const guildData = await client.findOrCreateGuild({
-				id: interaction.guildId
+				id: interaction.guildId,
 			});
 			interaction.guild.data = data.guildData = guildData;
 
 			const memberData = await client.findOrCreateMember({
 				id: interaction.member.id,
-				guildId: interaction.guildId
+				guildId: interaction.guildId,
 			});
 			data.memberData = memberData;
 		}
@@ -50,8 +50,8 @@ class CommandHandler extends BaseEvent {
 				content: interaction.user.toString(),
 				files: [{
 					name: "achievement_unlocked2.png",
-					attachment: "./assets/img/achievements/achievement_unlocked2.png"
-				}]
+					attachment: "./assets/img/achievements/achievement_unlocked2.png",
+				}],
 			});
 		}
 

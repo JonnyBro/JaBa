@@ -18,7 +18,7 @@ class Minecraft extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -40,7 +40,7 @@ class Minecraft extends BaseCommand {
 		const ip = interaction.options.getString("ip");
 		const options = {
 			type: "minecraft",
-			host: ip
+			host: ip,
 		};
 
 		if (ip.split(":").length > 1) {
@@ -49,7 +49,7 @@ class Minecraft extends BaseCommand {
 			options.port = splitIp[1];
 		}
 
-		var res = await gamedig.query(options).catch(() => {});
+		let res = await gamedig.query(options).catch(() => {});
 
 		if (!res) {
 			options.type = "minecraftpe";
@@ -60,41 +60,41 @@ class Minecraft extends BaseCommand {
 
 		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: res.name
+				name: res.name,
 			})
 			.addFields([
 				{
 					name: interaction.translate("general/minecraft:FIELD_STATUS"),
-					value: interaction.translate("general/minecraft:ONLINE")
+					value: interaction.translate("general/minecraft:ONLINE"),
 				},
 				{
 					name: interaction.translate("general/minecraft:FIELD_CONNECTED"),
-					value: `**${(res.raw.players ? res.raw.players.online : res.players.length)}** ${client.getNoun((res.raw.players ? res.raw.players.online : res.players.length), interaction.translate("misc:NOUNS:PLAYERS:1"), interaction.translate("misc:NOUNS:PLAYERS:2"), interaction.translate("misc:NOUNS:PLAYERS:5"))} / **${(res.raw.players ? res.raw.players.max : res.maxplayers)}** ${client.getNoun((res.raw.players ? res.raw.players.max : res.maxplayers), interaction.translate("misc:NOUNS:PLAYERS:1"), interaction.translate("misc:NOUNS:PLAYERS:2"), interaction.translate("misc:NOUNS:PLAYERS:5"))}`
+					value: `**${(res.raw.players ? res.raw.players.online : res.players.length)}** ${client.getNoun((res.raw.players ? res.raw.players.online : res.players.length), interaction.translate("misc:NOUNS:PLAYERS:1"), interaction.translate("misc:NOUNS:PLAYERS:2"), interaction.translate("misc:NOUNS:PLAYERS:5"))} / **${(res.raw.players ? res.raw.players.max : res.maxplayers)}** ${client.getNoun((res.raw.players ? res.raw.players.max : res.maxplayers), interaction.translate("misc:NOUNS:PLAYERS:1"), interaction.translate("misc:NOUNS:PLAYERS:2"), interaction.translate("misc:NOUNS:PLAYERS:5"))}`,
 				},
 				{
 					name: interaction.translate("general/minecraft:FIELD_IP"),
 					value: res.connect,
-					inline: true
+					inline: true,
 				},
 				{
 					name: interaction.translate("general/minecraft:FIELD_VERSION"),
 					value: res.raw.vanilla.raw.version.name,
-					inline: true
+					inline: true,
 
 				},
 				{
 					name: interaction.translate("general/minecraft:FIELD_PING"),
-					value: res.raw.vanilla.ping.toString()
-				}
+					value: res.raw.vanilla.ping.toString(),
+				},
 			])
 			.setColor(client.config.embed.color)
 			.setThumbnail(`https://eu.mc-api.net/v3/server/favicon/${ip}`)
 			.setFooter({
-				text: client.config.embed.footer
+				text: client.config.embed.footer,
 			});
 
 		interaction.editReply({
-			embeds: [embed]
+			embeds: [embed],
 		});
 	}
 }

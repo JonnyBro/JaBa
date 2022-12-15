@@ -17,7 +17,7 @@ class Eval extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: true
+			ownerOnly: true,
 		});
 	}
 	/**
@@ -45,7 +45,7 @@ class Eval extends BaseCommand {
 
 			if (output.includes(client.token)) output = output.replace(client.token, "T0K3N");
 			interaction.editReply({
-				content: "```js\n" + output + "```"
+				content: "```js\n" + output + "```",
 			});
 		}).catch(err => {
 			console.error(err);
@@ -53,7 +53,7 @@ class Eval extends BaseCommand {
 
 			if (err.includes(client.token)) err = err.replace(client.token, "T0K3N");
 			interaction.editReply({
-				content: "```js\n" + err + "```"
+				content: "```js\n" + err + "```",
 			});
 		});
 	}

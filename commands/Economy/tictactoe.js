@@ -18,7 +18,7 @@ class TicTacToe extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -38,11 +38,11 @@ class TicTacToe extends BaseCommand {
 		tictactoe(interaction, {
 			resultBtn: true,
 			embedColor: client.config.embed.color,
-			embedFoot: client.config.embed.footer
+			embedFoot: client.config.embed.footer,
 		}).then(async winner => {
 			const memberData = await client.findOrCreateMember({
 				id: winner.id,
-				guildId: interaction.guildId
+				guildId: interaction.guildId,
 			});
 
 			memberData.money += 100;
@@ -52,7 +52,7 @@ class TicTacToe extends BaseCommand {
 				user: interaction.translate("economy/transactions:TTT"),
 				amount: 100,
 				date: Date.now(),
-				type: "got"
+				type: "got",
 			};
 			memberData.transactions.push(info);
 		});

@@ -7,13 +7,12 @@ const express = require("express"),
 router.get("/:serverID", CheckAuth, async(req, res) => {
 	// Check if the user has the permissions to edit this guild
 	const guild = req.client.guilds.cache.get(req.params.serverID);
-	if (!guild || !req.userInfos.displayedGuilds || !req.userInfos.displayedGuilds.find((g) => g.id === req.params.serverID)) {
+	if (!guild || !req.userInfos.displayedGuilds || !req.userInfos.displayedGuilds.find((g) => g.id === req.params.serverID))
 		return res.render("404", {
 			user: req.userInfos,
 			translate: req.translate,
-			currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`
+			currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`,
 		});
-	}
 
 	// Fetch guild informations
 	const guildInfos = await utils.fetchGuild(guild.id, req.client, req.user.guilds);
@@ -26,20 +25,19 @@ router.get("/:serverID", CheckAuth, async(req, res) => {
 		translate: req.translate,
 		ChannelType,
 		bot: req.client,
-		currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`
+		currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`,
 	});
 });
 
 router.post("/:serverID", CheckAuth, async(req, res) => {
 	// Check if the user has the permissions to edit this guild
 	const guild = req.client.guilds.cache.get(req.params.serverID);
-	if (!guild || !req.userInfos.displayedGuilds || !req.userInfos.displayedGuilds.find((g) => g.id === req.params.serverID)) {
+	if (!guild || !req.userInfos.displayedGuilds || !req.userInfos.displayedGuilds.find((g) => g.id === req.params.serverID))
 		return res.render("404", {
 			user: req.userInfos,
 			translate: req.translate,
-			currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`
+			currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`,
 		});
-	}
 
 	const guildData = await req.client.findOrCreateGuild({ id: guild.id });
 	const data = req.body;
@@ -57,7 +55,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 			enabled: true,
 			message: data.message,
 			channel: guild.channels.cache.find(ch => "#" + ch.name === data.channel).id,
-			withImage: data.withImage === "on"
+			withImage: data.withImage === "on",
 		};
 		guildData.plugins.welcome = welcome;
 		guildData.markModified("plugins.welcome");
@@ -69,7 +67,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 			enabled: false,
 			message: null,
 			channel: null,
-			withImage: null
+			withImage: null,
 		};
 		guildData.plugins.welcome = welcome;
 		guildData.markModified("plugins.welcome");
@@ -81,7 +79,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 			enabled: true,
 			message: data.message,
 			channel: guild.channels.cache.find(ch => "#" + ch.name === data.channel).id,
-			withImage: data.withImage === "on"
+			withImage: data.withImage === "on",
 		};
 		guildData.plugins.goodbye = goodbye;
 		guildData.markModified("plugins.goodbye");
@@ -93,7 +91,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 			enabled: false,
 			message: null,
 			channel: null,
-			withImage: null
+			withImage: null,
 		};
 		guildData.plugins.goodbye = goodbye;
 		guildData.markModified("plugins.goodbye");
@@ -103,7 +101,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 	if (Object.prototype.hasOwnProperty.call(data, "autoroleEnable") || Object.prototype.hasOwnProperty.call(data, "autoroleUpdate")) {
 		const autorole = {
 			enabled: true,
-			role: guild.roles.cache.find(r => "@" + r.name === data.role).id
+			role: guild.roles.cache.find(r => "@" + r.name === data.role).id,
 		};
 		guildData.plugins.autorole = autorole;
 		guildData.markModified("plugins.autorole");
@@ -113,7 +111,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 	if (Object.prototype.hasOwnProperty.call(data, "autoroleDisable")) {
 		const autorole = {
 			enabled: false,
-			role: null
+			role: null,
 		};
 		guildData.plugins.autorole = autorole;
 		guildData.markModified("plugins.autorole");

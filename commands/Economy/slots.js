@@ -17,7 +17,7 @@ class Slots extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -48,7 +48,7 @@ class Slots extends BaseCommand {
 		const colonnes = [
 			client.functions.shuffle(fruits),
 			client.functions.shuffle(fruits),
-			client.functions.shuffle(fruits)
+			client.functions.shuffle(fruits),
 		];
 
 		function getCredits(number, isJackpot) {
@@ -87,7 +87,7 @@ class Slots extends BaseCommand {
 			if ((colonnes[0][i2] == colonnes[1][j2]) && (colonnes[1][j2] == colonnes[2][k2])) {
 				msg += "| : : :  **" + (interaction.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
 				await interaction.editReply({
-					content: msg
+					content: msg,
 				});
 
 				const credits = getCredits(amount, true);
@@ -95,8 +95,8 @@ class Slots extends BaseCommand {
 					content: "**!! ДЖЕКПОТ !!**\n" + interaction.translate("economy/slots:VICTORY", {
 						money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 						won: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-						user: interaction.member.toString()
-					})
+						user: interaction.member.toString(),
+					}),
 				});
 
 				const toAdd = credits - amount;
@@ -107,7 +107,7 @@ class Slots extends BaseCommand {
 					user: interaction.translate("economy/slots:DESCRIPTION"),
 					amount: toAdd,
 					date: Date.now(),
-					type: "got"
+					type: "got",
 				};
 				data.memberData.transactions.push(info);
 
@@ -118,8 +118,8 @@ class Slots extends BaseCommand {
 						interaction.followUp({
 							files: [{
 								name: "achievement_unlocked4.png",
-								attachment: "./assets/img/achievements/achievement_unlocked4.png"
-							}]
+								attachment: "./assets/img/achievements/achievement_unlocked4.png",
+							}],
 						});
 					}
 					data.userData.markModified("achievements.slots");
@@ -132,7 +132,7 @@ class Slots extends BaseCommand {
 			if (colonnes[0][i2] == colonnes[1][j2] || colonnes[1][j2] == colonnes[2][k2] || colonnes[0][i2] == colonnes[2][k2]) {
 				msg += "| : : :  **" + (interaction.translate("common:VICTORY").toUpperCase()) + "**  : : : |";
 				await interaction.editReply({
-					content: msg
+					content: msg,
 				});
 
 				const credits = getCredits(amount, false);
@@ -140,8 +140,8 @@ class Slots extends BaseCommand {
 					content: interaction.translate("economy/slots:VICTORY", {
 						money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 						won: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-						user: interaction.member.toString()
-					})
+						user: interaction.member.toString(),
+					}),
 				});
 				const toAdd = credits - amount;
 
@@ -149,7 +149,7 @@ class Slots extends BaseCommand {
 					user: interaction.translate("economy/slots:DESCRIPTION"),
 					amount: toAdd,
 					date: Date.now(),
-					type: "got"
+					type: "got",
 				};
 				data.memberData.transactions.push(info);
 				data.memberData.money += toAdd;
@@ -161,8 +161,8 @@ class Slots extends BaseCommand {
 						interaction.followUp({
 							files: [{
 								name: "achievement_unlocked4.png",
-								attachment: "./assets/img/achievements/achievement_unlocked4.png"
-							}]
+								attachment: "./assets/img/achievements/achievement_unlocked4.png",
+							}],
 						});
 					}
 					data.userData.markModified("achievements.slots");
@@ -176,15 +176,15 @@ class Slots extends BaseCommand {
 			interaction.followUp({
 				content: interaction.translate("economy/slots:DEFEAT", {
 					money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-					user: interaction.member.toString()
-				})
+					user: interaction.member.toString(),
+				}),
 			});
 
 			const info = {
 				user: interaction.translate("economy/slots:DESCRIPTION"),
 				amount: amount,
 				date: Date.now(),
-				type: "send"
+				type: "send",
 			};
 			data.memberData.transactions.push(info);
 			data.memberData.money -= amount;
@@ -216,7 +216,7 @@ class Slots extends BaseCommand {
 			msg += colonnes[0][i3] + " : " + colonnes[1][j3] + " : " + colonnes[2][k3] + "\n";
 
 			await interaction.editReply({
-				content: msg
+				content: msg,
 			});
 		}
 	}

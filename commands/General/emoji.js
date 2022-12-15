@@ -17,7 +17,7 @@ class Emoji extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -40,34 +40,34 @@ class Emoji extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("general/emoji:TITLE", {
-					emoji: parsedEmoji.name
-				})
+					emoji: parsedEmoji.name,
+				}),
 			})
 			.setColor(client.config.embed.color)
 			.setFooter({
-				text: client.config.embed.footer
+				text: client.config.embed.footer,
 			})
 			.addFields([
 				{
 					name: interaction.translate("common:NAME"),
-					value: parsedEmoji.name
+					value: parsedEmoji.name,
 				},
 				{
 					name: interaction.translate("general/emoji:ANIMATED"),
-					value: parsedEmoji.animated ? interaction.translate("common:YES") : interaction.translate("common:NO")
+					value: parsedEmoji.animated ? interaction.translate("common:YES") : interaction.translate("common:NO"),
 				},
 				{
 					name: interaction.translate("common:ID"),
-					value: parsedEmoji.id?.toString() || interaction.translate("general/emoji:STANDART")
+					value: parsedEmoji.id?.toString() || interaction.translate("general/emoji:STANDART"),
 				},
 				{
 					name: interaction.translate("general/emoji:LINK"),
-					value: `https://cdn.discordapp.com/emojis/${parsedEmoji.id}.${parsedEmoji.animated ? "gif" : "png"}`
-				}
+					value: `https://cdn.discordapp.com/emojis/${parsedEmoji.id}.${parsedEmoji.animated ? "gif" : "png"}`,
+				},
 			]);
 
 		interaction.reply({
-			embeds: [embed]
+			embeds: [embed],
 		});
 	}
 }

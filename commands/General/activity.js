@@ -15,7 +15,7 @@ class Activity extends BaseCommand {
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -43,7 +43,7 @@ class Activity extends BaseCommand {
 		const activities = defaultApplications.map(a => {
 			return {
 				label: `${a.name} ${a.premium_tier_level ? `(${interaction.translate("general/activity:BOOST_NEEDED")})` : ""}`,
-				value: a.id
+				value: a.id,
 			};
 		});
 
@@ -52,12 +52,12 @@ class Activity extends BaseCommand {
 				new SelectMenuBuilder()
 					.setCustomId("activity_select")
 					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
-					.addOptions(activities)
+					.addOptions(activities),
 			);
 
 		await interaction.editReply({
 			content: interaction.translate("general/activity:AVAILABLE_ACTIVITIES"),
-			components: [row]
+			components: [row],
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
@@ -73,23 +73,23 @@ class Activity extends BaseCommand {
 					.setColor(client.config.embed.color)
 					.setDescription(`**[${interaction.translate("general/activity:CLICK_HERE", {
 						activity: defaultApplications.find(a => a.id === activity).name,
-						channel: voice.name
+						channel: voice.name,
 					})}](${invite.code})**`)
 					.setFooter({
-						text: client.config.embed.footer
+						text: client.config.embed.footer,
 					})
 					.setTimestamp();
 
 				await interaction.editReply({
 					embeds: [embed],
-					components: []
+					components: [],
 				});
 			}
 		});
 
 		collector.on("end", () => {
 			return interaction.editReply({
-				components: []
+				components: [],
 			});
 		});
 	}

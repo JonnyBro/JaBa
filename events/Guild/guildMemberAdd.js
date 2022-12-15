@@ -8,9 +8,8 @@ Canvas.registerFont(resolve("./assets/fonts/KeepCalm-Medium.ttf"), { family: "Ke
 
 const applyText = (canvas, text, defaultFontSize, width, font) => {
 	const ctx = canvas.getContext("2d");
-	do {
-		ctx.font = `${(defaultFontSize -= 1)}px ${font}`;
-	} while (ctx.measureText(text).width > width);
+	do ctx.font = `${(defaultFontSize -= 1)}px ${font}`;
+	while (ctx.measureText(text).width > width);
 
 	return ctx.font;
 };
@@ -19,7 +18,7 @@ class GuildMemberAdd extends BaseEvent {
 	constructor() {
 		super({
 			name: "guildMemberAdd",
-			once: false
+			once: false,
 		});
 	}
 
@@ -34,23 +33,22 @@ class GuildMemberAdd extends BaseEvent {
 		await member.guild.members.fetch();
 
 		const guildData = await client.findOrCreateGuild({
-			id: member.guild.id
+			id: member.guild.id,
 		});
 		member.guild.data = guildData;
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildId: member.guild.id
+			guildId: member.guild.id,
 		});
-		if (memberData.mute.muted && memberData.mute.endDate > Date.now()) {
+		if (memberData.mute.muted && memberData.mute.endDate > Date.now())
 			member.guild.channels.cache.forEach((channel) => {
 				channel.permissionOverwrites.edit(member.id, {
 					SEND_MESSAGES: false,
 					ADD_REACTIONS: false,
-					CONNECT: false
+					CONNECT: false,
 				}).catch(() => {});
 			});
-		}
 
 		if (guildData.plugins.autorole.enabled) member.roles.add(guildData.plugins.autorole.role);
 
@@ -94,11 +92,11 @@ class GuildMemberAdd extends BaseEvent {
 
 					// Draw server name
 					ctx.font = applyText(canvas, client.translate("administration/welcome:IMG_WELCOME", {
-						server: member.guild.name
+						server: member.guild.name,
 					}, member.guild.data.language), 53, 625, "RubikMonoOne");
 
 					ctx.fillText(client.translate("administration/welcome:IMG_WELCOME", {
-						server: member.guild.name
+						server: member.guild.name,
 					}, member.guild.data.language), canvas.width - 700, canvas.height - 70);
 
 					// Draw discriminator
@@ -131,20 +129,16 @@ class GuildMemberAdd extends BaseEvent {
 					ctx.closePath();
 					ctx.clip();
 					const avatar = await Canvas.loadImage(member.displayAvatarURL({
-						extension: "jpg"
+						extension: "jpg",
 					}));
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 
 					const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: "welcome-image.png" });
 					channel.send({
 						content: message,
-						files: [attachment]
+						files: [attachment],
 					});
-				} else {
-					channel.send({
-						content: message
-					});
-				}
+				} else channel.send({ content: message });
 			}
 		}
 	}

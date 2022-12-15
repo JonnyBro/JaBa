@@ -17,7 +17,7 @@ class Help extends BaseCommand {
 						.setDescription(client.translate("common:COMMAND"))),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -52,7 +52,7 @@ class Help extends BaseCommand {
 		const categoriesRows = categories.sort().map(c => {
 			return {
 				label: `${c} (${commands.filter(cmd => cmd.category === c).length})`,
-				value: c
+				value: c,
 			};
 		});
 
@@ -61,13 +61,13 @@ class Help extends BaseCommand {
 				new SelectMenuBuilder()
 					.setCustomId("help_category_select")
 					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
-					.addOptions(categoriesRows)
+					.addOptions(categoriesRows),
 			);
 
 		const msg = await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
 			fetchReply: true,
-			components: [row]
+			components: [row],
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
@@ -81,36 +81,36 @@ class Help extends BaseCommand {
 				const categoryCommands = commands.filter(cmd => cmd.category === arg).map(c => {
 					return {
 						name: `**${c.command.name}**`,
-						value: interaction.translate(`${arg.toLowerCase()}/${c.command.name}:DESCRIPTION`)
+						value: interaction.translate(`${arg.toLowerCase()}/${c.command.name}:DESCRIPTION`),
 					};
 				});
 
 				const embed = new EmbedBuilder()
 					.setColor(client.config.embed.color)
 					.setFooter({
-						text: client.config.embed.footer
+						text: client.config.embed.footer,
 					})
 					.setAuthor({
-						name: interaction.translate("general/help:COMMANDS_IN", { category: arg })
+						name: interaction.translate("general/help:COMMANDS_IN", { category: arg }),
 					})
 					.addFields(categoryCommands)
 					.addFields([
 						{
 							name: "\u200B",
-							value: interaction.translate("general/help:INFO")
-						}
+							value: interaction.translate("general/help:INFO"),
+						},
 					]);
 
 				return interaction.editReply({
 					content: null,
-					embeds: [embed]
+					embeds: [embed],
 				});
 			}
 		});
 
 		collector.on("end", () => {
 			return interaction.editReply({
-				components: []
+				components: [],
 			});
 		});
 	}
@@ -132,21 +132,21 @@ function generateCommandHelp(interaction, command) {
 	const embed = new EmbedBuilder()
 		.setAuthor({
 			name: interaction.translate("general/help:CMD_TITLE", {
-				cmd: cmd.command.name
-			})
+				cmd: cmd.command.name,
+			}),
 		})
 		.addFields([
 			{
 				name: interaction.translate("general/help:FIELD_DESCRIPTION"),
-				value: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:DESCRIPTION`)
+				value: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:DESCRIPTION`),
 			},
 			{
 				name: interaction.translate("general/help:FIELD_USAGE"),
-				value: `*${cmd.command.dm_permission === false ? interaction.translate("general/help:GUILD_ONLY") : interaction.translate("general/help:NOT_GUILD_ONLY")}*\n\n` + usage
+				value: `*${cmd.command.dm_permission === false ? interaction.translate("general/help:GUILD_ONLY") : interaction.translate("general/help:NOT_GUILD_ONLY")}*\n\n` + usage,
 			},
 			{
 				name: interaction.translate("general/help:FIELD_EXAMPLES"),
-				value: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:EXAMPLES`)
+				value: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:EXAMPLES`),
 			},
 			// {
 			// 	name: interaction.translate("general/help:FIELD_ALIASES"),
@@ -154,12 +154,12 @@ function generateCommandHelp(interaction, command) {
 			// },
 			{
 				name: interaction.translate("general/help:FIELD_PERMISSIONS"),
-				value: cmd.command.default_member_permissions > 0 ? interaction.translate(`misc:PERMISSIONS:${getPermName(cmd.command.default_member_permissions)}`) : interaction.translate("general/help:NO_REQUIRED_PERMISSION")
-			}
+				value: cmd.command.default_member_permissions > 0 ? interaction.translate(`misc:PERMISSIONS:${getPermName(cmd.command.default_member_permissions)}`) : interaction.translate("general/help:NO_REQUIRED_PERMISSION"),
+			},
 		])
 		.setColor(interaction.client.config.embed.color)
 		.setFooter({
-			text: interaction.client.config.embed.footer
+			text: interaction.client.config.embed.footer,
 		});
 
 	return embed;

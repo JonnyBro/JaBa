@@ -15,7 +15,7 @@ class Memes extends BaseCommand {
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -37,8 +37,8 @@ class Memes extends BaseCommand {
 		const tags = ["memes", "dankmemes", "me_irl", "wholesomememes"].map(tag =>
 			JSON.parse(JSON.stringify({
 				label: tag,
-				value: tag
-			}))
+				value: tag,
+			})),
 		);
 
 		const row = new ActionRowBuilder()
@@ -46,13 +46,13 @@ class Memes extends BaseCommand {
 				new SelectMenuBuilder()
 					.setCustomId("memes_select")
 					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
-					.addOptions(tags)
+					.addOptions(tags),
 			);
 
 		const msg = await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
 			fetchReply: true,
-			components: [row]
+			components: [row],
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
@@ -68,7 +68,7 @@ class Memes extends BaseCommand {
 				const embed = new EmbedBuilder()
 					.setColor(client.config.embed.color)
 					.setFooter({
-						text: client.config.embed.footer
+						text: client.config.embed.footer,
 					})
 					.setTitle(res.title)
 					.setDescription(`${interaction.translate("fun/memes:SUBREDDIT")}: **${res.subreddit}**\n${interaction.translate("common:AUTHOR")}: **${res.author}**\n${interaction.translate("fun/memes:UPS")}: **${res.ups}**`)
@@ -76,14 +76,14 @@ class Memes extends BaseCommand {
 					.setTimestamp();
 
 				await interaction.editReply({
-					embeds: [embed]
+					embeds: [embed],
 				});
 			}
 		});
 
 		collector.on("end", () => {
 			return interaction.editReply({
-				components: []
+				components: [],
 			});
 		});
 	}

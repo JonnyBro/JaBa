@@ -19,7 +19,7 @@ class Clips extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -43,7 +43,7 @@ class Clips extends BaseCommand {
 
 			if (err) {
 				interaction.editReply({
-					content: "```js\n" + err + "```"
+					content: "```js\n" + err + "```",
 				});
 				return console.log("Unable to read directory: " + err);
 			}
@@ -76,7 +76,7 @@ class Clips extends BaseCommand {
 				await interaction.editReply({
 					content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 					embeds: [embeds[currentPage]],
-					components: [row]
+					components: [row],
 				});
 
 				const filter = i => i.user.id === interaction.user.id;
@@ -92,7 +92,7 @@ class Clips extends BaseCommand {
 								interaction.editReply({
 									content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 									embeds: [embeds[currentPage]],
-									components: [row]
+									components: [row],
 								});
 							}
 						} else if (i.customId === "clips_next_page") {
@@ -103,7 +103,7 @@ class Clips extends BaseCommand {
 								interaction.editReply({
 									content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 									embeds: [embeds[currentPage]],
-									components: [row]
+									components: [row],
 								});
 							}
 						} else if (i.customId === "clips_jump_page") {
@@ -111,9 +111,9 @@ class Clips extends BaseCommand {
 
 							const msg = await interaction.followUp({
 								content: interaction.translate("misc:JUMP_TO_PAGE", {
-									length: embeds.length
+									length: embeds.length,
 								}),
-								fetchReply: true
+								fetchReply: true,
 							});
 
 							const filter = res => {
@@ -126,7 +126,7 @@ class Clips extends BaseCommand {
 									interaction.editReply({
 										content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 										embeds: [embeds[currentPage]],
-										components: [row]
+										components: [row],
 									});
 
 									if (collected.first().deletable) collected.first().delete();
@@ -150,7 +150,7 @@ class Clips extends BaseCommand {
 					});
 
 					return interaction.editReply({
-						components: [row]
+						components: [row],
 					});
 				});
 			} else {
@@ -165,7 +165,7 @@ class Clips extends BaseCommand {
 					const connection = joinVoiceChannel({
 						channelId: voice.id,
 						guildId: interaction.guild.id,
-						adapterCreator: interaction.guild.voiceAdapterCreator
+						adapterCreator: interaction.guild.voiceAdapterCreator,
 					});
 
 					const resource = createAudioResource(fs.createReadStream(`./clips/${query}.mp3`));
@@ -187,9 +187,9 @@ class Clips extends BaseCommand {
 
 				await interaction.editReply({
 					content: interaction.translate("music/clips:PLAYING", {
-						clip: query
+						clip: query,
 					}),
-					components: []
+					components: [],
 				});
 			}
 		});
@@ -215,7 +215,7 @@ function generateClipsEmbeds(interaction, clips) {
 		const embed = new EmbedBuilder()
 			.setColor(interaction.client.config.embed.color)
 			.setFooter({
-				text: interaction.client.config.embed.footer
+				text: interaction.client.config.embed.footer,
 			})
 			.setTitle(interaction.translate("music/clips:CLIPS_LIST"))
 			.setDescription(page)

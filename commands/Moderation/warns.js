@@ -18,7 +18,7 @@ class Warns extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -40,30 +40,30 @@ class Warns extends BaseCommand {
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildId: interaction.guildId
+			guildId: interaction.guildId,
 		});
 
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("moderation/warns:SANCTIONS_OF", {
-					member: member.nickname || member.user.username
+					member: member.nickname || member.user.username,
 				}),
 				iconURL: member.displayAvatarURL({
 					extension: "png",
-					size: 512
-				})
+					size: 512,
+				}),
 			})
 			.setColor(client.config.embed.color)
 			.setFooter({
-				text: client.config.embed.footer
+				text: client.config.embed.footer,
 			});
 
 		if (memberData.sanctions.length === 0) {
 			embed.setDescription(interaction.translate("moderation/warns:NO_SANCTIONS", {
-				member: member.nickname || member.user.username
+				member: member.nickname || member.user.username,
 			}));
 			return interaction.reply({
-				embeds: [embed]
+				embeds: [embed],
 			});
 		} else {
 			memberData.sanctions.forEach(sanction => {
@@ -71,13 +71,13 @@ class Warns extends BaseCommand {
 					{
 						name: sanction.type + " | #" + sanction.case,
 						value: `${interaction.translate("common:MODERATOR")}: <@${sanction.moderator}>\n${interaction.translate("common:REASON")}: ${sanction.reason}`,
-						inline: true
-					}
+						inline: true,
+					},
 				]);
 			});
 		}
 		interaction.reply({
-			embeds: [embed]
+			embeds: [embed],
 		});
 	}
 }

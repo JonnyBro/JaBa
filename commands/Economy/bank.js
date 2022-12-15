@@ -17,14 +17,14 @@ class Bank extends BaseCommand {
 					.setRequired(true)
 					.addChoices(
 						{ name: client.translate("economy/bank:DEPOSIT"), value: "deposit" },
-						{ name: client.translate("economy/bank:WITHDRAW"), value: "withdraw" }
+						{ name: client.translate("economy/bank:WITHDRAW"), value: "withdraw" },
 					))
 				.addStringOption(option => option.setName("credits")
 					.setDescription(client.translate("moderation/clear:OPTION"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -56,12 +56,12 @@ class Bank extends BaseCommand {
 				user: interaction.translate("economy/transactions:BANK"),
 				amount: credits,
 				date: Date.now(),
-				type: "send"
+				type: "send",
 			};
 			data.memberData.transactions.push(info);
 
 			interaction.success("economy/bank:SUCCESS_DEP", {
-				money: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`
+				money: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 			});
 		} else {
 			const credits = interaction.options.getString("credits") === "all" ? data.memberData.bankSold : interaction.options.getString("credits");
@@ -72,7 +72,7 @@ class Bank extends BaseCommand {
 				user: interaction.translate("economy/transactions:BANK"),
 				amount: credits,
 				date: Date.now(),
-				type: "got"
+				type: "got",
 			};
 
 			data.memberData.transactions.push(info);
@@ -82,7 +82,7 @@ class Bank extends BaseCommand {
 			await data.memberData.save();
 
 			interaction.success("economy/bank:SUCCESS_WD", {
-				money: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`
+				money: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 			});
 		}
 	}

@@ -17,7 +17,7 @@ class Afk extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -40,7 +40,7 @@ class Afk extends BaseCommand {
 		data.userData.save();
 
 		interaction.success("general/afk:SUCCESS", {
-			reason
+			reason,
 		}, { ephemeral: true });
 	}
 }

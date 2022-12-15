@@ -6,30 +6,29 @@ const express = require("express"),
 router.get("/:serverID", CheckAuth, async (req, res) => {
 	// Check if the user has the permissions to edit this guild
 	const guild = req.client.guilds.cache.get(req.params.serverID);
-	if (!guild) {
+	if (!guild)
 		return res.render("404", {
 			user: req.userInfos,
 			translate: req.translate,
-			currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`
+			currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`,
 		});
-	}
 
 	const memberData = await req.client.findOrCreateMember({ id: req.userInfos.id, guildId: guild.id });
 
 	// Fetch guild informations
 	const membersData = await req.client.membersData.find({
-			guildID: guild.id
+			guildID: guild.id,
 		}).lean(),
 		members = membersData.map((m) => {
 			return {
 				id: m.id,
-				money: m.money + m.bankSold
+				money: m.money + m.bankSold,
 			};
 		}).sort((a, b) => b.money - a.money);
 
 	const leaderboards = {
 		money: members,
-		level: utils.sortArrayOfObjects("level", membersData)
+		level: utils.sortArrayOfObjects("level", membersData),
 	};
 
 	for (const cat in leaderboards) {
@@ -39,7 +38,7 @@ router.get("/:serverID", CheckAuth, async (req, res) => {
 
 	const stats = {
 		money: await utils.fetchUsers(leaderboards.money, req.client),
-		level: await utils.fetchUsers(leaderboards.level, req.client)
+		level: await utils.fetchUsers(leaderboards.level, req.client),
 	};
 
 	res.render("stats/guild", {

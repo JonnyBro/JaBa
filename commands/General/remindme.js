@@ -22,7 +22,7 @@ class Remindme extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -49,7 +49,7 @@ class Remindme extends BaseCommand {
 		const rData = {
 			message: message,
 			createdAt: dateNow,
-			sendAt: dateNow + ms(time)
+			sendAt: dateNow + ms(time),
 		};
 
 		data.userData.reminds.push(rData);
@@ -59,7 +59,7 @@ class Remindme extends BaseCommand {
 
 		interaction.success("general/remindme:SAVED", {
 			message,
-			time: moment(rData.createdAt).locale(interaction.guild.data.language).format("dddd, Do MMMM YYYY, HH:mm:ss")
+			time: moment(rData.createdAt).locale(interaction.guild.data.language).format("dddd, Do MMMM YYYY, HH:mm:ss"),
 		}, { edit: true });
 	}
 }

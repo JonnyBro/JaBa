@@ -15,7 +15,7 @@ class Queue extends BaseCommand {
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -65,7 +65,7 @@ class Queue extends BaseCommand {
 		await interaction.reply({
 			content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 			embeds: [embeds[currentPage]],
-			components: [row]
+			components: [row],
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
@@ -82,7 +82,7 @@ class Queue extends BaseCommand {
 						interaction.editReply({
 							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 							embeds: [embeds[currentPage]],
-							components: [row]
+							components: [row],
 						});
 					}
 				} else if (i.customId === "queue_next_page") {
@@ -94,7 +94,7 @@ class Queue extends BaseCommand {
 						interaction.editReply({
 							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 							embeds: [embeds[currentPage]],
-							components: [row]
+							components: [row],
 						});
 					}
 				} else if (i.customId === "queue_jump_page") {
@@ -103,9 +103,9 @@ class Queue extends BaseCommand {
 
 					const msg = await interaction.followUp({
 						content: interaction.translate("misc:JUMP_TO_PAGE", {
-							length: embeds.length
+							length: embeds.length,
 						}),
-						fetchReply: true
+						fetchReply: true,
 					});
 
 					const filter = res => {
@@ -118,7 +118,7 @@ class Queue extends BaseCommand {
 							interaction.editReply({
 								content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 								embeds: [embeds[currentPage]],
-								components: [row]
+								components: [row],
 							});
 
 							if (collected.first().deletable) collected.first().delete();
@@ -142,7 +142,7 @@ class Queue extends BaseCommand {
 			});
 
 			return interaction.editReply({
-				components: [row]
+				components: [row],
 			});
 		});
 	}

@@ -17,7 +17,7 @@ class Selectroles extends BaseCommand {
 					.setDescription(client.translate("administration/selectroles:MESSAGE"))
 					.addStringOption(option => option.setName("text")
 						.setDescription(client.translate("common:MESSAGE"))
-						.setRequired(true))
+						.setRequired(true)),
 				)
 				.addSubcommand(subcommand => subcommand.setName("addrole")
 					.setDescription(client.translate("administration/selectroles:ADDROLE"))
@@ -29,11 +29,11 @@ class Selectroles extends BaseCommand {
 						.setRequired(true))
 					.addRoleOption(option => option.setName("role")
 						.setDescription(client.translate("common:ROLE"))
-						.setRequired(true))
+						.setRequired(true)),
 				),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -59,7 +59,7 @@ class Selectroles extends BaseCommand {
 
 				interaction.reply({
 					content: interaction.translate("administration/selectroles:ROLES_UPDATED", null, { ephemeral: true }),
-					ephemeral: true
+					ephemeral: true,
 				});
 			}
 		});
@@ -81,7 +81,7 @@ class Selectroles extends BaseCommand {
 			interaction.channel.send(text).then(message => {
 				interaction.success("administration/selectroles:MESSAGE_SENT", {
 					channel: interaction.channel.toString(),
-					message_id: message.id
+					message_id: message.id,
 				}, { edit: true });
 			});
 		} else if (command === "addrole") {
@@ -96,7 +96,7 @@ class Selectroles extends BaseCommand {
 
 			const option = [{
 				label: role.name,
-				value: role.id
+				value: role.id,
 			}];
 
 			const menu = row.components[0];
@@ -110,7 +110,7 @@ class Selectroles extends BaseCommand {
 						SelectMenuBuilder.from(menu)
 							.setMinValues(0)
 							.setMaxValues(menu.options.length + 1)
-							.addOptions(option)
+							.addOptions(option),
 					);
 			} else {
 				row.addComponents(
@@ -119,19 +119,19 @@ class Selectroles extends BaseCommand {
 						.setMinValues(0)
 						.setMaxValues(1)
 						.setPlaceholder(interaction.translate("common:AVAILABLE_OPTIONS"))
-						.addOptions(option)
+						.addOptions(option),
 				);
 			}
 
 			message.edit({
-				components: [row]
+				components: [row],
 			});
 
 			interaction.followUp({
 				content: interaction.translate("administration/selectroles:SUCCESS_ADDED", {
-					role: role.name
+					role: role.name,
 				}),
-				ephemeral: true
+				ephemeral: true,
 			});
 		}
 	}

@@ -3,14 +3,13 @@ const Canvas = require("canvas"),
 	{ AttachmentBuilder } = require("discord.js"),
 	{ resolve } = require("path");
 
-Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "RubikMonoOne"  });
+Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "RubikMonoOne" });
 Canvas.registerFont(resolve("./assets/fonts/KeepCalm-Medium.ttf"), { family: "KeepCalm" });
 
 const applyText = (canvas, text, defaultFontSize, width, font) => {
 	const ctx = canvas.getContext("2d");
-	do {
-		ctx.font = `${(defaultFontSize -= 1)}px ${font}`;
-	} while (ctx.measureText(text).width > width);
+	do ctx.font = `${(defaultFontSize -= 1)}px ${font}`;
+	while (ctx.measureText(text).width > width);
 
 	return ctx.font;
 };
@@ -19,7 +18,7 @@ class GuildMemberRemove extends BaseEvent {
 	constructor() {
 		super({
 			name: "guildMemberRemove",
-			once: false
+			once: false,
 		});
 	}
 
@@ -34,7 +33,7 @@ class GuildMemberRemove extends BaseEvent {
 		await member.guild.members.fetch();
 
 		const guildData = await client.findOrCreateGuild({
-			id: member.guild.id
+			id: member.guild.id,
 		});
 		member.guild.data = guildData;
 
@@ -78,11 +77,11 @@ class GuildMemberRemove extends BaseEvent {
 
 					// Draw server name
 					ctx.font = applyText(canvas, client.translate("administration/goodbye:IMG_GOODBYE", {
-						server: member.guild.name
+						server: member.guild.name,
 					}, member.guild.data.language), 53, 625, "RubikMonoOne");
 
 					ctx.fillText(client.translate("administration/goodbye:IMG_GOODBYE", {
-						server: member.guild.name
+						server: member.guild.name,
 					}, member.guild.data.language), canvas.width - 700, canvas.height - 70);
 
 					// Draw discriminator
@@ -116,20 +115,16 @@ class GuildMemberRemove extends BaseEvent {
 					ctx.clip();
 					const avatar = await Canvas.loadImage(member.displayAvatarURL({
 						extension: "png",
-						size: 512
+						size: 512,
 					}));
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 
 					const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: "goodbye-image.png" });
 					channel.send({
 						content: message,
-						files: [attachment]
+						files: [attachment],
 					});
-				} else {
-					channel.send({
-						content: message
-					});
-				}
+				} else channel.send({ content: message });
 			}
 		}
 	}

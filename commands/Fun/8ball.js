@@ -17,7 +17,7 @@ class Eightball extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -42,7 +42,7 @@ class Eightball extends BaseCommand {
 
 		interaction.replyT("fun/8ball:ANSWER", {
 			question,
-			answer
+			answer,
 		}, { edit: true });
 	}
 }

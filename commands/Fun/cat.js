@@ -15,7 +15,7 @@ class Cat extends BaseCommand {
 				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -37,7 +37,7 @@ class Cat extends BaseCommand {
 		const res = await fetch("https://and-here-is-my-code.glitch.me/img/cat").then(response => response.json());
 
 		interaction.editReply({
-			content: res.Link
+			content: res.Link,
 		});
 	}
 }

@@ -19,7 +19,7 @@ class Reload extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: true
+			ownerOnly: true,
 		});
 	}
 	/**
@@ -47,7 +47,7 @@ class Reload extends BaseCommand {
 		autoUpdateDocs.update(client);
 
 		interaction.success("owner/reload:SUCCESS", {
-			command: cmd.command.name
+			command: cmd.command.name,
 		}, { ephemeral: true });
 	}
 }

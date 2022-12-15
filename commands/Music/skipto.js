@@ -17,7 +17,7 @@ class Skipto extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -46,7 +46,7 @@ class Skipto extends BaseCommand {
 			queue.skipTo(queue.tracks[position - 1]);
 
 			interaction.success("music/skipto:SUCCESS", {
-				position: position
+				position: position,
 			});
 		} else return interaction.error("music/skipto:ERROR", { position: position });
 	}

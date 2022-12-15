@@ -5,7 +5,7 @@ class Ready extends BaseEvent {
 	constructor() {
 		super({
 			name: "ready",
-			once: false
+			once: false,
 		});
 	}
 	/**
@@ -20,7 +20,7 @@ class Ready extends BaseEvent {
 
 		client.logger.log(`Loaded a total of ${commands.length} command(s).`, "ready");
 		client.logger.log(`${client.user.tag}, ready to serve ${tUsers} users in ${tServers} servers.`, "ready");
-		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"] , permissions: [ PermissionsBitField.Flags.Administrator ] })}`, "ready");
+		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: [ PermissionsBitField.Flags.Administrator ] })}`, "ready");
 
 		const birthdays = require("../helpers/birthdays");
 		birthdays.init(client);
@@ -41,7 +41,7 @@ class Ready extends BaseEvent {
 			{ name: "help", type: ActivityType.Watching },
 			{ name: `${commands.length} ${client.getNoun(commands.length, client.translate("misc:NOUNS:COMMANDS:1"), client.translate("misc:NOUNS:COMMANDS:2"), client.translate("misc:NOUNS:COMMANDS:5"))}`, type: ActivityType.Listening },
 			{ name: `${tServers} ${client.getNoun(tServers, client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5"))}`, type: ActivityType.Watching },
-			{ name: `${tUsers} ${client.getNoun(tUsers, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))}`, type: ActivityType.Watching }
+			{ name: `${tUsers} ${client.getNoun(tUsers, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))}`, type: ActivityType.Watching },
 		];
 
 		let i = 0;
@@ -52,7 +52,7 @@ class Ready extends BaseEvent {
 			const toShow = status[i];
 
 			client.user.setActivity(`${toShow.name} | v${version}`, {
-				type: toShow.type
+				type: toShow.type,
 			});
 
 			if (status[i + 1]) i++;

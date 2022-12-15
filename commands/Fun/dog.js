@@ -15,7 +15,7 @@ class Dog extends BaseCommand {
 				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -37,7 +37,7 @@ class Dog extends BaseCommand {
 		const res = await fetch("https://and-here-is-my-code.glitch.me/img/dog").then(response => response.json());
 
 		interaction.editReply({
-			content: res.Link
+			content: res.Link,
 		});
 	}
 }

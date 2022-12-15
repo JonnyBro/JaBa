@@ -18,7 +18,7 @@ class Whois extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -42,10 +42,10 @@ class Whois extends BaseCommand {
 		if (whois.status === "fail") return interaction.editReply({ content: interaction.translate("general/whois:ERROR", { ip }) });
 		const embed = new EmbedBuilder()
 			.setTitle(interaction.translate("general/whois:INFO_ABOUT", {
-				ip
+				ip,
 			}))
 			.setFooter({
-				text: client.config.embed.footer
+				text: client.config.embed.footer,
 			})
 			.setColor(client.config.embed.color)
 			.addFields(
@@ -57,7 +57,7 @@ class Whois extends BaseCommand {
 				{ name: interaction.translate("general/whois:TIMEZONE"), value: `${whois.timezone || interaction.translate("common:UNKNOWN")}`, inline: true },
 				{ name: interaction.translate("general/whois:CONTINENT"), value: `${whois.continent || interaction.translate("common:UNKNOWN")} (${whois.continentCode || interaction.translate("common:UNKNOWN")})`, inline: true },
 				{ name: interaction.translate("general/whois:CURRENCY"), value: `${whois.currency || interaction.translate("common:UNKNOWN")}`, inline: true },
-				{ name: interaction.translate("general/whois:ISP"), value: `${whois.isp || interaction.translate("common:UNKNOWN")}`, inline: true }
+				{ name: interaction.translate("general/whois:ISP"), value: `${whois.isp || interaction.translate("common:UNKNOWN")}`, inline: true },
 			)
 			.setTimestamp();
 
@@ -66,7 +66,7 @@ class Whois extends BaseCommand {
 		else if (whois.hosting) embed.addFields({ name: interaction.translate("general/whois:INFO"), value: interaction.translate("general/whois:HOSTING") });
 
 		interaction.editReply({
-			embeds: [embed]
+			embeds: [embed],
 		});
 	}
 }

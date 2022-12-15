@@ -14,7 +14,7 @@ class Skip extends BaseCommand {
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**

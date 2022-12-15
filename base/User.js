@@ -4,9 +4,9 @@ const mongoose = require("mongoose"),
 const genToken = () => {
 	let token = "";
 	const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzy0123456789.-_";
-	for (let i = 0; i < 32; i++) {
+	for (let i = 0; i < 32; i++)
 		token += characters.charAt(Math.floor(Math.random() * characters.length));
-	}
+
 	return token;
 };
 
@@ -25,61 +25,61 @@ const userSchema = new mongoose.Schema({
 			achieved: false,
 			progress: {
 				now: 0,
-				total: 1
-			}
+				total: 1,
+			},
 		},
 		work: {
 			achieved: false,
 			progress: {
 				now: 0,
-				total: 10
-			}
+				total: 10,
+			},
 		},
 		firstCommand: {
 			achieved: false,
 			progress: {
 				now: 0,
-				total: 1
-			}
+				total: 1,
+			},
 		},
 		slots: {
 			achieved: false,
 			progress: {
 				now: 0,
-				total: 3
-			}
+				total: 3,
+			},
 		},
 		tip: {
 			achieved: false,
 			progress: {
 				now: 0,
-				total: 1
-			}
+				total: 1,
+			},
 		},
 		rep: {
 			achieved: false,
 			progress: {
 				now: 0,
-				total: 20
+				total: 20,
 			},
 		},
 		invite: {
 			achieved: false,
 			progress: {
 				now: 0,
-				total: 1
-			}
-		}
-	}},
+				total: 1,
+			},
+		},
+	} },
 
 	cooldowns: { type: Object, default: {
-		rep: 0
-	}},
+		rep: 0,
+	} },
 
 	afk: { type: String, default: null },
 	reminds: { type: Array, default: [] },
 	logged: { type: Boolean, default: false },
-	apiToken: { type: String, default: genToken() }
+	apiToken: { type: String, default: genToken() },
 });
 
 userSchema.method("getAchievements", async function() {
@@ -93,7 +93,7 @@ userSchema.method("getAchievements", async function() {
 		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.slots.achieved ? "_colored" : ""}4.png`),
 		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.tip.achieved ? "_colored" : ""}5.png`),
 		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.rep.achieved ? "_colored" : ""}6.png`),
-		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.invite.achieved ? "_colored" : ""}7.png`)
+		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.invite.achieved ? "_colored" : ""}7.png`),
 	];
 	let dim = 0;
 

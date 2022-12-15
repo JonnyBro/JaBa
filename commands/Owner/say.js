@@ -19,7 +19,7 @@ class Say extends BaseCommand {
 					.setDescription(client.translate("common:CHANNEL"))),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: true
+			ownerOnly: true,
 		});
 	}
 	/**
@@ -45,12 +45,12 @@ class Say extends BaseCommand {
 
 			setTimeout(function () {
 				interaction.channel.send({
-					content: message
+					content: message,
 				});
 
 				interaction.replyT("owner/say:DONE", {
 					message,
-					channel: interaction.channel.toString()
+					channel: interaction.channel.toString(),
 				}, { edit: true });
 			}, 2000);
 		} else {
@@ -58,12 +58,12 @@ class Say extends BaseCommand {
 
 			setTimeout(function () {
 				channel.send({
-					content: message
+					content: message,
 				});
 
 				interaction.replyT("owner/say:DONE", {
 					message,
-					channel: channel.toString()
+					channel: channel.toString(),
 				}, { edit: true });
 			}, 2000);
 		}

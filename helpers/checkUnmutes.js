@@ -20,7 +20,7 @@ module.exports.init = async function (client) {
 					memberData.mute = {
 						muted: false,
 						endDate: null,
-						case: null
+						case: null,
 					};
 					memberData.save();
 					client.logger.log("[Unmuted] " + memberData.id + " cannot be found.");
@@ -28,7 +28,7 @@ module.exports.init = async function (client) {
 				});
 
 				const guildData = await client.findOrCreateGuild({
-					id: guild.id
+					id: guild.id,
 				});
 
 				if (member) {
@@ -43,11 +43,11 @@ module.exports.init = async function (client) {
 					.setDescription(guild.translate("moderation/unmute:SUCCESS_CASE", {
 						user: user.toString(),
 						usertag: user.tag,
-						count: memberData.mute.case
+						count: memberData.mute.case,
 					}))
 					.setColor("#F44271")
 					.setFooter({
-						text: guild.client.config.embed.footer
+						text: guild.client.config.embed.footer,
 					});
 
 				const channel = guild.channels.cache.get(guildData.plugins.modlogs);
@@ -56,7 +56,7 @@ module.exports.init = async function (client) {
 				memberData.mute = {
 					muted: false,
 					endDate: null,
-					case: null
+					case: null,
 				};
 
 				client.databaseCache.mutedUsers.delete(`${memberData.id}${memberData.guildID}`);

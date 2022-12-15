@@ -14,7 +14,7 @@ module.exports.init = async function (client) {
 
 		client.guilds.cache.forEach(async guild => {
 			const guildData = await client.findOrCreateGuild({
-				id: guild.id
+				id: guild.id,
 			});
 
 			if (guildData.plugins.birthdays) {
@@ -36,12 +36,12 @@ module.exports.init = async function (client) {
 												name: client.user.username,
 												iconURL: client.user.displayAvatarURL({
 													extension: "png",
-													size: 512
-												})
+													size: 512,
+												}),
 											})
 											.setColor(client.config.embed.color)
 											.setFooter({
-												text: client.config.embed.footer
+												text: client.config.embed.footer,
 											})
 											.addFields([
 												{
@@ -49,13 +49,13 @@ module.exports.init = async function (client) {
 													value: client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
 														name: user.username,
 														user: user.id,
-														age: `**${age}** ${client.getNoun(age, client.translate("misc:NOUNS:AGE:1"), client.translate("misc:NOUNS:AGE:2"), client.translate("misc:NOUNS:AGE:5"))}`
-													})
-												}
+														age: `**${age}** ${client.getNoun(age, client.translate("misc:NOUNS:AGE:1"), client.translate("misc:NOUNS:AGE:2"), client.translate("misc:NOUNS:AGE:5"))}`,
+													}),
+												},
 											]);
 
 										const msg = await channel.send({
-											embeds: [embed]
+											embeds: [embed],
 										});
 										await msg.react("🎉");
 									}

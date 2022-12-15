@@ -28,23 +28,23 @@ module.exports.init = function (client) {
 					mustSent.forEach(r => {
 						const embed = new EmbedBuilder()
 							.setAuthor({
-								name: client.translate("general/remindme:TITLE")
+								name: client.translate("general/remindme:TITLE"),
 							})
 							.setDescription(client.translate("general/remindme:CREATED", {
-								time: moment(r.createdAt).locale(client.defaultLanguage).format("dddd, Do MMMM YYYY, HH:mm:ss")
+								time: moment(r.createdAt).locale(client.defaultLanguage).format("dddd, Do MMMM YYYY, HH:mm:ss"),
 							}))
 							.addFields([
 								{
 									name: client.translate("common:MESSAGE"),
-									value: r.message
-								}
+									value: r.message,
+								},
 							])
 							.setColor(client.config.embed.color)
 							.setFooter({
-								text: client.config.embed.footer
+								text: client.config.embed.footer,
 							});
 						dUser.send({
-							embeds: [embed]
+							embeds: [embed],
 						});
 					});
 					user.reminds = user.reminds.filter(r => r.sendAt >= dateNow);

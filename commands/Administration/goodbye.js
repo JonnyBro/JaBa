@@ -14,7 +14,7 @@ class Goodbye extends BaseCommand {
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addSubcommand(subcommand => subcommand.setName("test")
-					.setDescription(client.translate("administration/goodbye:TEST"))
+					.setDescription(client.translate("administration/goodbye:TEST")),
 				)
 				.addSubcommand(subcommand => subcommand.setName("config")
 					.setDescription(client.translate("administration/goodbye:CONFIG"))
@@ -26,11 +26,11 @@ class Goodbye extends BaseCommand {
 					.addStringOption(option => option.setName("message")
 						.setDescription(client.translate("common:MESSAGE")))
 					.addBooleanOption(option => option.setName("image")
-						.setDescription(client.translate("administration/goodbye:IMAGE")))
+						.setDescription(client.translate("administration/goodbye:IMAGE"))),
 				),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -60,7 +60,7 @@ class Goodbye extends BaseCommand {
 					enabled: false,
 					message: null,
 					channelID: null,
-					withImage: null
+					withImage: null,
 				};
 				data.guildData.markModified("plugins.goodbye");
 				await data.guildData.save();
@@ -81,7 +81,7 @@ class Goodbye extends BaseCommand {
 				await data.guildData.save();
 
 				interaction.success("administration/goodbye:ENABLED", {
-					channel: `<#${data.guildData.plugins.goodbye.channel}>`
+					channel: `<#${data.guildData.plugins.goodbye.channel}>`,
 				}, { ephemeral: true });
 			}
 		}

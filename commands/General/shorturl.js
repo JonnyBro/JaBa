@@ -18,7 +18,7 @@ class Shorturl extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -40,7 +40,7 @@ class Shorturl extends BaseCommand {
 
 		interaction.reply({
 			content: `<${res}>`,
-			ephemeral: true
+			ephemeral: true,
 		});
 	}
 }

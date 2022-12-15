@@ -100,7 +100,7 @@ class DiscordTogether {
 						max_uses: 0,
 						temporary: false,
 						target_type: 2,
-						target_application_id: applicationID
+						target_application_id: applicationID,
 					}),
 					headers: {
 						Authorization: `Bot ${this.client.config.token}`,

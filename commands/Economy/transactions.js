@@ -16,7 +16,7 @@ class Transactions extends BaseCommand {
 					.setDescription(client.translate("economy/transactions:CLEAR"))),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -43,11 +43,11 @@ class Transactions extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("economy/transactions:EMBED_TRANSACTIONS"),
-				iconURL: interaction.member.displayAvatarURL()
+				iconURL: interaction.member.displayAvatarURL(),
 			})
 			.setColor(client.config.embed.color)
 			.setFooter({
-				text: client.config.embed.footer
+				text: client.config.embed.footer,
 			});
 
 		const transactions = data.memberData.transactions,
@@ -65,20 +65,20 @@ class Transactions extends BaseCommand {
 				{
 					name: interaction.translate("economy/transactions:T_GOT"),
 					value: sortedTransactions[0].join("\n"),
-					inline: true
-				}
+					inline: true,
+				},
 			]);
 			if (sortedTransactions[1].length > 0) embed.addFields([
 				{
 					name: interaction.translate("economy/transactions:T_SEND"),
 					value: sortedTransactions[1].join("\n"),
-					inline: true
-				}
+					inline: true,
+				},
 			]);
 		}
 
 		interaction.reply({
-			embeds: [embed]
+			embeds: [embed],
 		});
 	}
 }

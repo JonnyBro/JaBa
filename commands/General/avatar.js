@@ -16,7 +16,7 @@ class Avatar extends BaseCommand {
 					.setDescription(client.translate("common:USER"))),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -35,13 +35,13 @@ class Avatar extends BaseCommand {
 	async execute(client, interaction) {
 		const user = interaction.options.getUser("user") || interaction.user;
 		const avatarURL = user.displayAvatarURL({
-			size: 512
+			size: 512,
 		});
 
 		interaction.reply({
 			files: [{
-				attachment: avatarURL
-			}]
+				attachment: avatarURL,
+			}],
 		});
 	}
 }

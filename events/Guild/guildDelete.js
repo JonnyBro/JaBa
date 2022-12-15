@@ -5,7 +5,7 @@ class GuildDelete extends BaseEvent {
 	constructor() {
 		super({
 			name: "guildDelete",
-			once: false
+			once: false,
 		});
 	}
 
@@ -18,12 +18,12 @@ class GuildDelete extends BaseEvent {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: guild.name,
-				iconURL: guild.iconURL()
+				iconURL: guild.iconURL(),
 			})
 			.setColor("#B22222")
 			.setDescription(`Вышел с сервера **${guild.name}**.`);
 		client.channels.cache.get(client.config.support.logs).send({
-			embeds: [embed]
+			embeds: [embed],
 		});
 	}
 }

@@ -18,7 +18,7 @@ class Clearwarns extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -39,13 +39,13 @@ class Clearwarns extends BaseCommand {
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildId: interaction.guildId
+			guildId: interaction.guildId,
 		});
 
 		memberData.sanctions = [];
 		memberData.save();
 		interaction.success("moderation/clearwarns:SUCCESS", {
-			username: member.user.tag
+			username: member.user.tag,
 		});
 	}
 }

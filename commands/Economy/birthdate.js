@@ -30,14 +30,14 @@ class Birthdate extends BaseCommand {
 						{ name: "Сентябрь", value: 9 },
 						{ name: "Октябрь", value: 10 },
 						{ name: "Ноябрь", value: 11 },
-						{ name: "Декабрь", value: 12 }
+						{ name: "Декабрь", value: 12 },
 					))
 				.addIntegerOption(option => option.setName("year")
 					.setDescription(client.translate("economy/birthdate:YEAR"))
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -67,7 +67,7 @@ class Birthdate extends BaseCommand {
 		await data.userData.save();
 
 		interaction.success("economy/birthdate:SUCCESS", {
-			date: client.printDate(d)
+			date: client.printDate(d),
 		});
 	}
 }

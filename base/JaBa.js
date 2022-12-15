@@ -50,21 +50,20 @@ class JaBa extends Client {
 
 		playdl.getFreeClientID().then(id => playdl.setToken({
 			soundcloud: {
-				client_id: id
-			}
+				client_id: id,
+			},
 		}));
 
 		this.player.on("trackStart", async (queue, track) => {
 			const m = await queue.metadata.channel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language) });
-			if (track.durationMS > 1) {
+			if (track.durationMS > 1)
 				setTimeout(() => {
 					if (m.deletable) m.delete();
 				}, track.durationMS);
-			} else {
+			else
 				setTimeout(() => {
 					if (m.deletable) m.delete();
 				}, (10 * 60 * 1000)); // m * s * ms
-			}
 		});
 		this.player.on("queueEnd", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)));
 		this.player.on("channelEmpty", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.channel.guild.data.language)));
@@ -83,8 +82,8 @@ class JaBa extends Client {
 				botsCanWin: false,
 				embedColor: this.config.embed.color,
 				embedColorEnd: "#FF0000",
-				reaction: "🎉"
-			}
+				reaction: "🎉",
+			},
 		});
 	}
 
@@ -96,7 +95,7 @@ class JaBa extends Client {
 
 		mongoose.connect(this.config.mongoDB, {
 			useNewUrlParser: true,
-			useUnifiedTopology: true
+			useUnifiedTopology: true,
 		}).then(() => {
 			this.logger.log("Connected to the Mongodb database.", "log");
 		}).catch((err) => {
@@ -114,7 +113,11 @@ class JaBa extends Client {
 	 */
 	async loadCommands(dir) {
 		const filePath = path.join(__dirname, dir);
-		var folders = await fs.readdir(filePath); folders = folders.map(file => path.join(filePath, file)).filter(async (path) => { path = await fs.lstat(path); path.isDirectory(); });
+		let folders = await fs.readdir(filePath);
+		folders = folders
+			.map(file => path.join(filePath, file))
+			.filter(async path => { path = await fs.lstat(path); path.isDirectory(); });
+
 		const rest = new REST().setToken(this.config.token);
 		const commands = [];
 		for (let index = 0; index < folders.length; index++) {
@@ -130,14 +133,13 @@ class JaBa extends Client {
 						const command = new Command(this);
 						this.commands.set(command.command.name, command);
 						const aliases = [];
-						if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0) {
+						if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0)
 							command.aliases.forEach((alias) => {
 								const command_alias = (command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder) ? { ...command.command.toJSON() } : { ...command.command };
 								command_alias.name = alias;
 								aliases.push(command_alias);
 								this.commands.set(alias, command);
 							});
-						}
 
 						commands.push((command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder) ? command.command.toJSON() : command.command, ...aliases);
 
@@ -149,19 +151,18 @@ class JaBa extends Client {
 		}
 
 		try {
-			if (this.config.production) {
+			if (this.config.production)
 				await rest.put(
 					Routes.applicationCommands(this.config.user), {
-						body: commands
-					}
+						body: commands,
+					},
 				);
-			} else {
+			else
 				await rest.put(
 					Routes.applicationGuildCommands(this.config.user, this.config.support.id), {
-						body: commands
-					}
+						body: commands,
+					},
 				);
-			}
 
 			this.logger.log("Successfully registered application commands.");
 		} catch (err) {
@@ -180,14 +181,13 @@ class JaBa extends Client {
 			const command = new Command(this);
 			this.commands.set(command.command.name, command);
 			const aliases = [];
-			if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0) {
+			if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0)
 				command.aliases.forEach((alias) => {
 					const command_alias = command.command instanceof SlashCommandBuilder ? { ...command.command.toJSON() } : { ...command.command };
 					command_alias.name = alias;
 					aliases.push(command_alias);
 					this.commands.set(alias, command);
 				});
-			}
 
 			if (command.onLoad || typeof command.onLoad === "function") await command.onLoad(this);
 			this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
@@ -312,9 +312,9 @@ class JaBa extends Client {
 		if (this.databaseCache.users.get(userID)) return isLean ? this.databaseCache.users.get(userID).toJSON() : this.databaseCache.users.get(userID);
 		else {
 			let userData = (isLean ? await this.usersData.findOne({
-				id: userID
+				id: userID,
 			}).lean() : await this.usersData.findOne({
-				id: userID
+				id: userID,
 			}));
 			if (userData) {
 				if (!isLean) this.databaseCache.users.set(userID, userData);
@@ -322,7 +322,7 @@ class JaBa extends Client {
 				return userData;
 			} else {
 				userData = new this.usersData({
-					id: userID
+					id: userID,
 				});
 				await userData.save();
 				this.databaseCache.users.set(userID, userData);
@@ -343,10 +343,10 @@ class JaBa extends Client {
 		else {
 			let memberData = (isLean ? await this.membersData.findOne({
 				guildID: guildId,
-				id: memberID
+				id: memberID,
 			}).lean() : await this.membersData.findOne({
 				guildID: guildId,
-				id: memberID
+				id: memberID,
 			}));
 			if (memberData) {
 				if (!isLean) this.databaseCache.members.set(`${memberID}${guildId}`, memberData);
@@ -355,11 +355,11 @@ class JaBa extends Client {
 			} else {
 				memberData = new this.membersData({
 					id: memberID,
-					guildID: guildId
+					guildID: guildId,
 				});
 				await memberData.save();
 				const guild = await this.findOrCreateGuild({
-					id: guildId
+					id: guildId,
 				});
 				if (guild) {
 					guild.members.push(memberData._id);
@@ -382,9 +382,9 @@ class JaBa extends Client {
 		if (this.databaseCache.guilds.get(guildId)) return isLean ? this.databaseCache.guilds.get(guildId).toJSON() : this.databaseCache.guilds.get(guildId);
 		else {
 			let guildData = (isLean ? await this.guildsData.findOne({
-				id: guildId
+				id: guildId,
 			}).populate("members").lean() : await this.guildsData.findOne({
-				id: guildId
+				id: guildId,
 			}).populate("members"));
 			if (guildData) {
 				if (!isLean) this.databaseCache.guilds.set(guildId, guildData);
@@ -392,7 +392,7 @@ class JaBa extends Client {
 				return guildData;
 			} else {
 				guildData = new this.guildsData({
-					id: guildId
+					id: guildId,
 				});
 				await guildData.save();
 				this.databaseCache.guilds.set(guildId, guildData);

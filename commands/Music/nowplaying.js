@@ -15,7 +15,7 @@ class Nowplaying extends BaseCommand {
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -41,34 +41,34 @@ class Nowplaying extends BaseCommand {
 
 		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: interaction.translate("music/nowplaying:CURRENTLY_PLAYING")
+				name: interaction.translate("music/nowplaying:CURRENTLY_PLAYING"),
 			})
 			.setThumbnail(track.thumbnail)
 			.addFields([
 				{
 					name: interaction.translate("music/nowplaying:T_TITLE"),
 					value: `[${track.title}](${track.url})`,
-					inline: true
+					inline: true,
 				},
 				{
 					name: interaction.translate("music/nowplaying:T_AUTHOR"),
 					value: track.author || interaction.translate("common:UNKNOWN"),
-					inline: true
+					inline: true,
 				},
 				{ name: "\u200B", value: "\u200B", inline: true },
 				{
 					name: interaction.translate("common:VIEWS"),
 					value: new Intl.NumberFormat(interaction.client.languages.find(language => language.name === interaction.guild.data.language).moment, { notation: "standard" }).format(track.views),
-					inline: true
+					inline: true,
 				},
 				{
 					name: interaction.translate("music/queue:ADDED"),
 					value: track.requestedBy.toString(),
-					inline: true
+					inline: true,
 				},
 				{
 					name: interaction.translate("music/nowplaying:T_DURATION"),
-					value: progressBar
+					value: progressBar,
 				},
 				{
 					name: "\u200b",
@@ -76,17 +76,17 @@ class Nowplaying extends BaseCommand {
 						queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") :
 							queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") :
 								queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK") : interaction.translate("common:DISABLED")
-					}\``
-				}
+					}\``,
+				},
 			])
 			.setColor(client.config.embed.color)
 			.setFooter({
-				text: client.config.embed.footer
+				text: client.config.embed.footer,
 			})
 			.setTimestamp();
 
 		interaction.editReply({
-			embeds: [embed]
+			embeds: [embed],
 		});
 	}
 }

@@ -18,7 +18,7 @@ class Unban extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -42,7 +42,7 @@ class Unban extends BaseCommand {
 		interaction.guild.bans.remove(id);
 
 		interaction.success("moderation/unban:UNBANNED", {
-			id
+			id,
 		});
 	}
 }

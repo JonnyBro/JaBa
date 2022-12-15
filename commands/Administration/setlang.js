@@ -18,11 +18,11 @@ class Setlang extends BaseCommand {
 					.setRequired(true)
 					.addChoices(
 						{ name: "Русский", value: "ru-RU" },
-						{ name: "Українська", value: "uk-UA" }
+						{ name: "Українська", value: "uk-UA" },
 					)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -46,7 +46,7 @@ class Setlang extends BaseCommand {
 		await data.guildData.save();
 
 		return interaction.success("administration/setlang:SUCCESS", {
-			lang: language.nativeName
+			lang: language.nativeName,
 		});
 	}
 }

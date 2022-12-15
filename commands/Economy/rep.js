@@ -17,7 +17,7 @@ class Rep extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -37,7 +37,7 @@ class Rep extends BaseCommand {
 		const isInCooldown = data.userData.cooldowns?.rep;
 		if (isInCooldown) {
 			if (isInCooldown > Date.now()) return interaction.error("economy/rep:COOLDOWN", {
-				time: client.convertTime(isInCooldown, true, true, data.guildData.language)
+				time: client.convertTime(isInCooldown, true, true, data.guildData.language),
 			});
 		}
 
@@ -52,7 +52,7 @@ class Rep extends BaseCommand {
 		await data.userData.save();
 
 		const userData = await client.findOrCreateUser({
-			id: user.id
+			id: user.id,
 		});
 		userData.rep++;
 
@@ -64,8 +64,8 @@ class Rep extends BaseCommand {
 					content: `${user}`,
 					files: [{
 						name: "achievement_unlocked6.png",
-						attachment: "./assets/img/achievements/achievement_unlocked6.png"
-					}]
+						attachment: "./assets/img/achievements/achievement_unlocked6.png",
+					}],
 				});
 			}
 			userData.markModified("achievements.rep");
@@ -73,7 +73,7 @@ class Rep extends BaseCommand {
 		await userData.save();
 
 		interaction.success("economy/rep:SUCCESS", {
-			user: user.toString()
+			user: user.toString(),
 		});
 	}
 }

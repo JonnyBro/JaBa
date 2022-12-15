@@ -20,7 +20,7 @@ class Clear extends BaseCommand {
 					.setDescription(client.translate("common:USER"))),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -57,7 +57,7 @@ class Clear extends BaseCommand {
 
 			await interaction.editReply({
 				content: interaction.translate("moderation/clear:ALL_CONFIRM"),
-				components: [row]
+				components: [row],
 			});
 
 			const filter = i => i.user.id === interaction.user.id;
@@ -74,7 +74,7 @@ class Clear extends BaseCommand {
 						newChannel.setPosition(position);
 
 						return newChannel.send({
-							content: interaction.translate("moderation/clear:CHANNEL_CLEARED")
+							content: interaction.translate("moderation/clear:CHANNEL_CLEARED"),
 						});
 					} else if (i.customId === "clear_confirm_no") {
 						i.deferUpdate();
@@ -91,7 +91,7 @@ class Clear extends BaseCommand {
 
 					interaction.editReply({
 						content: interaction.translate("misc:SELECT_CANCELED"),
-						components: [row]
+						components: [row],
 					});
 				} else if (reason === "idle") {
 					row.components.forEach(component => {
@@ -99,14 +99,14 @@ class Clear extends BaseCommand {
 					});
 
 					interaction.editReply({
-						components: [row]
+						components: [row],
 					});
 				}
 			});
 		} else {
 			if (isNaN(option) || parseInt(option) < 1) return interaction.error("misc:OPTION_NAN_ALL", null, { ephemeral: true });
 			let messages = await interaction.channel.messages.fetch({
-				limit: option
+				limit: option,
 			});
 			if (member) messages = messages.filter(m => m.author.id === member.id);
 			if (messages.length > option) messages.length = parseInt(option, 10);
@@ -116,11 +116,11 @@ class Clear extends BaseCommand {
 			if (member) {
 				interaction.replyT("moderation/clear:CLEARED_MEMBER", {
 					amount: `**${option}** ${client.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`,
-					username: member.user.tag
+					username: member.user.tag,
 				}, { ephemeral: true, edit: true });
 			} else {
 				interaction.replyT("moderation/clear:CLEARED", {
-					amount: `**${option}** ${client.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`
+					amount: `**${option}** ${client.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`,
 				}, { ephemeral: true, edit: true });
 			}
 		}

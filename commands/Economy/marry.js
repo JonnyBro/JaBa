@@ -18,7 +18,7 @@ class Marry extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -40,7 +40,7 @@ class Marry extends BaseCommand {
 		if (member.user.bot) return interaction.error("economy/marry:BOT_USER");
 		if (member.id === interaction.member.id) return interaction.error("economy/marry:YOURSELF");
 		const userData = await client.findOrCreateUser({
-			id: member.id
+			id: member.id,
 		});
 		if (userData.lover) return interaction.error("economy/marry:ALREADY_MARRIED_USER", { user: member.toString() });
 
@@ -50,24 +50,24 @@ class Marry extends BaseCommand {
 			if (requester === interaction.author.id) {
 				const user = client.users.cache.get(receiver) || await client.users.fetch(receiver);
 				return interaction.error("economy/marry:REQUEST_AUTHOR_TO_AMEMBER", {
-					user: user.toString
+					user: user.toString,
 				});
 			} else if (receiver === interaction.member.id) {
 				const user = client.users.cache.get(requester) || await client.users.fetch(requester);
 				return interaction.error("economy/marry:REQUEST_AMEMBER_TO_AUTHOR", {
-					user: user.toString()
+					user: user.toString(),
 				});
 			} else if (requester === member.id) {
 				const user = client.users.cache.get(receiver) || await client.users.fetch(receiver);
 				return interaction.error("economy/marry:REQUEST_AMEMBER_TO_MEMBER", {
 					firstUser: member.toString(),
-					secondUser: user.toString()
+					secondUser: user.toString(),
 				});
 			} else if (receiver === member.id) {
 				const user = client.users.cache.get(requester) || await client.users.fetch(requester);
 				return interaction.error("economy/marry:REQUEST_MEMBER_TO_AMEMBER", {
 					firstUser: member.toString(),
-					secondUser: user.toString()
+					secondUser: user.toString(),
 				});
 			}
 		}
@@ -89,9 +89,9 @@ class Marry extends BaseCommand {
 		await interaction.reply({
 			content: interaction.translate("economy/marry:REQUEST", {
 				to: member.toString(),
-				from: interaction.member.toString()
+				from: interaction.member.toString(),
 			}),
-			components: [row]
+			components: [row],
 		});
 
 		const filter = i => i.user.id === member.id;
@@ -112,7 +112,7 @@ class Marry extends BaseCommand {
 				});
 
 				return interaction.editReply({
-					components: [row]
+					components: [row],
 				});
 			}
 
@@ -126,8 +126,8 @@ class Marry extends BaseCommand {
 					content: `${member.toString()} :heart: ${interaction.member.toString()}`,
 					files: [{
 						name: "achievement_unlocked3.png",
-						attachment: "./assets/img/achievements/achievement_unlocked3.png"
-					}]
+						attachment: "./assets/img/achievements/achievement_unlocked3.png",
+					}],
 				};
 
 				let sent = false;
@@ -151,17 +151,17 @@ class Marry extends BaseCommand {
 				return interaction.editReply({
 					content: interaction.translate("economy/marry:SUCCESS", {
 						creator: interaction.member.toString(),
-						partner: member.toString()
+						partner: member.toString(),
 					}),
-					components: []
+					components: [],
 				});
 			} else {
 				return interaction.editReply({
 					content: interaction.translate("economy/marry:DENIED", {
 						creator: interaction.member.toString(),
-						partner: member.toString()
+						partner: member.toString(),
 					}),
-					components: []
+					components: [],
 				});
 			}
 		});

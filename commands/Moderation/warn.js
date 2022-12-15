@@ -15,7 +15,7 @@ class Warn extends BaseCommand {
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -41,7 +41,7 @@ class Warn extends BaseCommand {
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildId: interaction.guildId
+			guildId: interaction.guildId,
 		});
 
 		const modal = new ModalBuilder()
@@ -77,24 +77,24 @@ class Warn extends BaseCommand {
 				date: Date.now(),
 				type: "warn",
 				case: data.guildData.casesCount,
-				reason
+				reason,
 			};
 
 			const embed = new EmbedBuilder()
 				.addFields([
 					{
 						name: interaction.translate("common:USER"),
-						value: `\`${member.user.tag}\` (${member.user.toString()})`
+						value: `\`${member.user.tag}\` (${member.user.toString()})`,
 					},
 					{
 						name: interaction.translate("common:MODERATOR"),
-						value: `\`${interaction.user.tag}\` (${interaction.user.toString()})`
+						value: `\`${interaction.user.tag}\` (${interaction.user.toString()})`,
 					},
 					{
 						name: interaction.translate("common:REASON"),
 						value: reason,
-						inline: true
-					}
+						inline: true,
+					},
 				]);
 
 			if (banCount) {
@@ -104,20 +104,20 @@ class Warn extends BaseCommand {
 							username: member.user,
 							moderator: interaction.user.tag,
 							server: interaction.guild.name,
-							reason
-						})
+							reason,
+						}),
 					});
 					caseInfo.type = "ban";
 					embed.setAuthor({
 						name: interaction.translate("moderation/ban:CASE", {
-							count: data.guildData.casesCount
-						})
+							count: data.guildData.casesCount,
+						}),
 					})
 						.setColor(client.config.embed.color);
 					interaction.guild.members.ban(member);
 					interaction.success("moderation/setwarns:AUTO_BAN", {
 						username: member.user.tag,
-						count: `${banCount} ${client.getNoun(banCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`
+						count: `${banCount} ${client.getNoun(banCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
 					});
 				}
 			}
@@ -129,20 +129,20 @@ class Warn extends BaseCommand {
 							username: member.user,
 							moderator: interaction.user.tag,
 							server: interaction.guild.name,
-							reason
-						})
+							reason,
+						}),
 					});
 					caseInfo.type = "kick";
 					embed.setAuthor({
 						name: interaction.translate("moderation/kick:CASE", {
-							count: data.guildData.casesCount
-						})
+							count: data.guildData.casesCount,
+						}),
 					})
 						.setColor(client.config.embed.color);
 					member.kick().catch(() => {});
 					interaction.success("moderation/setwarns:AUTO_KICK", {
 						username: member.user.tag,
-						count: `${kickCount} ${client.getNoun(kickCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`
+						count: `${kickCount} ${client.getNoun(kickCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
 					});
 				}
 			}
@@ -152,22 +152,22 @@ class Warn extends BaseCommand {
 					username: member.user.tag,
 					server: interaction.guild.name,
 					moderator: interaction.user.tag,
-					reason
-				})
+					reason,
+				}),
 			});
 
 			caseInfo.type = "warn";
 			embed.setAuthor({
 				name: interaction.translate("moderation/warn:CASE", {
-					caseNumber: data.guildData.casesCount
-				})
+					caseNumber: data.guildData.casesCount,
+				}),
 			}).setColor(client.config.embed.color);
 
 			submitted.reply({
 				content: interaction.translate("moderation/warn:WARNED", {
 					user: member.toString(),
-					reason
-				})
+					reason,
+				}),
 			});
 
 			memberData.sanctions.push(caseInfo);
@@ -177,7 +177,7 @@ class Warn extends BaseCommand {
 				const channel = interaction.guild.channels.cache.get(data.guildData.plugins.modlogs);
 				if (!channel) return;
 				channel.send({
-					embeds: [embed]
+					embeds: [embed],
 				});
 			}
 		}

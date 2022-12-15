@@ -6,7 +6,7 @@ router.get("/", function (req, res) {
 		user: req.userInfos,
 		translate: req.translate,
 		currentURL: `${req.client.config.dashboard.baseURL}${req.originalUrl}`,
-		site: req.client.config.dashboard.baseURL
+		site: req.client.config.dashboard.baseURL,
 	});
 });
 

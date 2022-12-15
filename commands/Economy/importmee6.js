@@ -15,7 +15,7 @@ class ImportMee6 extends BaseCommand {
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -42,8 +42,8 @@ class ImportMee6 extends BaseCommand {
 		interaction.editReply({
 			content: interaction.translate("owner/debug:SUCCESS_LEVEL", {
 				username: interaction.member.toString(),
-				amount: level
-			})
+				amount: level,
+			}),
 		});
 	}
 }

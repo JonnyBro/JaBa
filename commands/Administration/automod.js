@@ -21,7 +21,7 @@ class Automod extends BaseCommand {
 					.addChannelTypes(ChannelType.GuildText)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -44,7 +44,7 @@ class Automod extends BaseCommand {
 		if (state) {
 			data.guildData.plugins.automod = {
 				enabled: true,
-				ignored: []
+				ignored: [],
 			};
 			data.guildData.markModified("plugins.automod");
 			await data.guildData.save();
@@ -55,12 +55,12 @@ class Automod extends BaseCommand {
 				data.guildData.markModified("plugins.automod");
 				await data.guildData.save();
 				interaction.success("administration/automod:DISABLED_CHANNEL", {
-					channel: channel.toString()
+					channel: channel.toString(),
 				});
 			} else {
 				data.guildData.plugins.automod = {
 					enabled: false,
-					ignored: []
+					ignored: [],
 				};
 				data.guildData.markModified("plugins.automod");
 				await data.guildData.save();

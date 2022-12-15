@@ -18,7 +18,7 @@ class Poll extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -61,7 +61,7 @@ class Poll extends BaseCommand {
 		await interaction.reply({
 			content: interaction.translate("moderation/poll:SELECT_MENTION"),
 			ephemeral: true,
-			components: [row]
+			components: [row],
 		});
 
 		let mention = null;
@@ -74,24 +74,24 @@ class Poll extends BaseCommand {
 					mention = "||@everyone||";
 					i.update({
 						content: interaction.translate("moderation/poll:POLL_SENDED"),
-						components: []
+						components: [],
 					});
 				} else if (i.customId === "poll_here") {
 					mention = "||@here||";
 					i.update({
 						content: interaction.translate("moderation/poll:POLL_SENDED"),
-						components: []
+						components: [],
 					});
 				} else if (i.customId === "poll_nothing") {
 					mention = null;
 					i.update({
 						content: interaction.translate("moderation/poll:POLL_SENDED"),
-						components: []
+						components: [],
 					});
 				} else if (i.customId === "poll_cancel") {
 					return i.update({
 						content: interaction.translate("misc:SELECT_CANCELED"),
-						components: []
+						components: [],
 					});
 				}
 
@@ -100,26 +100,26 @@ class Poll extends BaseCommand {
 
 				const embed = new EmbedBuilder()
 					.setAuthor({
-						name: interaction.translate("moderation/poll:TITLE")
+						name: interaction.translate("moderation/poll:TITLE"),
 					})
 					.setColor(client.config.embed.color)
 					.addFields([
 						{
 							name: "\u200b",
-							value: question
+							value: question,
 						},
 						{
 							name: "\u200b",
 							value: interaction.translate("moderation/poll:REACT", {
 								success: cool.toString(),
-								error: notcool.toString()
-							})
-						}
+								error: notcool.toString(),
+							}),
+						},
 					]);
 
 				return interaction.channel.send({
 					content: mention,
-					embeds: [embed]
+					embeds: [embed],
 				}).then(async m => {
 					await m.react(cool);
 					await m.react(notcool);

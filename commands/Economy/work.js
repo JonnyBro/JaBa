@@ -14,7 +14,7 @@ class Work extends BaseCommand {
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -34,7 +34,7 @@ class Work extends BaseCommand {
 		const isInCooldown = data.memberData.cooldowns?.work;
 		if (isInCooldown) {
 			if (isInCooldown > Date.now()) return interaction.error("economy/work:COOLDOWN", {
-				time: client.convertTime(isInCooldown, true, true, data.guildData.language)
+				time: client.convertTime(isInCooldown, true, true, data.guildData.language),
 			});
 		}
 		if (Date.now() > data.memberData.cooldowns.work + (24 * 60 * 60 * 1000)) data.memberData.workStreak = 0;
@@ -49,7 +49,7 @@ class Work extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setFooter({
 				text: interaction.translate("economy/work:AWARD"),
-				iconURL: interaction.member.displayAvatarURL()
+				iconURL: interaction.member.displayAvatarURL(),
 			})
 			.setColor(client.config.embed.color);
 
@@ -58,7 +58,7 @@ class Work extends BaseCommand {
 			client.customEmojis.letters.w,
 			client.customEmojis.letters.a,
 			client.customEmojis.letters.r,
-			client.customEmojis.letters.d
+			client.customEmojis.letters.d,
 		];
 		let won = 200;
 
@@ -68,13 +68,13 @@ class Work extends BaseCommand {
 				{
 					name: interaction.translate("economy/work:SALARY"),
 					value: interaction.translate("economy/work:SALARY_CONTENT", {
-						won: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`
-					})
+						won: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+					}),
 				},
 				{
 					name: interaction.translate("economy/work:STREAK"),
-					value: interaction.translate("economy/work:STREAK_CONTENT")
-				}
+					value: interaction.translate("economy/work:STREAK_CONTENT"),
+				},
 			]);
 			data.memberData.workStreak = 0;
 		} else {
@@ -88,13 +88,13 @@ class Work extends BaseCommand {
 				{
 					name: interaction.translate("economy/work:SALARY"),
 					value: interaction.translate("economy/work:SALARY_CONTENT", {
-						won: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`
-					})
+						won: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+					}),
 				},
 				{
 					name: interaction.translate("economy/work:STREAK"),
-					value: award.join("")
-				}
+					value: award.join(""),
+				},
 			]);
 		}
 
@@ -105,19 +105,19 @@ class Work extends BaseCommand {
 			user: interaction.translate("economy/work:SALARY"),
 			amount: won,
 			date: Date.now(),
-			type: "got"
+			type: "got",
 		};
 		data.memberData.transactions.push(info);
 
 		const messageOptions = {
-			embeds: [embed]
+			embeds: [embed],
 		};
 		if (!data.userData.achievements.work.achieved) {
 			data.userData.achievements.work.progress.now += 1;
 			if (data.userData.achievements.work.progress.now === data.userData.achievements.work.progress.total) {
 				messageOptions.files = [{
 					name: "unlocked.png",
-					attachment: "./assets/img/achievements/achievement_unlocked1.png"
+					attachment: "./assets/img/achievements/achievement_unlocked1.png",
 				}];
 				data.userData.achievements.work.achieved = true;
 			}

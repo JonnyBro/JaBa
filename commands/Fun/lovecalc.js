@@ -22,7 +22,7 @@ class Lovecalc extends BaseCommand {
 						.setDescription(client.translate("common:USER"))),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -53,20 +53,20 @@ class Lovecalc extends BaseCommand {
 
 		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: `❤️ ${interaction.translate("fun/lovecalc:DESCRIPTION")}`
+				name: `❤️ ${interaction.translate("fun/lovecalc:DESCRIPTION")}`,
 			})
 			.setDescription(interaction.translate("fun/lovecalc:CONTENT", {
 				percent,
 				firstMember: firstMember,
-				secondMember: secondMember
+				secondMember: secondMember,
 			}))
 			.setColor(client.config.embed.color)
 			.setFooter({
-				text: client.config.embed.footer
+				text: client.config.embed.footer,
 			});
 
 		interaction.reply({
-			embeds: [embed]
+			embeds: [embed],
 		});
 	}
 }

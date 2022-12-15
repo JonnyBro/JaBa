@@ -20,7 +20,7 @@ class Announcement extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: true
+			ownerOnly: true,
 		});
 	}
 	/**
@@ -43,12 +43,12 @@ class Announcement extends BaseCommand {
 
 		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: interaction.translate("owner/announcement:TITLE")
+				name: interaction.translate("owner/announcement:TITLE"),
 			})
 			.setDescription(text)
 			.setColor(client.config.embed.color)
 			.setFooter({
-				text: interaction.user.tag
+				text: interaction.user.tag,
 			})
 			.setTimestamp();
 
@@ -57,13 +57,13 @@ class Announcement extends BaseCommand {
 			const channel = guild.channels.cache.get(guild?.data.plugins.news);
 			await channel.send({
 				content: `${interaction.options.getBoolean("tag") ? "||@everyone|| " : ""}ВАЖНОЕ ОБЪЯВЛЕНИЕ!`,
-				embeds: [embed]
+				embeds: [embed],
 			});
 		});
 
 		interaction.editReply({
 			content: interaction.translate("owner/announcement:SENDED"),
-			ephemeral: true
+			ephemeral: true,
 		});
 	}
 }

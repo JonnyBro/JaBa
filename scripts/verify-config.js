@@ -49,7 +49,7 @@ const checks = [
 			const dbName = config.mongoDB.split("/").pop();
 			const baseURL = config.mongoDB.substr(0, config.mongoDB.length - dbName.length);
 			const client = new MongoClient(baseURL, {
-				useUnifiedTopology: true
+				useUnifiedTopology: true,
 			});
 			client.connect().then(async () => {
 				success("Connection to Mongo database success");
@@ -69,8 +69,8 @@ const checks = [
 				const res = await fetch("https://v1.api.amethyste.moe/generate/blurple", {
 					method: "POST",
 					headers: {
-						Authorization: `Bearer ${config.apiKeys.amethyste}`
-					}
+						Authorization: `Bearer ${config.apiKeys.amethyste}`,
+					},
 				});
 				const result = await res.json();
 				if (result.status === 401) {
@@ -114,7 +114,7 @@ const checks = [
 			}
 			resolve();
 		});
-	}
+	},
 ];
 
 (async () => {

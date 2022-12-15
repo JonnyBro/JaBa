@@ -14,7 +14,7 @@ class Servers extends BaseCommand {
 				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: true
+			ownerOnly: true,
 		});
 	}
 	/**
@@ -59,7 +59,7 @@ class Servers extends BaseCommand {
 		await interaction.editReply({
 			content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 			embeds: [embeds[currentPage]],
-			components: [row]
+			components: [row],
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
@@ -75,7 +75,7 @@ class Servers extends BaseCommand {
 						interaction.editReply({
 							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 							embeds: [embeds[currentPage]],
-							components: [row]
+							components: [row],
 						});
 					}
 				} else if (i.customId === "servers_next_page") {
@@ -86,7 +86,7 @@ class Servers extends BaseCommand {
 						interaction.editReply({
 							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 							embeds: [embeds[currentPage]],
-							components: [row]
+							components: [row],
 						});
 					}
 				} else if (i.customId === "servers_jump_page") {
@@ -94,9 +94,9 @@ class Servers extends BaseCommand {
 
 					const msg = await interaction.followUp({
 						content: interaction.translate("misc:JUMP_TO_PAGE", {
-							length: embeds.length
+							length: embeds.length,
 						}),
-						fetchReply: true
+						fetchReply: true,
 					});
 
 					const filter = res => {
@@ -109,7 +109,7 @@ class Servers extends BaseCommand {
 							interaction.editReply({
 								content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 								embeds: [embeds[currentPage]],
-								components: [row]
+								components: [row],
 							});
 
 							if (collected.first().deletable) collected.first().delete();
@@ -133,7 +133,7 @@ class Servers extends BaseCommand {
 			});
 
 			return interaction.editReply({
-				components: [row]
+				components: [row],
 			});
 		});
 	}
@@ -159,7 +159,7 @@ function generateServersEmbeds(interaction, servers) {
 		const embed = new EmbedBuilder()
 			.setColor(interaction.client.config.embed.color)
 			.setFooter({
-				text: interaction.client.config.embed.footer
+				text: interaction.client.config.embed.footer,
 			})
 			.setTitle(interaction.translate("owner/servers:SERVERS_LIST"))
 			.setDescription(info)

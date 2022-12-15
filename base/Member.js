@@ -15,13 +15,13 @@ module.exports = mongoose.model("Member", new mongoose.Schema({
 
 	cooldowns: { type: Object, default: {
 		work: 0,
-		rob: 0
-	}},
+		rob: 0,
+	} },
 
 	sanctions: { type: Array, default: [] },
 	mute: { type: Object, default: {
 		muted: false,
 		case: null,
-		endDate: null
-	}},
+		endDate: null,
+	} },
 }));

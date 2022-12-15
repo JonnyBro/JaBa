@@ -14,7 +14,7 @@ class Divorce extends BaseCommand {
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -38,19 +38,19 @@ class Divorce extends BaseCommand {
 		await data.userData.save();
 
 		const oldLover = await client.findOrCreateUser({
-			id: user.id
+			id: user.id,
 		});
 		oldLover.lover = null;
 		await oldLover.save();
 
 		interaction.success("economy/divorce:DIVORCED", {
-			user: user.toString()
+			user: user.toString(),
 		});
 
 		user.send({
 			content: interaction.translate("economy/divorce:DIVORCED_U", {
-				user: interaction.member.toString()
-			})
+				user: interaction.member.toString(),
+			}),
 		});
 	}
 }

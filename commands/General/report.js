@@ -20,7 +20,7 @@ class Report extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -46,51 +46,51 @@ class Report extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("general/report:TITLE", {
-					user: member.user.tag
+					user: member.user.tag,
 				}),
 				iconURL: interaction.user.displayAvatarURL({
 					extension: "png",
-					size: 512
-				})
+					size: 512,
+				}),
 			})
 			.addFields([
 				{
 					name: interaction.translate("common:DATE"),
-					value: client.printDate(new Date(Date.now()))
+					value: client.printDate(new Date(Date.now())),
 				},
 				{
 					name: interaction.translate("common:AUTHOR"),
 					value: interaction.user.toString(),
-					inline: true
+					inline: true,
 				},
 				{
 					name: interaction.translate("common:USER"),
 					value: member.user.toString(),
-					inline: true
+					inline: true,
 				},
 				{
 					name: interaction.translate("common:REASON"),
 					value: rep,
-					inline: true
-				}
+					inline: true,
+				},
 			])
 			.setColor(client.config.embed.color)
 			.setFooter({
-				text: client.config.embed.footer
+				text: client.config.embed.footer,
 			});
 
 		const success = parseEmoji(client.customEmojis.cool).id;
 		const error = parseEmoji(client.customEmojis.notcool).id;
 
 		repChannel.send({
-			embeds: [embed]
+			embeds: [embed],
 		}).then(async m => {
 			await m.react(success);
 			await m.react(error);
 		});
 
 		interaction.success("general/report:SUCCESS", {
-			channel: repChannel.toString()
+			channel: repChannel.toString(),
 		});
 	}
 }

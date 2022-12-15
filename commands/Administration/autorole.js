@@ -20,7 +20,7 @@ class Autorole extends BaseCommand {
 					.setDescription(client.translate("common:ROLE"))),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -45,18 +45,18 @@ class Autorole extends BaseCommand {
 
 			data.guildData.plugins.autorole = {
 				enabled: true,
-				role: role.id
+				role: role.id,
 			};
 			data.guildData.markModified("plugins.autorole");
 			await data.guildData.save();
 
 			interaction.success("administration/autorole:SUCCESS_ENABLED", {
-				role: role.toString()
+				role: role.toString(),
 			});
 		} else {
 			data.guildData.plugins.autorole = {
 				enabled: false,
-				role: null
+				role: null,
 			};
 			data.guildData.markModified("plugins.autorole");
 			await data.guildData.save();

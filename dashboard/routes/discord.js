@@ -14,14 +14,13 @@ router.get("/login", async function(req, res) {
 
 router.get("/callback", async (req, res) => {
 	if (!req.query.code) return res.redirect(req.client.config.dashboard.failureURL);
-	if (req.query.state && req.query.state.startsWith("invite")) {
+	if (req.query.state && req.query.state.startsWith("invite"))
 		if (req.query.code) {
 			const guildID = req.query.state.substr("invite".length, req.query.state.length);
 			req.client.knownGuilds.push({ id: guildID, user: req.user.id });
 
 			return res.redirect(`/manage/${guildID}`);
 		}
-	}
 
 	const redirectURL = req.client.states[req.query.state] || "/selector";
 	const params = new URLSearchParams();
@@ -33,8 +32,8 @@ router.get("/callback", async (req, res) => {
 		body: params.toString(),
 		headers: {
 			Authorization: `Basic ${btoa(`${req.client.user.id}:${req.client.config.dashboard.secret}`)}`,
-			"Content-Type": "application/x-www-form-urlencoded"
-		}
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
 	});
 
 	// Fetch tokens (used to fetch user informations)
@@ -44,14 +43,14 @@ router.get("/callback", async (req, res) => {
 	if (tokens.error || !tokens.access_token) return res.redirect(`/api/login&state=${req.query.state}`);
 	const userData = {
 		infos: null,
-		guilds: null
+		guilds: null,
 	};
 	while (!userData.infos || !userData.guilds) {
 		/* User infos */
 		if (!userData.infos) {
 			response = await fetch("http://discordapp.com/api/users/@me", {
 				method: "GET",
-				headers: { Authorization: `Bearer ${tokens.access_token}` }
+				headers: { Authorization: `Bearer ${tokens.access_token}` },
 			});
 			const json = await response.json();
 			if (json.retry_after) await req.client.wait(json.retry_after);
@@ -62,7 +61,7 @@ router.get("/callback", async (req, res) => {
 		if (!userData.guilds) {
 			response = await fetch("https://discordapp.com/api/users/@me/guilds", {
 				method: "GET",
-				headers: { Authorization: `Bearer ${tokens.access_token}` }
+				headers: { Authorization: `Bearer ${tokens.access_token}` },
 			});
 			const json = await response.json();
 			if (json.retry_after) await req.client.wait(json.retry_after);

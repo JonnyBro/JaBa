@@ -25,7 +25,7 @@ module.exports.update = function (client) {
 
 	categories.sort().forEach(cat => {
 		const categoriesArray = [
-			["Название", "Описание", "Использование", "Разрешено использование"]
+			["Название", "Описание", "Использование", "Разрешено использование"],
 		];
 		const cmds = [...new Map(commands.filter(cmd => cmd.category === cat).map(v => [v.constructor.name, v])).values()];
 
@@ -38,7 +38,7 @@ module.exports.update = function (client) {
 				`**${cmd.command.name}** ${cmd.aliases.length ? `**(${cmd.aliases.join(", ")})**` : ""}`,
 				client.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:DESCRIPTION`),
 				`${cmd.command.name} ${client.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`)}`,
-				cmd.guildOnly ? "Только на сервере" : "На сервере и в ЛС бота"
+				cmd.guildOnly ? "Только на сервере" : "На сервере и в ЛС бота",
 			]);
 		});
 		text += `${table(categoriesArray)}\n\n`;

@@ -14,31 +14,31 @@ module.exports = mongoose.model("Guild", new Schema({
 			enabled: false,
 			message: null,
 			channel: null,
-			withImage: null
+			withImage: null,
 		},
 		goodbye: {
 			enabled: false,
 			message: null,
 			channel: null,
-			withImage: null
+			withImage: null,
 		},
 		autorole: {
 			enabled: false,
-			role: null
+			role: null,
 		},
 		automod: {
 			enabled: false,
-			ignored: []
+			ignored: [],
 		},
 		warnsSanctions: {
 			kick: false,
-			ban: false
+			ban: false,
 		},
 		news: false,
 		suggestions: false,
 		modlogs: false,
 		birthdays: false,
-		reports: false
-	}},
+		reports: false,
+	} },
 	casesCount: { type: Number, default: 0 },
 }));

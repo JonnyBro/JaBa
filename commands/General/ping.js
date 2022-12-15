@@ -14,7 +14,7 @@ class Ping extends BaseCommand {
 				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -32,7 +32,7 @@ class Ping extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		interaction.replyT("general/ping:CONTENT", {
-			ping: Math.round(client.ws.ping)
+			ping: Math.round(client.ws.ping),
 		});
 	}
 }

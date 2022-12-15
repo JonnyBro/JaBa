@@ -17,7 +17,7 @@ class Suggest extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -41,43 +41,43 @@ class Suggest extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("general/suggest:TITLE", {
-					user: interaction.user.tag
+					user: interaction.user.tag,
 				}),
-				iconURL: interaction.member.displayAvatarURL()
+				iconURL: interaction.member.displayAvatarURL(),
 			})
 			.addFields([
 				{
 					name: interaction.translate("common:DATE"),
-					value: client.printDate(new Date(Date.now()))
+					value: client.printDate(new Date(Date.now())),
 				},
 				{
 					name: interaction.translate("common:AUTHOR"),
 					value: interaction.user.toString(),
-					inline: true
+					inline: true,
 				},
 				{
 					name: interaction.translate("common:CONTENT"),
 					value: suggestion,
-					inline: true
-				}
+					inline: true,
+				},
 			])
 			.setColor(client.config.embed.color)
 			.setFooter({
-				text: client.config.embed.footer
+				text: client.config.embed.footer,
 			});
 
 		const success = parseEmoji(client.customEmojis.cool).id;
 		const error = parseEmoji(client.customEmojis.notcool).id;
 
 		suggChannel.send({
-			embeds: [embed]
+			embeds: [embed],
 		}).then(async m => {
 			await m.react(success);
 			await m.react(error);
 		});
 
 		interaction.success("general/suggest:SUCCESS", {
-			channel: suggChannel.toString()
+			channel: suggChannel.toString(),
 		});
 	}
 }

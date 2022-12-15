@@ -20,7 +20,7 @@ class Rob extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -45,7 +45,7 @@ class Rob extends BaseCommand {
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildId: interaction.guildId
+			guildId: interaction.guildId,
 		});
 		if (amount > memberData.money) return interaction.error("economy/rob:NOT_ENOUGH_MEMBER", { user: member.toString() });
 
@@ -57,7 +57,7 @@ class Rob extends BaseCommand {
 		const potentiallyLose = Math.floor(amount * 1.5);
 		if (potentiallyLose > data.memberData.money) return interaction.error("economy/rob:NOT_ENOUGH_AUTHOR", {
 			moneyMin: `**${potentiallyLose}** ${client.getNoun(potentiallyLose, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-			moneyCurrent: `**${data.memberData.money}** ${client.getNoun(data.memberData.money, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`
+			moneyCurrent: `**${data.memberData.money}** ${client.getNoun(data.memberData.money, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 		});
 
 		const itsAWon = Math.floor(client.functions.randomNum(0, 100) < 25);
@@ -70,7 +70,7 @@ class Rob extends BaseCommand {
 			const randomNum = client.functions.randomNum(1, 2);
 			interaction.replyT("economy/rob:ROB_WON_" + randomNum, {
 				money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-				user: member.toString()
+				user: member.toString(),
 			});
 			data.memberData.money += amount;
 			memberData.money -= amount;
@@ -82,7 +82,7 @@ class Rob extends BaseCommand {
 			interaction.replyT("economy/rob:ROB_LOSE_" + randomNum, {
 				fine: `**${potentiallyLose}** ${client.getNoun(potentiallyLose, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 				offset: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-				user: member.toString()
+				user: member.toString(),
 			});
 			data.memberData.money -= potentiallyLose;
 			memberData.money += won;

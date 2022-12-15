@@ -14,7 +14,7 @@ const config = require("../config");
 const dbName = config.mongoDB.split("/").pop();
 const baseURL = config.mongoDB.substr(0, config.mongoDB.length - dbName.length);
 const client = new MongoClient(baseURL, {
-	useUnifiedTopology: true
+	useUnifiedTopology: true,
 });
 
 client.connect().then(async () => {
@@ -27,20 +27,20 @@ client.connect().then(async () => {
 
 	console.log(chalk.yellow("Creating guilds index..."));
 	await guilds.createIndex({
-		id: 1
+		id: 1,
 	});
 	console.log(chalk.green("Guilds index created."));
 
 	console.log(chalk.yellow("Creating members index..."));
 	await members.createIndex({
 		guildID: 1,
-		id: -1
+		id: -1,
 	});
 	console.log(chalk.green("Members index created."));
 
 	console.log(chalk.yellow("Creating users index..."));
 	await users.createIndex({
-		id: 1
+		id: 1,
 	});
 	console.log(chalk.green("Users index created."));
 

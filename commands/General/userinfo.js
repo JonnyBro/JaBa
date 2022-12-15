@@ -16,7 +16,7 @@ class Userinfo extends BaseCommand {
 					.setDescription(client.translate("common:USER"))),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -37,58 +37,58 @@ class Userinfo extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: `${member.user.tag} (${member.id})`,
-				iconURL: member.displayAvatarURL()
+				iconURL: member.displayAvatarURL(),
 			})
 			.setThumbnail(member.displayAvatarURL({
-				size: 512
+				size: 512,
 			}))
 			.addFields([
 				{
 					name: ":man: " + interaction.translate("common:USERNAME"),
 					value: member.user.tag,
-					inline: true
+					inline: true,
 				},
 				{
 					name: client.customEmojis.pencil + " " + interaction.translate("common:NICKNAME"),
 					value: member.nickname || interaction.translate("general/userinfo:NO_NICKNAME"),
-					inline: true
+					inline: true,
 				},
 				{
 					name: client.customEmojis.status[member.presence.status] + " " + interaction.translate("common:STATUS"),
 					value: interaction.translate(`common:STATUS_${member.presence.status.toUpperCase()}`),
-					inline: true
+					inline: true,
 				},
 				{
 					name: client.customEmojis.bot + " " + interaction.translate("common:ROBOT"),
 					value: member.user.bot ? interaction.translate("common:YES") : interaction.translate("common:NO"),
-					inline: true
+					inline: true,
 				},
 				{
 					name: client.customEmojis.calendar + " " + interaction.translate("common:CREATION"),
 					value: client.printDate(member.user.createdAt),
-					inline: true
+					inline: true,
 				},
 				{
 					name: client.customEmojis.calendar2 + " " + interaction.translate("common:JOINED"),
 					value: client.printDate(member.joinedAt),
-					inline: true
+					inline: true,
 				},
 				{
 					name: client.customEmojis.color + " " + interaction.translate("common:COLOR"),
 					value: member.displayHexColor,
-					inline: true
+					inline: true,
 				},
 				{
 					name: client.customEmojis.roles + " " + interaction.translate("common:ROLES"),
 					value: (member.roles.size > 10 ? member.roles.cache.map((r) => r).slice(0, 10).join(", ") + " " + interaction.translate("general/userinfo:MORE_ROLES", {
-						count: member.roles.cache.size - 10
+						count: member.roles.cache.size - 10,
 					}) : (member.roles.cache.size < 1) ? interaction.translate("general/userinfo:NO_ROLE") : member.roles.cache.map((r) => r).join(", ")),
-					inline: true
-				}
+					inline: true,
+				},
 			])
 			.setColor(client.config.embed.color)
 			.setFooter({
-				text: client.config.embed.footer
+				text: client.config.embed.footer,
 			});
 
 		if (member.presence.activities[0]?.name === "Custom Status") {
@@ -96,21 +96,21 @@ class Userinfo extends BaseCommand {
 				{
 					name: client.customEmojis.games + " " + interaction.translate("common:ACTIVITY"),
 					value: member.presence.activities[0] ? `${interaction.translate("general/userinfo:CUSTOM")}\n${member.presence.activities[0].state || interaction.translate("common:NOT_DEFINED")}` : interaction.translate("general/userinfo:NO_ACTIVITY"),
-					inline: true
-				}
+					inline: true,
+				},
 			]);
 		} else {
 			embed.addFields([
 				{
 					name: client.customEmojis.games + " " + interaction.translate("common:ACTIVITY"),
 					value: member.presence.activities[0] ? `${member.presence.activities[0].name}\n${member.presence.activities[0].details}\n${member.presence.activities[0].state}` : interaction.translate("general/userinfo:NO_ACTIVITY"),
-					inline: true
-				}
+					inline: true,
+				},
 			]);
 		}
 
 		interaction.reply({
-			embeds: [embed]
+			embeds: [embed],
 		});
 	}
 }

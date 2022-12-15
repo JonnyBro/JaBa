@@ -26,11 +26,11 @@ class Leaderboard extends BaseCommand {
 					.addChoices(
 						{ name: client.translate("economy/leaderboard:LEVEL"), value: "level" },
 						{ name: client.translate("economy/leaderboard:MONEY"), value: "money" },
-						{ name: client.translate("economy/leaderboard:REP"), value: "rep" }
+						{ name: client.translate("economy/leaderboard:REP"), value: "rep" },
 					)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -53,7 +53,7 @@ class Leaderboard extends BaseCommand {
 		const isOnMobile = JSON.stringify(Object.keys(interaction.member.presence.clientStatus)) === JSON.stringify(["mobile"]);
 		if (isOnMobile) interaction.followUp({
 			content: interaction.translate("economy/leaderboard:MOBILE"),
-			ephemeral: true
+			ephemeral: true,
 		});
 
 		if (type === "money") {
@@ -63,7 +63,7 @@ class Leaderboard extends BaseCommand {
 			await asyncForEach(membersData, async member => {
 				membersLeaderboard.push({
 					id: member.id,
-					money: member.money + member.bankSold
+					money: member.money + member.bankSold,
 				});
 			});
 			membersLeaderboard.sort((a, b) => b.money - a.money);
@@ -81,23 +81,23 @@ class Leaderboard extends BaseCommand {
 			const embed = new EmbedBuilder()
 				.setAuthor({
 					name: interaction.translate("economy/leaderboard:TABLE", {
-						name: interaction.guild.name
+						name: interaction.guild.name,
 					}),
-					iconURL: interaction.guild.iconURL()
+					iconURL: interaction.guild.iconURL(),
 				})
 				.setColor(client.config.embed.color)
 				.addFields({
 					name: interaction.translate("common:USER"),
 					value: userNames,
-					inline: true
+					inline: true,
 				}, {
 					name: interaction.translate("common:CREDITS"),
 					value: money,
-					inline: true
+					inline: true,
 				});
 
 			interaction.editReply({
-				embeds: [embed]
+				embeds: [embed],
 			});
 		} else if (type === "level") {
 			const membersLeaderboard = [],
@@ -107,7 +107,7 @@ class Leaderboard extends BaseCommand {
 				membersLeaderboard.push({
 					id: member.id,
 					level: member.level,
-					xp: member.exp
+					xp: member.exp,
 				});
 			});
 			membersLeaderboard.sort((a, b) => b.level - a.level);
@@ -127,31 +127,31 @@ class Leaderboard extends BaseCommand {
 			const embed = new EmbedBuilder()
 				.setAuthor({
 					name: interaction.translate("economy/leaderboard:TABLE", {
-						name: interaction.guild.name
+						name: interaction.guild.name,
 					}),
-					iconURL: interaction.guild.iconURL()
+					iconURL: interaction.guild.iconURL(),
 				})
 				.setColor(client.config.embed.color)
 				.addFields([
 					{
 						name: interaction.translate("common:USER"),
 						value: userNames.join("\n"),
-						inline: true
+						inline: true,
 					},
 					{
 						name: interaction.translate("common:LEVEL"),
 						value: level.join("\n"),
-						inline: true
+						inline: true,
 					},
 					{
 						name: interaction.translate("common:XP"),
 						value: xp.join("\n"),
-						inline: true
-					}
+						inline: true,
+					},
 				]);
 
 			interaction.editReply({
-				embeds: [embed]
+				embeds: [embed],
 			});
 		} else if (type === "rep") {
 			const usersLeaderboard = [],
@@ -160,7 +160,7 @@ class Leaderboard extends BaseCommand {
 			await asyncForEach(usersData, async user => {
 				usersLeaderboard.push({
 					id: user.id,
-					rep: user.rep
+					rep: user.rep,
 				});
 			});
 			usersLeaderboard.sort((a, b) => b.rep - a.rep);
@@ -178,23 +178,23 @@ class Leaderboard extends BaseCommand {
 			const embed = new EmbedBuilder()
 				.setAuthor({
 					name: interaction.translate("economy/leaderboard:TABLE", {
-						name: interaction.guild.name
+						name: interaction.guild.name,
 					}),
-					iconURL: interaction.guild.iconURL()
+					iconURL: interaction.guild.iconURL(),
 				})
 				.setColor(client.config.embed.color)
 				.addFields({
 					name: interaction.translate("common:USER"),
 					value: userNames,
-					inline: true
+					inline: true,
 				}, {
 					name: interaction.translate("common:REP"),
 					value: rep,
-					inline: true
+					inline: true,
 				});
 
 			interaction.editReply({
-				embeds: [embed]
+				embeds: [embed],
 			});
 		}
 	}

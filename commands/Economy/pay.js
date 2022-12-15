@@ -20,7 +20,7 @@ class Pay extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -45,12 +45,12 @@ class Pay extends BaseCommand {
 
 
 		if (amount > data.memberData.money) return interaction.error("economy/pay:ENOUGH_MONEY", {
-			amount: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDITS:1"), interaction.translate("misc:NOUNS:CREDITS:2"), interaction.translate("misc:NOUNS:CREDITS:5"))}`
+			amount: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDITS:1"), interaction.translate("misc:NOUNS:CREDITS:2"), interaction.translate("misc:NOUNS:CREDITS:5"))}`,
 		});
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildId: interaction.guildId
+			guildId: interaction.guildId,
 		});
 
 		data.memberData.money -= amount;
@@ -63,7 +63,7 @@ class Pay extends BaseCommand {
 			user: member.user.tag,
 			amount: amount,
 			date: Date.now(),
-			type: "send"
+			type: "send",
 		};
 		data.memberData.transactions.push(info1);
 
@@ -71,13 +71,13 @@ class Pay extends BaseCommand {
 			user: member.user.tag,
 			amount: amount,
 			date: Date.now(),
-			type: "got"
+			type: "got",
 		};
 		data.memberData.transactions.push(info2);
 
 		interaction.success("economy/pay:SUCCESS", {
 			user: member.toString(),
-			amount: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`
+			amount: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 		});
 	}
 }

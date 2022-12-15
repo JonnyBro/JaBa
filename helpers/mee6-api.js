@@ -9,6 +9,7 @@ const fetchMee6 = async args => {
 		if (response.error && response.error.message) throw new Error(`${response.statusCode}: ${response.error.message}`);
 		else throw new Error(`${response.statusCode}: ${response.statusMessage}`);
 	}
+
 	return response;
 };
 
@@ -55,7 +56,7 @@ class Mee6Api {
 				id, level, username, discriminator, avatarUrl, messageCount,
 				tag: `${username}#${discriminator}`,
 				xp: { userXp, levelXp, totalXp },
-				rank: (limit * page) + index + 1
+				rank: (limit * page) + index + 1,
 			};
 		});
 	}

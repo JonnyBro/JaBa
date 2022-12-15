@@ -15,7 +15,7 @@ class Number extends BaseCommand {
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -44,7 +44,7 @@ class Number extends BaseCommand {
 		const filter = m => !m.author.bot;
 		const collector = new MessageCollector(interaction.channel, {
 			filter,
-			time: (5 * 60 * 1000)
+			time: (5 * 60 * 1000),
 		});
 		currentGames[interaction.guildId] = true;
 
@@ -63,8 +63,8 @@ class Number extends BaseCommand {
 						number,
 						time,
 						participantCount: participants.length,
-						participants: participants.map(p => `<@${p}>`).join(", ")
-					})
+						participants: participants.map(p => `<@${p}>`).join(", "),
+					}),
 				});
 
 				if (participants.length > 1) {
@@ -73,13 +73,13 @@ class Number extends BaseCommand {
 					interaction.channel.send({
 						content: interaction.translate("economy/number:WON", {
 							winner: msg.author.username,
-							credits: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`
-						})
+							credits: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+						}),
 					});
 
 					const memberData = await client.findOrCreateMember({
 						id: msg.author.id,
-						guildId: interaction.guildId
+						guildId: interaction.guildId,
 					});
 
 					memberData.money += won;
@@ -88,7 +88,7 @@ class Number extends BaseCommand {
 						user: interaction.translate("economy/transactions:NUMBERS"),
 						amount: won,
 						date: Date.now(),
-						type: "got"
+						type: "got",
 					};
 					data.memberData.transactions.push(info);
 
@@ -98,10 +98,10 @@ class Number extends BaseCommand {
 			}
 
 			if (parseInt(msg.content) < number) msg.reply({
-				content: interaction.translate("economy/number:TOO_BIG", { user: msg.author.toString(), number: parsedNumber })
+				content: interaction.translate("economy/number:TOO_BIG", { user: msg.author.toString(), number: parsedNumber }),
 			});
 			if (parseInt(msg.content) > number) msg.reply({
-				content: interaction.translate("economy/number:TOO_SMALL", { user: msg.author.toString(), number: parsedNumber })
+				content: interaction.translate("economy/number:TOO_SMALL", { user: msg.author.toString(), number: parsedNumber }),
 			});
 		});
 

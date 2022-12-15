@@ -23,14 +23,14 @@ async function walkDirectory(dir, namespaces = [], folderName = "") {
 
 	return {
 		namespaces: [...new Set(namespaces)],
-		languages
+		languages,
 	};
 }
 
 module.exports = async () => {
 	const options = {
 		jsonIndent: 2,
-		loadPath: path.resolve(__dirname, "../languages/{{lng}}/{{ns}}.json")
+		loadPath: path.resolve(__dirname, "../languages/{{lng}}/{{ns}}.json"),
 	};
 
 	const { namespaces, languages } = await walkDirectory(path.resolve(__dirname, "../languages/"));
@@ -45,7 +45,7 @@ module.exports = async () => {
 		interpolation: { escapeValue: false },
 		load: "all",
 		ns: namespaces,
-		preload: languages
+		preload: languages,
 	});
 
 	return new Map(languages.map(item => [item, i18next.getFixedT(item)]));

@@ -15,7 +15,7 @@ class NSFW extends BaseCommand {
 				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -39,8 +39,8 @@ class NSFW extends BaseCommand {
 		const tags = ["hentai", "ecchi", "lewdanimegirls", "hentaifemdom", "animefeets", "animebooty", "biganimetiddies", "sideoppai", "ahegao"].map(tag =>
 			JSON.parse(JSON.stringify({
 				label: tag,
-				value: tag
-			}))
+				value: tag,
+			})),
 		);
 
 		const row = new ActionRowBuilder()
@@ -48,14 +48,14 @@ class NSFW extends BaseCommand {
 				new SelectMenuBuilder()
 					.setCustomId("nsfw_select")
 					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
-					.addOptions(tags)
+					.addOptions(tags),
 			);
 
 		const msg = await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
 			ephemeral: true,
 			fetchReply: true,
-			components: [row]
+			components: [row],
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
@@ -71,7 +71,7 @@ class NSFW extends BaseCommand {
 				const embed = new EmbedBuilder()
 					.setColor(client.config.embed.color)
 					.setFooter({
-						text: client.config.embed.footer
+						text: client.config.embed.footer,
 					})
 					.setTitle(res.title)
 					.setDescription(`${interaction.translate("fun/memes:SUBREDDIT")}: **${res.subreddit}**\n${interaction.translate("common:AUTHOR")}: **${res.author}**\n${interaction.translate("fun/memes:UPS")}: **${res.ups}**`)
@@ -79,14 +79,14 @@ class NSFW extends BaseCommand {
 					.setTimestamp();
 
 				await interaction.editReply({
-					embeds: [embed]
+					embeds: [embed],
 				});
 			}
 		});
 
 		collector.on("end", () => {
 			return interaction.editReply({
-				components: []
+				components: [],
 			});
 		});
 	}

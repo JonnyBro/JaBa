@@ -4,7 +4,7 @@ class GuildMemberUpdate extends BaseEvent {
 	constructor() {
 		super({
 			name: "guildMemberRemove",
-			once: false
+			once: false,
 		});
 	}
 
@@ -21,7 +21,7 @@ class GuildMemberUpdate extends BaseEvent {
 
 		if (newMember?.roles.cache.some(r => r.name === "Поддержавшие JaBa")) {
 			const userData = await client.findOrCreateUser({
-				id: newMember.id
+				id: newMember.id,
 			});
 			userData.achievements.tip.progress.now = 1;
 			userData.achievements.tip.achieved = true;
@@ -31,8 +31,8 @@ class GuildMemberUpdate extends BaseEvent {
 			newMember.send({
 				files: [{
 					name: "achievement_unlocked5.png",
-					attachment: "./assets/img/achievements/achievement_unlocked5.png"
-				}]
+					attachment: "./assets/img/achievements/achievement_unlocked5.png",
+				}],
 			});
 		}
 	}

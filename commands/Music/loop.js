@@ -20,11 +20,11 @@ class Loop extends BaseCommand {
 						{ name: client.translate("music/loop:AUTOPLAY"), value: "3" },
 						{ name: client.translate("music/loop:QUEUE"), value: "2" },
 						{ name: client.translate("music/loop:TRACK"), value: "1" },
-						{ name: client.translate("music/loop:DISABLE"), value: "0" }
+						{ name: client.translate("music/loop:DISABLE"), value: "0" },
 					)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**

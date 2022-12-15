@@ -25,13 +25,13 @@ async function fetchUser(userData, client, query) {
 
 	const user = await client.users.fetch(userData.id);
 	const userDb = await client.findOrCreateUser({
-		id: user.id
+		id: user.id,
 	}, true);
 
 	const userInfos = {
 		...user.toJSON(),
 		...userDb,
-		...userData
+		...userData,
 	};
 
 	return userInfos;
@@ -54,9 +54,9 @@ async function fetchUsers(array, client) {
 					...{
 						money: element.money,
 						level: element.level,
-						rep: element.rep
+						rep: element.rep,
 					},
-					...user.toJSON()
+					...user.toJSON(),
 				});
 			});
 		});
@@ -74,13 +74,13 @@ async function fetchUsers(array, client) {
 async function fetchGuild(guildID, client, guilds) {
 	const guild = client.guilds.cache.get(guildID);
 	const conf = await client.findOrCreateGuild({
-		id: guild.id
+		id: guild.id,
 	});
 
 	return {
 		...guild,
 		...conf.toJSON(),
-		...guilds.find((g) => g.id === guild.id)
+		...guilds.find((g) => g.id === guild.id),
 	};
 }
 

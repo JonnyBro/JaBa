@@ -27,29 +27,29 @@ class Giveaway extends BaseCommand {
 						.setRequired(true))
 					.addBooleanOption(option => option.setName("isdrop")
 						.setDescription(client.translate("moderation/giveaway:ISDROP"))
-						.setRequired(true))
+						.setRequired(true)),
 				)
 				.addSubcommand(subcommand => subcommand.setName("reroll")
 					.setDescription(client.translate("moderation/giveaway:REROLL"))
 					.addStringOption(option => option.setName("giveaway_id")
 						.setDescription(client.translate("moderation/giveaway:GIVEAWAY_ID"))
-						.setRequired(true))
+						.setRequired(true)),
 				)
 				.addSubcommand(subcommand => subcommand.setName("end")
 					.setDescription(client.translate("moderation/giveaway:END"))
 					.addStringOption(option => option.setName("giveaway_id")
 						.setDescription(client.translate("moderation/giveaway:GIVEAWAY_ID"))
-						.setRequired(true))
+						.setRequired(true)),
 				)
 				.addSubcommand(subcommand => subcommand.setName("delete")
 					.setDescription(client.translate("moderation/giveaway:DELETE"))
 					.addStringOption(option => option.setName("giveaway_id")
 						.setDescription(client.translate("moderation/giveaway:GIVEAWAY_ID"))
-						.setRequired(true))
+						.setRequired(true)),
 				),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -99,8 +99,8 @@ class Giveaway extends BaseCommand {
 					noWinner: interaction.translate("moderation/giveaway:NO_WINNER"),
 					winners: interaction.translate("moderation/giveaway:WINNERS"),
 					endedAt: interaction.translate("moderation/giveaway:END_AT"),
-					hostedBy: interaction.translate("moderation/giveaway:HOSTED_BY")
-				}
+					hostedBy: interaction.translate("moderation/giveaway:HOSTED_BY"),
+				},
 			}).then(() => {
 				return interaction.success("moderation/giveaway:GIVEAWAY_CREATED", null, { ephemeral: true });
 			});
@@ -110,13 +110,13 @@ class Giveaway extends BaseCommand {
 			client.giveawaysManager.reroll(giveaway_id, {
 				messages: {
 					congrat: interaction.translate("moderation/giveaway:REROLL_CONGRAT"),
-					error: interaction.translate("moderation/giveaway:REROLL_ERROR")
-				}
+					error: interaction.translate("moderation/giveaway:REROLL_ERROR"),
+				},
 			}).then(() => {
 				return interaction.success("moderation/giveaway:GIVEAWAY_REROLLED");
 			}).catch(() => {
 				return interaction.error("moderation/giveaway:NOT_FOUND_ENDED", {
-					messageId: giveaway_id
+					messageId: giveaway_id,
 				}, { ephemeral: true });
 			});
 		} else if (command === "end") {
@@ -127,7 +127,7 @@ class Giveaway extends BaseCommand {
 				return interaction.success("moderation/giveaway:GIVEAWAY_ENDED");
 			} catch (e) {
 				return interaction.error("moderation/giveaway:NOT_FOUND", {
-					messageId: giveaway_id
+					messageId: giveaway_id,
 				}, { ephemeral: true });
 			}
 		} else if (command === "delete") {
@@ -137,7 +137,7 @@ class Giveaway extends BaseCommand {
 				return interaction.success("moderation/giveaway:GIVEAWAY_DELETED");
 			}).catch(() => {
 				return interaction.error("moderation/giveaway:NOT_FOUND", {
-					messageId: giveaway_id
+					messageId: giveaway_id,
 				}, { ephemeral: true });
 			});
 		}

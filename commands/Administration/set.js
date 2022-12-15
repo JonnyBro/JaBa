@@ -20,7 +20,7 @@ class Set extends BaseCommand {
 						{ name: client.translate("common:LEVEL"), value: "level" },
 						{ name: client.translate("common:XP"), value: "xp" },
 						{ name: client.translate("common:CREDITS"), value: "credits" },
-						{ name: client.translate("economy/transactions:BANK"), value: "bank" }
+						{ name: client.translate("economy/transactions:BANK"), value: "bank" },
 					))
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
@@ -30,7 +30,7 @@ class Set extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -53,7 +53,7 @@ class Set extends BaseCommand {
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,
-			guildId: interaction.guildId
+			guildId: interaction.guildId,
 		});
 		const int = interaction.options.getInteger("int");
 		if (int < 0) return interaction.error("administration/set:INVALID_NUMBER", null, { ephemeral: true });
@@ -64,7 +64,7 @@ class Set extends BaseCommand {
 				await memberData.save();
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 					username: member.toString(),
-					amount: int
+					amount: int,
 				}, { ephemeral: true });
 			}
 
@@ -73,7 +73,7 @@ class Set extends BaseCommand {
 				await memberData.save();
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 					username: member.toString(),
-					amount: int
+					amount: int,
 				}, { ephemeral: true });
 			}
 
@@ -82,7 +82,7 @@ class Set extends BaseCommand {
 				await memberData.save();
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 					username: member.toString(),
-					amount: int
+					amount: int,
 				}, { ephemeral: true });
 			}
 
@@ -91,7 +91,7 @@ class Set extends BaseCommand {
 				await memberData.save();
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 					username: member.toString(),
-					amount: int
+					amount: int,
 				}, { ephemeral: true });
 			}
 		}

@@ -21,7 +21,7 @@ class LMGTFY extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -47,12 +47,12 @@ class LMGTFY extends BaseCommand {
 
 			interaction.reply({
 				content: `<${res}>`,
-				ephemeral: true
+				ephemeral: true,
 			});
 		} else {
 			interaction.reply({
 				content: `<${url}>`,
-				ephemeral: true
+				ephemeral: true,
 			});
 		}
 	}

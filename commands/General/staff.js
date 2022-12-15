@@ -14,7 +14,7 @@ class Staff extends BaseCommand {
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -37,26 +37,26 @@ class Staff extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("general/staff:TITLE", {
-					guild: interaction.guild.name
-				})
+					guild: interaction.guild.name,
+				}),
 			})
 			.addFields([
 				{
 					name: interaction.translate("general/staff:ADMINS"),
-					value: (administrators.size > 0 ? administrators.map((a) => `${a.presence ? client.customEmojis.status[a.presence.status] : client.customEmojis.status.offline} | <@${a.user.id}>`).join("\n") : interaction.translate("general/staff:NO_ADMINS"))
+					value: (administrators.size > 0 ? administrators.map((a) => `${a.presence ? client.customEmojis.status[a.presence.status] : client.customEmojis.status.offline} | <@${a.user.id}>`).join("\n") : interaction.translate("general/staff:NO_ADMINS")),
 				},
 				{
 					name: interaction.translate("general/staff:MODS"),
-					value: (moderators.size > 0 ? moderators.map((m) => `${m.presence ? client.customEmojis.status[m.presence.status] : client.customEmojis.status.offline} | <@${m.user.id}>`).join("\n") : interaction.translate("general/staff:NO_MODS"))
-				}
+					value: (moderators.size > 0 ? moderators.map((m) => `${m.presence ? client.customEmojis.status[m.presence.status] : client.customEmojis.status.offline} | <@${m.user.id}>`).join("\n") : interaction.translate("general/staff:NO_MODS")),
+				},
 			])
 			.setColor(client.config.embed.color)
 			.setFooter({
-				text: client.config.embed.footer
+				text: client.config.embed.footer,
 			});
 
 		interaction.reply({
-			embeds: [embed]
+			embeds: [embed],
 		});
 	}
 }

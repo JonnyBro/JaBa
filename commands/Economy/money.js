@@ -24,7 +24,7 @@ class Money extends BaseCommand {
 					.setDescription(client.translate("common:USER"))),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -48,7 +48,7 @@ class Money extends BaseCommand {
 
 		const memberData = member.id === interaction.user.id ? data.memberData : await client.findOrCreateMember({
 			id: member.id,
-			guildId: interaction.guildId
+			guildId: interaction.guildId,
 		});
 
 		const guilds = client.guilds.cache.filter(g => g.members.cache.find(m => m.id === member.id));
@@ -56,7 +56,7 @@ class Money extends BaseCommand {
 		await asyncForEach(guilds, async guild => {
 			const data = await client.findOrCreateMember({
 				id: member.id,
-				guildId: guild.id
+				guildId: guild.id,
 			});
 			globalMoney += data.money + data.bankSold;
 		});
@@ -64,33 +64,33 @@ class Money extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("economy/money:TITLE", {
-					username: member.user.tag
+					username: member.user.tag,
 				}),
-				iconURL: member.user.displayAvatarURL()
+				iconURL: member.user.displayAvatarURL(),
 			})
 			.addFields([
 				{
 					name: interaction.translate("economy/profile:CASH"),
 					value: `**${memberData.money}** ${client.getNoun(memberData.money, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-					inline: true
+					inline: true,
 				},
 				{
 					name: interaction.translate("economy/profile:BANK"),
 					value: `**${memberData.bankSold}** ${client.getNoun(memberData.bankSold, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-					inline: true
+					inline: true,
 				},
 				{
 					name: interaction.translate("economy/profile:GLOBAL"),
 					value: `**${globalMoney}** ${client.getNoun(globalMoney, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-					inline: true
-				}
+					inline: true,
+				},
 			])
 			.setColor(client.config.embed.color)
 			.setFooter({
-				text: client.config.embed.footer
+				text: client.config.embed.footer,
 			});
 		interaction.editReply({
-			embeds: [embed]
+			embeds: [embed],
 		});
 	}
 }

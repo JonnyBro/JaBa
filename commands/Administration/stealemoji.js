@@ -18,7 +18,7 @@ class Stealemoji extends BaseCommand {
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
-			ownerOnly: false
+			ownerOnly: false,
 		});
 	}
 	/**
@@ -41,15 +41,15 @@ class Stealemoji extends BaseCommand {
 		interaction.guild.emojis
 			.create({
 				name: parsedEmoji.name,
-				attachment: `https://cdn.discordapp.com/emojis/${parsedEmoji.id}.${ext}`
+				attachment: `https://cdn.discordapp.com/emojis/${parsedEmoji.id}.${ext}`,
 			})
 			.then(emoji => interaction.success("administration/stealemoji:SUCCESS", {
-				emoji: emoji.name
+				emoji: emoji.name,
 			}, { ephemeral: true }))
 			.catch(e => {
 				interaction.error("administration/stealemoji:ERROR", {
 					emoji: parsedEmoji.name,
-					e
+					e,
 				}, { ephemeral: true });
 			});
 	}
