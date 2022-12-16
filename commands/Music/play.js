@@ -141,9 +141,8 @@ class Play extends BaseCommand {
 				.setTimestamp();
 
 			await interaction.editReply({
-				content: interaction.translate("music/play:SEARCH_RESULTS"),
 				embeds: [embed],
-				components: [row1, row2, row3],
+				components: rows,
 			});
 
 			const filter = i => i.user.id === interaction.user.id;
@@ -204,7 +203,7 @@ class Play extends BaseCommand {
 					});
 
 					return interaction.editReply({
-						components: [row1, row2, row3],
+						components: rows,
 					});
 				}
 			});
