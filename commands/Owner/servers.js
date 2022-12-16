@@ -63,7 +63,7 @@ class Servers extends BaseCommand {
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (20 * 1000) });
+		const collector = interaction.guild === null ? (await interaction.user.createDM()).createMessageComponentCollector({ filter, idle: (20 * 1000) }) : interaction.channel.createMessageComponentCollector({ filter, idle: (20 * 1000) });
 
 		collector.on("collect", async i => {
 			if (i.isButton()) {
