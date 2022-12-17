@@ -112,13 +112,12 @@ class JaBa extends Client {
 	 * @returns
 	 */
 	async loadCommands(dir) {
-		const filePath = path.join(__dirname, dir);
-		let folders = await fs.readdir(filePath);
-		folders = folders
-			.map(file => path.join(filePath, file))
-			.filter(async path => { path = await fs.lstat(path); path.isDirectory(); });
+		const rest = new REST().setToken(this.config.token),
+			filePath = path.join(__dirname, dir),
+			folders = (await fs.readdir(filePath))
+				.map(file => path.join(filePath, file))
+				.filter(async path => (await fs.lstat(path)).isDirectory());
 
-		const rest = new REST().setToken(this.config.token);
 		const commands = [];
 		for (let index = 0; index < folders.length; index++) {
 			const folder = folders[index];
@@ -234,6 +233,7 @@ class JaBa extends Client {
 
 	/**
 	 * Get default language
+	 * @returns {String} Default bot's language
 	 */
 	get defaultLanguage() {
 		return this.languages.find(language => language.default).name;
@@ -253,7 +253,7 @@ class JaBa extends Client {
 	}
 
 	/**
-	 * Returns beautified date
+	 * Beautify date
 	 * @param {Date} date Date
 	 * @param {String | null} format Format for moment
 	 * @param {String} locale Language
