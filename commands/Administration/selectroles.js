@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, ActionRowBuilder, SelectMenuBuilder } = require("discord.js");
+const { SlashCommandBuilder, PermissionFlagsBits, ActionRowBuilder, StringSelectMenuBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Selectroles extends BaseCommand {
@@ -42,7 +42,7 @@ class Selectroles extends BaseCommand {
 	 */
 	async onLoad(client) {
 		client.on("interactionCreate", async interaction => {
-			if (!interaction.isSelectMenu()) return;
+			if (!interaction.isStringSelectMenu()) return;
 
 			if (interaction.customId === "auto_roles") {
 				const removed = interaction.component.options.filter(option => {
@@ -107,14 +107,14 @@ class Selectroles extends BaseCommand {
 
 				row = ActionRowBuilder.from(row)
 					.setComponents(
-						SelectMenuBuilder.from(menu)
+						StringSelectMenuBuilder.from(menu)
 							.setMinValues(0)
 							.setMaxValues(menu.options.length + 1)
 							.addOptions(option),
 					);
 			} else {
 				row.addComponents(
-					new SelectMenuBuilder()
+					new StringSelectMenuBuilder()
 						.setCustomId("auto_roles")
 						.setMinValues(0)
 						.setMaxValues(1)

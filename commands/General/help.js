@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Help extends BaseCommand {
@@ -58,7 +58,7 @@ class Help extends BaseCommand {
 
 		const row = new ActionRowBuilder()
 			.addComponents(
-				new SelectMenuBuilder()
+				new StringSelectMenuBuilder()
 					.setCustomId("help_category_select")
 					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
 					.addOptions(categoriesRows),
@@ -74,7 +74,7 @@ class Help extends BaseCommand {
 		const collector = msg.createMessageComponentCollector({ filter, idle: (15 * 1000) });
 
 		collector.on("collect", async i => {
-			if (i.isSelectMenu() && i.customId === "help_category_select") {
+			if (i.isStringSelectMenu() && i.customId === "help_category_select") {
 				i.deferUpdate();
 
 				const arg = i?.values[0];

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
@@ -43,7 +43,7 @@ class Memes extends BaseCommand {
 
 		const row = new ActionRowBuilder()
 			.addComponents(
-				new SelectMenuBuilder()
+				new StringSelectMenuBuilder()
 					.setCustomId("memes_select")
 					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
 					.addOptions(tags),
@@ -59,11 +59,11 @@ class Memes extends BaseCommand {
 		const collector = msg.createMessageComponentCollector({ filter, idle: (2 * 60 * 1000) });
 
 		collector.on("collect", async i => {
-			if (i.isSelectMenu() && i.customId === "memes_select") {
+			if (i.isStringSelectMenu() && i.customId === "memes_select") {
 				i.deferUpdate();
 
 				const tag = i.values[0];
-				const res = await fetch(`https://meme-api.herokuapp.com/gimme/${tag}`).then(response => response.json());
+				const res = await fetch(`https://meme-api.com/gimme/${tag}`).then(response => response.json());
 
 				const embed = new EmbedBuilder()
 					.setColor(client.config.embed.color)

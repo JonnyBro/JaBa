@@ -69,14 +69,10 @@ class Warn extends BaseCommand {
 			const banCount = data.guildData.plugins.warnsSanctions.ban;
 			const kickCount = data.guildData.plugins.warnsSanctions.kick;
 
-			data.guildData.casesCount++;
-			data.guildData.save();
-
 			const caseInfo = {
 				moderator: interaction.member.id,
 				date: Date.now(),
 				type: "warn",
-				case: data.guildData.casesCount,
 				reason,
 			};
 
@@ -107,14 +103,16 @@ class Warn extends BaseCommand {
 							reason,
 						}),
 					});
+
 					caseInfo.type = "ban";
-					embed.setAuthor({
-						name: interaction.translate("moderation/ban:CASE", {
-							count: data.guildData.casesCount,
-						}),
-					})
+
+					embed
+						.setAuthor({
+							name: interaction.translate("moderation/warn:BAN"),
+						})
 						.setColor(client.config.embed.color);
-					interaction.guild.members.ban(member);
+
+					interaction.guild.members.ban(member).catch(() => {});
 					interaction.success("moderation/setwarns:AUTO_BAN", {
 						username: member.user.tag,
 						count: `${banCount} ${client.getNoun(banCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
@@ -132,13 +130,15 @@ class Warn extends BaseCommand {
 							reason,
 						}),
 					});
+
 					caseInfo.type = "kick";
-					embed.setAuthor({
-						name: interaction.translate("moderation/kick:CASE", {
-							count: data.guildData.casesCount,
-						}),
-					})
+
+					embed
+						.setAuthor({
+							name: interaction.translate("moderation/warn:KICK"),
+						})
 						.setColor(client.config.embed.color);
+
 					member.kick().catch(() => {});
 					interaction.success("moderation/setwarns:AUTO_KICK", {
 						username: member.user.tag,
@@ -157,11 +157,11 @@ class Warn extends BaseCommand {
 			});
 
 			caseInfo.type = "warn";
-			embed.setAuthor({
-				name: interaction.translate("moderation/warn:CASE", {
-					caseNumber: data.guildData.casesCount,
-				}),
-			}).setColor(client.config.embed.color);
+			embed
+				.setAuthor({
+					name: interaction.translate("moderation/warn:WARN"),
+				})
+				.setColor(client.config.embed.color);
 
 			submitted.reply({
 				content: interaction.translate("moderation/warn:WARNED", {
@@ -176,6 +176,7 @@ class Warn extends BaseCommand {
 			if (data.guildData.plugins.modlogs) {
 				const channel = interaction.guild.channels.cache.get(data.guildData.plugins.modlogs);
 				if (!channel) return;
+
 				channel.send({
 					embeds: [embed],
 				});

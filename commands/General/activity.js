@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, PermissionsBitField } = require("discord.js"),
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, PermissionsBitField } = require("discord.js"),
 	{ defaultApplications } = require("../../helpers/discordTogether");
 const BaseCommand = require("../../base/BaseCommand");
 
@@ -49,7 +49,7 @@ class Activity extends BaseCommand {
 
 		const row = new ActionRowBuilder()
 			.addComponents(
-				new SelectMenuBuilder()
+				new StringSelectMenuBuilder()
 					.setCustomId("activity_select")
 					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
 					.addOptions(activities),
@@ -64,7 +64,7 @@ class Activity extends BaseCommand {
 		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (15 * 1000) });
 
 		collector.on("collect", async i => {
-			if (i.isSelectMenu() && i.customId === "activity_select") {
+			if (i.isStringSelectMenu() && i.customId === "activity_select") {
 				const activity = i?.values[0];
 
 				const invite = await client.discordTogether.createTogetherCode(voice.id, activity);

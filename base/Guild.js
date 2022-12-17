@@ -8,7 +8,7 @@ module.exports = mongoose.model("Guild", new Schema({
 	membersData: { type: Object, default: {} },
 	members: [{ type: Schema.Types.ObjectId, ref: "Member" }],
 
-	language: { type: String, default: languages.find((l) => l.default).name },
+	language: { type: String, default: languages.find(l => l.default).name },
 	plugins: { type: Object, default: {
 		welcome: {
 			enabled: false,
@@ -40,5 +40,4 @@ module.exports = mongoose.model("Guild", new Schema({
 		birthdays: false,
 		reports: false,
 	} },
-	casesCount: { type: Number, default: 0 },
 }));
