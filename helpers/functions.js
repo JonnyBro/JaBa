@@ -1,21 +1,25 @@
-const { PermissionsBitField, ChannelType } = require("discord.js"),
-	langs = require("../languages/language-meta.json").map((l) => l.moment).filter((l) => l !== "en");
-langs.forEach((lang) => {
-	require(`moment/locale/${lang}.js`);
-});
+const { PermissionsBitField, ChannelType } = require("discord.js");
 
 module.exports = {
+	/**
+	 * Create invite link to guild
+	 * @param {import("../base/JaBa")} client Discord client
+	 * @param {String} guildId Guild's ID
+	 * @returns {String} Invite Link
+	 */
 	async createInvite(client, guildId) {
 		const guild = client.guilds.cache.get(guildId);
 		const member = guild.members.me;
 		const channel = guild.channels.cache.find(ch => ch.permissionsFor(member.id).has(PermissionsBitField.Flags.CreateInstantInvite) && ch.type === ChannelType.GuildText || ch.type === "GUILD_VOICE");
-		if (channel) {
-			const invite = await channel.createInvite();
-
-			return invite ? invite.url : "No URL";
-		} return "No channels found for invite";
+		if (channel) return (await channel.createInvite()).url || "No channels found or missing permissions";
 	},
 
+	/**
+	 * Sort array by key
+	 * @param {Array} array Array to sort
+	 * @param {Number} key Key
+	 * @returns {Array} Sorted array
+	 */
 	sortByKey(array, key) {
 		return array.sort(function (a, b) {
 			const x = a[key];
@@ -24,18 +28,21 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * Shuffles array
+	 * @param {*} pArray Array to shuffle
+	 * @returns {Array} Shuffled array
+	 */
 	shuffle(pArray) {
 		const array = [];
 		pArray.forEach(element => array.push(element));
 		let currentIndex = array.length,
 			temporaryValue, randomIndex;
 
-		// While there remain elements to shuffle...
 		while (currentIndex !== 0) {
-			// Pick a remaining element...
 			randomIndex = Math.floor(Math.random() * currentIndex);
 			currentIndex -= 1;
-			// And swap it with the current element.
+
 			temporaryValue = array[currentIndex];
 			array[currentIndex] = array[randomIndex];
 			array[randomIndex] = temporaryValue;
@@ -44,7 +51,16 @@ module.exports = {
 		return array;
 	},
 
+	/**
+	 * Returns a random integer between min (inclusive) and max (inclusive)
+	 * @param {Number} min Min
+	 * @param {Number} max Max
+	 * @returns {Number} Integer
+	 */
 	randomNum(min, max) {
-		return Math.floor(Math.random() * (max - min) + min + 1);
+		min = Math.ceil(min);
+		max = Math.floor(max);
+
+		return Math.floor(Math.random() * (max - min + 1) + min);
 	},
 };
