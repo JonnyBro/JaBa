@@ -159,7 +159,7 @@ class Clips extends BaseCommand {
 				const queue = client.player.getQueue(interaction.guild.id);
 				if (queue) return interaction.editReply({ content: interaction.translate("music/clips:ACTIVE_QUEUE") });
 				if (getVoiceConnection(interaction.guild.id)) return interaction.editReply({ content: interaction.translate("music/clips:ACTIVE_CLIP") });
-				if (!fs.existsSync(`./clips/${query}.mp3`)) return interaction.editReply({ content: interaction.translate("music/clips:NO_FILE", { file: query }) });
+				if (!fs.existsSync(`./clips/${query}.mp3`)) return interaction.editReply({ content: interaction.translate("music/clips:NO_CLIP", { file: query }) });
 
 				try {
 					const connection = joinVoiceChannel({
