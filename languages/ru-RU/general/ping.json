@@ -2,5 +2,6 @@
 	"DESCRIPTION": "Показать пинг бота",
 	"USAGE": "",
 	"EXAMPLES": "ping",
-	"CONTENT": "Понг! Мой пинг - **{{ping}}**ms."
+	"PONG": "Понг!",
+	"PING": "Мой пинг - **{{ping}}**ms"
 }

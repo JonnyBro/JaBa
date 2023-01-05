@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Ping extends BaseCommand {
@@ -31,8 +31,21 @@ class Ping extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		interaction.replyT("general/ping:CONTENT", {
-			ping: Math.round(client.ws.ping),
+		const embed = new EmbedBuilder()
+			.setColor(client.config.embed.color)
+			.setFooter({
+				text: client.config.embed.footer,
+			})
+			.setAuthor({
+				name: interaction.translate("general/ping:PONG"),
+				iconURL: client.user.avatarURL(),
+			})
+			.setDescription(interaction.translate("general/ping:PING", {
+				ping: Math.round(client.ws.ping),
+			}));
+
+		interaction.reply({
+			embeds: [embed],
 		});
 	}
 }
