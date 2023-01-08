@@ -33,11 +33,12 @@ class Seek extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		const voice = interaction.member.voice.channel;
+		const time = interaction.options.getInteger("time"),
+			voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+
 		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
-		const time = interaction.options.getInteger("time");
 
 		queue.seek(time * 1000);
 		interaction.success("music/seek:SUCCESS", {

@@ -51,7 +51,8 @@ class Welcome extends BaseCommand {
 
 		if (command === "test") {
 			client.emit("guildMemberAdd", interaction.member);
-			return interaction.success("administration/goodbye:TEST_SUCCESS", null, { ephemeral: true });
+
+			interaction.success("administration/goodbye:TEST_SUCCESS", null, { ephemeral: true });
 		} else {
 			const state = interaction.options.getBoolean("state");
 

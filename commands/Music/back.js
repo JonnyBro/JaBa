@@ -33,6 +33,7 @@ class Back extends BaseCommand {
 	async execute(client, interaction) {
 		const voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { ephemeral: true });
+
 		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { ephemeral: true });
 		if (!queue.previousTracks[0]) return interaction.error("music/back:NO_PREV_SONG", null, { ephemeral: true });

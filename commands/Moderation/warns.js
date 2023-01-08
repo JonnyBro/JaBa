@@ -69,7 +69,7 @@ class Warns extends BaseCommand {
 			memberData.sanctions.forEach(sanction => {
 				embed.addFields([
 					{
-						name: sanction.type + " | #" + sanction.case,
+						name: sanction.type,
 						value: `${interaction.translate("common:MODERATOR")}: <@${sanction.moderator}>\n${interaction.translate("common:REASON")}: ${sanction.reason}`,
 						inline: true,
 					},

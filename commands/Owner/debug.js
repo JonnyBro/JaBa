@@ -72,17 +72,20 @@ class Debug extends BaseCommand {
 		const command = interaction.options.getSubcommand();
 
 		if (command === "set") {
-			const type = interaction.options.getString("type");
+			const type = interaction.options.getString("type"),
+				int = interaction.options.getInteger("int");
+
 			const member = interaction.options.getMember("user");
 			if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
+
 			const userData = await client.findOrCreateUser({
-				id: member.id,
-			});
-			const memberData = await client.findOrCreateMember({
-				id: member.id,
-				guildId: interaction.guildId,
-			});
-			const int = interaction.options.getInteger("int");
+					id: member.id,
+				}),
+				memberData = await client.findOrCreateMember({
+					id: member.id,
+					guildId: interaction.guildId,
+				});
+
 
 			switch (type) {
 				case "level": {
@@ -131,17 +134,19 @@ class Debug extends BaseCommand {
 				}
 			}
 		} else {
-			const type = interaction.options.getString("type");
+			const type = interaction.options.getString("type"),
+				int = interaction.options.getInteger("int");
+
 			const member = interaction.options.getMember("target");
 			if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
+
 			const userData = await client.findOrCreateUser({
-				id: member.id,
-			});
-			const memberData = await client.findOrCreateMember({
-				id: member.id,
-				guildId: interaction.guildId,
-			});
-			const int = interaction.options.getInteger("int");
+					id: member.id,
+				}),
+				memberData = await client.findOrCreateMember({
+					id: member.id,
+					guildId: interaction.guildId,
+				});
 
 			switch (type) {
 				case "level": {

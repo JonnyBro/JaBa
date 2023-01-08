@@ -69,8 +69,8 @@ class Leaderboard extends BaseCommand {
 			membersLeaderboard.sort((a, b) => b.money - a.money);
 			if (membersLeaderboard.length > 20) membersLeaderboard.length = 20;
 
-			let userNames = "";
-			let money = "";
+			let userNames = "",
+				money = "";
 			for (let i = 0; i < membersLeaderboard.length; i++) {
 				const data = membersLeaderboard[i];
 
@@ -113,9 +113,9 @@ class Leaderboard extends BaseCommand {
 			membersLeaderboard.sort((a, b) => b.level - a.level);
 			if (membersLeaderboard.length > 20) membersLeaderboard.length = 20;
 
-			const userNames = [];
-			const level = [];
-			const xp = [];
+			const userNames = [],
+				level = [],
+				xp = [];
 			for (let i = 0; i < membersLeaderboard.length; i++) {
 				const data = membersLeaderboard[i];
 
@@ -166,8 +166,8 @@ class Leaderboard extends BaseCommand {
 			usersLeaderboard.sort((a, b) => b.rep - a.rep);
 			if (usersLeaderboard.length > 20) usersLeaderboard.length = 20;
 
-			let userNames = "";
-			let rep = "";
+			let userNames = "",
+				rep = "";
 			for (let i = 0; i < usersLeaderboard.length; i++) {
 				const data = usersLeaderboard[i];
 

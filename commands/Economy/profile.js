@@ -50,6 +50,7 @@ class Profile extends BaseCommand {
 			id: member.id,
 			guildId: interaction.guildId,
 		}));
+
 		const userData = (member.id === interaction.user.id ? data.userData : await client.findOrCreateUser({
 			id: member.id,
 		}));

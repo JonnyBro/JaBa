@@ -36,9 +36,10 @@ class Play extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply();
 
-		const voice = interaction.member.voice.channel;
+		const query = interaction.options.getString("query"),
+			voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { edit: true });
-		const query = interaction.options.getString("query");
+
 		const perms = voice.permissionsFor(client.user);
 		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.error("music/play:VOICE_CHANNEL_CONNECT", null, { edit: true });
 

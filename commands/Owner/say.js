@@ -37,8 +37,9 @@ class Say extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });
-		const message = interaction.options.getString("message");
-		const channel = interaction.options.getChannel("channel");
+
+		const message = interaction.options.getString("message"),
+			channel = interaction.options.getChannel("channel");
 
 		if (!channel) {
 			interaction.channel.sendTyping();

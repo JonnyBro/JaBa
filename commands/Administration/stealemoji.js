@@ -35,8 +35,8 @@ class Stealemoji extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		const parsedEmoji = parseEmoji(interaction.options.getString("emoji"));
-		const ext = parsedEmoji.animated ? "gif" : "png";
+		const parsedEmoji = parseEmoji(interaction.options.getString("emoji")),
+			ext = parsedEmoji.animated ? "gif" : "png";
 
 		interaction.guild.emojis
 			.create({

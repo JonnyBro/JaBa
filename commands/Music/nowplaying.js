@@ -36,8 +36,8 @@ class Nowplaying extends BaseCommand {
 
 		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { edit: true });
-		const progressBar = queue.createProgressBar();
-		const track = queue.current;
+		const progressBar = queue.createProgressBar(),
+			track = queue.current;
 
 		const embed = new EmbedBuilder()
 			.setAuthor({

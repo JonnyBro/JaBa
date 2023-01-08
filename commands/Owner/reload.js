@@ -36,8 +36,8 @@ class Reload extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		const command = interaction.options.getString("command");
-		const cmd = client.commands.get(command);
+		const command = interaction.options.getString("command"),
+			cmd = client.commands.get(command);
 		if (!cmd) return interaction.error("owner/reload:NOT_FOUND", { command }, { ephemeral: true });
 
 		await client.unloadCommand(`../commands/${cmd.category}`, cmd.command.name);

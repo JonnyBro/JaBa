@@ -38,8 +38,8 @@ class Automod extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
-		const state = interaction.options.getBoolean("state");
-		const channel = interaction.options.getChannel("channel");
+		const state = interaction.options.getBoolean("state"),
+			channel = interaction.options.getChannel("channel");
 
 		if (state) {
 			data.guildData.plugins.automod = {
@@ -48,12 +48,14 @@ class Automod extends BaseCommand {
 			};
 			data.guildData.markModified("plugins.automod");
 			await data.guildData.save();
+
 			return interaction.success("administration/automod:ENABLED");
 		} else {
 			if (channel) {
 				data.guildData.plugins.automod.ignored.push(channel);
 				data.guildData.markModified("plugins.automod");
 				await data.guildData.save();
+
 				interaction.success("administration/automod:DISABLED_CHANNEL", {
 					channel: channel.toString(),
 				});
@@ -64,6 +66,7 @@ class Automod extends BaseCommand {
 				};
 				data.guildData.markModified("plugins.automod");
 				await data.guildData.save();
+
 				interaction.success("administration/automod:DISABLED");
 			}
 		}

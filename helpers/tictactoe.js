@@ -110,7 +110,7 @@ async function tictactoe(interaction, options = {}) {
 
 			const collector = m.createMessageComponentCollector({
 				componentType: ComponentType.Button,
-				time: 5000,
+				time: (5 * 1000),
 			});
 			collector.on("collect", async button => {
 				if (button.user.id !== opponent.id)
@@ -664,7 +664,7 @@ async function tictactoe(interaction, options = {}) {
 						const collector = m.createMessageComponentCollector({
 							componentType: ComponentType.Button,
 							max: 1,
-							time: 5000,
+							time: (5 * 1000),
 						});
 
 						collector.on("collect", b => {
@@ -838,7 +838,7 @@ async function tictactoe(interaction, options = {}) {
 						.setColor(options.timeoutEmbedColor || "#C90000")
 						.setFooter(foot)
 						.setTimestamp()
-						.setDescription(interaction.translate("economy/tictactoe:TIMES_UP"));
+						.setDescription(interaction.translate("misc:TIMED_OUT"));
 					m.interaction.editReply({
 						content: interaction.translate("economy/tictactoe:NOT_ANSWERED", {
 							user: opponent.id,

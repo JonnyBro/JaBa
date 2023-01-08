@@ -33,6 +33,7 @@ class Shuffle extends BaseCommand {
 	async execute(client, interaction) {
 		const voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { ephemeral: true });
+
 		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { ephemeral: true });
 

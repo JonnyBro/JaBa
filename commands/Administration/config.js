@@ -132,9 +132,9 @@ class Config extends BaseCommand {
 				ephemeral: true,
 			});
 		} else {
-			const setting = interaction.options.getString("setting");
-			const state = interaction.options.getBoolean("state");
-			const channel = interaction.options.getChannel("channel");
+			const setting = interaction.options.getString("setting"),
+				state = interaction.options.getBoolean("state"),
+				channel = interaction.options.getChannel("channel");
 
 			await changeSetting(interaction, setting, state, channel);
 		}
@@ -154,6 +154,7 @@ async function changeSetting(interaction, setting, state, channel) {
 		interaction.guild.data.plugins[setting] = null;
 		interaction.guild.data.markModified(`plugins.${setting}`);
 		await interaction.guild.data.save();
+
 		return interaction.reply({
 			content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: **${interaction.translate("common:DISABLED")}**`,
 			ephemeral: true,
@@ -163,6 +164,7 @@ async function changeSetting(interaction, setting, state, channel) {
 			interaction.guild.data.plugins[setting] = channel.id;
 			interaction.guild.data.markModified(`plugins.${setting}`);
 			await interaction.guild.data.save();
+
 			return interaction.reply({
 				content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: **${interaction.translate("common:ENABLED")}** (${channel.toString()})`,
 				ephemeral: true,

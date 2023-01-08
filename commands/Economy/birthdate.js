@@ -54,9 +54,9 @@ class Birthdate extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
-		const day = interaction.options.getInteger("day");
-		const month = interaction.options.getInteger("month");
-		const year = interaction.options.getInteger("year");
+		const day = interaction.options.getInteger("day"),
+			month = interaction.options.getInteger("month"),
+			year = interaction.options.getInteger("year");
 
 		const d = new Date(year, month - 1, day);
 		if (!(day == d.getDate() && month - 1 == d.getMonth() && year == d.getFullYear())) return interaction.error("economy/birthdate:INVALID_DATE");

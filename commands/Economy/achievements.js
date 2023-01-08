@@ -35,6 +35,7 @@ class Achievements extends BaseCommand {
 	async execute(client, interaction, data) {
 		const user = interaction.options.getUser("user") || interaction.member;
 		if (user.bot) return interaction.error("economy/profile:BOT_USER");
+
 		const userData = (user.id === interaction.user.id ? data.userData : await client.findOrCreateUser({
 			id: user.id,
 		}));

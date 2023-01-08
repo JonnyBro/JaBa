@@ -40,6 +40,7 @@ class Rob extends BaseCommand {
 		const member = interaction.options.getMember("user");
 		if (member.user.bot) return interaction.error("economy/pay:BOT_USER");
 		if (member.id === interaction.member.id) return interaction.error("economy/rob:YOURSELF");
+
 		const amount = interaction.options.getInteger("amount");
 		if (amount <= 0) return interaction.error("misc:MORE_THAN_ZERO");
 
@@ -63,29 +64,36 @@ class Rob extends BaseCommand {
 		const itsAWon = Math.floor(client.functions.randomNum(0, 100) < 25);
 
 		if (itsAWon) {
-			const toWait = Date.now() + (6 * 60 * 60 * 1000);
+			const toWait = Date.now() + (6 * 60 * 60 * 1000),
+				randomNum = client.functions.randomNum(1, 2);
+
 			memberData.cooldowns.rob = toWait;
 			memberData.markModified("cooldowns");
 			await memberData.save();
-			const randomNum = client.functions.randomNum(1, 2);
+
 			interaction.replyT("economy/rob:ROB_WON_" + randomNum, {
 				money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 				user: member.toString(),
 			});
+
 			data.memberData.money += amount;
 			memberData.money -= amount;
+
 			await memberData.save();
 			await data.memberData.save();
 		} else {
-			const won = Math.floor(amount * 0.9);
-			const randomNum = client.functions.randomNum(1, 2);
+			const won = Math.floor(amount * 0.9),
+				randomNum = client.functions.randomNum(1, 2);
+
 			interaction.replyT("economy/rob:ROB_LOSE_" + randomNum, {
 				fine: `**${potentiallyLose}** ${client.getNoun(potentiallyLose, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 				offset: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 				user: member.toString(),
 			});
+
 			data.memberData.money -= potentiallyLose;
 			memberData.money += won;
+
 			await memberData.save();
 			await data.memberData.save();
 		}

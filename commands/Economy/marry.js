@@ -36,9 +36,11 @@ class Marry extends BaseCommand {
 	 */
 	async execute(client, interaction, data) {
 		if (data.userData.lover) return interaction.error("economy/marry:ALREADY_MARRIED");
+
 		const member = interaction.options.getMember("user");
 		if (member.user.bot) return interaction.error("economy/marry:BOT_USER");
 		if (member.id === interaction.member.id) return interaction.error("economy/marry:YOURSELF");
+
 		const userData = await client.findOrCreateUser({
 			id: member.id,
 		});

@@ -91,7 +91,7 @@ class Report extends BaseCommand {
 
 		interaction.success("general/report:SUCCESS", {
 			channel: repChannel.toString(),
-		});
+		}, { ephemeral: true });
 	}
 }
 

@@ -47,6 +47,7 @@ class Rep extends BaseCommand {
 
 		const toWait = Date.now() + 21600000; // 12 hours
 		if (!data.userData.cooldowns) data.userData.cooldowns = {};
+
 		data.userData.cooldowns.rep = toWait;
 		data.userData.markModified("cooldowns");
 		await data.userData.save();

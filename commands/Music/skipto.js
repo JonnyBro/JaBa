@@ -35,12 +35,13 @@ class Skipto extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const voice = interaction.member.voice.channel;
-		const queue = client.player.getQueue(interaction.guildId);
-		const position = interaction.options.getInteger("position");
-
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+
+		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
-		if (position < 0) return interaction.error("music/skipto:NO_PREV_SONG");
+
+		const position = interaction.options.getInteger("position");
+		if (position <= 0) return interaction.error("music/skipto:NO_PREV_SONG");
 
 		if (queue.tracks[position - 1]) {
 			queue.skipTo(queue.tracks[position - 1]);

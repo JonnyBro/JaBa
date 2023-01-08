@@ -78,7 +78,7 @@ class Suggest extends BaseCommand {
 
 		interaction.success("general/suggest:SUCCESS", {
 			channel: suggChannel.toString(),
-		});
+		}, { ephemeral: true });
 	}
 }
 

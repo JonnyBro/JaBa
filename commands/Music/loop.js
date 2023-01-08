@@ -43,13 +43,14 @@ class Loop extends BaseCommand {
 	async execute(client, interaction) {
 		const voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { edit: true });
+
 		const queue = client.player.getQueue(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { edit: true });
 
-		const type = interaction.options.getString("option");
-		const mode = type === "3" ? QueueRepeatMode.AUTOPLAY :
-			type === "2" ? QueueRepeatMode.QUEUE :
-				type === "1" ? QueueRepeatMode.TRACK : QueueRepeatMode.OFF;
+		const type = interaction.options.getString("option"),
+			mode = type === "3" ? QueueRepeatMode.AUTOPLAY :
+				type === "2" ? QueueRepeatMode.QUEUE :
+					type === "1" ? QueueRepeatMode.TRACK : QueueRepeatMode.OFF;
 
 		queue.setRepeatMode(mode);
 

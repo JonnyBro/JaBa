@@ -35,11 +35,12 @@ class Unban extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		const id = interaction.options.getString("user_id");
-		const banned = await interaction.guild.bans.fetch();
+		const id = interaction.options.getString("user_id"),
+			banned = await interaction.guild.bans.fetch();
+
 		if (!banned.find(u => u.user.id === id)) return interaction.error("moderation/unban:NOT_BANNED", { id });
 
-		interaction.guild.bans.remove(id);
+		await interaction.guild.bans.remove(id);
 
 		interaction.success("moderation/unban:UNBANNED", {
 			id,

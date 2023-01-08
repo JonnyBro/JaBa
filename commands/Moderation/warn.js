@@ -32,9 +32,10 @@ class Warn extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
-		const member = interaction.targetMember;
-		const memberPosition = member.roles.highest.position;
-		const moderationPosition = interaction.member.roles.highest.position;
+		const member = interaction.targetMember,
+			memberPosition = member.roles.highest.position,
+			moderationPosition = interaction.member.roles.highest.position;
+
 		if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
 		if (member.id === interaction.member.id) return interaction.error("moderation/warn:YOURSELF", null, { ephemeral: true });
 		if (interaction.guild.ownerId !== interaction.member.id && !(moderationPosition > memberPosition)) return interaction.error("moderation/ban:SUPERIOR", null, { ephemeral: true });
@@ -51,6 +52,9 @@ class Warn extends BaseCommand {
 		const reasonInput = new TextInputBuilder()
 			.setCustomId("warn_reason")
 			.setLabel(interaction.translate("moderation/warn:MODAL_REASON"))
+			.setMinLength(5)
+			.setMaxLength(200)
+			.setRequired(true)
 			.setStyle(TextInputStyle.Short);
 
 		modal.addComponents(new ActionRowBuilder().addComponents(reasonInput));
@@ -58,14 +62,19 @@ class Warn extends BaseCommand {
 		await interaction.showModal(modal);
 
 		const submitted = await interaction.awaitModalSubmit({
-			time: 120000,
+			time: (2 * 60 * 1000),
 			filter: i => i.user.id === interaction.member.id && i.customId === "warn_modal",
+		}).catch(() => {
+			interaction.followUp({
+				content: interaction.translate("misc:TIMED_OUT"),
+				ephemeral: true,
+			});
 		});
 
 		if (submitted) {
 			const reason = submitted.fields.getTextInputValue("warn_reason");
 
-			const sanctions = memberData.sanctions.filter((s) => s.type === "warn").length;
+			const sanctions = memberData.sanctions.filter(s => s.type === "warn").length;
 			const banCount = data.guildData.plugins.warnsSanctions.ban;
 			const kickCount = data.guildData.plugins.warnsSanctions.kick;
 
@@ -113,9 +122,11 @@ class Warn extends BaseCommand {
 						.setColor(client.config.embed.color);
 
 					interaction.guild.members.ban(member).catch(() => {});
-					interaction.success("moderation/setwarns:AUTO_BAN", {
-						username: member.user.tag,
-						count: `${banCount} ${client.getNoun(banCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
+					interaction.followUp({
+						content: interaction.translate("moderation/setwarns:AUTO_BAN", {
+							username: member.user.tag,
+							count: `${banCount} ${client.getNoun(banCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
+						}),
 					});
 				}
 			}
@@ -140,9 +151,11 @@ class Warn extends BaseCommand {
 						.setColor(client.config.embed.color);
 
 					member.kick().catch(() => {});
-					interaction.success("moderation/setwarns:AUTO_KICK", {
-						username: member.user.tag,
-						count: `${kickCount} ${client.getNoun(kickCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
+					interaction.followUp({
+						content: interaction.translate("moderation/setwarns:AUTO_KICK", {
+							username: member.user.tag,
+							count: `${kickCount} ${client.getNoun(kickCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
+						}),
 					});
 				}
 			}
@@ -156,19 +169,11 @@ class Warn extends BaseCommand {
 				}),
 			});
 
-			caseInfo.type = "warn";
 			embed
 				.setAuthor({
 					name: interaction.translate("moderation/warn:WARN"),
 				})
 				.setColor(client.config.embed.color);
-
-			submitted.reply({
-				content: interaction.translate("moderation/warn:WARNED", {
-					user: member.toString(),
-					reason,
-				}),
-			});
 
 			memberData.sanctions.push(caseInfo);
 			memberData.save();
@@ -181,6 +186,13 @@ class Warn extends BaseCommand {
 					embeds: [embed],
 				});
 			}
+
+			return submitted.reply({
+				content: interaction.translate("moderation/warn:WARNED", {
+					user: member.toString(),
+					reason,
+				}),
+			});
 		}
 	}
 }

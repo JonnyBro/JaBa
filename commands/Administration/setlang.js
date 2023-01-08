@@ -39,8 +39,8 @@ class Setlang extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
-		const lang = interaction.options.getString("language");
-		const language = client.languages.find(l => l.name === lang);
+		const lang = interaction.options.getString("language"),
+			language = client.languages.find(l => l.name === lang);
 
 		data.guildData.language = language.name;
 		await data.guildData.save();

@@ -85,9 +85,10 @@ class Selectroles extends BaseCommand {
 				}, { edit: true });
 			});
 		} else if (command === "addrole") {
-			const channel = interaction.options.getChannel("channel");
-			const message_id = interaction.options.getString("message_id");
-			const message = await channel.messages.fetch(message_id);
+			const channel = interaction.options.getChannel("channel"),
+				message_id = interaction.options.getString("message_id"),
+				message = await channel.messages.fetch(message_id);
+
 			if (!message || message.author.id !== client.user.id) return interaction.error("administration/selectroles:MESSAGE_ROLE", null, { edit: true });
 			const role = interaction.options.getRole("role");
 

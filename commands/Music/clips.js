@@ -156,6 +156,7 @@ class Clips extends BaseCommand {
 			} else {
 				const voice = interaction.member.voice.channel;
 				if (!voice) return interaction.editReply({ content: interaction.translate("music/play:NO_VOICE_CHANNEL") });
+
 				const queue = client.player.getQueue(interaction.guild.id);
 				if (queue) return interaction.editReply({ content: interaction.translate("music/clips:ACTIVE_QUEUE") });
 				if (getVoiceConnection(interaction.guild.id)) return interaction.editReply({ content: interaction.translate("music/clips:ACTIVE_CLIP") });
