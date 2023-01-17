@@ -84,8 +84,8 @@ class Stats extends BaseCommand {
 					value: interaction.translate("misc:STATS_FOOTER", {
 						dashboardLink: client.config.dashboard.baseURL,
 						docsLink: `${client.config.dashboard.baseURL}/docs/`,
-						inviteLink: client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: [ PermissionsBitField.Flags.Administrator ] }),
-						donateLink: "https://qiwi.com/n/JONNYBRO/",
+						inviteLink: client.generateInvite({ scopes: [ "bot", "applications.commands" ], permissions: [ PermissionsBitField.Flags.Administrator ] }),
+						donateLink: "https://www.donationalerts.com/r/jonny_bro",
 						owner: client.config.owner.id,
 					}),
 				},
