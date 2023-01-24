@@ -54,7 +54,7 @@ class Checkjar extends BaseCommand {
 				name: "Monobank API",
 				iconURL: "https://api.monobank.ua/docs/logo.png",
 			})
-			.setDescription(`Текущий баланс: **${data[0].balance / Math.pow(10, 2)} грн**`);
+			.setDescription(`Текущий баланс: **${data[0].balance / Math.pow(10, 2)}** грн\nТребуется на след. месяц: **654,46** грн (по курсу евро на 24.01.2023, 16.30 €)`);
 
 		data.length = 10;
 
