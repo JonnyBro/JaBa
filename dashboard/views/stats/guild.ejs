@@ -132,7 +132,7 @@
 
 			/* LEADERBOARD */
 			let values = ["money", "level"];
-			values.forEach((value) => {
+			values.forEach(value => {
 				let members = JSON.parse(`<%- JSON.stringify(stats) %>`)[value].sort((a, b) => a - b);
 				let data = {
 						labels: members.map(a => a.username),

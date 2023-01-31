@@ -98,7 +98,7 @@ class JaBa extends Client {
 			useUnifiedTopology: true,
 		}).then(() => {
 			this.logger.log("Connected to the Mongodb database.", "log");
-		}).catch((err) => {
+		}).catch(err => {
 			this.logger.log(`Unable to connect to the Mongodb database. Error: ${err}`, "error");
 		});
 
@@ -133,7 +133,7 @@ class JaBa extends Client {
 						this.commands.set(command.command.name, command);
 						const aliases = [];
 						if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0)
-							command.aliases.forEach((alias) => {
+							command.aliases.forEach(alias => {
 								const command_alias = (command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder) ? { ...command.command.toJSON() } : { ...command.command };
 								command_alias.name = alias;
 								aliases.push(command_alias);
@@ -181,7 +181,7 @@ class JaBa extends Client {
 			this.commands.set(command.command.name, command);
 			const aliases = [];
 			if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0)
-				command.aliases.forEach((alias) => {
+				command.aliases.forEach(alias => {
 					const command_alias = command.command instanceof SlashCommandBuilder ? { ...command.command.toJSON() } : { ...command.command };
 					command_alias.name = alias;
 					aliases.push(command_alias);

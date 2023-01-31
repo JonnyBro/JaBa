@@ -9,7 +9,7 @@ const { PermissionsBitField } = require("discord.js");
  */
 async function fetchUser(userData, client, query) {
 	if (userData.guilds) {
-		userData.guilds.forEach((guild) => {
+		userData.guilds.forEach(guild => {
 			if (!client.guilds.cache.get(guild.id)) return;
 			const perms = new PermissionsBitField(BigInt(guild.permissions));
 			if (perms.has(PermissionsBitField.Flags.ManageGuild)) guild.admin = true;
@@ -44,9 +44,9 @@ async function fetchUser(userData, client, query) {
  * @returns {object} The user informations
  */
 async function fetchUsers(array, client) {
-	return new Promise((resolve) => {
+	return new Promise(resolve => {
 		const users = [];
-		array.filter((e) => e.id).forEach((element) => {
+		array.filter(e => e.id).forEach(element => {
 			client.users.fetch(element.id).then(user => {
 				if (user.username.length > 15) user.username = user.username.substr(0, 12) + "...";
 
@@ -80,7 +80,7 @@ async function fetchGuild(guildID, client, guilds) {
 	return {
 		...guild,
 		...conf.toJSON(),
-		...guilds.find((g) => g.id === guild.id),
+		...guilds.find(g => g.id === guild.id),
 	};
 }
 

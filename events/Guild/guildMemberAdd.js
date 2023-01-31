@@ -42,7 +42,7 @@ class GuildMemberAdd extends BaseEvent {
 			guildId: member.guild.id,
 		});
 		if (memberData.mute.muted && memberData.mute.endDate > Date.now())
-			member.guild.channels.cache.forEach((channel) => {
+			member.guild.channels.cache.forEach(channel => {
 				channel.permissionOverwrites.edit(member.id, {
 					SEND_MESSAGES: false,
 					ADD_REACTIONS: false,

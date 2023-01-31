@@ -80,9 +80,9 @@ class Userinfo extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.roles + " " + interaction.translate("common:ROLES"),
-					value: (member.roles.size > 10 ? member.roles.cache.map((r) => r).slice(0, 10).join(", ") + " " + interaction.translate("general/userinfo:MORE_ROLES", {
+					value: (member.roles.size > 10 ? member.roles.cache.map(r => r).slice(0, 10).join(", ") + " " + interaction.translate("general/userinfo:MORE_ROLES", {
 						count: member.roles.cache.size - 10,
-					}) : (member.roles.cache.size < 1) ? interaction.translate("general/userinfo:NO_ROLE") : member.roles.cache.map((r) => r).join(", ")),
+					}) : (member.roles.cache.size < 1) ? interaction.translate("general/userinfo:NO_ROLE") : member.roles.cache.map(r => r).join(", ")),
 					inline: true,
 				},
 			])

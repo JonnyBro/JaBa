@@ -22,7 +22,7 @@ module.exports.init = function (client) {
 
 			if (dUser) {
 				const reminds = user.reminds;
-				const mustSent = reminds.filter((r) => r.sendAt < dateNow);
+				const mustSent = reminds.filter(r => r.sendAt < dateNow);
 
 				if (mustSent.length > 0) {
 					mustSent.forEach(r => {

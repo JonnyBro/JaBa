@@ -17,8 +17,8 @@ module.exports.update = function (client) {
 	let text = `# JaBa имеет **${commands.length} ${client.getNoun(commands.length, "команда", "команды", "команд")}** в **${categories.length} ${client.getNoun(categories.length, "категории", "категориях", "категориях")}**!  \n\n#### Содержимое таблицы  \n**Название**: Название команды  \n**Описание**: Описание команды  \n**Использование**: Использование команды ( [] - обязательно, () - необязательно )  \n**Разрешено использование**: Где можно использовать команду  \n\n`;
 
 	// categories.sort(function(a, b) {
-	// 	const aCmdsSize = commands.filter((cmd) => cmd.category === a).size;
-	// 	const bCmdsSize = commands.filter((cmd) => cmd.category === b).size;
+	// 	const aCmdsSize = commands.filter(cmd => cmd.category === a).size;
+	// 	const bCmdsSize = commands.filter(cmd => cmd.category === b).size;
 	// 	if (aCmdsSize > bCmdsSize) return -1;
 	// 	else return 1;
 	// })

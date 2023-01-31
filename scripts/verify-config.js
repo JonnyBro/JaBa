@@ -10,7 +10,7 @@ const { GatewayIntentBits } = require("discord.js"),
 const checks = [
 	() => {
 		console.log("\n\nEnvironnement");
-		return new Promise((res) => {
+		return new Promise(res => {
 			if (parseInt(process.version.split(".")[0].split("v")[1]) >= 12) {
 				success("node.js version equal or higher than v12");
 			} else {
@@ -21,11 +21,11 @@ const checks = [
 	},
 	() => {
 		console.log("\n\nDiscord Bot");
-		return new Promise((res) => {
+		return new Promise(res => {
 			const Discord = require("discord.js");
 			const client = new Discord.Client({ intents: [ GatewayIntentBits.Guilds ] });
 			let readyResolve;
-			new Promise((resolve) => readyResolve = resolve);
+			new Promise(resolve => readyResolve = resolve);
 			client.login(config.token).then(async () => {
 				success("Valid bot token");
 				await readyResolve();
@@ -44,7 +44,7 @@ const checks = [
 	},
 	() => {
 		console.log("\n\nMongoDB");
-		return new Promise((res) => {
+		return new Promise(res => {
 			const MongoClient = require("mongodb").MongoClient;
 			const dbName = config.mongoDB.split("/").pop();
 			const baseURL = config.mongoDB.substr(0, config.mongoDB.length - dbName.length);
@@ -89,7 +89,7 @@ const checks = [
 				ignore("Dashboard is not enabled, skipping check.");
 			} else {
 				const checkPortTaken = (port) => {
-					return new Promise((resolve) => {
+					return new Promise(resolve => {
 						const net = require("net");
 						const tester = net.createServer()
 							.once("error", () => {

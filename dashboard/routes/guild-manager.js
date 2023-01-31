@@ -7,7 +7,7 @@ const express = require("express"),
 router.get("/:serverID", CheckAuth, async(req, res) => {
 	// Check if the user has the permissions to edit this guild
 	const guild = req.client.guilds.cache.get(req.params.serverID);
-	if (!guild || !req.userInfos.displayedGuilds || !req.userInfos.displayedGuilds.find((g) => g.id === req.params.serverID))
+	if (!guild || !req.userInfos.displayedGuilds || !req.userInfos.displayedGuilds.find(g => g.id === req.params.serverID))
 		return res.render("404", {
 			user: req.userInfos,
 			translate: req.translate,
@@ -32,7 +32,7 @@ router.get("/:serverID", CheckAuth, async(req, res) => {
 router.post("/:serverID", CheckAuth, async(req, res) => {
 	// Check if the user has the permissions to edit this guild
 	const guild = req.client.guilds.cache.get(req.params.serverID);
-	if (!guild || !req.userInfos.displayedGuilds || !req.userInfos.displayedGuilds.find((g) => g.id === req.params.serverID))
+	if (!guild || !req.userInfos.displayedGuilds || !req.userInfos.displayedGuilds.find(g => g.id === req.params.serverID))
 		return res.render("404", {
 			user: req.userInfos,
 			translate: req.translate,
@@ -43,7 +43,7 @@ router.post("/:serverID", CheckAuth, async(req, res) => {
 	const data = req.body;
 
 	if (data.language) {
-		const language = req.client.languages.find((language) => language.nativeName.toLowerCase() === data.language.toLowerCase());
+		const language = req.client.languages.find(language => language.nativeName.toLowerCase() === data.language.toLowerCase());
 		if (language) guildData.language = language.name;
 		if (data.prefix.length >= 1 && data.prefix.length < 2000) guildData.prefix = data.prefix;
 

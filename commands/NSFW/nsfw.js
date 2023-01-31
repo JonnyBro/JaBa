@@ -34,7 +34,7 @@ class NSFW extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });
 
-		if ((interaction.guildId && !interaction.channel.nsfw)) return interaction.replyT("misc:NSFW_COMMAND", null, { ephemeral: true, edit: true });
+		if (interaction.guildId && !interaction.channel.nsfw) return interaction.replyT("misc:NSFW_COMMAND", null, { ephemeral: true, edit: true });
 
 		const tags = ["hentai", "ecchi", "lewdanimegirls", "hentaifemdom", "animefeets", "animebooty", "biganimetiddies", "sideoppai", "ahegao"].map(tag =>
 			JSON.parse(JSON.stringify({

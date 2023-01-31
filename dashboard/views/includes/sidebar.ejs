@@ -31,7 +31,7 @@
 				</a>
 				<% if (user.displayedGuilds) { %>
 				<ul class="treeview-menu">
-					<% user.displayedGuilds.forEach((guild) => { %>
+					<% user.displayedGuilds.forEach(guild => { %>
 					<li><a href="<%= guild.settingsUrl %>"><i
 								class="fa fa-circle-o text-<%= guild.owner ? "green" : "grey" %>"></i>
 							<%= guild.name %></a></li>

@@ -19,7 +19,7 @@ router.get("/:serverID", CheckAuth, async (req, res) => {
 	const membersData = await req.client.membersData.find({
 			guildID: guild.id,
 		}).lean(),
-		members = membersData.map((m) => {
+		members = membersData.map(m => {
 			return {
 				id: m.id,
 				money: m.money + m.bankSold,
