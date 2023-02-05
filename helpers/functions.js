@@ -15,6 +15,20 @@ module.exports = {
 	},
 
 	/**
+	 * Calls a callback for each element in collection async
+	 * @param {Array} collection
+	 * @param {Function} callback
+	 * @returns {Promise}
+	 */
+	async asyncForEach (collection, callback) {
+		const allPromises = collection.map(async key => {
+			await callback(key);
+		});
+
+		return await Promise.all(allPromises);
+	},
+
+	/**
 	 * Sort array by key
 	 * @param {Array} array Array to sort
 	 * @param {Number} key Key

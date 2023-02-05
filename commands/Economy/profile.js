@@ -1,14 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
-const asyncForEach = async (collection, callback) => {
-	const allPromises = collection.map(async key => {
-		await callback(key);
-	});
-
-	return await Promise.all(allPromises);
-};
-
 class Profile extends BaseCommand {
 	/**
 	 *
@@ -58,7 +50,7 @@ class Profile extends BaseCommand {
 
 		const guilds = client.guilds.cache.filter(g => g.members.cache.find(m => m.id === member.id));
 		let globalMoney = 0;
-		await asyncForEach(guilds, async guild => {
+		await client.functions.asyncForEach(guilds, async guild => {
 			const data = await client.findOrCreateMember({
 				id: member.id,
 				guildId: guild.id,

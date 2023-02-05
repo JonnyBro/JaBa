@@ -1,14 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
-const asyncForEach = async (collection, callback) => {
-	const allPromises = collection.map(async key => {
-		await callback(key);
-	});
-
-	return await Promise.all(allPromises);
-};
-
 class Leaderboard extends BaseCommand {
 	/**
 	 *
@@ -60,7 +52,7 @@ class Leaderboard extends BaseCommand {
 			const membersLeaderboard = [],
 				membersData = await client.membersData.find({ guildID: interaction.guildId }).lean();
 
-			await asyncForEach(membersData, async member => {
+			await client.functions.asyncForEach(membersData, async member => {
 				membersLeaderboard.push({
 					id: member.id,
 					money: member.money + member.bankSold,
@@ -103,7 +95,7 @@ class Leaderboard extends BaseCommand {
 			const membersLeaderboard = [],
 				membersData = await client.membersData.find({ guildID: interaction.guildId }).lean();
 
-			await asyncForEach(membersData, async member => {
+			await client.functions.asyncForEach(membersData, async member => {
 				membersLeaderboard.push({
 					id: member.id,
 					level: member.level,
@@ -157,7 +149,7 @@ class Leaderboard extends BaseCommand {
 			const usersLeaderboard = [],
 				usersData = await client.usersData.find({ rep: { $gt: 0 } }).lean();
 
-			await asyncForEach(usersData, async user => {
+			await client.functions.asyncForEach(usersData, async user => {
 				usersLeaderboard.push({
 					id: user.id,
 					rep: user.rep,
