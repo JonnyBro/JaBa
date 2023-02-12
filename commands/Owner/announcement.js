@@ -17,7 +17,9 @@ class Announcement extends BaseCommand {
 					.setRequired(true))
 				.addBooleanOption(option => option.setName("tag")
 					.setDescription(client.translate("owner/announcement:TAG"))
-					.setRequired(true)),
+					.setRequired(true))
+				.addBooleanOption(option => option.setName("important")
+					.setDescription(client.translate("owner/announcement:IMPORTANT"))),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: true,
@@ -38,7 +40,8 @@ class Announcement extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });
-		const text = interaction.options.getString("message");
+		const text = interaction.options.getString("message"),
+			important = interaction.options.getBoolean("important");
 		if (text.length > 1000) return interaction.error("owner/announcement:TOO_LONG");
 
 		const embed = new EmbedBuilder()
@@ -52,11 +55,19 @@ class Announcement extends BaseCommand {
 			})
 			.setTimestamp();
 
-		client.guilds.cache.forEach(async guild => {
+		(await client.guilds.fetch()).forEach(async guild => {
 			if (guild.id === "568120814776614924") return;
 
+			guild = await guild.fetch();
 			const channel = guild.channels.cache.get(guild?.data.plugins.news);
-			await channel.send({
+			if (!channel && !important) return;
+
+			if (!channel && important) {
+				guild.channels.cache.find(c => c.isTextBased()).send({
+					content: `${interaction.options.getBoolean("tag") ? "||@everyone|| " : ""}ВАЖНОЕ ОБЪЯВЛЕНИЕ!`,
+					embeds: [embed],
+				});
+			} else if (channel) channel.send({
 				content: `${interaction.options.getBoolean("tag") ? "||@everyone|| " : ""}ВАЖНОЕ ОБЪЯВЛЕНИЕ!`,
 				embeds: [embed],
 			});

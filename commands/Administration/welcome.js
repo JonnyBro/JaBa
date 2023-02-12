@@ -24,7 +24,7 @@ class Welcome extends BaseCommand {
 					.addChannelOption(option => option.setName("channel")
 						.setDescription(client.translate("common:CHANNEL")))
 					.addStringOption(option => option.setName("message")
-						.setDescription(client.translate("common:MESSAGE")))
+						.setDescription(client.translate("administration/goodbye:MESSAGE")))
 					.addBooleanOption(option => option.setName("image")
 						.setDescription(client.translate("administration/goodbye:IMAGE"))),
 				),
