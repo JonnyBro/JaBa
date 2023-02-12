@@ -1,8 +1,0 @@
-{
-	"DESCRIPTION": "Створити активність у голосовому каналі",
-	"USAGE": "",
-	"EXAMPLES": "activity",
-	"AVAILABLE_ACTIVITIES": "Доступні активності:",
-	"CLICK_HERE": "Натисніть сюди, щоб почати {{activity}} в {{channel}}",
-	"BOOST_NEEDED": "Необхідний перший рівень бусту або вище!"
-}

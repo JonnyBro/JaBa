@@ -1,6 +1,5 @@
 const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
 	{ Player } = require("discord-player-play-dl"),
-	{ DiscordTogether } = require("../helpers/discordTogether"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ REST } = require("@discordjs/rest"),
 	{ Routes } = require("discord-api-types/v10");
@@ -43,8 +42,6 @@ class JaBa extends Client {
 		this.databaseCache.members = new Collection();
 		this.databaseCache.usersReminds = new Collection();
 		this.databaseCache.mutedUsers = new Collection();
-
-		this.discordTogether = new DiscordTogether(this);
 
 		this.player = new Player(this);
 

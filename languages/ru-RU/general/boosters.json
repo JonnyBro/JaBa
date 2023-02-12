@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Список участников, которые дали буст серверу",
+	"USAGE": "",
+	"EXAMPLES": "boosters",
+	"BOOSTERS_LIST": "Список бустеров",
+	"BOOSTER_SINCE": "Буст с"
+}
