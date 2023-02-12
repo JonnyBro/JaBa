@@ -151,7 +151,7 @@ function generateBoostersEmbeds(interaction, boosters) {
 	let k = 10;
 
 	for (let i = 0; i < boosters.size; i += 10) {
-		const current = boosters.sort((a, b) => b.premiumSinceTimestamp - a.premiumSinceTimestamp).map(g => g).slice(i, k);
+		const current = boosters.sort((a, b) => a.premiumSinceTimestamp - b.premiumSinceTimestamp).map(g => g).slice(i, k);
 		let j = i;
 		k += 10;
 
