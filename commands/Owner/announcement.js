@@ -59,15 +59,9 @@ class Announcement extends BaseCommand {
 			if (guild.id === "568120814776614924") return;
 
 			guild = await guild.fetch();
-			const channel = guild.channels.cache.get(guild?.data.plugins.news);
-			if (!channel && !important) return;
+			const channel = important ? (guild?.data?.plugins.news ? guild.channels.cache.get(guild?.data?.plugins.news) : guild.channels.cache.find(c => c.isTextBased())) : guild.channels.cache.get(guild?.data?.plugins.news);
 
-			if (!channel && important) {
-				guild.channels.cache.find(c => c.isTextBased()).send({
-					content: `${interaction.options.getBoolean("tag") ? "||@everyone|| " : ""}ВАЖНОЕ ОБЪЯВЛЕНИЕ!`,
-					embeds: [embed],
-				});
-			} else if (channel) channel.send({
+			channel.send({
 				content: `${interaction.options.getBoolean("tag") ? "||@everyone|| " : ""}ВАЖНОЕ ОБЪЯВЛЕНИЕ!`,
 				embeds: [embed],
 			});
