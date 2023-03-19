@@ -68,7 +68,7 @@ async function tictactoe(interaction, options = {}) {
 
 			const acceptEmbed = new EmbedBuilder()
 				.setTitle(interaction.translate("economy/tictactoe:REQUEST_WAIT", {
-					user: opponent.id,
+					user: opponent.toString(),
 				}))
 				.setAuthor({
 					name: (interaction.user ? interaction.user : interaction.author).tag,
@@ -664,7 +664,6 @@ async function tictactoe(interaction, options = {}) {
 						const collector = m.createMessageComponentCollector({
 							componentType: ComponentType.Button,
 							max: 1,
-							time: (5 * 1000),
 						});
 
 						collector.on("collect", b => {
