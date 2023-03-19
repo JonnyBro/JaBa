@@ -46,7 +46,7 @@ class Clearwarns extends BaseCommand {
 		memberData.save();
 
 		interaction.success("moderation/clearwarns:SUCCESS", {
-			username: member.user.tag,
+			user: member.user.tag,
 		});
 	}
 }
