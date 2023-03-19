@@ -68,7 +68,7 @@ async function tictactoe(interaction, options = {}) {
 
 			const acceptEmbed = new EmbedBuilder()
 				.setTitle(interaction.translate("economy/tictactoe:REQUEST_WAIT", {
-					user: opponent.toString(),
+					user: opponent.tag,
 				}))
 				.setAuthor({
 					name: (interaction.user ? interaction.user : interaction.author).tag,
