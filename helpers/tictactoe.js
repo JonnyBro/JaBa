@@ -110,7 +110,7 @@ async function tictactoe(interaction, options = {}) {
 
 			const collector = m.createMessageComponentCollector({
 				componentType: ComponentType.Button,
-				time: (5 * 1000),
+				time: (30 * 1000),
 			});
 			collector.on("collect", async button => {
 				if (button.user.id !== opponent.id)
