@@ -37,11 +37,11 @@ class Checkjar extends BaseCommand {
 
 		await interaction.deferReply();
 
-		const jar = "x3VtgmqMXYJ6k-vqdlhmGCejFH9Ej3Y";
+		const jar = client.config.monobankApi.jar;
 		const data = await fetch(`https://api.monobank.ua/personal/statement/${jar}/${Date.now() - (7 * 24 * 60 * 60 * 1000)}/${Date.now()}`, {
 			method: "GET",
 			headers: {
-				"X-Token": "ugBCz115wxv4VPdtfIlkZtb1lvV2FglPrppAaphVpKwU",
+				"X-Token": client.config.monobankApi.token,
 			},
 		}).then(res => res.json());
 
@@ -54,7 +54,7 @@ class Checkjar extends BaseCommand {
 				name: "Monobank API",
 				iconURL: "https://api.monobank.ua/docs/logo.png",
 			})
-			.setDescription(`Текущий баланс: **${data[0].balance / Math.pow(10, 2)}** грн\nТребуется на след. месяц: **654,46** грн (по курсу евро на 24.01.2023, 16.30 €)`);
+			.setDescription(`Текущий баланс: **${data[0].balance / Math.pow(10, 2)}** грн\nТребуется на след. месяц: **654,46** грн (по курсу евро на 24.01.2023)`);
 
 		data.length = 10;
 
