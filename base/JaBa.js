@@ -1,5 +1,5 @@
 const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
-	{ Player } = require("discord-player-play-dl"),
+	{ Player } = require("discord-player"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ REST } = require("@discordjs/rest"),
 	{ Routes } = require("discord-api-types/v10");
@@ -43,7 +43,7 @@ class JaBa extends Client {
 		this.databaseCache.usersReminds = new Collection();
 		this.databaseCache.mutedUsers = new Collection();
 
-		this.player = new Player(this);
+		this.player = Player.singleton(this);
 
 		playdl.getFreeClientID().then(id => playdl.setToken({
 			soundcloud: {
@@ -51,7 +51,7 @@ class JaBa extends Client {
 			},
 		}));
 
-		this.player.on("trackStart", async (queue, track) => {
+		this.player.events.on("playerStart", async (queue, track) => {
 			const m = await queue.metadata.channel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language) });
 			if (track.durationMS > 1)
 				setTimeout(() => {
@@ -60,16 +60,16 @@ class JaBa extends Client {
 			else
 				setTimeout(() => {
 					if (m.deletable) m.delete();
-				}, (10 * 60 * 1000)); // m * s * ms
+				}, (5 * 60 * 1000)); // m * s * ms
 		});
-		this.player.on("queueEnd", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)));
-		this.player.on("channelEmpty", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.channel.guild.data.language)));
-		this.player.on("connectionError", (queue, e) => {
-			console.error(e);
+		this.player.events.on("emptyQueue", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)));
+		this.player.events.on("emptyChannel", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.channel.guild.data.language)));
+		this.player.events.on("playerError", (queue, e) => {
+			console.log(e);
 			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
 		});
-		this.player.on("error", (queue, e) => {
-			console.error(e);
+		this.player.events.on("error", (queue, e) => {
+			console.log(e);
 			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
 		});
 

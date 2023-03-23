@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js"),
-	{ QueueRepeatMode } = require("discord-player-play-dl");
+	{ QueueRepeatMode } = require("discord-player");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Loop extends BaseCommand {
@@ -44,7 +44,7 @@ class Loop extends BaseCommand {
 		const voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { edit: true });
 
-		const queue = client.player.getQueue(interaction.guildId);
+		const queue = client.player.nodes.get(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { edit: true });
 
 		const type = interaction.options.getString("option"),

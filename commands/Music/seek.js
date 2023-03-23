@@ -37,10 +37,10 @@ class Seek extends BaseCommand {
 			voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
 
-		const queue = client.player.getQueue(interaction.guildId);
+		const queue = client.player.nodes.get(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
-		queue.seek(time * 1000);
+		queue.node.seek(time * 1000);
 		interaction.success("music/seek:SUCCESS", {
 			time: `**${time}** ${client.getNoun(time, interaction.translate("misc:NOUNS:SECONDS:1"), interaction.translate("misc:NOUNS:SECONDS:2"), interaction.translate("misc:NOUNS:SECONDS:5"))}`,
 		});

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js"),
-	{ QueueRepeatMode } = require("discord-player-play-dl");
+	{ QueueRepeatMode } = require("discord-player");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Nowplaying extends BaseCommand {
@@ -34,10 +34,10 @@ class Nowplaying extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply();
 
-		const queue = client.player.getQueue(interaction.guildId);
+		const queue = client.player.nodes.get(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { edit: true });
-		const progressBar = queue.createProgressBar(),
-			track = queue.current;
+		const progressBar = queue.node.createProgressBar(),
+			track = queue.currentTrack;
 
 		const embed = new EmbedBuilder()
 			.setAuthor({
@@ -58,7 +58,7 @@ class Nowplaying extends BaseCommand {
 				{ name: "\u200B", value: "\u200B", inline: true },
 				{
 					name: interaction.translate("common:VIEWS"),
-					value: new Intl.NumberFormat(interaction.client.languages.find(language => language.name === interaction.guild.data.language).moment, { notation: "standard" }).format(track.views),
+					value: track.raw.live ? "" : new Intl.NumberFormat(interaction.client.languages.find(language => language.name === interaction.guild.data.language).moment, { notation: "standard" }).format(track.raw.views),
 					inline: true,
 				},
 				{

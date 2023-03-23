@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js"),
-	{ QueueRepeatMode } = require("discord-player-play-dl");
+	{ QueueRepeatMode } = require("discord-player");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Queue extends BaseCommand {
@@ -32,7 +32,7 @@ class Queue extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		const queue = client.player.getQueue(interaction.guildId);
+		const queue = client.player.nodes.get(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
 		let currentPage = 0;
@@ -151,15 +151,15 @@ class Queue extends BaseCommand {
 /**
  *
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
- * @param {import("discord-player-play-dl").Queue} queue
+ * @param {import("discord-player").GuildQueue} queue
  * @returns
  */
 function generateQueueEmbeds(interaction, queue) {
 	const embeds = [];
-	const currentTrack = queue.current;
+	const currentTrack = queue.currentTrack;
 	let k = 10;
 
-	if (!queue.tracks.length) {
+	if (!queue.tracks.size) {
 		const embed = new EmbedBuilder()
 			.setTitle(interaction.translate("music/nowplaying:CURRENTLY_PLAYING"))
 			.setThumbnail(currentTrack.thumbnail)
@@ -175,8 +175,8 @@ function generateQueueEmbeds(interaction, queue) {
 		return embeds;
 	}
 
-	for (let i = 0; i < queue.tracks.length; i += 10) {
-		const current = queue.tracks.slice(i, k);
+	for (let i = 0; i < queue.getSize(); i += 10) {
+		const current = queue.tracks.toArray().slice(i, k);
 		let j = i;
 		k += 10;
 
@@ -190,7 +190,7 @@ function generateQueueEmbeds(interaction, queue) {
 				queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") :
 					queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") :
 						queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK") : interaction.translate("common:DISABLED")
-			}\`\n${interaction.translate("music/queue:DURATION")}: \`${interaction.client.convertTime(Date.now() + queue.totalTime, false, true, interaction.guild.data.language)}\`\n[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${info}`)
+			}\`\n${interaction.translate("music/queue:DURATION")}: \`${interaction.client.convertTime(Date.now() + queue.node.streamTime, false, true, interaction.guild.data.language)}\`\n[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${info}`)
 			.setTimestamp();
 		embeds.push(embed);
 	}

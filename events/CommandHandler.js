@@ -15,8 +15,6 @@ class CommandHandler extends BaseEvent {
 	 * @param {import("discord.js").Interaction} interaction
 	 */
 	async execute(client, interaction) {
-		if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isCommand()) return;
-
 		const command = client.commands.get(interaction.commandName);
 		const data = [];
 
@@ -24,9 +22,6 @@ class CommandHandler extends BaseEvent {
 			id: interaction.user.id,
 		});
 		data.userData = userData;
-
-		if (command.guildOnly && !interaction.inGuild()) return interaction.replyT("misc:GUILD_ONLY", { ephemeral: true });
-		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.replyT("misc:OWNER_ONLY", { ephemeral: true });
 
 		if (interaction.inGuild()) {
 			const guildData = await client.findOrCreateGuild({
@@ -40,6 +35,14 @@ class CommandHandler extends BaseEvent {
 			});
 			data.memberData = memberData;
 		}
+
+		if (interaction.isAutocomplete()) {
+			return await command.autocompleteRun(client, interaction);
+		}
+		if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isCommand()) return;
+
+		if (command.guildOnly && !interaction.inGuild()) return interaction.replyT("misc:GUILD_ONLY", { ephemeral: true });
+		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.replyT("misc:OWNER_ONLY", { ephemeral: true });
 
 		if (!userData.achievements.firstCommand.achieved) {
 			userData.achievements.firstCommand.progress.now = 1;

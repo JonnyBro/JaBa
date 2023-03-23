@@ -34,10 +34,10 @@ class Skip extends BaseCommand {
 		const voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
 
-		const queue = client.player.getQueue(interaction.guildId);
+		const queue = client.player.nodes.get(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
-		queue.skip();
+		queue.node.skip();
 		interaction.success("music/skip:SUCCESS");
 	}
 }
