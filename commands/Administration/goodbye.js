@@ -11,22 +11,29 @@ class Goodbye extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("goodbye")
 				.setDescription(client.translate("administration/goodbye:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("administration/goodbye:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addSubcommand(subcommand => subcommand.setName("test")
-					.setDescription(client.translate("administration/goodbye:TEST")),
+					.setDescription(client.translate("administration/goodbye:TEST"))
+					.setDescriptionLocalizations({ "uk": client.translate("administration/goodbye:TEST", null, "uk-UA") }),
 				)
 				.addSubcommand(subcommand => subcommand.setName("config")
 					.setDescription(client.translate("administration/goodbye:CONFIG"))
+					.setDescriptionLocalizations({ "uk": client.translate("administration/goodbye:CONFIG", null, "uk-UA") })
 					.addBooleanOption(option => option.setName("state")
 						.setDescription(client.translate("common:STATE"))
+						.setDescriptionLocalizations({ "uk": client.translate("common:STATE", null, "uk-UA") })
 						.setRequired(true))
 					.addChannelOption(option => option.setName("channel")
-						.setDescription(client.translate("common:CHANNEL")))
+						.setDescription(client.translate("common:CHANNEL"))
+						.setDescriptionLocalizations({ "uk": client.translate("common:CHANNEL", null, "uk-UA") }))
 					.addStringOption(option => option.setName("message")
-						.setDescription(client.translate("administration/goodbye:MESSAGE")))
+						.setDescription(client.translate("administration/goodbye:MESSAGE"))
+						.setDescriptionLocalizations({ "uk": client.translate("common:MESSAGE", null, "uk-UA") }))
 					.addBooleanOption(option => option.setName("image")
-						.setDescription(client.translate("administration/goodbye:IMAGE"))),
+						.setDescription(client.translate("administration/goodbye:IMAGE"))
+						.setDescriptionLocalizations({ "uk": client.translate("common:IMAGE", null, "uk-UA") })),
 				),
 			aliases: [],
 			dirname: __dirname,

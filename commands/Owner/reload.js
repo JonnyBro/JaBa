@@ -13,10 +13,13 @@ class Reload extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("reload")
 				.setDescription(client.translate("owner/reload:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("owner/reload:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("command")
 					.setDescription(client.translate("common:COMMAND"))
-					.setRequired(true)),
+					.setDescriptionLocalizations({ "uk": client.translate("common:COMMAND", null, "uk-UA") })
+					.setRequired(true)
+					.setAutocomplete(true)),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: true,
@@ -49,6 +52,24 @@ class Reload extends BaseCommand {
 		interaction.success("owner/reload:SUCCESS", {
 			command: cmd.command.name,
 		}, { ephemeral: true });
+	}
+
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").AutocompleteInteraction} interaction
+	 * @returns
+	 */
+	async autocompleteRun(client, interaction) {
+		const command = interaction.options.getString("command"),
+			results = client.commands.filter(c => c.command.name.includes(command));
+
+		return interaction.respond(
+			results.map(c => c).slice(0, 25).map(c => ({
+				name: c.command.name,
+				value: c.command.name,
+			}),
+			));
 	}
 }
 

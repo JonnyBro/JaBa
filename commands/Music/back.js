@@ -11,6 +11,7 @@ class Back extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("back")
 				.setDescription(client.translate("music/back:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("music/back:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,

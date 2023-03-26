@@ -11,9 +11,11 @@ class Slots extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("slots")
 				.setDescription(client.translate("economy/slots:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("economy/slots:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addIntegerOption(option => option.setName("amount")
 					.setDescription(client.translate("common:INT"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:INT", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

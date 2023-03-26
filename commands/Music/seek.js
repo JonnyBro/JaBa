@@ -11,8 +11,10 @@ class Seek extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("seek")
 				.setDescription(client.translate("music/seek:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("music/seek:DESCRIPTION", null, "uk-UA") })
 				.addIntegerOption(option => option.setName("time")
 					.setDescription(client.translate("music/seek:TIME"))
+					.setDescriptionLocalizations({ "uk": client.translate("music/seek:TIME", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

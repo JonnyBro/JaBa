@@ -11,9 +11,11 @@ class Profile extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("profile")
 				.setDescription(client.translate("economy/profile:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("economy/profile:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))),
+					.setDescription(client.translate("common:USER"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

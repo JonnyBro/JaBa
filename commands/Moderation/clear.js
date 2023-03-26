@@ -11,13 +11,19 @@ class Clear extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("clear")
 				.setDescription(client.translate("moderation/clear:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("moderation/clear:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
 				.addStringOption(option => option.setName("option")
 					.setDescription(client.translate("moderation/clear:OPTION"))
+					.setDescriptionLocalizations({ "uk": client.translate("moderation/clear:OPTION", null, "uk-UA") })
 					.setRequired(true))
 				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))),
+					.setDescription(client.translate("common:USER"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") }))
+				.addStringOption(option => option.setName("id")
+					.setDescription(client.translate("common:USER_ID"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:USER_ID", null, "uk-UA") })),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -39,8 +45,9 @@ class Clear extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });
 
-		const option = interaction.options.getString("option");
-		const member = interaction.options.getMember("user");
+		const option = interaction.options.getString("option"),
+			member = interaction.options.getMember("user"),
+			user_id = interaction.options.getString("id");
 
 		if (option === "all") {
 			const row = new ActionRowBuilder()
@@ -105,23 +112,25 @@ class Clear extends BaseCommand {
 			});
 		} else {
 			if (isNaN(option) || parseInt(option) < 1) return interaction.error("misc:OPTION_NAN_ALL", null, { ephemeral: true });
+
 			let messages = await interaction.channel.messages.fetch({
 				limit: option,
 			});
-			if (member) messages = messages.filter(m => m.author.id === member.id);
-			if (messages.length > option) messages.length = parseInt(option, 10);
+
+			if ((!member && !user_id) || (member && user_id)) return interaction.replyT("moderation/clear:REQUIRE_ID_USER", null, { edit: true });
+			if (member || user_id) messages = messages.filter(m => m.author.id === (member?.id || user_id));
 
 			interaction.channel.bulkDelete(messages.filter(m => !m.pinned), true);
 
-			if (member) {
+			if (member || user_id) {
 				interaction.replyT("moderation/clear:CLEARED_MEMBER", {
 					amount: `**${option}** ${client.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`,
-					username: member.user.tag,
-				}, { ephemeral: true, edit: true });
+					user: (member?.user.tag || user_id),
+				}, { edit: true });
 			} else {
 				interaction.replyT("moderation/clear:CLEARED", {
 					amount: `**${option}** ${client.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`,
-				}, { ephemeral: true, edit: true });
+				}, { edit: true });
 			}
 		}
 	}

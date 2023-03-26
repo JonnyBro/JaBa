@@ -11,9 +11,11 @@ class Skipto extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("skipto")
 				.setDescription(client.translate("music/skipto:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("music/skipto:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addIntegerOption(option => option.setName("position")
 					.setDescription(client.translate("music/skipto:POSITION"))
+					.setDescriptionLocalizations({ "uk": client.translate("music/skipto:POSITION", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

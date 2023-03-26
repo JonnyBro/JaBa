@@ -11,9 +11,11 @@ class Avatar extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("avatar")
 				.setDescription(client.translate("general/avatar:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("general/avatar:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true)
 				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))),
+					.setDescription(client.translate("common:USER"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

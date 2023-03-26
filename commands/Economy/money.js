@@ -11,9 +11,11 @@ class Money extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("money")
 				.setDescription(client.translate("economy/money:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("economy/money:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))),
+					.setDescription(client.translate("common:USER"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -56,7 +58,7 @@ class Money extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("economy/money:TITLE", {
-					username: member.user.tag,
+					user: member.user.tag,
 				}),
 				iconURL: member.user.displayAvatarURL(),
 			})

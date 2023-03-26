@@ -11,13 +11,16 @@ class Autorole extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("autorole")
 				.setDescription(client.translate("administration/autorole:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("administration/autorole:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addBooleanOption(option => option.setName("state")
 					.setDescription(client.translate("common:STATE"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:STATE", null, "uk-UA") })
 					.setRequired(true))
 				.addRoleOption(option => option.setName("role")
-					.setDescription(client.translate("common:ROLE"))),
+					.setDescription(client.translate("common:ROLE"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:ROLE", null, "uk-UA") })),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

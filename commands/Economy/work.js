@@ -11,6 +11,7 @@ class Work extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("work")
 				.setDescription(client.translate("economy/work:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("economy/work:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,

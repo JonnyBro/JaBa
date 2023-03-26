@@ -11,10 +11,12 @@ class Clearwarns extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("clearwarns")
 				.setDescription(client.translate("moderation/clearwarns:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("moderation/clearwarns:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

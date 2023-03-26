@@ -11,10 +11,12 @@ class Warns extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("warns")
 				.setDescription(client.translate("moderation/warns:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("moderation/warns:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

@@ -11,6 +11,7 @@ class Divorce extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("divorce")
 				.setDescription(client.translate("economy/divorce:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("economy/divorce:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,

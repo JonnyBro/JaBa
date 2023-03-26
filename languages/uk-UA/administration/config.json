@@ -16,10 +16,10 @@
 	"AUTOMOD_TITLE": "Автомодерація",
 	"AUTOMOD_CONTENT": "Автомодерація включена.\nІгноровані канали: {{channels}}",
 	"AUTO_SANCTIONS": "Автоматичні покарання",
-	"KICK_CONTENT": "Кік: Після **{{count}}** попереджень.",
-	"KICK_NOT_DEFINED": "Кік: Не призначено.",
-	"BAN_CONTENT": "Бан: Після **{{count}}** попереджень.",
-	"BAN_NOT_DEFINED": "Бан: Не призначено.",
+	"KICK_CONTENT": "Кік: Після **{{count}}** попереджень",
+	"KICK_NOT_DEFINED": "Кік: Не призначено",
+	"BAN_CONTENT": "Бан: Після **{{count}}** попереджень",
+	"BAN_NOT_DEFINED": "Бан: Не призначено",
 	"DASHBOARD_TITLE": "Змінити налаштування",
-	"DASHBOARD_CONTENT": "Натисніть сюди, щоб перейти до панелі керування!"
+	"DASHBOARD_CONTENT": "Натисніть сюди, щоб перейти до панелі керування"
 }

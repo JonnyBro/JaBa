@@ -11,9 +11,11 @@ class Afk extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("afk")
 				.setDescription(client.translate("general/afk:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("general/afk:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("message")
 					.setDescription(client.translate("common:MESSAGE"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:MESSAGE", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

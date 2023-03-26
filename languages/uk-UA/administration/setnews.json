@@ -2,6 +2,6 @@
 	"DESCRIPTION": "Встановити канал для новин бота",
 	"USAGE": "[state] (#channel)",
 	"EXAMPLES": "setnews state:True channel:#bot-news\nsetnews state:False",
-	"ENABLED": "Новини бота включені в канал **{{channel}}**!",
-	"DISABLED": "Новини бота вимкнені!"
+	"ENABLED": "Новини бота включені в канал **{{channel}}**",
+	"DISABLED": "Новини бота вимкнені"
 }

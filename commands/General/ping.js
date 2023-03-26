@@ -11,6 +11,7 @@ class Ping extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("ping")
 				.setDescription(client.translate("general/ping:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("general/ping:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,

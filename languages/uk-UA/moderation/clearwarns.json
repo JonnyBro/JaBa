@@ -2,5 +2,5 @@
 	"DESCRIPTION": "Зняти усі попередження з користувача",
 	"USAGE": "[@user]",
 	"EXAMPLES": "clearwarns user:@Jonny_Bro#4226",
-	"SUCCESS": "Попередження користувача {{user}} видалено!"
+	"SUCCESS": "Попередження користувача {{user}} видалено"
 }

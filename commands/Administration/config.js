@@ -11,16 +11,20 @@ class Config extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("config")
 				.setDescription(client.translate("administration/config:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("administration/config:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addSubcommand(subcommand => subcommand.setName("list")
-					.setDescription(client.translate("administration/config:LIST")),
+					.setDescription(client.translate("administration/config:LIST"))
+					.setDescriptionLocalizations({ "uk": client.translate("administration/config:LIST", null, "uk-UA") }),
 				)
 				.addSubcommand(subcommand => subcommand.setName("set")
 					.setDescription(client.translate("administration/config:SET"))
+					.setDescriptionLocalizations({ "uk": client.translate("administration/config:SET", null, "uk-UA") })
 					.addStringOption(option => option.setName("setting")
 						.setDescription(client.translate("administration/config:SETTING"))
-						.addChoices(
+						.setDescriptionLocalizations({ "uk": client.translate("administration/config:SETTING", null, "uk-UA") })
+						.setChoices(
 							{ name: client.translate("administration/config:BIRTHDAYS"), value: "birthdays" },
 							{ name: client.translate("administration/config:MODLOGS"), value: "modlogs" },
 							{ name: client.translate("administration/config:NEWS"), value: "news" },
@@ -30,9 +34,11 @@ class Config extends BaseCommand {
 						.setRequired(true))
 					.addBooleanOption(option => option.setName("state")
 						.setDescription(client.translate("common:STATE"))
+						.setDescriptionLocalizations({ "uk": client.translate("common:STATE", null, "uk-UA") })
 						.setRequired(true))
 					.addChannelOption(option => option.setName("channel")
-						.setDescription(client.translate("common:CHANNEL"))),
+						.setDescription(client.translate("common:CHANNEL"))
+						.setDescriptionLocalizations({ "uk": client.translate("common:STATE", null, "uk-UA") })),
 				),
 			aliases: [],
 			dirname: __dirname,

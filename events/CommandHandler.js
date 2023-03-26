@@ -41,8 +41,8 @@ class CommandHandler extends BaseEvent {
 		}
 		if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isCommand()) return;
 
-		if (command.guildOnly && !interaction.inGuild()) return interaction.replyT("misc:GUILD_ONLY", { ephemeral: true });
-		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.replyT("misc:OWNER_ONLY", { ephemeral: true });
+		if (command.guildOnly && !interaction.inGuild()) return interaction.error("misc:GUILD_ONLY", null, { ephemeral: true });
+		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { ephemeral: true });
 
 		if (!userData.achievements.firstCommand.achieved) {
 			userData.achievements.firstCommand.progress.now = 1;

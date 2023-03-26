@@ -11,6 +11,7 @@ class Serverinfo extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("serverinfo")
 				.setDescription(client.translate("general/serverinfo:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("general/serverinfo:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,

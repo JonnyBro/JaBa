@@ -11,15 +11,19 @@ class Announcement extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("announcement")
 				.setDescription(client.translate("owner/announcement:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("owner/announcement:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("message")
 					.setDescription(client.translate("common:MESSAGE"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:MESSAGE", null, "uk-UA") })
 					.setRequired(true))
 				.addBooleanOption(option => option.setName("tag")
 					.setDescription(client.translate("owner/announcement:TAG"))
+					.setDescriptionLocalizations({ "uk": client.translate("owner/announcement:TAG", null, "uk-UA") })
 					.setRequired(true))
 				.addBooleanOption(option => option.setName("important")
-					.setDescription(client.translate("owner/announcement:IMPORTANT"))),
+					.setDescription(client.translate("owner/announcement:IMPORTANT"))
+					.setDescriptionLocalizations({ "uk": client.translate("owner/announcement:IMPORTANT", null, "uk-UA") })),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: true,

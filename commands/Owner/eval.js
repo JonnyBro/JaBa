@@ -11,9 +11,11 @@ class Eval extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("eval")
 				.setDescription(client.translate("owner/eval:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("owner/eval:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("code")
 					.setDescription(client.translate("owner/eval:CODE"))
+					.setDescriptionLocalizations({ "uk": client.translate("owner/eval:CODE", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

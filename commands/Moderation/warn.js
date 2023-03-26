@@ -106,7 +106,7 @@ class Warn extends BaseCommand {
 				if (sanctions >= banCount) {
 					member.send({
 						content: interaction.translate("moderation/ban:BANNED_DM", {
-							username: member.user,
+							user: member.user,
 							moderator: interaction.user.tag,
 							server: interaction.guild.name,
 							reason,
@@ -124,7 +124,7 @@ class Warn extends BaseCommand {
 					interaction.guild.members.ban(member).catch(() => {});
 					interaction.followUp({
 						content: interaction.translate("moderation/setwarns:AUTO_BAN", {
-							username: member.user.tag,
+							user: member.user.tag,
 							count: `${banCount} ${client.getNoun(banCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
 						}),
 					});
@@ -135,7 +135,7 @@ class Warn extends BaseCommand {
 				if (sanctions >= kickCount) {
 					member.send({
 						content: interaction.translate("moderation/kick:KICKED_DM", {
-							username: member.user,
+							user: member.user,
 							moderator: interaction.user.tag,
 							server: interaction.guild.name,
 							reason,
@@ -153,7 +153,7 @@ class Warn extends BaseCommand {
 					member.kick().catch(() => {});
 					interaction.followUp({
 						content: interaction.translate("moderation/setwarns:AUTO_KICK", {
-							username: member.user.tag,
+							user: member.user.tag,
 							count: `${kickCount} ${client.getNoun(kickCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
 						}),
 					});
@@ -162,7 +162,7 @@ class Warn extends BaseCommand {
 
 			member.send({
 				content: interaction.translate("moderation/warn:WARNED_DM", {
-					username: member.user.tag,
+					user: member.user.tag,
 					server: interaction.guild.name,
 					moderator: interaction.user.tag,
 					reason,

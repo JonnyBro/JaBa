@@ -12,6 +12,7 @@ class Cat extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("cat")
 				.setDescription(client.translate("fun/cat:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("fun/cat:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,

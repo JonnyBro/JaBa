@@ -11,11 +11,13 @@ class Leaderboard extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("leaderboard")
 				.setDescription(client.translate("economy/leaderboard:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("economy/leaderboard:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addStringOption(option => option.setName("type")
 					.setDescription(client.translate("owner/debug:TYPE"))
+					.setDescriptionLocalizations({ "uk": client.translate("owner/debug:TYPE", null, "uk-UA") })
 					.setRequired(true)
-					.addChoices(
+					.setChoices(
 						{ name: client.translate("economy/leaderboard:LEVEL"), value: "level" },
 						{ name: client.translate("economy/leaderboard:MONEY"), value: "money" },
 						{ name: client.translate("economy/leaderboard:REP"), value: "rep" },

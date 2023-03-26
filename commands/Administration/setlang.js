@@ -11,12 +11,14 @@ class Setlang extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("setlang")
 				.setDescription(client.translate("administration/setlang:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("administration/setlang:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addStringOption(option => option.setName("language")
 					.setDescription(client.translate("common:LANGUAGE"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:LANGUAGE", null, "uk-UA") })
 					.setRequired(true)
-					.addChoices(
+					.setChoices(
 						{ name: "Русский", value: "ru-RU" },
 						{ name: "Українська", value: "uk-UA" },
 					)),

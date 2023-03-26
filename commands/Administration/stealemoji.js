@@ -11,10 +11,12 @@ class Stealemoji extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("stealemoji")
 				.setDescription(client.translate("administration/stealemoji:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("administration/stealemoji:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addStringOption(option => option.setName("emoji")
 					.setDescription(client.translate("common:EMOJI"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:EMOJI", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

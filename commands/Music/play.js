@@ -11,9 +11,11 @@ class Play extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("play")
 				.setDescription(client.translate("music/play:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("music/play:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addStringOption(option => option.setName("query")
 					.setDescription(client.translate("music/play:QUERY"))
+					.setDescriptionLocalizations({ "uk": client.translate("music/play:QUERY", null, "uk-UA") })
 					.setRequired(true)
 					.setAutocomplete(true)),
 			aliases: [],
@@ -80,7 +82,7 @@ class Play extends BaseCommand {
 	 * @returns
 	 */
 	async autocompleteRun(client, interaction) {
-		const query = interaction.options.getString("query", true),
+		const query = interaction.options.getString("query"),
 			results = await client.player.search(query);
 
 		return interaction.respond(

@@ -11,9 +11,11 @@ class Rep extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("rep")
 				.setDescription(client.translate("economy/rep:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("economy/rep:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

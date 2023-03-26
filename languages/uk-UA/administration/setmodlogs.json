@@ -2,6 +2,6 @@
 	"DESCRIPTION": "Встановити канал для логів модерації",
 	"USAGE": "[state] (#channel)",
 	"EXAMPLES": "setmodlogs state:True channel:#логи\nsetmodlogs state:False",
-	"ENABLED": "Логи модерації включені в канал **{{channel}}**!",
-	"DISABLED": "Логи модерації вимкнені!"
+	"ENABLED": "Логи модерації включені в канал **{{channel}}**",
+	"DISABLED": "Логи модерації вимкнені"
 }

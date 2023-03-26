@@ -15,8 +15,6 @@ class GuildCreate extends BaseEvent {
 	 * @param {import("discord.js").Guild} guild
 	 */
 	async execute(client, guild) {
-		const messageOptions = {};
-
 		const userData = await client.findOrCreateUser({
 			id: guild.ownerId,
 		});
@@ -24,15 +22,11 @@ class GuildCreate extends BaseEvent {
 		if (!userData.achievements.invite.achieved) {
 			userData.achievements.invite.progress.now += 1;
 			userData.achievements.invite.achieved = true;
-			messageOptions.files = [{
-				name: "unlocked.png",
-				attachment: "./assets/img/achievements/achievement_unlocked7.png",
-			}];
 			userData.markModified("achievements.invite");
 			await userData.save();
 		}
 
-		const thanksEmbed = new EmbedBuilder()
+		const thanks = new EmbedBuilder()
 			.setAuthor({
 				name: "Спасибо что добавили меня на свой сервер!",
 			})
@@ -42,10 +36,15 @@ class GuildCreate extends BaseEvent {
 				text: client.config.embed.footer,
 			})
 			.setTimestamp();
-		messageOptions.embeds = [thanksEmbed];
 
 		const owner = await guild.fetchOwner();
-		owner.send(messageOptions);
+		owner.send({
+			files: [{
+				name: "unlocked.png",
+				attachment: "./assets/img/achievements/achievement_unlocked7.png",
+			}],
+			embeds: [thanks],
+		});
 
 		const users = guild.members.cache.filter(m => !m.user.bot).size;
 		const bots = guild.members.cache.filter(m => m.user.bot).size;

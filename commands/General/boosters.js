@@ -11,6 +11,7 @@ class Boosters extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("boosters")
 				.setDescription(client.translate("general/boosters:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("general/boosters:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,

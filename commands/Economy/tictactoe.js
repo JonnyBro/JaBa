@@ -12,9 +12,11 @@ class TicTacToe extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("tictactoe")
 				.setDescription(client.translate("economy/tictactoe:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("economy/tictactoe:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

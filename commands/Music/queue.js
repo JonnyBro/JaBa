@@ -12,6 +12,7 @@ class Queue extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("queue")
 				.setDescription(client.translate("music/queue:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("music/queue:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,

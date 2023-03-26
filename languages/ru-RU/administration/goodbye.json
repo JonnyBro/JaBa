@@ -3,13 +3,13 @@
 	"USAGE": "config [state] [#channel] [message] [image] \nИли [test]",
 	"EXAMPLES": "goodbye state:True channel:#welcome Прощай! image:True\ngoodbye test",
 	"TEST": "Проверить",
-	"TEST_SUCCESS": "Тест выполнен...",
+	"TEST_SUCCESS": "Тест выполнен",
 	"CONFIG": "Настроить",
 	"IMAGE": "Добавить карточку к сообщению?",
 	"MESSAGE": "Ваше сообщение (доступны подмены с помощью {user}, {server} и {membercount})",
-	"ENABLED": "Прощальные сообщения включены в {{channel}}!\nИспользуйте `goodbye test` для просмотра сообщения!",
-	"DISABLED": "Прощальные сообщения отключены!",
+	"ENABLED": "Прощальные сообщения включены в {{channel}}!\nИспользуйте `goodbye test` для просмотра сообщения",
+	"DISABLED": "Прощальные сообщения отключены",
 	"DEFAULT_MESSAGE": "Пока, {user}! Нас теперь {membercount} без тебя :'(",
-	"IMG_GOODBYE": "Вышел с {{server}}!",
+	"IMG_GOODBYE": "Вышел с {{server}}",
 	"TITLE": "До встречи!"
 }

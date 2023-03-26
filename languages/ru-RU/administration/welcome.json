@@ -2,9 +2,9 @@
 	"DESCRIPTION": "Включить или отключить сообщения при входе пользователя на сервер",
 	"USAGE": "config [state] [#channel] [message] [image] \nИли [test]",
 	"EXAMPLES": "welcome state:True channel:#welcome Добро пожаловать! image:True\nwelcome test",
-	"ENABLED": "Приветствующие сообщения включены в {{channel}}!\nИспользуйте `welcome test` для просмотра сообщения!",
-	"DISABLED": "Приветствующие сообщения отключены!",
-	"DEFAULT_MESSAGE": "Добро пожаловать {user}! Нас теперь {membercount}!",
-	"IMG_WELCOME": "Добро пожаловать на {{server}}!",
+	"ENABLED": "Приветствующие сообщения включены в {{channel}}!\nИспользуйте `welcome test` для просмотра сообщения",
+	"DISABLED": "Приветствующие сообщения отключены",
+	"DEFAULT_MESSAGE": "Добро пожаловать {user}! Нас теперь {membercount}",
+	"IMG_WELCOME": "Добро пожаловать на {{server}}",
 	"TITLE": "Добро пожаловать!"
 }

@@ -12,12 +12,15 @@ class LMGTFY extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("lmgtfy")
 				.setDescription(client.translate("fun/lmgtfy:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("fun/lmgtfy:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("query")
 					.setDescription(client.translate("fun/lmgtfy:QUERY"))
+					.setDescriptionLocalizations({ "uk": client.translate("fun/lmgtfy:QUERY", null, "uk-UA") })
 					.setRequired(true))
 				.addBooleanOption(option => option.setName("short")
 					.setDescription(client.translate("fun/lmgtfy:SHORT"))
+					.setDescriptionLocalizations({ "uk": client.translate("fun/lmgtfy:SHORT", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
@@ -51,7 +54,7 @@ class LMGTFY extends BaseCommand {
 			});
 		} else {
 			interaction.reply({
-				content: `<${url}>`,
+				content: `\`\`\`<${url}>\`\`\``,
 				ephemeral: true,
 			});
 		}

@@ -13,9 +13,11 @@ class Clips extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("clips")
 				.setDescription(client.translate("music/clips:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("music/clips:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addStringOption(option => option.setName("query")
 					.setDescription(client.translate("music/clips:QUERY"))
+					.setDescriptionLocalizations({ "uk": client.translate("music/clips:QUERY", null, "uk-UA") })
 					.setRequired(true)
 					.setAutocomplete(true)),
 			aliases: [],
@@ -76,10 +78,12 @@ class Clips extends BaseCommand {
 	 * @returns
 	 */
 	async autocompleteRun(client, interaction) {
-		const files = fs.readdirSync("./clips");
+		const query = interaction.options.getString("query"),
+			files = fs.readdirSync("./clips"),
+			results = files.filter(f => f.includes(query));
 
 		return interaction.respond(
-			files.slice(0, 10).map(file => ({
+			results.slice(0, 25).map(file => ({
 				name: file.substring(0, file.length - 4),
 				value: `./clips/${file}`,
 			}),

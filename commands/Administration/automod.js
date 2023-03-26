@@ -11,13 +11,22 @@ class Automod extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("automod")
 				.setDescription(client.translate("administration/automod:DESCRIPTION"))
+				.setDescriptionLocalizations({
+					"uk": client.translate("administration/automod:DESCRIPTION", null, "uk-UA"),
+				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addBooleanOption(option => option.setName("state")
 					.setDescription(client.translate("common:STATE"))
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:STATE", null, "uk-UA"),
+					})
 					.setRequired(true))
 				.addChannelOption(option => option.setName("channel")
 					.setDescription(client.translate("common:CHANNEL"))
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:CHANNEL", null, "uk-UA"),
+					})
 					.addChannelTypes(ChannelType.GuildText)),
 			aliases: [],
 			dirname: __dirname,

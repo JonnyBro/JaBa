@@ -11,10 +11,12 @@ class Unban extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("unban")
 				.setDescription(client.translate("moderation/unban:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("moderation/unban:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
 				.addStringOption(option => option.setName("user_id")
 					.setDescription(client.translate("common:USER_ID"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:USER_ID", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

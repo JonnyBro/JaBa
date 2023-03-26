@@ -12,6 +12,7 @@ class Nowplaying extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("nowplaying")
 				.setDescription(client.translate("music/nowplaying:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("music/nowplaying:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,

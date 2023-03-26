@@ -2,7 +2,7 @@
 	"DESCRIPTION": "Показати інформацію про Minecraft сервер",
 	"USAGE": "[IP]",
 	"EXAMPLES": "minecraft IP:mc.hypixel.net",
-	"FAILED": "Сервер недоступний або доступ заборонено!",
+	"FAILED": "Сервер недоступний або доступ заборонено",
 	"ONLINE": "Онлайн",
 	"OFFLINE": "Оффлайн",
 	"PLAYERS": "{{count}} гравець(и)",

@@ -12,9 +12,11 @@ class Shorturl extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("shorturl")
 				.setDescription(client.translate("general/shorturl:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("general/shorturl:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("url")
 					.setDescription(client.translate("general/shorturl:URL"))
+					.setDescriptionLocalizations({ "uk": client.translate("general/shorturl:URL", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

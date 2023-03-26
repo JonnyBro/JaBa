@@ -3,13 +3,13 @@
 	"USAGE": "config [state] [#channel] [message] [image] \nАбо [test]",
 	"EXAMPLES": "goodbye state:True channel:#welcome Прощай! image:True\ngoodbye test",
 	"TEST": "Перевірити",
-	"TEST_SUCCESS": "Тест виконано...",
+	"TEST_SUCCESS": "Тест виконано",
 	"CONFIG": "Налаштувати",
 	"IMAGE": "Додати картку до повідомлення?",
 	"MESSAGE": "Ваше повідомлення (доступні заміни за допомогою {user}, {server} та {membercount})",
-	"ENABLED": "Прощальні повідомлення включені до {{channel}}!\nВикористовуйте `goodbye test` для перегляду повідомлення!",
-	"DISABLED": "Прощальні повідомлення вимкнені!",
+	"ENABLED": "Прощальні повідомлення включені до {{channel}}!\nВикористовуйте `goodbye test` для перегляду повідомлення",
+	"DISABLED": "Прощальні повідомлення вимкнені",
 	"DEFAULT_MESSAGE": "Бувай, {user}! Нас тепер {membercount} без тебе :'(",
-	"IMG_GOODBYE": "Вийшов з {{server}}!",
+	"IMG_GOODBYE": "Вийшов з {{server}}",
 	"TITLE": "До зустрічі!"
 }

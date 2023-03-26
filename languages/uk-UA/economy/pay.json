@@ -2,9 +2,9 @@
 	"DESCRIPTION": "Надіслати кредити користувачу",
 	"USAGE": "[@user] [amount]",
 	"EXAMPLES": "pay user:@Jonny_Bro#4226 amount:1000",
-	"BOT_USER": "Ботам не потрібні гроші B)!",
-	"YOURSELF": "Ви не можете переказати кредити самому собі!",
+	"BOT_USER": "Ботам не потрібні гроші B)",
+	"YOURSELF": "Ви не можете переказати кредити самому собі",
 	"INVALID_AMOUNT": "Вкажіть суму",
 	"ENOUGH_MONEY": "У вас немає {{amount}}",
-	"SUCCESS": "Ви відправили {{user}} {{amount}}!"
+	"SUCCESS": "Ви відправили {{user}} {{amount}}"
 }

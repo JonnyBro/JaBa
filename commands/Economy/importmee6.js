@@ -12,6 +12,7 @@ class ImportMee6 extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("importmee6")
 				.setDescription(client.translate("economy/importmee6:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("economy/importmee6:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
@@ -41,7 +42,7 @@ class ImportMee6 extends BaseCommand {
 
 		interaction.editReply({
 			content: interaction.translate("owner/debug:SUCCESS_LEVEL", {
-				username: interaction.member.toString(),
+				user: interaction.member.toString(),
 				amount: level,
 			}),
 		});

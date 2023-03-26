@@ -2,8 +2,8 @@
 	"DESCRIPTION": "Надіслати пропозицію до спеціального каналу",
 	"USAGE": "[message]",
 	"EXAMPLES": "suggest message:Новий канал #nsfw :smiling_imp:",
-	"MISSING_CHANNEL": "Канал для пропозицій не налаштований!",
-	"MISSING_CONTENT": "Введіть пропозицію!",
+	"MISSING_CHANNEL": "Канал для пропозицій не налаштований",
+	"MISSING_CONTENT": "Введіть пропозицію",
 	"TITLE": "Пропозиція - {{user}}",
-	"SUCCESS": "Ваша пропозиція надіслана в {{channel}}!"
+	"SUCCESS": "Ваша пропозиція надіслана в {{channel}}"
 }

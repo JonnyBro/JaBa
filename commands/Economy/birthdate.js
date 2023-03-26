@@ -11,14 +11,17 @@ class Birthdate extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("birthdate")
 				.setDescription(client.translate("economy/birthdate:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("economy/birthdate:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addIntegerOption(option => option.setName("day")
 					.setDescription(client.translate("economy/birthdate:DAY"))
+					.setDescriptionLocalizations({ "uk": client.translate("economy/birthdate:DAY", null, "uk-UA") })
 					.setRequired(true))
 				.addIntegerOption(option => option.setName("month")
 					.setDescription(client.translate("economy/birthdate:MONTH"))
+					.setDescriptionLocalizations({ "uk": client.translate("economy/birthdate:MONTH", null, "uk-UA") })
 					.setRequired(true)
-					.addChoices(
+					.setChoices(
 						{ name: "Январь", value: 1 },
 						{ name: "Февраль", value: 2 },
 						{ name: "Март", value: 3 },
@@ -34,7 +37,9 @@ class Birthdate extends BaseCommand {
 					))
 				.addIntegerOption(option => option.setName("year")
 					.setDescription(client.translate("economy/birthdate:YEAR"))
-					.setRequired(true)),
+					.setDescriptionLocalizations({ "uk": client.translate("economy/birthdate:YEAR", null, "uk-UA") })
+					.setRequired(true)
+					.setAutocomplete(true)),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -69,6 +74,24 @@ class Birthdate extends BaseCommand {
 		interaction.success("economy/birthdate:SUCCESS", {
 			date: client.printDate(d),
 		});
+	}
+
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").AutocompleteInteraction} interaction
+	 * @returns
+	 */
+	async autocompleteRun(client, interaction) {
+		const int = interaction.options.getInteger("year"),
+			results = Array.from({ length: 2023 }, (_, k) => k + 1).filter(i => i.toString().includes(int));
+
+		return interaction.respond(
+			results.slice(0, 25).map(i => ({
+				name: i,
+				value: i,
+			}),
+			));
 	}
 }
 

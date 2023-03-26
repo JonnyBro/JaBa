@@ -1,7 +1,8 @@
 {
 	"DESCRIPTION": "Выбор режима повтора",
-	"USAGE": "",
-	"EXAMPLES": "loop",
+	"USAGE": "[option]",
+	"EXAMPLES": "loop option:1",
+	"OPTION": "Режим воспроизведения",
 	"AUTOPLAY": "Автовоспроизведение",
 	"QUEUE": "Очередь",
 	"TRACK": "Текущий трек",

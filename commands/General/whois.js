@@ -12,9 +12,11 @@ class Whois extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("whois")
 				.setDescription(client.translate("general/whois:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("general/whois:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("ip")
 					.setDescription(client.translate("common:IP"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:IP", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

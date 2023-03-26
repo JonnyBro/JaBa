@@ -12,14 +12,17 @@ class Lovecalc extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("lovecalc")
 				.setDescription(client.translate("fun/lovecalc:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("fun/lovecalc:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addUserOption(option =>
 					option.setName("first_member")
 						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
 						.setRequired(true))
 				.addUserOption(option =>
 					option.setName("second_member")
-						.setDescription(client.translate("common:USER"))),
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

@@ -12,6 +12,7 @@ class Dog extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("dog")
 				.setDescription(client.translate("fun/dog:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("fun/dog:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,

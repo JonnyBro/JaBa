@@ -3,5 +3,5 @@
 	"USAGE": "[@user]",
 	"EXAMPLES": "warns user:@Jonny_Bro#4226",
 	"SANCTIONS_OF": "Порушення {{member}}",
-	"NO_SANCTIONS": "**{{member}}** не має порушень."
+	"NO_SANCTIONS": "**{{member}}** не має порушень"
 }

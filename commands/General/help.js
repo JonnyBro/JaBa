@@ -11,10 +11,12 @@ class Help extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("help")
 				.setDescription(client.translate("general/help:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("general/help:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true)
 				.addStringOption(option =>
 					option.setName("command")
-						.setDescription(client.translate("common:COMMAND"))),
+						.setDescription(client.translate("common:COMMAND"))
+						.setDescriptionLocalizations({ "uk": client.translate("common:COMMAND", null, "uk-UA") })),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -39,6 +41,7 @@ class Help extends BaseCommand {
 		const commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()];
 		const categories = [];
 		const command = interaction.options.getString("command");
+		if ((commands.find(c => c.command.name === command).category === "Owner") && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { edit: true, ephemeral: true });
 
 		if (command) return interaction.editReply({ embeds: [ generateCommandHelp(interaction, command) ] });
 
@@ -125,6 +128,7 @@ function getPermName(bitfield = 0) {
 function generateCommandHelp(interaction, command) {
 	const cmd = interaction.client.commands.get(command);
 	if (!cmd) return interaction.error("general/help:NOT_FOUND", { command }, { edit: true });
+
 	const usage = interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`) === "" ?
 		interaction.translate("misc:NO_ARGS")
 		: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`);

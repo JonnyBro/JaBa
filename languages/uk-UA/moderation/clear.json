@@ -3,8 +3,9 @@
 	"USAGE": "[option] (@user)",
 	"EXAMPLES": "clear option:10\nclear option:10 user:@Jonny_Bro#4226\nclear option:all",
 	"OPTION": "Ціле число / all",
+	"REQUIRE_ID_USER": "Вкажіть користувача або ID",
 	"ALL_CONFIRM": "**Всі повідомлення в каналі будуть видалені! Ви впевнені?**",
-	"CHANNEL_CLEARED": "Канал очищений!",
-	"CLEARED": "Було видалено {{amount}}!",
-	"CLEARED_MEMBER": "Було видалено {{amount}} від {{user}}!"
+	"CHANNEL_CLEARED": "Канал очищений",
+	"CLEARED": "Було видалено {{amount}}",
+	"CLEARED_MEMBER": "Було видалено {{amount}} від {{user}}"
 }

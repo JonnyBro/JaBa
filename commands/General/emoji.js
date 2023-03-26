@@ -11,9 +11,11 @@ class Emoji extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("emoji")
 				.setDescription(client.translate("general/emoji:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("general/emoji:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("emoji")
 					.setDescription(client.translate("common:EMOJI"))
+					.setDescriptionLocalizations({ "uk": client.translate("commom:EMOJI", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

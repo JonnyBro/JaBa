@@ -11,16 +11,19 @@ class Bank extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("bank")
 				.setDescription(client.translate("economy/bank:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("economy/bank:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addStringOption(option => option.setName("option")
 					.setDescription(client.translate("economy/bank:OPTION"))
+					.setDescriptionLocalizations({ "uk": client.translate("economy/bank:OPTION", null, "uk-UA") })
 					.setRequired(true)
-					.addChoices(
+					.setChoices(
 						{ name: client.translate("economy/bank:DEPOSIT"), value: "deposit" },
 						{ name: client.translate("economy/bank:WITHDRAW"), value: "withdraw" },
 					))
 				.addStringOption(option => option.setName("credits")
-					.setDescription(client.translate("moderation/clear:OPTION"))
+					.setDescription(client.translate("misc:OPTION_NAN_ALL"))
+					.setDescriptionLocalizations({ "uk": client.translate("misc:OPTION_NAN_ALL", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

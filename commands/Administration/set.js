@@ -11,12 +11,14 @@ class Set extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("set")
 				.setDescription(client.translate("administration/set:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("administration/set:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addStringOption(option => option.setName("type")
 					.setDescription(client.translate("owner/debug:TYPE"))
+					.setDescriptionLocalizations({ "uk": client.translate("owner/debug:TYPE", null, "uk-UA") })
 					.setRequired(true)
-					.addChoices(
+					.setChoices(
 						{ name: client.translate("common:LEVEL"), value: "level" },
 						{ name: client.translate("common:XP"), value: "xp" },
 						{ name: client.translate("common:CREDITS"), value: "credits" },
@@ -24,9 +26,11 @@ class Set extends BaseCommand {
 					))
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
 					.setRequired(true))
 				.addIntegerOption(option => option.setName("int")
 					.setDescription(client.translate("common:INT"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:INT", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
@@ -64,7 +68,7 @@ class Set extends BaseCommand {
 				memberData.level = int;
 				await memberData.save();
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-					username: member.toString(),
+					user: member.toString(),
 					amount: int,
 				}, { ephemeral: true });
 			}
@@ -73,7 +77,7 @@ class Set extends BaseCommand {
 				memberData.exp = int;
 				await memberData.save();
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-					username: member.toString(),
+					user: member.toString(),
 					amount: int,
 				}, { ephemeral: true });
 			}
@@ -82,7 +86,7 @@ class Set extends BaseCommand {
 				memberData.money = int;
 				await memberData.save();
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-					username: member.toString(),
+					user: member.toString(),
 					amount: int,
 				}, { ephemeral: true });
 			}
@@ -91,7 +95,7 @@ class Set extends BaseCommand {
 				memberData.bankSold = int;
 				await memberData.save();
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-					username: member.toString(),
+					user: member.toString(),
 					amount: int,
 				}, { ephemeral: true });
 			}

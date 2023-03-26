@@ -11,12 +11,15 @@ class Rob extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("rob")
 				.setDescription(client.translate("economy/rob:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("economy/rob:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
 					.setRequired(true))
 				.addIntegerOption(option => option.setName("amount")
 					.setDescription(client.translate("common:INT"))
+					.setDescriptionLocalizations({ "uk": client.translate("common:INT", null, "uk-UA") })
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

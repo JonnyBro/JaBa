@@ -12,11 +12,12 @@ class Loop extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("loop")
 				.setDescription(client.translate("music/loop:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("music/loop:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addStringOption(option => option.setName("option")
-					.setDescription(client.translate("economy/bank:OPTION"))
+					.setDescription(client.translate("music/loop:OPTION"))
 					.setRequired(true)
-					.addChoices(
+					.setChoices(
 						{ name: client.translate("music/loop:AUTOPLAY"), value: "3" },
 						{ name: client.translate("music/loop:QUEUE"), value: "2" },
 						{ name: client.translate("music/loop:TRACK"), value: "1" },

@@ -11,13 +11,16 @@ class Debug extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("debug")
 				.setDescription(client.translate("owner/debug:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("owner/debug:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addSubcommand(subcommand => subcommand.setName("set")
 					.setDescription(client.translate("owner/debug:SET"))
+					.setDescriptionLocalizations({ "uk": client.translate("owner/debug:SET", null, "uk-UA") })
 					.addStringOption(option => option.setName("type")
 						.setDescription(client.translate("owner/debug:TYPE"))
+						.setDescriptionLocalizations({ "uk": client.translate("owner/debug:TYPE", null, "uk-UA") })
 						.setRequired(true)
-						.addChoices(
+						.setChoices(
 							{ name: client.translate("common:LEVEL"), value: "level" },
 							{ name: client.translate("common:XP"), value: "xp" },
 							{ name: client.translate("common:CREDITS"), value: "credits" },
@@ -26,17 +29,21 @@ class Debug extends BaseCommand {
 						))
 					.addUserOption(option => option.setName("user")
 						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
 						.setRequired(true))
 					.addIntegerOption(option => option.setName("int")
 						.setDescription(client.translate("common:INT"))
+						.setDescriptionLocalizations({ "uk": client.translate("common:INT", null, "uk-UA") })
 						.setRequired(true)),
 				)
 				.addSubcommand(subcommand => subcommand.setName("add")
 					.setDescription(client.translate("owner/debug:ADD"))
+					.setDescriptionLocalizations({ "uk": client.translate("owner/debug:ADD", null, "uk-UA") })
 					.addStringOption(option => option.setName("type")
 						.setDescription(client.translate("owner/debug:TYPE"))
+						.setDescriptionLocalizations({ "uk": client.translate("owner/debug:TYPE", null, "uk-UA") })
 						.setRequired(true)
-						.addChoices(
+						.setChoices(
 							{ name: client.translate("common:LEVEL"), value: "level" },
 							{ name: client.translate("common:XP"), value: "xp" },
 							{ name: client.translate("common:CREDITS"), value: "credits" },
@@ -45,9 +52,11 @@ class Debug extends BaseCommand {
 						))
 					.addUserOption(option => option.setName("user")
 						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
 						.setRequired(true))
 					.addIntegerOption(option => option.setName("int")
-						.setDescription(client.translate("owner/debug:INT"))
+						.setDescription(client.translate("common:INT"))
+						.setDescriptionLocalizations({ "uk": client.translate("common:INT", null, "uk-UA") })
 						.setRequired(true)),
 				),
 			aliases: [],
@@ -92,7 +101,7 @@ class Debug extends BaseCommand {
 					memberData.level = int;
 					await memberData.save();
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-						username: member.toString(),
+						user: member.toString(),
 						amount: int,
 					}, { ephemeral: true });
 				}
@@ -101,7 +110,7 @@ class Debug extends BaseCommand {
 					memberData.exp = int;
 					await memberData.save();
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-						username: member.toString(),
+						user: member.toString(),
 						amount: int,
 					}, { ephemeral: true });
 				}
@@ -110,7 +119,7 @@ class Debug extends BaseCommand {
 					memberData.money = int;
 					await memberData.save();
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-						username: member.toString(),
+						user: member.toString(),
 						amount: int,
 					}, { ephemeral: true });
 				}
@@ -119,7 +128,7 @@ class Debug extends BaseCommand {
 					memberData.bankSold = int;
 					await memberData.save();
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-						username: member.toString(),
+						user: member.toString(),
 						amount: int,
 					}, { ephemeral: true });
 				}
@@ -128,7 +137,7 @@ class Debug extends BaseCommand {
 					userData.rep = int;
 					await userData.save();
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-						username: member.toString(),
+						user: member.toString(),
 						amount: int,
 					}, { ephemeral: true });
 				}
@@ -153,7 +162,7 @@ class Debug extends BaseCommand {
 					memberData.level += int;
 					await memberData.save();
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-						username: member.toString(),
+						user: member.toString(),
 						amount: int,
 					}, { ephemeral: true });
 				}
@@ -162,7 +171,7 @@ class Debug extends BaseCommand {
 					memberData.exp += int;
 					await memberData.save();
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-						username: member.toString(),
+						user: member.toString(),
 						amount: int,
 					}, { ephemeral: true });
 				}
@@ -171,7 +180,7 @@ class Debug extends BaseCommand {
 					memberData.money += int;
 					await memberData.save();
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-						username: member.toString(),
+						user: member.toString(),
 						amount: int,
 					}, { ephemeral: true });
 				}
@@ -180,7 +189,7 @@ class Debug extends BaseCommand {
 					memberData.bankSold += int;
 					await memberData.save();
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-						username: member.toString(),
+						user: member.toString(),
 						amount: int,
 					}, { ephemeral: true });
 				}
@@ -189,7 +198,7 @@ class Debug extends BaseCommand {
 					userData.rep += int;
 					await userData.save();
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
-						username: member.toString(),
+						user: member.toString(),
 						amount: int,
 					}, { ephemeral: true });
 				}

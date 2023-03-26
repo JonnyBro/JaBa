@@ -12,6 +12,7 @@ class Memes extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("memes")
 				.setDescription(client.translate("fun/memes:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("fun/memes:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
@@ -34,7 +35,7 @@ class Memes extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply();
 
-		const tags = ["memes", "dankmemes", "me_irl", "wholesomememes"].map(tag =>
+		const tags = ["funny", "memes", "dankmemes", "me_irl", "wholesomememes"].map(tag =>
 			JSON.parse(JSON.stringify({
 				label: tag,
 				value: tag,
