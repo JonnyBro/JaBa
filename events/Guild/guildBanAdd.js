@@ -17,7 +17,7 @@ class guildBanAdd extends BaseEvent {
 	async execute(client, ban) {
 		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: client.user.name,
+				name: client.user.username,
 				iconURL: ban.guild.iconURL(),
 			})
 			.setColor("#FF0000")
