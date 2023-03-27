@@ -10,9 +10,9 @@ class NSFW extends BaseCommand {
 	constructor(client) {
 		super({
 			command: new SlashCommandBuilder()
-				.setName("pic")
-				.setDescription(client.translate("nsfw/pic:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("nsfw/pic:DESCRIPTION", null, "uk-UA") })
+				.setName("nsfw")
+				.setDescription(client.translate("nsfw/nsfw:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("nsfw/nsfw:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,
