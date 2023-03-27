@@ -38,7 +38,7 @@ module.exports.update = function (client) {
 				`**${cmd.command.name}** ${cmd.aliases.length ? `**(${cmd.aliases.join(", ")})**` : ""}`,
 				client.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:DESCRIPTION`),
 				`${cmd.command.name} ${client.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`).replace(/\n/, " \\| ")}`,
-				cmd.guildOnly ? "Только на сервере" : "На сервере и в ЛС бота",
+				cmd.command.dm_permission ? "На сервере и в ЛС бота" : "Только на сервере",
 			]);
 		});
 		text += `${table(categoriesArray)}\n\n`;
