@@ -44,7 +44,7 @@ class Volume extends BaseCommand {
 		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { ephemeral: true });
 
 		const volume = interaction.options.getInteger("int");
-		if (volume <= 0 || volume > 100) return interaction.error("common:INVALID_NUMBER_RANGE", { min: 1, max: 100 });
+		if (volume <= 0 || volume > 100) return interaction.error("misc:INVALID_NUMBER_RANGE", { min: 1, max: 100 });
 
 		queue.node.setVolume(volume);
 		interaction.success("music/volume:SUCCESS", {
