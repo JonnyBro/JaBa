@@ -18,7 +18,7 @@
         "@discordjs/voice": "^0.15.0",
         "btoa": "^1.2.1",
         "canvacord": "^5.1.0",
-        "canvas": "^2.9.0",
+        "canvas": "^2.10.2",
         "chalk": "^4.1.2",
         "cron": "^2.1.0",
         "discord-api-types": "^0.37.36",

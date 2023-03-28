@@ -11,10 +11,10 @@ const checks = [
 	() => {
 		console.log("\n\nEnvironnement");
 		return new Promise(res => {
-			if (parseInt(process.version.split(".")[0].split("v")[1]) >= 12) {
-				success("node.js version equal or higher than v12");
+			if (parseInt(process.version.split(".")[0].split("v")[1]) >= 18) {
+				success("node.js version equal or higher than v18");
 			} else {
-				error("node.js version should be equal or higher than v12");
+				error("node.js version should be equal or higher than v18");
 			}
 			res();
 		});
