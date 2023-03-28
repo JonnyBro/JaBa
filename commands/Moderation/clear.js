@@ -117,8 +117,8 @@ class Clear extends BaseCommand {
 				limit: option,
 			});
 
-			if ((!member && !user_id) || (member && user_id)) return interaction.replyT("moderation/clear:REQUIRE_ID_USER", null, { edit: true });
-			if (member || user_id) messages = messages.filter(m => m.author.id === (member?.id || user_id));
+			if (user_id && member) return interaction.replyT("moderation/clear:REQUIRE_ID_USER", null, { edit: true });
+			if (user_id || member) messages = messages.filter(m => m.author.id === (user_id || member.id));
 
 			interaction.channel.bulkDelete(messages.filter(m => !m.pinned), true);
 
