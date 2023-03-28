@@ -9,7 +9,6 @@ const BaseEvent = require("./BaseEvent.js"),
 	path = require("path"),
 	fs = require("fs").promises,
 	mongoose = require("mongoose"),
-	playdl = require("play-dl"),
 	moment = require("moment");
 
 moment.relativeTimeThreshold("ss", 5);
@@ -44,12 +43,6 @@ class JaBa extends Client {
 		this.databaseCache.mutedUsers = new Collection();
 
 		this.player = Player.singleton(this);
-
-		playdl.getFreeClientID().then(id => playdl.setToken({
-			soundcloud: {
-				client_id: id,
-			},
-		}));
 
 		this.player.events.on("playerStart", async (queue, track) => {
 			const m = await queue.metadata.channel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language) });
