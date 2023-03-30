@@ -14,6 +14,7 @@ const client = new JaBa({
 	await client.loadEvents("../events");
 	await client.loadCommands("../commands");
 	await client.init();
+	console.time("botReady");
 })();
 
 client.on("disconnect", () => client.logger.log("Bot is disconnecting...", "warn"))

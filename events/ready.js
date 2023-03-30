@@ -14,13 +14,19 @@ class Ready extends BaseEvent {
 	 */
 	async execute(client) {
 		const commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()];
-		let hiddenGuild = await client.guilds.fetch("568120814776614924");
-		let tUsers = client.users.cache.size - hiddenGuild.memberCount;
+
+		let hiddenGuildMembersCount = client.guilds.cache.get("568120814776614924").memberCount;
 		let tServers = client.guilds.cache.size - 1;
+		let tUsers = 0;
+		client.guilds.cache.forEach(g => {
+			tUsers += g.memberCount;
+		});
+		tUsers = tUsers - hiddenGuildMembersCount;
 
 		client.logger.log(`Loaded a total of ${commands.length} command(s).`, "ready");
-		client.logger.log(`${client.user.tag}, ready to serve ${tUsers} users in ${tServers} servers.`, "ready");
+		client.logger.log(`${client.user.tag}, ready to serve ${tUsers} members in ${tServers} servers.`, "ready");
 		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: [ PermissionsBitField.Flags.Administrator ] })}`, "ready");
+		console.timeEnd("botReady");
 
 		const birthdays = require("../helpers/birthdays");
 		birthdays.init(client);
@@ -46,18 +52,21 @@ class Ready extends BaseEvent {
 
 		let i = 0;
 		setInterval(async function () {
-			hiddenGuild = await client.guilds.fetch("568120814776614924");
-			tUsers = client.users.cache.size - hiddenGuild.memberCount;
+			hiddenGuildMembersCount = client.guilds.cache.get("568120814776614924").memberCount;
 			tServers = client.guilds.cache.size - 1;
-			const toShow = status[i];
+			tUsers = 0;
+			client.guilds.cache.forEach(g => {
+				tUsers += g.memberCount;
+			});
+			tUsers = tUsers - hiddenGuildMembersCount;
 
-			client.user.setActivity(`${toShow.name} | v${version}`, {
-				type: toShow.type,
+			client.user.setActivity(`${status[i].name} | v${version}`, {
+				type: status[i].type,
 			});
 
 			if (status[i + 1]) i++;
 			else i = 0;
-		}, 10000); // Every 10 seconds
+		}, 30 * 1000); // Every 30 seconds
 	}
 }
 

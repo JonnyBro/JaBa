@@ -31,9 +31,13 @@ class Stats extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
-		const hiddenGuild = await client.guilds.fetch("568120814776614924");
-		const users = client.users.cache.size - hiddenGuild.memberCount;
+		const hiddenGuildMembersCount = client.guilds.cache.get("568120814776614924").memberCount;
 		const servers = client.guilds.cache.size - 1;
+		let users = 0;
+		client.guilds.cache.forEach(g => {
+			users += g.memberCount;
+		});
+		users = users - hiddenGuildMembersCount;
 
 		const statsEmbed = new EmbedBuilder()
 			.setColor(client.config.embed.color)

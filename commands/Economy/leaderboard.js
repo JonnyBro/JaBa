@@ -54,7 +54,7 @@ class Leaderboard extends BaseCommand {
 			const membersLeaderboard = [],
 				membersData = await client.membersData.find({ guildID: interaction.guildId }).lean();
 
-			await client.functions.asyncForEach(membersData, async member => {
+			client.functions.asyncForEach(membersData, member => {
 				membersLeaderboard.push({
 					id: member.id,
 					money: member.money + member.bankSold,
@@ -97,7 +97,7 @@ class Leaderboard extends BaseCommand {
 			const membersLeaderboard = [],
 				membersData = await client.membersData.find({ guildID: interaction.guildId }).lean();
 
-			await client.functions.asyncForEach(membersData, async member => {
+			client.functions.asyncForEach(membersData, async member => {
 				membersLeaderboard.push({
 					id: member.id,
 					level: member.level,
@@ -151,7 +151,7 @@ class Leaderboard extends BaseCommand {
 			const usersLeaderboard = [],
 				usersData = await client.usersData.find({ rep: { $gt: 0 } }).lean();
 
-			await client.functions.asyncForEach(usersData, async user => {
+			client.functions.asyncForEach(usersData, async user => {
 				usersLeaderboard.push({
 					id: user.id,
 					rep: user.rep,
