@@ -38,11 +38,11 @@ class Checkjar extends BaseCommand {
 
 		await interaction.deferReply();
 
-		const jar = client.config.monobankApi.jar;
-		const data = await fetch(`https://api.monobank.ua/personal/statement/${jar}/${Date.now() - (7 * 24 * 60 * 60 * 1000)}/${Date.now()}`, {
+		const jar = client.config.apiKeys.monobankApiJar;
+		const data = fetch(`https://api.monobank.ua/personal/statement/${jar}/${Date.now() - (7 * 24 * 60 * 60 * 1000)}/${Date.now()}`, {
 			method: "GET",
 			headers: {
-				"X-Token": client.config.monobankApi.token,
+				"X-Token": client.config.apiKeys.monobankApiKey,
 			},
 		}).then(res => res.json());
 
