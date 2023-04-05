@@ -87,7 +87,7 @@ class Play extends BaseCommand {
 
 		return interaction.respond(
 			results.tracks.slice(0, 10).map(track => ({
-				name: `${track.author} - ${track.title}`.slice(0, 90) + "...",
+				name: (`${track.author} - ${track.title}`.length >= 100 & `${track.author} - ${track.title}`.slice(0, 90) + "...") || `${track.author} - ${track.title}`,
 				value: track.url,
 			}),
 			));
