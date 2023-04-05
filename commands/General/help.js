@@ -16,7 +16,8 @@ class Help extends BaseCommand {
 				.addStringOption(option =>
 					option.setName("command")
 						.setDescription(client.translate("common:COMMAND"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:COMMAND", null, "uk-UA") })),
+						.setDescriptionLocalizations({ "uk": client.translate("common:COMMAND", null, "uk-UA") })
+						.setAutocomplete(true)),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -41,9 +42,11 @@ class Help extends BaseCommand {
 		const commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()];
 		const categories = [];
 		const command = interaction.options.getString("command");
-		if ((commands.find(c => c.command.name === command).category === "Owner") && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { edit: true, ephemeral: true });
 
-		if (command) return interaction.editReply({ embeds: [ generateCommandHelp(interaction, command) ] });
+		if (command) {
+			if (commands.find(c => c.command.name === command).category === "Owner" && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { edit: true, ephemeral: true });
+			return interaction.editReply({ embeds: [ generateCommandHelp(interaction, command) ] });
+		}
 
 		commands.forEach(c => {
 			if (!categories.includes(c.category)) {
@@ -116,6 +119,26 @@ class Help extends BaseCommand {
 				components: [],
 			});
 		});
+	}
+
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").AutocompleteInteraction} interaction
+	 * @returns
+	 */
+	async autocompleteRun(client, interaction) {
+		const command = interaction.options.getString("command"),
+			commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()],
+			results = commands.filter(c => c.name.includes(command));
+		console.log(commands);
+
+		return interaction.respond(
+			results.slice(0, 25).map(command => ({
+				name: command.name,
+				value: command.name,
+			}),
+			));
 	}
 }
 
