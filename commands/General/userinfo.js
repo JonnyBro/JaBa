@@ -55,11 +55,11 @@ class Userinfo extends BaseCommand {
 					value: member.nickname || interaction.translate("general/userinfo:NO_NICKNAME"),
 					inline: true,
 				},
-				{
-					name: client.customEmojis.status[member.presence.status] + " " + interaction.translate("common:STATUS"),
-					value: interaction.translate(`common:STATUS_${member.presence.status.toUpperCase()}`),
-					inline: true,
-				},
+				// {
+				// 	name: client.customEmojis.status[member.presence.status] + " " + interaction.translate("common:STATUS"),
+				// 	value: interaction.translate(`common:STATUS_${member.presence.status.toUpperCase()}`),
+				// 	inline: true,
+				// },
 				{
 					name: client.customEmojis.bot + " " + interaction.translate("common:ROBOT"),
 					value: member.user.bot ? interaction.translate("common:YES") : interaction.translate("common:NO"),
