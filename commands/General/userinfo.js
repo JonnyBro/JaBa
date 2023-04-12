@@ -93,6 +93,7 @@ class Userinfo extends BaseCommand {
 				text: client.config.embed.footer,
 			});
 
+		/*
 		if (member.presence.activities[0]?.name === "Custom Status") {
 			embed.addFields([
 				{
@@ -109,7 +110,7 @@ class Userinfo extends BaseCommand {
 					inline: true,
 				},
 			]);
-		}
+		} */
 
 		interaction.reply({
 			embeds: [embed],
