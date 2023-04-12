@@ -131,7 +131,6 @@ class Help extends BaseCommand {
 		const command = interaction.options.getString("command"),
 			commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()],
 			results = commands.filter(c => c.command.name.includes(command));
-		console.log(commands);
 
 		return interaction.respond(
 			results.slice(0, 25).map(command => ({
