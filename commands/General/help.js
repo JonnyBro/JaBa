@@ -130,13 +130,13 @@ class Help extends BaseCommand {
 	async autocompleteRun(client, interaction) {
 		const command = interaction.options.getString("command"),
 			commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()],
-			results = commands.filter(c => c.name.includes(command));
+			results = commands.filter(c => c.command.name.includes(command));
 		console.log(commands);
 
 		return interaction.respond(
 			results.slice(0, 25).map(command => ({
-				name: command.name,
-				value: command.name,
+				name: command.command.name,
+				value: command.command.name,
 			}),
 			));
 	}
