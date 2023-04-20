@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Спросить у ChatGPT",
-	"USAGE": "[query]",
-	"EXAMPLES": "chat query:Привет! Как тебя зовут?",
-	"PROMPT": "Запрос",
-	"THANKS": "> Спасибо за ожидание!"
-}
