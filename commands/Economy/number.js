@@ -57,7 +57,7 @@ class Number extends BaseCommand {
 			const parsedNumber = parseInt(msg.content, 10);
 
 			if (parsedNumber === number) {
-				const time = client.convertTime(gameCreatedAt, false, false, data.guildData.language);
+				const time = client.functions.convertTime(gameCreatedAt, false, false, data.guildData.language);
 				interaction.channel.send({
 					content: interaction.translate("economy/number:GAME_STATS", {
 						winner: msg.author.toString(),
@@ -74,7 +74,7 @@ class Number extends BaseCommand {
 					interaction.channel.send({
 						content: interaction.translate("economy/number:WON", {
 							winner: msg.author.username,
-							credits: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+							credits: `**${won}** ${client.functions.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 						}),
 					});
 

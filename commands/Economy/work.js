@@ -35,7 +35,7 @@ class Work extends BaseCommand {
 		const isInCooldown = data.memberData.cooldowns?.work;
 		if (isInCooldown) {
 			if (isInCooldown > Date.now()) return interaction.error("economy/work:COOLDOWN", {
-				time: client.convertTime(isInCooldown, true, true, data.guildData.language),
+				time: client.functions.convertTime(isInCooldown, true, true, data.guildData.language),
 			});
 		}
 		if (Date.now() > data.memberData.cooldowns.work + (24 * 60 * 60 * 1000)) data.memberData.workStreak = 0;
@@ -69,7 +69,7 @@ class Work extends BaseCommand {
 				{
 					name: interaction.translate("economy/work:SALARY"),
 					value: interaction.translate("economy/work:SALARY_CONTENT", {
-						won: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+						won: `**${won}** ${client.functions.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 					}),
 				},
 				{
@@ -89,7 +89,7 @@ class Work extends BaseCommand {
 				{
 					name: interaction.translate("economy/work:SALARY"),
 					value: interaction.translate("economy/work:SALARY_CONTENT", {
-						won: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+						won: `**${won}** ${client.functions.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 					}),
 				},
 				{

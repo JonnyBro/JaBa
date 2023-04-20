@@ -79,22 +79,22 @@ class Profile extends BaseCommand {
 				},
 				{
 					name: interaction.translate("economy/profile:CASH"),
-					value: `**${memberData.money}** ${client.getNoun(memberData.money, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+					value: `**${memberData.money}** ${client.functions.getNoun(memberData.money, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 					inline: true,
 				},
 				{
 					name: interaction.translate("economy/profile:BANK"),
-					value: `**${memberData.bankSold}** ${client.getNoun(memberData.bankSold, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+					value: `**${memberData.bankSold}** ${client.functions.getNoun(memberData.bankSold, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 					inline: true,
 				},
 				{
 					name: interaction.translate("economy/profile:GLOBAL"),
-					value: `**${globalMoney}** ${client.getNoun(globalMoney, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+					value: `**${globalMoney}** ${client.functions.getNoun(globalMoney, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 					inline: true,
 				},
 				{
 					name: interaction.translate("economy/profile:REPUTATION"),
-					value: `**${userData.rep}** ${client.getNoun(userData.rep, interaction.translate("misc:NOUNS:POINTS:1"), interaction.translate("misc:NOUNS:POINTS:2"), interaction.translate("misc:NOUNS:POINTS:5"))}`,
+					value: `**${userData.rep}** ${client.functions.getNoun(userData.rep, interaction.translate("misc:NOUNS:POINTS:1"), interaction.translate("misc:NOUNS:POINTS:2"), interaction.translate("misc:NOUNS:POINTS:5"))}`,
 					inline: true,
 				},
 				{
@@ -109,12 +109,12 @@ class Profile extends BaseCommand {
 				},
 				{
 					name: interaction.translate("economy/profile:REGISTERED"),
-					value: client.printDate(new Date(memberData.registeredAt)),
+					value: client.functions.printDate(new Date(memberData.registeredAt)),
 					inline: true,
 				},
 				{
 					name: interaction.translate("economy/profile:BIRTHDATE"),
-					value: (!userData.birthdate ? interaction.translate("common:NOT_DEFINED") : client.printDate(new Date(userData.birthdate))),
+					value: (!userData.birthdate ? interaction.translate("common:NOT_DEFINED") : client.functions.printDate(new Date(userData.birthdate))),
 					inline: true,
 				},
 				{

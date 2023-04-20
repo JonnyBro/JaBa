@@ -169,7 +169,7 @@ function generateQueueEmbeds(interaction, queue) {
 				queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") :
 					queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") :
 						queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK") : interaction.translate("common:DISABLED")
-			}\`\n${interaction.translate("music/queue:DURATION")}: \`${interaction.client.convertTime(Date.now() + queue.totalTime, false, true, interaction.guild.data.language)}\`\n[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${interaction.translate("music/queue:NO_QUEUE")}`)
+			}\`\n${interaction.translate("music/queue:DURATION")}: \`${interaction.client.functions.convertTime(Date.now() + queue.totalTime, false, true, interaction.guild.data.language)}\`\n[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${interaction.translate("music/queue:NO_QUEUE")}`)
 			.setTimestamp();
 		embeds.push(embed);
 
@@ -191,7 +191,7 @@ function generateQueueEmbeds(interaction, queue) {
 				queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") :
 					queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") :
 						queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK") : interaction.translate("common:DISABLED")
-			}\`\n${interaction.translate("music/queue:DURATION")}: \`${interaction.client.convertTime(Date.now() + queue.node.streamTime, false, true, interaction.guild.data.language)}\`\n[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${info}`)
+			}\`\n${interaction.translate("music/queue:DURATION")}: \`${interaction.client.functions.convertTime(Date.now() + queue.node.streamTime, false, true, interaction.guild.data.language)}\`\n[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${info}`)
 			.setTimestamp();
 		embeds.push(embed);
 	}

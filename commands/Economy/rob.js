@@ -60,8 +60,8 @@ class Rob extends BaseCommand {
 
 		const potentiallyLose = Math.floor(amount * 1.5);
 		if (potentiallyLose > data.memberData.money) return interaction.error("economy/rob:NOT_ENOUGH_AUTHOR", {
-			moneyMin: `**${potentiallyLose}** ${client.getNoun(potentiallyLose, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-			moneyCurrent: `**${data.memberData.money}** ${client.getNoun(data.memberData.money, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+			moneyMin: `**${potentiallyLose}** ${client.functions.getNoun(potentiallyLose, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+			moneyCurrent: `**${data.memberData.money}** ${client.functions.getNoun(data.memberData.money, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 		});
 
 		const itsAWon = Math.floor(client.functions.randomNum(0, 100) < 25);
@@ -75,7 +75,7 @@ class Rob extends BaseCommand {
 			await memberData.save();
 
 			interaction.replyT("economy/rob:ROB_WON_" + randomNum, {
-				money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+				money: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 				user: member.toString(),
 			});
 
@@ -89,8 +89,8 @@ class Rob extends BaseCommand {
 				randomNum = client.functions.randomNum(1, 2);
 
 			interaction.replyT("economy/rob:ROB_LOSE_" + randomNum, {
-				fine: `**${potentiallyLose}** ${client.getNoun(potentiallyLose, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-				offset: `**${won}** ${client.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+				fine: `**${potentiallyLose}** ${client.functions.getNoun(potentiallyLose, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+				offset: `**${won}** ${client.functions.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 				user: member.toString(),
 			});
 

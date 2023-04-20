@@ -47,7 +47,7 @@ class Pay extends BaseCommand {
 		const amount = interaction.options.getInteger("amount");
 		if (amount <= 0) return interaction.error("misc:MORE_THAN_ZERO");
 		if (amount > data.memberData.money) return interaction.error("economy/pay:ENOUGH_MONEY", {
-			amount: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDITS:1"), interaction.translate("misc:NOUNS:CREDITS:2"), interaction.translate("misc:NOUNS:CREDITS:5"))}`,
+			amount: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDITS:1"), interaction.translate("misc:NOUNS:CREDITS:2"), interaction.translate("misc:NOUNS:CREDITS:5"))}`,
 		});
 
 		const memberData = await client.findOrCreateMember({
@@ -79,7 +79,7 @@ class Pay extends BaseCommand {
 
 		interaction.success("economy/pay:SUCCESS", {
 			user: member.toString(),
-			amount: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+			amount: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 		});
 	}
 }

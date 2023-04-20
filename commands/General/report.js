@@ -59,7 +59,7 @@ class Report extends BaseCommand {
 			.addFields([
 				{
 					name: interaction.translate("common:DATE"),
-					value: client.printDate(new Date(Date.now())),
+					value: client.functions.printDate(new Date(Date.now())),
 				},
 				{
 					name: interaction.translate("common:AUTHOR"),

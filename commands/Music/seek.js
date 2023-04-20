@@ -44,7 +44,7 @@ class Seek extends BaseCommand {
 
 		queue.node.seek(time * 1000);
 		interaction.success("music/seek:SUCCESS", {
-			time: `**${time}** ${client.getNoun(time, interaction.translate("misc:NOUNS:SECONDS:1"), interaction.translate("misc:NOUNS:SECONDS:2"), interaction.translate("misc:NOUNS:SECONDS:5"))}`,
+			time: `**${time}** ${client.functions.getNoun(time, interaction.translate("misc:NOUNS:SECONDS:1"), interaction.translate("misc:NOUNS:SECONDS:2"), interaction.translate("misc:NOUNS:SECONDS:5"))}`,
 		});
 	}
 }

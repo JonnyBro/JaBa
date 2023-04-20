@@ -1,4 +1,12 @@
 const { PermissionsBitField, ChannelType } = require("discord.js");
+const moment = require("moment");
+
+moment.relativeTimeThreshold("ss", 5);
+moment.relativeTimeThreshold("s", 60);
+moment.relativeTimeThreshold("m", 60);
+moment.relativeTimeThreshold("h", 60);
+moment.relativeTimeThreshold("d", 24);
+moment.relativeTimeThreshold("M", 12);
 
 module.exports = {
 	/**
@@ -20,7 +28,7 @@ module.exports = {
 	 * @param {Function} callback
 	 * @returns {Promise}
 	 */
-	async asyncForEach (collection, callback) {
+	async asyncForEach(collection, callback) {
 		const allPromises = collection.map(async key => {
 			await callback(key);
 		});
@@ -76,5 +84,55 @@ module.exports = {
 		max = Math.floor(max);
 
 		return Math.floor(Math.random() * (max - min + 1) + min);
+	},
+
+	/**
+	 * Beautify date
+	 * @param {Date} date Date
+	 * @param {String | null} format Format for moment
+	 * @param {String} locale Language
+	 * @returns {String} Beautified date
+	 */
+	printDate(date, format = "", locale = this.defaultLanguage) {
+		const languageData = this.languages.find(language => language.name === locale);
+		if (format === "" || format === null) format = languageData.defaultMomentFormat;
+
+		return moment(new Date(date))
+			.locale(languageData.moment)
+			.format(format);
+	},
+
+	/**
+	 * Convert given time
+	 * @param {String} time Time
+	 * @param {Boolean} type Type (To now = true or from now = false)
+	 * @param {Boolean} noPrefix Use prefix?
+	 * @param {String} locale Language
+	 * @returns {String} Time
+	 */
+	convertTime(time, type = false, noPrefix = false, locale = this.defaultLanguage) {
+		const languageData = this.languages.find(language => language.name === locale);
+		const m = moment(time).locale(languageData.moment);
+
+		return (type ? m.toNow(noPrefix) : m.fromNow(noPrefix));
+	},
+
+	/**
+	 * Get noun for number
+	 * @param {Number} number Number
+	 * @param {String} one String for one
+	 * @param {String} two String for two
+	 * @param {String} five String for five
+	 * @returns
+	 */
+	getNoun(number, one, two, five) {
+		let n = Math.abs(number);
+		n %= 100;
+		if (n >= 5 && n <= 20) return five;
+		n %= 10;
+		if (n === 1) return one;
+		if (n >= 2 && n <= 4) return two;
+
+		return five;
 	},
 };

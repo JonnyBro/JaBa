@@ -125,7 +125,7 @@ class Warn extends BaseCommand {
 					interaction.followUp({
 						content: interaction.translate("moderation/setwarns:AUTO_BAN", {
 							user: member.user.tag,
-							count: `${banCount} ${client.getNoun(banCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
+							count: `${banCount} ${client.functions.getNoun(banCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
 						}),
 					});
 				}
@@ -154,7 +154,7 @@ class Warn extends BaseCommand {
 					interaction.followUp({
 						content: interaction.translate("moderation/setwarns:AUTO_KICK", {
 							user: member.user.tag,
-							count: `${kickCount} ${client.getNoun(kickCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
+							count: `${kickCount} ${client.functions.getNoun(kickCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
 						}),
 					});
 				}

@@ -14,7 +14,7 @@ module.exports.update = function (client) {
 		if (!categories.includes(cmd.category)) categories.push(cmd.category);
 	});
 
-	let text = `# JaBa имеет **${commands.length} ${client.getNoun(commands.length, "команда", "команды", "команд")}** в **${categories.length} ${client.getNoun(categories.length, "категории", "категориях", "категориях")}**!  \n\n#### Содержимое таблицы  \n**Название**: Название команды  \n**Описание**: Описание команды  \n**Использование**: Использование команды ( [] - обязательно, () - необязательно )  \n**Разрешено использование**: Где можно использовать команду  \n\n`;
+	let text = `# JaBa имеет **${commands.length} ${client.functions.getNoun(commands.length, "команда", "команды", "команд")}** в **${categories.length} ${client.functions.getNoun(categories.length, "категории", "категориях", "категориях")}**!  \n\n#### Содержимое таблицы  \n**Название**: Название команды  \n**Описание**: Описание команды  \n**Использование**: Использование команды ( [] - обязательно, () - необязательно )  \n**Разрешено использование**: Где можно использовать команду  \n\n`;
 
 	// categories.sort(function(a, b) {
 	// 	const aCmdsSize = commands.filter(cmd => cmd.category === a).size;
@@ -29,7 +29,7 @@ module.exports.update = function (client) {
 		];
 		const cmds = [...new Map(commands.filter(cmd => cmd.category === cat).map(v => [v.constructor.name, v])).values()];
 
-		text += `### ${cat} (${cmds.length} ${client.getNoun(cmds.length, "команда", "команды", "команд")})\n\n`;
+		text += `### ${cat} (${cmds.length} ${client.functions.getNoun(cmds.length, "команда", "команды", "команд")})\n\n`;
 		cmds.sort(function (a, b) {
 			if (a.command.name < b.command.name) return -1;
 			else return 1;

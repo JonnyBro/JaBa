@@ -70,13 +70,13 @@ class Stats extends BaseCommand {
 				{
 					name: client.customEmojis.status.online + " " + interaction.translate("general/stats:ONLINE_TITLE"),
 					value: interaction.translate("general/stats:ONLINE_CONTENT", {
-						time: client.convertTime(Date.now() + client.uptime, true, true, data.guildData.language),
+						time: client.functions.convertTime(Date.now() + client.uptime, true, true, data.guildData.language),
 					}),
 				},
 				{
 					name: client.customEmojis.voice + " " + interaction.translate("general/stats:MUSIC_TITLE"),
 					value: interaction.translate("general/stats:MUSIC_CONTENT", {
-						count: `${client.player.queues.size} ${client.getNoun(client.player.queues.size, interaction.translate("misc:NOUNS:SERVERS:1"), interaction.translate("misc:NOUNS:SERVERS:2"), interaction.translate("misc:NOUNS:SERVERS:5"))}`,
+						count: `${client.player.queues.size} ${client.functions.getNoun(client.player.queues.size, interaction.translate("misc:NOUNS:SERVERS:1"), interaction.translate("misc:NOUNS:SERVERS:2"), interaction.translate("misc:NOUNS:SERVERS:5"))}`,
 					}),
 				},
 				{

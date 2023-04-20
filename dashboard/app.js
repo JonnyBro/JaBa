@@ -43,8 +43,8 @@ module.exports.init = async(client) => {
 			if (req.user && req.url !== "/") req.userInfos = await utils.fetchUser(req.user, req.client);
 			if (req.user) {
 				req.translate = req.client.translations.get(req.locale);
-				req.printDate = (date) => req.client.printDate(date, null, req.locale);
-				req.convertTime = (time) => req.client.convertTime(time, "to", true, req.locale);
+				req.printDate = (date) => req.client.functions.printDate(date, null, req.locale);
+				req.convertTime = (time) => req.client.functions.convertTime(time, "to", true, req.locale);
 			}
 			next();
 		})

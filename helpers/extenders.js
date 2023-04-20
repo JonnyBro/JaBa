@@ -15,14 +15,14 @@ BaseInteraction.prototype.replyT = function (key, args, options = {}) {
 	else return this.reply({ content: string, ephemeral: options.ephemeral || false });
 };
 
-BaseInteraction.prototype.error = function (key, args, options = {}) {
-	options.prefixEmoji = "error";
+BaseInteraction.prototype.success = function (key, args, options = {}) {
+	options.prefixEmoji = "success";
 
 	return this.replyT(key, args, options);
 };
 
-BaseInteraction.prototype.success = function (key, args, options = {}) {
-	options.prefixEmoji = "success";
+BaseInteraction.prototype.error = function (key, args, options = {}) {
+	options.prefixEmoji = "error";
 
 	return this.replyT(key, args, options);
 };
@@ -42,14 +42,14 @@ Message.prototype.replyT = function (key, args, options = {}) {
 	else return this.reply({ content: string, allowedMentions: { repliedUser: options.mention ? true : false } });
 };
 
-Message.prototype.error = function (key, args, options = {}) {
-	options.prefixEmoji = "error";
+Message.prototype.success = function (key, args, options = {}) {
+	options.prefixEmoji = "success";
 
 	return this.replyT(key, args, options);
 };
 
-Message.prototype.success = function (key, args, options = {}) {
-	options.prefixEmoji = "success";
+Message.prototype.error = function (key, args, options = {}) {
+	options.prefixEmoji = "error";
 
 	return this.replyT(key, args, options);
 };

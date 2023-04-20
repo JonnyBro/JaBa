@@ -71,7 +71,7 @@ class Minecraft extends BaseCommand {
 				},
 				{
 					name: interaction.translate("general/minecraft:FIELD_CONNECTED"),
-					value: `**${(res.raw.players ? res.raw.players.online : res.players.length)}** ${client.getNoun((res.raw.players ? res.raw.players.online : res.players.length), interaction.translate("misc:NOUNS:PLAYERS:1"), interaction.translate("misc:NOUNS:PLAYERS:2"), interaction.translate("misc:NOUNS:PLAYERS:5"))} / **${(res.raw.players ? res.raw.players.max : res.maxplayers)}** ${client.getNoun((res.raw.players ? res.raw.players.max : res.maxplayers), interaction.translate("misc:NOUNS:PLAYERS:1"), interaction.translate("misc:NOUNS:PLAYERS:2"), interaction.translate("misc:NOUNS:PLAYERS:5"))}`,
+					value: `**${(res.raw.players ? res.raw.players.online : res.players.length)}** ${client.functions.getNoun((res.raw.players ? res.raw.players.online : res.players.length), interaction.translate("misc:NOUNS:PLAYERS:1"), interaction.translate("misc:NOUNS:PLAYERS:2"), interaction.translate("misc:NOUNS:PLAYERS:5"))} / **${(res.raw.players ? res.raw.players.max : res.maxplayers)}** ${client.functions.getNoun((res.raw.players ? res.raw.players.max : res.maxplayers), interaction.translate("misc:NOUNS:PLAYERS:1"), interaction.translate("misc:NOUNS:PLAYERS:2"), interaction.translate("misc:NOUNS:PLAYERS:5"))}`,
 				},
 				{
 					name: interaction.translate("general/minecraft:FIELD_IP"),

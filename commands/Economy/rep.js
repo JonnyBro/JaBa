@@ -39,7 +39,7 @@ class Rep extends BaseCommand {
 		const isInCooldown = data.userData.cooldowns?.rep;
 		if (isInCooldown) {
 			if (isInCooldown > Date.now()) return interaction.error("economy/rep:COOLDOWN", {
-				time: client.convertTime(isInCooldown, true, true, data.guildData.language),
+				time: client.functions.convertTime(isInCooldown, true, true, data.guildData.language),
 			});
 		}
 

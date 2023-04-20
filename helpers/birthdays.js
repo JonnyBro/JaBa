@@ -49,7 +49,7 @@ module.exports.init = async function (client) {
 													value: client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
 														name: user.username,
 														user: user.id,
-														age: `**${age}** ${client.getNoun(age, client.translate("misc:NOUNS:AGE:1"), client.translate("misc:NOUNS:AGE:2"), client.translate("misc:NOUNS:AGE:5"))}`,
+														age: `**${age}** ${client.functions.getNoun(age, client.translate("misc:NOUNS:AGE:1"), client.translate("misc:NOUNS:AGE:2"), client.translate("misc:NOUNS:AGE:5"))}`,
 													}),
 												},
 											]);

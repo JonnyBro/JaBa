@@ -49,7 +49,7 @@ class Bank extends BaseCommand {
 		if (choice === "deposit") {
 			const credits = interaction.options.getString("credits") === "all" ? data.memberData.money : interaction.options.getString("credits");
 			if (isNaN(credits) || credits < 1) return interaction.error("misc:OPTION_NAN_ALL");
-			if (data.memberData.money < credits) return interaction.error("economy/bank:NOT_ENOUGH_CREDIT", { money: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` });
+			if (data.memberData.money < credits) return interaction.error("economy/bank:NOT_ENOUGH_CREDIT", { money: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` });
 
 			data.memberData.money -= credits;
 			data.memberData.bankSold += credits;
@@ -64,12 +64,12 @@ class Bank extends BaseCommand {
 			data.memberData.transactions.push(info);
 
 			interaction.success("economy/bank:SUCCESS_DEP", {
-				money: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+				money: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 			});
 		} else {
 			const credits = interaction.options.getString("credits") === "all" ? data.memberData.bankSold : interaction.options.getString("credits");
 			if (isNaN(credits) || credits < 1) return interaction.error("misc:OPTION_NAN_ALL");
-			if (data.memberData.bankSold < credits) return interaction.error("economy/bank:NOT_ENOUGH_BANK", { money: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` });
+			if (data.memberData.bankSold < credits) return interaction.error("economy/bank:NOT_ENOUGH_BANK", { money: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` });
 
 			const info = {
 				user: interaction.translate("economy/transactions:BANK"),
@@ -85,7 +85,7 @@ class Bank extends BaseCommand {
 			await data.memberData.save();
 
 			interaction.success("economy/bank:SUCCESS_WD", {
-				money: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+				money: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 			});
 		}
 	}

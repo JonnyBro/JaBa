@@ -55,13 +55,13 @@ class Serverinfo extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.calendar + interaction.translate("common:CREATION"),
-					value: client.printDate(guild.createdAt),
+					value: client.functions.printDate(guild.createdAt),
 					inline: true,
 				},
 				{
 					name: client.customEmojis.users + interaction.translate("common:MEMBERS"),
-					value: `${guild.members.cache.filter(m => !m.user.bot).size} ${client.getNoun(guild.members.cache.filter(m => !m.user.bot).size, interaction.translate("misc:NOUNS:MEMBERS:1"), interaction.translate("misc:NOUNS:MEMBERS:2"), interaction.translate("misc:NOUNS:MEMBERS:5"))}` +
-						"\n" + `${guild.members.cache.filter(m => m.user.bot).size} ${client.getNoun(guild.members.cache.filter(m => m.user.bot).size, interaction.translate("misc:NOUNS:BOTS:1"), interaction.translate("misc:NOUNS:BOTS:2"), interaction.translate("misc:NOUNS:BOTS:5"))}`,
+					value: `${guild.members.cache.filter(m => !m.user.bot).size} ${client.functions.getNoun(guild.members.cache.filter(m => !m.user.bot).size, interaction.translate("misc:NOUNS:MEMBERS:1"), interaction.translate("misc:NOUNS:MEMBERS:2"), interaction.translate("misc:NOUNS:MEMBERS:5"))}` +
+						"\n" + `${guild.members.cache.filter(m => m.user.bot).size} ${client.functions.getNoun(guild.members.cache.filter(m => m.user.bot).size, interaction.translate("misc:NOUNS:BOTS:1"), interaction.translate("misc:NOUNS:BOTS:2"), interaction.translate("misc:NOUNS:BOTS:5"))}`,
 					inline: true,
 				},
 				{
@@ -86,9 +86,9 @@ class Serverinfo extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.channels + interaction.translate("common:CHANNELS"),
-					value: `${guild.channels.cache.filter(c => c.type === ChannelType.GuildText).size} ${client.getNoun(guild.channels.cache.filter(c => c.type === ChannelType.GuildText).size, interaction.translate("misc:NOUNS:TEXT:1"), interaction.translate("misc:NOUNS:TEXT:2"), interaction.translate("misc:NOUNS:TEXT:5"))}` +
-						"\n" + `${guild.channels.cache.filter(c => c.type === ChannelType.GuildVoice).size} ${client.getNoun(guild.channels.cache.filter(c => c.type === ChannelType.GuildVoice).size, interaction.translate("misc:NOUNS:VOICE:1"), interaction.translate("misc:NOUNS:VOICE:2"), interaction.translate("misc:NOUNS:VOICE:5"))}` +
-						"\n" + `${guild.channels.cache.filter(c => c.type === ChannelType.GuildCategory).size} ${client.getNoun(guild.channels.cache.filter(c => c.type === ChannelType.GuildCategory).size, interaction.translate("misc:NOUNS:CATEGORY:1"), interaction.translate("misc:NOUNS:CATEGORY:2"), interaction.translate("misc:NOUNS:CATEGORY:5"))}`,
+					value: `${guild.channels.cache.filter(c => c.type === ChannelType.GuildText).size} ${client.functions.getNoun(guild.channels.cache.filter(c => c.type === ChannelType.GuildText).size, interaction.translate("misc:NOUNS:TEXT:1"), interaction.translate("misc:NOUNS:TEXT:2"), interaction.translate("misc:NOUNS:TEXT:5"))}` +
+						"\n" + `${guild.channels.cache.filter(c => c.type === ChannelType.GuildVoice).size} ${client.functions.getNoun(guild.channels.cache.filter(c => c.type === ChannelType.GuildVoice).size, interaction.translate("misc:NOUNS:VOICE:1"), interaction.translate("misc:NOUNS:VOICE:2"), interaction.translate("misc:NOUNS:VOICE:5"))}` +
+						"\n" + `${guild.channels.cache.filter(c => c.type === ChannelType.GuildCategory).size} ${client.functions.getNoun(guild.channels.cache.filter(c => c.type === ChannelType.GuildCategory).size, interaction.translate("misc:NOUNS:CATEGORY:1"), interaction.translate("misc:NOUNS:CATEGORY:2"), interaction.translate("misc:NOUNS:CATEGORY:5"))}`,
 					inline: true,
 				},
 			])

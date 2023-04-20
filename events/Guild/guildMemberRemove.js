@@ -90,7 +90,7 @@ class GuildMemberRemove extends BaseEvent {
 
 					// Draw membercount
 					ctx.font = "22px RubikMonoOne";
-					ctx.fillText(`${member.guild.memberCount} ${client.getNoun(member.guild.memberCount, client.translate("misc:NOUNS:MEMBERS:1", null, member.guild.data.language), client.translate("misc:NOUNS:MEMBERS:2", null, member.guild.data.language), client.translate("misc:NOUNS:MEMBERS:5", null, member.guild.data.language))}`, 40, canvas.height - 35);
+					ctx.fillText(`${member.guild.memberCount} ${client.functions.getNoun(member.guild.memberCount, client.translate("misc:NOUNS:MEMBERS:1", null, member.guild.data.language), client.translate("misc:NOUNS:MEMBERS:2", null, member.guild.data.language), client.translate("misc:NOUNS:MEMBERS:5", null, member.guild.data.language))}`, 40, canvas.height - 35);
 
 					// Draw # for discriminator
 					ctx.fillStyle = "#FFFFFF";

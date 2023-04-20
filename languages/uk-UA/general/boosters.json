@@ -3,5 +3,6 @@
 	"USAGE": "",
 	"EXAMPLES": "boosters",
 	"BOOSTERS_LIST": "Список бустерів",
+	"NO_BOOSTERS": "Бусти відсутні",
 	"BOOSTER_SINCE": "Буст з"
 }

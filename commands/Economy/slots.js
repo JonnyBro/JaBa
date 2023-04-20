@@ -39,7 +39,7 @@ class Slots extends BaseCommand {
 		await interaction.deferReply();
 
 		const amount = interaction.options.getInteger("amount");
-		if (amount > data.memberData.money) return interaction.error("economy/slots:NOT_ENOUGH", { money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` }, { edit: true });
+		if (amount > data.memberData.money) return interaction.error("economy/slots:NOT_ENOUGH", { money: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` }, { edit: true });
 
 		const fruits = ["🍎", "🍐", "🍌", "🍇", "🍉", "🍒", "🍓"];
 
@@ -95,8 +95,8 @@ class Slots extends BaseCommand {
 				const credits = getCredits(amount, true);
 				interaction.followUp({
 					content: "**!! ДЖЕКПОТ !!**\n" + interaction.translate("economy/slots:VICTORY", {
-						money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-						won: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+						money: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+						won: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 						user: interaction.member.toString(),
 					}),
 				});
@@ -140,8 +140,8 @@ class Slots extends BaseCommand {
 				const credits = getCredits(amount, false);
 				interaction.followUp({
 					content: interaction.translate("economy/slots:VICTORY", {
-						money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-						won: `**${credits}** ${client.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+						money: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+						won: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 						user: interaction.member.toString(),
 					}),
 				});
@@ -177,7 +177,7 @@ class Slots extends BaseCommand {
 			msg += "| : : :  **" + (interaction.translate("common:DEFEAT").toUpperCase()) + "**  : : : |";
 			interaction.followUp({
 				content: interaction.translate("economy/slots:DEFEAT", {
-					money: `**${amount}** ${client.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+					money: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 					user: interaction.member.toString(),
 				}),
 			});

@@ -37,17 +37,14 @@ class Ready extends BaseEvent {
 		const checkReminds = require("../helpers/checkReminds");
 		checkReminds.init(client);
 
-		const cleanup = require("../helpers/cleanup");
-		cleanup.init(client);
-
 		if (client.config.dashboard.enabled) client.dashboard.init(client);
 
 		const version = require("../package.json").version;
 		const status = [
 			{ name: "help", type: ActivityType.Watching },
-			{ name: `${commands.length} ${client.getNoun(commands.length, client.translate("misc:NOUNS:COMMANDS:1"), client.translate("misc:NOUNS:COMMANDS:2"), client.translate("misc:NOUNS:COMMANDS:5"))}`, type: ActivityType.Listening },
-			{ name: `${tServers} ${client.getNoun(tServers, client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5"))}`, type: ActivityType.Watching },
-			{ name: `${tUsers} ${client.getNoun(tUsers, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))}`, type: ActivityType.Watching },
+			{ name: `${commands.length} ${client.functions.getNoun(commands.length, client.translate("misc:NOUNS:COMMANDS:1"), client.translate("misc:NOUNS:COMMANDS:2"), client.translate("misc:NOUNS:COMMANDS:5"))}`, type: ActivityType.Listening },
+			{ name: `${tServers} ${client.functions.getNoun(tServers, client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5"))}`, type: ActivityType.Watching },
+			{ name: `${tUsers} ${client.functions.getNoun(tUsers, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))}`, type: ActivityType.Watching },
 		];
 
 		let i = 0;

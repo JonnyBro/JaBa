@@ -36,7 +36,9 @@ class Boosters extends BaseCommand {
 
 		let currentPage = 0;
 		const boosters = (await interaction.guild.members.fetch()).filter(m => m.premiumSince);
-		const embeds = generateBoostersEmbeds(interaction, boosters);
+		if (boosters.size === 0) return interaction.error("general/boosters:NO_BOOSTERS", null, { edit: true });
+
+		const embeds = generateBoostersEmbeds(client, interaction, boosters);
 
 		const row = new ActionRowBuilder()
 			.addComponents(
@@ -143,11 +145,12 @@ class Boosters extends BaseCommand {
 
 /**
  *
+ * @param {import("../../base/JaBa")} client
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
  * @param {Array} boosters
  * @returns
  */
-function generateBoostersEmbeds(interaction, boosters) {
+function generateBoostersEmbeds(client, interaction, boosters) {
 	const embeds = [];
 	let k = 10;
 
@@ -156,7 +159,7 @@ function generateBoostersEmbeds(interaction, boosters) {
 		let j = i;
 		k += 10;
 
-		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: **${interaction.client.printDate(member.premiumSince, null, interaction.guild.data.locale)}**`).join("\n");
+		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: **${client.functions.printDate(member.premiumSince, null, interaction.guild.data.locale)}**`).join("\n");
 
 		const embed = new EmbedBuilder()
 			.setColor(interaction.client.config.embed.color)
