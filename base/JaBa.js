@@ -2,8 +2,7 @@ const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = r
 	{ Player } = require("discord-player"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ REST } = require("@discordjs/rest"),
-	{ Routes } = require("discord-api-types/v10"),
-	{ Configuration, OpenAIApi } = require("openai");
+	{ Routes } = require("discord-api-types/v10");
 
 const BaseEvent = require("./BaseEvent.js"),
 	BaseCommand = require("./BaseCommand.js"),
@@ -34,12 +33,6 @@ class JaBa extends Client {
 		this.databaseCache.members = new Collection();
 		this.databaseCache.usersReminds = new Collection();
 		this.databaseCache.mutedUsers = new Collection();
-
-		const configuration = new Configuration({
-			apiKey: this.config.apiKeys.openai,
-		});
-
-		this.openai = new OpenAIApi(configuration);
 
 		this.player = Player.singleton(this);
 
