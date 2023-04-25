@@ -82,8 +82,10 @@ class Play extends BaseCommand {
 	 * @returns
 	 */
 	async autocompleteRun(client, interaction) {
-		const query = interaction.options.getString("query"),
-			results = await client.player.search(query);
+		const query = interaction.options.getString("query");
+		if (query.includes("http") || query === "") return;
+
+		const results = await client.player.search(query);
 
 		return interaction.respond(
 			results.tracks.slice(0, 10).map(track => ({

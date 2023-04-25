@@ -34,7 +34,9 @@ class JaBa extends Client {
 		this.databaseCache.usersReminds = new Collection();
 		this.databaseCache.mutedUsers = new Collection();
 
-		this.player = Player.singleton(this);
+		this.player = Player.singleton(this, {
+			autoRegisterExtractor: false,
+		});
 
 		this.player.events.on("playerStart", async (queue, track) => {
 			const m = await queue.metadata.channel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language) });
@@ -83,6 +85,8 @@ class JaBa extends Client {
 		}).catch(err => {
 			this.logger.log(`Unable to connect to the Mongodb database. Error: ${err}`, "error");
 		});
+
+		await this.player.extractors.loadDefault();
 
 		const autoUpdateDocs = require("../helpers/autoUpdateDocs");
 		autoUpdateDocs.update(this);
