@@ -55,8 +55,8 @@ class Play extends BaseCommand {
 			client.player.play(interaction.member.voice.channel, searchResult, {
 				nodeOptions: {
 					metadata: {
-						channel: interaction.channel,
 						client,
+						channel: interaction.channel,
 						requestedBy: interaction.user,
 					},
 				},

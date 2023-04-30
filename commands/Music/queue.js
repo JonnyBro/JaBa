@@ -169,7 +169,7 @@ function generateQueueEmbeds(interaction, queue) {
 				queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") :
 					queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") :
 						queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK") : interaction.translate("common:DISABLED")
-			}\`\n${interaction.translate("music/queue:DURATION")}: \`${interaction.client.functions.convertTime(Date.now() + queue.totalTime, false, true, interaction.guild.data.language)}\`\n[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${interaction.translate("music/queue:NO_QUEUE")}`)
+			}\`\n${currentTrack.url.startsWith("./clips") ? `${currentTrack.title} (clips)` : `[${currentTrack.title}](${currentTrack.url})`}\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${interaction.translate("music/queue:NO_QUEUE")}`)
 			.setTimestamp();
 		embeds.push(embed);
 
@@ -181,7 +181,7 @@ function generateQueueEmbeds(interaction, queue) {
 		let j = i;
 		k += 10;
 
-		const info = current.map(track => `${++j}. [${track.title}](${track.url})\n> ${interaction.translate("music/queue:ADDED")} ${track.requestedBy}`).join("\n");
+		const info = current.map(track => `${++j}. ${track.url.startsWith("./clips") ? `${track.title} (clips)` : `[${track.title}](${track.url})`}\n> ${interaction.translate("music/queue:ADDED")} ${track.requestedBy}`).join("\n");
 
 		const embed = new EmbedBuilder()
 			.setTitle(interaction.translate("music/nowplaying:CURRENTLY_PLAYING"))
@@ -191,7 +191,7 @@ function generateQueueEmbeds(interaction, queue) {
 				queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") :
 					queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") :
 						queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK") : interaction.translate("common:DISABLED")
-			}\`\n${interaction.translate("music/queue:DURATION")}: \`${interaction.client.functions.convertTime(Date.now() + queue.node.streamTime, false, true, interaction.guild.data.language)}\`\n[${currentTrack.title}](${currentTrack.url})\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${info}`)
+			}\`\n${currentTrack.url.startsWith("./clips") ? `${currentTrack.title} (clips)` : `[${currentTrack.title}](${currentTrack.url})`}\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${info}`)
 			.setTimestamp();
 		embeds.push(embed);
 	}
