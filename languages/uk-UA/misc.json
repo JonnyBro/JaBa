@@ -14,6 +14,10 @@
 	"STATS_FOOTER": "● [Панель керування]({{dashboardLink}})\n● [Сервер підтримки]({{supportLink}})\n● [Запросити JaBa на свій сервер]({{inviteLink}})\n● [Підтримати]({{donateLink}}) (вкажіть ваш Discord тег для видачі ачивки, для інших способів підтримки пишіть в ЛЗ <@{{owner}}>)",
 	"TIMED_OUT": "Час вийшов",
 	"JUMP_TO_PAGE": "Вкажіть сторінку, до якої хочете перейти (максимум **{{length}}**):",
+	"QUOTE_TITLE": "Повідомлення від {{user}}",
+	"QUOTE_ATTACHED": "Прикріплені файли",
+	"QUOTE_JUMP": "Перейти",
+	"QUOTE_FOOTER": "Цитував {{user}}",
 
 	"PERMISSIONS": {
 		"CreateInstantInvite": "Створення запрошення",
