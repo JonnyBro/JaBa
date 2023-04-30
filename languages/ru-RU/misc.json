@@ -15,6 +15,11 @@
 	"TIMED_OUT": "Время вышло",
 	"JUMP_TO_PAGE": "Укажите страницу к которой хотите перейти (максимум **{{length}}**):",
 
+	"QUOTE_TITLE": "Сообщение от {{user}}",
+	"QUOTE_ATTACHED": "Прикреплённые файлы",
+	"QUOTE_JUMP": "Перейти",
+	"QUOTE_FOOTER": "Цитировал {{user}}",
+
 	"PERMISSIONS": {
 		"CreateInstantInvite": "Создание приглашения",
 		"KickMembers": "Выгонять участников",

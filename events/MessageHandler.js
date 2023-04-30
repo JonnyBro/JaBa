@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require("discord.js");
+const { PermissionsBitField, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const BaseEvent = require("../base/BaseEvent"),
 	xpCooldown = {},
 	usersMap = new Map(),
@@ -48,6 +48,61 @@ class MessageCreate extends BaseEvent {
 
 		if (message.guild) {
 			await updateXp(client, message, data);
+
+			if (message.content.includes("discord.com/channels/")) {
+				const ids = message.content.match(/\d+/g);
+				const channelId = ids[1],
+					messageId = ids[2];
+
+				const msg = await client.channels.cache.get(channelId).messages.fetch(messageId);
+				const embed = new EmbedBuilder()
+					.setAuthor({
+						name: message.translate("misc:QUOTE_TITLE", {
+							user: msg.author.tag,
+						}),
+						iconURL: "https://wynem.com/assets/images/icons/quote.webp",
+					})
+					.setThumbnail(msg.author.avatarURL())
+					.setDescription(msg.content !== "" ? msg.content : `*${message.translate("common:MISSING")}*`)
+					.addFields([
+						{
+							name: message.translate("misc:QUOTE_ATTACHED"),
+							value: msg.attachments.size > 0 ? msg.attachments.map(a => {
+								return `[${a.name}](${a.url})`;
+							}).join("\n") : `*${message.translate("common:MISSING")}*`,
+						},
+					])
+					.setFooter({
+						text: message.translate("misc:QUOTE_FOOTER", { user: message.author.tag }),
+					})
+					.setColor(client.config.embed.color)
+					.setTimestamp(msg.createdTimestamp);
+
+				const row = new ActionRowBuilder()
+					.addComponents(
+						new ButtonBuilder()
+							.setLabel(message.translate("misc:QUOTE_JUMP"))
+							.setStyle(ButtonStyle.Link)
+							.setURL(msg.url),
+						new ButtonBuilder()
+							.setCustomId("quote_delete")
+							.setEmoji("1102200816582000750")
+							.setStyle(ButtonStyle.Danger),
+					);
+
+				const reply = await message.reply({
+					embeds: [embed],
+					components: [row],
+				});
+
+				const filter = i => i.user.id === message.author.id;
+				const collector = message.channel.createMessageComponentCollector({ filter, time: (60 * 1000) });
+
+				collector.on("collect", async i => {
+					if (i.isButton() && i.customId === "quote_delete")
+						if (reply.deletable) await reply.delete();
+				});
+			}
 
 			if (data.guildData.plugins.automod.enabled && !data.guildData.plugins.automod.ignored.includes(message.channel.id))
 				if (/(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(message.content))
