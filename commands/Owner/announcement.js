@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ChannelType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Announcement extends BaseCommand {
@@ -63,7 +63,7 @@ class Announcement extends BaseCommand {
 			if (guild.id === "568120814776614924") return;
 
 			guild = await guild.fetch();
-			const channel = important ? (guild?.data?.plugins.news ? guild.channels.cache.get(guild?.data?.plugins.news) : guild.channels.cache.find(c => c.isTextBased())) : guild.channels.cache.get(guild?.data?.plugins.news);
+			const channel = important ? (guild?.data?.plugins.news ? guild.channels.cache.get(guild?.data?.plugins.news) : guild.channels.cache.find(c => c.type === ChannelType.GuildText)) : guild.channels.cache.get(guild?.data?.plugins.news);
 
 			channel.send({
 				content: `${interaction.options.getBoolean("tag") ? "||@everyone|| " : ""}ВАЖНОЕ ОБЪЯВЛЕНИЕ!`,
