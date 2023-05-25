@@ -45,17 +45,20 @@ class CommandHandler extends BaseEvent {
 		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { ephemeral: true });
 
 		if (!userData.achievements.firstCommand.achieved) {
-			userData.achievements.firstCommand.progress.now = 1;
-			userData.achievements.firstCommand.achieved = true;
-			userData.markModified("achievements.firstCommand");
-			await userData.save();
-			await interaction.channel.send({
+			const args = {
 				content: interaction.user.toString(),
 				files: [{
 					name: "achievement_unlocked2.png",
 					attachment: "./assets/img/achievements/achievement_unlocked2.png",
 				}],
-			});
+			};
+
+			userData.achievements.firstCommand.progress.now = 1;
+			userData.achievements.firstCommand.achieved = true;
+			userData.markModified("achievements.firstCommand");
+			await userData.save();
+
+			interaction.channel.isDMBased() ? interaction.user.send(args) : await interaction.channel.send(args);
 		}
 
 		client.logger.log(`User ${interaction.user.tag} used ${command.command.name} in ${interaction.guild ? interaction.guild.name : "DM"} with arguments: ${interaction.options.data.length > 0 ? interaction.options.data.map(arg => { return `${arg.name}: ${arg.value}`; }).join(", ") : "no args"}`, "cmd");
