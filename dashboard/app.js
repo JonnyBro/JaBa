@@ -6,6 +6,7 @@ module.exports.init = async(client) => {
 	/* Init express app */
 	const express = require("express"),
 		session = require("express-session"),
+		cors = require("cors"),
 		path = require("path"),
 		app = express();
 
@@ -24,6 +25,7 @@ module.exports.init = async(client) => {
 		// For post methods
 		.use(express.json())
 		.use(express.urlencoded({ extended: true }))
+		.use(cors())
 		// Set the engine to html (for ejs template)
 		.engine("html", require("ejs").renderFile)
 		.set("view engine", "ejs")
