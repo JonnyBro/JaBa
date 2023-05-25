@@ -2,6 +2,8 @@ const express = require("express"),
 	router = express.Router();
 
 router.get("/", function (req, res) {
+	res.set("Access-Control-Allow-Origin", "*");
+
 	res.render("docs", {
 		user: req.userInfos,
 		translate: req.translate,
