@@ -57,7 +57,7 @@ class Transactions extends BaseCommand {
 
 		transactions.slice(-20).forEach(t => {
 			const array = t.type === "got" ? sortedTransactions[0] : sortedTransactions[1];
-			array.push(`${interaction.translate("economy/transactions:T_USER_" + t.type.toUpperCase())}: ${t.user}\n${interaction.translate("economy/transactions:T_AMOUNT")}: ${t.amount}\n${interaction.translate("economy/transactions:T_DATE")}: ${client.functions.printDate(t.date, "Do MMMM YYYY, HH:mm", data.guildData.language)}\n`);
+			array.push(`${interaction.translate("economy/transactions:T_USER_" + t.type.toUpperCase())}: ${t.user}\n${interaction.translate("economy/transactions:T_AMOUNT")}: ${t.amount}\n${interaction.translate("economy/transactions:T_DATE")}: ${client.functions.printDate(client, t.date, "Do MMMM YYYY, HH:mm", data.guildData.language)}\n`);
 		});
 
 		if (transactions.length < 1) {

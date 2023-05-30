@@ -88,13 +88,14 @@ module.exports = {
 
 	/**
 	 * Beautify date
+	 * @param {import("../base/JaBa")} client Discord client
 	 * @param {Date} date Date
 	 * @param {String | null} format Format for moment
 	 * @param {String} locale Language
 	 * @returns {String} Beautified date
 	 */
-	printDate(date, format = "", locale = this.defaultLanguage) {
-		const languageData = this.languages.find(language => language.name === locale);
+	printDate(client, date, format = "", locale = client.defaultLanguage) {
+		const languageData = client.languages.find(language => language.name === locale);
 		if (format === "" || format === null) format = languageData.defaultMomentFormat;
 
 		return moment(new Date(date))
@@ -104,14 +105,15 @@ module.exports = {
 
 	/**
 	 * Convert given time
+	 * @param {import("../base/JaBa")} client Discord client
 	 * @param {String} time Time
 	 * @param {Boolean} type Type (To now = true or from now = false)
 	 * @param {Boolean} noPrefix Use prefix?
 	 * @param {String} locale Language
 	 * @returns {String} Time
 	 */
-	convertTime(time, type = false, noPrefix = false, locale = this.defaultLanguage) {
-		const languageData = this.languages.find(language => language.name === locale);
+	convertTime(client, time, type = false, noPrefix = false, locale = this.defaultLanguage) {
+		const languageData = client.languages.find(language => language.name === locale);
 		const m = moment(time).locale(languageData.moment);
 
 		return (type ? m.toNow(noPrefix) : m.fromNow(noPrefix));

@@ -67,12 +67,12 @@ class Userinfo extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.calendar + " " + interaction.translate("common:CREATION"),
-					value: client.functions.printDate(member.user.createdAt),
+					value: client.functions.printDate(client, member.user.createdAt),
 					inline: true,
 				},
 				{
 					name: client.customEmojis.calendar2 + " " + interaction.translate("common:JOINED"),
-					value: client.functions.printDate(member.joinedAt),
+					value: client.functions.printDate(client, member.joinedAt),
 					inline: true,
 				},
 				{

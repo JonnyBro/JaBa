@@ -159,7 +159,7 @@ function generateBoostersEmbeds(client, interaction, boosters) {
 		let j = i;
 		k += 10;
 
-		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: **${client.functions.printDate(member.premiumSince, null, interaction.guild.data.locale)}**`).join("\n");
+		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: **${client.functions.printDate(client, member.premiumSince, null, interaction.guild.data.locale)}**`).join("\n");
 
 		const embed = new EmbedBuilder()
 			.setColor(interaction.client.config.embed.color)

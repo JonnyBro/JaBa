@@ -57,7 +57,7 @@ class Number extends BaseCommand {
 			const parsedNumber = parseInt(msg.content, 10);
 
 			if (parsedNumber === number) {
-				const time = client.functions.convertTime(gameCreatedAt, false, false, data.guildData.language);
+				const time = client.functions.convertTime(client, gameCreatedAt, false, false, data.guildData.language);
 				interaction.channel.send({
 					content: interaction.translate("economy/number:GAME_STATS", {
 						winner: msg.author.toString(),

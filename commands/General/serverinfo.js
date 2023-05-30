@@ -55,7 +55,7 @@ class Serverinfo extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.calendar + interaction.translate("common:CREATION"),
-					value: client.functions.printDate(guild.createdAt),
+					value: client.functions.printDate(client, guild.createdAt),
 					inline: true,
 				},
 				{
