@@ -84,7 +84,7 @@ class Birthdate extends BaseCommand {
 	 */
 	async autocompleteRun(client, interaction) {
 		const int = interaction.options.getInteger("year"),
-			results = Array.from({ length: 2023 }, (_, k) => k + 1).filter(i => i.toString().includes(int));
+			results = Array.from({ length: (2023 - 1900) / 1 }, (_, i) => 1900 + i * 1).filter(i => i.toString().includes(int));
 
 		return interaction.respond(
 			results.slice(0, 25).map(i => ({
