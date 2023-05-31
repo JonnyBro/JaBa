@@ -60,8 +60,8 @@ class Lovecalc extends BaseCommand {
 			})
 			.setDescription(interaction.translate("fun/lovecalc:CONTENT", {
 				percent,
-				firstMember: firstMember,
-				secondMember: secondMember,
+				firstMember: firstMember.user.tag,
+				secondMember: secondMember.user.tag,
 			}))
 			.setColor(client.config.embed.color)
 			.setFooter({
