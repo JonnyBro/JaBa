@@ -107,6 +107,9 @@ class JaBa extends Client {
 		const commands = [];
 		for (let index = 0; index < folders.length; index++) {
 			const folder = folders[index];
+
+			if (folder.endsWith("!DISABLED")) continue;
+
 			const files = await fs.readdir(folder);
 
 			for (let index = 0; index < files.length; index++) {
