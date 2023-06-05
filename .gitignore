@@ -19,7 +19,8 @@
 # IDE
 .vscode
 
-# Node modules
+# Node
+package-lock.json
 node_modules
 yarn.lock
 
