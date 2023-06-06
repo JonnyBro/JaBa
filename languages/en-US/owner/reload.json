@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Перезагрузить команду",
+	"USAGE": "[command]",
+	"EXAMPLES": "reload command:help",
+	"NOT_FOUND": "Команда `{{command}}` не найдена",
+	"SUCCESS": "Команда `{{command}}` успешно перезагружена"
+}

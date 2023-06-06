@@ -1,0 +1,6 @@
+{
+	"DESCRIPTION": "Изменить пользователю опыт, уровень, кредиты или банк",
+	"USAGE": "[type] [@user] [int]",
+	"EXAMPLES": "set type:Уровень user:@Jonny_Bro#4226 int:10",
+	"INVALID_NUMBER": "Значение должно быть больше нуля"
+}

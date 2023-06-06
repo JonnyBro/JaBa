@@ -1,0 +1,18 @@
+{
+	"DESCRIPTION": "Посмотреть или очистить историю своих транзакций",
+	"USAGE": "(clear)",
+	"EXAMPLES": "transactions\n transactions clear:True",
+	"CLEAR": "Очистить список транзакций?",
+	"CLEARED": "Список транзакций очищен",
+	"NO_TRANSACTIONS": "У вас нет транзакций",
+	"EMBED_TRANSACTIONS": "Ваши транзакции",
+	"BANK": "Банк",
+	"NUMBERS": "Угадай число",
+	"TTT": "Крестики-нолики",
+	"T_GOT": "Пополнение",
+	"T_SEND": "Списание",
+	"T_USER_GOT": "Источник",
+	"T_USER_SEND": "Получатель",
+	"T_AMOUNT": "Сумма",
+	"T_DATE": "Дата"
+}

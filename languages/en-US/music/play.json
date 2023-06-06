@@ -1,0 +1,17 @@
+{
+	"DESCRIPTION": "Начать воспроизведение трека",
+	"USAGE": "[query]",
+	"EXAMPLES": "play query:Never Gonna Give You Up",
+	"QUERY": "Название / Прямая ссылка / Ссылка на YouTube, Spotify или SoundCloud",
+	"NO_VOICE_CHANNEL": "Вы должны находиться в голосовом канале",
+	"VOICE_CHANNEL_CONNECT": "Я не могу присоедениться к вашему голосовому каналу",
+	"RESULTS_TITLE": "Результаты поиска по \"{{query}}\"",
+	"NO_RESULT": "По запросу `{{query}}` ничего не найдено",
+	"NOW_PLAYING": "Сейчас играет **{{songName}}**",
+	"NOT_PLAYING": "На сервере сейчас ничего не воспроизводится",
+	"QUEUE_ENDED": "Очередь окончена",
+	"ADDED_QUEUE": "**{{songName}}** добавлен в очередь",
+	"STOP_DISCONNECTED": "Воспроизведение окончено, т.к. я вышел из голосового канала",
+	"STOP_EMPTY": "Воспроизведение окончено, т.к. все вышли из голосового канала",
+	"ERR_OCCURRED": "Произошла ошибка...\n```{{error}}```"
+}

@@ -1,0 +1,15 @@
+{
+	"DESCRIPTION": "Показать информацию о играющем сейчас треке",
+	"USAGE": "",
+	"EXAMPLES": "nowplaying",
+	"CURRENTLY_PLAYING": "Сейчас играет",
+	"T_TITLE": "Название",
+	"T_AUTHOR": "Автор",
+	"T_DURATION": "Длительность",
+	"T_DESCRIPTION": "Описание",
+	"NO_DESCRIPTION": "Описание отсутствует",
+	"REPEAT": "Повтор",
+	"AUTOPLAY": "Автовоспроизведение",
+	"QUEUE": "Очереди",
+	"TRACK": "Трека"
+}
