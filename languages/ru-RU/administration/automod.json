@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Включить или отключить автоудаление спама и ссылок-приглашений",
+	"DESCRIPTION": "Включить или отключить автоудаление ссылок-приглашений",
 	"USAGE": "[state] (#channel)",
 	"EXAMPLES": "automod state:True\nautomod state:False channel:#general\nautomod state:False",
 	"ENABLED": "Ссылки-приглашения будут удаляться автоматически\nИспользуйте `automod false #channel` для игнорирования канала",

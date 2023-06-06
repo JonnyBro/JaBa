@@ -1,14 +1,14 @@
 {
-	"DESCRIPTION": "Показать список достижений пользователя",
+	"DESCRIPTION": "Shows a user's list of achievements",
 	"USAGE": "(@user)",
 	"EXAMPLES": "achievements\nachievements user:@Jonny_Bro#4226",
-	"SEND_CMD": "Используйте свою первую команду",
-	"CLAIM_SALARY": "Получите зарплату 10 раз",
-	"MARRY": "Найдите вторую половинку",
-	"SLOTS": "Выиграйте 3 раза подряд в слоты",
-	"TIP": "Поддержите разработчика",
-	"REP": "Достигните 20 очков репутации",
-	"INVITE": "Пригласите JaBa на ваш сервер",
-	"TITLE": "🔥 Достижения",
-	"PROGRESS": "Прогресс: {{now}}/{{total}} ({{percent}}%)"
+	"SEND_CMD": "Use your first command",
+	"CLAIM_SALARY": "Claim your salary 10 times",
+	"MARRY": "Find a partner",
+	"SLOTS": "Win 3 times in a row in slots",
+	"TIP": "Support the developer",
+	"REP": "Reach 20 reputation points",
+	"INVITE": "Invite JaBa to your server",
+	"TITLE": "🔥 Achievements",
+	"PROGRESS": "Progress: {{now}}/{{total}} ({{percent}}%)"
 }

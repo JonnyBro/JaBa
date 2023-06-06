@@ -1,0 +1,12 @@
+{
+	"DESCRIPTION": "Play Guess The Number",
+	"USAGE": "",
+	"EXAMPLES": "number",
+	"GAME_START": "I have chosen a number, start guessing!\nWrite STOP if you want to stop the game",
+	"TOO_BIG": "{{user}}, my number is **greater** than `{{number}}`",
+	"TOO_SMALL": "{{user}}, my number is **smaller** than `{{number}}`",
+	"WON": "{{winner}} has won {{credits}}",
+	"DEFEAT": "No one guessed the number! It was **{{number}}**",
+	"GAME_STATS": "🎉 | {{winner}} has guessed the number! It was **{{number}}**!\n\n**Statistics:**\n*-* __**Duration**__: {{time}}\n*-* __**Participants ({{participantCount}})**__: {{participants}}",
+	"GAME_RUNNING": "The game is already in progress"
+}

@@ -1,8 +1,8 @@
 {
-	"DESCRIPTION": "Включить или отключить автоназначение роли при входе на сервер",
+	"DESCRIPTION": "Toggles automatic role assignment upon joining the server",
 	"USAGE": "[state] (@role)",
-	"EXAMPLES": "autorole state:True role:@новенький\nautorole state:False",
-	"MISSING_ROLE": "Укажите роль",
-	"SUCCESS_ENABLED": "Автоназначение роли включено!\nНовые пользователи будут автоматически получать {{role}} при входе на сервер",
-	"SUCCESS_DISABLED": "Автоназначение роли отключено"
+	"EXAMPLES": "autorole state:True role:@newbie\nautorole state:False",
+	"MISSING_ROLE": "Specify a role",
+	"SUCCESS_ENABLED": "Role assignment is enabled!\nNew users will automatically receive the {{role}} upon joining the server",
+	"SUCCESS_DISABLED": "Role assignment is disabled"
 }

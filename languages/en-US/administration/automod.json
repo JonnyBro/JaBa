@@ -1,10 +1,10 @@
 {
-	"DESCRIPTION": "Включить или отключить автоудаление спама и ссылок-приглашений",
+	"DESCRIPTION": "Toggles automatic removal of invitation links",
 	"USAGE": "[state] (#channel)",
 	"EXAMPLES": "automod state:True\nautomod state:False channel:#general\nautomod state:False",
-	"ENABLED": "Ссылки-приглашения будут удаляться автоматически\nИспользуйте `automod false #channel` для игнорирования канала",
-	"DISABLED_CHANNEL": "Автомодерация не будет выполняться в {{channel}}",
-	"DISABLED": "Автомодерация отключена",
-	"DELETED": "Ваше сообщение было удалено, т.к. содержало в себе ссылку-приглашение",
-	"NO_SPAM": "Прекратите спамить!"
+	"ENABLED": "Invitation links will be automatically removed\nUse `automod false #channel` to ignore the channel",
+	"DISABLED_CHANNEL": "Automoderation will not be performed in {{channel}}",
+	"DISABLED": "Automoderation is disabled",
+	"DELETED": "Your message has been deleted because it contained an invitation link",
+	"NO_SPAM": "Stop spamming!"
 }

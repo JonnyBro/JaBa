@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Импортировать свой уровень из MEE6",
+	"DESCRIPTION": "Imports your level from MEE6",
 	"USAGE": "",
 	"EXAMPLES": "importmee6"
 }

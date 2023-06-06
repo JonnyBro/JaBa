@@ -3,7 +3,7 @@
 	"USAGE": "[time] [message]",
 	"EXAMPLES": "remindme time:12h message:Використовувати команду work\nremindme time:5m message:Дістати курку з морозилки",
 	"TIME": "Час (Наприклад: 10s, 5m, 2h, 1d, 3w)",
-	"SAVED": "Нагадування `{{message}}` збережено **{{time}}**",
+	"SAVED": "Нагадування `{{message}}` збережено на **{{time}}**",
 	"TITLE": "Нагадування від JaBa",
 	"CREATED": "Нагадування створено: **{{time}}**"
 }

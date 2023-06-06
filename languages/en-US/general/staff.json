@@ -1,10 +1,10 @@
 {
-	"DESCRIPTION": "Показать список администрации сервера",
+	"DESCRIPTION": "Shows a list of server staff members",
 	"USAGE": "",
 	"EXAMPLES": "staff",
-	"TITLE": "Персонал {{guild}}",
-	"ADMINS": "Администраторы",
-	"NO_ADMINS": "Нет администраторов",
-	"MODS": "Модераторы",
-	"NO_MODS": "Нет модераторов"
+	"TITLE": "Staff Members of {{guild}}",
+	"ADMINS": "Administrators",
+	"NO_ADMINS": "No administrators",
+	"MODS": "Moderators",
+	"NO_MODS": "No moderators"
 }

@@ -1,6 +1,6 @@
 {
-	"DESCRIPTION": "Пропустить текущий трек",
+	"DESCRIPTION": "Skips the current track",
 	"USAGE": "",
 	"EXAMPLES": "skip",
-	"SUCCESS": "Трек пропущен"
+	"SUCCESS": "Track skipped"
 }

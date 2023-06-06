@@ -1,9 +1,7 @@
 const { PermissionsBitField, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
-const BaseEvent = require("../base/BaseEvent"),
-	xpCooldown = {},
-	usersMap = new Map(),
-	messageLimit = 10,
-	timeDifferenceMs = 5000;
+const BaseEvent = require("../base/BaseEvent");
+
+const xpCooldown = {};
 
 class MessageCreate extends BaseEvent {
 	constructor() {
@@ -127,49 +125,6 @@ class MessageCreate extends BaseEvent {
 				if (userData.afk) message.replyT("general/afk:IS_AFK", { user: u.tag, reason: userData.afk }, { ephemeral: true });
 			});
 		}
-
-		if (data.guildData.plugins.automod.enabled)
-			if (usersMap.has(message.author.id)) {
-				let msgCount = userData.msgCount;
-				const userData = usersMap.get(message.author.id),
-					{ lastMessage, timer } = userData,
-					difference = message.createdTimestamp - lastMessage.createdTimestamp;
-
-				if (difference > timeDifferenceMs) {
-					clearTimeout(timer);
-
-					userData.msgCount = 1;
-					userData.lastMessage = message;
-					userData.timer = setTimeout(() => {
-						usersMap.delete(message.author.id);
-					}, 1000);
-					usersMap.set(message.author.id, userData);
-				} else {
-					++msgCount;
-					if (parseInt(msgCount) === messageLimit) {
-						message.replyT("administration/automod:");
-						let messages = await message.channel.messages.fetch({
-							limit: messageLimit,
-						});
-						messages = messages.filter(m => m.author.id === message.user.id);
-
-						message.channel.bulkDelete(messages.filter(m => !m.pinned), true);
-					} else {
-						userData.msgCount = msgCount;
-						usersMap.set(message.author.id, userData);
-					}
-				}
-			} else {
-				const fn = setTimeout(() => {
-					usersMap.delete(message.author.id);
-				}, 1000);
-
-				usersMap.set(message.author.id, {
-					msgCount: 1,
-					lastMessage: message,
-					timer: fn,
-				});
-			}
 
 		return;
 	}

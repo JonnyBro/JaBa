@@ -1,10 +1,10 @@
 {
-	"DESCRIPTION": "Показать таблицу лидеров по кредитам, уровню или очкам репутации",
+	"DESCRIPTION": "Shows the leaderboard for credits, level, or reputation points",
 	"USAGE": "[type]",
-	"EXAMPLES": "leaderboard type:Уровень",
-	"LEVEL": "Уровень",
-	"MONEY": "Кредиты",
-	"REP": "Репутация",
-	"MOBILE": ":confused: Я заметил, что вы онлайн с телефона... Таблица лидеров может отображаться некорректно на маленьких экранах. Попробуйте позже с другого устройства",
-	"TABLE": "Таблица лидеров {{name}}"
+	"EXAMPLES": "leaderboard type:Level",
+	"LEVEL": "Level",
+	"MONEY": "Credits",
+	"REP": "Reputation",
+	"MOBILE": ":confused: I noticed that you're online from a mobile device... The leaderboard may not display correctly on small screens. Please try again later from a different device.",
+	"TABLE": "{{name}} Leaderboard"
 }

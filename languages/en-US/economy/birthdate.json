@@ -1,14 +1,14 @@
 {
-	"DESCRIPTION": "Установить дату рождения",
+	"DESCRIPTION": "Sets your date of birth",
 	"USAGE": "[day] [month] [year]",
 	"EXAMPLES": "birthdate day:17 month:03 year:2000",
-	"DAY": "День",
-	"MONTH": "Месяц",
-	"YEAR": "Год",
-	"INVALID_DATE": "Указана неверная дата",
-	"DATE_TOO_LOW": "Вам больше 80 лет? :eyes:",
-	"DATE_TOO_HIGH": "Хммм... Вы ещё не родились",
-	"HAPPY_BIRTHDAY": "День рождения",
-	"HAPPY_BIRTHDAY_MESSAGE": "Поздравляем {{name}} (<@{{user}}>) с днём рождения, сегодня ему(ей) исполнилось {{age}}!",
-	"SUCCESS": "Ваша дата рождения установлена на **{{date}}**"
+	"DAY": "Day",
+	"MONTH": "Month",
+	"YEAR": "Year",
+	"INVALID_DATE": "Invalid date provided",
+	"DATE_TOO_LOW": "Are you over 80 years old? :eyes:",
+	"DATE_TOO_HIGH": "Hmm... You haven't been born yet",
+	"HAPPY_BIRTHDAY": "Happy Birthday",
+	"HAPPY_BIRTHDAY_MESSAGE": "Happy birthday to {{name}} (<@{{user}}>)! Today, they have turned {{age}}!",
+	"SUCCESS": "Your date of birth has been set to **{{date}}**"
 }

@@ -1,157 +1,157 @@
 {
-	"BOT_USER": "Вы не можете сделать это с ботом",
-	"FORCE_STOP": "Игра принудительно окончена {{user}}, никто не победил",
-	"LEVEL_UP": "Вы достигли следующего уровня! Ваш новый уровень: **{{level}}**",
-	"GUILD_ONLY": "Данную команду можно использовать только на сервере",
-	"HELLO_SERVER": "Привет! Все мои команды доступны через **/** Используйте </help:1029832476077596773>, чтобы получить список команд",
-	"INVALID_NUMBER_RANGE": "Укажите число от **{{min}}** до **{{max}}**",
-	"MORE_THAN_ZERO": "Укажите целое число больше 0",
-	"NO_ARGS": "Агрументы не требуются",
-	"NSFW_COMMAND": "Данную команду можно использовать только в NSFW канале",
-	"OPTION_NAN_ALL": "Укажите целое число больше 0 или `all`",
-	"OWNER_ONLY": "Данную команду может использовать только владелец бота",
-	"SELECT_CANCELED": "Выбор отменён",
-	"STATS_FOOTER": "● [Панель управления]({{dashboardLink}})\n● [Сервер поддержки]({{supportLink}})\n● [Пригласить JaBa на свой сервер]({{inviteLink}})\n● [Поддержать]({{donateLink}}) (укажите ваш Discord тэг для выдачи ачивки, для других способов поддержки пишите в ЛС <@{{owner}}>)",
-	"TIMED_OUT": "Время вышло",
-	"JUMP_TO_PAGE": "Укажите страницу к которой хотите перейти (максимум **{{length}}**):",
-	"QUOTE_TITLE": "Сообщение от {{user}}",
-	"QUOTE_ATTACHED": "Прикреплённые файлы",
-	"QUOTE_JUMP": "Перейти",
-	"QUOTE_FOOTER": "Цитировал {{user}}",
+	"BOT_USER": "You cannot do this with the bot.",
+	"FORCE_STOP": "The game has been forcibly ended, {{user}}, nobody won (the number was {{number}}).",
+	"LEVEL_UP": "You have reached the next level! Your new level is: **{{level}}**",
+	"GUILD_ONLY": "This command can only be used on a server.",
+	"HELLO_SERVER": "Hello! All my commands are available through **/**. Use </help:1029832476077596773> to get a list of commands.",
+	"INVALID_NUMBER_RANGE": "Please specify a number between **{{min}}** and **{{max}}**.",
+	"MORE_THAN_ZERO": "Please specify an integer greater than 0.",
+	"NO_ARGS": "No arguments required.",
+	"NSFW_COMMAND": "This command can only be used in an NSFW channel.",
+	"OPTION_NAN_ALL": "Please specify an integer greater than 0 or `all`.",
+	"OWNER_ONLY": "Only the bot owner can use this command.",
+	"SELECT_CANCELED": "Selection canceled.",
+	"STATS_FOOTER": "● [Dashboard]({{dashboardLink}})\n● [Support Server]({{supportLink}})\n● [Invite JaBa to Your Server]({{inviteLink}})\n● [Support]({{donateLink}}) (provide your Discord tag for achievement granting, for other support methods, please DM <@{{owner}}>)",
+	"TIMED_OUT": "Time out.",
+	"JUMP_TO_PAGE": "Specify the page you want to jump to (maximum **{{length}}**):",
+	"QUOTE_TITLE": "Message from {{user}}",
+	"QUOTE_ATTACHED": "Attached files",
+	"QUOTE_JUMP": "Jump",
+	"QUOTE_FOOTER": "Quoted by {{user}}",
 
 	"PERMISSIONS": {
-		"CreateInstantInvite": "Создание приглашения",
-		"KickMembers": "Выгонять участников",
-		"BanMembers": "Банить участников",
-		"Administrator": "Администратор",
-		"ManageChannels": "Управлять каналами",
-		"ManageGuild": "Управлять сервером",
-		"AddReactions": "Добавлять реакции",
-		"ViewAuditLog": "Просматривать журнал аудита",
-		"PrioritySpeaker": "Приоритетный режим",
-		"Stream": "Видео",
-		"ViewChannel": "Просматривать каналы",
-		"SendMessages": "Отправлять сообщения",
-		"SendTTSMessages": "Отправка сообщений text-to-speech",
-		"ManageMessages": "Управлять сообщениями",
-		"EmbedLinks": "Встраивать ссылки",
-		"AttachFiles": "Прикреплять файлы",
-		"ReadMessageHistory": "Читать историю сообщений",
-		"MentionEveryone": "Упоминание *@*everyone, *@*here и всех ролей",
-		"UseExternalEmojis": "Использовать внешние эмодзи",
-		"ViewGuildInsights": "Просматривать статистику сервера",
-		"Connect": "Подключаться",
-		"Speak": "Говорить",
-		"MuteMembers": "Отключать участникам микрофон",
-		"DeafenMembers": "Отключать участникам звук",
-		"MoveMembers": "Перемещать участников",
-		"UseVAD": "Использовать режим активации по голосу",
-		"ChangeNickname": "Изменить никнейм",
-		"ManageNicknames": "Управлять никнеймами",
-		"ManageRoles": "Управлять ролями",
-		"ManageWebhooks": "Управлять вебхуками (webhooks)",
-		"ManageEmojisAndStickers": "Управлять эмодзи и стикерами",
-		"UseApplicationCommands": "Использовать команды приложения",
-		"ManageEvents": "Управление событиями",
-		"ManageThreads": "Управление ветками",
-		"CreatePublicThreads": "Создать публичные ветки",
-		"CreatePrivateThreads": "Создание приватных веток",
-		"UseExternalStickers": "Использовать внешние стикеры",
-		"SendMessagesInThreads": "Отправлять сообщения в ветках",
-		"UseEmbeddedActivities": "Начать активность",
-		"ModerateMembers": "Отправить участников подумать о своём поведении"
+		"CreateInstantInvite": "Create Instant Invite",
+		"KickMembers": "Kick Members",
+		"BanMembers": "Ban Members",
+		"Administrator": "Administrator",
+		"ManageChannels": "Manage Channels",
+		"ManageGuild": "Manage Guild",
+		"AddReactions": "Add Reactions",
+		"ViewAuditLog": "View Audit Log",
+		"PrioritySpeaker": "Priority Speaker",
+		"Stream": "Stream",
+		"ViewChannel": "View Channel",
+		"SendMessages": "Send Messages",
+		"SendTTSMessages": "Send Text-to-Speech Messages",
+		"ManageMessages": "Manage Messages",
+		"EmbedLinks": "Embed Links",
+		"AttachFiles": "Attach Files",
+		"ReadMessageHistory": "Read Message History",
+		"MentionEveryone": "Mention *@*everyone, *@*here, and all roles",
+		"UseExternalEmojis": "Use External Emojis",
+		"ViewGuildInsights": "View Guild Insights",
+		"Connect": "Connect",
+		"Speak": "Speak",
+		"MuteMembers": "Mute Members",
+		"DeafenMembers": "Deafen Members",
+		"MoveMembers": "Move Members",
+		"UseVAD": "Use Voice Activity Detection",
+		"ChangeNickname": "Change Nickname",
+		"ManageNicknames": "Manage Nicknames",
+		"ManageRoles": "Manage Roles",
+		"ManageWebhooks": "Manage Webhooks",
+		"ManageEmojisAndStickers": "Manage Emojis and Stickers",
+		"UseApplicationCommands": "Use Application Commands",
+		"ManageEvents": "Manage Events",
+		"ManageThreads": "Manage Threads",
+		"CreatePublicThreads": "Create Public Threads",
+		"CreatePrivateThreads": "Create Private Threads",
+		"UseExternalStickers": "Use External Stickers",
+		"SendMessagesInThreads": "Send Messages in Threads",
+		"UseEmbeddedActivities": "Start Activities",
+		"ModerateMembers": "Tell Members to Think about Their Behavior"
 	},
 
 	"NOUNS": {
 		"CREDIT": {
-			"1": "кредит",
-			"2": "кредита",
-			"5": "кредитов"
+			"1": "credit",
+			"2": "credits",
+			"5": "credits"
 		},
 		"CREDITS": {
-			"1": "кредита",
-			"2": "кредитов",
-			"5": "кредитов"
+			"1": "credit",
+			"2": "credits",
+			"5": "credits"
 		},
 		"COMMANDS": {
-			"1": "команду",
-			"2": "команды",
-			"5": "команд"
+			"1": "command",
+			"2": "commands",
+			"5": "commands"
 		},
 		"POINTS": {
-			"1": "очко",
-			"2": "очка",
-			"5": "очков"
+			"1": "point",
+			"2": "points",
+			"5": "points"
 		},
 		"MEMBERS": {
-			"1": "участник",
-			"2": "участника",
-			"5": "участников"
+			"1": "member",
+			"2": "members",
+			"5": "members"
 		},
 		"USERS": {
-			"1": "пользователь",
-			"2": "пользователя",
-			"5": "пользователей"
+			"1": "user",
+			"2": "users",
+			"5": "users"
 		},
 		"PLAYERS": {
-			"1": "игрок",
-			"2": "игрока",
-			"5": "игроков"
+			"1": "player",
+			"2": "players",
+			"5": "players"
 		},
 		"TRACKS": {
-			"1": "трек",
-			"2": "трека",
-			"5": "треков"
+			"1": "track",
+			"2": "tracks",
+			"5": "tracks"
 		},
 		"BOTS": {
-			"1": "бот",
-			"2": "бота",
-			"5": "ботов"
+			"1": "bot",
+			"2": "bots",
+			"5": "bots"
 		},
 		"TEXT": {
-			"1": "текстовый канал",
-			"2": "текстовых канала",
-			"5": "текстовых каналов"
+			"1": "text channel",
+			"2": "text channels",
+			"5": "text channels"
 		},
 		"VOICE": {
-			"1": "голосовой канал",
-			"2": "голосовых канала",
-			"5": "голосовых каналов"
+			"1": "voice channel",
+			"2": "voice channels",
+			"5": "voice channels"
 		},
 		"CATEGORY": {
-			"1": "категория",
-			"2": "категории",
-			"5": "категорий"
+			"1": "category",
+			"2": "categories",
+			"5": "categories"
 		},
 		"MESSAGES": {
-			"1": "сообщение",
-			"2": "сообщения",
-			"5": "сообщений"
+			"1": "message",
+			"2": "messages",
+			"5": "messages"
 		},
 		"WARNS": {
-			"1": "предупреждение",
-			"2": "предупреждения",
-			"5": "предупреждений"
+			"1": "warning",
+			"2": "warnings",
+			"5": "warnings"
 		},
 		"SECONDS": {
-			"1": "секунду",
-			"2": "секунды",
-			"5": "секунд"
+			"1": "second",
+			"2": "seconds",
+			"5": "seconds"
 		},
 		"SERVER": {
-			"1": "сервер",
-			"2": "сервера",
-			"5": "серверов"
+			"1": "server",
+			"2": "servers",
+			"5": "servers"
 		},
 		"SERVERS": {
-			"1": "сервере",
-			"2": "серверах",
-			"5": "серверах"
+			"1": "server",
+			"2": "servers",
+			"5": "servers"
 		},
 		"AGE": {
-			"1": "год",
-			"2": "года",
-			"5": "лет"
+			"1": "year",
+			"2": "years",
+			"5": "years"
 		}
 	}
 }

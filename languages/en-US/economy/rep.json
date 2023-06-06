@@ -1,9 +1,9 @@
 {
-	"DESCRIPTION": "Дать репутацию пользователю",
+	"DESCRIPTION": "Gives reputation to a user",
 	"USAGE": "[@user]",
 	"EXAMPLES": "rep user:@Jonny_Bro#4226",
-	"COOLDOWN": "Вы должны подождать **{{time}}** до следующего использования",
-	"BOT_USER": "Боты и так крутые B)",
-	"YOURSELF": "Вы не можете дать очко репутации самому себе",
-	"SUCCESS": "Вы дали очко репутации {{user}}"
+	"COOLDOWN": "You must wait **{{time}}** before using it again",
+	"BOT_USER": "Bots are already cool B)",
+	"YOURSELF": "You cannot give reputation to yourself",
+	"SUCCESS": "You have given a reputation point to {{user}}"
 }

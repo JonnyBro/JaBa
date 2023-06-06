@@ -1,7 +1,7 @@
 {
-	"DESCRIPTION": "Включить предыдущий трек",
+	"DESCRIPTION": "Starts the previous track",
 	"USAGE": "",
 	"EXAMPLES": "back",
-	"NO_PREV_SONG": "Предыдущий трек отсутствует",
-	"SUCCESS": "Играет предыдущий трек"
+	"NO_PREV_SONG": "No previous track available",
+	"SUCCESS": "Playing the previous track"
 }

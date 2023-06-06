@@ -1,14 +1,14 @@
 {
-	"DESCRIPTION": "Выбор режима повтора",
+	"DESCRIPTION": "Sets the repeat mode",
 	"USAGE": "[option]",
 	"EXAMPLES": "loop option:1",
-	"OPTION": "Режим воспроизведения",
-	"AUTOPLAY": "Автовоспроизведение",
-	"QUEUE": "Очередь",
-	"TRACK": "Текущий трек",
-	"DISABLE": "Отключить",
-	"AUTOPLAY_ENABLED": "Автовоспроизведение **включено**",
-	"QUEUE_ENABLED": "Повтор очереди **включён**",
-	"TRACK_ENABLED": "Повтор текущего трека **включён**",
-	"LOOP_DISABLED": "Повтор **отключён**"
+	"OPTION": "Playback mode",
+	"AUTOPLAY": "Autoplay",
+	"QUEUE": "Queue",
+	"TRACK": "Current track",
+	"DISABLE": "Disable",
+	"AUTOPLAY_ENABLED": "Autoplay **enabled**",
+	"QUEUE_ENABLED": "Queue repeat **enabled**",
+	"TRACK_ENABLED": "Current track repeat **enabled**",
+	"LOOP_DISABLED": "Repeat **disabled**"
 }

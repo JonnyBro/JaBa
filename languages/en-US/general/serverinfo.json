@@ -1,9 +1,9 @@
 {
-	"DESCRIPTION": "Показать информацию о сервере",
+	"DESCRIPTION": "Shows server information",
 	"USAGE": "",
 	"EXAMPLES": "serverinfo",
-	"AFK_CHANNEL": "AFK канал",
-	"BOOSTS": "Кол-во бустов",
-	"LINK": "Статистика сервера",
-	"LINK_TEXT": "Нажмите сюда, чтобы открыть статистику сервера в панели управления"
+	"AFK_CHANNEL": "AFK Channel",
+	"BOOSTS": "Number of Boosts",
+	"LINK": "Server Statistics",
+	"LINK_TEXT": "Click here to open the server statistics in the control panel"
 }

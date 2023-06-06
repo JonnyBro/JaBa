@@ -1,14 +1,14 @@
 {
-	"DESCRIPTION": "Выдать предупреждение пользователю",
-	"USAGE": "ПКМ на пользователя > Приложения > warn (С аватаркой JaBa)",
+	"DESCRIPTION": "Issues a warning to a user",
+	"USAGE": "Right-click on the user > Applications > warn (With JaBa avatar)",
 	"EXAMPLES": "warn",
-	"YOURSELF": "Вы не можете подать жалобу на себя",
-	"SUPERIOR": "Вы не можете подать жалобу на данного пользователя",
-	"MODAL_TITLE": "Выдать предупреждение {{nickname}}",
-	"MODAL_REASON": "Причина предупреждения",
-	"WARNED_DM": "Вы получили предупреждение на сервере **{{server}}** от пользователя **{{moderator}}** по причине **{{reason}}**",
-	"WARNED": "**{{user}}** получил предупреждение по причине **{{reason}}**",
-	"WARN": "Предупрежение",
-	"BAN": "Бан",
-	"KICK": "Кик"
+	"YOURSELF": "You cannot issue a warning to yourself",
+	"SUPERIOR": "You cannot issue a warning to this user",
+	"MODAL_TITLE": "Issue a warning to {{nickname}}",
+	"MODAL_REASON": "Reason for the warning",
+	"WARNED_DM": "You have received a warning on the **{{server}}** server from user **{{moderator}}** for the following reason: **{{reason}}**",
+	"WARNED": "**{{user}}** has been warned for the following reason: **{{reason}}**",
+	"WARN": "Warning",
+	"BAN": "Ban",
+	"KICK": "Kick"
 }

@@ -1,12 +1,12 @@
 {
-	"DESCRIPTION": "Управление банковским счётом",
+	"DESCRIPTION": "Manages your bank account",
 	"USAGE": "[option] [credits/all]",
 	"EXAMPLES": "bank option:deposit credits:1000\nbank option:withdraw credits:all",
-	"OPTION": "Действие",
-	"DEPOSIT": "Внести",
-	"WITHDRAW": "Снять",
-	"NOT_ENOUGH_CREDIT": "У вас нет {{money}}",
-	"NOT_ENOUGH_BANK": "Недостаточно кредитов на банковском счету, необходимо {{money}}",
-	"SUCCESS_DEP": "{{money}} внесено на ваш банковский счёт",
-	"SUCCESS_WD": "Вы сняли {{money}} с вашего банковского счёта"
+	"OPTION": "Action",
+	"DEPOSIT": "Deposit",
+	"WITHDRAW": "Withdraw",
+	"NOT_ENOUGH_CREDIT": "You don't have {{money}}",
+	"NOT_ENOUGH_BANK": "Insufficient credits in your bank account, {{money}} required",
+	"SUCCESS_DEP": "{{money}} deposited into your bank account",
+	"SUCCESS_WD": "You have withdrawn {{money}} from your bank account"
 }

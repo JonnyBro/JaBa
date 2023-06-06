@@ -11,8 +11,8 @@ class TicTacToe extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("tictactoe")
-				.setDescription(client.translate("economy/tictactoe:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("economy/tictactoe:DESCRIPTION", null, "uk-UA") })
+				.setDescription(client.translate("fun/tictactoe:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("fun/tictactoe:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))

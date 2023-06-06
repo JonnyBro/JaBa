@@ -1,11 +1,11 @@
 {
-	"DESCRIPTION": "Показать информацию о пользователе",
+	"DESCRIPTION": "Shows user information",
 	"USAGE": "(@user)",
 	"EXAMPLES": "userinfo\nuserinfo user:@Jonny_Bro#4226",
-	"CUSTOM": "Пользовательский статус",
-	"NO_ACTIVITY": "Не играет",
-	"NO_ROLE": "Нет роли",
-	"ROLE": "Высшая роль",
-	"NO_NICKNAME": "Нет никнейма",
-	"MORE_ROLES": "и ещё {{count}} роль(и/ей)"
+	"CUSTOM": "Custom Status",
+	"NO_ACTIVITY": "Not playing",
+	"NO_ROLE": "No role",
+	"ROLE": "Top Role",
+	"NO_NICKNAME": "No nickname",
+	"MORE_ROLES": "and {{count}} more role(s)"
 }

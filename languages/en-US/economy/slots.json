@@ -1,8 +1,8 @@
 {
-	"DESCRIPTION": "Казино \"Casino JaBa\"",
+	"DESCRIPTION": "Casino \"Casino JaBa\"",
 	"USAGE": "[amount]",
 	"EXAMPLES": "slots amount:100",
-	"DEFEAT": "{{user}} поставил {{money}} и всё проиграл",
-	"VICTORY": "{{user}} поставил {{money}} и выиграл {{won}}",
-	"NOT_ENOUGH": "У вас нет {{money}}"
+	"DEFEAT": "{{user}} bet {{money}} and lost it all",
+	"VICTORY": "{{user}} bet {{money}} and won {{won}}",
+	"NOT_ENOUGH": "You don't have {{money}}"
 }

@@ -1,15 +1,15 @@
 {
-	"DESCRIPTION": "Включить или отключить сообщения при выходе пользователя с сервера",
-	"USAGE": "config [state] [#channel] [message] [image] \nИли [test]",
-	"EXAMPLES": "goodbye state:True channel:#welcome Прощай! image:True\ngoodbye test",
-	"TEST": "Проверить",
-	"TEST_SUCCESS": "Тест выполнен",
-	"CONFIG": "Настроить",
-	"IMAGE": "Добавить карточку к сообщению?",
-	"MESSAGE": "Ваше сообщение (доступны подмены с помощью {user}, {server} и {membercount})",
-	"ENABLED": "Прощальные сообщения включены в {{channel}}!\nИспользуйте `goodbye test` для просмотра сообщения",
-	"DISABLED": "Прощальные сообщения отключены",
-	"DEFAULT_MESSAGE": "Пока, {user}! Нас теперь {membercount} без тебя :'(",
-	"IMG_GOODBYE": "Вышел с {{server}}",
-	"TITLE": "До встречи!"
+	"DESCRIPTION": "Toggles messages when a user leaves the server",
+	"USAGE": "config [state] [#channel] [message] [image]\nOr [test]",
+	"EXAMPLES": "goodbye state:True channel:#welcome Goodbye! image:True\ngoodbye test",
+	"TEST": "Test",
+	"TEST_SUCCESS": "Test successful",
+	"CONFIG": "Configure",
+	"IMAGE": "Add a card to the message?",
+	"MESSAGE": "Your message (placeholders available: {user}, {server}, and {membercount})",
+	"ENABLED": "Farewell messages are enabled in {{channel}}!\nUse `goodbye test` to preview the message",
+	"DISABLED": "Farewell messages are disabled",
+	"DEFAULT_MESSAGE": "Goodbye, {user}! We're now {membercount} without you :'(",
+	"IMG_GOODBYE": "Left {server}",
+	"TITLE": "Until we meet again!"
 }

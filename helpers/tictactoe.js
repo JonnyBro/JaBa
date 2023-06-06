@@ -29,19 +29,19 @@ async function tictactoe(interaction, options = {}) {
 
 				if (!opponent)
 					return interaction.reply({
-						content: interaction.translate("economy/tictactoe:NO_USER"),
+						content: interaction.translate("fun/tictactoe:NO_USER"),
 						ephemeral: true,
 					});
 
 				if (opponent.bot)
 					return interaction.reply({
-						content: interaction.translate("economy/tictactoe:BOT_USER"),
+						content: interaction.translate("fun/tictactoe:BOT_USER"),
 						ephemeral: true,
 					});
 
 				if (opponent.id == (interaction.user ? interaction.user : interaction.author).id)
 					return interaction.reply({
-						content: interaction.translate("economy/tictactoe:YOURSELF"),
+						content: interaction.translate("fun/tictactoe:YOURSELF"),
 						ephemeral: true,
 					});
 			} else if (!interaction.commandId) {
@@ -49,25 +49,25 @@ async function tictactoe(interaction, options = {}) {
 
 				if (!opponent)
 					return interaction.reply({
-						content: interaction.translate("economy/tictactoe:NO_USER"),
+						content: interaction.translate("fun/tictactoe:NO_USER"),
 					});
 
 				if (opponent.bot)
 					return interaction.reply({
-						content: interaction.translate("economy/tictactoe:BOT_USER"),
+						content: interaction.translate("fun/tictactoe:BOT_USER"),
 						ephemeral: true,
 					});
 
 				if (opponent.id === interaction.member.id)
 					return interaction.reply({
-						content: interaction.translate("economy/tictactoe:YOURSELF"),
+						content: interaction.translate("fun/tictactoe:YOURSELF"),
 					});
 			}
 
 			const foot = options.embedFoot ? { text: options.embedFoot } : { text: "Удачи =)" };
 
 			const acceptEmbed = new EmbedBuilder()
-				.setTitle(interaction.translate("economy/tictactoe:REQUEST_WAIT", {
+				.setTitle(interaction.translate("fun/tictactoe:REQUEST_WAIT", {
 					user: opponent.tag,
 				}))
 				.setAuthor({
@@ -95,13 +95,13 @@ async function tictactoe(interaction, options = {}) {
 
 			let m;
 			if (interaction.commandId) m = await interaction.reply({
-				content: interaction.translate("economy/tictactoe:INVITE_USER", {
+				content: interaction.translate("fun/tictactoe:INVITE_USER", {
 					opponent: opponent.id,
 				}),
 				embeds: [acceptEmbed],
 				components: [accep],
 			}); else if (!interaction.commandId) m = await interaction.reply({
-				content: interaction.translate("economy/tictactoe:INVITE_USER", {
+				content: interaction.translate("fun/tictactoe:INVITE_USER", {
 					opponent: opponent.id,
 				}),
 				embeds: [acceptEmbed],
@@ -115,7 +115,7 @@ async function tictactoe(interaction, options = {}) {
 			collector.on("collect", async button => {
 				if (button.user.id !== opponent.id)
 					return button.reply({
-						content: interaction.translate("economy/tictactoe:REQUEST_SEND", {
+						content: interaction.translate("fun/tictactoe:REQUEST_SEND", {
 							opponent: opponent.id,
 						}),
 						ephemeral: true,
@@ -188,7 +188,7 @@ async function tictactoe(interaction, options = {}) {
 					};
 
 					const epm = new EmbedBuilder()
-						.setTitle(interaction.translate("economy/tictactoe:DESCRIPTION"))
+						.setTitle(interaction.translate("fun/tictactoe:DESCRIPTION"))
 						.setColor(options.embedColor || "#075FFF")
 						.setFooter(foot)
 						.setTimestamp();
@@ -197,7 +197,7 @@ async function tictactoe(interaction, options = {}) {
 					if (interaction.commandId) msg = await interaction.editReply({
 						embeds: [
 							epm.setDescription(
-								interaction.translate("economy/tictactoe:WAITING", {
+								interaction.translate("fun/tictactoe:WAITING", {
 									user: Args.userid,
 									emoji: client.emojis.cache.get(o_emoji) || "⭕",
 								}),
@@ -206,7 +206,7 @@ async function tictactoe(interaction, options = {}) {
 					}); else if (!interaction.commandId) msg = await button.message.edit({
 						embeds: [
 							epm.setDescription(
-								interaction.translate("economy/tictactoe:WAITING", {
+								interaction.translate("fun/tictactoe:WAITING", {
 									user: Args.userid,
 									emoji: client.emojis.cache.get(o_emoji) || "⭕",
 								}),
@@ -332,7 +332,7 @@ async function tictactoe(interaction, options = {}) {
 								if (options.resultBtn === true)
 									return m
 										.edit({
-											content: interaction.translate("economy/tictactoe:WON", {
+											content: interaction.translate("fun/tictactoe:WON", {
 												winner: fighters[1],
 												emoji: client.emojis.cache.get(o_emoji) || "⭕",
 											}),
@@ -340,7 +340,7 @@ async function tictactoe(interaction, options = {}) {
 
 											embeds: [
 												epm.setDescription(
-													interaction.translate("economy/tictactoe:WON", {
+													interaction.translate("fun/tictactoe:WON", {
 														winner: fighters[1],
 														emoji: client.emojis.cache.get(o_emoji) || "⭕",
 													}),
@@ -353,14 +353,14 @@ async function tictactoe(interaction, options = {}) {
 								else if (!options.resultBtn || options.resultBtn === false)
 									return m
 										.edit({
-											content: interaction.translate("economy/tictactoe:WON", {
+											content: interaction.translate("fun/tictactoe:WON", {
 												winner: fighters[1],
 												emoji: client.emojis.cache.get(o_emoji) || "⭕",
 											}),
 
 											embeds: [
 												epm.setDescription(
-													`${interaction.translate("economy/tictactoe:WON", {
+													`${interaction.translate("fun/tictactoe:WON", {
 														winner: fighters[1],
 														emoji: client.emojis.cache.get(o_emoji) || "⭕",
 													})}\n\`\`\`\n${Args.a1.emoji
@@ -401,14 +401,14 @@ async function tictactoe(interaction, options = {}) {
 								if (options.resultBtn === true)
 									return m
 										.edit({
-											content: interaction.translate("economy/tictactoe:WON", {
+											content: interaction.translate("fun/tictactoe:WON", {
 												winner: fighters[0],
 												emoji: client.emojis.cache.get(o_emoji) || "⭕",
 											}),
 											components: buttons,
 											embeds: [
 												epm.setDescription(
-													interaction.translate("economy/tictactoe:WON", {
+													interaction.translate("fun/tictactoe:WON", {
 														winner: fighters[0],
 														emoji: client.emojis.cache.get(o_emoji) || "⭕",
 													}),
@@ -421,14 +421,14 @@ async function tictactoe(interaction, options = {}) {
 								else if (!options.resultBtn || options.resultBtn === false)
 									return m
 										.edit({
-											content: interaction.translate("economy/tictactoe:WON", {
+											content: interaction.translate("fun/tictactoe:WON", {
 												winner: fighters[0],
 												emoji: client.emojis.cache.get(o_emoji) || "⭕",
 											}),
 
 											embeds: [
 												epm.setDescription(
-													`${interaction.translate("economy/tictactoe:WON", {
+													`${interaction.translate("fun/tictactoe:WON", {
 														winner: fighters[0],
 														emoji: client.emojis.cache.get(o_emoji) || "⭕",
 													})}\n\`\`\`\n${Args.a1.emoji
@@ -520,14 +520,14 @@ async function tictactoe(interaction, options = {}) {
 								if (options.resultBtn === true)
 									return m
 										.edit({
-											content: interaction.translate("economy/tictactoe:WON", {
+											content: interaction.translate("fun/tictactoe:WON", {
 												winner: fighters[1],
 												emoji: client.emojis.cache.get(o_emoji) || "⭕",
 											}),
 											components: buttons,
 											embeds: [
 												epm.setDescription(
-													interaction.translate("economy/tictactoe:WON", {
+													interaction.translate("fun/tictactoe:WON", {
 														winner: fighters[1],
 														emoji: client.emojis.cache.get(o_emoji) || "⭕",
 													}),
@@ -540,13 +540,13 @@ async function tictactoe(interaction, options = {}) {
 								else if (!options.resultBtn || options.resultBtn === false)
 									return m
 										.edit({
-											content: interaction.translate("economy/tictactoe:WON", {
+											content: interaction.translate("fun/tictactoe:WON", {
 												winner: fighters[1],
 												emoji: client.emojis.cache.get(o_emoji) || "⭕",
 											}),
 											embeds: [
 												epm.setDescription(
-													`${interaction.translate("economy/tictactoe:WON", {
+													`${interaction.translate("fun/tictactoe:WON", {
 														winner: fighters[1],
 														emoji: client.emojis.cache.get(o_emoji) || "⭕",
 													})}\n\`\`\`\n${Args.a1.emoji
@@ -587,14 +587,14 @@ async function tictactoe(interaction, options = {}) {
 								if (options.resultBtn === true)
 									return m
 										.edit({
-											content: interaction.translate("economy/tictactoe:WON", {
+											content: interaction.translate("fun/tictactoe:WON", {
 												winner: fighters[0],
 												emoji: client.emojis.cache.get(o_emoji) || "⭕",
 											}),
 											components: buttons,
 											embeds: [
 												epm.setDescription(
-													interaction.translate("economy/tictactoe:WON", {
+													interaction.translate("fun/tictactoe:WON", {
 														winner: fighters[0],
 														emoji: client.emojis.cache.get(o_emoji) || "⭕",
 													}),
@@ -607,13 +607,13 @@ async function tictactoe(interaction, options = {}) {
 								else
 									return m
 										.edit({
-											content: interaction.translate("economy/tictactoe:WON", {
+											content: interaction.translate("fun/tictactoe:WON", {
 												winner: fighters[0],
 												emoji: client.emojis.cache.get(o_emoji) || "⭕",
 											}),
 											embeds: [
 												epm.setDescription(
-													`${interaction.translate("economy/tictactoe:WON", {
+													`${interaction.translate("fun/tictactoe:WON", {
 														winner: fighters[0],
 														emoji: client.emojis.cache.get(o_emoji) || "⭕",
 													})}\n\`\`\`\n${Args.a1.emoji
@@ -652,7 +652,7 @@ async function tictactoe(interaction, options = {}) {
 							content: `<@${Args.userid}>`,
 							embeds: [
 								epm.setDescription(
-									interaction.translate("economy/tictactoe:WAITING", {
+									interaction.translate("fun/tictactoe:WAITING", {
 										user: Args.userid,
 										emoji: Args.user == 0 ? `${client.emojis.cache.get(o_emoji) || "⭕"}` : `${client.emojis.cache.get(x_emoji) || "❌"}`,
 									}),
@@ -669,7 +669,7 @@ async function tictactoe(interaction, options = {}) {
 						collector.on("collect", b => {
 							if (b.user.id !== Args.userid) {
 								b.reply({
-									content: interaction.translate("economy/tictactoe:CANT_PLAY"),
+									content: interaction.translate("fun/tictactoe:CANT_PLAY"),
 									ephemeral: true,
 								});
 
@@ -765,8 +765,8 @@ async function tictactoe(interaction, options = {}) {
 										if (options.resultBtn === true)
 											return m
 												.edit({
-													content: interaction.translate("economy/tictactoe:TIE"),
-													embeds: [epm.setDescription(interaction.translate("economy/tictactoe:TIE_DESC"))],
+													content: interaction.translate("fun/tictactoe:TIE"),
+													embeds: [epm.setDescription(interaction.translate("fun/tictactoe:TIE_DESC"))],
 												})
 												.then(m => {
 													m.react(dashmoji);
@@ -774,10 +774,10 @@ async function tictactoe(interaction, options = {}) {
 										else
 											return m
 												.edit({
-													content: interaction.translate("economy/tictactoe:TIE"),
+													content: interaction.translate("fun/tictactoe:TIE"),
 													embeds: [
 														epm.setDescription(
-															`${interaction.translate("economy/tictactoe:TIE_DESC")}!\n\`\`\`\n${Args.a1.emoji
+															`${interaction.translate("fun/tictactoe:TIE_DESC")}!\n\`\`\`\n${Args.a1.emoji
 																.replace(o_emoji, "⭕")
 																.replace(x_emoji, "❌")} | ${Args.a2.emoji
 																.replace(o_emoji, "⭕")
@@ -816,7 +816,7 @@ async function tictactoe(interaction, options = {}) {
 						collector.on("end", (collected, reason) => {
 							if (collected.size === 0 && reason == "time")
 								m.edit({
-									content: interaction.translate("economy/tictactoe:NO_ANSWER", {
+									content: interaction.translate("fun/tictactoe:NO_ANSWER", {
 										user: Args.userid,
 									}),
 									components: [],
@@ -829,7 +829,7 @@ async function tictactoe(interaction, options = {}) {
 			collector.on("end", (_, reason) => {
 				if (reason == "time") {
 					const embed = new EmbedBuilder()
-						.setTitle(interaction.translate("economy/tictactoe:NO_ANSWER_TITLE"))
+						.setTitle(interaction.translate("fun/tictactoe:NO_ANSWER_TITLE"))
 						.setAuthor({
 							name: (interaction.user ? interaction.user : interaction.author).tag,
 							iconURL: (interaction.user ? interaction.user : interaction.author).displayAvatarURL(),
@@ -839,7 +839,7 @@ async function tictactoe(interaction, options = {}) {
 						.setTimestamp()
 						.setDescription(interaction.translate("misc:TIMED_OUT"));
 					m.interaction.editReply({
-						content: interaction.translate("economy/tictactoe:NOT_ANSWERED", {
+						content: interaction.translate("fun/tictactoe:NOT_ANSWERED", {
 							user: opponent.id,
 						}),
 						embeds: [embed],
@@ -848,7 +848,7 @@ async function tictactoe(interaction, options = {}) {
 				}
 				if (reason == "decline") {
 					const embed = new EmbedBuilder()
-						.setTitle(interaction.translate("economy/tictactoe:CANCELED"))
+						.setTitle(interaction.translate("fun/tictactoe:CANCELED"))
 						.setAuthor({
 							name: (interaction.user ? interaction.user : interaction.author).tag,
 							iconURL: (interaction.user ? interaction.user : interaction.author).displayAvatarURL(),
@@ -856,7 +856,7 @@ async function tictactoe(interaction, options = {}) {
 						.setColor(options.timeoutEmbedColor || "#C90000")
 						.setFooter(foot)
 						.setTimestamp()
-						.setDescription(interaction.translate("economy/tictactoe:CANCELED_DESC", {
+						.setDescription(interaction.translate("fun/tictactoe:CANCELED_DESC", {
 							user: opponent.id,
 						}));
 					m.interaction.editReply({

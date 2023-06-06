@@ -1,15 +1,15 @@
 {
-	"DESCRIPTION": "Показать информацию о играющем сейчас треке",
+	"DESCRIPTION": "Shows information about the currently playing track",
 	"USAGE": "",
 	"EXAMPLES": "nowplaying",
-	"CURRENTLY_PLAYING": "Сейчас играет",
-	"T_TITLE": "Название",
-	"T_AUTHOR": "Автор",
-	"T_DURATION": "Длительность",
-	"T_DESCRIPTION": "Описание",
-	"NO_DESCRIPTION": "Описание отсутствует",
-	"REPEAT": "Повтор",
-	"AUTOPLAY": "Автовоспроизведение",
-	"QUEUE": "Очереди",
-	"TRACK": "Трека"
+	"CURRENTLY_PLAYING": "Currently playing",
+	"T_TITLE": "Title",
+	"T_AUTHOR": "Author",
+	"T_DURATION": "Duration",
+	"T_DESCRIPTION": "Description",
+	"NO_DESCRIPTION": "No description",
+	"REPEAT": "Repeat",
+	"AUTOPLAY": "Autoplay",
+	"QUEUE": "Queue",
+	"TRACK": "Track"
 }

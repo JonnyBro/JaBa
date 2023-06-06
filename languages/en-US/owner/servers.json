@@ -1,6 +1,6 @@
 {
-	"DESCRIPTION": "Показать список серверов бота",
+	"DESCRIPTION": "Shows a list of servers where bot is",
 	"USAGE": "",
 	"EXAMPLES": "servers",
-	"SERVERS_LIST": "Список серверов"
+	"SERVERS_LIST": "List of servers"
 }

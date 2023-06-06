@@ -1,10 +1,10 @@
 {
-	"DESCRIPTION": "Отправить кредиты пользователю",
+	"DESCRIPTION": "Sends credits to a user",
 	"USAGE": "[@user] [amount]",
 	"EXAMPLES": "pay user:@Jonny_Bro#4226 amount:1000",
-	"BOT_USER": "Ботам не нужны деньги B)",
-	"YOURSELF": "Вы не можете перевести кредиты самому себе",
-	"INVALID_AMOUNT": "Укажите сумму",
-	"ENOUGH_MONEY": "У вас нет {{amount}}",
-	"SUCCESS": "Вы отправили {{user}} {{amount}}!"
+	"BOT_USER": "Bots don't need money B)",
+	"YOURSELF": "You cannot transfer credits to yourself",
+	"INVALID_AMOUNT": "Please specify an amount",
+	"ENOUGH_MONEY": "You don't have {{amount}}",
+	"SUCCESS": "You have sent {{amount}} to {{user}}!"
 }

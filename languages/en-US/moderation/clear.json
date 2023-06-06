@@ -1,11 +1,11 @@
 {
-	"DESCRIPTION": "Очистка сообщений в канале",
+	"DESCRIPTION": "Clears messages in a channel",
 	"USAGE": "[option] (@user)",
 	"EXAMPLES": "clear option:10\nclear option:10 user:@Jonny_Bro#4226\nclear option:all",
-	"OPTION": "Целое число / all",
-	"REQUIRE_ID_USER": "Укажите пользователя или ID",
-	"ALL_CONFIRM": "**Все сообщения в канале будут удалены! Вы уверены?**",
-	"CHANNEL_CLEARED": "Канал очищен",
-	"CLEARED": "Было удалено {{amount}}",
-	"CLEARED_MEMBER": "Было удалено {{amount}} от {{user}}"
+	"OPTION": "Integer / all",
+	"REQUIRE_ID_USER": "Specify a user or ID",
+	"ALL_CONFIRM": "**All messages in the channel will be deleted! Are you sure?**",
+	"CHANNEL_CLEARED": "Channel cleared",
+	"CLEARED": "{{amount}} messages were deleted",
+	"CLEARED_MEMBER": "{{amount}} messages were deleted from {{user}}"
 }

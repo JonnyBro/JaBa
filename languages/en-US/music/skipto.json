@@ -1,9 +1,9 @@
 {
-	"DESCRIPTION": "Перейти на заданный трек",
+	"DESCRIPTION": "Jumps to a specified track",
 	"USAGE": "[position]",
 	"EXAMPLES": "skipto position:3",
-	"POSITION": "Номер трека в очереди",
-	"SUCCESS": "Выполнен переход на трек под номером **{{position}}**",
-	"ERROR": "На позиции {{position}} ничего не найдено",
-	"NO_PREV_SONG": "Вы не можете перейти назад, для этого используйте команду `back`"
+	"POSITION": "Track number in the queue",
+	"SUCCESS": "Jumped to track number **{{position}}**",
+	"ERROR": "Nothing found at position {{position}}",
+	"NO_PREV_SONG": "You cannot go back, use the `back` command for that"
 }

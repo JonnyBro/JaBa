@@ -1,13 +1,13 @@
 {
-	"DESCRIPTION": "Позволяет изменять данные пользователя",
+	"DESCRIPTION": "Allows you to modify user's data",
 	"USAGE": "[set/add] [type] [@user] [int]",
-	"EXAMPLES": "debug set type:Уровень user:@Jonny_Bro#4226 int:100",
-	"TYPE": "Тип данных",
-	"SET": "Установить значение",
-	"ADD": "Добавить к значению",
-	"SUCCESS_LEVEL": "Уровень пользователя **{{user}}** изменён на **{{amount}}**",
-	"SUCCESS_XP": "XP пользователя **{{user}}** изменён на **{{amount}}**",
-	"SUCCESS_CREDITS": "Кредиты пользователя **{{user}}** изменены на **{{amount}}**",
-	"SUCCESS_BANK": "Банк пользователя **{{user}}** изменён на **{{amount}}**",
-	"SUCCESS_REP": "Очки репутации пользователя **{{user}}** изменены на **{{amount}}**"
+	"EXAMPLES": "debug set type:Level user:@Jonny_Bro#4226 int:100",
+	"TYPE": "Type of data",
+	"SET": "Set the value",
+	"ADD": "Add to the value",
+	"SUCCESS_LEVEL": "Level of user **{{user}}** changed to **{{amount}}**",
+	"SUCCESS_XP": "XP of user **{{user}}** changed to **{{amount}}**",
+	"SUCCESS_CREDITS": "Credits of user **{{user}}** changed to **{{amount}}**",
+	"SUCCESS_BANK": "Bank of user **{{user}}** changed to **{{amount}}**",
+	"SUCCESS_REP": "Reputation points of user **{{user}}** changed to **{{amount}}**"
 }

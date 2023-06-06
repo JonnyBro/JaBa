@@ -1,7 +1,7 @@
 {
-	"DESCRIPTION": "Показать пинг бота",
+	"DESCRIPTION": "Shows the bot's ping",
 	"USAGE": "",
 	"EXAMPLES": "ping",
-	"PONG": "Понг!",
-	"PING": "Мой пинг - **{{ping}}**ms"
+	"PONG": "Pong!",
+	"PING": "My ping is **{{ping}}**ms"
 }

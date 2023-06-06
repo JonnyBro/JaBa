@@ -1,6 +1,6 @@
 {
-	"DESCRIPTION": "Остановить воспроизведение очереди",
+	"DESCRIPTION": "Stops and removes the queue",
 	"USAGE": "",
 	"EXAMPLES": "stop",
-	"SUCCESS": "Воспроизведение остановлено"
+	"SUCCESS": "Playback stopped"
 }

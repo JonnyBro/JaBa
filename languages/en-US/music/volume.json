@@ -1,6 +1,6 @@
 {
-	"DESCRIPTION": "Установить громкость бота",
+	"DESCRIPTION": "Sets the volume of the bot",
 	"USAGE": "[int]",
 	"EXAMPLES": "volume 50",
-	"SUCCESS": "Громкость установлена на **{{volume}}**"
+	"SUCCESS": "Volume set to **{{volume}}**"
 }

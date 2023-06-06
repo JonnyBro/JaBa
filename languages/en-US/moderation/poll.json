@@ -1,11 +1,11 @@
 {
-	"DESCRIPTION": "Запустить опрос в текущем канале",
+	"DESCRIPTION": "Starts a poll in the current channel",
 	"USAGE": "[question]",
-	"EXAMPLES": "poll question:Земля плоская?",
-	"QUESTION": "Текст вопроса",
-	"NOTHING": "Без упоминания",
-	"SELECT_MENTION": "Выберите упоминание:",
-	"POLL_SENDED": "Опрос отправлен",
-	"REACT": "Отреагируйте {{success}} или {{error}}!",
-	"TITLE": "📊 Опрос:"
+	"EXAMPLES": "poll question:Is the Earth flat?",
+	"QUESTION": "Question text",
+	"NOTHING": "No mention",
+	"SELECT_MENTION": "Select a mention:",
+	"POLL_SENDED": "Poll sent",
+	"REACT": "React with {{success}} or {{error}}!",
+	"TITLE": "📊 Poll:"
 }

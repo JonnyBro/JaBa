@@ -1,7 +1,7 @@
 {
-	"DESCRIPTION": "Включить или отключить автоудаление команд модерации",
+	"DESCRIPTION": "Toggles automatic deletion of moderation commands",
 	"USAGE": "[state]",
 	"EXAMPLES": "deletemod state:True\ndeletemod state:False",
-	"ENABLED": "Автоудаление команд модерации включено",
-	"DISABLED": "Автоудаление команд модерации отключено"
+	"ENABLED": "Automatic deletion of moderation commands is enabled",
+	"DISABLED": "Automatic deletion of moderation commands is disabled"
 }

@@ -11,8 +11,8 @@ class Number extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("number")
-				.setDescription(client.translate("economy/number:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("economy/number:DESCRIPTION", null, "uk-UA") })
+				.setDescription(client.translate("fun/number:DESCRIPTION"))
+				.setDescriptionLocalizations({ "uk": client.translate("fun/number:DESCRIPTION", null, "uk-UA") })
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
@@ -33,12 +33,12 @@ class Number extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
-		if (currentGames[interaction.guildId]) return interaction.error("economy/number:GAME_RUNNING");
+		if (currentGames[interaction.guildId]) return interaction.error("fun/number:GAME_RUNNING");
 
 		const participants = [],
 			number = client.functions.randomNum(1000, 5000);
 
-		await interaction.replyT("economy/number:GAME_START");
+		await interaction.replyT("fun/number:GAME_START");
 
 		const gameCreatedAt = Date.now();
 
@@ -59,7 +59,7 @@ class Number extends BaseCommand {
 			if (parsedNumber === number) {
 				const time = client.functions.convertTime(client, gameCreatedAt, false, false, data.guildData.language);
 				interaction.channel.send({
-					content: interaction.translate("economy/number:GAME_STATS", {
+					content: interaction.translate("fun/number:GAME_STATS", {
 						winner: msg.author.toString(),
 						number,
 						time,
@@ -72,7 +72,7 @@ class Number extends BaseCommand {
 					const won = 100 * (participants.length * 0.5);
 
 					interaction.channel.send({
-						content: interaction.translate("economy/number:WON", {
+						content: interaction.translate("fun/number:WON", {
 							winner: msg.author.username,
 							credits: `**${won}** ${client.functions.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 						}),
@@ -99,17 +99,17 @@ class Number extends BaseCommand {
 			}
 
 			if (parseInt(msg.content) < number) msg.reply({
-				content: interaction.translate("economy/number:TOO_BIG", { user: msg.author.toString(), number: parsedNumber }),
+				content: interaction.translate("fun/number:TOO_BIG", { user: msg.author.toString(), number: parsedNumber }),
 			});
 			if (parseInt(msg.content) > number) msg.reply({
-				content: interaction.translate("economy/number:TOO_SMALL", { user: msg.author.toString(), number: parsedNumber }),
+				content: interaction.translate("fun/number:TOO_SMALL", { user: msg.author.toString(), number: parsedNumber }),
 			});
 		});
 
 		collector.on("end", (_, reason) => {
 			delete currentGames[interaction.guildId];
-			if (reason === "time") return interaction.editReply({ content: interaction.translate("economy/number:DEFEAT", { number }) });
-			else if (reason === "force") return interaction.editReply({ content: interaction.translate("misc:FORCE_STOP", { user: interaction.member.toString() }) });
+			if (reason === "time") return interaction.editReply({ content: interaction.translate("fun/number:DEFEAT", { number }) });
+			else if (reason === "force") return interaction.editReply({ content: interaction.translate("misc:FORCE_STOP", { user: interaction.member.toString(), number }) });
 		});
 	}
 }

@@ -1,8 +1,8 @@
 {
-	"DESCRIPTION": "Список участников, которые дали буст серверу",
+	"DESCRIPTION": "Lists members who have boosted the server",
 	"USAGE": "",
 	"EXAMPLES": "boosters",
-	"BOOSTERS_LIST": "Список бустеров",
-	"NO_BOOSTERS": "Бусты отсутствуют",
-	"BOOSTER_SINCE": "Буст с"
+	"BOOSTERS_LIST": "Boosters List",
+	"NO_BOOSTERS": "No boosters",
+	"BOOSTER_SINCE": "Boosted since"
 }

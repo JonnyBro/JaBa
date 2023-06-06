@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Получить NSFW изображение",
+	"DESCRIPTION": "Sends NSFW image",
 	"USAGE": "",
 	"EXAMPLES": "nsfw"
 }

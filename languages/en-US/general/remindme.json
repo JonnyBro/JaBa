@@ -1,9 +1,9 @@
 {
-	"DESCRIPTION": "Создать напоминание",
+	"DESCRIPTION": "Creates a reminder",
 	"USAGE": "[time] [message]",
-	"EXAMPLES": "remindme time:12h message:Использовать команду work\nremindme time:5m message:Достать курицу из морозилки!",
-	"TIME": "Время (Например: 10s, 5m, 2h, 1d, 3w)",
-	"SAVED": "Напоминание `{{message}}` сохранено **{{time}}**",
-	"TITLE": "Напоминание от JaBa",
-	"CREATED": "Напоминание создано: **{{time}}**"
+	"EXAMPLES": "remindme time:12h message:Use the command 'work'\nremindme time:5m message:Get the chicken from the freezer!",
+	"TIME": "Time (e.g., 10s, 5m, 2h, 1d, 3w)",
+	"SAVED": "Reminder `{{message}}` saved for **{{time}}**",
+	"TITLE": "Reminder from JaBa",
+	"CREATED": "Reminder created for: **{{time}}**"
 }

@@ -1,6 +1,6 @@
 {
-	"DESCRIPTION": "Создать LMGTFY (давай я загуглю это для тебя) ссылку",
+	"DESCRIPTION": "Creates an LMGTFY (Let Me Google That For You) link",
 	"USAGE": "[query] [short]",
-	"QUERY": "Запрос",
-	"EXAMPLES": "lmgtfy query:Как создать Discord бота? short:False"
+	"QUERY": "Query",
+	"EXAMPLES": "lmgtfy query:How to create a Discord bot? short:False"
 }

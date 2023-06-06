@@ -1,7 +1,7 @@
 {
-	"DESCRIPTION": "Получить мем с выбранного сабреддита",
+	"DESCRIPTION": "Gets a meme from a selected subreddit",
 	"USAGE": "",
 	"EXAMPLES": "memes",
-	"SUBREDDIT": "Сабреддит",
-	"UPS": "Апвоуты"
+	"SUBREDDIT": "Subreddit",
+	"UPS": "Upvotes"
 }
