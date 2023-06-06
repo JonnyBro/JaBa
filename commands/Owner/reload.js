@@ -46,7 +46,7 @@ class Reload extends BaseCommand {
 		await client.unloadCommand(`../commands/${cmd.category}`, cmd.command.name);
 		await client.loadCommand(`../commands/${cmd.category}`, cmd.command.name);
 
-		i18next.reloadResources(["ru-RU", "uk-UA"]);
+		i18next.reloadResources(["ru-RU", "uk-UA", "en-US"]);
 		autoUpdateDocs.update(client);
 
 		interaction.success("owner/reload:SUCCESS", {
