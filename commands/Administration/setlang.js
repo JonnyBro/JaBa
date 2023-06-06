@@ -19,6 +19,7 @@ class Setlang extends BaseCommand {
 					.setDescriptionLocalizations({ "uk": client.translate("common:LANGUAGE", null, "uk-UA") })
 					.setRequired(true)
 					.setChoices(
+						{ name: "English", value: "en-US" },
 						{ name: "Русский", value: "ru-RU" },
 						{ name: "Українська", value: "uk-UA" },
 					)),
