@@ -76,7 +76,7 @@ class Stats extends BaseCommand {
 				{
 					name: client.customEmojis.voice + " " + interaction.translate("general/stats:MUSIC_TITLE"),
 					value: interaction.translate("general/stats:MUSIC_CONTENT", {
-						count: `${client.player.queues.size} ${client.functions.getNoun(client.player.queues.size, interaction.translate("misc:NOUNS:SERVERS:1"), interaction.translate("misc:NOUNS:SERVERS:2"), interaction.translate("misc:NOUNS:SERVERS:5"))}`,
+						count: `${client.player.nodes.cache.size} ${client.functions.getNoun(client.player.nodes.cache.size, interaction.translate("misc:NOUNS:SERVERS:1"), interaction.translate("misc:NOUNS:SERVERS:2"), interaction.translate("misc:NOUNS:SERVERS:5"))}`,
 					}),
 				},
 				{

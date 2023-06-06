@@ -9,7 +9,7 @@
 	"ONLINE_TITLE": "• __Online__",
 	"ONLINE_CONTENT": "Been online for {{time}}",
 	"MUSIC_TITLE": "• __Music__",
-	"MUSIC_CONTENT": "Playing music on {{count}} servers",
+	"MUSIC_CONTENT": "Playing music on {{count}}",
 	"CREDITS_TITLE": ":heart: • __Additional Information__",
 	"CREDITS_CONTENT": "__**Contributors**__:\n**`Добрый Спецназ`** - Tester, idea generator\n__**Translators**__:\n**`@[ДАННЫЕ УДАЛЕНЫ]`** - :flag_ua:",
 	"LINKS_TITLE": "• __Links__",
