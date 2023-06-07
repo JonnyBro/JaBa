@@ -56,7 +56,7 @@ class MessageCreate extends BaseEvent {
 				const embed = new EmbedBuilder()
 					.setAuthor({
 						name: message.translate("misc:QUOTE_TITLE", {
-							user: msg.author.tag,
+							user: msg.author.discriminator === "0" ? msg.author.username : msg.author.tag,
 						}),
 						iconURL: "https://wynem.com/assets/images/icons/quote.webp",
 					})
@@ -71,7 +71,7 @@ class MessageCreate extends BaseEvent {
 						},
 					])
 					.setFooter({
-						text: message.translate("misc:QUOTE_FOOTER", { user: message.author.tag }),
+						text: message.translate("misc:QUOTE_FOOTER", { user: message.author.discriminator === "0" ? message.author.username : message.author.tag }),
 					})
 					.setColor(client.config.embed.color)
 					.setTimestamp(msg.createdTimestamp);
@@ -122,7 +122,7 @@ class MessageCreate extends BaseEvent {
 				const userData = await client.findOrCreateUser({
 					id: u.id,
 				});
-				if (userData.afk) message.replyT("general/afk:IS_AFK", { user: u.tag, reason: userData.afk }, { ephemeral: true });
+				if (userData.afk) message.replyT("general/afk:IS_AFK", { user: u.discriminator === "0" ? u.username : u.tag, reason: userData.afk }, { ephemeral: true });
 			});
 		}
 

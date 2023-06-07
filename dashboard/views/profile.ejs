@@ -32,7 +32,7 @@
 						<div class="box box-widget widget-user">
 							<!-- Add the bg color to the header using any of the bg-* classes -->
 							<div class="widget-user-header bg-red">
-								<h3 class="widget-user-username"><%= user.tag %></h3>
+								<h3 class="widget-user-username"><%= user.discriminator === "0" ? user.username : user.tag %></h3>
 							</div>
 							<div class="widget-user-image">
 								<img class="img-circle" src="<%= user.displayAvatarURL %>" alt="User Avatar">
@@ -68,8 +68,9 @@
 										<div class="description-block">
 											<h5 class="description-header">
 												<%= translate("economy/profile:LOVER").substr(2) %></h5>
+												<% const lover = bot.users.cache.get(user.lover) %>
 												<span
-											class="description-text"><%= !user.lover ? translate("economy/profile:NO_LOVER") : bot.users.cache.get(user.lover).tag %></span>
+											class="description-text"><%= !user.lover ? translate("economy/profile:NO_LOVER") : lover.discriminator === "0" ? lover.username : lover.tag %></span>
 										</div>
 										<!-- /.description-block -->
 									</div>

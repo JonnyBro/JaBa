@@ -60,6 +60,8 @@ class Profile extends BaseCommand {
 			globalMoney += data.money + data.bankSold;
 		});
 
+		const lover = client.users.cache.get(userData.lover);
+
 		const profileEmbed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("economy/profile:TITLE", {
@@ -119,7 +121,7 @@ class Profile extends BaseCommand {
 				},
 				{
 					name: interaction.translate("economy/profile:LOVER"),
-					value: (!userData.lover ? interaction.translate("common:NOT_DEFINED") : client.users.cache.get(userData.lover).tag),
+					value: (!userData.lover ? interaction.translate("common:NOT_DEFINED") : lover.discriminator === "0" ? lover.username : lover.tag),
 					inline: true,
 				},
 				{

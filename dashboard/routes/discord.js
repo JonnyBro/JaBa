@@ -87,7 +87,7 @@ router.get("/callback", async (req, res) => {
 		const embed = new Discord.EmbedBuilder()
 			.setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
 			.setColor(req.client.config.embed.color)
-			.setDescription(req.client.translate("dashboard:FIRST_LOGIN", { user: user.tag }));
+			.setDescription(req.client.translate("dashboard:FIRST_LOGIN", { user: user.discriminator === "0" ? user.username : user.tag }));
 
 		logsChannel.send({ embeds: [embed] });
 

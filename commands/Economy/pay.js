@@ -62,7 +62,7 @@ class Pay extends BaseCommand {
 		memberData.save();
 
 		const info1 = {
-			user: member.user.tag,
+			user: member.user.discriminator === "0" ? member.user.username : member.user.tag,
 			amount: amount,
 			date: Date.now(),
 			type: "send",
@@ -70,7 +70,7 @@ class Pay extends BaseCommand {
 		data.memberData.transactions.push(info1);
 
 		const info2 = {
-			user: member.user.tag,
+			user: member.user.discriminator === "0" ? member.user.username : member.user.tag,
 			amount: amount,
 			date: Date.now(),
 			type: "got",

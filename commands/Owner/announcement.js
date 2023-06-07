@@ -55,7 +55,7 @@ class Announcement extends BaseCommand {
 			.setDescription(text)
 			.setColor(client.config.embed.color)
 			.setFooter({
-				text: interaction.user.tag,
+				text: interaction.user.discriminator === "0" ? interaction.user.username : interaction.user.tag,
 			})
 			.setTimestamp();
 

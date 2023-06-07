@@ -43,7 +43,7 @@ class Suggest extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("general/suggest:TITLE", {
-					user: interaction.user.tag,
+					user: interaction.user.discriminator === "0" ? interaction.user.username : interaction.user.tag,
 				}),
 				iconURL: interaction.member.displayAvatarURL(),
 			})

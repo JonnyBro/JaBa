@@ -24,7 +24,7 @@ class Ready extends BaseEvent {
 		tUsers = tUsers - hiddenGuildMembersCount;
 
 		client.logger.log(`Loaded a total of ${commands.length} command(s).`, "ready");
-		client.logger.log(`${client.user.tag}, ready to serve ${tUsers} members in ${tServers} servers.`, "ready");
+		client.logger.log(`${client.user.discriminator === "0" ? client.user.username : client.user.tag}, ready to serve ${tUsers} members in ${tServers} servers.`, "ready");
 		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: [ PermissionsBitField.Flags.Administrator ] })}`, "ready");
 		console.timeEnd("botReady");
 

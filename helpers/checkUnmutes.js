@@ -42,7 +42,7 @@ module.exports.init = async function (client) {
 				const embed = new EmbedBuilder()
 					.setDescription(guild.translate("moderation/unmute:SUCCESS_CASE", {
 						user: user.toString(),
-						usertag: user.tag,
+						usertag: user.discriminator === "0" ? user.username : user.tag,
 						count: memberData.mute.case,
 					}))
 					.setColor("#F44271")

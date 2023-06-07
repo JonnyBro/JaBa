@@ -41,7 +41,7 @@ class GuildMemberRemove extends BaseEvent {
 			const channel = member.guild.channels.cache.get(guildData.plugins.goodbye.channel);
 			if (channel) {
 				const message = guildData.plugins.goodbye.message
-					.replace(/{user}/g, member.user.tag)
+					.replace(/{user}/g, member.user.discriminator === "0" ? member.user.username : member.user.tag)
 					.replace(/{server}/g, member.guild.name)
 					.replace(/{membercount}/g, member.guild.memberCount);
 				if (guildData.plugins.goodbye.withImage) {
@@ -86,7 +86,7 @@ class GuildMemberRemove extends BaseEvent {
 
 					// Draw discriminator
 					ctx.font = "35px RubikMonoOne";
-					ctx.fillText(member.user.discriminator, canvas.width - 623, canvas.height - 178);
+					ctx.fillText(member.user.discriminator === "0" ? "" : member.user.discriminator, canvas.width - 623, canvas.height - 178);
 
 					// Draw membercount
 					ctx.font = "22px RubikMonoOne";

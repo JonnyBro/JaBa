@@ -64,15 +64,16 @@ async function tictactoe(interaction, options = {}) {
 					});
 			}
 
-			const foot = options.embedFoot ? { text: options.embedFoot } : { text: "Удачи =)" };
+			const foot = options.embedFoot ? { text: options.embedFoot } : { text: "Удачи =)" },
+				user = interaction.user ? interaction.user : interaction.author
 
 			const acceptEmbed = new EmbedBuilder()
 				.setTitle(interaction.translate("fun/tictactoe:REQUEST_WAIT", {
-					user: opponent.tag,
+					user: opponent.discriminator === "0" ? opponent.username : opponent.tag,
 				}))
 				.setAuthor({
-					name: (interaction.user ? interaction.user : interaction.author).tag,
-					iconURL: (interaction.user ? interaction.user : interaction.author).displayAvatarURL(),
+					name: user.discriminator === "0" ? user.username : user.tag,
+					iconURL: user.displayAvatarURL(),
 				})
 				.setColor(options.embedColor || "#075FFF")
 				.setFooter(foot)
@@ -831,8 +832,8 @@ async function tictactoe(interaction, options = {}) {
 					const embed = new EmbedBuilder()
 						.setTitle(interaction.translate("fun/tictactoe:NO_ANSWER_TITLE"))
 						.setAuthor({
-							name: (interaction.user ? interaction.user : interaction.author).tag,
-							iconURL: (interaction.user ? interaction.user : interaction.author).displayAvatarURL(),
+							name: user.discriminator === "0" ? user.username : user.tag,
+							iconURL: user.displayAvatarURL(),
 						})
 						.setColor(options.timeoutEmbedColor || "#C90000")
 						.setFooter(foot)
@@ -850,8 +851,8 @@ async function tictactoe(interaction, options = {}) {
 					const embed = new EmbedBuilder()
 						.setTitle(interaction.translate("fun/tictactoe:CANCELED"))
 						.setAuthor({
-							name: (interaction.user ? interaction.user : interaction.author).tag,
-							iconURL: (interaction.user ? interaction.user : interaction.author).displayAvatarURL(),
+							name: user.discriminator === "0" ? user.username : user.tag,
+							iconURL: user.displayAvatarURL(),
 						})
 						.setColor(options.timeoutEmbedColor || "#C90000")
 						.setFooter(foot)

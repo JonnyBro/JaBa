@@ -101,7 +101,7 @@ class GuildMemberAdd extends BaseEvent {
 
 					// Draw discriminator
 					ctx.font = "35px RubikMonoOne";
-					ctx.fillText(member.user.discriminator, canvas.width - 623, canvas.height - 178);
+					ctx.fillText(member.user.discriminator === "0" ? "" : member.user.discriminator, canvas.width - 623, canvas.height - 178);
 
 					// Draw membercount
 					ctx.font = "22px RubikMonoOne";

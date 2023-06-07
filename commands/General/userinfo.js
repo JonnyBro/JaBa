@@ -38,7 +38,7 @@ class Userinfo extends BaseCommand {
 		const member = interaction.options.getMember("user") || interaction.member;
 		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: `${member.user.tag} (${member.id})`,
+				name: `${member.user.discriminator === "0" ? member.user.username : member.user.tag} (${member.id})`,
 				iconURL: member.displayAvatarURL(),
 			})
 			.setThumbnail(member.displayAvatarURL({
@@ -47,7 +47,7 @@ class Userinfo extends BaseCommand {
 			.addFields([
 				{
 					name: ":man: " + interaction.translate("common:USERNAME"),
-					value: member.user.tag,
+					value: member.user.discriminator === "0" ? member.user.username : member.user.tag,
 					inline: true,
 				},
 				{

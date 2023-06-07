@@ -49,7 +49,7 @@ class Report extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("general/report:TITLE", {
-					user: member.user.tag,
+					user: member.user.discriminator === "0" ? member.user.username : member.user.tag,
 				}),
 				iconURL: interaction.user.displayAvatarURL({
 					extension: "png",

@@ -125,7 +125,7 @@ class Clear extends BaseCommand {
 			if (member || user_id) {
 				interaction.replyT("moderation/clear:CLEARED_MEMBER", {
 					amount: `**${option}** ${client.functions.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`,
-					user: (member?.user.tag || user_id),
+					user: (member?.user.discriminator === "0" ? member?.user.username : member?.user.tag || user_id),
 				}, { edit: true });
 			} else {
 				interaction.replyT("moderation/clear:CLEARED", {

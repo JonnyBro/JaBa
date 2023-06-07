@@ -8,7 +8,7 @@
 				<img src="<%= user.displayAvatarURL %>" class="img-circle" alt="User Image">
 			</div>
 			<div class="pull-left info">
-				<p><%= user.tag %></p>
+				<p><%= user.discriminator === "0" ? user.username : user.tag %></p>
 				<!-- <a href="#"><i class="fa fa-circle text-<%=// user.status === "dnd" ? "danger" : user.status === "idle" ? "warning" : user.status === "online" ? "success" : ""%>"></i>
 					<%=// translate("common:STATUS_" + user.status.toUpperCase()) %>
 				</a> -->
