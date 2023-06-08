@@ -8,7 +8,7 @@
 [![](https://www.codefactor.io/repository/github/JonnyBro/JaBa/badge)](https://www.codefactor.io/repository/github/JonnyBro/JaBa)
 [![](https://img.shields.io/github/license/JonnyBro/JaBa?label=%D0%9B%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F%20&style=flat-square)](https://github.com/JonnyBro/JaBa/blob/main/LICENSE)
 
-JaBa это *Discord* бот с открытым (теперь) исходным кодом, написанный [Jonny_Bro](https://github.com/JonnyBro) ([Discord](discord://discordapp.com/users/281361531411890186)) на JavaScript с помощью [discord.js](https://github.com/discordjs/discord.js) и [Mongoose](https://mongoosejs.com).\
+JaBa это *Discord* бот с открытым (теперь) исходным кодом, написанный [Jonny_Bro](https://github.com/JonnyBro) на JavaScript с помощью [discord.js](https://github.com/discordjs/discord.js) и [Mongoose](https://mongoosejs.com).\
 Поставьте звёздочку если вам нравится что я делаю :3
 
 ## Функционал
