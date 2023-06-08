@@ -48,8 +48,9 @@ class MessageCreate extends BaseEvent {
 			await updateXp(client, message, data);
 
 			if (message.content.includes("discord.com/channels/")) {
-				const ids = message.content.match(/\d+/g);
-				const channelId = ids[1],
+				const link = message.content.match(/(https|http):\/\/(discord.com)\/(channels)\/\d+\/\d+\/\d+/g)[0],
+					ids = link.match(/\d+/g),
+					channelId = ids[1],
 					messageId = ids[2];
 
 				const msg = await client.channels.cache.get(channelId).messages.fetch(messageId);
