@@ -11,12 +11,18 @@ class Help extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("help")
 				.setDescription(client.translate("general/help:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("general/help:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("general/help:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("general/help:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(true)
 				.addStringOption(option =>
 					option.setName("command")
 						.setDescription(client.translate("common:COMMAND"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:COMMAND", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:COMMAND", null, "uk-UA"),
+							"ru": client.translate("common:COMMAND", null, "ru-RU"),
+						})
 						.setAutocomplete(true)),
 			aliases: [],
 			dirname: __dirname,

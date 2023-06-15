@@ -13,15 +13,24 @@ class Remindme extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("remindme")
 				.setDescription(client.translate("general/remindme:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("general/remindme:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("general/remindme:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("general/remindme:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("time")
 					.setDescription(client.translate("general/remindme:TIME"))
-					.setDescriptionLocalizations({ "uk": client.translate("general/remindme:TIME", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("general/remindme:TIME", null, "uk-UA"),
+						"ru": client.translate("general/remindme:TIME", null, "ru-RU"),
+					})
 					.setRequired(true))
 				.addStringOption(option => option.setName("message")
 					.setDescription(client.translate("common:MESSAGE"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:MESSAGE", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:MESSAGE", null, "uk-UA"),
+						"ru": client.translate("common:MESSAGE", null, "ru-RU"),
+					})
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

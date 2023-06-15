@@ -11,11 +11,17 @@ class Userinfo extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("userinfo")
 				.setDescription(client.translate("general/userinfo:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("general/userinfo:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("general/userinfo:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("general/userinfo:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })),
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:USER", null, "uk-UA"),
+						"ru": client.translate("common:USER", null, "ru-RU"),
+					})),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

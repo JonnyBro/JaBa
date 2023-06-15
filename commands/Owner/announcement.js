@@ -11,19 +11,31 @@ class Announcement extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("announcement")
 				.setDescription(client.translate("owner/announcement:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("owner/announcement:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("owner/announcement:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("owner/announcement:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("message")
 					.setDescription(client.translate("common:MESSAGE"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:MESSAGE", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:MESSAGE", null, "uk-UA"),
+						"ru": client.translate("common:MESSAGE", null, "ru-RU"),
+					})
 					.setRequired(true))
 				.addBooleanOption(option => option.setName("tag")
 					.setDescription(client.translate("owner/announcement:TAG"))
-					.setDescriptionLocalizations({ "uk": client.translate("owner/announcement:TAG", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("owner/announcement:TAG", null, "uk-UA"),
+						"ru": client.translate("owner/announcement:TAG", null, "ru-RU"),
+					})
 					.setRequired(true))
 				.addBooleanOption(option => option.setName("important")
 					.setDescription(client.translate("owner/announcement:IMPORTANT"))
-					.setDescriptionLocalizations({ "uk": client.translate("owner/announcement:IMPORTANT", null, "uk-UA") })),
+					.setDescriptionLocalizations({
+						"uk": client.translate("owner/announcement:IMPORTANT", null, "uk-UA"),
+						"ru": client.translate("owner/announcement:IMPORTANT", null, "ru-RU"),
+					})),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: true,

@@ -13,11 +13,17 @@ class Clips extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("clips")
 				.setDescription(client.translate("music/clips:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("music/clips:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("music/clips:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("music/clips:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addStringOption(option => option.setName("query")
 					.setDescription(client.translate("music/clips:QUERY"))
-					.setDescriptionLocalizations({ "uk": client.translate("music/clips:QUERY", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("music/clips:QUERY", null, "uk-UA"),
+						"ru": client.translate("music/clips:QUERY", null, "ru-RU"),
+					})
 					.setRequired(true)
 					.setAutocomplete(true)),
 			aliases: [],

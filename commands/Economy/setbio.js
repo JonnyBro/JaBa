@@ -11,11 +11,17 @@ class Setbio extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("setbio")
 				.setDescription(client.translate("economy/setbio:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("economy/setbio:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("economy/setbio:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("economy/setbio:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("text")
 					.setDescription(client.translate("economy/profile:BIO"))
-					.setDescriptionLocalizations({ "uk": client.translate("economy/profile:BIO", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("economy/profile:BIO", null, "uk-UA"),
+						"ru": client.translate("economy/profile:BIO", null, "ru-RU"),
+					})
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

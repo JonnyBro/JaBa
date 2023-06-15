@@ -11,16 +11,22 @@ class Leaderboard extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("leaderboard")
 				.setDescription(client.translate("economy/leaderboard:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("economy/leaderboard:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("economy/leaderboard:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("economy/leaderboard:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addStringOption(option => option.setName("type")
 					.setDescription(client.translate("owner/debug:TYPE"))
-					.setDescriptionLocalizations({ "uk": client.translate("owner/debug:TYPE", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("owner/debug:TYPE", null, "uk-UA"),
+						"ru": client.translate("owner/debug:TYPE", null, "ru-RU"),
+					})
 					.setRequired(true)
 					.setChoices(
-						{ name: client.translate("economy/leaderboard:LEVEL"), value: "level" },
-						{ name: client.translate("economy/leaderboard:MONEY"), value: "money" },
-						{ name: client.translate("economy/leaderboard:REP"), value: "rep" },
+						{ name: client.translate("common:LEVEL"), value: "level" },
+						{ name: client.translate("common:MONEY"), value: "money" },
+						{ name: client.translate("common:REP"), value: "rep" },
 					)),
 			aliases: [],
 			dirname: __dirname,

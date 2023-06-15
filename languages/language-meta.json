@@ -1,23 +1,23 @@
 [
 	{
+		"name": "en-US",
+		"nativeName": "English",
+		"moment": "en",
+		"defaultMomentFormat": "MMMM Do YYYY",
+		"default": true
+	},
+	{
 		"name": "ru-RU",
 		"nativeName": "Русский",
 		"moment": "ru",
 		"defaultMomentFormat": "Do MMMM YYYY",
-		"default": true
+		"default": false
 	},
 	{
 		"name": "uk-UA",
 		"nativeName": "Українська",
 		"moment": "uk",
 		"defaultMomentFormat": "Do MMMM YYYY",
-		"default": false
-	},
-	{
-		"name": "en-US",
-		"nativeName": "English",
-		"moment": "en",
-		"defaultMomentFormat": "MMMM Do YYYY",
 		"default": false
 	}
 ]

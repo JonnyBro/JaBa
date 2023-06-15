@@ -12,7 +12,10 @@ class Memes extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("memes")
 				.setDescription(client.translate("fun/memes:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("fun/memes:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("fun/memes:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("fun/memes:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,

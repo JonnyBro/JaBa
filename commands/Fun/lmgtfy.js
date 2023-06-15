@@ -12,15 +12,24 @@ class LMGTFY extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("lmgtfy")
 				.setDescription(client.translate("fun/lmgtfy:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("fun/lmgtfy:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("fun/lmgtfy:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("fun/lmgtfy:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("query")
 					.setDescription(client.translate("fun/lmgtfy:QUERY"))
-					.setDescriptionLocalizations({ "uk": client.translate("fun/lmgtfy:QUERY", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("fun/lmgtfy:QUERY", null, "uk-UA"),
+						"ru": client.translate("fun/lmgtfy:QUERY", null, "ru-RU"),
+					})
 					.setRequired(true))
 				.addBooleanOption(option => option.setName("short")
 					.setDescription(client.translate("fun/lmgtfy:SHORT"))
-					.setDescriptionLocalizations({ "uk": client.translate("fun/lmgtfy:SHORT", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("fun/lmgtfy:SHORT", null, "uk-UA"),
+						"ru": client.translate("fun/lmgtfy:SHORT", null, "ru-RU"),
+					})
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
@@ -41,6 +50,8 @@ class LMGTFY extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		const query = interaction.options.getString("query").replace(/[' '_]/g, "+"),
 			short = interaction.options.getBoolean("short"),
 			url = `https://letmegooglethat.com/?q=${query}`;
@@ -48,14 +59,12 @@ class LMGTFY extends BaseCommand {
 		if (short) {
 			const res = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`).then(res => res.text());
 
-			interaction.reply({
+			interaction.editReply({
 				content: `<${res}>`,
-				ephemeral: true,
 			});
 		} else {
-			interaction.reply({
-				content: `\`\`\`<${url}>\`\`\``,
-				ephemeral: true,
+			interaction.editReply({
+				content: `<${url}>`,
 			});
 		}
 	}

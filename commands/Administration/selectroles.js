@@ -11,30 +11,52 @@ class Selectroles extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("selectroles")
 				.setDescription(client.translate("administration/selectroles:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("administration/selectroles:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("administration/selectroles:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("administration/selectroles:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addSubcommand(subcommand => subcommand.setName("message")
 					.setDescription(client.translate("administration/selectroles:MESSAGE"))
-					.setDescriptionLocalizations({ "uk": client.translate("administration/selectroles:MESSAGE", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("administration/selectroles:MESSAGE", null, "uk-UA"),
+						"ru": client.translate("administration/selectroles:MESSAGE", null, "ru-RU"),
+					})
 					.addStringOption(option => option.setName("text")
 						.setDescription(client.translate("common:MESSAGE"))
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:MESSAGE", null, "uk-UA"),
+							"ru": client.translate("common:MESSAGE", null, "ru-RU"),
+						})
 						.setRequired(true)),
 				)
 				.addSubcommand(subcommand => subcommand.setName("addrole")
 					.setDescription(client.translate("administration/selectroles:ADDROLE"))
-					.setDescriptionLocalizations({ "uk": client.translate("administration/selectroles:ADDROLE", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("administration/selectroles:ADDROLE", null, "uk-UA"),
+						"ru": client.translate("administration/selectroles:ADDROLE", null, "ru-RU"),
+					})
 					.addChannelOption(option => option.setName("channel")
 						.setDescription(client.translate("common:CHANNEL"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:CHANNEL", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:CHANNEL", null, "uk-UA"),
+							"ru": client.translate("common:CHANNEL", null, "ru-RU"),
+						})
 						.setRequired(true))
 					.addStringOption(option => option.setName("message_id")
 						.setDescription(client.translate("common:MESSAGE_ID"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:MESSAGE_ID", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:MESSAGE_ID", null, "uk-UA"),
+							"ru": client.translate("common:MESSAGE_ID", null, "ru-RU"),
+						})
 						.setRequired(true))
 					.addRoleOption(option => option.setName("role")
 						.setDescription(client.translate("common:ROLE"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:ROLE", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:ROLE", null, "uk-UA"),
+							"ru": client.translate("common:ROLE", null, "ru-RU"),
+						})
 						.setRequired(true)),
 				),
 			aliases: [],

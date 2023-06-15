@@ -11,14 +11,23 @@ class Debug extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("debug")
 				.setDescription(client.translate("owner/debug:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("owner/debug:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("owner/debug:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("owner/debug:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addSubcommand(subcommand => subcommand.setName("set")
 					.setDescription(client.translate("owner/debug:SET"))
-					.setDescriptionLocalizations({ "uk": client.translate("owner/debug:SET", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("owner/debug:SET", null, "uk-UA"),
+						"ru": client.translate("owner/debug:SET", null, "ru-RU"),
+					})
 					.addStringOption(option => option.setName("type")
 						.setDescription(client.translate("owner/debug:TYPE"))
-						.setDescriptionLocalizations({ "uk": client.translate("owner/debug:TYPE", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("owner/debug:TYPE", null, "uk-UA"),
+							"ru": client.translate("owner/debug:TYPE", null, "ru-RU"),
+						})
 						.setRequired(true)
 						.setChoices(
 							{ name: client.translate("common:LEVEL"), value: "level" },
@@ -29,19 +38,31 @@ class Debug extends BaseCommand {
 						))
 					.addUserOption(option => option.setName("user")
 						.setDescription(client.translate("common:USER"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:USER", null, "uk-UA"),
+							"ru": client.translate("common:USER", null, "ru-RU"),
+						})
 						.setRequired(true))
 					.addIntegerOption(option => option.setName("int")
 						.setDescription(client.translate("common:INT"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:INT", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:INT", null, "uk-UA"),
+							"ru": client.translate("common:INT", null, "ru-RU"),
+						})
 						.setRequired(true)),
 				)
 				.addSubcommand(subcommand => subcommand.setName("add")
 					.setDescription(client.translate("owner/debug:ADD"))
-					.setDescriptionLocalizations({ "uk": client.translate("owner/debug:ADD", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("owner/debug:ADD", null, "uk-UA"),
+						"ru": client.translate("owner/debug:ADD", null, "ru-RU"),
+					})
 					.addStringOption(option => option.setName("type")
 						.setDescription(client.translate("owner/debug:TYPE"))
-						.setDescriptionLocalizations({ "uk": client.translate("owner/debug:TYPE", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("owner/debug:TYPE", null, "uk-UA"),
+							"ru": client.translate("owner/debug:TYPE", null, "ru-RU"),
+						})
 						.setRequired(true)
 						.setChoices(
 							{ name: client.translate("common:LEVEL"), value: "level" },
@@ -52,11 +73,17 @@ class Debug extends BaseCommand {
 						))
 					.addUserOption(option => option.setName("user")
 						.setDescription(client.translate("common:USER"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:USER", null, "uk-UA"),
+							"ru": client.translate("common:USER", null, "ru-RU"),
+						})
 						.setRequired(true))
 					.addIntegerOption(option => option.setName("int")
 						.setDescription(client.translate("common:INT"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:INT", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:INT", null, "uk-UA"),
+							"ru": client.translate("common:INT", null, "ru-RU"),
+						})
 						.setRequired(true)),
 				),
 			aliases: [],

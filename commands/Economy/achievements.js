@@ -11,11 +11,17 @@ class Achievements extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("achievements")
 				.setDescription(client.translate("economy/achievements:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("economy/achievements:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("economy/achievements:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("economy/achievements:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })),
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:USER", null, "uk-UA"),
+						"ru": client.translate("common:USER", null, "ru-RU"),
+					})),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

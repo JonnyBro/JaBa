@@ -11,7 +11,10 @@ class Stop extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("stop")
 				.setDescription(client.translate("music/stop:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("music/stop:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("music/stop:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("music/stop:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,

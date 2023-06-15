@@ -11,19 +11,31 @@ class Clear extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("clear")
 				.setDescription(client.translate("moderation/clear:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("moderation/clear:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("moderation/clear:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("moderation/clear:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
 				.addStringOption(option => option.setName("option")
 					.setDescription(client.translate("moderation/clear:OPTION"))
-					.setDescriptionLocalizations({ "uk": client.translate("moderation/clear:OPTION", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("moderation/clear:OPTION", null, "uk-UA"),
+						"ru": client.translate("moderation/clear:OPTION", null, "ru-RU"),
+					})
 					.setRequired(true))
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") }))
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:USER", null, "uk-UA"),
+						"ru": client.translate("common:USER", null, "ru-RU"),
+					}))
 				.addStringOption(option => option.setName("id")
 					.setDescription(client.translate("common:USER_ID"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:USER_ID", null, "uk-UA") })),
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:USER_ID", null, "uk-UA"),
+						"ru": client.translate("common:USER_ID", null, "ru-RU"),
+					})),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

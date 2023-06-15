@@ -11,11 +11,17 @@ class Skipto extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("skipto")
 				.setDescription(client.translate("music/skipto:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("music/skipto:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("music/skipto:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("music/skipto:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addIntegerOption(option => option.setName("position")
 					.setDescription(client.translate("music/skipto:POSITION"))
-					.setDescriptionLocalizations({ "uk": client.translate("music/skipto:POSITION", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("music/skipto:POSITION", null, "uk-UA"),
+						"ru": client.translate("music/skipto:POSITION", null, "ru-RU"),
+					})
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
@@ -49,7 +55,7 @@ class Skipto extends BaseCommand {
 			queue.node.skipTo(queue.tracks.at(position - 1));
 
 			interaction.success("music/skipto:SUCCESS", {
-				position: position,
+				position,
 			});
 		} else return interaction.error("music/skipto:ERROR", { position: position });
 	}

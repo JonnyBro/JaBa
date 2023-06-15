@@ -11,12 +11,18 @@ class Set extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("set")
 				.setDescription(client.translate("administration/set:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("administration/set:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("administration/set:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("administration/set:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addStringOption(option => option.setName("type")
 					.setDescription(client.translate("owner/debug:TYPE"))
-					.setDescriptionLocalizations({ "uk": client.translate("owner/debug:TYPE", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("owner/debug:TYPE", null, "uk-UA"),
+						"ru": client.translate("owner/debug:TYPE", null, "ru-RU"),
+					})
 					.setRequired(true)
 					.setChoices(
 						{ name: client.translate("common:LEVEL"), value: "level" },
@@ -26,11 +32,17 @@ class Set extends BaseCommand {
 					))
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:USER", null, "uk-UA"),
+						"ru": client.translate("common:USER", null, "ru-RU"),
+					})
 					.setRequired(true))
 				.addIntegerOption(option => option.setName("int")
 					.setDescription(client.translate("common:INT"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:INT", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:INT", null, "uk-UA"),
+						"ru": client.translate("common:INT", null, "ru-RU"),
+					})
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

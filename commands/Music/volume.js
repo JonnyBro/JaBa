@@ -11,11 +11,17 @@ class Volume extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("volume")
 				.setDescription(client.translate("music/volume:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("music/volume:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("music/volume:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("music/volume:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addIntegerOption(option => option.setName("int")
 					.setDescription(client.translate("common:INT"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:INT", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:INT", null, "uk-UA"),
+						"ru": client.translate("common:INT", null, "ru-RU"),
+					})
 					.setRequired(true)
 					.setAutocomplete(true)),
 			aliases: [],

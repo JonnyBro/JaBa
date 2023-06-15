@@ -11,11 +11,17 @@ class Transactions extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("transactions")
 				.setDescription(client.translate("economy/transactions:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("economy/transactions:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("economy/transactions:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("economy/transactions:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addBooleanOption(option => option.setName("clear")
 					.setDescription(client.translate("economy/transactions:CLEAR"))
-					.setDescriptionLocalizations({ "uk": client.translate("economy/transactions:CLEAR", null, "uk-UA") })),
+					.setDescriptionLocalizations({
+						"uk": client.translate("economy/transactions:CLEAR", null, "uk-UA"),
+						"ru": client.translate("economy/transactions:CLEAR", null, "ru-RU"),
+					})),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

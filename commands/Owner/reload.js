@@ -13,11 +13,17 @@ class Reload extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("reload")
 				.setDescription(client.translate("owner/reload:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("owner/reload:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("owner/reload:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("owner/reload:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("command")
 					.setDescription(client.translate("common:COMMAND"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:COMMAND", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:COMMAND", null, "uk-UA"),
+						"ru": client.translate("common:COMMAND", null, "ru-RU"),
+					})
 					.setRequired(true)
 					.setAutocomplete(true)),
 			aliases: [],

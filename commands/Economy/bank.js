@@ -11,11 +11,17 @@ class Bank extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("bank")
 				.setDescription(client.translate("economy/bank:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("economy/bank:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("economy/bank:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("economy/bank:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addStringOption(option => option.setName("option")
 					.setDescription(client.translate("economy/bank:OPTION"))
-					.setDescriptionLocalizations({ "uk": client.translate("economy/bank:OPTION", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("economy/bank:OPTION", null, "uk-UA"),
+						"ru": client.translate("economy/bank:OPTION", null, "ru-RU"),
+					})
 					.setRequired(true)
 					.setChoices(
 						{ name: client.translate("economy/bank:DEPOSIT"), value: "deposit" },
@@ -23,7 +29,10 @@ class Bank extends BaseCommand {
 					))
 				.addStringOption(option => option.setName("credits")
 					.setDescription(client.translate("misc:OPTION_NAN_ALL"))
-					.setDescriptionLocalizations({ "uk": client.translate("misc:OPTION_NAN_ALL", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("misc:OPTION_NAN_ALL", null, "uk-UA"),
+						"ru": client.translate("misc:OPTION_NAN_ALL", null, "ru-RU"),
+					})
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
@@ -47,7 +56,7 @@ class Bank extends BaseCommand {
 		const choice = interaction.options.getString("option");
 
 		if (choice === "deposit") {
-			const credits = interaction.options.getString("credits") === "all" ? data.memberData.money : interaction.options.getString("credits");
+			const credits = interaction.options.getString("credits").toLowerCase() === "all" ? data.memberData.money : interaction.options.getString("credits");
 			if (isNaN(credits) || credits < 1) return interaction.error("misc:OPTION_NAN_ALL");
 			if (data.memberData.money < credits) return interaction.error("economy/bank:NOT_ENOUGH_CREDIT", { money: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` });
 

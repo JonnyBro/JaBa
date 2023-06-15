@@ -12,7 +12,10 @@ class Crab extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("crab")
 				.setDescription(client.translate("fun/crab:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("fun/crab:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("fun/crab:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("fun/crab:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,

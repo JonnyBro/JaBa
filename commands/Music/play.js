@@ -11,11 +11,17 @@ class Play extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("play")
 				.setDescription(client.translate("music/play:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("music/play:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("music/play:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("music/play:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addStringOption(option => option.setName("query")
 					.setDescription(client.translate("music/play:QUERY"))
-					.setDescriptionLocalizations({ "uk": client.translate("music/play:QUERY", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("music/play:QUERY", null, "uk-UA"),
+						"ru": client.translate("music/play:QUERY", null, "ru-RU"),
+					})
 					.setRequired(true)
 					.setAutocomplete(true)),
 			aliases: [],

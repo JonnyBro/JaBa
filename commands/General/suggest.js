@@ -11,11 +11,17 @@ class Suggest extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("suggest")
 				.setDescription(client.translate("general/suggest:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("general/suggest:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("general/suggest:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("general/suggest:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addStringOption(option => option.setName("message")
 					.setDescription(client.translate("common:MESSAGE"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:MESSAGE", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:MESSAGE", null, "uk-UA"),
+						"ru": client.translate("common:MESSAGE", null, "ru-RU"),
+					})
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

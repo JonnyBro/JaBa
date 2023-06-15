@@ -11,15 +11,24 @@ class Report extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("report")
 				.setDescription(client.translate("general/report:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("general/report:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("general/report:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("general/report:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:USER", null, "uk-UA"),
+						"ru": client.translate("common:USER", null, "ru-RU"),
+					})
 					.setRequired(true))
 				.addStringOption(option => option.setName("message")
 					.setDescription(client.translate("common:MESSAGE"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:MESSAGE", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:MESSAGE", null, "uk-UA"),
+						"ru": client.translate("common:MESSAGE", null, "ru-RU"),
+					})
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

@@ -11,15 +11,24 @@ class Say extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("say")
 				.setDescription(client.translate("owner/say:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("owner/say:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("owner/say:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("owner/say:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addStringOption(option => option.setName("message")
 					.setDescription(client.translate("common:MESSAGE"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:MESSAGE", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:MESSAGE", null, "uk-UA"),
+						"ru": client.translate("common:MESSAGE", null, "ru-RU"),
+					})
 					.setRequired(true))
 				.addChannelOption(option => option.setName("channel")
 					.setDescription(client.translate("common:CHANNEL"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:CHANNEL", null, "uk-UA") })),
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:CHANNEL", null, "uk-UA"),
+						"ru": client.translate("common:CHANNEL", null, "ru-RU"),
+					})),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: true,

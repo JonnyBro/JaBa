@@ -11,6 +11,10 @@ class Stats extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("stats")
 				.setDescription(client.translate("general/stats:DESCRIPTION"))
+				.setDescriptionLocalizations({
+					"uk": client.translate("general/stats:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("general/stats:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,

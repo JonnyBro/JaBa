@@ -11,12 +11,18 @@ class Poll extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("poll")
 				.setDescription(client.translate("moderation/poll:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("moderation/poll:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("moderation/poll:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("moderation/poll:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
 				.addStringOption(option => option.setName("question")
 					.setDescription(client.translate("moderation/poll:QUESTION"))
-					.setDescriptionLocalizations({ "uk": client.translate("moderation/poll:QUESTION", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("moderation/poll:QUESTION", null, "uk-UA"),
+						"ru": client.translate("moderation/poll:QUESTION", null, "ru-RU"),
+					})
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

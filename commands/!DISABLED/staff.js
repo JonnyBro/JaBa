@@ -11,7 +11,10 @@ class Staff extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("staff")
 				.setDescription(client.translate("general/staff:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("general/staff:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("general/staff:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("general/staff:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,

@@ -11,7 +11,10 @@ class Servers extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("servers")
 				.setDescription(client.translate("owner/servers:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("owner/servers:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("owner/servers:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("owner/servers:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,

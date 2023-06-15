@@ -11,11 +11,17 @@ class Rep extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("rep")
 				.setDescription(client.translate("economy/rep:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("economy/rep:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("economy/rep:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("economy/rep:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:USER", null, "uk-UA"),
+						"ru": client.translate("common:USER", null, "ru-RU"),
+					})
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
@@ -57,6 +63,7 @@ class Rep extends BaseCommand {
 		const userData = await client.findOrCreateUser({
 			id: user.id,
 		});
+
 		userData.rep++;
 
 		if (!userData.achievements.rep.achieved) {

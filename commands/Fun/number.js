@@ -12,7 +12,10 @@ class Number extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("number")
 				.setDescription(client.translate("fun/number:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("fun/number:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("fun/number:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("fun/number:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,

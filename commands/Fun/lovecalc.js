@@ -12,17 +12,26 @@ class Lovecalc extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("lovecalc")
 				.setDescription(client.translate("fun/lovecalc:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("fun/lovecalc:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("fun/lovecalc:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("fun/lovecalc:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.addUserOption(option =>
 					option.setName("first_member")
 						.setDescription(client.translate("common:USER"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:USER", null, "uk-UA"),
+							"ru": client.translate("common:USER", null, "ru-RU"),
+						})
 						.setRequired(true))
 				.addUserOption(option =>
 					option.setName("second_member")
 						.setDescription(client.translate("common:USER"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:USER", null, "uk-UA") })),
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:USER", null, "uk-UA"),
+							"ru": client.translate("common:USER", null, "ru-RU"),
+						})),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -52,7 +61,7 @@ class Lovecalc extends BaseCommand {
 			.split("")
 			.filter(e => !isNaN(e))
 			.join("");
-		const percent = parseInt(string.substr(0, 2), 10);
+		const percent = parseInt(string.slice(0, 2), 10);
 
 		const embed = new EmbedBuilder()
 			.setAuthor({

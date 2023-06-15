@@ -12,11 +12,17 @@ class Minecraft extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("minecraft")
 				.setDescription(client.translate("general/minecraft:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("general/minecraft:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("general/minecraft:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("general/minecraft:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("ip")
 					.setDescription(client.translate("common:IP"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:IP", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:IP", null, "uk-UA"),
+						"ru": client.translate("common:IP", null, "ru-RU"),
+					})
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,

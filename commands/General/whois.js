@@ -12,11 +12,17 @@ class Whois extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("whois")
 				.setDescription(client.translate("general/whois:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("general/whois:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("general/whois:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("general/whois:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(true)
 				.addStringOption(option => option.setName("ip")
 					.setDescription(client.translate("common:IP"))
-					.setDescriptionLocalizations({ "uk": client.translate("common:IP", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("common:IP", null, "uk-UA"),
+						"ru": client.translate("common:IP", null, "ru-RU"),
+					})
 					.setRequired(true)),
 			aliases: [],
 			dirname: __dirname,
@@ -39,9 +45,11 @@ class Whois extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply();
 
-		const ip = interaction.options.getString("ip");
-		const whois = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,continent,continentCode,country,countryCode,region,regionName,city,zip,timezone,currency,isp,org,as,mobile,proxy,hosting,query`).then(response => response.json());
+		const ip = interaction.options.getString("ip"),
+			whois = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,continent,continentCode,country,countryCode,region,regionName,city,zip,timezone,currency,isp,org,as,mobile,proxy,hosting,query`).then(response => response.json());
+
 		if (whois.status === "fail") return interaction.editReply({ content: interaction.translate("general/whois:ERROR", { ip }) });
+
 		const embed = new EmbedBuilder()
 			.setTitle(interaction.translate("general/whois:INFO_ABOUT", {
 				ip,
@@ -64,8 +72,8 @@ class Whois extends BaseCommand {
 			.setTimestamp();
 
 		if (whois.proxy) embed.addFields({ name: interaction.translate("general/whois:INFO"), value: interaction.translate("general/whois:PROXY") });
-		else if (whois.mobile) embed.addFields({ name: interaction.translate("general/whois:INFO"), value: interaction.translate("general/whois:MOBILE") });
-		else if (whois.hosting) embed.addFields({ name: interaction.translate("general/whois:INFO"), value: interaction.translate("general/whois:HOSTING") });
+		if (whois.mobile) embed.addFields({ name: interaction.translate("general/whois:INFO"), value: interaction.translate("general/whois:MOBILE") });
+		if (whois.hosting) embed.addFields({ name: interaction.translate("general/whois:INFO"), value: interaction.translate("general/whois:HOSTING") });
 
 		interaction.editReply({
 			embeds: [embed],

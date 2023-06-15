@@ -12,51 +12,87 @@ class Giveaway extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("giveaway")
 				.setDescription(client.translate("moderation/giveaway:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("moderation/giveaway:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("moderation/giveaway:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("moderation/giveaway:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
 				.addSubcommand(subcommand => subcommand.setName("create")
 					.setDescription(client.translate("moderation/giveaway:CREATE"))
-					.setDescriptionLocalizations({ "uk": client.translate("moderation/giveaway:CREATE", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("moderation/giveaway:CREATE", null, "uk-UA"),
+						"ru": client.translate("moderation/giveaway:CREATE", null, "ru-RU"),
+					})
 					.addStringOption(option => option.setName("duration")
 						.setDescription(client.translate("common:DURATION"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:DURATION", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:DURATION", null, "uk-UA"),
+							"ru": client.translate("common:DURATION", null, "ru-RU"),
+						})
 						.setRequired(true))
 					.addIntegerOption(option => option.setName("winners_count")
 						.setDescription(client.translate("moderation/giveaway:WINNERS_COUNT"))
-						.setDescriptionLocalizations({ "uk": client.translate("moderation/giveaway:WINNERS_COUNT", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("moderation/giveaway:WINNERS_COUNT", null, "uk-UA"),
+							"ru": client.translate("moderation/giveaway:WINNERS_COUNT", null, "ru-RU"),
+						})
 						.setRequired(true))
 					.addStringOption(option => option.setName("prize")
 						.setDescription(client.translate("moderation/giveaway:PRIZE"))
-						.setDescriptionLocalizations({ "uk": client.translate("moderation/giveaway:PRIZE", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("moderation/giveaway:PRIZE", null, "uk-UA"),
+							"ru": client.translate("moderation/giveaway:PRIZE", null, "ru-RU"),
+						})
 						.setRequired(true))
 					.addBooleanOption(option => option.setName("isdrop")
 						.setDescription(client.translate("moderation/giveaway:ISDROP"))
-						.setDescriptionLocalizations({ "uk": client.translate("moderation/giveaway:ISDROP", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("moderation/giveaway:ISDROP", null, "uk-UA"),
+							"ru": client.translate("moderation/giveaway:ISDROP", null, "ru-RU"),
+						})
 						.setRequired(true)),
 				)
 				.addSubcommand(subcommand => subcommand.setName("reroll")
 					.setDescription(client.translate("moderation/giveaway:REROLL"))
-					.setDescriptionLocalizations({ "uk": client.translate("moderation/giveaway:REROLL", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("moderation/giveaway:REROLL", null, "uk-UA"),
+						"ru": client.translate("moderation/giveaway:REROLL", null, "ru-RU"),
+					})
 					.addStringOption(option => option.setName("giveaway_id")
 						.setDescription(client.translate("moderation/giveaway:GIVEAWAY_ID"))
-						.setDescriptionLocalizations({ "uk": client.translate("moderation/giveaway:GIVEAWAY_ID", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("moderation/giveaway:GIVEAWAY_ID", null, "uk-UA"),
+							"ru": client.translate("moderation/giveaway:GIVEAWAY_ID", null, "ru-RU"),
+						})
 						.setRequired(true)),
 				)
 				.addSubcommand(subcommand => subcommand.setName("end")
 					.setDescription(client.translate("moderation/giveaway:END"))
-					.setDescriptionLocalizations({ "uk": client.translate("moderation/giveaway:END", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("moderation/giveaway:END", null, "uk-UA"),
+						"ru": client.translate("moderation/giveaway:END", null, "ru-RU"),
+					})
 					.addStringOption(option => option.setName("giveaway_id")
 						.setDescription(client.translate("moderation/giveaway:GIVEAWAY_ID"))
-						.setDescriptionLocalizations({ "uk": client.translate("moderation/giveaway:GIVEAWAY_ID", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("moderation/giveaway:GIVEAWAY_ID", null, "uk-UA"),
+							"ru": client.translate("moderation/giveaway:GIVEAWAY_ID", null, "ru-RU"),
+						})
 						.setRequired(true)),
 				)
 				.addSubcommand(subcommand => subcommand.setName("delete")
 					.setDescription(client.translate("moderation/giveaway:DELETE"))
-					.setDescriptionLocalizations({ "uk": client.translate("moderation/giveaway:DELETE", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("moderation/giveaway:DELETE", null, "uk-UA"),
+						"ru": client.translate("moderation/giveaway:DELETE", null, "ru-RU"),
+					})
 					.addStringOption(option => option.setName("giveaway_id")
 						.setDescription(client.translate("moderation/giveaway:GIVEAWAY_ID"))
-						.setDescriptionLocalizations({ "uk": client.translate("moderation/giveaway:GIVEAWAY_ID", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("moderation/giveaway:GIVEAWAY_ID", null, "uk-UA"),
+							"ru": client.translate("moderation/giveaway:GIVEAWAY_ID", null, "ru-RU"),
+						})
 						.setRequired(true)),
 				),
 			aliases: [],

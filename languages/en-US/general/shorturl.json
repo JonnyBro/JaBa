@@ -1,6 +1,5 @@
 {
 	"DESCRIPTION": "Shortens a URL",
 	"USAGE": "[url]",
-	"EXAMPLES": "shorturl url:https://google.com",
-	"URL": "URL"
+	"EXAMPLES": "shorturl url:https://google.com"
 }

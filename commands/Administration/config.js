@@ -11,19 +11,31 @@ class Config extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("config")
 				.setDescription(client.translate("administration/config:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("administration/config:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("administration/config:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("administration/config:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 				.addSubcommand(subcommand => subcommand.setName("list")
 					.setDescription(client.translate("administration/config:LIST"))
-					.setDescriptionLocalizations({ "uk": client.translate("administration/config:LIST", null, "uk-UA") }),
+					.setDescriptionLocalizations({
+						"uk": client.translate("administration/config:LIST", null, "uk-UA"),
+						"ru": client.translate("administration/config:LIST", null, "ru-RU"),
+					}),
 				)
 				.addSubcommand(subcommand => subcommand.setName("set")
 					.setDescription(client.translate("administration/config:SET"))
-					.setDescriptionLocalizations({ "uk": client.translate("administration/config:SET", null, "uk-UA") })
+					.setDescriptionLocalizations({
+						"uk": client.translate("administration/config:SET", null, "uk-UA"),
+						"ru": client.translate("administration/config:SET", null, "ru-RU"),
+					})
 					.addStringOption(option => option.setName("setting")
 						.setDescription(client.translate("administration/config:SETTING"))
-						.setDescriptionLocalizations({ "uk": client.translate("administration/config:SETTING", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("administration/config:SETTING", null, "uk-UA"),
+							"ru": client.translate("administration/config:SETTING", null, "ru-RU"),
+						})
 						.setChoices(
 							{ name: client.translate("administration/config:BIRTHDAYS"), value: "birthdays" },
 							{ name: client.translate("administration/config:MODLOGS"), value: "modlogs" },
@@ -34,11 +46,17 @@ class Config extends BaseCommand {
 						.setRequired(true))
 					.addBooleanOption(option => option.setName("state")
 						.setDescription(client.translate("common:STATE"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:STATE", null, "uk-UA") })
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:STATE", null, "uk-UA"),
+							"ru": client.translate("common:STATE", null, "ru-RU"),
+						})
 						.setRequired(true))
 					.addChannelOption(option => option.setName("channel")
 						.setDescription(client.translate("common:CHANNEL"))
-						.setDescriptionLocalizations({ "uk": client.translate("common:STATE", null, "uk-UA") })),
+						.setDescriptionLocalizations({
+							"uk": client.translate("common:CHANNEL", null, "uk-UA"),
+							"ru": client.translate("common:CHANNEL", null, "ru-RU"),
+						})),
 				),
 			aliases: [],
 			dirname: __dirname,

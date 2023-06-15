@@ -12,7 +12,10 @@ class NSFW extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("nsfw")
 				.setDescription(client.translate("nsfw/nsfw:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("nsfw/nsfw:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("nsfw/nsfw:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("nsfw/nsfw:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(true),
 			aliases: [],
 			dirname: __dirname,

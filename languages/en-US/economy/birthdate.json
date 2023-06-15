@@ -10,5 +10,18 @@
 	"DATE_TOO_HIGH": "Hmm... You haven't been born yet",
 	"HAPPY_BIRTHDAY": "Happy Birthday",
 	"HAPPY_BIRTHDAY_MESSAGE": "Happy birthday to {{name}} (<@{{user}}>)! Today, they have turned {{age}}!",
-	"SUCCESS": "Your date of birth has been set to **{{date}}**"
+	"SUCCESS": "Your date of birth has been set to **{{date}}**",
+
+	"JANUARY": "January",
+	"FEBRUARY": "February",
+	"MARCH": "March",
+	"APRIL": "April",
+	"MAY": "May",
+	"JUNE": "June",
+	"JULY": "July",
+	"AUGUST": "August",
+	"SEPTEMBER": "September",
+	"OCTOBER": "October",
+	"NOVEMBER": "November",
+	"DECEMBER": "December"
 }

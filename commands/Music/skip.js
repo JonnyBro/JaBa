@@ -11,7 +11,10 @@ class Skip extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("skip")
 				.setDescription(client.translate("music/skip:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("music/skip:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("music/skip:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("music/skip:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,

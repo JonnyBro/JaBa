@@ -11,7 +11,10 @@ class Shuffle extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("shuffle")
 				.setDescription(client.translate("music/shuffle:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("music/shuffle:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("music/shuffle:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("music/shuffle:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,

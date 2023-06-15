@@ -13,7 +13,10 @@ class Checkjar extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("checkjar")
 				.setDescription(client.translate("iat/checkjar:DESCRIPTION"))
-				.setDescriptionLocalizations({ "uk": client.translate("iat/checkjar:DESCRIPTION", null, "uk-UA") })
+				.setDescriptionLocalizations({
+					"uk": client.translate("iat/checkjar:DESCRIPTION", null, "uk-UA"),
+					"ru": client.translate("iat/checkjar:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false),
 			aliases: [],
 			dirname: __dirname,
