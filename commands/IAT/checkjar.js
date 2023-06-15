@@ -37,15 +37,24 @@ class Checkjar extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		if (!interaction.member.roles.cache.has("1039467712633638962")) return interaction.reply({ content: "error", ephemeral: true });
+		if (!interaction.guildId !== "1039187019957555252") return interaction.reply({ content: "error", ephemeral: true });
 
 		await interaction.deferReply();
 
-		const jar = client.config.apiKeys.monobankApiJar;
-		const data = fetch(`https://api.monobank.ua/personal/statement/${jar}/${Date.now() - (7 * 24 * 60 * 60 * 1000)}/${Date.now()}`, {
+		const jarsList = await fetch("https://api.monobank.ua/personal/client-info", {
 			method: "GET",
 			headers: {
 				"X-Token": client.config.apiKeys.monobankApiKey,
+				"Content-Type": "application/json",
+			},
+		}).then(res => res.json());
+		const jar = jarsList.jars[1];
+
+		const jarTransactions = await fetch(`https://api.monobank.ua/personal/statement/${jar.id}/${Date.now() - (7 * 24 * 60 * 60 * 1000)}/${Date.now()}`, {
+			method: "GET",
+			headers: {
+				"X-Token": client.config.apiKeys.monobankApiKey,
+				"Content-Type": "application/json",
 			},
 		}).then(res => res.json());
 
@@ -58,11 +67,11 @@ class Checkjar extends BaseCommand {
 				name: "Monobank API",
 				iconURL: "https://api.monobank.ua/docs/logo.png",
 			})
-			.setDescription(`Текущий баланс: **${data[0].balance / Math.pow(10, 2)}** грн\nТребуется на след. месяц: **654,46** грн (по курсу евро на 24.01.2023)`);
+			.setDescription(`Текущий баланс: **${jar.balance / Math.pow(10, 2)}** грн\nТребуется на след. месяц: ~**381** грн (по курсу евро на 15.06.2023)`);
 
-		data.length = 10;
+		jarTransactions.length = 10;
 
-		data.forEach(t => {
+		jarTransactions.forEach(t => {
 			const time = moment.unix(t.time);
 
 			embed.addFields([
