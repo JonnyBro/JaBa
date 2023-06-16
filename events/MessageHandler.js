@@ -106,8 +106,8 @@ class MessageCreate extends BaseEvent {
 			if (data.guildData.plugins.automod.enabled && !data.guildData.plugins.automod.ignored.includes(message.channel.id))
 				if (/(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(message.content))
 					if (!message.channel.permissionsFor(message.member).has(PermissionsBitField.Flags.ManageMessages)) {
-						message.delete();
 						message.error("administration/automod:DELETED");
+						message.delete();
 					}
 
 			const afkReason = data.userData.afk;

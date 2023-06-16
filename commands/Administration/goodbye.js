@@ -96,9 +96,9 @@ class Goodbye extends BaseCommand {
 
 				interaction.success("administration/goodbye:DISABLED");
 			} else {
-				const channel = interaction.options.getChannel("channel");
+				const channel = interaction.options.getChannel("channel") || interaction.channel;
 				const message = interaction.options.getString("message") || interaction.translate("administration/goodbye:DEFAULT_MESSAGE");
-				const image = interaction.options.getBoolean("image");
+				const image = interaction.options.getBoolean("image") || true;
 
 				data.guildData.plugins.goodbye = {
 					enabled: true,
