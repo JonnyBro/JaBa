@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Встановити канал для пропозицій",
-	"USAGE": "[state] (#channel)",
-	"EXAMPLES": "setsuggests state:True channel:#пропозиції\nsetsuggests state:False",
-	"ENABLED": "Пропозиції надсилатимуться в **{{channel}}**",
-	"DISABLED": "Пропозиції вимкнено"
-}

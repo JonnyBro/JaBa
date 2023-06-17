@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Встановити канал для скарг",
-	"USAGE": "[state] (#channel)",
-	"EXAMPLES": "setreports state:True channel:#скарги\nsetreports state:False",
-	"ENABLED": "Скарги надсилатимуться в **{{channel}}**",
-	"DISABLED": "Скарги відключені"
-}

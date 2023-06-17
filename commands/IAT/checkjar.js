@@ -37,8 +37,6 @@ class Checkjar extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		if (!interaction.guildId === "1039187019957555252") return interaction.reply({ content: "error", ephemeral: true });
-
 		await interaction.deferReply();
 
 		const jarsList = await fetch("https://api.monobank.ua/personal/client-info", {

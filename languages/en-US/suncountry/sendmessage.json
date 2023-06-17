@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Send an anonymous message to the selected channel",
+	"USAGE": "rpinfo [text] (attachment)\ninstalife [text] (attachment)",
+	"EXAMPLES": "sendmessage rpinfo text:Happy New Year, everyone!\nsendmessage instalife text:Accident at the Police Station! attachment:<image>",
+	"RPINFO": "Send a message to RP Info",
+	"INSTALIFE": "Send a message to InstaLife",
+	"MESSAGE_SENT": "Message sent!\n{{message}}"
+}

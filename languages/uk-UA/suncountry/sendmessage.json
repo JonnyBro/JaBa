@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Надіслати анонімне повідомлення до обраного каналу",
+	"USAGE": "rpinfo [текст] (вкладення)\ninstalife [текст] (вкладення)",
+	"EXAMPLES": "sendmessage rpinfo text:Всім з новим роком!\nsendmessage instalife text:Аварія в ВП! вкладення:<зображення>",
+	"RPINFO": "Надіслати повідомлення в RP Info",
+	"INSTALIFE": "Надіслати повідомлення в InstaLife",
+	"MESSAGE_SENT": "Повідомлення відправлено!\n{{message}}"
+}

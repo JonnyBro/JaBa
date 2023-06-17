@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Toggles messages when a user leaves the server",
 	"USAGE": "config [state] [#channel] [message] [image]\nOr [test]",
-	"EXAMPLES": "goodbye state:True channel:#welcome Goodbye! image:True\ngoodbye test",
+	"EXAMPLES": "goodbye config state:True channel:#welcome Goodbye! image:True\ngoodbye test",
 	"TEST": "Test",
 	"TEST_SUCCESS": "Test successful",
 	"CONFIG": "Configure",

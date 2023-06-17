@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Увімкнути або вимкнути повідомлення при виході користувача з сервера",
 	"USAGE": "config [state] [#channel] [message] [image] \nАбо [test]",
-	"EXAMPLES": "goodbye state:True channel:#welcome Прощай! image:True\ngoodbye test",
+	"EXAMPLES": "goodbye config state:True channel:#welcome Прощай! image:True\ngoodbye test",
 	"TEST": "Перевірити",
 	"TEST_SUCCESS": "Тест виконано",
 	"CONFIG": "Налаштувати",

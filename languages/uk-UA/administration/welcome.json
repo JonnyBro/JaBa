@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Увімкнути або вимкнути повідомлення під час входу користувача на сервер",
 	"USAGE": "config [state] [#channel] [message] [image] \nАбо [test]",
-	"EXAMPLES": "welcome state:True channel:#welcome Ласкаво просимо! image:True\nwelcome test",
+	"EXAMPLES": "welcome config state:True channel:#welcome Ласкаво просимо! image:True\nwelcome test",
 	"ENABLED": "Привітальні повідомлення включені до {{channel}}!\nВикористовуйте `welcome test` для перегляду повідомлення",
 	"DISABLED": "Привітання відключено",
 	"DEFAULT_MESSAGE": "Ласкаво просимо {user}! Нас тепер {membercount}",

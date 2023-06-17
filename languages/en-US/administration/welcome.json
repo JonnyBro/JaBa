@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Toggles welcome messages when a user joins the server",
 	"USAGE": "config [state] [#channel] [message] [image]\nOr [test]",
-	"EXAMPLES": "welcome state:True channel:#welcome Welcome! image:True\nwelcome test",
+	"EXAMPLES": "welcome config state:True channel:#welcome Welcome! image:True\nwelcome test",
 	"ENABLED": "Welcome messages are enabled in {{channel}}!\nUse `welcome test` to view the message",
 	"DISABLED": "Welcome messages are disabled",
 	"DEFAULT_MESSAGE": "Welcome, {user}! We now have {membercount} members",
