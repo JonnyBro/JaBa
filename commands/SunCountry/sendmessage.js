@@ -84,11 +84,11 @@ class Sendmessage extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });
 
-		const guild = client.guilds.cache.get("600970971410857996"),
+		const command = interaction.options.getSubcommand(),
+			guild = client.guilds.cache.get("600970971410857996"),
 			channel = command === "rpinfo" ? guild.channels.cache.get("1119571321421058098") : guild.channels.cache.get("1119579266376540213");
 
-		const command = interaction.options.getSubcommand(),
-			text = interaction.options.getString("text"),
+		const text = interaction.options.getString("text"),
 			name = interaction.options.getString("name"),
 			attachment = interaction.options.getAttachment("attachment");
 
