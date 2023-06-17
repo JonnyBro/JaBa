@@ -94,9 +94,9 @@ class Sendmessage extends BaseCommand {
 
 		const embed = new EmbedBuilder()
 			.setColor(client.config.embed.color)
-			.setTitle("InstaLife")
+			.setTitle(`@${name}`)
 			.setAuthor({
-				name: `@${name}`,
+				name: "InstaLife",
 			})
 			.setImage(attachment ? attachment.url : null)
 			.setDescription(text);
