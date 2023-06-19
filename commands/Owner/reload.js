@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
-	i18next = require("i18next"),
-	autoUpdateDocs = require("../../helpers/autoUpdateDocs");
+	i18next = require("i18next");
+	// autoUpdateDocs = require("../../helpers/autoUpdateDocs");
 
 class Reload extends BaseCommand {
 	/**
@@ -53,7 +53,7 @@ class Reload extends BaseCommand {
 		await client.loadCommand(`../commands/${cmd.category}`, cmd.command.name);
 
 		i18next.reloadResources(["ru-RU", "uk-UA", "en-US"]);
-		autoUpdateDocs.update(client);
+		// autoUpdateDocs.update(client);
 
 		interaction.success("owner/reload:SUCCESS", {
 			command: cmd.command.name,

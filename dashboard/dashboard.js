@@ -1,7 +1,6 @@
 const SoftUI = require("dbd-soft-ui"),
 	DBD = require("discord-dashboard"),
-	os = require("os"),
-	fs = require("fs").promises;
+	os = require("os");
 
 /**
  *
@@ -28,7 +27,7 @@ module.exports.load = async client => {
 		return {
 			category: c,
 			categoryId: c.toLowerCase(),
-			subTitle: "bottom text",
+			subTitle: "",
 			hideAlias: true,
 			hideDescription: false,
 			hideSidebarItem: c === "Owner" || c === "IAT" || c === "SunCountry" ? true : false,
@@ -40,7 +39,7 @@ module.exports.load = async client => {
 	DBD.Dashboard = DBD.UpdatedClass();
 
 	const Dashboard = new DBD.Dashboard({
-		port: 80,
+		port: client.config.dashboard.port,
 		client: {
 			id: client.config.user,
 			secret: client.config.dashboard.secret,
@@ -56,6 +55,7 @@ module.exports.load = async client => {
 			clientId: client.config.user,
 			scopes: ["bot", "applications.commands"],
 			permissions: "8",
+			redirectUri: client.config.dashboard.domain,
 		},
 		supportServer: {
 			slash: "/support",
@@ -84,6 +84,7 @@ module.exports.load = async client => {
 		},
 		useTheme404: true,
 		useThemeMaintenance: true,
+		useUnderMaintenance: false,
 		underMaintenanceAccessKey: client.config.dashboard.maintanceKey,
 		underMaintenanceAccessPage: "/get-access",
 		underMaintenance: {
@@ -195,9 +196,9 @@ module.exports.load = async client => {
 			},
 			commands: categories,
 			locales: {
-				enUS: JSON.parse(await fs.readFile("languages/en-US/dashboard.json", { encoding: "utf-8" })),
-				ruRU: JSON.parse(await fs.readFile("languages/ru-RU/dashboard.json", { encoding: "utf-8" })),
-				ukUA: JSON.parse(await fs.readFile("languages/uk-UA/dashboard.json", { encoding: "utf-8" })),
+				enUS: require("../languages/en-US/dashboard.json"),
+				ruRU: require("../languages/ru-RU/dashboard.json"),
+				ukUA: require("../languages/uk-UA/dashboard.json"),
 			},
 		}),
 		settings: [{
