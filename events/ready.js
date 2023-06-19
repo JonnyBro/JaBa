@@ -37,7 +37,7 @@ class Ready extends BaseEvent {
 		const checkReminds = require("../helpers/checkReminds");
 		checkReminds.init(client);
 
-		if (client.config.dashboard.enabled) client.dashboard.init(client);
+		if (client.config.dashboard.enabled) client.dashboard.load(client);
 
 		const version = require("../package.json").version;
 		const status = [

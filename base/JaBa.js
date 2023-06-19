@@ -23,7 +23,7 @@ class JaBa extends Client {
 		this.guildsData = require("../base/Guild");
 		this.usersData = require("../base/User");
 		this.membersData = require("../base/Member");
-		this.dashboard = require("../dashboard/app");
+		this.dashboard = require("../dashboard/dashboard");
 		this.states = {};
 		this.knownGuilds = [];
 
@@ -88,8 +88,8 @@ class JaBa extends Client {
 
 		await this.player.extractors.loadDefault();
 
-		const autoUpdateDocs = require("../helpers/autoUpdateDocs");
-		autoUpdateDocs.update(this);
+		// const autoUpdateDocs = require("../helpers/autoUpdateDocs");
+		// autoUpdateDocs.update(this);
 	}
 
 	/**

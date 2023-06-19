@@ -1,35 +1,92 @@
 {
-	"AUTOROLE_CONF": "🎖️ Autorole Configuration",
-	"BASIC_CONF": "📝 Basic Settings",
-	"BIRTHDAYS": "Birthday Greetings",
-	"CAN_USE": "Can use",
-	"CHANNELS_CONF": "🌀 Special Channels",
-	"COOLDOWNS": "Cooldowns",
-	"ERR_OCCURRED": "Oops! Something went wrong.",
-	"ERR_OCCURRED_CONTENT": "I will try to fix it as soon as possible (you can report the issue to the owner). In the meantime, you can go back to the control panel.",
-	"FIRST_LOGIN": "{{user}} has logged into the control panel for the first time! :tada:",
-	"GOODBYE_CONF": "😢 Goodbye Message",
-	"GOODBYE_IMG": "😢 Include Card",
-	"MANAGE": "Manage",
-	"MODLOGS": "Moderation Logs",
-	"NEWS": "Bot News",
-	"NOT_FOUND": "Oops! Page not found.",
-	"NOT_FOUND_CONTENT": "I couldn't find what you were looking for. In the meantime, you can go back to the control panel.",
-	"NO_CHANNEL": "No channel selected",
-	"NO_DEFENCE": "You are defenseless",
-	"NO_SERVER": "Server not found",
-	"NO_SERVER_CONTENT": "Nothing to display. Make sure you are logged in with the correct account and try again.",
-	"REP": "Rep Command",
-	"REPORTS": "Reports",
-	"ROB": "Rob Protection",
-	"SEARCH": "Search across servers...",
-	"SELECTOR": "Server Selector",
-	"SERVERS_LIST": "Server List",
-	"SERVERS_MANAGEMENT": "Server Management",
-	"SUGGESTIONS": "Suggestions",
-	"TOP_CREDITS": "Top Credits",
-	"TOP_LEVEL": "Top Level",
-	"WELCOME_CONF": "👋 Welcome Message",
-	"WELCOME_IMG": "👋 Include Card",
-	"WORK": "Work Salary"
+	"name": "English",
+	"index": {
+		"feeds": [ "Current User", "CPU", "System Platform", "Server Count" ],
+		"card": {
+			"category": "JaBa Bot",
+			"title": "Simple bot made by <a href=\"https://github.com/JonnyBro\">Jonny_Bro</a>",
+			"description": "Upper Text",
+			"image": "",
+			"footer": "Bottom Text"
+		},
+		"feedsTitle": "Feeds",
+		"graphTitle": "Graphs"
+	},
+	"manage": {
+		"settings": {
+			"memberCount": "Members",
+			"info": {
+				"info": "Info",
+				"server": "Server Information"
+			}
+		}
+	},
+	"privacyPolicy": {
+		"title": "Privacy Policy",
+		"description": "Privacy Policy and Terms of Service",
+		"pp": "Complete Privacy Policy"
+	},
+	"partials": {
+		"sidebar": {
+			"dash": "Dashboard",
+			"manage": "Manage Guilds",
+			"commands": "Commands",
+			"pp": "Privacy Policy",
+			"admin": "Admin",
+			"account": "Account Pages",
+			"login": "Sign In",
+			"logout": "Sign Out"
+		},
+		"navbar": {
+			"home": "Home",
+			"pages": {
+				"manage": "Manage Guilds",
+				"settings": "Manage Guilds",
+				"commands": "Commands",
+				"pp": "Privacy Policy",
+				"admin": "Admin Panel",
+				"error": "Error",
+				"credits": "Credits",
+				"debug": "Debug",
+				"leaderboard": "Leaderboard",
+				"profile": "Profile",
+				"maintenance": "Under Maintenance"
+			}
+		},
+		"title": {
+			"pages": {
+				"manage": "Manage Guilds",
+				"settings": "Manage Guilds",
+				"commands": "Commands",
+				"pp": "Privacy Policy",
+				"admin": "Admin Panel",
+				"error": "Error",
+				"credits": "Credits",
+				"debug": "Debug",
+				"leaderboard": "Leaderboard",
+				"profile": "Profile",
+				"maintenance": "Under Maintenance"
+			}
+		},
+		"preloader": {
+			"text": "Page is loading..."
+		},
+		"premium": {
+			"title": "Want more from JaBa?",
+			"description": "Check out premium features below!",
+			"buttonText": "Become Premium"
+		},
+		"settings": {
+			"title": "Site Configuration",
+			"description": "Configurable Viewing Options",
+			"theme": {
+				"title": "Site Theme",
+				"description": "Make the site more appealing for your eyes!"
+			},
+			"language": {
+				"title": "Site Language",
+				"description": "Select your preffered language!"
+			}
+		}
+	}
 }
