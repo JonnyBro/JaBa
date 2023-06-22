@@ -1,0 +1,3 @@
+[submodule "dashboard/--force"]
+	path = dashboard/--force
+	url = https://github.com/JonnyBro/dashboard-core
