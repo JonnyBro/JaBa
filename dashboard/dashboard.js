@@ -1,6 +1,5 @@
 const SoftUI = require("dbd-soft-ui"),
-	DBD = require("discord-dashboard"),
-	os = require("os");
+	DBD = require("discord-dashboard");
 
 /**
  *
@@ -44,18 +43,17 @@ module.exports.load = async client => {
 			id: client.config.user,
 			secret: client.config.dashboard.secret,
 		},
+		cookiesSecret: client.config.dashboard.secret,
 		domain: client.config.dashboard.domain,
-		redirectUri: `${client.config.dashboard.domain}/discord/callback`,
+		redirectUri: `${client.config.dashboard.domain}${client.config.dashboard.port !== 80 ? `:${client.config.dashboard.port}` : ""}/discord/callback`,
 		bot: client,
 		ownerIDs: [ client.config.owner ],
-		requiredPermissions: [ DBD.DISCORD_FLAGS.Permissions.VIEW_CHANNEL ],
-		acceptPrivacyPolicy: true,
 		minimizedConsoleLogs: true,
 		invite: {
 			clientId: client.config.user,
 			scopes: ["bot", "applications.commands"],
 			permissions: "8",
-			redirectUri: client.config.dashboard.domain,
+			redirectUri: client.config.dashboard.domain + client.config.dashboard.port !== 80 ? `:${client.config.dashboard.port}` : "",
 		},
 		supportServer: {
 			slash: "/support",
@@ -102,43 +100,32 @@ module.exports.load = async client => {
 			customThemeOptions: {
 				// eslint-disable-next-line no-unused-vars
 				index: async ({ req, res, config }) => {
-					const username = req.session?.user?.username || "Guest";
+					const user = req.session?.user;
+					const username = user?.username || "Guest";
 
 					const cards = [
 						{
 							title: "Current User",
 							icon: "single-02",
 							getValue: username,
-							progressBar: {
-								enabled: false,
-								getProgress: client.guilds.cache.size,
-							},
 						},
 						{
-							title: "CPU",
-							icon: "tv-2",
-							getValue: os.cpus()[0].model,
-							progressBar: {
-								enabled: false,
-								getProgress: 50,
-							},
-						},
-						{
-							title: "System Platform",
+							title: "Node Version",
 							icon: "settings-gear-65",
-							getValue: os.platform(),
-							progressBar: {
-								enabled: false,
-								getProgress: 50,
-							},
+							getValue: process.versions.node,
 						},
 						{
-							title: "Server Count",
+							title: "Users Count",
+							icon: "favourite-28",
+							getValue: client.users.cache.size,
+						},
+						{
+							title: "Servers Count",
 							icon: "notification-70",
 							getValue: `${client.guilds.cache.size} out of 2000`,
 							progressBar: {
 								enabled: true,
-								getProgress: (client.guilds.cache.size / 2000) * 100,
+								getProgress: Math.round((client.guilds.cache.size / 2000) * 100),
 							},
 						},
 					];
@@ -196,50 +183,82 @@ module.exports.load = async client => {
 			},
 			commands: categories,
 			locales: {
-				enUS: require("../languages/en-US/dashboard.json"),
-				ruRU: require("../languages/ru-RU/dashboard.json"),
-				ukUA: require("../languages/uk-UA/dashboard.json"),
+				enUS: require("../languages/en-US/dashboard.json").DASHBOARD,
+				ruRU: require("../languages/ru-RU/dashboard.json").DASHBOARD,
+				ukUA: require("../languages/uk-UA/dashboard.json").DASHBOARD,
 			},
 		}),
+		customPages: [
+			DBD.customPagesTypes.redirectToUrl("/github", () => {
+				return "https://github.com/JonnyBro/JaBa";
+			}),
+		],
 		settings: [{
-			categoryId: "setup",
-			categoryName: "Setup",
-			categoryDescription: "Setup your bot with default settings!",
-			categoryOptionsList: [{
-				optionId: "lang",
-				optionName: "Language",
-				optionDescription: "Change bot's language easily",
-				optionType: DBD.formTypes.select({
-					"English": "en-US",
-					"Russian": "ru-RU",
-					"Ukrainian": "uk-UA",
-				}),
-				getActualSet: async ({ guild }) => {
-					const guildData = await client.findOrCreateGuild({
-						id: guild.id,
-					});
+			categoryId: "main",
+			categoryName: "Main settings",
+			categoryDescription: "Setup your bot here!",
+			categoryOptionsList: [
+				{
+					optionId: "lang",
+					optionName: "Language",
+					optionDescription: client.translate("administration/setlang:DESCRIPTION"),
+					optionType: DBD.formTypes.select({
+						"English": "en-US",
+						"Russian": "ru-RU",
+						"Ukrainian": "uk-UA",
+					}),
+					getActualSet: async ({ guild }) => {
+						const guildData = await client.findOrCreateGuild({
+							id: guild.id,
+						});
 
-					return guildData.language || client.defaultLanguage;
+						return guildData.language || client.defaultLanguage;
+					},
+					setNew: async ({ guild, newData }) => {
+						const guildData = await client.findOrCreateGuild({
+							id: guild.id,
+						});
+
+						guildData.language = newData;
+						await guildData.save();
+
+						return;
+					},
 				},
-				setNew: async ({ guild, newData }) => {
-					const guildData = await client.findOrCreateGuild({
-						id: guild.id,
-					});
+				{
+					optionId: "xd",
+					optionName: "OMG",
+					optionDescription: "Change bot's language on the server",
+					optionType: DBD.formTypes.select({
+						"English": "en-US",
+						"Russian": "ru-RU",
+						"Ukrainian": "uk-UA",
+					}),
+					getActualSet: async ({ guild }) => {
+						const guildData = await client.findOrCreateGuild({
+							id: guild.id,
+						});
 
-					guildData.language = newData;
-					await guildData.save();
+						return guildData.language || client.defaultLanguage;
+					},
+					setNew: async ({ guild, newData }) => {
+						const guildData = await client.findOrCreateGuild({
+							id: guild.id,
+						});
 
-					return;
+						guildData.language = newData;
+						await guildData.save();
+
+						return;
+					},
 				},
-			}],
+			],
 		}],
 	});
-
-	DBD.customPagesTypes.redirectToUrl("github", "https://github.com/JonnyBro/JaBa");
 
 	await Dashboard.init().then(() => {
 		client.logger.log(`Dashboard launched on port ${client.config.dashboard.port}`, "ready");
 	}).catch(err => {
-		client.logger.log(`Dashboard failed to initialize: ${err}`, "error");
+		client.logger.log(`Dashboard failed to initialize:\n${err}`, "error");
 	});
 };

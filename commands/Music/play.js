@@ -70,8 +70,8 @@ class Play extends BaseCommand {
 				leaveOnEnd: false,
 				leaveOnStop: true,
 				skipOnNoStream: true,
-				maxSize: 500,
-				maxHistorySize: 100,
+				maxSize: 200,
+				maxHistorySize: 50,
 			});
 		}
 

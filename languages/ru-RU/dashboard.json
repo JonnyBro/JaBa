@@ -1,91 +1,98 @@
 {
-	"name": "Русский",
-	"index": {
-		"feeds": [ "Current User", "CPU", "System Platform", "Server Count" ],
-		"card": {
-			"category": "JaBa Bot",
-			"title": "Simple bot made by <a href=\"https://github.com/JonnyBro\">Jonny_Bro</a>",
-			"description": "Upper Text",
-			"image": "",
-			"footer": "Bottom Text"
-		},
-		"feedsTitle": "Feeds",
-		"graphTitle": "Graphs"
-	},
-	"manage": {
-		"settings": {
-			"memberCount": "Members",
-			"info": {
-				"info": "Info",
-				"server": "Server Information"
-			}
-		}
-	},
-	"privacyPolicy": {
-		"title": "Privacy Policy",
-		"description": "Privacy Policy and Terms of Service",
-		"pp": "Complete Privacy Policy"
-	},
-	"partials": {
-		"sidebar": {
-			"dash": "Dashboard",
-			"manage": "Manage Guilds",
-			"commands": "Commands",
-			"pp": "Privacy Policy",
-			"admin": "Admin",
-			"account": "Account Pages",
-			"login": "Sign In",
-			"logout": "Sign Out"
-		},
-		"navbar": {
-			"home": "Home",
-			"pages": {
-				"manage": "Manage Guilds",
-				"settings": "Manage Guilds",
-				"commands": "Commands",
-				"pp": "Privacy Policy",
-				"admin": "Admin Panel",
-				"error": "Error",
-				"credits": "Credits",
-				"debug": "Debug",
-				"leaderboard": "Leaderboard",
-				"profile": "Profile",
-				"maintenance": "Under Maintenance"
-			}
-		},
-		"title": {
-			"pages": {
-				"manage": "Manage Guilds",
-				"settings": "Manage Guilds",
-				"commands": "Commands",
-				"pp": "Privacy Policy",
-				"admin": "Admin Panel",
-				"error": "Error",
-				"credits": "Credits",
-				"debug": "Debug",
-				"leaderboard": "Leaderboard",
-				"profile": "Profile",
-				"maintenance": "Under Maintenance"
-			}
-		},
-		"preloader": {
-			"text": "Page is loading..."
-		},
-		"premium": {
-			"title": "Want more from JaBa?",
-			"description": "Check out premium features below!",
-			"buttonText": "Become Premium"
-		},
-		"settings": {
-			"title": "Site Configuration",
-			"description": "Configurable Viewing Options",
-			"theme": {
-				"title": "Site Theme",
-				"description": "Make the site more appealing for your eyes!"
+	"DASHBOARD": {
+		"name": "Русский",
+		"index": {
+			"feeds": [ "Текущий пользователь", "Версия Node", "Кол-во пользователей", "Кол-во серверов" ],
+			"card": {
+				"category": "JaBa Bot",
+				"title": "Простой бот, созданный <a href=\"https://github.com/JonnyBro\">Jonny_Bro</a>",
+				"description": "Верхний текст",
+				"image": "",
+				"footer": "Нижний текст"
 			},
-			"language": {
-				"title": "Site Language",
-				"description": "Select your preffered language!"
+			"feedsTitle": "Новости",
+			"graphTitle": "Графики"
+		},
+		"manage": {
+			"settings": {
+				"memberCount": "Участники",
+				"info": {
+					"info": "Информация",
+					"server": "Информация о сервере"
+				}
+			}
+		},
+		"privacyPolicy": {
+			"title": "Политика конф.",
+			"description": "Политика конфиденциальности и Условия использования",
+			"pp": "Полная политика конфиденциальности"
+		},
+		"partials": {
+			"sidebar": {
+				"dash": "Панель управления",
+				"manage": "Сервера",
+				"commands": "Команды",
+				"pp": "Политика конф.",
+				"admin": "Админ панель",
+				"account": "Аккаунт",
+				"login": "Войти",
+				"logout": "Выйти"
+			},
+			"navbar": {
+				"home": "Главная",
+				"pages": {
+					"manage": "Настройки серверов",
+					"settings": "Настройки",
+					"commands": "Команды",
+					"pp": "Политика конфиденциальности",
+					"admin": "Админ панель",
+					"error": "Ошибка",
+					"credits": "Разработчики панели",
+					"debug": "Отладка",
+					"leaderboard": "Таблица лидеров",
+					"profile": "Профиль",
+					"maintenance": "Техобслуживание"
+				}
+			},
+			"title": {
+				"pages": {
+					"manage": "Настройки серверов",
+					"settings": "Настройки",
+					"commands": "Команды",
+					"pp": "Политика конфиденциальности",
+					"admin": "Админ панель",
+					"error": "Ошибка",
+					"credits": "Разработчики панели",
+					"debug": "Отладка",
+					"leaderboard": "Таблица лидеров",
+					"profile": "Профиль",
+					"maintenance": "Техобслуживание"
+				}
+			},
+			"sweetalert": {
+				"success": {
+					"login": "Вход выполнен."
+				}
+			},
+			"preloader": {
+				"text": "Загрузка..."
+			},
+			"premium": {
+				"title": "Хотите большего JaBa?",
+				"description": "Проверьте Премиум функции!",
+				"buttonText": "Стать Премиум"
+			},
+			"settings": {
+				"title": "Настройки сайта",
+				"description": "Настройте параметры панели управления",
+				"theme": {
+					"title": "Тема",
+					"description": "У нас есть тёмная и светлая!"
+				},
+				"language": {
+					"title": "Язык",
+					"description": "Выберите предпочитаемый язык!"
+				}
 			}
 		}
 	}
