@@ -14,7 +14,6 @@ module.exports = {
 	/* Dashboard configuration */
 	dashboard: {
 		enabled: true, // Whether the dashboard is enabled or not
-		license: "", // Licence from https://assistantscenter.com/licenses/opensource
 		maintanceKey: "", // Your maintance key
 		port: 80, // Dashboard port
 		domain: "http://localhost", // The base URL of the dashboard without / at the end
@@ -33,6 +32,5 @@ module.exports = {
 		name: "XXXXXXXXXXX#1234", // And the name of the bot's owner
 	},
 	/* The API keys that are required for certain commands */
-	/* Not used right now */
 	apiKeys: {},
 };

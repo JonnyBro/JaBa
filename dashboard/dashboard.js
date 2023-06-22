@@ -1,5 +1,5 @@
-const SoftUI = require("dbd-soft-ui"),
-	DBD = require("discord-dashboard");
+const SoftUI = require("./dashboard-core/theme/dbd-soft-ui"),
+	DBD = require("./dashboard-core/index");
 
 /**
  *
@@ -33,9 +33,6 @@ module.exports.load = async client => {
 			list: commands.filter(v => v._category === c),
 		};
 	});
-
-	await DBD.useLicense(client.config.dashboard.license);
-	DBD.Dashboard = DBD.UpdatedClass();
 
 	const Dashboard = new DBD.Dashboard({
 		port: client.config.dashboard.port,
