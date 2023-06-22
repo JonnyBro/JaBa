@@ -61,7 +61,7 @@ class MessageCreate extends BaseEvent {
 						}),
 						iconURL: "https://wynem.com/assets/images/icons/quote.webp",
 					})
-					.setThumbnail(msg.author.avatarURL())
+					.setThumbnail(msg.author.displayAvatarURL())
 					.setDescription(msg.content !== "" ? msg.content : `*${message.translate("common:MISSING")}*`)
 					.addFields([
 						{
