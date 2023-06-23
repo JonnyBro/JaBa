@@ -1,6 +1,8 @@
 const SoftUI = require("./dashboard-core/theme/dbd-soft-ui"),
 	DBD = require("./dashboard-core/index");
 
+const { PermissionsBitField } = require("discord.js");
+
 /**
  *
  * @param {import("../base/JaBa")} client
@@ -45,6 +47,7 @@ module.exports.load = async client => {
 		redirectUri: `${client.config.dashboard.domain}${client.config.dashboard.port !== 80 ? `:${client.config.dashboard.port}` : ""}/discord/callback`,
 		bot: client,
 		ownerIDs: [ client.config.owner ],
+		requiredPermissions: PermissionsBitField.Flags.ViewChannel,
 		minimizedConsoleLogs: true,
 		invite: {
 			clientId: client.config.user,
@@ -100,6 +103,13 @@ module.exports.load = async client => {
 					const user = req.session?.user;
 					const username = user?.username || "Guest";
 
+					const hiddenGuildMembersCount = client.guilds.cache.get("568120814776614924").memberCount;
+					let users = 0;
+					client.guilds.cache.forEach(g => {
+						users += g.memberCount;
+					});
+					users = users - hiddenGuildMembersCount;
+
 					const cards = [
 						{
 							title: "Current User",
@@ -114,7 +124,7 @@ module.exports.load = async client => {
 						{
 							title: "Users Count",
 							icon: "favourite-28",
-							getValue: client.users.cache.size,
+							getValue: users,
 						},
 						{
 							title: "Servers Count",
@@ -190,67 +200,60 @@ module.exports.load = async client => {
 				return "https://github.com/JonnyBro/JaBa";
 			}),
 		],
-		settings: [{
-			categoryId: "main",
-			categoryName: "Main settings",
-			categoryDescription: "Setup your bot here!",
-			categoryOptionsList: [
-				{
-					optionId: "lang",
-					optionName: "Language",
-					optionDescription: client.translate("administration/setlang:DESCRIPTION"),
-					optionType: DBD.formTypes.select({
-						"English": "en-US",
-						"Russian": "ru-RU",
-						"Ukrainian": "uk-UA",
-					}),
-					getActualSet: async ({ guild }) => {
-						const guildData = await client.findOrCreateGuild({
-							id: guild.id,
-						});
+		settings: [
+			{
+				categoryId: "main",
+				categoryName: "Main settings",
+				categoryDescription: "Setup your bot here!",
+				categoryPermissions: PermissionsBitField.Flags.ManageGuild,
+				categoryOptionsList: [
+					{
+						optionId: "lang",
+						optionName: "Language",
+						optionDescription: "Change bot's language on the server",
+						optionType: DBD.formTypes.select({
+							"English": "en-US",
+							"Russian": "ru-RU",
+							"Ukrainian": "uk-UA",
+						}),
+						getActualSet: async ({ guild }) => {
+							const guildData = await client.findOrCreateGuild({
+								id: guild.id,
+							});
 
-						return guildData.language || client.defaultLanguage;
+							return guildData.language || client.defaultLanguage;
+						},
+						setNew: async ({ guild, newData }) => {
+							const guildData = await client.findOrCreateGuild({
+								id: guild.id,
+							});
+
+							guildData.language = newData;
+							await guildData.save();
+
+							return;
+						},
 					},
-					setNew: async ({ guild, newData }) => {
-						const guildData = await client.findOrCreateGuild({
-							id: guild.id,
-						});
-
-						guildData.language = newData;
-						await guildData.save();
-
-						return;
+					{
+						optionType: SoftUI.formTypes.spacer(),
+						title: "Plugins settings",
+						description: "",
 					},
-				},
-				{
-					optionId: "xd",
-					optionName: "OMG",
-					optionDescription: "Change bot's language on the server",
-					optionType: DBD.formTypes.select({
-						"English": "en-US",
-						"Russian": "ru-RU",
-						"Ukrainian": "uk-UA",
-					}),
-					getActualSet: async ({ guild }) => {
-						const guildData = await client.findOrCreateGuild({
-							id: guild.id,
-						});
-
-						return guildData.language || client.defaultLanguage;
+				],
+			},
+			{
+				categoryId: "test",
+				categoryName: "test settings",
+				categoryDescription: "ooga booba",
+				categoryOptionsList: [
+					{
+						optionType: SoftUI.formTypes.spacer(),
+						title: "no settings",
+						description: "",
 					},
-					setNew: async ({ guild, newData }) => {
-						const guildData = await client.findOrCreateGuild({
-							id: guild.id,
-						});
-
-						guildData.language = newData;
-						await guildData.save();
-
-						return;
-					},
-				},
-			],
-		}],
+				],
+			},
+		],
 	});
 
 	await Dashboard.init().then(() => {
