@@ -1,7 +1,9 @@
 const SoftUI = require("./dashboard-core/theme/dbd-soft-ui"),
-	DBD = require("./dashboard-core/index");
+	DBD = require("./dashboard-core/index"),
+	session = require("express-session"),
+	FileStore = require("session-file-store")(session);
 
-const { PermissionsBitField } = require("discord.js");
+const { PermissionsBitField, ChannelType } = require("discord.js");
 
 /**
  *
@@ -43,10 +45,11 @@ module.exports.load = async client => {
 			secret: client.config.dashboard.secret,
 		},
 		cookiesSecret: client.config.dashboard.secret,
+		sessionSaveSession: new FileStore,
 		domain: client.config.dashboard.domain,
 		redirectUri: `${client.config.dashboard.domain}${client.config.dashboard.port !== 80 ? `:${client.config.dashboard.port}` : ""}/discord/callback`,
 		bot: client,
-		ownerIDs: [ client.config.owner ],
+		ownerIDs: [ client.config.owner.id ],
 		requiredPermissions: PermissionsBitField.Flags.ViewChannel,
 		minimizedConsoleLogs: true,
 		invite: {
@@ -190,9 +193,9 @@ module.exports.load = async client => {
 			},
 			commands: categories,
 			locales: {
-				enUS: require("../languages/en-US/dashboard.json").DASHBOARD,
-				ruRU: require("../languages/ru-RU/dashboard.json").DASHBOARD,
-				ukUA: require("../languages/uk-UA/dashboard.json").DASHBOARD,
+				enUS: require("../languages/en-US/dashboard.json"),
+				ruRU: require("../languages/ru-RU/dashboard.json"),
+				ukUA: require("../languages/uk-UA/dashboard.json"),
 			},
 		}),
 		customPages: [
@@ -221,7 +224,7 @@ module.exports.load = async client => {
 								id: guild.id,
 							});
 
-							return guildData.language || client.defaultLanguage;
+							return guildData.language;
 						},
 						setNew: async ({ guild, newData }) => {
 							const guildData = await client.findOrCreateGuild({
@@ -235,9 +238,407 @@ module.exports.load = async client => {
 						},
 					},
 					{
-						optionType: SoftUI.formTypes.spacer(),
-						title: "Plugins settings",
-						description: "",
+						optionId: "welcome",
+						optionName: "Welcome Message",
+						optionDescription: "Setup welcome message on the server",
+						optionType: SoftUI.formTypes.multiRow([
+							{
+								optionId: "welcome_enable",
+								optionName: "Enabled",
+								optionDescription: "Toggle welcome messages sending",
+								optionType: DBD.formTypes.switch(),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.welcome.enabled;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.welcome.enabled = newData;
+									await guildData.save();
+
+									return;
+								},
+							},
+							{
+								optionId: "welcome_image",
+								optionName: "Add Image",
+								optionDescription: "Toggle sending an image with welcome message",
+								optionType: DBD.formTypes.switch(),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.welcome.withImage;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.welcome.withImage = newData;
+									await guildData.save();
+
+									return;
+								},
+							},
+							{
+								optionId: "welcome_message",
+								optionName: "Message",
+								optionDescription: "Change welcome message (You can use {user}, {server} and {membercount} wildcards)",
+								optionType: DBD.formTypes.input("Welcome, {user}!", 2, 100, false, false),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.welcome.message;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.welcome.message = newData !== "" ? newData : null;
+									await guildData.save();
+
+									return;
+								},
+							},
+							{
+								optionId: "welcome_channel",
+								optionName: "Channel",
+								optionDescription: "Select a channel for welcome messages",
+								optionType: DBD.formTypes.channelsSelect(false, [ ChannelType.GuildText ]),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.welcome.channel;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.welcome.channel = newData !== "" ? newData : null;
+									await guildData.save();
+
+									return;
+								},
+							},
+						]),
+					},
+					{
+						optionId: "goodbye",
+						optionName: "Goodbye Message",
+						optionDescription: "Setup goodbye message on the server",
+						optionType: SoftUI.formTypes.multiRow([
+							{
+								optionId: "goodbye_enable",
+								optionName: "Enabled",
+								optionDescription: "Toggle goodbye messages sending",
+								optionType: DBD.formTypes.switch(),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.goodbye.enabled;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.goodbye.enabled = newData;
+									await guildData.save();
+
+									return;
+								},
+							},
+							{
+								optionId: "goodbye_image",
+								optionName: "Add Image",
+								optionDescription: "Toggle sending an image with goodbye message",
+								optionType: DBD.formTypes.switch(),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.goodbye.withImage;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.goodbye.withImage = newData;
+									await guildData.save();
+
+									return;
+								},
+							},
+							{
+								optionId: "goodbye_message",
+								optionName: "Message",
+								optionDescription: "Change goodbye message (You can use {user}, {server} and {membercount} wildcards)",
+								optionType: DBD.formTypes.input("goodbye, {user}!", 2, 100, false, false),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.goodbye.message;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.goodbye.message = newData !== "" ? newData : null;
+									await guildData.save();
+
+									return;
+								},
+							},
+							{
+								optionId: "goodbye_channel",
+								optionName: "Channel",
+								optionDescription: "Select a channel for goodbye messages",
+								optionType: DBD.formTypes.channelsSelect(false, [ ChannelType.GuildText ]),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.goodbye.channel;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.goodbye.channel = newData !== "" ? newData : null;
+									await guildData.save();
+
+									return;
+								},
+							},
+						]),
+					},
+					{
+						optionId: "autorole",
+						optionName: "Auto Role",
+						optionDescription: "Setup auto role on the server",
+						optionType: SoftUI.formTypes.multiRow([
+							{
+								optionId: "autorole_enable",
+								optionName: "Enabled",
+								optionDescription: "Toggle auto role granting for new members",
+								optionType: DBD.formTypes.switch(),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.autorole.enabled;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.autorole.enabled = newData;
+									await guildData.save();
+
+									return;
+								},
+							},
+							{
+								optionId: "autorole_role",
+								optionName: "Role",
+								optionDescription: "Select a role for auto role",
+								optionType: DBD.formTypes.rolesSelect(false, false, true),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.autorole.role;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.autorole.role = newData !== "" ? newData : null;
+									await guildData.save();
+
+									return;
+								},
+							},
+						]),
+					},
+					{
+						optionId: "automod",
+						optionName: "Auto Mod",
+						optionDescription: "Setup auto mod on the server",
+						optionType: SoftUI.formTypes.multiRow([
+							{
+								optionId: "automod_enable",
+								optionName: "Enabled",
+								optionDescription: "Toggle auto mod granting for new members",
+								optionType: DBD.formTypes.switch(),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.automod.enabled;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.automod.enabled = newData;
+									await guildData.save();
+
+									return;
+								},
+							},
+							{
+								optionId: "automod_ignore",
+								optionName: "Ignore channels",
+								optionDescription: "Select channels for auto mod to ignore",
+								optionType: DBD.formTypes.channelsMultiSelect(false, false, [ ChannelType.GuildText ]),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.automod.ignored;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.automod.ignored = newData;
+									await guildData.save();
+
+									return;
+								},
+							},
+						]),
+					},
+					{
+						optionId: "channels",
+						optionName: "Special Channels",
+						optionDescription: "Setup special channels on the server",
+						optionType: SoftUI.formTypes.multiRow([
+							{
+								optionId: "channels_suggestions",
+								optionName: "Suggestions channel",
+								optionDescription: "Select channel for suggestions to go to",
+								optionType: DBD.formTypes.channelsSelect(false, [ ChannelType.GuildText ]),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.suggestions;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.suggestions = newData;
+									await guildData.save();
+
+									return;
+								},
+							},
+							{
+								optionId: "channels_reports",
+								optionName: "Reports channel",
+								optionDescription: "Select channel for reports to go to",
+								optionType: DBD.formTypes.channelsSelect(false, [ ChannelType.GuildText ]),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.reports;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.reports = newData;
+									await guildData.save();
+
+									return;
+								},
+							},
+							{
+								optionId: "channels_birthdays",
+								optionName: "Birthdays channel",
+								optionDescription: "Select channel for birthdays message to go to",
+								optionType: DBD.formTypes.channelsSelect(false, [ ChannelType.GuildText ]),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.birthdays;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.birthdays = newData;
+									await guildData.save();
+
+									return;
+								},
+							},
+							{
+								optionId: "channels_modlogs",
+								optionName: "Moderation logs channel",
+								optionDescription: "Select channel for moderation logs to go to (warns)",
+								optionType: DBD.formTypes.channelsSelect(false, [ ChannelType.GuildText ]),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.modlogs;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.modlogs = newData;
+									await guildData.save();
+
+									return;
+								},
+							},
+						]),
 					},
 				],
 			},
@@ -245,6 +646,7 @@ module.exports.load = async client => {
 				categoryId: "test",
 				categoryName: "test settings",
 				categoryDescription: "ooga booba",
+				categoryPermissions: PermissionsBitField.Flags.ViewChannel,
 				categoryOptionsList: [
 					{
 						optionType: SoftUI.formTypes.spacer(),

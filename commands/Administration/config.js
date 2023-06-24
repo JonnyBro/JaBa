@@ -39,7 +39,6 @@ class Config extends BaseCommand {
 						.setChoices(
 							{ name: client.translate("administration/config:BIRTHDAYS"), value: "birthdays" },
 							{ name: client.translate("administration/config:MODLOGS"), value: "modlogs" },
-							{ name: client.translate("administration/config:NEWS"), value: "news" },
 							{ name: client.translate("administration/config:REPORTS"), value: "reports" },
 							{ name: client.translate("administration/config:SUGGESTIONS"), value: "suggestions" },
 						)
@@ -129,12 +128,9 @@ class Config extends BaseCommand {
 					},
 					{
 						name: interaction.translate("administration/config:SPECIAL_CHANNELS"),
-						value: interaction.translate("administration/config:NEWS_LIST", {
-							channel: guildData.plugins.news ? `<#${guildData.plugins.news}>` : `*${interaction.translate("common:NOT_DEFINED")}*`,
+						value: interaction.translate("administration/config:SUGGESTIONS_LIST", {
+							channel: guildData.plugins.suggestions ? `<#${guildData.plugins.suggestions}>` : `*${interaction.translate("common:NOT_DEFINED")}*`,
 						}) + "\n" +
-					interaction.translate("administration/config:SUGGESTIONS_LIST", {
-						channel: guildData.plugins.suggestions ? `<#${guildData.plugins.suggestions}>` : `*${interaction.translate("common:NOT_DEFINED")}*`,
-					}) + "\n" +
 					interaction.translate("administration/config:REPORTS_LIST", {
 						channel: guildData.plugins.reports ? `<#${guildData.plugins.reports}>` : `*${interaction.translate("common:NOT_DEFINED")}*`,
 					}) + "\n" +
@@ -145,10 +141,10 @@ class Config extends BaseCommand {
 						channel: guildData.plugins.birthdays ? `<#${guildData.plugins.birthdays}>` : `*${interaction.translate("common:NOT_DEFINED")}*`,
 					}),
 					},
-					// {
-					// 	name: interaction.translate("administration/config:DASHBOARD_TITLE"),
-					// 	value: `[${interaction.translate("administration/config:DASHBOARD_CONTENT")}](${client.config.dashboard.baseURL})`
-					// }
+					{
+						name: interaction.translate("administration/config:DASHBOARD_TITLE"),
+						value: `[${interaction.translate("administration/config:DASHBOARD_CONTENT")}](${client.config.dashboard.domain})`,
+					},
 				]);
 
 			interaction.reply({
@@ -193,11 +189,10 @@ async function changeSetting(interaction, setting, state, channel) {
 				content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: **${interaction.translate("common:ENABLED")}** (${channel.toString()})`,
 				ephemeral: true,
 			});
-		} else
-			return interaction.reply({
-				content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: ${interaction.guild.data.plugins[setting] ? `**${interaction.translate("common:ENABLED")}** (<#${interaction.guild.data.plugins[setting]}>)` : `**${interaction.translate("common:DISABLED")}**`}`,
-				ephemeral: true,
-			});
+		} else return interaction.reply({
+			content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: ${interaction.guild.data.plugins[setting] ? `**${interaction.translate("common:ENABLED")}** (<#${interaction.guild.data.plugins[setting]}>)` : `**${interaction.translate("common:DISABLED")}**`}`,
+			ephemeral: true,
+		});
 	}
 }
 

@@ -20,8 +20,10 @@
 .vscode
 
 # Node
-package-lock.json
 node_modules
 
 # SQlite
 /json.sqlite
+
+# Sessions Store
+sessions

@@ -8,7 +8,6 @@
 	"GOODBYE_TITLE": "Прощання",
 	"GOODBYE_CONTENT": "Канал: {{channel}}\nКартка: {{withImage}}",
 	"SPECIAL_CHANNELS": "Спеціальні канали",
-	"NEWS": "Новини роботи: {{channel}}",
 	"MODLOGS": "Логи модерації: {{channel}}",
 	"BIRTHDAYS": "Привітання з днем ​​народження: {{channel}}",
 	"SUGGESTIONS": "Пропозиції: {{channel}}",

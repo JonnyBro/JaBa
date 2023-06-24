@@ -39,11 +39,13 @@ class GuildMemberRemove extends BaseEvent {
 
 		if (guildData.plugins.goodbye.enabled) {
 			const channel = member.guild.channels.cache.get(guildData.plugins.goodbye.channel);
+
 			if (channel) {
 				const message = guildData.plugins.goodbye.message
 					.replace(/{user}/g, member.user.discriminator === "0" ? member.user.username : member.user.tag)
 					.replace(/{server}/g, member.guild.name)
 					.replace(/{membercount}/g, member.guild.memberCount);
+
 				if (guildData.plugins.goodbye.withImage) {
 					const canvas = Canvas.createCanvas(1024, 450),
 						ctx = canvas.getContext("2d");
@@ -113,6 +115,7 @@ class GuildMemberRemove extends BaseEvent {
 					ctx.stroke();
 					ctx.closePath();
 					ctx.clip();
+
 					const avatar = await Canvas.loadImage(member.displayAvatarURL({
 						extension: "png",
 						size: 512,
@@ -120,11 +123,13 @@ class GuildMemberRemove extends BaseEvent {
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 
 					const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: "goodbye-image.png" });
+
 					channel.send({
 						content: message,
 						files: [attachment],
 					});
-				} else channel.send({ content: message });
+				} else
+					channel.send({ content: message });
 			}
 		}
 	}

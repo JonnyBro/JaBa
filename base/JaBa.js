@@ -32,7 +32,6 @@ class JaBa extends Client {
 		this.databaseCache.guilds = new Collection();
 		this.databaseCache.members = new Collection();
 		this.databaseCache.usersReminds = new Collection();
-		this.databaseCache.mutedUsers = new Collection();
 
 		this.player = Player.singleton(this, {
 			autoRegisterExtractor: false,

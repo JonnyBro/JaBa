@@ -1,98 +1,96 @@
 {
-	"DASHBOARD": {
-		"name": "English",
-		"index": {
-			"feeds": [ "Current User", "Node version", "Users Count", "Servers Count" ],
-			"card": {
-				"category": "JaBa Bot",
-				"title": "Simple bot made by <a href=\"https://github.com/JonnyBro\">Jonny_Bro</a>",
-				"description": "Upper Text",
-				"image": "",
-				"footer": "Bottom Text"
-			},
-			"feedsTitle": "Feeds",
-			"graphTitle": "Graphs"
+	"name": "English",
+	"index": {
+		"feeds": [ "Current User", "Node version", "Users Count", "Servers Count" ],
+		"card": {
+			"category": "JaBa Bot",
+			"title": "Simple bot made by <a href=\"https://github.com/JonnyBro\">Jonny_Bro</a>",
+			"description": "Upper Text",
+			"image": "",
+			"footer": "Bottom Text"
 		},
-		"manage": {
-			"settings": {
-				"memberCount": "Members",
-				"info": {
-					"info": "Info",
-					"server": "Server Information"
-				}
+		"feedsTitle": "Feeds",
+		"graphTitle": "Graphs"
+	},
+	"manage": {
+		"settings": {
+			"memberCount": "Members",
+			"info": {
+				"info": "Info",
+				"server": "Server Information"
 			}
+		}
+	},
+	"privacyPolicy": {
+		"title": "Privacy Policy",
+		"description": "Privacy Policy and Terms of Service",
+		"pp": "Complete Privacy Policy"
+	},
+	"partials": {
+		"sidebar": {
+			"dash": "Dashboard",
+			"manage": "Manage Guilds",
+			"commands": "Commands",
+			"pp": "Privacy Policy",
+			"admin": "Admin",
+			"account": "Account Pages",
+			"login": "Sign In",
+			"logout": "Sign Out"
 		},
-		"privacyPolicy": {
-			"title": "Privacy Policy",
-			"description": "Privacy Policy and Terms of Service",
-			"pp": "Complete Privacy Policy"
-		},
-		"partials": {
-			"sidebar": {
-				"dash": "Dashboard",
+		"navbar": {
+			"home": "Home",
+			"pages": {
 				"manage": "Manage Guilds",
+				"settings": "Manage Guilds",
 				"commands": "Commands",
 				"pp": "Privacy Policy",
-				"admin": "Admin",
-				"account": "Account Pages",
-				"login": "Sign In",
-				"logout": "Sign Out"
+				"admin": "Admin Panel",
+				"error": "Error",
+				"credits": "Credits",
+				"debug": "Debug",
+				"leaderboard": "Leaderboard",
+				"profile": "Profile",
+				"maintenance": "Under Maintenance"
+			}
+		},
+		"title": {
+			"pages": {
+				"manage": "Manage Guilds",
+				"settings": "Manage Guilds",
+				"commands": "Commands",
+				"pp": "Privacy Policy",
+				"admin": "Admin Panel",
+				"error": "Error",
+				"credits": "Credits",
+				"debug": "Debug",
+				"leaderboard": "Leaderboard",
+				"profile": "Profile",
+				"maintenance": "Under Maintenance"
+			}
+		},
+		"sweetalert": {
+			"success": {
+				"login": "Successfully logged in."
+			}
+		},
+		"preloader": {
+			"text": "Page is loading..."
+		},
+		"premium": {
+			"title": "Want more from JaBa?",
+			"description": "Check out premium features below!",
+			"buttonText": "Become Premium"
+		},
+		"settings": {
+			"title": "Site Configuration",
+			"description": "Configurable Viewing Options",
+			"theme": {
+				"title": "Site Theme",
+				"description": "Make the site more appealing for your eyes!"
 			},
-			"navbar": {
-				"home": "Home",
-				"pages": {
-					"manage": "Manage Guilds",
-					"settings": "Manage Guilds",
-					"commands": "Commands",
-					"pp": "Privacy Policy",
-					"admin": "Admin Panel",
-					"error": "Error",
-					"credits": "Credits",
-					"debug": "Debug",
-					"leaderboard": "Leaderboard",
-					"profile": "Profile",
-					"maintenance": "Under Maintenance"
-				}
-			},
-			"title": {
-				"pages": {
-					"manage": "Manage Guilds",
-					"settings": "Manage Guilds",
-					"commands": "Commands",
-					"pp": "Privacy Policy",
-					"admin": "Admin Panel",
-					"error": "Error",
-					"credits": "Credits",
-					"debug": "Debug",
-					"leaderboard": "Leaderboard",
-					"profile": "Profile",
-					"maintenance": "Under Maintenance"
-				}
-			},
-			"sweetalert": {
-				"success": {
-					"login": "Successfully logged in."
-				}
-			},
-			"preloader": {
-				"text": "Page is loading..."
-			},
-			"premium": {
-				"title": "Want more from JaBa?",
-				"description": "Check out premium features below!",
-				"buttonText": "Become Premium"
-			},
-			"settings": {
-				"title": "Site Configuration",
-				"description": "Configurable Viewing Options",
-				"theme": {
-					"title": "Site Theme",
-					"description": "Make the site more appealing for your eyes!"
-				},
-				"language": {
-					"title": "Site Language",
-					"description": "Select your preffered language!"
-				}
+			"language": {
+				"title": "Site Language",
+				"description": "Select your preffered language!"
 			}
 		}
 	}

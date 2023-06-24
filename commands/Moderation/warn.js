@@ -74,9 +74,9 @@ class Warn extends BaseCommand {
 		if (submitted) {
 			const reason = submitted.fields.getTextInputValue("warn_reason");
 
-			const sanctions = memberData.sanctions.filter(s => s.type === "warn").length;
-			const banCount = data.guildData.plugins.warnsSanctions.ban;
-			const kickCount = data.guildData.plugins.warnsSanctions.kick;
+			// const sanctions = memberData.sanctions.filter(s => s.type === "warn").length;
+			// const banCount = data.guildData.plugins.warnsSanctions.ban;
+			// const kickCount = data.guildData.plugins.warnsSanctions.kick;
 
 			const caseInfo = {
 				moderator: interaction.member.id,
@@ -101,7 +101,7 @@ class Warn extends BaseCommand {
 						inline: true,
 					},
 				]);
-
+			/*
 			if (banCount) {
 				if (sanctions >= banCount) {
 					member.send({
@@ -122,6 +122,7 @@ class Warn extends BaseCommand {
 						.setColor(client.config.embed.color);
 
 					interaction.guild.members.ban(member).catch(() => {});
+
 					interaction.followUp({
 						content: interaction.translate("moderation/setwarns:AUTO_BAN", {
 							user: member.user.discriminator === "0" ? member.user.username : member.user.tag,
@@ -151,6 +152,7 @@ class Warn extends BaseCommand {
 						.setColor(client.config.embed.color);
 
 					member.kick().catch(() => {});
+
 					interaction.followUp({
 						content: interaction.translate("moderation/setwarns:AUTO_KICK", {
 							user: member.user.discriminator === "0" ? member.user.username : member.user.tag,
@@ -159,7 +161,7 @@ class Warn extends BaseCommand {
 					});
 				}
 			}
-
+			*/
 			member.send({
 				content: interaction.translate("moderation/warn:WARNED_DM", {
 					user: member.user.discriminator === "0" ? member.user.username : member.user.tag,
