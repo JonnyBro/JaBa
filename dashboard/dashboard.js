@@ -44,8 +44,8 @@ module.exports.load = async client => {
 		},
 		SSL: {
 			enabled: true,
-			key: "../jababot-cloudflare.key",
-			cert: "../jababot-cloudflare.crt",
+			key: "../../jababot-cloudflare.key",
+			cert: "../../jababot-cloudflare.crt",
 		},
 		cookiesSecret: client.config.dashboard.secret,
 		domain: client.config.dashboard.domain,
