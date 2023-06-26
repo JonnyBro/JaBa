@@ -1,5 +1,6 @@
 const SoftUI = require("./dashboard-core/theme/dbd-soft-ui"),
-	DBD = require("./dashboard-core/index");
+	DBD = require("./dashboard-core/index"),
+	fs = require("fs");
 
 const { PermissionsBitField, ChannelType } = require("discord.js");
 
@@ -36,6 +37,7 @@ module.exports.load = async client => {
 		};
 	});
 
+
 	const Dashboard = new DBD.Dashboard({
 		port: client.config.dashboard.port,
 		client: {
@@ -44,8 +46,8 @@ module.exports.load = async client => {
 		},
 		SSL: {
 			enabled: true,
-			key: "../../jababot-cloudflare.key",
-			cert: "../../jababot-cloudflare.crt",
+			key: fs.readFileSync(`${__dirname}/../jababot-cloudflare.key`, "utf-8"),
+			cert: fs.readFileSync(`${__dirname}/../jababot-cloudflare.crt`, "utf-8"),
 		},
 		cookiesSecret: client.config.dashboard.secret,
 		domain: client.config.dashboard.domain,
