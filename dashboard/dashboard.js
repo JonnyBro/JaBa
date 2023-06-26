@@ -45,7 +45,7 @@ module.exports.load = async client => {
 			secret: client.config.dashboard.secret,
 		},
 		SSL: {
-			enabled: true,
+			enabled: false,
 			key: fs.readFileSync(`${__dirname}/../jababot-cloudflare.key`, "utf-8"),
 			cert: fs.readFileSync(`${__dirname}/../jababot-cloudflare.crt`, "utf-8"),
 		},
