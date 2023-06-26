@@ -117,9 +117,9 @@ module.exports.load = async client => {
 							getValue: username,
 						},
 						{
-							title: "Node Version",
+							title: "Playing music in this much servers",
 							icon: "settings-gear-65",
-							getValue: process.versions.node,
+							getValue: client.player.nodes.cache.size,
 						},
 						{
 							title: "Users Count",
@@ -129,10 +129,10 @@ module.exports.load = async client => {
 						{
 							title: "Servers Count",
 							icon: "notification-70",
-							getValue: `${client.guilds.cache.size} out of 2000`,
+							getValue: `${client.guilds.cache.size - 1} out of 2000`,
 							progressBar: {
 								enabled: true,
-								getProgress: Math.round((client.guilds.cache.size / 2000) * 100),
+								getProgress: Math.round(((client.guilds.cache.size - 1) / 2000) * 100),
 							},
 						},
 					];

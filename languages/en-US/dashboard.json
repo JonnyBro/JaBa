@@ -1,7 +1,7 @@
 {
 	"name": "English",
 	"index": {
-		"feeds": [ "Current User", "Node version", "Users Count", "Servers Count" ],
+		"feeds": [ "Current User", "Playing music in this much servers", "Users Count", "Servers Count" ],
 		"card": {
 			"category": "JaBa Bot",
 			"title": "Simple bot made by <a href=\"https://github.com/JonnyBro\">Jonny_Bro</a>",
