@@ -1,7 +1,5 @@
 const SoftUI = require("./dashboard-core/theme/dbd-soft-ui"),
-	DBD = require("./dashboard-core/index"),
-	session = require("express-session"),
-	FileStore = require("session-file-store")(session);
+	DBD = require("./dashboard-core/index");
 
 const { PermissionsBitField, ChannelType } = require("discord.js");
 
@@ -45,7 +43,6 @@ module.exports.load = async client => {
 			secret: client.config.dashboard.secret,
 		},
 		cookiesSecret: client.config.dashboard.secret,
-		sessionSaveSession: new FileStore,
 		domain: client.config.dashboard.domain,
 		redirectUri: `${client.config.dashboard.domain}${client.config.dashboard.port !== 80 ? `:${client.config.dashboard.port}` : ""}/discord/callback`,
 		bot: client,
@@ -148,7 +145,7 @@ module.exports.load = async client => {
 				},
 			},
 			websiteName: `${client.user.username} Dashboard`,
-			colorScheme: "red",
+			colorScheme: "blue",
 			supporteMail: "",
 			icons: {
 				favicon: client.user.avatarURL(),
@@ -181,9 +178,13 @@ module.exports.load = async client => {
 				},
 			},
 			sweetalert: {
-				errors: {},
+				errors: {
+					settingsSave: "Failed to save setttings",
+				},
 				success: {
+					settingsSave: "Successfully saved setttings.",
 					login: "Successfully logged in.",
+					logout: "Successfully logged out.",
 				},
 			},
 			preloader: {
@@ -649,9 +650,15 @@ module.exports.load = async client => {
 				categoryPermissions: PermissionsBitField.Flags.ViewChannel,
 				categoryOptionsList: [
 					{
-						optionType: SoftUI.formTypes.spacer(),
-						title: "no settings",
-						description: "",
+						optionType: DBD.formTypes.embedBuilder({
+							username: "JaBa",
+							avatarURL: "https://cdn.discordapp.com/avatars/708637495054565426/af98d49ebc9bf28b40b45ed5a0a623b4.png?size=4096",
+						}),
+						setNew: async ({ guild, user, newData }) => {
+							console.log(guild);
+							console.log(user);
+							console.log(newData);
+						},
 					},
 				],
 			},

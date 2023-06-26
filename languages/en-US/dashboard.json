@@ -69,8 +69,13 @@
 			}
 		},
 		"sweetalert": {
+			"errors": {
+				"settingsSave": "Failed to save setttings"
+			},
 			"success": {
-				"login": "Successfully logged in."
+				"settingsSave": "Successfully saved setttings.",
+				"login": "Successfully logged in.",
+				"logout": "Successfully logged out."
 			}
 		},
 		"preloader": {
