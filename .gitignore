@@ -27,3 +27,7 @@ node_modules
 
 # Sessions Store
 sessions
+
+# SSL
+/*.crt
+/*.key

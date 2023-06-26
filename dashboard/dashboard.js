@@ -42,6 +42,11 @@ module.exports.load = async client => {
 			id: client.config.user,
 			secret: client.config.dashboard.secret,
 		},
+		SSL: {
+			enabled: true,
+			key: "../jababot-cloudflare.key",
+			cert: "../jababot-cloudflare.crt",
+		},
 		cookiesSecret: client.config.dashboard.secret,
 		domain: client.config.dashboard.domain,
 		redirectUri: `${client.config.dashboard.domain}${client.config.dashboard.port !== 80 ? `:${client.config.dashboard.port}` : ""}/discord/callback`,
