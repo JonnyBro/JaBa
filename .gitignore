@@ -20,9 +20,10 @@
 .vscode
 
 # Node
-package-lock.json
 node_modules
-yarn.lock
 
-# Backups
-/.backup
+# SQlite
+/json.sqlite
+
+# Sessions Store
+sessions

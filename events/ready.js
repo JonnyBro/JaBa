@@ -31,13 +31,11 @@ class Ready extends BaseEvent {
 		const birthdays = require("../helpers/birthdays");
 		birthdays.init(client);
 
-		const checkUnmutes = require("../helpers/checkUnmutes");
-		checkUnmutes.init(client);
 
 		const checkReminds = require("../helpers/checkReminds");
 		checkReminds.init(client);
 
-		if (client.config.dashboard.enabled) client.dashboard.init(client);
+		if (client.config.dashboard.enabled) client.dashboard.load(client);
 
 		const version = require("../package.json").version;
 		const status = [

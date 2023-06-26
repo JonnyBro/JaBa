@@ -49,7 +49,7 @@ class Serverinfo extends BaseCommand {
 			.addFields([
 				{
 					name: client.customEmojis.link + " " + interaction.translate("general/serverinfo:LINK"),
-					value: `[${interaction.translate("general/serverinfo:LINK_TEXT")}](${client.config.dashboard.baseURL}/stats/${guild.id})`,
+					value: `[${interaction.translate("general/serverinfo:LINK_TEXT")}](${client.config.dashboard.domain}/stats/${guild.id})`,
 				},
 				{
 					name: client.customEmojis.title + interaction.translate("common:NAME"),

@@ -88,7 +88,7 @@ const checks = [
 			if (!config.dashboard.enabled) {
 				ignore("Dashboard is not enabled, skipping check.");
 			} else {
-				const checkPortTaken = (port) => {
+				const checkPortTaken = port => {
 					return new Promise(resolve => {
 						const net = require("net");
 						const tester = net.createServer()

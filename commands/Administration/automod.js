@@ -64,7 +64,7 @@ class Automod extends BaseCommand {
 			return interaction.success("administration/automod:ENABLED");
 		} else {
 			if (channel) {
-				data.guildData.plugins.automod.ignored.push(channel);
+				data.guildData.plugins.automod.ignored.push(channel.id);
 				data.guildData.markModified("plugins.automod");
 				await data.guildData.save();
 

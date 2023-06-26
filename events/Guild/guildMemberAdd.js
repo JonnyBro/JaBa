@@ -54,11 +54,13 @@ class GuildMemberAdd extends BaseEvent {
 
 		if (guildData.plugins.welcome.enabled) {
 			const channel = member.guild.channels.cache.get(guildData.plugins.welcome.channel);
+
 			if (channel) {
 				const message = guildData.plugins.welcome.message
 					.replace(/{user}/g, member)
 					.replace(/{server}/g, member.guild.name)
 					.replace(/{membercount}/g, member.guild.memberCount);
+
 				if (guildData.plugins.welcome.withImage) {
 					const canvas = Canvas.createCanvas(1024, 450),
 						ctx = canvas.getContext("2d");
@@ -128,17 +130,20 @@ class GuildMemberAdd extends BaseEvent {
 					ctx.stroke();
 					ctx.closePath();
 					ctx.clip();
+
 					const avatar = await Canvas.loadImage(member.displayAvatarURL({
 						extension: "jpg",
 					}));
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 
 					const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: "welcome-image.png" });
+
 					channel.send({
 						content: message,
 						files: [attachment],
 					});
-				} else channel.send({ content: message });
+				} else
+					channel.send({ content: message });
 			}
 		}
 	}

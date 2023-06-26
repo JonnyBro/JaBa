@@ -79,7 +79,7 @@ class Profile extends BaseCommand {
 			.addFields([
 				{
 					name: client.customEmojis.link + " " + interaction.translate("economy/profile:LINK"),
-					value: `[${interaction.translate("economy/profile:LINK_TEXT")}](${client.config.dashboard.baseURL}/user/${member.user.id}/${interaction.guild.id})`,
+					value: `[${interaction.translate("economy/profile:LINK_TEXT")}](${client.config.dashboard.domain}/user/${member.user.id}/${interaction.guild.id})`,
 				},
 				{
 					name: interaction.translate("economy/profile:BIO"),

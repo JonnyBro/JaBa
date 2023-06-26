@@ -23,7 +23,7 @@ class JaBa extends Client {
 		this.guildsData = require("../base/Guild");
 		this.usersData = require("../base/User");
 		this.membersData = require("../base/Member");
-		this.dashboard = require("../dashboard/app");
+		this.dashboard = require("../dashboard/dashboard");
 		this.states = {};
 		this.knownGuilds = [];
 
@@ -32,7 +32,6 @@ class JaBa extends Client {
 		this.databaseCache.guilds = new Collection();
 		this.databaseCache.members = new Collection();
 		this.databaseCache.usersReminds = new Collection();
-		this.databaseCache.mutedUsers = new Collection();
 
 		this.player = Player.singleton(this, {
 			autoRegisterExtractor: false,
@@ -88,8 +87,8 @@ class JaBa extends Client {
 
 		await this.player.extractors.loadDefault();
 
-		const autoUpdateDocs = require("../helpers/autoUpdateDocs");
-		autoUpdateDocs.update(this);
+		// const autoUpdateDocs = require("../helpers/autoUpdateDocs");
+		// autoUpdateDocs.update(this);
 	}
 
 	/**
