@@ -22,3 +22,4 @@ client.on("disconnect", () => client.logger.log("Bot is disconnecting...", "warn
 	.on("warn", warn => client.logger.log(warn, "warn"))
 	.on("error", e => client.logger.log(`${e.message}\n${e.stack}`, "error"));
 process.on("unhandledRejection", e => console.log(e));
+process.on("uncaughtException", e => console.log(e));
