@@ -1,3 +1,4 @@
 [submodule "dashboard/dashboard-core"]
 	path = dashboard/dashboard-core
 	url = https://github.com/JonnyBro/dashboard-core
+	branch = main
