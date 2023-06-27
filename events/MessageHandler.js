@@ -18,8 +18,6 @@ class MessageCreate extends BaseEvent {
 	 */
 	async execute(client, message) {
 		if (message.guild && message.guild.id === "568120814776614924") return;
-		if (message.content.includes("no bitches")) message.reply({ files: [{ name: "b.png", attachment: "./assets/img/b.png" }] });
-		if (message.content.includes("bitches") && !message.content.includes("no bitches")) message.reply({ files: [{ name: "nob.png", attachment: "./assets/img/nob.png" }] });
 
 		const data = {};
 		if (message.author.bot) return;
