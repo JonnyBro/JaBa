@@ -121,8 +121,5 @@
             "space-unary-ops": "error",
             "yoda": "error"
         }
-    },
-    "eslintIgnore": [
-        "dashboard/public"
-    ]
+    }
 }
