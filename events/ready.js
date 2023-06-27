@@ -23,23 +23,23 @@ class Ready extends BaseEvent {
 		});
 		tUsers = tUsers - hiddenGuildMembersCount;
 
-		client.logger.log(`Loaded a total of ${commands.length} command(s).`, "ready");
-		client.logger.log(`${client.user.discriminator === "0" ? client.user.username : client.user.tag}, ready to serve ${tUsers} members in ${tServers} servers.`, "ready");
-		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: [ PermissionsBitField.Flags.Administrator ] })}`, "ready");
-		console.timeEnd("botReady");
-
 		const birthdays = require("../helpers/birthdays");
 		birthdays.init(client);
-
 
 		const checkReminds = require("../helpers/checkReminds");
 		checkReminds.init(client);
 
-		if (client.config.dashboard.enabled) client.dashboard.load(client);
+		if (client.config.dashboard.enabled) await client.dashboard.load(client);
+
+		client.logger.log(`Loaded a total of ${commands.length} command(s).`, "ready");
+		client.logger.log(`${client.user.discriminator === "0" ? client.user.username : client.user.tag}, ready to serve ${tUsers} members in ${tServers} servers.`, "ready");
+		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: [ PermissionsBitField.Flags.Administrator ] })}`, "ready");
+
+		console.timeEnd("botReady");
 
 		const version = require("../package.json").version;
 		const status = [
-			{ name: "help", type: ActivityType.Watching },
+			{ name: "/help", type: ActivityType.Watching },
 			{ name: `${commands.length} ${client.functions.getNoun(commands.length, client.translate("misc:NOUNS:COMMANDS:1"), client.translate("misc:NOUNS:COMMANDS:2"), client.translate("misc:NOUNS:COMMANDS:5"))}`, type: ActivityType.Listening },
 			{ name: `${tServers} ${client.functions.getNoun(tServers, client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5"))}`, type: ActivityType.Watching },
 			{ name: `${tUsers} ${client.functions.getNoun(tUsers, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))}`, type: ActivityType.Watching },
