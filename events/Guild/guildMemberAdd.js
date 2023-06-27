@@ -35,20 +35,6 @@ class GuildMemberAdd extends BaseEvent {
 		const guildData = await client.findOrCreateGuild({
 			id: member.guild.id,
 		});
-		member.guild.data = guildData;
-
-		const memberData = await client.findOrCreateMember({
-			id: member.id,
-			guildId: member.guild.id,
-		});
-		if (memberData.mute.muted && memberData.mute.endDate > Date.now())
-			member.guild.channels.cache.forEach(channel => {
-				channel.permissionOverwrites.edit(member.id, {
-					SEND_MESSAGES: false,
-					ADD_REACTIONS: false,
-					CONNECT: false,
-				}).catch(() => {});
-			});
 
 		if (guildData.plugins.autorole.enabled) member.roles.add(guildData.plugins.autorole.role);
 
@@ -95,11 +81,11 @@ class GuildMemberAdd extends BaseEvent {
 					// Draw server name
 					ctx.font = applyText(canvas, client.translate("administration/welcome:IMG_WELCOME", {
 						server: member.guild.name,
-					}, member.guild.data.language), 53, 625, "RubikMonoOne");
+					}, guildData.language), 53, 625, "RubikMonoOne");
 
 					ctx.fillText(client.translate("administration/welcome:IMG_WELCOME", {
 						server: member.guild.name,
-					}, member.guild.data.language), canvas.width - 700, canvas.height - 70);
+					}, guildData.language), canvas.width - 700, canvas.height - 70);
 
 					// Draw discriminator
 					ctx.font = "35px RubikMonoOne";
@@ -107,20 +93,20 @@ class GuildMemberAdd extends BaseEvent {
 
 					// Draw membercount
 					ctx.font = "22px RubikMonoOne";
-					ctx.fillText(`${member.guild.memberCount}й ${client.translate("misc:NOUNS:MEMBERS:1", null, member.guild.data.language)}`, 40, canvas.height - 35);
+					ctx.fillText(`${member.guild.memberCount}й ${client.translate("misc:NOUNS:MEMBERS:1", null, guildData.language)}`, 40, canvas.height - 35);
 
 					// Draw # for discriminator
 					ctx.fillStyle = "#FFFFFF";
 					ctx.font = "70px RubikMonoOne";
-					ctx.fillText("#", canvas.width - 690, canvas.height - 165);
+					ctx.fillText(member.user.discriminator === "0" ? "" : "#", canvas.width - 690, canvas.height - 165);
 
 					// Draw title
 					ctx.font = "45px RubikMonoOne";
 					ctx.strokeStyle = "#000000";
 					ctx.lineWidth = 10;
-					ctx.strokeText(client.translate("administration/welcome:TITLE", null, member.guild.data.language), canvas.width - 670, canvas.height - 330);
+					ctx.strokeText(client.translate("administration/welcome:TITLE", null, guildData.language), canvas.width - 670, canvas.height - 330);
 					ctx.fillStyle = "#FFFFFF";
-					ctx.fillText(client.translate("administration/welcome:TITLE", null, member.guild.data.language), canvas.width - 670, canvas.height - 330);
+					ctx.fillText(client.translate("administration/welcome:TITLE", null, guildData.language), canvas.width - 670, canvas.height - 330);
 
 					// Draw avatar circle
 					ctx.beginPath();

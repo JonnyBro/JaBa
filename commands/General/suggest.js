@@ -41,9 +41,10 @@ class Suggest extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
-	async execute(client, interaction) {
-		const suggChannel = interaction.guild.channels.cache.get(interaction.guild.data.plugins.suggestions);
+	async execute(client, interaction, data) {
+		const suggChannel = interaction.guild.channels.cache.get(data.guildData.plugins.suggestions);
 		if (!suggChannel) return interaction.error("general/suggest:MISSING_CHANNEL");
+
 		const suggestion = interaction.options.getString("message");
 
 		const embed = new EmbedBuilder()

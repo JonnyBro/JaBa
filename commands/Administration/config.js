@@ -156,7 +156,7 @@ class Config extends BaseCommand {
 				state = interaction.options.getBoolean("state"),
 				channel = interaction.options.getChannel("channel");
 
-			await changeSetting(interaction, setting, state, channel);
+			await changeSetting(interaction, setting, state, channel, data.guildData);
 		}
 	}
 }
@@ -167,13 +167,14 @@ class Config extends BaseCommand {
  * @param {String} setting
  * @param {Boolean} state
  * @param {import("discord.js").GuildTextBasedChannel} channel
+ * @param {import("../../base/Guild")} guildData
  * @returns
  */
-async function changeSetting(interaction, setting, state, channel) {
+async function changeSetting(interaction, setting, state, channel, guildData) {
 	if (!state) {
-		interaction.guild.data.plugins[setting] = null;
-		interaction.guild.data.markModified(`plugins.${setting}`);
-		await interaction.guild.data.save();
+		guildData.plugins[setting] = null;
+		guildData.markModified(`plugins.${setting}`);
+		await guildData.save();
 
 		return interaction.reply({
 			content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: **${interaction.translate("common:DISABLED")}**`,
@@ -181,16 +182,16 @@ async function changeSetting(interaction, setting, state, channel) {
 		});
 	} else {
 		if (channel) {
-			interaction.guild.data.plugins[setting] = channel.id;
-			interaction.guild.data.markModified(`plugins.${setting}`);
-			await interaction.guild.data.save();
+			guildData.plugins[setting] = channel.id;
+			guildData.markModified(`plugins.${setting}`);
+			await guildData.save();
 
 			return interaction.reply({
 				content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: **${interaction.translate("common:ENABLED")}** (${channel.toString()})`,
 				ephemeral: true,
 			});
 		} else return interaction.reply({
-			content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: ${interaction.guild.data.plugins[setting] ? `**${interaction.translate("common:ENABLED")}** (<#${interaction.guild.data.plugins[setting]}>)` : `**${interaction.translate("common:DISABLED")}**`}`,
+			content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: ${guildData.plugins[setting] ? `**${interaction.translate("common:ENABLED")}** (<#${guildData.plugins[setting]}>)` : `**${interaction.translate("common:DISABLED")}**`}`,
 			ephemeral: true,
 		});
 	}

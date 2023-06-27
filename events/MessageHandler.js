@@ -20,30 +20,26 @@ class MessageCreate extends BaseEvent {
 		if (message.guild && message.guild.id === "568120814776614924") return;
 
 		const data = {};
+
 		if (message.author.bot) return;
+
+		const userData = await client.findOrCreateUser({ id: message.author.id });
+		data.userData = userData;
+
 		if (message.guild && !message.member) await message.guild.members.fetch(message.author.id);
 		if (message.guild) {
-			const guild = await client.findOrCreateGuild({
-				id: message.guild.id,
-			});
-			message.guild.data = data.guildData = guild;
+			const guild = await client.findOrCreateGuild({ id: message.guild.id });
+			data.guildData = guild;
 		}
+
 		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) return message.replyT("misc:HELLO_SERVER", null, { mention: true });
 		if (message.guild) {
-			const memberData = await client.findOrCreateMember({
-				id: message.author.id,
-				guildId: message.guild.id,
-			});
+			const memberData = await client.findOrCreateMember({ id: message.author.id, guildId: message.guild.id });
 			data.memberData = memberData;
 		}
 
-		const userData = await client.findOrCreateUser({
-			id: message.author.id,
-		});
-		data.userData = userData;
-
 		if (message.guild) {
-			await updateXp(client, message, data);
+			await updateXp(client, message, data.memberData);
 
 			if (message.content.includes("discord.com/channels/")) {
 				const link = message.content.match(/(https|http):\/\/(ptb\.|canary\.)?(discord.com)\/(channels)\/\d+\/\d+\/\d+/g)[0],
@@ -133,12 +129,12 @@ class MessageCreate extends BaseEvent {
  *
  * @param {import("../base/JaBa")} client
  * @param {import("discord.js").Message} msg
- * @param {*} data
+ * @param {import("../base/Member")} memberData
  * @returns
  */
-async function updateXp(client, msg, data) {
-	const points = parseInt(data.memberData.exp),
-		level = parseInt(data.memberData.level),
+async function updateXp(client, msg, memberData) {
+	const points = parseInt(memberData.exp),
+		level = parseInt(memberData.level),
 		isInCooldown = xpCooldown[msg.author.id];
 
 	if (isInCooldown)
@@ -152,14 +148,14 @@ async function updateXp(client, msg, data) {
 	const neededXp = 5 * (level * level) + 80 * level + 100;
 
 	if (newXp > neededXp) {
-		data.memberData.level = parseInt(level + 1, 10);
-		data.memberData.exp = 0;
+		memberData.level = parseInt(level + 1, 10);
+		memberData.exp = 0;
 		msg.replyT("misc:LEVEL_UP", {
-			level: data.memberData.level,
+			level: memberData.level,
 		}, { mention: false });
-	} else data.memberData.exp = parseInt(newXp, 10);
+	} else memberData.exp = parseInt(newXp, 10);
 
-	await data.memberData.save();
+	await memberData.save();
 }
 
 module.exports = MessageCreate;

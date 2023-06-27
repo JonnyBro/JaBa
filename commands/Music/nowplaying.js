@@ -35,7 +35,7 @@ class Nowplaying extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
-	async execute(client, interaction) {
+	async execute(client, interaction, data) {
 		await interaction.deferReply();
 
 		const queue = client.player.nodes.get(interaction.guildId);
@@ -62,7 +62,7 @@ class Nowplaying extends BaseCommand {
 				{ name: "\u200B", value: "\u200B", inline: true },
 				{
 					name: interaction.translate("common:VIEWS"),
-					value: track.raw.live ? "" : new Intl.NumberFormat(interaction.client.languages.find(language => language.name === interaction.guild.data.language).moment, { notation: "standard" }).format(track.raw.views),
+					value: track.raw.live ? "" : new Intl.NumberFormat(interaction.client.languages.find(language => language.name === data.guldData.language).moment, { notation: "standard" }).format(track.raw.views),
 					inline: true,
 				},
 				{

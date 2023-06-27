@@ -35,7 +35,6 @@ class GuildMemberRemove extends BaseEvent {
 		const guildData = await client.findOrCreateGuild({
 			id: member.guild.id,
 		});
-		member.guild.data = guildData;
 
 		if (guildData.plugins.goodbye.enabled) {
 			const channel = member.guild.channels.cache.get(guildData.plugins.goodbye.channel);
@@ -80,11 +79,11 @@ class GuildMemberRemove extends BaseEvent {
 					// Draw server name
 					ctx.font = applyText(canvas, client.translate("administration/goodbye:IMG_GOODBYE", {
 						server: member.guild.name,
-					}, member.guild.data.language), 53, 625, "RubikMonoOne");
+					}, guildData.language), 53, 625, "RubikMonoOne");
 
 					ctx.fillText(client.translate("administration/goodbye:IMG_GOODBYE", {
 						server: member.guild.name,
-					}, member.guild.data.language), canvas.width - 700, canvas.height - 70);
+					}, guildData.language), canvas.width - 700, canvas.height - 70);
 
 					// Draw discriminator
 					ctx.font = "35px RubikMonoOne";
@@ -92,7 +91,7 @@ class GuildMemberRemove extends BaseEvent {
 
 					// Draw membercount
 					ctx.font = "22px RubikMonoOne";
-					ctx.fillText(`${member.guild.memberCount} ${client.functions.getNoun(member.guild.memberCount, client.translate("misc:NOUNS:MEMBERS:1", null, member.guild.data.language), client.translate("misc:NOUNS:MEMBERS:2", null, member.guild.data.language), client.translate("misc:NOUNS:MEMBERS:5", null, member.guild.data.language))}`, 40, canvas.height - 35);
+					ctx.fillText(`${member.guild.memberCount} ${client.functions.getNoun(member.guild.memberCount, client.translate("misc:NOUNS:MEMBERS:1", null, guildData.language), client.translate("misc:NOUNS:MEMBERS:2", null, guildData.language), client.translate("misc:NOUNS:MEMBERS:5", null, guildData.language))}`, 40, canvas.height - 35);
 
 					// Draw # for discriminator
 					ctx.fillStyle = "#FFFFFF";
@@ -103,9 +102,9 @@ class GuildMemberRemove extends BaseEvent {
 					ctx.font = "45px RubikMonoOne";
 					ctx.strokeStyle = "#000000";
 					ctx.lineWidth = 10;
-					ctx.strokeText(client.translate("administration/goodbye:TITLE", null, member.guild.data.language), canvas.width - 670, canvas.height - 330);
+					ctx.strokeText(client.translate("administration/goodbye:TITLE", null, guildData.language), canvas.width - 670, canvas.height - 330);
 					ctx.fillStyle = "#FFFFFF";
-					ctx.fillText(client.translate("administration/goodbye:TITLE", null, member.guild.data.language), canvas.width - 670, canvas.height - 330);
+					ctx.fillText(client.translate("administration/goodbye:TITLE", null, guildData.language), canvas.width - 670, canvas.height - 330);
 
 					// Draw avatar circle
 					ctx.beginPath();

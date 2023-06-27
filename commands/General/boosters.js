@@ -34,14 +34,14 @@ class Boosters extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
-	async execute(client, interaction) {
+	async execute(client, interaction, data) {
 		await interaction.deferReply();
 
 		let currentPage = 0;
 		const boosters = (await interaction.guild.members.fetch()).filter(m => m.premiumSince);
 		if (boosters.size === 0) return interaction.error("general/boosters:NO_BOOSTERS", null, { edit: true });
 
-		const embeds = generateBoostersEmbeds(client, interaction, boosters);
+		const embeds = generateBoostersEmbeds(client, interaction, boosters, data.guildData);
 
 		const row = new ActionRowBuilder()
 			.addComponents(
@@ -151,9 +151,10 @@ class Boosters extends BaseCommand {
  * @param {import("../../base/JaBa")} client
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
  * @param {Array} boosters
+ * @param {import("../../base/Guild")} guildData
  * @returns
  */
-function generateBoostersEmbeds(client, interaction, boosters) {
+function generateBoostersEmbeds(client, interaction, boosters, guildData) {
 	const embeds = [];
 	let k = 10;
 
@@ -162,7 +163,7 @@ function generateBoostersEmbeds(client, interaction, boosters) {
 		let j = i;
 		k += 10;
 
-		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: **${client.functions.printDate(client, member.premiumSince, null, interaction.guild.data.language)}**`).join("\n");
+		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: **${client.functions.printDate(client, member.premiumSince, null, guildData.language)}**`).join("\n");
 
 		const embed = new EmbedBuilder()
 			.setColor(interaction.client.config.embed.color)

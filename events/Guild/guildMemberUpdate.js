@@ -17,12 +17,13 @@ class GuildMemberUpdate extends BaseEvent {
 	async execute(client, oldMember, newMember) {
 		if (oldMember.guild && oldMember.guild.id === "568120814776614924") return;
 		if (oldMember.guild.id !== client.config.support.id) return;
-		if (oldMember.roles.cache.some(r => r.name === "Поддержавшие JaBa")) return;
+		if (oldMember.roles.cache.some(r => r.id === "940149470975365191")) return;
 
-		if (newMember?.roles.cache.some(r => r.name === "Поддержавшие JaBa")) {
+		if (newMember?.roles.cache.some(r => r.id === "940149470975365191")) {
 			const userData = await client.findOrCreateUser({
 				id: newMember.id,
 			});
+
 			userData.achievements.tip.progress.now = 1;
 			userData.achievements.tip.achieved = true;
 			userData.markModified("achievements.tip");

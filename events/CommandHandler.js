@@ -12,42 +12,32 @@ class CommandHandler extends BaseEvent {
 	/**
 	 *
 	 * @param {import("../base/JaBa")} client
-	 * @param {import("discord.js").Interaction} interaction
+	 * @param {import("discord.js").BaseInteraction} interaction
 	 */
 	async execute(client, interaction) {
 		const command = client.commands.get(interaction.commandName);
 		const data = [];
 
-		const userData = await client.findOrCreateUser({
-			id: interaction.user.id,
-		});
+		const userData = await client.findOrCreateUser({ id: interaction.user.id });
 		data.userData = userData;
 
 		if (interaction.inGuild()) {
-			const guildData = await client.findOrCreateGuild({
-				id: interaction.guildId,
-			});
-			interaction.guild.data = data.guildData = guildData;
+			const guildData = await client.findOrCreateGuild({ id: interaction.guildId });
+			const memberData = await client.findOrCreateMember({ id: interaction.member.id, guildId: interaction.guildId });
 
-			const memberData = await client.findOrCreateMember({
-				id: interaction.member.id,
-				guildId: interaction.guildId,
-			});
+			data.guildData = guildData;
 			data.memberData = memberData;
 		}
 
-		if (interaction.isAutocomplete()) {
+		if (interaction.isAutocomplete())
 			return await command.autocompleteRun(client, interaction);
-		}
 		if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isCommand()) return;
 
-		if (command.guildOnly && !interaction.inGuild()) return interaction.error("misc:GUILD_ONLY", null, { ephemeral: true });
 		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { ephemeral: true });
 
-		if (!interaction.guildId === "1039187019957555252") return interaction.error({ content: "IAT Only", ephemeral: true }); // IAT
-		if (!interaction.guildId === "600970971410857996") return interaction.error({ content: "SC Only", ephemeral: true }); // SC
+		if (!interaction.guildId === "1039187019957555252") return interaction.error({ content: "IAT Only", ephemeral: true });
+		if (!interaction.guildId === "600970971410857996") return interaction.error({ content: "SC Only", ephemeral: true });
 
-		/*
 		if (!userData.achievements.firstCommand.achieved) {
 			const args = {
 				content: interaction.user.toString(),
@@ -62,9 +52,8 @@ class CommandHandler extends BaseEvent {
 			userData.markModified("achievements.firstCommand");
 			await userData.save();
 
-			interaction.channel.isDMBased() ? interaction.user.send(args) : await interaction.channel.send(args);
+			interaction.user.send(args);
 		}
-		*/
 
 		client.logger.log(`User ${interaction.user.discriminator === "0" ? interaction.user.username : interaction.user.tag} used ${command.command.name} in ${interaction.guild ? interaction.guild.name : "DM"} with arguments: ${interaction.options.data.length > 0 ? interaction.options.data.map(arg => { return `${arg.name}: ${arg.value}`; }).join(", ") : "no args"}`, "cmd");
 

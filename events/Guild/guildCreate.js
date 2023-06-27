@@ -20,7 +20,7 @@ class GuildCreate extends BaseEvent {
 		});
 
 		if (!userData.achievements.invite.achieved) {
-			userData.achievements.invite.progress.now += 1;
+			userData.achievements.invite.progress.now = 1;
 			userData.achievements.invite.achieved = true;
 			userData.markModified("achievements.invite");
 			await userData.save();
@@ -28,9 +28,9 @@ class GuildCreate extends BaseEvent {
 
 		const thanks = new EmbedBuilder()
 			.setAuthor({
-				name: "Спасибо что добавили меня на свой сервер!",
+				name: "Thanks for inviting me to your server!",
 			})
-			.setDescription("Чтобы получить список команд, используйте `/help`!.")
+			.setDescription("Use </help:1029832476077596773> in your server to get list of all commands!.")
 			.setColor(client.config.embed.color)
 			.setFooter({
 				text: client.config.embed.footer,
