@@ -65,7 +65,7 @@ async function tictactoe(interaction, options = {}) {
 			}
 
 			const foot = options.embedFoot ? { text: options.embedFoot } : { text: "Удачи =)" },
-				user = interaction.user ? interaction.user : interaction.author
+				user = interaction.user ? interaction.user : interaction.author;
 
 			const acceptEmbed = new EmbedBuilder()
 				.setTitle(interaction.translate("fun/tictactoe:REQUEST_WAIT", {
