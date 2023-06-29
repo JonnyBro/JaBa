@@ -22,19 +22,17 @@ class MessageCreate extends BaseEvent {
 		const data = {};
 
 		if (message.author.bot) return;
+		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) return message.replyT("misc:HELLO_SERVER", null, { mention: true });
 
 		const userData = await client.findOrCreateUser({ id: message.author.id });
 		data.userData = userData;
 
 		if (message.guild && !message.member) await message.guild.members.fetch(message.author.id);
 		if (message.guild) {
-			const guild = await client.findOrCreateGuild({ id: message.guild.id });
-			data.guildData = guild;
-		}
-
-		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) return message.replyT("misc:HELLO_SERVER", null, { mention: true });
-		if (message.guild) {
+			const guildData = await client.findOrCreateGuild({ id: message.guild.id });
 			const memberData = await client.findOrCreateMember({ id: message.author.id, guildId: message.guild.id });
+
+			message.guild.data = data.guildData = guildData;
 			data.memberData = memberData;
 		}
 
