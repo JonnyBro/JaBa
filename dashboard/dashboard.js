@@ -60,7 +60,7 @@ module.exports.load = async client => {
 			clientId: client.config.user,
 			scopes: ["bot", "applications.commands"],
 			permissions: "8",
-			redirectUri: client.config.dashboard.domain + client.config.dashboard.port !== 80 ? `:${client.config.dashboard.port}` : "",
+			redirectUri: `${client.config.dashboard.domain}${client.config.dashboard.port !== 80 ? `:${client.config.dashboard.port}` : ""}`,
 		},
 		supportServer: {
 			slash: "/support",
