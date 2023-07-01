@@ -39,15 +39,14 @@ class Checkjar extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply();
 
-		const jarsList = await fetch("https://api.monobank.ua/personal/client-info", {
+		const clientInfo = await fetch("https://api.monobank.ua/personal/client-info", {
 			method: "GET",
 			headers: {
 				"X-Token": client.config.apiKeys.monobankApiKey,
 				"Content-Type": "application/json",
 			},
 		}).then(res => res.json());
-		const jar = jarsList.jars[1];
-
+		const jar = clientInfo.jars[1];
 		const jarTransactions = await fetch(`https://api.monobank.ua/personal/statement/${jar.id}/${Date.now() - (7 * 24 * 60 * 60 * 1000)}/${Date.now()}`, {
 			method: "GET",
 			headers: {
@@ -61,11 +60,7 @@ class Checkjar extends BaseCommand {
 			.setFooter({
 				text: client.config.embed.footer,
 			})
-			.setAuthor({
-				name: "Monobank API",
-				iconURL: "https://api.monobank.ua/docs/logo.png",
-			})
-			.setDescription(`Текущий баланс: **${jar.balance / Math.pow(10, 2)}** грн\nТребуется на след. месяц: ~**381** грн (по курсу евро на 15.06.2023)`);
+			.setDescription(`Текущий баланс: **${jar.balance / Math.pow(10, 2)}** грн\nТребуется на след. месяц: **379,18** грн (по курсу евро на 02.07.2023).\nЗдесь указаны последние 10 транзакций.`);
 
 		jarTransactions.length = 10;
 
@@ -76,7 +71,6 @@ class Checkjar extends BaseCommand {
 				{
 					name: `${t.description}`,
 					value: `Дата: ${time.locale("uk-UA").format("DD MMMM YYYY, HH:mm")}\nСумма: ${t.amount / Math.pow(10, 2)} грн`,
-					inline: true,
 				},
 			]);
 		});
