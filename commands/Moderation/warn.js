@@ -47,7 +47,7 @@ class Warn extends BaseCommand {
 
 		const modal = new ModalBuilder()
 			.setCustomId("warn_modal")
-			.setTitle(interaction.translate("moderation/warn:MODAL_TITLE", { nickname: member.user.discriminator === "0" ? member.user.username : member.user.tag }).normalize("NFKD"));
+			.setTitle(interaction.translate("moderation/warn:MODAL_TITLE", { nickname: client.functions.getUsername(member.user) }).normalize("NFKD"));
 
 		const reasonInput = new TextInputBuilder()
 			.setCustomId("warn_reason")
@@ -89,11 +89,11 @@ class Warn extends BaseCommand {
 				.addFields([
 					{
 						name: interaction.translate("common:USER"),
-						value: `\`${member.user.discriminator === "0" ? member.user.username : member.user.tag}\` (${member.user.toString()})`,
+						value: `\`${client.functions.getUsername(member.user)}\` (${member.user.toString()})`,
 					},
 					{
 						name: interaction.translate("common:MODERATOR"),
-						value: `\`${interaction.user.discriminator === "0" ? interaction.user.username : interaction.user.tag}\` (${interaction.user.toString()})`,
+						value: `\`${client.functions.getUsername(interaction.user)}\` (${interaction.user.toString()})`,
 					},
 					{
 						name: interaction.translate("common:REASON"),
@@ -107,7 +107,7 @@ class Warn extends BaseCommand {
 					member.send({
 						content: interaction.translate("moderation/ban:BANNED_DM", {
 							user: member.user,
-							moderator: interaction.user.discriminator === "0" ? interaction.user.username : interaction.user.tag,
+							moderator: client.functions.getUsername(interaction.user),
 							server: interaction.guild.name,
 							reason,
 						}),
@@ -125,7 +125,7 @@ class Warn extends BaseCommand {
 
 					interaction.followUp({
 						content: interaction.translate("moderation/setwarns:AUTO_BAN", {
-							user: member.user.discriminator === "0" ? member.user.username : member.user.tag,
+							user: client.functions.getUsername(member.user),
 							count: `${banCount} ${client.functions.getNoun(banCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
 						}),
 					});
@@ -137,7 +137,7 @@ class Warn extends BaseCommand {
 					member.send({
 						content: interaction.translate("moderation/kick:KICKED_DM", {
 							user: member.user,
-							moderator: interaction.user.discriminator === "0" ? interaction.user.username : interaction.user.tag,
+							moderator: client.functions.getUsername(interaction.user),
 							server: interaction.guild.name,
 							reason,
 						}),
@@ -155,7 +155,7 @@ class Warn extends BaseCommand {
 
 					interaction.followUp({
 						content: interaction.translate("moderation/setwarns:AUTO_KICK", {
-							user: member.user.discriminator === "0" ? member.user.username : member.user.tag,
+							user: client.functions.getUsername(member.user),
 							count: `${kickCount} ${client.functions.getNoun(kickCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
 						}),
 					});
@@ -164,9 +164,9 @@ class Warn extends BaseCommand {
 			*/
 			member.send({
 				content: interaction.translate("moderation/warn:WARNED_DM", {
-					user: member.user.discriminator === "0" ? member.user.username : member.user.tag,
+					user: client.functions.getUsername(member.user),
 					server: interaction.guild.name,
-					moderator: interaction.user.discriminator === "0" ? interaction.user.username : interaction.user.tag,
+					moderator: client.functions.getUsername(interaction.user),
 					reason,
 				}),
 			});

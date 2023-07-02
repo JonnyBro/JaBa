@@ -37,7 +37,7 @@ module.exports = {
 	},
 
 	/**
-	 * Sort array by key
+	 * Sorts array by key
 	 * @param {Array} array Array to sort
 	 * @param {Number} key Key
 	 * @returns {Array} Sorted array
@@ -51,7 +51,7 @@ module.exports = {
 	},
 
 	/**
-	 * Shuffles array
+	 * Shuffles the array
 	 * @param {*} pArray Array to shuffle
 	 * @returns {Array} Shuffled array
 	 */
@@ -104,7 +104,7 @@ module.exports = {
 	},
 
 	/**
-	 * Convert given time
+	 * Converts given time
 	 * @param {import("../base/JaBa")} client Discord client
 	 * @param {String} time Time
 	 * @param {Boolean} type Type (To now = true or from now = false)
@@ -120,7 +120,7 @@ module.exports = {
 	},
 
 	/**
-	 * Get noun for number
+	 * Get a noun for number
 	 * @param {Number} number Number
 	 * @param {String} one String for one
 	 * @param {String} two String for two
@@ -136,5 +136,14 @@ module.exports = {
 		if (n >= 2 && n <= 4) return two;
 
 		return five;
+	},
+
+	/**
+	 * Returns just a username if user has a new username, else returns user's tag
+	 * @param {import("discord.js").User} user Number
+	 * @returns
+	 */
+	getUsername(user) {
+		return user.discriminator === "0" ? user.username : user.tag;
 	},
 };
