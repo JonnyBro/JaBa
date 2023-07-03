@@ -210,6 +210,9 @@ module.exports.load = async client => {
 			DBD.customPagesTypes.redirectToUrl("/github", () => {
 				return "https://github.com/JonnyBro/JaBa";
 			}),
+			DBD.customPagesTypes.redirectToUrl("/updates", () => {
+				return "https://github.com/JonnyBro/JaBa/blob/main/dashboard/docs/updates.md";
+			}),
 		],
 		settings: [
 			{
