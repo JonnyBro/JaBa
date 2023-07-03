@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Clear extends BaseCommand {
@@ -16,7 +16,7 @@ class Clear extends BaseCommand {
 					"ru": client.translate("moderation/clear:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
+				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
 				.addStringOption(option => option.setName("option")
 					.setDescription(client.translate("moderation/clear:OPTION"))
 					.setDescriptionLocalizations({

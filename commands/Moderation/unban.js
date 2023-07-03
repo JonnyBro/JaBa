@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Unban extends BaseCommand {
@@ -16,7 +16,7 @@ class Unban extends BaseCommand {
 					"ru": client.translate("moderation/unban:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
+				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
 				.addStringOption(option => option.setName("user_id")
 					.setDescription(client.translate("common:USER_ID"))
 					.setDescriptionLocalizations({

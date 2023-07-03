@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Config extends BaseCommand {
@@ -16,7 +16,7 @@ class Config extends BaseCommand {
 					"ru": client.translate("administration/config:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
 				.addSubcommand(subcommand => subcommand.setName("list")
 					.setDescription(client.translate("administration/config:LIST"))
 					.setDescriptionLocalizations({

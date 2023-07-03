@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Autorole extends BaseCommand {
@@ -16,7 +16,7 @@ class Autorole extends BaseCommand {
 					"ru": client.translate("administration/autorole:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
 				.addBooleanOption(option => option.setName("state")
 					.setDescription(client.translate("common:STATE"))
 					.setDescriptionLocalizations({

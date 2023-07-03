@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	ms = require("ms");
 
@@ -17,7 +17,7 @@ class Giveaway extends BaseCommand {
 					"ru": client.translate("moderation/giveaway:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
+				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
 				.addSubcommand(subcommand => subcommand.setName("create")
 					.setDescription(client.translate("moderation/giveaway:CREATE"))
 					.setDescriptionLocalizations({

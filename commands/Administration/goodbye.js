@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Goodbye extends BaseCommand {
@@ -16,7 +16,7 @@ class Goodbye extends BaseCommand {
 					"ru": client.translate("administration/goodbye:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
 				.addSubcommand(subcommand => subcommand.setName("test")
 					.setDescription(client.translate("administration/goodbye:TEST"))
 					.setDescriptionLocalizations({

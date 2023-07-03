@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, parseEmoji, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, parseEmoji, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Stealemoji extends BaseCommand {
@@ -16,7 +16,7 @@ class Stealemoji extends BaseCommand {
 					"ru": client.translate("administration/stealemoji:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
 				.addStringOption(option => option.setName("emoji")
 					.setDescription(client.translate("common:EMOJI"))
 					.setDescriptionLocalizations({

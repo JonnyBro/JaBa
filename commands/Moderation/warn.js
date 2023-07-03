@@ -1,4 +1,4 @@
-const { ContextMenuCommandBuilder, ModalBuilder, EmbedBuilder, ActionRowBuilder, TextInputBuilder, ApplicationCommandType, PermissionFlagsBits, TextInputStyle } = require("discord.js");
+const { ContextMenuCommandBuilder, ModalBuilder, EmbedBuilder, ActionRowBuilder, TextInputBuilder, ApplicationCommandType, PermissionsBitField, TextInputStyle } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Warn extends BaseCommand {
@@ -12,7 +12,7 @@ class Warn extends BaseCommand {
 				.setName("warn")
 				.setType(ApplicationCommandType.User)
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages),
+				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

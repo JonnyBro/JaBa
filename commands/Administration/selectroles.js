@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, ActionRowBuilder, StringSelectMenuBuilder } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, ActionRowBuilder, StringSelectMenuBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Selectroles extends BaseCommand {
@@ -16,7 +16,7 @@ class Selectroles extends BaseCommand {
 					"ru": client.translate("administration/selectroles:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
 				.addSubcommand(subcommand => subcommand.setName("message")
 					.setDescription(client.translate("administration/selectroles:MESSAGE"))
 					.setDescriptionLocalizations({

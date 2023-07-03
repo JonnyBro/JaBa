@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Warns extends BaseCommand {
@@ -16,7 +16,7 @@ class Warns extends BaseCommand {
 					"ru": client.translate("moderation/warns:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers && PermissionFlagsBits.ManageMessages)
+				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
 				.addUserOption(option => option.setName("user")
 					.setDescription(client.translate("common:USER"))
 					.setDescriptionLocalizations({
