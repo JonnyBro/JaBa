@@ -3,14 +3,13 @@
     "version": "4.3.1",
     "description": "My Discord Bot",
     "main": "index.js",
-    "private": true,
     "scripts": {
+        "preinstall": "npx only-allow pnpm",
         "start": "node .",
         "lint": "eslint . --ext .js",
         "testcfg": "node scripts/verify-config.js"
     },
-    "author": "Jonny_Bro#4226",
-    "license": "ISC",
+    "author": "Discord: jonny_bro",
     "dependencies": {
         "@discord-player/extractor": "^4.3.1",
         "@discordjs/opus": "^0.9.0",
