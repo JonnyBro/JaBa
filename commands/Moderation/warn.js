@@ -178,6 +178,7 @@ class Warn extends BaseCommand {
 				.setColor(client.config.embed.color);
 
 			memberData.sanctions.push(caseInfo);
+			memberData.markModified("sanctions");
 			memberData.save();
 
 			if (data.guildData.plugins.modlogs) {

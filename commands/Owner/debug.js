@@ -126,7 +126,9 @@ class Debug extends BaseCommand {
 			switch (type) {
 				case "level": {
 					memberData.level = int;
+					memberData.markModified("level");
 					await memberData.save();
+
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 						user: member.toString(),
 						amount: int,
@@ -135,7 +137,9 @@ class Debug extends BaseCommand {
 
 				case "xp": {
 					memberData.exp = int;
+					memberData.markModified("exp");
 					await memberData.save();
+
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 						user: member.toString(),
 						amount: int,
@@ -144,7 +148,9 @@ class Debug extends BaseCommand {
 
 				case "credits": {
 					memberData.money = int;
+					memberData.markModified("money");
 					await memberData.save();
+
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 						user: member.toString(),
 						amount: int,
@@ -153,7 +159,9 @@ class Debug extends BaseCommand {
 
 				case "bank": {
 					memberData.bankSold = int;
+					memberData.markModified("bankSold");
 					await memberData.save();
+
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 						user: member.toString(),
 						amount: int,
@@ -162,7 +170,9 @@ class Debug extends BaseCommand {
 
 				case "rep": {
 					userData.rep = int;
+					userData.markModified("rep");
 					await userData.save();
+
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 						user: member.toString(),
 						amount: int,
@@ -187,7 +197,9 @@ class Debug extends BaseCommand {
 			switch (type) {
 				case "level": {
 					memberData.level += int;
+					memberData.markModified("level");
 					await memberData.save();
+
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 						user: member.toString(),
 						amount: int,
@@ -196,7 +208,9 @@ class Debug extends BaseCommand {
 
 				case "xp": {
 					memberData.exp += int;
+					memberData.markModified("exp");
 					await memberData.save();
+
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 						user: member.toString(),
 						amount: int,
@@ -205,7 +219,9 @@ class Debug extends BaseCommand {
 
 				case "credits": {
 					memberData.money += int;
+					memberData.markModified("money");
 					await memberData.save();
+
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 						user: member.toString(),
 						amount: int,
@@ -214,7 +230,9 @@ class Debug extends BaseCommand {
 
 				case "bank": {
 					memberData.bankSold += int;
+					memberData.markModified("bankSold");
 					await memberData.save();
+
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 						user: member.toString(),
 						amount: int,
@@ -223,7 +241,9 @@ class Debug extends BaseCommand {
 
 				case "rep": {
 					userData.rep += int;
+					userData.markModified("rep");
 					await userData.save();
+
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
 						user: member.toString(),
 						amount: int,

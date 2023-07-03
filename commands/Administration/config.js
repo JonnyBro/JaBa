@@ -41,6 +41,7 @@ class Config extends BaseCommand {
 							{ name: client.translate("administration/config:MODLOGS"), value: "modlogs" },
 							{ name: client.translate("administration/config:REPORTS"), value: "reports" },
 							{ name: client.translate("administration/config:SUGGESTIONS"), value: "suggestions" },
+							{ name: client.translate("administration/config:MESSAGEUPDATE"), value: "monitoring.messageUpdate" },
 						)
 						.setRequired(true))
 					.addBooleanOption(option => option.setName("state")
@@ -127,19 +128,17 @@ class Config extends BaseCommand {
 						}) : interaction.translate("common:DISABLED"),
 					},
 					{
+						name: interaction.translate("administration/config:MONITORING_CHANNELS"),
+						value:
+							`${interaction.translate("administration/config:MESSAGEUPDATE")}: ${guildData.plugins.monitoring.messageUpdate ? `<#${guildData.plugins.monitoring.messageUpdate}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n`,
+					},
+					{
 						name: interaction.translate("administration/config:SPECIAL_CHANNELS"),
-						value: interaction.translate("administration/config:SUGGESTIONS_LIST", {
-							channel: guildData.plugins.suggestions ? `<#${guildData.plugins.suggestions}>` : `*${interaction.translate("common:NOT_DEFINED")}*`,
-						}) + "\n" +
-					interaction.translate("administration/config:REPORTS_LIST", {
-						channel: guildData.plugins.reports ? `<#${guildData.plugins.reports}>` : `*${interaction.translate("common:NOT_DEFINED")}*`,
-					}) + "\n" +
-					interaction.translate("administration/config:MODLOGS_LIST", {
-						channel: guildData.plugins.modlogs ? `<#${guildData.plugins.modlogs}>` : `*${interaction.translate("common:NOT_DEFINED")}*`,
-					}) + "\n" +
-					interaction.translate("administration/config:BIRTHDAYS_LIST", {
-						channel: guildData.plugins.birthdays ? `<#${guildData.plugins.birthdays}>` : `*${interaction.translate("common:NOT_DEFINED")}*`,
-					}),
+						value:
+							`${interaction.translate("administration/config:SUGGESTIONS")}: ${guildData.plugins.suggestions ? `<#${guildData.plugins.suggestions}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:REPORTS")}: ${guildData.plugins.reports ? `<#${guildData.plugins.reports}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:MODLOGS")}: ${guildData.plugins.modlogs ? `<#${guildData.plugins.modlogs}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:BIRTHDAYS")}: ${guildData.plugins.birthdays ? `<#${guildData.plugins.birthdays}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}`,
 					},
 					{
 						name: interaction.translate("administration/config:DASHBOARD_TITLE"),

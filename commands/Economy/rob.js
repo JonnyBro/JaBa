@@ -91,8 +91,11 @@ class Rob extends BaseCommand {
 			data.memberData.money += amount;
 			memberData.money -= amount;
 
-			await memberData.save();
+			data.memberData.markModified("money");
+			memberData.markModified("money");
+
 			await data.memberData.save();
+			await memberData.save();
 		} else {
 			const won = Math.floor(amount * 0.9),
 				randomNum = client.functions.randomNum(1, 2);
@@ -106,8 +109,11 @@ class Rob extends BaseCommand {
 			data.memberData.money -= potentiallyLose;
 			memberData.money += won;
 
-			await memberData.save();
+			data.memberData.markModified("money");
+			memberData.markModified("money");
+
 			await data.memberData.save();
+			await memberData.save();
 		}
 	}
 }

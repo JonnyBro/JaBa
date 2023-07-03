@@ -49,7 +49,7 @@ class Eval extends BaseCommand {
 		const result = new Promise(resolve => resolve(eval(code)));
 
 		return result.then(output => {
-			if (typeof output != "string") output = require("util").inspect(output, { depth: 0 });
+			if (typeof output !== "string") output = require("util").inspect(output);
 			if (output.includes(client.token)) output = output.replace(client.token, "T0K3N");
 
 			interaction.editReply({

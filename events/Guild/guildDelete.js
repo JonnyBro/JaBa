@@ -20,7 +20,8 @@ class GuildDelete extends BaseEvent {
 				name: guild.name,
 				iconURL: guild.iconURL(),
 			})
-			.setColor("#FF0000")
+			.setColor(client.config.embed.color)
+			.setFooter({ text: client.config.embed.footer })
 			.setDescription(`Вышел с сервера **${guild.name}**.`);
 		client.channels.cache.get(client.config.support.logs).send({
 			embeds: [embed],

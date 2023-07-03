@@ -105,7 +105,9 @@ class MessageCreate extends BaseEvent {
 			const afkReason = data.userData.afk;
 			if (afkReason) {
 				data.userData.afk = null;
+				data.userData.markModified("afk");
 				await data.userData.save();
+
 				message.replyT("general/afk:DELETED", {
 					user: message.author.username,
 				}, { mention: true });
@@ -153,6 +155,9 @@ async function updateXp(client, msg, memberData) {
 			level: memberData.level,
 		}, { mention: false });
 	} else memberData.exp = parseInt(newXp, 10);
+
+	memberData.markModified("exp");
+	memberData.markModified("level");
 
 	await memberData.save();
 }

@@ -28,12 +28,12 @@ class GuildMemberAdd extends BaseEvent {
 	 * @param {import("discord.js").GuildMember} member
 	 */
 	async execute(client, member) {
-		if (member.guild && member.guild.id === "568120814776614924") return;
+		if (member.guild && member.guildId === "568120814776614924") return;
 
 		await member.guild.members.fetch();
 
 		const guildData = await client.findOrCreateGuild({
-			id: member.guild.id,
+			id: member.guildId,
 		});
 
 		if (guildData.plugins.autorole.enabled) member.roles.add(guildData.plugins.autorole.role);

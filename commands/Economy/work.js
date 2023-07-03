@@ -103,6 +103,7 @@ class Work extends BaseCommand {
 		}
 
 		data.memberData.money += won;
+		data.memberData.markModified("money");
 		await data.memberData.save();
 
 		const info = {

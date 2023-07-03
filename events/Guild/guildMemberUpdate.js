@@ -15,8 +15,8 @@ class GuildMemberUpdate extends BaseEvent {
 	 * @param {import("discord.js").GuildMember} newMember
 	 */
 	async execute(client, oldMember, newMember) {
-		if (oldMember.guild && oldMember.guild.id === "568120814776614924") return;
-		if (oldMember.guild.id !== client.config.support.id) return;
+		if (oldMember.guild && oldMember.guildId === "568120814776614924") return;
+		if (oldMember.guildId !== client.config.support.id) return;
 		if (oldMember.roles.cache.some(r => r.id === "940149470975365191")) return;
 
 		if (newMember?.roles.cache.some(r => r.id === "940149470975365191")) {

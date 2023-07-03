@@ -240,6 +240,7 @@ module.exports.load = async client => {
 							});
 
 							guildData.language = newData;
+							guildData.markModified("language");
 							await guildData.save();
 
 							return;
@@ -268,6 +269,7 @@ module.exports.load = async client => {
 									});
 
 									guildData.plugins.welcome.enabled = newData;
+									guildData.markModified("plugins.welcome");
 									await guildData.save();
 
 									return;
@@ -291,6 +293,7 @@ module.exports.load = async client => {
 									});
 
 									guildData.plugins.welcome.withImage = newData;
+									guildData.markModified("plugins.welcome");
 									await guildData.save();
 
 									return;
@@ -314,6 +317,7 @@ module.exports.load = async client => {
 									});
 
 									guildData.plugins.welcome.message = newData !== "" ? newData : null;
+									guildData.markModified("plugins.welcome");
 									await guildData.save();
 
 									return;
@@ -337,6 +341,7 @@ module.exports.load = async client => {
 									});
 
 									guildData.plugins.welcome.channel = newData !== "" ? newData : null;
+									guildData.markModified("plugins.welcome");
 									await guildData.save();
 
 									return;
@@ -367,6 +372,7 @@ module.exports.load = async client => {
 									});
 
 									guildData.plugins.goodbye.enabled = newData;
+									guildData.markModified("plugins.goodbye");
 									await guildData.save();
 
 									return;
@@ -390,6 +396,7 @@ module.exports.load = async client => {
 									});
 
 									guildData.plugins.goodbye.withImage = newData;
+									guildData.markModified("plugins.goodbye");
 									await guildData.save();
 
 									return;
@@ -413,6 +420,7 @@ module.exports.load = async client => {
 									});
 
 									guildData.plugins.goodbye.message = newData !== "" ? newData : null;
+									guildData.markModified("plugins.goodbye");
 									await guildData.save();
 
 									return;
@@ -436,6 +444,7 @@ module.exports.load = async client => {
 									});
 
 									guildData.plugins.goodbye.channel = newData !== "" ? newData : null;
+									guildData.markModified("plugins.goodbye");
 									await guildData.save();
 
 									return;
@@ -466,6 +475,7 @@ module.exports.load = async client => {
 									});
 
 									guildData.plugins.autorole.enabled = newData;
+									guildData.markModified("plugins.autorole");
 									await guildData.save();
 
 									return;
@@ -489,6 +499,7 @@ module.exports.load = async client => {
 									});
 
 									guildData.plugins.autorole.role = newData !== "" ? newData : null;
+									guildData.markModified("plugins.autorole");
 									await guildData.save();
 
 									return;
@@ -519,6 +530,7 @@ module.exports.load = async client => {
 									});
 
 									guildData.plugins.automod.enabled = newData;
+									guildData.markModified("plugins.automod");
 									await guildData.save();
 
 									return;
@@ -526,8 +538,8 @@ module.exports.load = async client => {
 							},
 							{
 								optionId: "automod_ignore",
-								optionName: "Ignore channels",
-								optionDescription: "Select channels for auto mod to ignore",
+								optionName: "Ignore Channels",
+								optionDescription: "Select a channels for auto mod to ignore",
 								optionType: DBD.formTypes.channelsMultiSelect(false, false, [ ChannelType.GuildText ]),
 								getActualSet: async ({ guild }) => {
 									const guildData = await client.findOrCreateGuild({
@@ -542,6 +554,38 @@ module.exports.load = async client => {
 									});
 
 									guildData.plugins.automod.ignored = newData;
+									guildData.markModified("plugins.automod");
+									await guildData.save();
+
+									return;
+								},
+							},
+						]),
+					},
+					{
+						optionId: "monitoring",
+						optionName: "Monitoring Channels",
+						optionDescription: "Setup monitoring channels on the server",
+						optionType: SoftUI.formTypes.multiRow([
+							{
+								optionId: "monitoring_messageupdate",
+								optionName: "Message Update Channel",
+								optionDescription: "Select a channel for messages updates logs to go to",
+								optionType: DBD.formTypes.channelsSelect(false, [ ChannelType.GuildText ]),
+								getActualSet: async ({ guild }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									return guildData.plugins.monitoring.messageUpdate;
+								},
+								setNew: async ({ guild, newData }) => {
+									const guildData = await client.findOrCreateGuild({
+										id: guild.id,
+									});
+
+									guildData.plugins.monitoring.messageUpdate = newData !== "" ? newData : null;
+									guildData.markModified("plugins.monitoring");
 									await guildData.save();
 
 									return;
@@ -556,8 +600,8 @@ module.exports.load = async client => {
 						optionType: SoftUI.formTypes.multiRow([
 							{
 								optionId: "channels_suggestions",
-								optionName: "Suggestions channel",
-								optionDescription: "Select channel for suggestions to go to",
+								optionName: "Suggestions Channel",
+								optionDescription: "Select a channel for suggestions to go to",
 								optionType: DBD.formTypes.channelsSelect(false, [ ChannelType.GuildText ]),
 								getActualSet: async ({ guild }) => {
 									const guildData = await client.findOrCreateGuild({
@@ -571,7 +615,8 @@ module.exports.load = async client => {
 										id: guild.id,
 									});
 
-									guildData.plugins.suggestions = newData;
+									guildData.plugins.suggestions = newData !== "" ? newData : null;
+									guildData.markModified("plugins.suggestions");
 									await guildData.save();
 
 									return;
@@ -579,8 +624,8 @@ module.exports.load = async client => {
 							},
 							{
 								optionId: "channels_reports",
-								optionName: "Reports channel",
-								optionDescription: "Select channel for reports to go to",
+								optionName: "Reports Channel",
+								optionDescription: "Select a channel for reports to go to",
 								optionType: DBD.formTypes.channelsSelect(false, [ ChannelType.GuildText ]),
 								getActualSet: async ({ guild }) => {
 									const guildData = await client.findOrCreateGuild({
@@ -594,7 +639,8 @@ module.exports.load = async client => {
 										id: guild.id,
 									});
 
-									guildData.plugins.reports = newData;
+									guildData.plugins.reports = newData !== "" ? newData : null;
+									guildData.markModified("plugins.reports");
 									await guildData.save();
 
 									return;
@@ -602,8 +648,8 @@ module.exports.load = async client => {
 							},
 							{
 								optionId: "channels_birthdays",
-								optionName: "Birthdays channel",
-								optionDescription: "Select channel for birthdays message to go to",
+								optionName: "Birthdays Channel",
+								optionDescription: "Select a channel for birthdays message to go to",
 								optionType: DBD.formTypes.channelsSelect(false, [ ChannelType.GuildText ]),
 								getActualSet: async ({ guild }) => {
 									const guildData = await client.findOrCreateGuild({
@@ -617,7 +663,8 @@ module.exports.load = async client => {
 										id: guild.id,
 									});
 
-									guildData.plugins.birthdays = newData;
+									guildData.plugins.birthdays = newData !== "" ? newData : null;
+									guildData.markModified("plugins.birthdays");
 									await guildData.save();
 
 									return;
@@ -625,8 +672,8 @@ module.exports.load = async client => {
 							},
 							{
 								optionId: "channels_modlogs",
-								optionName: "Moderation logs channel",
-								optionDescription: "Select channel for moderation logs to go to (warns)",
+								optionName: "Moderation Logs Channel",
+								optionDescription: "Select a channel for moderation logs to go to (warns)",
 								optionType: DBD.formTypes.channelsSelect(false, [ ChannelType.GuildText ]),
 								getActualSet: async ({ guild }) => {
 									const guildData = await client.findOrCreateGuild({
@@ -640,7 +687,8 @@ module.exports.load = async client => {
 										id: guild.id,
 									});
 
-									guildData.plugins.modlogs = newData;
+									guildData.plugins.modlogs = newData !== "" ? newData : null;
+									guildData.markModified("plugins.modlogs");
 									await guildData.save();
 
 									return;
@@ -661,11 +709,6 @@ module.exports.load = async client => {
 							username: "JaBa",
 							avatarURL: "https://cdn.discordapp.com/avatars/708637495054565426/af98d49ebc9bf28b40b45ed5a0a623b4.png?size=4096",
 						}),
-						setNew: async ({ guild, user, newData }) => {
-							console.log(guild);
-							console.log(user);
-							console.log(newData);
-						},
 					},
 				],
 			},

@@ -46,7 +46,9 @@ class Setbio extends BaseCommand {
 		if (newBio.length > 150) return interaction.error("economy/setbio:MAX_CHARACTERS");
 
 		data.userData.bio = newBio;
+		data.memberData.markModified("bio");
 		await data.userData.save();
+
 		interaction.success("economy/setbio:SUCCESS");
 	}
 }

@@ -109,15 +109,18 @@ class Slots extends BaseCommand {
 
 				const toAdd = credits - amount;
 
-				data.memberData.money += toAdd;
-
 				const info = {
 					user: interaction.translate("economy/slots:DESCRIPTION"),
 					amount: toAdd,
 					date: Date.now(),
 					type: "got",
 				};
+
+				data.memberData.money += toAdd;
 				data.memberData.transactions.push(info);
+
+				data.memberData.markModified("money");
+				data.memberData.markModified("transactions");
 
 				if (!data.userData.achievements.slots.achieved) {
 					data.userData.achievements.slots.progress.now += 1;
@@ -134,6 +137,7 @@ class Slots extends BaseCommand {
 					await data.userData.save();
 				}
 				await data.memberData.save();
+
 				return;
 			}
 
@@ -159,8 +163,12 @@ class Slots extends BaseCommand {
 					date: Date.now(),
 					type: "got",
 				};
-				data.memberData.transactions.push(info);
+
 				data.memberData.money += toAdd;
+				data.memberData.transactions.push(info);
+
+				data.memberData.markModified("money");
+				data.memberData.markModified("transactions");
 
 				if (!data.userData.achievements.slots.achieved) {
 					data.userData.achievements.slots.progress.now += 1;
@@ -194,8 +202,12 @@ class Slots extends BaseCommand {
 				date: Date.now(),
 				type: "send",
 			};
-			data.memberData.transactions.push(info);
+
 			data.memberData.money -= amount;
+			data.memberData.transactions.push(info);
+
+			data.memberData.markModified("money");
+			data.memberData.markModified("transactions");
 
 			if (!data.userData.achievements.slots.achieved) {
 				data.userData.achievements.slots.progress.now = 0;

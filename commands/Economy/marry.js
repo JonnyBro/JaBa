@@ -128,8 +128,11 @@ class Marry extends BaseCommand {
 
 			if (reason) {
 				data.userData.lover = member.id;
-				await data.userData.save();
 				userData.lover = interaction.member.id;
+
+				data.userData.markModified("lover");
+				await data.userData.save();
+				userData.markModified("lover");
 				await userData.save();
 
 				const messageOptions = {

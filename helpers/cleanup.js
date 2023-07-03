@@ -29,6 +29,8 @@ module.exports.init = async function (client) {
 				if (transaction.date < timestamp) {
 					const index = transactions.indexOf(transaction);
 					transactions.splice(index, 1);
+
+					member.markModified("transactions");
 					await member.save();
 				}
 			}

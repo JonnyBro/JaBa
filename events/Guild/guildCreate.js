@@ -54,7 +54,8 @@ class GuildCreate extends BaseEvent {
 				name: guild.name,
 				iconURL: guild.iconURL(),
 			})
-			.setColor("#32CD32")
+			.setColor(client.config.embed.color)
+			.setFooter({ text: client.config.embed.footer })
 			.setDescription(`Зашёл на сервер **${guild.name}**. На нём **${users}** ${client.functions.getNoun(users, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))} и **${bots}** ${client.functions.getNoun(bots, client.translate("misc:NOUNS:BOTS:1"), client.translate("misc:NOUNS:BOTS:2"), client.translate("misc:NOUNS:BOTS:5"))}`);
 		client.channels.cache.get(client.config.support.logs).send({
 			embeds: [embed],

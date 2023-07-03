@@ -51,6 +51,7 @@ class Clearwarns extends BaseCommand {
 		});
 
 		memberData.sanctions = [];
+		memberData.markModified("sanctions");
 		memberData.save();
 
 		interaction.success("moderation/clearwarns:SUCCESS", {

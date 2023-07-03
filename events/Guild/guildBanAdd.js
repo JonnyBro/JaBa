@@ -17,11 +17,12 @@ class guildBanAdd extends BaseEvent {
 	async execute(client, ban) {
 		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: client.user.username,
+				name: client.user.getUsername(),
 				iconURL: ban.guild.iconURL(),
 			})
-			.setColor("#FF0000")
-			.setDescription(`Вы были забанены на **${ban.guild.name}** по причине **${ban.reason || "Не указана"}**`);
+			.setColor(client.config.embed.color)
+			.setFooter({ text: client.config.embed.footer })
+			.setDescription(`You were banned from **${ban.guild.name}**!\nReason: **${ban.reason || "Not specified"}**`);
 
 		ban.user.send({
 			embeds: [embed],

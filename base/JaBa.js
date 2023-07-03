@@ -243,29 +243,24 @@ class JaBa extends Client {
 	/**
 	 * Find or create user in DB
 	 * @param {Array} param0 { id: User ID }
-	 * @param {Boolean} isLean Return JSON instead Mongoose model?
 	 * @returns {import("./User")} Mongoose model or JSON of this user
 	 */
-	async findOrCreateUser({ id: userID }, isLean) {
-		if (this.databaseCache.users.get(userID)) return isLean ? this.databaseCache.users.get(userID).toJSON() : this.databaseCache.users.get(userID);
+	async findOrCreateUser({ id: userID }) {
+		if (this.databaseCache.users.get(userID)) return this.databaseCache.users.get(userID);
 		else {
-			let userData = (isLean ? await this.usersData.findOne({
-				id: userID,
-			}).lean() : await this.usersData.findOne({
-				id: userID,
-			}));
+			let userData = await this.usersData.findOne({ id: userID });
+
 			if (userData) {
-				if (!isLean) this.databaseCache.users.set(userID, userData);
+				this.databaseCache.users.set(userID, userData);
 
 				return userData;
 			} else {
-				userData = new this.usersData({
-					id: userID,
-				});
+				userData = new this.usersData({ id: userID });
 				await userData.save();
+
 				this.databaseCache.users.set(userID, userData);
 
-				return isLean ? userData.toJSON() : userData;
+				return userData;
 			}
 		}
 	}
@@ -273,70 +268,53 @@ class JaBa extends Client {
 	/**
 	 * Find or create member in DB
 	 * @param {Array} param0 { id: Member ID }
-	 * @param {Boolean} isLean Return JSON instead Mongoose model?
 	 * @returns {import("./Member")} Mongoose model or JSON of this member
 	 */
-	async findOrCreateMember({ id: memberID, guildId }, isLean) {
-		if (this.databaseCache.members.get(`${memberID}${guildId}`)) return isLean ? this.databaseCache.members.get(`${memberID}${guildId}`).toJSON() : this.databaseCache.members.get(`${memberID}${guildId}`);
-		else {
-			let memberData = (isLean ? await this.membersData.findOne({
-				guildID: guildId,
-				id: memberID,
-			}).lean() : await this.membersData.findOne({
-				guildID: guildId,
-				id: memberID,
-			}));
-			if (memberData) {
-				if (!isLean) this.databaseCache.members.set(`${memberID}${guildId}`, memberData);
+	async findOrCreateMember({ id: memberID, guildId }) {
+		let memberData = await this.membersData.findOne({ guildID: guildId, id: memberID });
 
-				return memberData;
-			} else {
-				memberData = new this.membersData({
-					id: memberID,
-					guildID: guildId,
-				});
-				await memberData.save();
-				const guild = await this.findOrCreateGuild({
-					id: guildId,
-				});
-				if (guild) {
-					guild.members.push(memberData._id);
-					await guild.save();
-				}
-				this.databaseCache.members.set(`${memberID}${guildId}`, memberData);
+		if (memberData) {
+			this.databaseCache.members.set(`${memberID}${guildId}`, memberData);
 
-				return isLean ? memberData.toJSON() : memberData;
+			return memberData;
+		} else {
+			memberData = new this.membersData({ id: memberID, guildID: guildId });
+			await memberData.save();
+
+			const guildData = await this.findOrCreateGuild({ id: guildId });
+
+			if (guildData) {
+				guildData.members.push(memberData._id);
+				guildData.markModified("members");
+
+				await guildData.save();
 			}
+
+			this.databaseCache.members.set(`${memberID}${guildId}`, memberData);
+
+			return memberData;
 		}
 	}
 
 	/**
 	 * Find or create guild in DB
 	 * @param {Array} param0 { id: Guild ID }
-	 * @param {Boolean} isLean Return JSON instead Mongoose model?
 	 * @returns {import("./Guild")} Mongoose model or JSON of this guild
 	 */
-	async findOrCreateGuild({ id: guildId }, isLean) {
-		if (this.databaseCache.guilds.get(guildId)) return isLean ? this.databaseCache.guilds.get(guildId).toJSON() : this.databaseCache.guilds.get(guildId);
-		else {
-			let guildData = (isLean ? await this.guildsData.findOne({
-				id: guildId,
-			}).populate("members").lean() : await this.guildsData.findOne({
-				id: guildId,
-			}).populate("members"));
-			if (guildData) {
-				if (!isLean) this.databaseCache.guilds.set(guildId, guildData);
+	async findOrCreateGuild({ id: guildId }) {
+		let guildData = await this.guildsData.findOne({ id: guildId }).populate("members");
 
-				return guildData;
-			} else {
-				guildData = new this.guildsData({
-					id: guildId,
-				});
-				await guildData.save();
-				this.databaseCache.guilds.set(guildId, guildData);
+		if (guildData) {
+			this.databaseCache.guilds.set(guildId, guildData);
 
-				return isLean ? guildData.toJSON() : guildData;
-			}
+			return guildData;
+		} else {
+			guildData = new this.guildsData({ id: guildId });
+			await guildData.save();
+
+			this.databaseCache.guilds.set(guildId, guildData);
+
+			return guildData;
 		}
 	}
 }

@@ -29,8 +29,7 @@ class CommandHandler extends BaseEvent {
 			data.memberData = memberData;
 		}
 
-		if (interaction.isAutocomplete())
-			return await command.autocompleteRun(client, interaction);
+		if (interaction.isAutocomplete()) return await command.autocompleteRun(client, interaction);
 		if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isCommand()) return;
 
 		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { ephemeral: true });
