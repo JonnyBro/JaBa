@@ -16,7 +16,7 @@ class Automod extends BaseCommand {
 					"ru": client.translate("administration/automod:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addBooleanOption(option => option.setName("state")
 					.setDescription(client.translate("common:STATE"))
 					.setDescriptionLocalizations({

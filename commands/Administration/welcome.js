@@ -16,7 +16,7 @@ class Welcome extends BaseCommand {
 					"ru": client.translate("administration/welcome:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addSubcommand(subcommand => subcommand.setName("test")
 					.setDescription(client.translate("administration/goodbye:TEST"))
 					.setDescriptionLocalizations({

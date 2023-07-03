@@ -16,7 +16,7 @@ class Config extends BaseCommand {
 					"ru": client.translate("administration/config:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addSubcommand(subcommand => subcommand.setName("list")
 					.setDescription(client.translate("administration/config:LIST"))
 					.setDescriptionLocalizations({

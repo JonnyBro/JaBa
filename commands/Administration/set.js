@@ -16,7 +16,7 @@ class Set extends BaseCommand {
 					"ru": client.translate("administration/set:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addStringOption(option => option.setName("type")
 					.setDescription(client.translate("owner/debug:TYPE"))
 					.setDescriptionLocalizations({

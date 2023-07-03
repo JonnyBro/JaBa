@@ -16,7 +16,7 @@ class Stealemoji extends BaseCommand {
 					"ru": client.translate("administration/stealemoji:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addStringOption(option => option.setName("emoji")
 					.setDescription(client.translate("common:EMOJI"))
 					.setDescriptionLocalizations({

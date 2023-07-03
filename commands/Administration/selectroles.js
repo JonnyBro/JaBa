@@ -16,7 +16,7 @@ class Selectroles extends BaseCommand {
 					"ru": client.translate("administration/selectroles:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addSubcommand(subcommand => subcommand.setName("message")
 					.setDescription(client.translate("administration/selectroles:MESSAGE"))
 					.setDescriptionLocalizations({

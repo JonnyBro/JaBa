@@ -16,7 +16,7 @@ class Setlang extends BaseCommand {
 					"ru": client.translate("administration/setlang:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addStringOption(option => option.setName("language")
 					.setDescription(client.translate("common:LANGUAGE"))
 					.setDescriptionLocalizations({
