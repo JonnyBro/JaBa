@@ -54,7 +54,7 @@ class Warns extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("moderation/warns:SANCTIONS_OF", {
-					member: member.nickname || member.user.username,
+					member: member.user.getUsername(),
 				}),
 				iconURL: member.displayAvatarURL({
 					extension: "png",
@@ -68,7 +68,7 @@ class Warns extends BaseCommand {
 
 		if (memberData.sanctions.length === 0) {
 			embed.setDescription(interaction.translate("moderation/warns:NO_SANCTIONS", {
-				member: member.nickname || member.user.username,
+				member: member.user.getUsername(),
 			}));
 			return interaction.reply({
 				embeds: [embed],
