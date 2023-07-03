@@ -44,7 +44,7 @@ class Userinfo extends BaseCommand {
 		const member = interaction.options.getMember("user") || interaction.member;
 		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: `${client.functions.getUsername(member.user)} (${member.id})`,
+				name: `${member.user.getUsername()} (${member.id})`,
 				iconURL: member.displayAvatarURL(),
 			})
 			.setThumbnail(member.displayAvatarURL({
@@ -53,7 +53,7 @@ class Userinfo extends BaseCommand {
 			.addFields([
 				{
 					name: ":man: " + interaction.translate("common:USERNAME"),
-					value: client.functions.getUsername(member.user),
+					value: member.user.getUsername(),
 					inline: true,
 				},
 				{

@@ -49,7 +49,7 @@ class MessageCreate extends BaseEvent {
 				const embed = new EmbedBuilder()
 					.setAuthor({
 						name: message.translate("misc:QUOTE_TITLE", {
-							user: client.functions.getUsername(msg.author),
+							user: msg.author.getUsername(),
 						}),
 						iconURL: "https://wynem.com/assets/images/icons/quote.webp",
 					})
@@ -64,7 +64,7 @@ class MessageCreate extends BaseEvent {
 						},
 					])
 					.setFooter({
-						text: message.translate("misc:QUOTE_FOOTER", { user: client.functions.getUsername(message.author) }),
+						text: message.translate("misc:QUOTE_FOOTER", { user: message.author.getUsername() }),
 					})
 					.setColor(client.config.embed.color)
 					.setTimestamp(msg.createdTimestamp);
@@ -116,7 +116,7 @@ class MessageCreate extends BaseEvent {
 					id: u.id,
 				});
 
-				if (userData.afk) message.replyT("general/afk:IS_AFK", { user: client.functions.getUsername(u), reason: userData.afk }, { ephemeral: true });
+				if (userData.afk) message.replyT("general/afk:IS_AFK", { user: u.getUsername(), reason: userData.afk }, { ephemeral: true });
 			});
 		}
 

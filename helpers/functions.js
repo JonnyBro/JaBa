@@ -132,18 +132,10 @@ module.exports = {
 		n %= 100;
 		if (n >= 5 && n <= 20) return five;
 		n %= 10;
+
 		if (n === 1) return one;
 		if (n >= 2 && n <= 4) return two;
 
 		return five;
-	},
-
-	/**
-	 * Returns just a username if user has a new username, else returns user's tag
-	 * @param {import("discord.js").User} user Number
-	 * @returns
-	 */
-	getUsername(user) {
-		return user.discriminator === "0" ? user.username : user.tag;
 	},
 };

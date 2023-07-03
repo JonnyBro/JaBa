@@ -64,7 +64,7 @@ class Money extends BaseCommand {
 		const embed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("economy/money:TITLE", {
-					user: client.functions.getUsername(member.user),
+					user: member.user.getUsername(),
 				}),
 				iconURL: member.user.displayAvatarURL(),
 			})

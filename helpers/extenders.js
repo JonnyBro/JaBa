@@ -1,4 +1,8 @@
-const { Message, BaseInteraction } = require("discord.js");
+const { Message, BaseInteraction, User } = require("discord.js");
+
+User.prototype.getUsername = function () {
+	return this.discriminator === "0" ? this.username : this.tag;
+};
 
 BaseInteraction.prototype.translate = function (key, args) {
 	const language = this.client.translations.get(this.guild ? (this.guild.data ? this.guild.data.language : "ru-RU") : "ru-RU");

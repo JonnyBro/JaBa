@@ -69,10 +69,10 @@ async function tictactoe(interaction, options = {}) {
 
 			const acceptEmbed = new EmbedBuilder()
 				.setTitle(interaction.translate("fun/tictactoe:REQUEST_WAIT", {
-					user: client.functions.getUsername(opponent),
+					user: opponent.getUsername(),
 				}))
 				.setAuthor({
-					name: client.functions.getUsername(user),
+					name: user.getUsername(),
 					iconURL: user.displayAvatarURL(),
 				})
 				.setColor(options.embedColor || "#075FFF")
@@ -832,7 +832,7 @@ async function tictactoe(interaction, options = {}) {
 					const embed = new EmbedBuilder()
 						.setTitle(interaction.translate("fun/tictactoe:NO_ANSWER_TITLE"))
 						.setAuthor({
-							name: client.functions.getUsername(user),
+							name: user.getUsername(),
 							iconURL: user.displayAvatarURL(),
 						})
 						.setColor(options.timeoutEmbedColor || "#C90000")
@@ -851,7 +851,7 @@ async function tictactoe(interaction, options = {}) {
 					const embed = new EmbedBuilder()
 						.setTitle(interaction.translate("fun/tictactoe:CANCELED"))
 						.setAuthor({
-							name: client.functions.getUsername(user),
+							name: user.getUsername(),
 							iconURL: user.displayAvatarURL(),
 						})
 						.setColor(options.timeoutEmbedColor || "#C90000")

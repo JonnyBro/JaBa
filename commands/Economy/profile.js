@@ -127,7 +127,7 @@ class Profile extends BaseCommand {
 				},
 				{
 					name: interaction.translate("economy/profile:LOVER"),
-					value: (!userData.lover ? interaction.translate("common:NOT_DEFINED") : client.functions.getUsername(lover)),
+					value: (!userData.lover ? interaction.translate("common:NOT_DEFINED") : lover.getUsername()),
 					inline: true,
 				},
 				{

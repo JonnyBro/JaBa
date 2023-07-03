@@ -41,7 +41,7 @@ class GuildMemberRemove extends BaseEvent {
 
 			if (channel) {
 				const message = guildData.plugins.goodbye.message
-					.replace(/{user}/g, client.functions.getUsername(member.user))
+					.replace(/{user}/g, member.user.getUsername())
 					.replace(/{server}/g, member.guild.name)
 					.replace(/{membercount}/g, member.guild.memberCount);
 
