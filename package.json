@@ -6,8 +6,7 @@
     "scripts": {
         "preinstall": "npx only-allow pnpm",
         "start": "node .",
-        "lint": "eslint . --ext .js",
-        "testcfg": "node scripts/verify-config.js"
+        "lint": "eslint . --ext .js"
     },
     "author": "Discord: jonny_bro",
     "dependencies": {
