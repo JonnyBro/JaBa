@@ -19,7 +19,7 @@ class BaseCommand {
 		/**
 		 * @type {String}
 		 */
-		this.category = (this.dirname ? this.dirname.split(path.sep)[parseInt(this.dirname.split(path.sep).length - 1, 10)] : "Other");
+		this.category = this.dirname ? this.dirname.split(path.sep)[parseInt(this.dirname.split(path.sep).length - 1, 10)] : "Other";
 	}
 }
 

@@ -12,18 +12,21 @@ class Play extends BaseCommand {
 				.setName("play")
 				.setDescription(client.translate("music/play:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("music/play:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("music/play:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("music/play:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("music/play:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addStringOption(option => option.setName("query")
-					.setDescription(client.translate("music/play:QUERY"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("music/play:QUERY", null, "uk-UA"),
-						"ru": client.translate("music/play:QUERY", null, "ru-RU"),
-					})
-					.setRequired(true)
-					.setAutocomplete(true)),
+				.addStringOption(option =>
+					option
+						.setName("query")
+						.setDescription(client.translate("music/play:QUERY"))
+						.setDescriptionLocalizations({
+							uk: client.translate("music/play:QUERY", null, "uk-UA"),
+							ru: client.translate("music/play:QUERY", null, "ru-RU"),
+						})
+						.setRequired(true)
+						.setAutocomplete(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -96,10 +99,10 @@ class Play extends BaseCommand {
 
 		return interaction.respond(
 			results.tracks.slice(0, 10).map(track => ({
-				name: (`${track.author} - ${track.title}`.length >= 100 & `${track.author} - ${track.title}`.slice(0, 90) + "...") || `${track.author} - ${track.title}`,
+				name: (`${track.author} - ${track.title}`.length >= 100) & (`${track.author} - ${track.title}`.slice(0, 90) + "...") || `${track.author} - ${track.title}`,
 				value: track.url,
-			}),
-			));
+			})),
+		);
 	}
 }
 

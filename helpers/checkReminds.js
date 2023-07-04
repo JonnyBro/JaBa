@@ -6,14 +6,12 @@ const moment = require("moment");
  * @param {import("../base/JaBa")} client
  */
 module.exports.init = function (client) {
-	client.usersData
-		.find({ reminds: { $gt: [] } })
-		.then(users => {
-			for (const user of users) {
-				if (!client.users.cache.has(user.id)) client.users.fetch(user.id);
-				client.databaseCache.usersReminds.set(user.id, user);
-			}
-		});
+	client.usersData.find({ reminds: { $gt: [] } }).then(users => {
+		for (const user of users) {
+			if (!client.users.cache.has(user.id)) client.users.fetch(user.id);
+			client.databaseCache.usersReminds.set(user.id, user);
+		}
+	});
 
 	setInterval(async function () {
 		const dateNow = Date.now();
@@ -30,9 +28,11 @@ module.exports.init = function (client) {
 							.setAuthor({
 								name: client.translate("general/remindme:TITLE"),
 							})
-							.setDescription(client.translate("general/remindme:CREATED", {
-								time: moment(r.createdAt).locale(client.defaultLanguage).format("dddd, Do MMMM YYYY, HH:mm:ss"),
-							}))
+							.setDescription(
+								client.translate("general/remindme:CREATED", {
+									time: moment(r.createdAt).locale(client.defaultLanguage).format("dddd, Do MMMM YYYY, HH:mm:ss"),
+								}),
+							)
 							.addFields([
 								{
 									name: client.translate("common:MESSAGE"),
@@ -49,7 +49,7 @@ module.exports.init = function (client) {
 					});
 					user.reminds = user.reminds.filter(r => r.sendAt >= dateNow);
 					user.markModified("reminds");
-					user.save();
+					await user.save();
 
 					if (user.reminds.length === 0) client.databaseCache.usersReminds.delete(user.id);
 				}

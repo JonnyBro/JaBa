@@ -12,8 +12,8 @@ class Skip extends BaseCommand {
 				.setName("skip")
 				.setDescription(client.translate("music/skip:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("music/skip:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("music/skip:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("music/skip:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("music/skip:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
 			aliases: [],

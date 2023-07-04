@@ -20,9 +20,7 @@ class GuildMemberUpdate extends BaseEvent {
 		if (oldMember.roles.cache.some(r => r.id === "940149470975365191")) return;
 
 		if (newMember?.roles.cache.some(r => r.id === "940149470975365191")) {
-			const userData = await client.findOrCreateUser({
-				id: newMember.id,
-			});
+			const userData = await client.findOrCreateUser({ id: newMember.id });
 
 			userData.achievements.tip.progress.now = 1;
 			userData.achievements.tip.achieved = true;
@@ -30,10 +28,12 @@ class GuildMemberUpdate extends BaseEvent {
 			await userData.save();
 
 			newMember.send({
-				files: [{
-					name: "achievement_unlocked5.png",
-					attachment: "./assets/img/achievements/achievement_unlocked5.png",
-				}],
+				files: [
+					{
+						name: "achievement_unlocked5.png",
+						attachment: "./assets/img/achievements/achievement_unlocked5.png",
+					},
+				],
 			});
 		}
 	}

@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	i18next = require("i18next");
-	// autoUpdateDocs = require("../../helpers/autoUpdateDocs");
+// autoUpdateDocs = require("../../helpers/autoUpdateDocs");
 
 class Reload extends BaseCommand {
 	/**
@@ -14,18 +14,21 @@ class Reload extends BaseCommand {
 				.setName("reload")
 				.setDescription(client.translate("owner/reload:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("owner/reload:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("owner/reload:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("owner/reload:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("owner/reload:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true)
-				.addStringOption(option => option.setName("command")
-					.setDescription(client.translate("common:COMMAND"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:COMMAND", null, "uk-UA"),
-						"ru": client.translate("common:COMMAND", null, "ru-RU"),
-					})
-					.setRequired(true)
-					.setAutocomplete(true)),
+				.addStringOption(option =>
+					option
+						.setName("command")
+						.setDescription(client.translate("common:COMMAND"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:COMMAND", null, "uk-UA"),
+							ru: client.translate("common:COMMAND", null, "ru-RU"),
+						})
+						.setRequired(true)
+						.setAutocomplete(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: true,
@@ -71,11 +74,14 @@ class Reload extends BaseCommand {
 			results = client.commands.filter(c => c.command.name.includes(command));
 
 		return interaction.respond(
-			results.map(c => c).slice(0, 25).map(c => ({
-				name: c.command.name,
-				value: c.command.name,
-			}),
-			));
+			results
+				.map(c => c)
+				.slice(0, 25)
+				.map(c => ({
+					name: c.command.name,
+					value: c.command.name,
+				})),
+		);
 	}
 }
 

@@ -12,8 +12,8 @@ class Work extends BaseCommand {
 				.setName("work")
 				.setDescription(client.translate("economy/work:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("economy/work:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("economy/work:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("economy/work:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("economy/work:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
 			aliases: [],
@@ -37,13 +37,14 @@ class Work extends BaseCommand {
 	async execute(client, interaction, data) {
 		const isInCooldown = data.memberData.cooldowns?.work;
 		if (isInCooldown) {
-			if (isInCooldown > Date.now()) return interaction.error("economy/work:COOLDOWN", {
-				time: client.functions.convertTime(client, isInCooldown, true, true, data.guildData.language),
-			});
+			if (isInCooldown > Date.now())
+				return interaction.error("economy/work:COOLDOWN", {
+					time: client.functions.convertTime(client, isInCooldown, true, true, data.guildData.language),
+				});
 		}
-		if (Date.now() > data.memberData.cooldowns.work + (24 * 60 * 60 * 1000)) data.memberData.workStreak = 0;
+		if (Date.now() > data.memberData.cooldowns.work + 24 * 60 * 60 * 1000) data.memberData.workStreak = 0;
 
-		const toWait = Date.now() + (24 * 60 * 60 * 1000); // 24 hours
+		const toWait = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
 		data.memberData.cooldowns.work = toWait;
 		data.memberData.markModified("cooldowns");
 
@@ -57,13 +58,7 @@ class Work extends BaseCommand {
 			})
 			.setColor(client.config.embed.color);
 
-		const award = [
-			client.customEmojis.letters.a,
-			client.customEmojis.letters.w,
-			client.customEmojis.letters.a,
-			client.customEmojis.letters.r,
-			client.customEmojis.letters.d,
-		];
+		const award = [client.customEmojis.letters.a, client.customEmojis.letters.w, client.customEmojis.letters.a, client.customEmojis.letters.r, client.customEmojis.letters.d];
 		let won = 200;
 
 		if (data.memberData.workStreak >= 5) {
@@ -117,13 +112,16 @@ class Work extends BaseCommand {
 		const messageOptions = {
 			embeds: [embed],
 		};
+
 		if (!data.userData.achievements.work.achieved) {
 			data.userData.achievements.work.progress.now += 1;
 			if (data.userData.achievements.work.progress.now === data.userData.achievements.work.progress.total) {
-				messageOptions.files = [{
-					name: "unlocked.png",
-					attachment: "./assets/img/achievements/achievement_unlocked1.png",
-				}];
+				messageOptions.files = [
+					{
+						name: "unlocked.png",
+						attachment: "./assets/img/achievements/achievement_unlocked1.png",
+					},
+				];
 				data.userData.achievements.work.achieved = true;
 			}
 			data.userData.markModified("achievements.work");

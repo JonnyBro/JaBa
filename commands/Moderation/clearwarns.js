@@ -12,18 +12,21 @@ class Clearwarns extends BaseCommand {
 				.setName("clearwarns")
 				.setDescription(client.translate("moderation/clearwarns:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("moderation/clearwarns:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("moderation/clearwarns:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("moderation/clearwarns:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("moderation/clearwarns:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
-				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:USER", null, "uk-UA"),
-						"ru": client.translate("common:USER", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addUserOption(option =>
+					option
+						.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

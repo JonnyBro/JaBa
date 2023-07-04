@@ -14,8 +14,8 @@ class Checkjar extends BaseCommand {
 				.setName("checkjar")
 				.setDescription(client.translate("iat/checkjar:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("iat/checkjar:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("iat/checkjar:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("iat/checkjar:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("iat/checkjar:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
 			aliases: [],
@@ -47,7 +47,7 @@ class Checkjar extends BaseCommand {
 			},
 		}).then(res => res.json());
 		const jar = clientInfo.jars[1];
-		const jarTransactions = await fetch(`https://api.monobank.ua/personal/statement/${jar.id}/${Date.now() - (7 * 24 * 60 * 60 * 1000)}/${Date.now()}`, {
+		const jarTransactions = await fetch(`https://api.monobank.ua/personal/statement/${jar.id}/${Date.now() - 7 * 24 * 60 * 60 * 1000}/${Date.now()}`, {
 			method: "GET",
 			headers: {
 				"X-Token": client.config.apiKeys.monobankApiKey,

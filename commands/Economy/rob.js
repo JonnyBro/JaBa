@@ -12,24 +12,30 @@ class Rob extends BaseCommand {
 				.setName("rob")
 				.setDescription(client.translate("economy/rob:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("economy/rob:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("economy/rob:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("economy/rob:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("economy/rob:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:USER", null, "uk-UA"),
-						"ru": client.translate("common:USER", null, "ru-RU"),
-					})
-					.setRequired(true))
-				.addIntegerOption(option => option.setName("amount")
-					.setDescription(client.translate("common:INT"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:INT", null, "uk-UA"),
-						"ru": client.translate("common:INT", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addUserOption(option =>
+					option
+						.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						})
+						.setRequired(true),
+				)
+				.addIntegerOption(option =>
+					option
+						.setName("amount")
+						.setDescription(client.translate("common:INT"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:INT", null, "uk-UA"),
+							ru: client.translate("common:INT", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -68,15 +74,16 @@ class Rob extends BaseCommand {
 		}
 
 		const potentiallyLose = Math.floor(amount * 1.5);
-		if (potentiallyLose > data.memberData.money) return interaction.error("economy/rob:NOT_ENOUGH_AUTHOR", {
-			moneyMin: `**${potentiallyLose}** ${client.functions.getNoun(potentiallyLose, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-			moneyCurrent: `**${data.memberData.money}** ${client.functions.getNoun(data.memberData.money, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-		});
+		if (potentiallyLose > data.memberData.money)
+			return interaction.error("economy/rob:NOT_ENOUGH_AUTHOR", {
+				moneyMin: `**${potentiallyLose}** ${client.functions.getNoun(potentiallyLose, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+				moneyCurrent: `**${data.memberData.money}** ${client.functions.getNoun(data.memberData.money, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+			});
 
 		const itsAWon = Math.floor(client.functions.randomNum(0, 100) < 25);
 
 		if (itsAWon) {
-			const toWait = Date.now() + (6 * 60 * 60 * 1000),
+			const toWait = Date.now() + 6 * 60 * 60 * 1000,
 				randomNum = client.functions.randomNum(1, 2);
 
 			memberData.cooldowns.rob = toWait;

@@ -40,10 +40,12 @@ class CommandHandler extends BaseEvent {
 		if (!userData.achievements.firstCommand.achieved) {
 			const args = {
 				content: interaction.user.toString(),
-				files: [{
-					name: "achievement_unlocked2.png",
-					attachment: "./assets/img/achievements/achievement_unlocked2.png",
-				}],
+				files: [
+					{
+						name: "achievement_unlocked2.png",
+						attachment: "./assets/img/achievements/achievement_unlocked2.png",
+					},
+				],
 			};
 
 			userData.achievements.firstCommand.progress.now = 1;
@@ -54,7 +56,7 @@ class CommandHandler extends BaseEvent {
 			interaction.user.send(args);
 		}
 
-		client.logger.log(`User ${interaction.user.getUsername()} used ${command.command.name} in ${interaction.guild ? interaction.guild.name : "DM"} with arguments: ${interaction.options.data.length > 0 ? interaction.options.data.map(arg => { return `${arg.name}: ${arg.value}`; }).join(", ") : "no args"}`, "cmd");
+		client.logger.log(`User ${interaction.user.getUsername()} used ${command.command.name} in ${interaction.guild ? interaction.guild.name : "DM"} with arguments: ${interaction.options.data.length > 0 ? interaction.options.data.map(arg => { return `${arg.name}: ${arg.value}`; }).join(", ") : "no args" }`, "cmd");
 
 		return command.execute(client, interaction, data);
 	}

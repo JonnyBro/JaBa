@@ -13,8 +13,8 @@ class Number extends BaseCommand {
 				.setName("number")
 				.setDescription(client.translate("fun/number:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("fun/number:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("fun/number:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("fun/number:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("fun/number:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
 			aliases: [],
@@ -48,7 +48,7 @@ class Number extends BaseCommand {
 		const filter = m => !m.author.bot;
 		const collector = new MessageCollector(interaction.channel, {
 			filter,
-			time: (5 * 60 * 1000),
+			time: 5 * 60 * 1000,
 		});
 		currentGames[interaction.guildId] = true;
 
@@ -102,12 +102,14 @@ class Number extends BaseCommand {
 				collector.stop();
 			}
 
-			if (parseInt(msg.content) < number) msg.reply({
-				content: interaction.translate("fun/number:TOO_BIG", { user: msg.author.toString(), number: parsedNumber }),
-			});
-			if (parseInt(msg.content) > number) msg.reply({
-				content: interaction.translate("fun/number:TOO_SMALL", { user: msg.author.toString(), number: parsedNumber }),
-			});
+			if (parseInt(msg.content) < number)
+				msg.reply({
+					content: interaction.translate("fun/number:TOO_BIG", { user: msg.author.toString(), number: parsedNumber }),
+				});
+			if (parseInt(msg.content) > number)
+				msg.reply({
+					content: interaction.translate("fun/number:TOO_SMALL", { user: msg.author.toString(), number: parsedNumber }),
+				});
 		});
 
 		collector.on("end", (_, reason) => {

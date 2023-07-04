@@ -13,8 +13,8 @@ class Memes extends BaseCommand {
 				.setName("memes")
 				.setDescription(client.translate("fun/memes:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("fun/memes:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("fun/memes:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("fun/memes:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("fun/memes:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
 			aliases: [],
@@ -39,19 +39,20 @@ class Memes extends BaseCommand {
 		await interaction.deferReply();
 
 		const tags = ["funny", "memes", "dankmemes", "me_irl", "wholesomememes"].map(tag =>
-			JSON.parse(JSON.stringify({
-				label: tag,
-				value: tag,
-			})),
+			JSON.parse(
+				JSON.stringify({
+					label: tag,
+					value: tag,
+				}),
+			),
 		);
 
-		const row = new ActionRowBuilder()
-			.addComponents(
-				new StringSelectMenuBuilder()
-					.setCustomId("memes_select")
-					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
-					.addOptions(tags),
-			);
+		const row = new ActionRowBuilder().addComponents(
+			new StringSelectMenuBuilder()
+				.setCustomId("memes_select")
+				.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
+				.addOptions(tags),
+		);
 
 		const msg = await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
@@ -60,7 +61,7 @@ class Memes extends BaseCommand {
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = msg.createMessageComponentCollector({ filter, idle: (2 * 60 * 1000) });
+		const collector = msg.createMessageComponentCollector({ filter, idle: 2 * 60 * 1000 });
 
 		collector.on("collect", async i => {
 			if (i.isStringSelectMenu() && i.customId === "memes_select") {

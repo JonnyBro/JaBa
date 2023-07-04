@@ -14,18 +14,21 @@ class Clips extends BaseCommand {
 				.setName("clips")
 				.setDescription(client.translate("music/clips:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("music/clips:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("music/clips:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("music/clips:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("music/clips:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addStringOption(option => option.setName("query")
-					.setDescription(client.translate("music/clips:QUERY"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("music/clips:QUERY", null, "uk-UA"),
-						"ru": client.translate("music/clips:QUERY", null, "ru-RU"),
-					})
-					.setRequired(true)
-					.setAutocomplete(true)),
+				.addStringOption(option =>
+					option
+						.setName("query")
+						.setDescription(client.translate("music/clips:QUERY"))
+						.setDescriptionLocalizations({
+							uk: client.translate("music/clips:QUERY", null, "uk-UA"),
+							ru: client.translate("music/clips:QUERY", null, "ru-RU"),
+						})
+						.setRequired(true)
+						.setAutocomplete(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -92,8 +95,8 @@ class Clips extends BaseCommand {
 			results.slice(0, 25).map(file => ({
 				name: file.substring(0, file.length - 4),
 				value: `./clips/${file}`,
-			}),
-			));
+			})),
+		);
 	}
 }
 

@@ -13,17 +13,20 @@ class Marry extends BaseCommand {
 				.setName("marry")
 				.setDescription(client.translate("economy/marry:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("economy/marry:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("economy/marry:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("economy/marry:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("economy/marry:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:USER", null, "uk-UA"),
-						"ru": client.translate("common:USER", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addUserOption(option =>
+					option
+						.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -58,23 +61,27 @@ class Marry extends BaseCommand {
 			const receiver = pendings[requester];
 
 			if (requester === interaction.author.id) {
-				const user = client.users.cache.get(receiver) || await client.users.fetch(receiver);
+				const user = client.users.cache.get(receiver) || (await client.users.fetch(receiver));
+
 				return interaction.error("economy/marry:REQUEST_AUTHOR_TO_AMEMBER", {
 					user: user.toString,
 				});
 			} else if (receiver === interaction.member.id) {
-				const user = client.users.cache.get(requester) || await client.users.fetch(requester);
+				const user = client.users.cache.get(requester) || (await client.users.fetch(requester));
+
 				return interaction.error("economy/marry:REQUEST_AMEMBER_TO_AUTHOR", {
 					user: user.toString(),
 				});
 			} else if (requester === member.id) {
-				const user = client.users.cache.get(receiver) || await client.users.fetch(receiver);
+				const user = client.users.cache.get(receiver) || (await client.users.fetch(receiver));
+
 				return interaction.error("economy/marry:REQUEST_AMEMBER_TO_MEMBER", {
 					firstUser: member.toString(),
 					secondUser: user.toString(),
 				});
 			} else if (receiver === member.id) {
-				const user = client.users.cache.get(requester) || await client.users.fetch(requester);
+				const user = client.users.cache.get(requester) || (await client.users.fetch(requester));
+
 				return interaction.error("economy/marry:REQUEST_MEMBER_TO_AMEMBER", {
 					firstUser: member.toString(),
 					secondUser: user.toString(),
@@ -84,17 +91,10 @@ class Marry extends BaseCommand {
 
 		pendings[interaction.member.id] = member.id;
 
-		const row = new ActionRowBuilder()
-			.addComponents(
-				new ButtonBuilder()
-					.setCustomId("marry_confirm_yes")
-					.setLabel(interaction.translate("common:ACCEPT"))
-					.setStyle(ButtonStyle.Success),
-				new ButtonBuilder()
-					.setCustomId("marry_confirm_no")
-					.setLabel(interaction.translate("common:CANCEL"))
-					.setStyle(ButtonStyle.Danger),
-			);
+		const row = new ActionRowBuilder().addComponents(
+			new ButtonBuilder().setCustomId("marry_confirm_yes").setLabel(interaction.translate("common:ACCEPT")).setStyle(ButtonStyle.Success),
+			new ButtonBuilder().setCustomId("marry_confirm_no").setLabel(interaction.translate("common:CANCEL")).setStyle(ButtonStyle.Danger),
+		);
 
 		await interaction.reply({
 			content: interaction.translate("economy/marry:REQUEST", {
@@ -105,7 +105,7 @@ class Marry extends BaseCommand {
 		});
 
 		const filter = i => i.user.id === member.id;
-		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (10 * 60 * 1000) });
+		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: 10 * 60 * 1000 });
 
 		collector.on("collect", async i => {
 			if (i.isButton()) {
@@ -137,10 +137,12 @@ class Marry extends BaseCommand {
 
 				const messageOptions = {
 					content: `${member.toString()} :heart: ${interaction.member.toString()}`,
-					files: [{
-						name: "achievement_unlocked3.png",
-						attachment: "./assets/img/achievements/achievement_unlocked3.png",
-					}],
+					files: [
+						{
+							name: "achievement_unlocked3.png",
+							attachment: "./assets/img/achievements/achievement_unlocked3.png",
+						},
+					],
 				};
 
 				let sent = false;

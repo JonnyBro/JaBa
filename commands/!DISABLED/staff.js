@@ -12,8 +12,8 @@ class Staff extends BaseCommand {
 				.setName("staff")
 				.setDescription(client.translate("general/staff:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("general/staff:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("general/staff:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("general/staff:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("general/staff:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
 			aliases: [],
@@ -47,11 +47,14 @@ class Staff extends BaseCommand {
 			.addFields([
 				{
 					name: interaction.translate("general/staff:ADMINS"),
-					value: (administrators.size > 0 ? administrators.map(a => `${a.presence ? client.customEmojis.status[a.presence.status] : client.customEmojis.status.offline} | <@${a.user.id}>`).join("\n") : interaction.translate("general/staff:NO_ADMINS")),
+					value:
+						administrators.size > 0
+							? administrators.map(a => `${a.presence ? client.customEmojis.status[a.presence.status] : client.customEmojis.status.offline} | <@${a.user.id}>`).join("\n")
+							: interaction.translate("general/staff:NO_ADMINS"),
 				},
 				{
 					name: interaction.translate("general/staff:MODS"),
-					value: (moderators.size > 0 ? moderators.map(m => `${m.presence ? client.customEmojis.status[m.presence.status] : client.customEmojis.status.offline} | <@${m.user.id}>`).join("\n") : interaction.translate("general/staff:NO_MODS")),
+					value: moderators.size > 0 ? moderators.map(m => `${m.presence ? client.customEmojis.status[m.presence.status] : client.customEmojis.status.offline} | <@${m.user.id}>`).join("\n") : interaction.translate("general/staff:NO_MODS"),
 				},
 			])
 			.setColor(client.config.embed.color)

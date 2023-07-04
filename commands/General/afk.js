@@ -12,17 +12,20 @@ class Afk extends BaseCommand {
 				.setName("afk")
 				.setDescription(client.translate("general/afk:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("general/afk:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("general/afk:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("general/afk:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("general/afk:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true)
-				.addStringOption(option => option.setName("message")
-					.setDescription(client.translate("common:MESSAGE"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:MESSAGE", null, "uk-UA"),
-						"ru": client.translate("common:MESSAGE", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addStringOption(option =>
+					option
+						.setName("message")
+						.setDescription(client.translate("common:MESSAGE"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:MESSAGE", null, "uk-UA"),
+							ru: client.translate("common:MESSAGE", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

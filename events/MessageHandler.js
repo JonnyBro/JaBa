@@ -58,9 +58,14 @@ class MessageCreate extends BaseEvent {
 					.addFields([
 						{
 							name: message.translate("misc:QUOTE_ATTACHED"),
-							value: msg.attachments.size > 0 ? msg.attachments.map(a => {
-								return `[${a.name}](${a.url})`;
-							}).join("\n") : `*${message.translate("common:MISSING")}*`,
+							value:
+								msg.attachments.size > 0
+									? msg.attachments
+										.map(a => {
+											return `[${a.name}](${a.url})`;
+										})
+										.join("\n")
+									: `*${message.translate("common:MISSING")}*`,
 						},
 					])
 					.setFooter({
@@ -69,17 +74,10 @@ class MessageCreate extends BaseEvent {
 					.setColor(client.config.embed.color)
 					.setTimestamp(msg.createdTimestamp);
 
-				const row = new ActionRowBuilder()
-					.addComponents(
-						new ButtonBuilder()
-							.setLabel(message.translate("misc:QUOTE_JUMP"))
-							.setStyle(ButtonStyle.Link)
-							.setURL(msg.url),
-						new ButtonBuilder()
-							.setCustomId("quote_delete")
-							.setEmoji("1102200816582000750")
-							.setStyle(ButtonStyle.Danger),
-					);
+				const row = new ActionRowBuilder().addComponents(
+					new ButtonBuilder().setLabel(message.translate("misc:QUOTE_JUMP")).setStyle(ButtonStyle.Link).setURL(msg.url),
+					new ButtonBuilder().setCustomId("quote_delete").setEmoji("1102200816582000750").setStyle(ButtonStyle.Danger),
+				);
 
 				const reply = await message.reply({
 					embeds: [embed],
@@ -87,18 +85,17 @@ class MessageCreate extends BaseEvent {
 				});
 
 				const filter = i => i.user.id === message.author.id;
-				const collector = message.channel.createMessageComponentCollector({ filter, time: (60 * 1000) });
+				const collector = message.channel.createMessageComponentCollector({ filter, time: 60 * 1000 });
 
 				collector.on("collect", async i => {
-					if (i.isButton() && i.customId === "quote_delete")
-						if (reply.deletable) await reply.delete();
+					if (i.isButton() && i.customId === "quote_delete") if (reply.deletable) reply.delete();
 				});
 			}
 
 			if (data.guildData.plugins.automod.enabled && !data.guildData.plugins.automod.ignored.includes(message.channel.id))
 				if (/(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(message.content))
 					if (!message.channel.permissionsFor(message.member).has(PermissionsBitField.Flags.ManageMessages)) {
-						await message.error("administration/automod:DELETED");
+						await message.error("administration/automod:DELETED", null, { mention: true });
 						message.delete();
 					}
 
@@ -114,9 +111,7 @@ class MessageCreate extends BaseEvent {
 			}
 
 			message.mentions.users.forEach(async u => {
-				const userData = await client.findOrCreateUser({
-					id: u.id,
-				});
+				const userData = await client.findOrCreateUser({ id: u.id });
 
 				if (userData.afk) message.replyT("general/afk:IS_AFK", { user: u.getUsername(), reason: userData.afk }, { ephemeral: true });
 			});
@@ -138,10 +133,9 @@ async function updateXp(client, msg, memberData) {
 		level = parseInt(memberData.level),
 		isInCooldown = xpCooldown[msg.author.id];
 
-	if (isInCooldown)
-		if (isInCooldown > Date.now()) return;
+	if (isInCooldown) if (isInCooldown > Date.now()) return;
 
-	const toWait = Date.now() + (60 * 1000); // 1 min
+	const toWait = Date.now() + 60 * 1000; // 1 min
 	xpCooldown[msg.author.id] = toWait;
 
 	const won = client.functions.randomNum(1, 2);

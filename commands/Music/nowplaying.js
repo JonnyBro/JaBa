@@ -13,8 +13,8 @@ class Nowplaying extends BaseCommand {
 				.setName("nowplaying")
 				.setDescription(client.translate("music/nowplaying:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("music/nowplaying:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("music/nowplaying:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("music/nowplaying:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("music/nowplaying:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
 			aliases: [],
@@ -77,9 +77,13 @@ class Nowplaying extends BaseCommand {
 				{
 					name: "\u200b",
 					value: `${interaction.translate("music/nowplaying:REPEAT")}: \`${
-						queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") :
-							queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") :
-								queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK") : interaction.translate("common:DISABLED")
+						queue.repeatMode === QueueRepeatMode.AUTOPLAY
+							? interaction.translate("music/nowplaying:AUTOPLAY")
+							: queue.repeatMode === QueueRepeatMode.QUEUE
+								? interaction.translate("music/nowplaying:QUEUE")
+								: queue.repeatMode === QueueRepeatMode.TRACK
+									? interaction.translate("music/nowplaying:TRACK")
+									: interaction.translate("common:DISABLED")
 					}\``,
 				},
 			])

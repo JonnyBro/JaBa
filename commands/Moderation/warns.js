@@ -12,18 +12,21 @@ class Warns extends BaseCommand {
 				.setName("warns")
 				.setDescription(client.translate("moderation/warns:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("moderation/warns:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("moderation/warns:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("moderation/warns:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("moderation/warns:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
-				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:USER", null, "uk-UA"),
-						"ru": client.translate("common:USER", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addUserOption(option =>
+					option
+						.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -56,10 +59,7 @@ class Warns extends BaseCommand {
 				name: interaction.translate("moderation/warns:SANCTIONS_OF", {
 					member: member.user.getUsername(),
 				}),
-				iconURL: member.displayAvatarURL({
-					extension: "png",
-					size: 512,
-				}),
+				iconURL: member.displayAvatarURL(),
 			})
 			.setColor(client.config.embed.color)
 			.setFooter({
@@ -67,9 +67,11 @@ class Warns extends BaseCommand {
 			});
 
 		if (memberData.sanctions.length === 0) {
-			embed.setDescription(interaction.translate("moderation/warns:NO_SANCTIONS", {
-				member: member.user.getUsername(),
-			}));
+			embed.setDescription(
+				interaction.translate("moderation/warns:NO_SANCTIONS", {
+					member: member.user.getUsername(),
+				}),
+			);
 			return interaction.reply({
 				embeds: [embed],
 			});
@@ -84,6 +86,7 @@ class Warns extends BaseCommand {
 				]);
 			});
 		}
+
 		interaction.reply({
 			embeds: [embed],
 		});

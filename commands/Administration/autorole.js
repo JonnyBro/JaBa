@@ -12,24 +12,30 @@ class Autorole extends BaseCommand {
 				.setName("autorole")
 				.setDescription(client.translate("administration/autorole:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("administration/autorole:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("administration/autorole:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("administration/autorole:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("administration/autorole:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
-				.addBooleanOption(option => option.setName("state")
-					.setDescription(client.translate("common:STATE"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:STATE", null, "uk-UA"),
-						"ru": client.translate("common:STATE", null, "ru-RU"),
-					})
-					.setRequired(true))
-				.addRoleOption(option => option.setName("role")
-					.setDescription(client.translate("common:ROLE"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:ROLE", null, "uk-UA"),
-						"ru": client.translate("common:ROLE", null, "ru-RU"),
-					})),
+				.addBooleanOption(option =>
+					option
+						.setName("state")
+						.setDescription(client.translate("common:STATE"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:STATE", null, "uk-UA"),
+							ru: client.translate("common:STATE", null, "ru-RU"),
+						})
+						.setRequired(true),
+				)
+				.addRoleOption(option =>
+					option
+						.setName("role")
+						.setDescription(client.translate("common:ROLE"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:ROLE", null, "uk-UA"),
+							ru: client.translate("common:ROLE", null, "ru-RU"),
+						}),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

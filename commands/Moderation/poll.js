@@ -12,18 +12,21 @@ class Poll extends BaseCommand {
 				.setName("poll")
 				.setDescription(client.translate("moderation/poll:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("moderation/poll:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("moderation/poll:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("moderation/poll:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("moderation/poll:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
-				.addStringOption(option => option.setName("question")
-					.setDescription(client.translate("moderation/poll:QUESTION"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("moderation/poll:QUESTION", null, "uk-UA"),
-						"ru": client.translate("moderation/poll:QUESTION", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addStringOption(option =>
+					option
+						.setName("question")
+						.setDescription(client.translate("moderation/poll:QUESTION"))
+						.setDescriptionLocalizations({
+							uk: client.translate("moderation/poll:QUESTION", null, "uk-UA"),
+							ru: client.translate("moderation/poll:QUESTION", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -45,26 +48,12 @@ class Poll extends BaseCommand {
 	async execute(client, interaction) {
 		const question = interaction.options.getString("question");
 
-		const row = new ActionRowBuilder()
-			.addComponents(
-				new ButtonBuilder()
-					.setCustomId("poll_everyone")
-					.setLabel("@everyone")
-					.setStyle(ButtonStyle.Primary),
-				new ButtonBuilder()
-					.setCustomId("poll_here")
-					.setLabel("@here")
-					.setStyle(ButtonStyle.Primary),
-				new ButtonBuilder()
-					.setCustomId("poll_nothing")
-					.setLabel(interaction.translate("moderation/poll:NOTHING"))
-					.setStyle(ButtonStyle.Primary),
-				new ButtonBuilder()
-					.setCustomId("poll_cancel")
-					.setLabel(interaction.translate("common:CANCEL"))
-					.setStyle(ButtonStyle.Danger),
-			);
-
+		const row = new ActionRowBuilder().addComponents(
+			new ButtonBuilder().setCustomId("poll_everyone").setLabel("@everyone").setStyle(ButtonStyle.Primary),
+			new ButtonBuilder().setCustomId("poll_here").setLabel("@here").setStyle(ButtonStyle.Primary),
+			new ButtonBuilder().setCustomId("poll_nothing").setLabel(interaction.translate("moderation/poll:NOTHING")).setStyle(ButtonStyle.Primary),
+			new ButtonBuilder().setCustomId("poll_cancel").setLabel(interaction.translate("common:CANCEL")).setStyle(ButtonStyle.Danger),
+		);
 
 		await interaction.reply({
 			content: interaction.translate("moderation/poll:SELECT_MENTION"),
@@ -74,7 +63,7 @@ class Poll extends BaseCommand {
 
 		let mention = null;
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (15 * 1000) });
+		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: 15 * 1000 });
 
 		collector.on("collect", async i => {
 			if (i.isButton()) {

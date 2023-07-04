@@ -13,8 +13,8 @@ class Queue extends BaseCommand {
 				.setName("queue")
 				.setDescription(client.translate("music/queue:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("music/queue:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("music/queue:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("music/queue:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("music/queue:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
 			aliases: [],
@@ -42,29 +42,12 @@ class Queue extends BaseCommand {
 		let currentPage = 0;
 		let embeds = generateQueueEmbeds(interaction, queue);
 
-		const row = new ActionRowBuilder()
-			.addComponents(
-				new ButtonBuilder()
-					.setCustomId("queue_prev_page")
-					.setLabel(interaction.translate("music/queue:PREV_PAGE"))
-					.setStyle(ButtonStyle.Primary)
-					.setEmoji("⬅️"),
-				new ButtonBuilder()
-					.setCustomId("queue_next_page")
-					.setLabel(interaction.translate("music/queue:NEXT_PAGE"))
-					.setStyle(ButtonStyle.Primary)
-					.setEmoji("➡️"),
-				new ButtonBuilder()
-					.setCustomId("queue_jump_page")
-					.setLabel(interaction.translate("music/queue:JUMP_PAGE"))
-					.setStyle(ButtonStyle.Secondary)
-					.setEmoji("↗️"),
-				new ButtonBuilder()
-					.setCustomId("queue_stop")
-					.setLabel(interaction.translate("common:CANCEL"))
-					.setStyle(ButtonStyle.Danger)
-					.setEmoji("⏹️"),
-			);
+		const row = new ActionRowBuilder().addComponents(
+			new ButtonBuilder().setCustomId("queue_prev_page").setLabel(interaction.translate("music/queue:PREV_PAGE")).setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
+			new ButtonBuilder().setCustomId("queue_next_page").setLabel(interaction.translate("music/queue:NEXT_PAGE")).setStyle(ButtonStyle.Primary).setEmoji("➡️"),
+			new ButtonBuilder().setCustomId("queue_jump_page").setLabel(interaction.translate("music/queue:JUMP_PAGE")).setStyle(ButtonStyle.Secondary).setEmoji("↗️"),
+			new ButtonBuilder().setCustomId("queue_stop").setLabel(interaction.translate("common:CANCEL")).setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
+		);
 
 		await interaction.reply({
 			content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
@@ -73,7 +56,7 @@ class Queue extends BaseCommand {
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (20 * 1000) });
+		const collector = interaction.channel.createMessageComponentCollector({ filter, idle: 20 * 1000 });
 
 		collector.on("collect", async i => {
 			if (i.isButton()) {
@@ -116,7 +99,7 @@ class Queue extends BaseCommand {
 						return res.author.id === interaction.user.id && !isNaN(res.content);
 					};
 
-					interaction.channel.awaitMessages({ filter, max: 1, time: (10 * 1000) }).then(collected => {
+					interaction.channel.awaitMessages({ filter, max: 1, time: 10 * 1000 }).then(collected => {
 						if (embeds[collected.first().content - 1]) {
 							currentPage = collected.first().content - 1;
 							interaction.editReply({
@@ -168,11 +151,19 @@ function generateQueueEmbeds(interaction, queue) {
 			.setTitle(interaction.translate("music/nowplaying:CURRENTLY_PLAYING"))
 			.setThumbnail(currentTrack.thumbnail)
 			.setColor(interaction.client.config.embed.color)
-			.setDescription(`${interaction.translate("music/nowplaying:REPEAT")}: \`${
-				queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") :
-					queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") :
-						queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK") : interaction.translate("common:DISABLED")
-			}\`\n${currentTrack.url.startsWith("./clips") ? `${currentTrack.title} (clips)` : `[${currentTrack.title}](${currentTrack.url})`}\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${interaction.translate("music/queue:NO_QUEUE")}`)
+			.setDescription(
+				`${interaction.translate("music/nowplaying:REPEAT")}: \`${
+					queue.repeatMode === QueueRepeatMode.AUTOPLAY
+						? interaction.translate("music/nowplaying:AUTOPLAY")
+						: queue.repeatMode === QueueRepeatMode.QUEUE
+							? interaction.translate("music/nowplaying:QUEUE")
+							: queue.repeatMode === QueueRepeatMode.TRACK
+								? interaction.translate("music/nowplaying:TRACK")
+								: interaction.translate("common:DISABLED")
+				}\`\n${currentTrack.url.startsWith("./clips") ? `${currentTrack.title} (clips)` : `[${currentTrack.title}](${currentTrack.url})`}\n> ${interaction.translate("music/queue:ADDED")} ${
+					currentTrack.requestedBy
+				}\n\n**${interaction.translate("music/queue:NEXT")}**\n${interaction.translate("music/queue:NO_QUEUE")}`,
+			)
 			.setTimestamp();
 		embeds.push(embed);
 
@@ -190,11 +181,19 @@ function generateQueueEmbeds(interaction, queue) {
 			.setTitle(interaction.translate("music/nowplaying:CURRENTLY_PLAYING"))
 			.setThumbnail(currentTrack.thumbnail)
 			.setColor(interaction.client.config.embed.color)
-			.setDescription(`${interaction.translate("music/nowplaying:REPEAT")}: \`${
-				queue.repeatMode === QueueRepeatMode.AUTOPLAY ? interaction.translate("music/nowplaying:AUTOPLAY") :
-					queue.repeatMode === QueueRepeatMode.QUEUE ? interaction.translate("music/nowplaying:QUEUE") :
-						queue.repeatMode === QueueRepeatMode.TRACK ? interaction.translate("music/nowplaying:TRACK") : interaction.translate("common:DISABLED")
-			}\`\n${currentTrack.url.startsWith("./clips") ? `${currentTrack.title} (clips)` : `[${currentTrack.title}](${currentTrack.url})`}\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requestedBy}\n\n**${interaction.translate("music/queue:NEXT")}**\n${info}`)
+			.setDescription(
+				`${interaction.translate("music/nowplaying:REPEAT")}: \`${
+					queue.repeatMode === QueueRepeatMode.AUTOPLAY
+						? interaction.translate("music/nowplaying:AUTOPLAY")
+						: queue.repeatMode === QueueRepeatMode.QUEUE
+							? interaction.translate("music/nowplaying:QUEUE")
+							: queue.repeatMode === QueueRepeatMode.TRACK
+								? interaction.translate("music/nowplaying:TRACK")
+								: interaction.translate("common:DISABLED")
+				}\`\n${currentTrack.url.startsWith("./clips") ? `${currentTrack.title} (clips)` : `[${currentTrack.title}](${currentTrack.url})`}\n> ${interaction.translate("music/queue:ADDED")} ${
+					currentTrack.requestedBy
+				}\n\n**${interaction.translate("music/queue:NEXT")}**\n${info}`,
+			)
 			.setTimestamp();
 		embeds.push(embed);
 	}

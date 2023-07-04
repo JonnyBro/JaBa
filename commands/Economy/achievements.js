@@ -12,16 +12,19 @@ class Achievements extends BaseCommand {
 				.setName("achievements")
 				.setDescription(client.translate("economy/achievements:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("economy/achievements:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("economy/achievements:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("economy/achievements:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("economy/achievements:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:USER", null, "uk-UA"),
-						"ru": client.translate("common:USER", null, "ru-RU"),
-					})),
+				.addUserOption(option =>
+					option
+						.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						}),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -44,9 +47,7 @@ class Achievements extends BaseCommand {
 		const user = interaction.options.getUser("user") || interaction.member;
 		if (user.bot) return interaction.error("economy/profile:BOT_USER");
 
-		const userData = (user.id === interaction.user.id ? data.userData : await client.findOrCreateUser({
-			id: user.id,
-		}));
+		const userData = user.id === interaction.user.id ? data.userData : await client.findOrCreateUser({ id: user.id });
 
 		const embed = new EmbedBuilder()
 			.setAuthor({

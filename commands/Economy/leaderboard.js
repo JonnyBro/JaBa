@@ -12,22 +12,21 @@ class Leaderboard extends BaseCommand {
 				.setName("leaderboard")
 				.setDescription(client.translate("economy/leaderboard:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("economy/leaderboard:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("economy/leaderboard:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("economy/leaderboard:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("economy/leaderboard:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addStringOption(option => option.setName("type")
-					.setDescription(client.translate("owner/debug:TYPE"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("owner/debug:TYPE", null, "uk-UA"),
-						"ru": client.translate("owner/debug:TYPE", null, "ru-RU"),
-					})
-					.setRequired(true)
-					.setChoices(
-						{ name: client.translate("common:LEVEL"), value: "level" },
-						{ name: client.translate("common:MONEY"), value: "money" },
-						{ name: client.translate("common:REP"), value: "rep" },
-					)),
+				.addStringOption(option =>
+					option
+						.setName("type")
+						.setDescription(client.translate("owner/debug:TYPE"))
+						.setDescriptionLocalizations({
+							uk: client.translate("owner/debug:TYPE", null, "uk-UA"),
+							ru: client.translate("owner/debug:TYPE", null, "ru-RU"),
+						})
+						.setRequired(true)
+						.setChoices({ name: client.translate("common:LEVEL"), value: "level" }, { name: client.translate("common:MONEY"), value: "money" }, { name: client.translate("common:REP"), value: "rep" }),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -51,10 +50,11 @@ class Leaderboard extends BaseCommand {
 
 		const type = interaction.options.getString("type");
 		const isOnMobile = JSON.stringify(Object.keys(interaction.member.presence.clientStatus)) === JSON.stringify(["mobile"]);
-		if (isOnMobile) interaction.followUp({
-			content: interaction.translate("economy/leaderboard:MOBILE"),
-			ephemeral: true,
-		});
+		if (isOnMobile)
+			interaction.followUp({
+				content: interaction.translate("economy/leaderboard:MOBILE"),
+				ephemeral: true,
+			});
 
 		if (type === "money") {
 			const membersLeaderboard = [],
@@ -86,15 +86,18 @@ class Leaderboard extends BaseCommand {
 					iconURL: interaction.guild.iconURL(),
 				})
 				.setColor(client.config.embed.color)
-				.addFields({
-					name: interaction.translate("common:USER"),
-					value: userNames,
-					inline: true,
-				}, {
-					name: interaction.translate("common:CREDITS"),
-					value: money,
-					inline: true,
-				});
+				.addFields(
+					{
+						name: interaction.translate("common:USER"),
+						value: userNames,
+						inline: true,
+					},
+					{
+						name: interaction.translate("common:CREDITS"),
+						value: money,
+						inline: true,
+					},
+				);
 
 			interaction.editReply({
 				embeds: [embed],
@@ -183,15 +186,18 @@ class Leaderboard extends BaseCommand {
 					iconURL: interaction.guild.iconURL(),
 				})
 				.setColor(client.config.embed.color)
-				.addFields({
-					name: interaction.translate("common:USER"),
-					value: userNames,
-					inline: true,
-				}, {
-					name: interaction.translate("common:REP"),
-					value: rep,
-					inline: true,
-				});
+				.addFields(
+					{
+						name: interaction.translate("common:USER"),
+						value: userNames,
+						inline: true,
+					},
+					{
+						name: interaction.translate("common:REP"),
+						value: rep,
+						inline: true,
+					},
+				);
 
 			interaction.editReply({
 				embeds: [embed],

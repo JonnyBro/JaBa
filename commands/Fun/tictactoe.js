@@ -13,17 +13,20 @@ class TicTacToe extends BaseCommand {
 				.setName("tictactoe")
 				.setDescription(client.translate("fun/tictactoe:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("fun/tictactoe:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("fun/tictactoe:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("fun/tictactoe:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("fun/tictactoe:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:USER", null, "uk-UA"),
-						"ru": client.translate("common:USER", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addUserOption(option =>
+					option
+						.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

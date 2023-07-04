@@ -15,9 +15,7 @@ class GuildCreate extends BaseEvent {
 	 * @param {import("discord.js").Guild} guild
 	 */
 	async execute(client, guild) {
-		const userData = await client.findOrCreateUser({
-			id: guild.ownerId,
-		});
+		const userData = await client.findOrCreateUser({ id: guild.ownerId });
 
 		if (!userData.achievements.invite.achieved) {
 			userData.achievements.invite.progress.now = 1;
@@ -39,10 +37,12 @@ class GuildCreate extends BaseEvent {
 
 		const owner = await guild.fetchOwner();
 		owner.send({
-			files: [{
-				name: "unlocked.png",
-				attachment: "./assets/img/achievements/achievement_unlocked7.png",
-			}],
+			files: [
+				{
+					name: "unlocked.png",
+					attachment: "./assets/img/achievements/achievement_unlocked7.png",
+				},
+			],
 			embeds: [thanks],
 		});
 

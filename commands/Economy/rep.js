@@ -12,17 +12,20 @@ class Rep extends BaseCommand {
 				.setName("rep")
 				.setDescription(client.translate("economy/rep:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("economy/rep:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("economy/rep:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("economy/rep:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("economy/rep:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:USER", null, "uk-UA"),
-						"ru": client.translate("common:USER", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addUserOption(option =>
+					option
+						.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -44,9 +47,10 @@ class Rep extends BaseCommand {
 	async execute(client, interaction, data) {
 		const isInCooldown = data.userData.cooldowns?.rep;
 		if (isInCooldown) {
-			if (isInCooldown > Date.now()) return interaction.error("economy/rep:COOLDOWN", {
-				time: client.functions.convertTime(client, isInCooldown, true, true, data.guildData.language),
-			});
+			if (isInCooldown > Date.now())
+				return interaction.error("economy/rep:COOLDOWN", {
+					time: client.functions.convertTime(client, isInCooldown, true, true, data.guildData.language),
+				});
 		}
 
 		const user = interaction.options.getUser("user");
@@ -67,15 +71,17 @@ class Rep extends BaseCommand {
 		userData.rep++;
 
 		if (!userData.achievements.rep.achieved) {
-			userData.achievements.rep.progress.now = (userData.rep > userData.achievements.rep.progress.total ? userData.achievements.rep.progress.total : userData.rep);
+			userData.achievements.rep.progress.now = userData.rep > userData.achievements.rep.progress.total ? userData.achievements.rep.progress.total : userData.rep;
 			if (userData.achievements.rep.progress.now >= userData.achievements.rep.progress.total) {
 				userData.achievements.rep.achieved = true;
 				interaction.followUp({
 					content: `${user}`,
-					files: [{
-						name: "achievement_unlocked6.png",
-						attachment: "./assets/img/achievements/achievement_unlocked6.png",
-					}],
+					files: [
+						{
+							name: "achievement_unlocked6.png",
+							attachment: "./assets/img/achievements/achievement_unlocked6.png",
+						},
+					],
 				});
 			}
 			userData.markModified("achievements.rep");

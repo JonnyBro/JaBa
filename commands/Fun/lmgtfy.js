@@ -13,24 +13,30 @@ class LMGTFY extends BaseCommand {
 				.setName("lmgtfy")
 				.setDescription(client.translate("fun/lmgtfy:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("fun/lmgtfy:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("fun/lmgtfy:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("fun/lmgtfy:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("fun/lmgtfy:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true)
-				.addStringOption(option => option.setName("query")
-					.setDescription(client.translate("fun/lmgtfy:QUERY"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("fun/lmgtfy:QUERY", null, "uk-UA"),
-						"ru": client.translate("fun/lmgtfy:QUERY", null, "ru-RU"),
-					})
-					.setRequired(true))
-				.addBooleanOption(option => option.setName("short")
-					.setDescription(client.translate("fun/lmgtfy:SHORT"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("fun/lmgtfy:SHORT", null, "uk-UA"),
-						"ru": client.translate("fun/lmgtfy:SHORT", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addStringOption(option =>
+					option
+						.setName("query")
+						.setDescription(client.translate("fun/lmgtfy:QUERY"))
+						.setDescriptionLocalizations({
+							uk: client.translate("fun/lmgtfy:QUERY", null, "uk-UA"),
+							ru: client.translate("fun/lmgtfy:QUERY", null, "ru-RU"),
+						})
+						.setRequired(true),
+				)
+				.addBooleanOption(option =>
+					option
+						.setName("short")
+						.setDescription(client.translate("fun/lmgtfy:SHORT"))
+						.setDescriptionLocalizations({
+							uk: client.translate("fun/lmgtfy:SHORT", null, "uk-UA"),
+							ru: client.translate("fun/lmgtfy:SHORT", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

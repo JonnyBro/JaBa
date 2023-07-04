@@ -12,8 +12,8 @@ class Servers extends BaseCommand {
 				.setName("servers")
 				.setDescription(client.translate("owner/servers:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("owner/servers:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("owner/servers:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("owner/servers:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("owner/servers:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true),
 			aliases: [],
@@ -40,21 +40,11 @@ class Servers extends BaseCommand {
 		let currentPage = 0;
 		const embeds = generateServersEmbeds(interaction, client.guilds.cache);
 
-		const row = new ActionRowBuilder()
-			.addComponents(
-				new ButtonBuilder()
-					.setCustomId("servers_prev_page")
-					.setStyle(ButtonStyle.Primary)
-					.setEmoji("⬅️"),
-				new ButtonBuilder()
-					.setCustomId("servers_next_page")
-					.setStyle(ButtonStyle.Primary)
-					.setEmoji("➡️"),
-				new ButtonBuilder()
-					.setCustomId("servers_stop")
-					.setStyle(ButtonStyle.Danger)
-					.setEmoji("⏹️"),
-			);
+		const row = new ActionRowBuilder().addComponents(
+			new ButtonBuilder().setCustomId("servers_prev_page").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
+			new ButtonBuilder().setCustomId("servers_next_page").setStyle(ButtonStyle.Primary).setEmoji("➡️"),
+			new ButtonBuilder().setCustomId("servers_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
+		);
 
 		await interaction.editReply({
 			content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
@@ -63,7 +53,7 @@ class Servers extends BaseCommand {
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = interaction.guild === null ? (await interaction.user.createDM()).createMessageComponentCollector({ filter, idle: (20 * 1000) }) : interaction.channel.createMessageComponentCollector({ filter, idle: (20 * 1000) });
+		const collector = interaction.guild === null ? (await interaction.user.createDM()).createMessageComponentCollector({ filter, idle: 20 * 1000 }) : interaction.channel.createMessageComponentCollector({ filter, idle: 20 * 1000 });
 
 		collector.on("collect", async i => {
 			if (i.isButton()) {
@@ -119,11 +109,24 @@ function generateServersEmbeds(interaction, servers) {
 	let k = 10;
 
 	for (let i = 0; i < servers.size; i += 10) {
-		const current = servers.sort((a, b) => b.memberCount - a.memberCount).map(g => g).slice(i, k);
+		const current = servers
+			.sort((a, b) => b.memberCount - a.memberCount)
+			.map(g => g)
+			.slice(i, k);
 		let j = i;
 		k += 10;
 
-		const info = current.map(server => `${++j}. ${server.name} | ${server.memberCount} ${interaction.client.functions.getNoun(server.memberCount, interaction.translate("misc:NOUNS:MEMBERS:1"), interaction.translate("misc:NOUNS:MEMBERS:2"), interaction.translate("misc:NOUNS:MEMBERS:5"))}`).join("\n");
+		const info = current
+			.map(
+				server =>
+					`${++j}. ${server.name} | ${server.memberCount} ${interaction.client.functions.getNoun(
+						server.memberCount,
+						interaction.translate("misc:NOUNS:MEMBERS:1"),
+						interaction.translate("misc:NOUNS:MEMBERS:2"),
+						interaction.translate("misc:NOUNS:MEMBERS:5"),
+					)}`,
+			)
+			.join("\n");
 
 		const embed = new EmbedBuilder()
 			.setColor(interaction.client.config.embed.color)

@@ -77,13 +77,23 @@ class GuildMemberRemove extends BaseEvent {
 					ctx.fillText(member.user.username, canvas.width - 670, canvas.height - 250);
 
 					// Draw server name
-					ctx.font = applyText(canvas, client.translate("administration/goodbye:IMG_GOODBYE", {
-						server: member.guild.name,
-					}, guildData.language), 53, 625, "RubikMonoOne");
+					ctx.font = applyText(
+						canvas,
+						client.translate("administration/goodbye:IMG_GOODBYE", {
+							server: member.guild.name,
+						}, guildData.language),
+						53,
+						625,
+						"RubikMonoOne",
+					);
 
-					ctx.fillText(client.translate("administration/goodbye:IMG_GOODBYE", {
-						server: member.guild.name,
-					}, guildData.language), canvas.width - 700, canvas.height - 70);
+					ctx.fillText(
+						client.translate("administration/goodbye:IMG_GOODBYE", {
+							server: member.guild.name,
+						}, guildData.language),
+						canvas.width - 700,
+						canvas.height - 70,
+					);
 
 					// Draw discriminator
 					ctx.font = "35px RubikMonoOne";
@@ -91,7 +101,11 @@ class GuildMemberRemove extends BaseEvent {
 
 					// Draw membercount
 					ctx.font = "22px RubikMonoOne";
-					ctx.fillText(`${member.guild.memberCount} ${client.functions.getNoun(member.guild.memberCount, client.translate("misc:NOUNS:MEMBERS:1", null, guildData.language), client.translate("misc:NOUNS:MEMBERS:2", null, guildData.language), client.translate("misc:NOUNS:MEMBERS:5", null, guildData.language))}`, 40, canvas.height - 35);
+					ctx.fillText(
+						`${member.guild.memberCount} ${client.functions.getNoun(member.guild.memberCount, client.translate("misc:NOUNS:MEMBERS:1", null, guildData.language), client.translate("misc:NOUNS:MEMBERS:2", null, guildData.language), client.translate("misc:NOUNS:MEMBERS:5", null, guildData.language))}`,
+						40,
+						canvas.height - 35,
+					);
 
 					// Draw # for discriminator
 					ctx.fillStyle = "#FFFFFF";
@@ -115,10 +129,12 @@ class GuildMemberRemove extends BaseEvent {
 					ctx.closePath();
 					ctx.clip();
 
-					const avatar = await Canvas.loadImage(member.displayAvatarURL({
-						extension: "png",
-						size: 512,
-					}));
+					const avatar = await Canvas.loadImage(
+						member.displayAvatarURL({
+							extension: "png",
+							size: 512,
+						}),
+					);
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 
 					const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: "goodbye-image.png" });
@@ -127,8 +143,7 @@ class GuildMemberRemove extends BaseEvent {
 						content: message,
 						files: [attachment],
 					});
-				} else
-					channel.send({ content: message });
+				} else channel.send({ content: message });
 			}
 		}
 	}

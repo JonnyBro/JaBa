@@ -12,30 +12,39 @@ class Clear extends BaseCommand {
 				.setName("clear")
 				.setDescription(client.translate("moderation/clear:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("moderation/clear:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("moderation/clear:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("moderation/clear:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("moderation/clear:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
-				.addStringOption(option => option.setName("option")
-					.setDescription(client.translate("moderation/clear:OPTION"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("moderation/clear:OPTION", null, "uk-UA"),
-						"ru": client.translate("moderation/clear:OPTION", null, "ru-RU"),
-					})
-					.setRequired(true))
-				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:USER", null, "uk-UA"),
-						"ru": client.translate("common:USER", null, "ru-RU"),
-					}))
-				.addStringOption(option => option.setName("id")
-					.setDescription(client.translate("common:USER_ID"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:USER_ID", null, "uk-UA"),
-						"ru": client.translate("common:USER_ID", null, "ru-RU"),
-					})),
+				.addStringOption(option =>
+					option
+						.setName("option")
+						.setDescription(client.translate("moderation/clear:OPTION"))
+						.setDescriptionLocalizations({
+							uk: client.translate("moderation/clear:OPTION", null, "uk-UA"),
+							ru: client.translate("moderation/clear:OPTION", null, "ru-RU"),
+						})
+						.setRequired(true),
+				)
+				.addUserOption(option =>
+					option
+						.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						}),
+				)
+				.addStringOption(option =>
+					option
+						.setName("id")
+						.setDescription(client.translate("common:USER_ID"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER_ID", null, "uk-UA"),
+							ru: client.translate("common:USER_ID", null, "ru-RU"),
+						}),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -62,17 +71,10 @@ class Clear extends BaseCommand {
 			user_id = interaction.options.getString("id");
 
 		if (option === "all") {
-			const row = new ActionRowBuilder()
-				.addComponents(
-					new ButtonBuilder()
-						.setCustomId("clear_confirm_yes")
-						.setLabel(interaction.translate("common:ACCEPT"))
-						.setStyle(ButtonStyle.Danger),
-					new ButtonBuilder()
-						.setCustomId("clear_confirm_no")
-						.setLabel(interaction.translate("common:CANCEL"))
-						.setStyle(ButtonStyle.Secondary),
-				);
+			const row = new ActionRowBuilder().addComponents(
+				new ButtonBuilder().setCustomId("clear_confirm_yes").setLabel(interaction.translate("common:ACCEPT")).setStyle(ButtonStyle.Danger),
+				new ButtonBuilder().setCustomId("clear_confirm_no").setLabel(interaction.translate("common:CANCEL")).setStyle(ButtonStyle.Secondary),
+			);
 
 			await interaction.editReply({
 				content: interaction.translate("moderation/clear:ALL_CONFIRM"),
@@ -80,7 +82,7 @@ class Clear extends BaseCommand {
 			});
 
 			const filter = i => i.user.id === interaction.user.id;
-			const collector = interaction.channel.createMessageComponentCollector({ filter, idle: (15 * 1000) });
+			const collector = interaction.channel.createMessageComponentCollector({ filter, idle: 15 * 1000 });
 
 			collector.on("collect", async i => {
 				if (i.isButton()) {
@@ -132,12 +134,15 @@ class Clear extends BaseCommand {
 			if (user_id && member) return interaction.replyT("moderation/clear:REQUIRE_ID_USER", null, { edit: true });
 			if (user_id || member) messages = messages.filter(m => m.author.id === (user_id || member.id));
 
-			interaction.channel.bulkDelete(messages.filter(m => !m.pinned), true);
+			interaction.channel.bulkDelete(
+				messages.filter(m => !m.pinned),
+				true,
+			);
 
 			if (member || user_id) {
 				interaction.replyT("moderation/clear:CLEARED_MEMBER", {
 					amount: `**${option}** ${client.functions.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`,
-					user: member && member.user.getUsername() || user_id,
+					user: (member && member.user.getUsername()) || user_id,
 				}, { edit: true });
 			} else {
 				interaction.replyT("moderation/clear:CLEARED", {

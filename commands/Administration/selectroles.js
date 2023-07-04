@@ -12,52 +12,68 @@ class Selectroles extends BaseCommand {
 				.setName("selectroles")
 				.setDescription(client.translate("administration/selectroles:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("administration/selectroles:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("administration/selectroles:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("administration/selectroles:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("administration/selectroles:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
-				.addSubcommand(subcommand => subcommand.setName("message")
-					.setDescription(client.translate("administration/selectroles:MESSAGE"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("administration/selectroles:MESSAGE", null, "uk-UA"),
-						"ru": client.translate("administration/selectroles:MESSAGE", null, "ru-RU"),
-					})
-					.addStringOption(option => option.setName("text")
-						.setDescription(client.translate("common:MESSAGE"))
+				.addSubcommand(subcommand =>
+					subcommand
+						.setName("message")
+						.setDescription(client.translate("administration/selectroles:MESSAGE"))
 						.setDescriptionLocalizations({
-							"uk": client.translate("common:MESSAGE", null, "uk-UA"),
-							"ru": client.translate("common:MESSAGE", null, "ru-RU"),
+							uk: client.translate("administration/selectroles:MESSAGE", null, "uk-UA"),
+							ru: client.translate("administration/selectroles:MESSAGE", null, "ru-RU"),
 						})
-						.setRequired(true)),
+						.addStringOption(option =>
+							option
+								.setName("text")
+								.setDescription(client.translate("common:MESSAGE"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:MESSAGE", null, "uk-UA"),
+									ru: client.translate("common:MESSAGE", null, "ru-RU"),
+								})
+								.setRequired(true),
+						),
 				)
-				.addSubcommand(subcommand => subcommand.setName("addrole")
-					.setDescription(client.translate("administration/selectroles:ADDROLE"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("administration/selectroles:ADDROLE", null, "uk-UA"),
-						"ru": client.translate("administration/selectroles:ADDROLE", null, "ru-RU"),
-					})
-					.addChannelOption(option => option.setName("channel")
-						.setDescription(client.translate("common:CHANNEL"))
+				.addSubcommand(subcommand =>
+					subcommand
+						.setName("addrole")
+						.setDescription(client.translate("administration/selectroles:ADDROLE"))
 						.setDescriptionLocalizations({
-							"uk": client.translate("common:CHANNEL", null, "uk-UA"),
-							"ru": client.translate("common:CHANNEL", null, "ru-RU"),
+							uk: client.translate("administration/selectroles:ADDROLE", null, "uk-UA"),
+							ru: client.translate("administration/selectroles:ADDROLE", null, "ru-RU"),
 						})
-						.setRequired(true))
-					.addStringOption(option => option.setName("message_id")
-						.setDescription(client.translate("common:MESSAGE_ID"))
-						.setDescriptionLocalizations({
-							"uk": client.translate("common:MESSAGE_ID", null, "uk-UA"),
-							"ru": client.translate("common:MESSAGE_ID", null, "ru-RU"),
-						})
-						.setRequired(true))
-					.addRoleOption(option => option.setName("role")
-						.setDescription(client.translate("common:ROLE"))
-						.setDescriptionLocalizations({
-							"uk": client.translate("common:ROLE", null, "uk-UA"),
-							"ru": client.translate("common:ROLE", null, "ru-RU"),
-						})
-						.setRequired(true)),
+						.addChannelOption(option =>
+							option
+								.setName("channel")
+								.setDescription(client.translate("common:CHANNEL"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:CHANNEL", null, "uk-UA"),
+									ru: client.translate("common:CHANNEL", null, "ru-RU"),
+								})
+								.setRequired(true),
+						)
+						.addStringOption(option =>
+							option
+								.setName("message_id")
+								.setDescription(client.translate("common:MESSAGE_ID"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:MESSAGE_ID", null, "uk-UA"),
+									ru: client.translate("common:MESSAGE_ID", null, "ru-RU"),
+								})
+								.setRequired(true),
+						)
+						.addRoleOption(option =>
+							option
+								.setName("role")
+								.setDescription(client.translate("common:ROLE"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:ROLE", null, "uk-UA"),
+									ru: client.translate("common:ROLE", null, "ru-RU"),
+								})
+								.setRequired(true),
+						),
 				),
 			aliases: [],
 			dirname: __dirname,
@@ -123,10 +139,12 @@ class Selectroles extends BaseCommand {
 			let row = message.components[0];
 			if (!row) row = new ActionRowBuilder();
 
-			const option = [{
-				label: role.name,
-				value: role.id,
-			}];
+			const option = [
+				{
+					label: role.name,
+					value: role.id,
+				},
+			];
 
 			const menu = row.components[0];
 			if (menu) {
@@ -134,22 +152,14 @@ class Selectroles extends BaseCommand {
 					if (o.value === option[0].value) return interaction.error("administration/selectroles:ALREADY_IN_MENU");
 				}
 
-				row = ActionRowBuilder.from(row)
-					.setComponents(
-						StringSelectMenuBuilder.from(menu)
-							.setMinValues(0)
-							.setMaxValues(menu.options.length + 1)
-							.addOptions(option),
-					);
-			} else {
-				row.addComponents(
-					new StringSelectMenuBuilder()
-						.setCustomId("auto_roles")
+				row = ActionRowBuilder.from(row).setComponents(
+					StringSelectMenuBuilder.from(menu)
 						.setMinValues(0)
-						.setMaxValues(1)
-						.setPlaceholder(interaction.translate("common:AVAILABLE_OPTIONS"))
+						.setMaxValues(menu.options.length + 1)
 						.addOptions(option),
 				);
+			} else {
+				row.addComponents(new StringSelectMenuBuilder().setCustomId("auto_roles").setMinValues(0).setMaxValues(1).setPlaceholder(interaction.translate("common:AVAILABLE_OPTIONS")).addOptions(option));
 			}
 
 			message.edit({

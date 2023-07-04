@@ -12,28 +12,31 @@ class Bank extends BaseCommand {
 				.setName("bank")
 				.setDescription(client.translate("economy/bank:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("economy/bank:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("economy/bank:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("economy/bank:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("economy/bank:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addStringOption(option => option.setName("option")
-					.setDescription(client.translate("economy/bank:OPTION"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("economy/bank:OPTION", null, "uk-UA"),
-						"ru": client.translate("economy/bank:OPTION", null, "ru-RU"),
-					})
-					.setRequired(true)
-					.setChoices(
-						{ name: client.translate("economy/bank:DEPOSIT"), value: "deposit" },
-						{ name: client.translate("economy/bank:WITHDRAW"), value: "withdraw" },
-					))
-				.addStringOption(option => option.setName("credits")
-					.setDescription(client.translate("misc:OPTION_NAN_ALL"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("misc:OPTION_NAN_ALL", null, "uk-UA"),
-						"ru": client.translate("misc:OPTION_NAN_ALL", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addStringOption(option =>
+					option
+						.setName("option")
+						.setDescription(client.translate("economy/bank:OPTION"))
+						.setDescriptionLocalizations({
+							uk: client.translate("economy/bank:OPTION", null, "uk-UA"),
+							ru: client.translate("economy/bank:OPTION", null, "ru-RU"),
+						})
+						.setRequired(true)
+						.setChoices({ name: client.translate("economy/bank:DEPOSIT"), value: "deposit" }, { name: client.translate("economy/bank:WITHDRAW"), value: "withdraw" }),
+				)
+				.addStringOption(option =>
+					option
+						.setName("credits")
+						.setDescription(client.translate("misc:OPTION_NAN_ALL"))
+						.setDescriptionLocalizations({
+							uk: client.translate("misc:OPTION_NAN_ALL", null, "uk-UA"),
+							ru: client.translate("misc:OPTION_NAN_ALL", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -58,7 +61,10 @@ class Bank extends BaseCommand {
 		if (choice === "deposit") {
 			const credits = interaction.options.getString("credits").toLowerCase() === "all" ? data.memberData.money : interaction.options.getString("credits");
 			if (isNaN(credits) || credits < 1) return interaction.error("misc:OPTION_NAN_ALL");
-			if (data.memberData.money < credits) return interaction.error("economy/bank:NOT_ENOUGH_CREDIT", { money: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` });
+			if (data.memberData.money < credits)
+				return interaction.error("economy/bank:NOT_ENOUGH_CREDIT", {
+					money: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+				});
 
 			data.memberData.money -= credits;
 			data.memberData.bankSold += credits;
@@ -80,7 +86,10 @@ class Bank extends BaseCommand {
 		} else {
 			const credits = interaction.options.getString("credits") === "all" ? data.memberData.bankSold : interaction.options.getString("credits");
 			if (isNaN(credits) || credits < 1) return interaction.error("misc:OPTION_NAN_ALL");
-			if (data.memberData.bankSold < credits) return interaction.error("economy/bank:NOT_ENOUGH_BANK", { money: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}` });
+			if (data.memberData.bankSold < credits)
+				return interaction.error("economy/bank:NOT_ENOUGH_BANK", {
+					money: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+				});
 
 			const info = {
 				user: interaction.translate("economy/transactions:BANK"),

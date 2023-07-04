@@ -38,7 +38,6 @@ class messageUpdate extends BaseEvent {
 				embeds: [embed],
 			});
 		}
-
 	}
 }
 

@@ -13,8 +13,8 @@ class NSFW extends BaseCommand {
 				.setName("nsfw")
 				.setDescription(client.translate("nsfw/nsfw:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("nsfw/nsfw:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("nsfw/nsfw:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("nsfw/nsfw:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("nsfw/nsfw:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true),
 			aliases: [],
@@ -41,19 +41,15 @@ class NSFW extends BaseCommand {
 		if (interaction.guildId && !interaction.channel.nsfw) return interaction.replyT("misc:NSFW_COMMAND", null, { edit: true });
 
 		const tags = ["hentai", "ecchi", "lewdanimegirls", "hentaifemdom", "animefeets", "animebooty", "biganimetiddies", "sideoppai", "ahegao"].map(tag =>
-			JSON.parse(JSON.stringify({
-				label: tag,
-				value: tag,
-			})),
+			JSON.parse(
+				JSON.stringify({
+					label: tag,
+					value: tag,
+				}),
+			),
 		);
 
-		const row = new ActionRowBuilder()
-			.addComponents(
-				new StringSelectMenuBuilder()
-					.setCustomId("nsfw_select")
-					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
-					.addOptions(tags),
-			);
+		const row = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId("nsfw_select").setPlaceholder(client.translate("common:NOTHING_SELECTED")).addOptions(tags));
 
 		const msg = await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
@@ -63,7 +59,7 @@ class NSFW extends BaseCommand {
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = msg.createMessageComponentCollector({ filter, idle: (2 * 60 * 1000) });
+		const collector = msg.createMessageComponentCollector({ filter, idle: 2 * 60 * 1000 });
 
 		collector.on("collect", async i => {
 			if (i.isStringSelectMenu() && i.customId === "nsfw_select") {

@@ -1,0 +1,11 @@
+{
+	"arrowParens": "avoid",
+	"bracketSpacing": true,
+	"endOfLine": "lf",
+	"printWidth": 250,
+	"semi": true,
+	"tabWidth": 4,
+	"trailingComma": "all",
+	"useTabs": true,
+	"parser": "babel"
+}

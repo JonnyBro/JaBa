@@ -12,23 +12,22 @@ class Setlang extends BaseCommand {
 				.setName("setlang")
 				.setDescription(client.translate("administration/setlang:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("administration/setlang:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("administration/setlang:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("administration/setlang:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("administration/setlang:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
-				.addStringOption(option => option.setName("language")
-					.setDescription(client.translate("common:LANGUAGE"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:LANGUAGE", null, "uk-UA"),
-						"ru": client.translate("common:LANGUAGE", null, "ru-RU"),
-					})
-					.setRequired(true)
-					.setChoices(
-						{ name: "English", value: "en-US" },
-						{ name: "Русский", value: "ru-RU" },
-						{ name: "Українська", value: "uk-UA" },
-					)),
+				.addStringOption(option =>
+					option
+						.setName("language")
+						.setDescription(client.translate("common:LANGUAGE"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:LANGUAGE", null, "uk-UA"),
+							ru: client.translate("common:LANGUAGE", null, "ru-RU"),
+						})
+						.setRequired(true)
+						.setChoices({ name: "English", value: "en-US" }, { name: "Русский", value: "ru-RU" }, { name: "Українська", value: "uk-UA" }),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

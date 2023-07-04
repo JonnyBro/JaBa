@@ -12,18 +12,21 @@ class Stealemoji extends BaseCommand {
 				.setName("stealemoji")
 				.setDescription(client.translate("administration/stealemoji:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("administration/stealemoji:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("administration/stealemoji:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("administration/stealemoji:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("administration/stealemoji:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
-				.addStringOption(option => option.setName("emoji")
-					.setDescription(client.translate("common:EMOJI"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:EMOJI", null, "uk-UA"),
-						"ru": client.translate("common:EMOJI", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addStringOption(option =>
+					option
+						.setName("emoji")
+						.setDescription(client.translate("common:EMOJI"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:EMOJI", null, "uk-UA"),
+							ru: client.translate("common:EMOJI", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -51,9 +54,11 @@ class Stealemoji extends BaseCommand {
 				name: parsedEmoji.name,
 				attachment: `https://cdn.discordapp.com/emojis/${parsedEmoji.id}.${ext}`,
 			})
-			.then(emoji => interaction.success("administration/stealemoji:SUCCESS", {
-				emoji: emoji.name,
-			}, { ephemeral: true }))
+			.then(emoji =>
+				interaction.success("administration/stealemoji:SUCCESS", {
+					emoji: emoji.name,
+				}, { ephemeral: true }),
+			)
 			.catch(e => {
 				interaction.error("administration/stealemoji:ERROR", {
 					emoji: parsedEmoji.name,

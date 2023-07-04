@@ -12,24 +12,30 @@ class Pay extends BaseCommand {
 				.setName("pay")
 				.setDescription(client.translate("economy/pay:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("economy/pay:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("economy/pay:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("economy/pay:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("economy/pay:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:USER", null, "uk-UA"),
-						"ru": client.translate("common:USER", null, "ru-RU"),
-					})
-					.setRequired(true))
-				.addIntegerOption(option => option.setName("amount")
-					.setDescription(client.translate("common:INT"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:INT", null, "uk-UA"),
-						"ru": client.translate("common:INT", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addUserOption(option =>
+					option
+						.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						})
+						.setRequired(true),
+				)
+				.addIntegerOption(option =>
+					option
+						.setName("amount")
+						.setDescription(client.translate("common:INT"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:INT", null, "uk-UA"),
+							ru: client.translate("common:INT", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -55,9 +61,10 @@ class Pay extends BaseCommand {
 
 		const amount = interaction.options.getInteger("amount");
 		if (amount <= 0) return interaction.error("misc:MORE_THAN_ZERO");
-		if (amount > data.memberData.money) return interaction.error("economy/pay:ENOUGH_MONEY", {
-			amount: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDITS:1"), interaction.translate("misc:NOUNS:CREDITS:2"), interaction.translate("misc:NOUNS:CREDITS:5"))}`,
-		});
+		if (amount > data.memberData.money)
+			return interaction.error("economy/pay:ENOUGH_MONEY", {
+				amount: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDITS:1"), interaction.translate("misc:NOUNS:CREDITS:2"), interaction.translate("misc:NOUNS:CREDITS:5"))}`,
+			});
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,

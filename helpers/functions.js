@@ -18,7 +18,7 @@ module.exports = {
 	async createInvite(client, guildId) {
 		const guild = client.guilds.cache.get(guildId);
 		const member = guild.members.me;
-		const channel = guild.channels.cache.find(ch => ch.permissionsFor(member.id).has(PermissionsBitField.Flags.CreateInstantInvite) && ch.type === ChannelType.GuildText || ch.type === "GUILD_VOICE");
+		const channel = guild.channels.cache.find(ch => (ch.permissionsFor(member.id).has(PermissionsBitField.Flags.CreateInstantInvite) && ch.type === ChannelType.GuildText) || ch.type === "GUILD_VOICE");
 		if (channel) return (await channel.createInvite()).url || "No channels found or missing permissions";
 	},
 
@@ -46,7 +46,7 @@ module.exports = {
 		return array.sort(function (a, b) {
 			const x = a[key];
 			const y = b[key];
-			return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+			return x < y ? 1 : x > y ? -1 : 0;
 		});
 	},
 
@@ -59,7 +59,8 @@ module.exports = {
 		const array = [];
 		pArray.forEach(element => array.push(element));
 		let currentIndex = array.length,
-			temporaryValue, randomIndex;
+			temporaryValue,
+			randomIndex;
 
 		while (currentIndex !== 0) {
 			randomIndex = Math.floor(Math.random() * currentIndex);
@@ -82,7 +83,6 @@ module.exports = {
 	randomNum(min, max) {
 		min = Math.ceil(min);
 		max = Math.floor(max);
-
 		return Math.floor(Math.random() * (max - min + 1) + min);
 	},
 
@@ -97,10 +97,7 @@ module.exports = {
 	printDate(client, date, format = "", locale = client.defaultLanguage) {
 		const languageData = client.languages.find(language => language.name === locale);
 		if (format === "" || format === null) format = languageData.defaultMomentFormat;
-
-		return moment(new Date(date))
-			.locale(languageData.moment)
-			.format(format);
+		return moment(new Date(date)).locale(languageData.moment).format(format);
 	},
 
 	/**
@@ -115,8 +112,7 @@ module.exports = {
 	convertTime(client, time, type = false, noPrefix = false, locale = this.defaultLanguage) {
 		const languageData = client.languages.find(language => language.name === locale);
 		const m = moment(time).locale(languageData.moment);
-
-		return (type ? m.toNow(noPrefix) : m.fromNow(noPrefix));
+		return type ? m.toNow(noPrefix) : m.fromNow(noPrefix);
 	},
 
 	/**

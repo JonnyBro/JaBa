@@ -20,10 +20,8 @@ class Mee6Api {
 	 * @returns {String} ID of the guild or user.
 	 */
 	static getId(guildOrUser) {
-		if (typeof guildOrUser === "string")
-			return guildOrUser;
-		else if (typeof guildOrUser.id === "string")
-			return guildOrUser.id;
+		if (typeof guildOrUser === "string") return guildOrUser;
+		else if (typeof guildOrUser.id === "string") return guildOrUser.id;
 		else throw new Error("Invalid Id specified.");
 	}
 
@@ -35,6 +33,7 @@ class Mee6Api {
 	static async getRoleRewards(guild) {
 		const guildId = this.getId(guild);
 		const { role_rewards } = await fetchMee6(`${guildId}?limit=1`);
+
 		return role_rewards.sort((a, b) => a.rank - b.rank).map(({ rank, ...rest }) => ({ ...rest, level: rank }));
 	}
 
@@ -52,11 +51,17 @@ class Mee6Api {
 			const { id, level, username, discriminator, avatar, message_count: messageCount } = user;
 			const avatarUrl = `https://cdn.discordapp.com/avatars/${id}/${avatar}`;
 			const [userXp, levelXp, totalXp] = user.detailed_xp;
+
 			return {
-				id, level, username, discriminator, avatarUrl, messageCount,
+				id,
+				level,
+				username,
+				discriminator,
+				avatarUrl,
+				messageCount,
 				tag: `${username}#${discriminator}`,
 				xp: { userXp, levelXp, totalXp },
-				rank: (limit * page) + index + 1,
+				rank: limit * page + index + 1,
 			};
 		});
 	}
@@ -68,13 +73,16 @@ class Mee6Api {
 	 */
 	static async getLeaderboard(guild) {
 		const leaderboard = [];
-		let pageNumber = 0, page;
+		let pageNumber = 0,
+			page;
+
 		while (true) {
 			page = await this.getLeaderboardPage(guild, 1000, pageNumber);
 			leaderboard.push(...page);
 			if (page.length < 1000) break;
 			pageNumber += 1;
 		}
+
 		return leaderboard;
 	}
 
@@ -86,13 +94,17 @@ class Mee6Api {
 	 */
 	static async getUserXp(guild, user) {
 		const userId = this.getId(user);
-		let pageNumber = 0, page, userInfo;
+		let pageNumber = 0,
+			page,
+			userInfo;
+
 		while (true) {
 			page = await this.getLeaderboardPage(guild, 1000, pageNumber);
 			userInfo = page.find(u => u.id === userId);
 			if (page.length < 1000 || userInfo) break;
 			pageNumber += 1;
 		}
+
 		return userInfo;
 	}
 }

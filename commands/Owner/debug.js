@@ -12,79 +12,101 @@ class Debug extends BaseCommand {
 				.setName("debug")
 				.setDescription(client.translate("owner/debug:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("owner/debug:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("owner/debug:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("owner/debug:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("owner/debug:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addSubcommand(subcommand => subcommand.setName("set")
-					.setDescription(client.translate("owner/debug:SET"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("owner/debug:SET", null, "uk-UA"),
-						"ru": client.translate("owner/debug:SET", null, "ru-RU"),
-					})
-					.addStringOption(option => option.setName("type")
-						.setDescription(client.translate("owner/debug:TYPE"))
+				.addSubcommand(subcommand =>
+					subcommand
+						.setName("set")
+						.setDescription(client.translate("owner/debug:SET"))
 						.setDescriptionLocalizations({
-							"uk": client.translate("owner/debug:TYPE", null, "uk-UA"),
-							"ru": client.translate("owner/debug:TYPE", null, "ru-RU"),
+							uk: client.translate("owner/debug:SET", null, "uk-UA"),
+							ru: client.translate("owner/debug:SET", null, "ru-RU"),
 						})
-						.setRequired(true)
-						.setChoices(
-							{ name: client.translate("common:LEVEL"), value: "level" },
-							{ name: client.translate("common:XP"), value: "xp" },
-							{ name: client.translate("common:CREDITS"), value: "credits" },
-							{ name: client.translate("economy/transactions:BANK"), value: "bank" },
-							{ name: client.translate("common:REP"), value: "rep" },
-						))
-					.addUserOption(option => option.setName("user")
-						.setDescription(client.translate("common:USER"))
-						.setDescriptionLocalizations({
-							"uk": client.translate("common:USER", null, "uk-UA"),
-							"ru": client.translate("common:USER", null, "ru-RU"),
-						})
-						.setRequired(true))
-					.addIntegerOption(option => option.setName("int")
-						.setDescription(client.translate("common:INT"))
-						.setDescriptionLocalizations({
-							"uk": client.translate("common:INT", null, "uk-UA"),
-							"ru": client.translate("common:INT", null, "ru-RU"),
-						})
-						.setRequired(true)),
+						.addStringOption(option =>
+							option
+								.setName("type")
+								.setDescription(client.translate("owner/debug:TYPE"))
+								.setDescriptionLocalizations({
+									uk: client.translate("owner/debug:TYPE", null, "uk-UA"),
+									ru: client.translate("owner/debug:TYPE", null, "ru-RU"),
+								})
+								.setRequired(true)
+								.setChoices(
+									{ name: client.translate("common:LEVEL"), value: "level" },
+									{ name: client.translate("common:XP"), value: "xp" },
+									{ name: client.translate("common:CREDITS"), value: "credits" },
+									{ name: client.translate("economy/transactions:BANK"), value: "bank" },
+									{ name: client.translate("common:REP"), value: "rep" },
+								),
+						)
+						.addUserOption(option =>
+							option
+								.setName("user")
+								.setDescription(client.translate("common:USER"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:USER", null, "uk-UA"),
+									ru: client.translate("common:USER", null, "ru-RU"),
+								})
+								.setRequired(true),
+						)
+						.addIntegerOption(option =>
+							option
+								.setName("int")
+								.setDescription(client.translate("common:INT"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:INT", null, "uk-UA"),
+									ru: client.translate("common:INT", null, "ru-RU"),
+								})
+								.setRequired(true),
+						),
 				)
-				.addSubcommand(subcommand => subcommand.setName("add")
-					.setDescription(client.translate("owner/debug:ADD"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("owner/debug:ADD", null, "uk-UA"),
-						"ru": client.translate("owner/debug:ADD", null, "ru-RU"),
-					})
-					.addStringOption(option => option.setName("type")
-						.setDescription(client.translate("owner/debug:TYPE"))
+				.addSubcommand(subcommand =>
+					subcommand
+						.setName("add")
+						.setDescription(client.translate("owner/debug:ADD"))
 						.setDescriptionLocalizations({
-							"uk": client.translate("owner/debug:TYPE", null, "uk-UA"),
-							"ru": client.translate("owner/debug:TYPE", null, "ru-RU"),
+							uk: client.translate("owner/debug:ADD", null, "uk-UA"),
+							ru: client.translate("owner/debug:ADD", null, "ru-RU"),
 						})
-						.setRequired(true)
-						.setChoices(
-							{ name: client.translate("common:LEVEL"), value: "level" },
-							{ name: client.translate("common:XP"), value: "xp" },
-							{ name: client.translate("common:CREDITS"), value: "credits" },
-							{ name: client.translate("economy/transactions:BANK"), value: "bank" },
-							{ name: client.translate("common:REP"), value: "rep" },
-						))
-					.addUserOption(option => option.setName("user")
-						.setDescription(client.translate("common:USER"))
-						.setDescriptionLocalizations({
-							"uk": client.translate("common:USER", null, "uk-UA"),
-							"ru": client.translate("common:USER", null, "ru-RU"),
-						})
-						.setRequired(true))
-					.addIntegerOption(option => option.setName("int")
-						.setDescription(client.translate("common:INT"))
-						.setDescriptionLocalizations({
-							"uk": client.translate("common:INT", null, "uk-UA"),
-							"ru": client.translate("common:INT", null, "ru-RU"),
-						})
-						.setRequired(true)),
+						.addStringOption(option =>
+							option
+								.setName("type")
+								.setDescription(client.translate("owner/debug:TYPE"))
+								.setDescriptionLocalizations({
+									uk: client.translate("owner/debug:TYPE", null, "uk-UA"),
+									ru: client.translate("owner/debug:TYPE", null, "ru-RU"),
+								})
+								.setRequired(true)
+								.setChoices(
+									{ name: client.translate("common:LEVEL"), value: "level" },
+									{ name: client.translate("common:XP"), value: "xp" },
+									{ name: client.translate("common:CREDITS"), value: "credits" },
+									{ name: client.translate("economy/transactions:BANK"), value: "bank" },
+									{ name: client.translate("common:REP"), value: "rep" },
+								),
+						)
+						.addUserOption(option =>
+							option
+								.setName("user")
+								.setDescription(client.translate("common:USER"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:USER", null, "uk-UA"),
+									ru: client.translate("common:USER", null, "ru-RU"),
+								})
+								.setRequired(true),
+						)
+						.addIntegerOption(option =>
+							option
+								.setName("int")
+								.setDescription(client.translate("common:INT"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:INT", null, "uk-UA"),
+									ru: client.translate("common:INT", null, "ru-RU"),
+								})
+								.setRequired(true),
+						),
 				),
 			aliases: [],
 			dirname: __dirname,
@@ -121,7 +143,6 @@ class Debug extends BaseCommand {
 					id: member.id,
 					guildId: interaction.guildId,
 				});
-
 
 			switch (type) {
 				case "level": {

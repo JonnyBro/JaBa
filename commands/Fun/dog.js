@@ -13,8 +13,8 @@ class Dog extends BaseCommand {
 				.setName("dog")
 				.setDescription(client.translate("fun/dog:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("fun/dog:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("fun/dog:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("fun/dog:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("fun/dog:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true),
 			aliases: [],

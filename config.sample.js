@@ -2,7 +2,7 @@ module.exports = {
 	/* The token of your Discord Bot */
 	token: "XXXXXXXXXXX",
 	/* ID of Bot's user */
-	user: "XXXXXXXXXXX",
+	userId: "XXXXXXXXXXX",
 	/* Set to true for production */
 	production: true,
 	/* For the support server */

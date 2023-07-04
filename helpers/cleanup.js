@@ -20,7 +20,7 @@ function setDaysTimeout(callback, days) {
  */
 module.exports.init = async function (client) {
 	setDaysTimeout(async () => {
-		const timestamp = Date.now() + (29 * 24 * 60 * 60 * 1000); // 29 days
+		const timestamp = Date.now() + 29 * 24 * 60 * 60 * 1000; // 29 days
 		const members = client.membersData.find({ transactions: { $gt: [] } });
 
 		for (const member of members) {

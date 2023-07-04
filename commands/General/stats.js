@@ -12,8 +12,8 @@ class Stats extends BaseCommand {
 				.setName("stats")
 				.setDescription(client.translate("general/stats:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("general/stats:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("general/stats:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("general/stats:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("general/stats:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true),
 			aliases: [],
@@ -80,7 +80,12 @@ class Stats extends BaseCommand {
 				{
 					name: client.customEmojis.voice + " " + interaction.translate("general/stats:MUSIC_TITLE"),
 					value: interaction.translate("general/stats:MUSIC_CONTENT", {
-						count: `${client.player.nodes.cache.size} ${client.functions.getNoun(client.player.nodes.cache.size, interaction.translate("misc:NOUNS:SERVERS:1"), interaction.translate("misc:NOUNS:SERVERS:2"), interaction.translate("misc:NOUNS:SERVERS:5"))}`,
+						count: `${client.player.nodes.cache.size} ${client.functions.getNoun(
+							client.player.nodes.cache.size,
+							interaction.translate("misc:NOUNS:SERVERS:1"),
+							interaction.translate("misc:NOUNS:SERVERS:2"),
+							interaction.translate("misc:NOUNS:SERVERS:5"),
+						)}`,
 					}),
 				},
 				{
@@ -92,7 +97,7 @@ class Stats extends BaseCommand {
 					value: interaction.translate("misc:STATS_FOOTER", {
 						dashboardLink: client.config.dashboard.domain,
 						supportLink: "https://discord.gg/Ptkj2n9nzZ",
-						inviteLink: client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: [ PermissionsBitField.Flags.Administrator ] }),
+						inviteLink: client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: [PermissionsBitField.Flags.Administrator] }),
 						donateLink: "https://www.donationalerts.com/r/jonny_bro",
 						owner: client.config.owner.id,
 					}),

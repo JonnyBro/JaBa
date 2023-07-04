@@ -4,8 +4,7 @@ const mongoose = require("mongoose"),
 const genToken = () => {
 	let token = "";
 	const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzy0123456789.-_";
-	for (let i = 0; i < 32; i++)
-		token += characters.charAt(Math.floor(Math.random() * characters.length));
+	for (let i = 0; i < 32; i++) token += characters.charAt(Math.floor(Math.random() * characters.length));
 
 	return token;
 };
@@ -20,61 +19,67 @@ const userSchema = new mongoose.Schema({
 
 	registeredAt: { type: Number, default: Date.now() },
 
-	achievements: { type: Object, default: {
-		married: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 1,
+	achievements: {
+		type: Object,
+		default: {
+			married: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 1,
+				},
+			},
+			work: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 10,
+				},
+			},
+			firstCommand: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 1,
+				},
+			},
+			slots: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 3,
+				},
+			},
+			tip: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 1,
+				},
+			},
+			rep: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 20,
+				},
+			},
+			invite: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 1,
+				},
 			},
 		},
-		work: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 10,
-			},
-		},
-		firstCommand: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 1,
-			},
-		},
-		slots: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 3,
-			},
-		},
-		tip: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 1,
-			},
-		},
-		rep: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 20,
-			},
-		},
-		invite: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 1,
-			},
-		},
-	} },
+	},
 
-	cooldowns: { type: Object, default: {
-		rep: 0,
-	} },
+	cooldowns: {
+		type: Object,
+		default: {
+			rep: 0,
+		},
+	},
 
 	afk: { type: String, default: null },
 	reminds: { type: Array, default: [] },
@@ -82,7 +87,7 @@ const userSchema = new mongoose.Schema({
 	apiToken: { type: String, default: genToken() },
 });
 
-userSchema.method("getAchievements", async function() {
+userSchema.method("getAchievements", async function () {
 	const canvas = Canvas.createCanvas(1800, 250),
 		ctx = canvas.getContext("2d");
 

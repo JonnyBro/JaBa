@@ -12,18 +12,21 @@ class Volume extends BaseCommand {
 				.setName("volume")
 				.setDescription(client.translate("music/volume:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("music/volume:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("music/volume:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("music/volume:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("music/volume:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addIntegerOption(option => option.setName("int")
-					.setDescription(client.translate("common:INT"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:INT", null, "uk-UA"),
-						"ru": client.translate("common:INT", null, "ru-RU"),
-					})
-					.setRequired(true)
-					.setAutocomplete(true)),
+				.addIntegerOption(option =>
+					option
+						.setName("int")
+						.setDescription(client.translate("common:INT"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:INT", null, "uk-UA"),
+							ru: client.translate("common:INT", null, "ru-RU"),
+						})
+						.setRequired(true)
+						.setAutocomplete(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -72,8 +75,8 @@ class Volume extends BaseCommand {
 			results.slice(0, 25).map(i => ({
 				name: i,
 				value: i,
-			}),
-			));
+			})),
+		);
 	}
 }
 

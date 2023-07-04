@@ -13,17 +13,20 @@ class Minecraft extends BaseCommand {
 				.setName("minecraft")
 				.setDescription(client.translate("general/minecraft:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("general/minecraft:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("general/minecraft:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("general/minecraft:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("general/minecraft:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true)
-				.addStringOption(option => option.setName("ip")
-					.setDescription(client.translate("common:IP"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:IP", null, "uk-UA"),
-						"ru": client.translate("common:IP", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addStringOption(option =>
+					option
+						.setName("ip")
+						.setDescription(client.translate("common:IP"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:IP", null, "uk-UA"),
+							ru: client.translate("common:IP", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -77,7 +80,17 @@ class Minecraft extends BaseCommand {
 				},
 				{
 					name: interaction.translate("general/minecraft:FIELD_CONNECTED"),
-					value: `**${(res.raw.players ? res.raw.players.online : res.players.length)}** ${client.functions.getNoun((res.raw.players ? res.raw.players.online : res.players.length), interaction.translate("misc:NOUNS:PLAYERS:1"), interaction.translate("misc:NOUNS:PLAYERS:2"), interaction.translate("misc:NOUNS:PLAYERS:5"))} / **${(res.raw.players ? res.raw.players.max : res.maxplayers)}** ${client.functions.getNoun((res.raw.players ? res.raw.players.max : res.maxplayers), interaction.translate("misc:NOUNS:PLAYERS:1"), interaction.translate("misc:NOUNS:PLAYERS:2"), interaction.translate("misc:NOUNS:PLAYERS:5"))}`,
+					value: `**${res.raw.players ? res.raw.players.online : res.players.length}** ${client.functions.getNoun(
+						res.raw.players ? res.raw.players.online : res.players.length,
+						interaction.translate("misc:NOUNS:PLAYERS:1"),
+						interaction.translate("misc:NOUNS:PLAYERS:2"),
+						interaction.translate("misc:NOUNS:PLAYERS:5"),
+					)} / **${res.raw.players ? res.raw.players.max : res.maxplayers}** ${client.functions.getNoun(
+						res.raw.players ? res.raw.players.max : res.maxplayers,
+						interaction.translate("misc:NOUNS:PLAYERS:1"),
+						interaction.translate("misc:NOUNS:PLAYERS:2"),
+						interaction.translate("misc:NOUNS:PLAYERS:5"),
+					)}`,
 				},
 				{
 					name: interaction.translate("general/minecraft:FIELD_IP"),
@@ -88,7 +101,6 @@ class Minecraft extends BaseCommand {
 					name: interaction.translate("general/minecraft:FIELD_VERSION"),
 					value: res.raw.vanilla.raw.version.name,
 					inline: true,
-
 				},
 				{
 					name: interaction.translate("general/minecraft:FIELD_PING"),

@@ -12,8 +12,8 @@ class Back extends BaseCommand {
 				.setName("back")
 				.setDescription(client.translate("music/back:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("music/back:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("music/back:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("music/back:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("music/back:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
 			aliases: [],

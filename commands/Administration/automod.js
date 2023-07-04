@@ -12,25 +12,31 @@ class Automod extends BaseCommand {
 				.setName("automod")
 				.setDescription(client.translate("administration/automod:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("administration/automod:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("administration/automod:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("administration/automod:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("administration/automod:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
-				.addBooleanOption(option => option.setName("state")
-					.setDescription(client.translate("common:STATE"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:STATE", null, "uk-UA"),
-						"ru": client.translate("common:STATE", null, "ru-RU"),
-					})
-					.setRequired(true))
-				.addChannelOption(option => option.setName("channel")
-					.setDescription(client.translate("common:CHANNEL"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:CHANNEL", null, "uk-UA"),
-						"ru": client.translate("common:CHANNEL", null, "ru-RU"),
-					})
-					.addChannelTypes(ChannelType.GuildText)),
+				.addBooleanOption(option =>
+					option
+						.setName("state")
+						.setDescription(client.translate("common:STATE"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:STATE", null, "uk-UA"),
+							ru: client.translate("common:STATE", null, "ru-RU"),
+						})
+						.setRequired(true),
+				)
+				.addChannelOption(option =>
+					option
+						.setName("channel")
+						.setDescription(client.translate("common:CHANNEL"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:CHANNEL", null, "uk-UA"),
+							ru: client.translate("common:CHANNEL", null, "ru-RU"),
+						})
+						.addChannelTypes(ChannelType.GuildText),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

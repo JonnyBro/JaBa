@@ -12,8 +12,8 @@ class Stop extends BaseCommand {
 				.setName("stop")
 				.setDescription(client.translate("music/stop:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("music/stop:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("music/stop:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("music/stop:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("music/stop:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
 			aliases: [],

@@ -12,16 +12,19 @@ class Userinfo extends BaseCommand {
 				.setName("userinfo")
 				.setDescription(client.translate("general/userinfo:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("general/userinfo:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("general/userinfo:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("general/userinfo:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("general/userinfo:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:USER", null, "uk-UA"),
-						"ru": client.translate("common:USER", null, "ru-RU"),
-					})),
+				.addUserOption(option =>
+					option
+						.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						}),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -47,9 +50,11 @@ class Userinfo extends BaseCommand {
 				name: `${member.user.getUsername()} (${member.id})`,
 				iconURL: member.displayAvatarURL(),
 			})
-			.setThumbnail(member.displayAvatarURL({
-				size: 512,
-			}))
+			.setThumbnail(
+				member.displayAvatarURL({
+					size: 512,
+				}),
+			)
 			.addFields([
 				{
 					name: ":man: " + interaction.translate("common:USERNAME"),
@@ -88,9 +93,13 @@ class Userinfo extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.roles + " " + interaction.translate("common:ROLES"),
-					value: (member.roles.size > 10 ? member.roles.cache.map(r => r).slice(0, 10).join(", ") + " " + interaction.translate("general/userinfo:MORE_ROLES", {
-						count: member.roles.cache.size - 10,
-					}) : (member.roles.cache.size < 1) ? interaction.translate("general/userinfo:NO_ROLE") : member.roles.cache.map(r => r).join(", ")),
+					value:
+						member.roles.size > 10
+							? member.roles.cache.map(r => r).filter(r => r.id !== interaction.guild.roles.everyone.id).slice(0, 10).join(", ") + " " +
+						interaction.translate("general/userinfo:MORE_ROLES", {
+							count: member.roles.cache.size - 10,
+						})
+							: member.roles.cache.size < 1 ? interaction.translate("general/userinfo:NO_ROLE") : member.roles.cache.map(r => r).filter(r => r.id !== interaction.guild.roles.everyone.id).slice(0, 10).join(", "),
 					inline: true,
 				},
 			])

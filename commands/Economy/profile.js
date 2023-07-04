@@ -12,16 +12,19 @@ class Profile extends BaseCommand {
 				.setName("profile")
 				.setDescription(client.translate("economy/profile:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("economy/profile:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("economy/profile:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("economy/profile:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("economy/profile:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:USER", null, "uk-UA"),
-						"ru": client.translate("common:USER", null, "ru-RU"),
-					})),
+				.addUserOption(option =>
+					option
+						.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						}),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -46,14 +49,8 @@ class Profile extends BaseCommand {
 		const member = interaction.options.getMember("user") || interaction.member;
 		if (member.user.bot) return interaction.error("economy/profile:BOT_USER");
 
-		const memberData = (member.id === interaction.user.id ? data.memberData : await client.findOrCreateMember({
-			id: member.id,
-			guildId: interaction.guildId,
-		}));
-
-		const userData = (member.id === interaction.user.id ? data.userData : await client.findOrCreateUser({
-			id: member.id,
-		}));
+		const memberData = member.id === interaction.user.id ? data.memberData : await client.findOrCreateMember({ id: member.id, guildId: interaction.guildId });
+		const userData = member.id === interaction.user.id ? data.userData : await client.findOrCreateUser({ id: member.id });
 		if (userData.lover && !client.users.cache.find(u => u.id === userData.lover)) await client.users.fetch(userData.lover, true);
 
 		const guilds = client.guilds.cache.filter(g => g.members.cache.find(m => m.id === member.id));
@@ -107,7 +104,7 @@ class Profile extends BaseCommand {
 				},
 				{
 					name: interaction.translate("economy/profile:LEVEL"),
-					value:`**${memberData.level}**`,
+					value: `**${memberData.level}**`,
 					inline: true,
 				},
 				{
@@ -122,12 +119,12 @@ class Profile extends BaseCommand {
 				},
 				{
 					name: interaction.translate("economy/profile:BIRTHDATE"),
-					value: (!userData.birthdate ? interaction.translate("common:NOT_DEFINED") : client.functions.printDate(client, new Date(userData.birthdate))),
+					value: !userData.birthdate ? interaction.translate("common:NOT_DEFINED") : client.functions.printDate(client, new Date(userData.birthdate)),
 					inline: true,
 				},
 				{
 					name: interaction.translate("economy/profile:LOVER"),
-					value: (!userData.lover ? interaction.translate("common:NOT_DEFINED") : lover.getUsername()),
+					value: !userData.lover ? interaction.translate("common:NOT_DEFINED") : lover.getUsername(),
 					inline: true,
 				},
 				{
@@ -145,10 +142,12 @@ class Profile extends BaseCommand {
 
 		interaction.editReply({
 			embeds: [profileEmbed],
-			files: [{
-				name: "achievements.png",
-				attachment: buffer,
-			}],
+			files: [
+				{
+					name: "achievements.png",
+					attachment: buffer,
+				},
+			],
 		});
 	}
 }

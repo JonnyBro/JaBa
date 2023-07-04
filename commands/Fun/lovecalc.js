@@ -13,25 +13,29 @@ class Lovecalc extends BaseCommand {
 				.setName("lovecalc")
 				.setDescription(client.translate("fun/lovecalc:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("fun/lovecalc:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("fun/lovecalc:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("fun/lovecalc:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("fun/lovecalc:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
 				.addUserOption(option =>
-					option.setName("first_member")
+					option
+						.setName("first_member")
 						.setDescription(client.translate("common:USER"))
 						.setDescriptionLocalizations({
-							"uk": client.translate("common:USER", null, "uk-UA"),
-							"ru": client.translate("common:USER", null, "ru-RU"),
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
 						})
-						.setRequired(true))
+						.setRequired(true),
+				)
 				.addUserOption(option =>
-					option.setName("second_member")
+					option
+						.setName("second_member")
 						.setDescription(client.translate("common:USER"))
 						.setDescriptionLocalizations({
-							"uk": client.translate("common:USER", null, "uk-UA"),
-							"ru": client.translate("common:USER", null, "ru-RU"),
-						})),
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						}),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -67,11 +71,13 @@ class Lovecalc extends BaseCommand {
 			.setAuthor({
 				name: `❤️ ${interaction.translate("fun/lovecalc:DESCRIPTION")}`,
 			})
-			.setDescription(interaction.translate("fun/lovecalc:CONTENT", {
-				percent,
-				firstMember: firstMember.user.toString(),
-				secondMember: secondMember.user.toString(),
-			}))
+			.setDescription(
+				interaction.translate("fun/lovecalc:CONTENT", {
+					percent,
+					firstMember: firstMember.user.toString(),
+					secondMember: secondMember.user.toString(),
+				}),
+			)
 			.setColor(client.config.embed.color)
 			.setFooter({
 				text: client.config.embed.footer,

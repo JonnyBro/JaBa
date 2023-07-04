@@ -79,13 +79,23 @@ class GuildMemberAdd extends BaseEvent {
 					ctx.fillText(member.user.username, canvas.width - 670, canvas.height - 250);
 
 					// Draw server name
-					ctx.font = applyText(canvas, client.translate("administration/welcome:IMG_WELCOME", {
-						server: member.guild.name,
-					}, guildData.language), 53, 625, "RubikMonoOne");
+					ctx.font = applyText(
+						canvas,
+						client.translate("administration/welcome:IMG_WELCOME", {
+							server: member.guild.name,
+						}, guildData.language),
+						53,
+						625,
+						"RubikMonoOne",
+					);
 
-					ctx.fillText(client.translate("administration/welcome:IMG_WELCOME", {
-						server: member.guild.name,
-					}, guildData.language), canvas.width - 700, canvas.height - 70);
+					ctx.fillText(
+						client.translate("administration/welcome:IMG_WELCOME", {
+							server: member.guild.name,
+						}, guildData.language),
+						canvas.width - 700,
+						canvas.height - 70,
+					);
 
 					// Draw discriminator
 					ctx.font = "35px RubikMonoOne";
@@ -117,9 +127,11 @@ class GuildMemberAdd extends BaseEvent {
 					ctx.closePath();
 					ctx.clip();
 
-					const avatar = await Canvas.loadImage(member.displayAvatarURL({
-						extension: "jpg",
-					}));
+					const avatar = await Canvas.loadImage(
+						member.displayAvatarURL({
+							extension: "jpg",
+						}),
+					);
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 
 					const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: "welcome-image.png" });
@@ -128,8 +140,7 @@ class GuildMemberAdd extends BaseEvent {
 						content: message,
 						files: [attachment],
 					});
-				} else
-					channel.send({ content: message });
+				} else channel.send({ content: message });
 			}
 		}
 	}

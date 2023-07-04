@@ -12,16 +12,19 @@ class Money extends BaseCommand {
 				.setName("money")
 				.setDescription(client.translate("economy/money:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("economy/money:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("economy/money:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("economy/money:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("economy/money:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false)
-				.addUserOption(option => option.setName("user")
-					.setDescription(client.translate("common:USER"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:USER", null, "uk-UA"),
-						"ru": client.translate("common:USER", null, "ru-RU"),
-					})),
+				.addUserOption(option =>
+					option
+						.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						}),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -46,10 +49,7 @@ class Money extends BaseCommand {
 		const member = interaction.options.getMember("user") || interaction.member;
 		if (member.user.bot) return interaction.error("economy/money:BOT_USER");
 
-		const memberData = member.id === interaction.user.id ? data.memberData : await client.findOrCreateMember({
-			id: member.id,
-			guildId: interaction.guildId,
-		});
+		const memberData = member.id === interaction.user.id ? data.memberData : await client.findOrCreateMember({ id: member.id, guildId: interaction.guildId });
 
 		const guilds = client.guilds.cache.filter(g => g.members.cache.find(m => m.id === member.id));
 		let globalMoney = 0;

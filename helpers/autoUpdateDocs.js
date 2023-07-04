@@ -24,9 +24,7 @@ module.exports.update = function (client) {
 	// })
 
 	categories.sort().forEach(cat => {
-		const categoriesArray = [
-			["Название", "Описание", "Использование", "Разрешено использование"],
-		];
+		const categoriesArray = [["Название", "Описание", "Использование", "Разрешено использование"]];
 		const cmds = [...new Map(commands.filter(cmd => cmd.category === cat).map(v => [v.constructor.name, v])).values()];
 
 		text += `### ${cat} (${cmds.length} ${client.functions.getNoun(cmds.length, "команда", "команды", "команд")})\n\n`;

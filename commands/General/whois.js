@@ -13,17 +13,20 @@ class Whois extends BaseCommand {
 				.setName("whois")
 				.setDescription(client.translate("general/whois:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("general/whois:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("general/whois:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("general/whois:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("general/whois:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true)
-				.addStringOption(option => option.setName("ip")
-					.setDescription(client.translate("common:IP"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:IP", null, "uk-UA"),
-						"ru": client.translate("common:IP", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addStringOption(option =>
+					option
+						.setName("ip")
+						.setDescription(client.translate("common:IP"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:IP", null, "uk-UA"),
+							ru: client.translate("common:IP", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -51,9 +54,11 @@ class Whois extends BaseCommand {
 		if (whois.status === "fail") return interaction.editReply({ content: interaction.translate("general/whois:ERROR", { ip }) });
 
 		const embed = new EmbedBuilder()
-			.setTitle(interaction.translate("general/whois:INFO_ABOUT", {
-				ip,
-			}))
+			.setTitle(
+				interaction.translate("general/whois:INFO_ABOUT", {
+					ip,
+				}),
+			)
 			.setFooter({
 				text: client.config.embed.footer,
 			})

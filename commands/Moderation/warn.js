@@ -8,11 +8,7 @@ class Warn extends BaseCommand {
 	 */
 	constructor() {
 		super({
-			command: new ContextMenuCommandBuilder()
-				.setName("warn")
-				.setType(ApplicationCommandType.User)
-				.setDMPermission(false)
-				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages),
+			command: new ContextMenuCommandBuilder().setName("warn").setType(ApplicationCommandType.User).setDMPermission(false).setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -47,7 +43,9 @@ class Warn extends BaseCommand {
 
 		const modal = new ModalBuilder()
 			.setCustomId("warn_modal")
-			.setTitle(interaction.translate("moderation/warn:MODAL_TITLE", { nickname: member.user.getUsername() }).normalize("NFKD"));
+			.setTitle(interaction.translate("moderation/warn:MODAL_TITLE", {
+				nickname: member.user.getUsername(),
+			}).normalize("NFKD"));
 
 		const reasonInput = new TextInputBuilder()
 			.setCustomId("warn_reason")
@@ -61,15 +59,17 @@ class Warn extends BaseCommand {
 
 		await interaction.showModal(modal);
 
-		const submitted = await interaction.awaitModalSubmit({
-			time: (2 * 60 * 1000),
-			filter: i => i.user.id === interaction.member.id && i.customId === "warn_modal",
-		}).catch(() => {
-			interaction.followUp({
-				content: interaction.translate("misc:TIMED_OUT"),
-				ephemeral: true,
+		const submitted = await interaction
+			.awaitModalSubmit({
+				time: 2 * 60 * 1000,
+				filter: i => i.user.id === interaction.member.id && i.customId === "warn_modal",
+			})
+			.catch(() => {
+				interaction.followUp({
+					content: interaction.translate("misc:TIMED_OUT"),
+					ephemeral: true,
+				});
 			});
-		});
 
 		if (submitted) {
 			const reason = submitted.fields.getTextInputValue("warn_reason");
@@ -85,22 +85,21 @@ class Warn extends BaseCommand {
 				reason,
 			};
 
-			const embed = new EmbedBuilder()
-				.addFields([
-					{
-						name: interaction.translate("common:USER"),
-						value: `\`${member.user.getUsername()}\` (${member.user.toString()})`,
-					},
-					{
-						name: interaction.translate("common:MODERATOR"),
-						value: `\`${interaction.user.getUsername()}\` (${interaction.user.toString()})`,
-					},
-					{
-						name: interaction.translate("common:REASON"),
-						value: reason,
-						inline: true,
-					},
-				]);
+			const embed = new EmbedBuilder().addFields([
+				{
+					name: interaction.translate("common:USER"),
+					value: `\`${member.user.getUsername()}\` (${member.user.toString()})`,
+				},
+				{
+					name: interaction.translate("common:MODERATOR"),
+					value: `\`${interaction.user.getUsername()}\` (${interaction.user.toString()})`,
+				},
+				{
+					name: interaction.translate("common:REASON"),
+					value: reason,
+					inline: true,
+				},
+			]);
 			/*
 			if (banCount) {
 				if (sanctions >= banCount) {

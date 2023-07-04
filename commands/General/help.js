@@ -12,18 +12,20 @@ class Help extends BaseCommand {
 				.setName("help")
 				.setDescription(client.translate("general/help:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("general/help:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("general/help:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("general/help:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("general/help:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true)
 				.addStringOption(option =>
-					option.setName("command")
+					option
+						.setName("command")
 						.setDescription(client.translate("common:COMMAND"))
 						.setDescriptionLocalizations({
-							"uk": client.translate("common:COMMAND", null, "uk-UA"),
-							"ru": client.translate("common:COMMAND", null, "ru-RU"),
+							uk: client.translate("common:COMMAND", null, "uk-UA"),
+							ru: client.translate("common:COMMAND", null, "ru-RU"),
 						})
-						.setAutocomplete(true)),
+						.setAutocomplete(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -52,7 +54,7 @@ class Help extends BaseCommand {
 		if (command) {
 			if (commands.find(c => c.command.name === command).category === "Owner" && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { edit: true, ephemeral: true });
 
-			return interaction.editReply({ embeds: [ generateCommandHelp(interaction, command) ] });
+			return interaction.editReply({ embeds: [generateCommandHelp(interaction, command)] });
 		}
 
 		commands.forEach(c => {
@@ -72,13 +74,7 @@ class Help extends BaseCommand {
 			};
 		});
 
-		const row = new ActionRowBuilder()
-			.addComponents(
-				new StringSelectMenuBuilder()
-					.setCustomId("help_category_select")
-					.setPlaceholder(client.translate("common:NOTHING_SELECTED"))
-					.addOptions(categoriesRows),
-			);
+		const row = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId("help_category_select").setPlaceholder(client.translate("common:NOTHING_SELECTED")).addOptions(categoriesRows));
 
 		const msg = await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
@@ -87,19 +83,21 @@ class Help extends BaseCommand {
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = msg.createMessageComponentCollector({ filter, idle: (15 * 1000) });
+		const collector = msg.createMessageComponentCollector({ filter, idle: 15 * 1000 });
 
 		collector.on("collect", async i => {
 			if (i.isStringSelectMenu() && i.customId === "help_category_select") {
 				i.deferUpdate();
 
 				const arg = i?.values[0];
-				const categoryCommands = commands.filter(cmd => cmd.category === arg).map(c => {
-					return {
-						name: `**${c.command.name}**`,
-						value: interaction.translate(`${arg.toLowerCase()}/${c.command.name}:DESCRIPTION`),
-					};
-				});
+				const categoryCommands = commands
+					.filter(cmd => cmd.category === arg)
+					.map(c => {
+						return {
+							name: `**${c.command.name}**`,
+							value: interaction.translate(`${arg.toLowerCase()}/${c.command.name}:DESCRIPTION`),
+						};
+					});
 
 				const embed = new EmbedBuilder()
 					.setColor(client.config.embed.color)
@@ -146,14 +144,13 @@ class Help extends BaseCommand {
 			results.slice(0, 25).map(command => ({
 				name: command.command.name,
 				value: command.command.name,
-			}),
-			));
+			})),
+		);
 	}
 }
 
 function getPermName(bitfield = 0) {
-	for (const key in PermissionsBitField.Flags)
-		if (PermissionsBitField.Flags[key] === BigInt(bitfield)) return key;
+	for (const key in PermissionsBitField.Flags) if (PermissionsBitField.Flags[key] === BigInt(bitfield)) return key;
 	return null;
 }
 
@@ -161,9 +158,7 @@ function generateCommandHelp(interaction, command) {
 	const cmd = interaction.client.commands.get(command);
 	if (!cmd) return interaction.error("general/help:NOT_FOUND", { command }, { edit: true });
 
-	const usage = interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`) === "" ?
-		interaction.translate("misc:NO_ARGS")
-		: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`);
+	const usage = interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`) === "" ? interaction.translate("misc:NO_ARGS") : interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`);
 
 	const embed = new EmbedBuilder()
 		.setAuthor({

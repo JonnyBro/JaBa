@@ -13,17 +13,20 @@ class Shorturl extends BaseCommand {
 				.setName("shorturl")
 				.setDescription(client.translate("general/shorturl:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("general/shorturl:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("general/shorturl:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("general/shorturl:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("general/shorturl:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true)
-				.addStringOption(option => option.setName("url")
-					.setDescription(client.translate("common:URL"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("common:URL", null, "uk-UA"),
-						"ru": client.translate("common:URL", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addStringOption(option =>
+					option
+						.setName("url")
+						.setDescription(client.translate("common:URL"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:URL", null, "uk-UA"),
+							ru: client.translate("common:URL", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

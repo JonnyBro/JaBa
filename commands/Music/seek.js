@@ -12,16 +12,19 @@ class Seek extends BaseCommand {
 				.setName("seek")
 				.setDescription(client.translate("music/seek:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("music/seek:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("music/seek:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("music/seek:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("music/seek:DESCRIPTION", null, "ru-RU"),
 				})
-				.addIntegerOption(option => option.setName("time")
-					.setDescription(client.translate("music/seek:TIME"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("music/seek:TIME", null, "uk-UA"),
-						"ru": client.translate("music/seek:TIME", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addIntegerOption(option =>
+					option
+						.setName("time")
+						.setDescription(client.translate("music/seek:TIME"))
+						.setDescriptionLocalizations({
+							uk: client.translate("music/seek:TIME", null, "uk-UA"),
+							ru: client.translate("music/seek:TIME", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

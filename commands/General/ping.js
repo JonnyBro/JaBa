@@ -12,8 +12,8 @@ class Ping extends BaseCommand {
 				.setName("ping")
 				.setDescription(client.translate("general/ping:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("general/ping:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("general/ping:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("general/ping:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("general/ping:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true),
 			aliases: [],
@@ -44,9 +44,11 @@ class Ping extends BaseCommand {
 				name: interaction.translate("general/ping:PONG"),
 				iconURL: client.user.avatarURL(),
 			})
-			.setDescription(interaction.translate("general/ping:PING", {
-				ping: Math.round(client.ws.ping),
-			}));
+			.setDescription(
+				interaction.translate("general/ping:PING", {
+					ping: Math.round(client.ws.ping),
+				}),
+			);
 
 		interaction.reply({
 			embeds: [embed],

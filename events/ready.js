@@ -33,7 +33,7 @@ class Ready extends BaseEvent {
 
 		client.logger.log(`Loaded a total of ${commands.length} command(s).`, "ready");
 		client.logger.log(`${client.user.getUsername()}, ready to serve ${tUsers} members in ${tServers} servers.`, "ready");
-		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: [ PermissionsBitField.Flags.Administrator ] })}`, "ready");
+		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: [PermissionsBitField.Flags.Administrator] })}`, "ready");
 
 		console.timeEnd("botReady");
 

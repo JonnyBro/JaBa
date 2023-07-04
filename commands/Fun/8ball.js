@@ -12,17 +12,20 @@ class Eightball extends BaseCommand {
 				.setName("8ball")
 				.setDescription(client.translate("fun/8ball:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("fun/8ball:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("fun/8ball:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("fun/8ball:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("fun/8ball:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true)
-				.addStringOption(option => option.setName("question")
-					.setDescription(client.translate("fun/8ball:QUESTION"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("fun/8ball:QUESTION", null, "uk-UA"),
-						"ru": client.translate("fun/8ball:QUESTION", null, "ru-RU"),
-					})
-					.setRequired(true)),
+				.addStringOption(option =>
+					option
+						.setName("question")
+						.setDescription(client.translate("fun/8ball:QUESTION"))
+						.setDescriptionLocalizations({
+							uk: client.translate("fun/8ball:QUESTION", null, "uk-UA"),
+							ru: client.translate("fun/8ball:QUESTION", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,

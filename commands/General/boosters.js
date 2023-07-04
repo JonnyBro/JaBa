@@ -12,8 +12,8 @@ class Boosters extends BaseCommand {
 				.setName("boosters")
 				.setDescription(client.translate("general/boosters:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("general/boosters:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("general/boosters:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("general/boosters:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("general/boosters:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
 			aliases: [],
@@ -43,25 +43,12 @@ class Boosters extends BaseCommand {
 
 		const embeds = generateBoostersEmbeds(client, interaction, boosters, data.guildData);
 
-		const row = new ActionRowBuilder()
-			.addComponents(
-				new ButtonBuilder()
-					.setCustomId("boosters_prev_page")
-					.setStyle(ButtonStyle.Primary)
-					.setEmoji("⬅️"),
-				new ButtonBuilder()
-					.setCustomId("boosters_next_page")
-					.setStyle(ButtonStyle.Primary)
-					.setEmoji("➡️"),
-				new ButtonBuilder()
-					.setCustomId("boosters_jump_page")
-					.setStyle(ButtonStyle.Secondary)
-					.setEmoji("↗️"),
-				new ButtonBuilder()
-					.setCustomId("boosters_stop")
-					.setStyle(ButtonStyle.Danger)
-					.setEmoji("⏹️"),
-			);
+		const row = new ActionRowBuilder().addComponents(
+			new ButtonBuilder().setCustomId("boosters_prev_page").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
+			new ButtonBuilder().setCustomId("boosters_next_page").setStyle(ButtonStyle.Primary).setEmoji("➡️"),
+			new ButtonBuilder().setCustomId("boosters_jump_page").setStyle(ButtonStyle.Secondary).setEmoji("↗️"),
+			new ButtonBuilder().setCustomId("boosters_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
+		);
 
 		await interaction.editReply({
 			content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
@@ -70,7 +57,7 @@ class Boosters extends BaseCommand {
 		});
 
 		const filter = i => i.user.id === interaction.user.id;
-		const collector = interaction.guild === null ? (await interaction.user.createDM()).createMessageComponentCollector({ filter, idle: (20 * 1000) }) : interaction.channel.createMessageComponentCollector({ filter, idle: (20 * 1000) });
+		const collector = interaction.guild === null ? (await interaction.user.createDM()).createMessageComponentCollector({ filter, idle: 20 * 1000 }) : interaction.channel.createMessageComponentCollector({ filter, idle: 20 * 1000 });
 
 		collector.on("collect", async i => {
 			if (i.isButton()) {
@@ -110,7 +97,7 @@ class Boosters extends BaseCommand {
 						return res.author.id === interaction.user.id && !isNaN(res.content);
 					};
 
-					interaction.channel.awaitMessages({ filter, max: 1, time: (10 * 1000) }).then(collected => {
+					interaction.channel.awaitMessages({ filter, max: 1, time: 10 * 1000 }).then(collected => {
 						if (embeds[collected.first().content - 1]) {
 							currentPage = collected.first().content - 1;
 							interaction.editReply({
@@ -159,7 +146,10 @@ function generateBoostersEmbeds(client, interaction, boosters, guildData) {
 	let k = 10;
 
 	for (let i = 0; i < boosters.size; i += 10) {
-		const current = boosters.sort((a, b) => a.premiumSinceTimestamp - b.premiumSinceTimestamp).map(g => g).slice(i, k);
+		const current = boosters
+			.sort((a, b) => a.premiumSinceTimestamp - b.premiumSinceTimestamp)
+			.map(g => g)
+			.slice(i, k);
 		let j = i;
 		k += 10;
 

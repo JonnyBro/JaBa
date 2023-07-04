@@ -46,7 +46,7 @@ class JaBa extends Client {
 			else
 				setTimeout(() => {
 					if (m.deletable) m.delete();
-				}, (5 * 60 * 1000)); // m * s * ms
+				}, 5 * 60 * 1000); // m * s * ms
 		});
 		this.player.events.on("emptyQueue", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)));
 		this.player.events.on("emptyChannel", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.channel.guild.data.language)));
@@ -76,14 +76,17 @@ class JaBa extends Client {
 	async init() {
 		this.login(this.config.token);
 
-		mongoose.connect(this.config.mongoDB, {
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-		}).then(() => {
-			this.logger.log("Connected to the Mongodb database.", "log");
-		}).catch(err => {
-			this.logger.log(`Unable to connect to the Mongodb database. Error: ${err}`, "error");
-		});
+		mongoose
+			.connect(this.config.mongoDB, {
+				useNewUrlParser: true,
+				useUnifiedTopology: true,
+			})
+			.then(() => {
+				this.logger.log("Connected to the Mongodb database.", "log");
+			})
+			.catch(err => {
+				this.logger.log(`Unable to connect to the Mongodb database. Error: ${err}`, "error");
+			});
 
 		await this.player.extractors.loadDefault();
 
@@ -99,9 +102,7 @@ class JaBa extends Client {
 	async loadCommands(dir) {
 		const rest = new REST().setToken(this.config.token),
 			filePath = path.join(__dirname, dir),
-			folders = (await fs.readdir(filePath))
-				.map(file => path.join(filePath, file))
-				.filter(async path => (await fs.lstat(path)).isDirectory());
+			folders = (await fs.readdir(filePath)).map(file => path.join(filePath, file)).filter(async path => (await fs.lstat(path)).isDirectory());
 
 		const commands = [];
 		for (let index = 0; index < folders.length; index++) {
@@ -122,13 +123,13 @@ class JaBa extends Client {
 						const aliases = [];
 						if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0)
 							command.aliases.forEach(alias => {
-								const command_alias = (command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder) ? { ...command.command.toJSON() } : { ...command.command };
+								const command_alias = command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder ? { ...command.command.toJSON() } : { ...command.command };
 								command_alias.name = alias;
 								aliases.push(command_alias);
 								this.commands.set(alias, command);
 							});
 
-						commands.push((command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder) ? command.command.toJSON() : command.command, ...aliases);
+						commands.push(command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
 
 						if (command.onLoad || typeof command.onLoad === "function") await command.onLoad(this);
 						this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
@@ -139,17 +140,13 @@ class JaBa extends Client {
 
 		try {
 			if (this.config.production)
-				await rest.put(
-					Routes.applicationCommands(this.config.user), {
-						body: commands,
-					},
-				);
+				await rest.put(Routes.applicationCommands(this.config.userId), {
+					body: commands,
+				});
 			else
-				await rest.put(
-					Routes.applicationGuildCommands(this.config.user, this.config.support.id), {
-						body: commands,
-					},
-				);
+				await rest.put(Routes.applicationGuildCommands(this.config.userId, this.config.support.id), {
+					body: commands,
+				});
 
 			this.logger.log("Successfully registered application commands.");
 		} catch (err) {

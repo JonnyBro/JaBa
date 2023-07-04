@@ -13,8 +13,8 @@ class Crab extends BaseCommand {
 				.setName("crab")
 				.setDescription(client.translate("fun/crab:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("fun/crab:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("fun/crab:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("fun/crab:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("fun/crab:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true),
 			aliases: [],

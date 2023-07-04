@@ -12,56 +12,75 @@ class Sendmessage extends BaseCommand {
 				.setName("sendmessage")
 				.setDescription(client.translate("suncountry/sendmessage:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					"uk": client.translate("suncountry/sendmessage:DESCRIPTION", null, "uk-UA"),
-					"ru": client.translate("suncountry/sendmessage:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("suncountry/sendmessage:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("suncountry/sendmessage:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true)
-				.addSubcommand(subcommand => subcommand.setName("rpinfo")
-					.setDescription(client.translate("suncountry/sendmessage:RPINFO"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("suncountry/sendmessage:RPINFO", null, "uk-UA"),
-						"ru": client.translate("suncountry/sendmessage:RPINFO", null, "ru-RU"),
-					})
-					.addStringOption(option => option.setName("text")
-						.setDescription(client.translate("common:MESSAGE"))
+				.addSubcommand(subcommand =>
+					subcommand
+						.setName("rpinfo")
+						.setDescription(client.translate("suncountry/sendmessage:RPINFO"))
 						.setDescriptionLocalizations({
-							"uk": client.translate("common:MESSAGE", null, "uk-UA"),
-							"ru": client.translate("common:MESSAGE", null, "ru-RU"),
+							uk: client.translate("suncountry/sendmessage:RPINFO", null, "uk-UA"),
+							ru: client.translate("suncountry/sendmessage:RPINFO", null, "ru-RU"),
 						})
-						.setRequired(true))
-					.addAttachmentOption(option => option.setName("attachment")
-						.setDescription(client.translate("common:ATTACHMENT"))
-						.setDescriptionLocalizations({
-							"uk": client.translate("common:ATTACHMENT", null, "uk-UA"),
-							"ru": client.translate("common:ATTACHMENT", null, "ru-RU"),
-						})),
+						.addStringOption(option =>
+							option
+								.setName("text")
+								.setDescription(client.translate("common:MESSAGE"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:MESSAGE", null, "uk-UA"),
+									ru: client.translate("common:MESSAGE", null, "ru-RU"),
+								})
+								.setRequired(true),
+						)
+						.addAttachmentOption(option =>
+							option
+								.setName("attachment")
+								.setDescription(client.translate("common:ATTACHMENT"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:ATTACHMENT", null, "uk-UA"),
+									ru: client.translate("common:ATTACHMENT", null, "ru-RU"),
+								}),
+						),
 				)
-				.addSubcommand(subcommand => subcommand.setName("instalife")
-					.setDescription(client.translate("suncountry/sendmessage:INSTALIFE"))
-					.setDescriptionLocalizations({
-						"uk": client.translate("suncountry/sendmessage:INSTALIFE", null, "uk-UA"),
-						"ru": client.translate("suncountry/sendmessage:INSTALIFE", null, "ru-RU"),
-					})
-					.addStringOption(option => option.setName("name")
-						.setDescription(client.translate("common:USERNAME"))
+				.addSubcommand(subcommand =>
+					subcommand
+						.setName("instalife")
+						.setDescription(client.translate("suncountry/sendmessage:INSTALIFE"))
 						.setDescriptionLocalizations({
-							"uk": client.translate("common:USERNAME", null, "uk-UA"),
-							"ru": client.translate("common:USERNAME", null, "ru-RU"),
+							uk: client.translate("suncountry/sendmessage:INSTALIFE", null, "uk-UA"),
+							ru: client.translate("suncountry/sendmessage:INSTALIFE", null, "ru-RU"),
 						})
-						.setRequired(true))
-					.addStringOption(option => option.setName("text")
-						.setDescription(client.translate("common:MESSAGE"))
-						.setDescriptionLocalizations({
-							"uk": client.translate("common:MESSAGE", null, "uk-UA"),
-							"ru": client.translate("common:MESSAGE", null, "ru-RU"),
-						})
-						.setRequired(true))
-					.addAttachmentOption(option => option.setName("attachment")
-						.setDescription(client.translate("common:ATTACHMENT"))
-						.setDescriptionLocalizations({
-							"uk": client.translate("common:ATTACHMENT", null, "uk-UA"),
-							"ru": client.translate("common:ATTACHMENT", null, "ru-RU"),
-						})),
+						.addStringOption(option =>
+							option
+								.setName("name")
+								.setDescription(client.translate("common:USERNAME"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:USERNAME", null, "uk-UA"),
+									ru: client.translate("common:USERNAME", null, "ru-RU"),
+								})
+								.setRequired(true),
+						)
+						.addStringOption(option =>
+							option
+								.setName("text")
+								.setDescription(client.translate("common:MESSAGE"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:MESSAGE", null, "uk-UA"),
+									ru: client.translate("common:MESSAGE", null, "ru-RU"),
+								})
+								.setRequired(true),
+						)
+						.addAttachmentOption(option =>
+							option
+								.setName("attachment")
+								.setDescription(client.translate("common:ATTACHMENT"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:ATTACHMENT", null, "uk-UA"),
+									ru: client.translate("common:ATTACHMENT", null, "ru-RU"),
+								}),
+						),
 				),
 			aliases: [],
 			dirname: __dirname,
@@ -101,14 +120,18 @@ class Sendmessage extends BaseCommand {
 			.setImage(attachment ? attachment.url : null)
 			.setDescription(text);
 
-		channel.send({
-			content: command === "rpinfo" ? text : null,
-			files: command === "rpinfo" ? (attachment ? [{
+		const content = command === "rpinfo" ? text : null,
+			files = command === "rpinfo" ? (attachment ? [{
 				name: attachment.name,
 				attachment: attachment.url,
 			}] : null) : null,
-			embeds: command === "instalife" ? [embed] : null,
-		}).then(message => {
+			embeds = command === "instalife" ? [embed] : null;
+
+		channel.send({
+			content,
+			files,
+			embeds,
+		}) .then(message => {
 			interaction.success("suncountry/sendmessage:MESSAGE_SENT", {
 				message: message.url,
 			}, { edit: true });
