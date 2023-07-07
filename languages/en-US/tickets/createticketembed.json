@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Create a message with buttons to create tickets",
+	"DESCRIPTION": "Creates a message with buttons to create tickets",
 	"USAGE": "",
 	"EXAMPLES": "createticketembed",
 	"SUCCESS": "Post created",

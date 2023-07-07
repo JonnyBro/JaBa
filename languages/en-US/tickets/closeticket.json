@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Closes ticket",
+	"DESCRIPTION": "Closes current ticket",
 	"USAGE": "",
 	"EXAMPLES": "closeticket",
 	"CLOSE_TICKET": "Close Ticket",
