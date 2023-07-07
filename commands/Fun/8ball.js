@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Eightball extends BaseCommand {
@@ -48,13 +48,29 @@ class Eightball extends BaseCommand {
 		await interaction.deferReply();
 
 		const question = interaction.options.getString("question");
-		const answer = interaction.translate(`fun/8ball:RESPONSE_${client.functions.randomNum(1, 20)}`);
+		const embed = new EmbedBuilder()
+			.setTitle(interaction.translate("fun/8ball:DESCRIPTION"))
+			.setAuthor({
+				name: client.user.getUsername(),
+				iconURL: client.user.displayAvatarURL(),
+			})
+			.setFields(
+				{
+					name: interaction.translate("fun/8ball:QUESTION"),
+					value: question,
+				},
+				{
+					name: interaction.translate("fun/8ball:ANSWER"),
+					value: interaction.translate(`fun/8ball:RESPONSE_${client.functions.randomNum(1, 20)}`),
+				},
+			)
+			.setColor(client.config.embed.color)
+			.setFooter(client.config.embed.footer)
+			.setTimestamp();
+
 		await client.wait(5000);
 
-		interaction.replyT("fun/8ball:ANSWER", {
-			question,
-			answer,
-		}, { edit: true });
+		interaction.editReply({ embeds: [embed] });
 	}
 }
 

@@ -30,7 +30,7 @@ module.exports.init = async function (client) {
 								if (currentMonth === month && currentDay === day) {
 									const embed = new EmbedBuilder()
 										.setAuthor({
-											name: client.user.username,
+											name: client.user.getUsername(),
 											iconURL: client.user.displayAvatarURL(),
 										})
 										.setColor(client.config.embed.color)

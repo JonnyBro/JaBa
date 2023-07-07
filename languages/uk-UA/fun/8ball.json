@@ -1,9 +1,9 @@
 {
 	"DESCRIPTION": "Я говорю правду",
 	"USAGE": "[question]",
-	"QUESTION": "Питання",
 	"EXAMPLES": "8ball question:JaBa крутий?",
-	"ANSWER": "**Питання:** {{question}}\n**Відповідь:** {{answer}}",
+	"QUESTION": "Питання",
+	"ANSWER": "Відповідь",
 	"RESPONSE_1": "Безперечно",
 	"RESPONSE_2": "Вирішено",
 	"RESPONSE_3": "Ніяких сумнівів",

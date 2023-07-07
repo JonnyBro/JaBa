@@ -1,9 +1,9 @@
 {
 	"DESCRIPTION": "I tell the truth",
 	"USAGE": "[question]",
-	"QUESTION": "Question",
 	"EXAMPLES": "8ball question:Is JaBa awesome?",
-	"ANSWER": "**Question:** {{question}}\n**Answer:** {{answer}}",
+	"QUESTION": "Question",
+	"ANSWER": "Answer",
 	"RESPONSE_1": "It is certain",
 	"RESPONSE_2": "It is decidedly so",
 	"RESPONSE_3": "Without a doubt",

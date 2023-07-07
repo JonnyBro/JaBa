@@ -151,7 +151,7 @@ module.exports.load = async client => {
 					};
 				},
 			},
-			websiteName: `${client.user.username} Dashboard`,
+			websiteName: `${client.user.getUsername()} Dashboard`,
 			colorScheme: "blue",
 			supporteMail: "",
 			icons: {
