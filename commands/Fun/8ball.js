@@ -49,7 +49,6 @@ class Eightball extends BaseCommand {
 
 		const question = interaction.options.getString("question");
 		const embed = new EmbedBuilder()
-			.setTitle(interaction.translate("fun/8ball:DESCRIPTION"))
 			.setAuthor({
 				name: client.user.getUsername(),
 				iconURL: client.user.displayAvatarURL(),
