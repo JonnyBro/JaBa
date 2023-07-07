@@ -8,6 +8,10 @@
 	"MODLOGS": "Логи модерації",
 	"REPORTS": "Скарги",
 	"SUGGESTIONS": "Пропозиції",
+	"TICKETSCATEGORY": "Категорія для тікетів (Позначені іконкою папки)",
+	"TICKETS_NOT_CATEGORY": "Виберіть **категорію** для каналів",
+	"TICKETLOGS": "Логи тікетів",
+	"TRANSCRIPTIONLOGS": "Логи розшифровок",
 
 	"MONITORING_CHANNELS": "Каналы мониторинга",
 	"MESSAGEUPDATE": "Логи изменения сообщений",

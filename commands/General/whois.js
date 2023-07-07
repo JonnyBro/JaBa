@@ -59,9 +59,7 @@ class Whois extends BaseCommand {
 					ip,
 				}),
 			)
-			.setFooter({
-				text: client.config.embed.footer,
-			})
+			.setFooter(client.config.embed.footer)
 			.setColor(client.config.embed.color)
 			.addFields(
 				{ name: interaction.translate("common:IP"), value: whois.query, inline: true },

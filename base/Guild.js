@@ -43,8 +43,10 @@ module.exports = mongoose.model("Guild", new Schema({
 				messageUpdate: null,
 			},
 			tickets: {
+				count: 0,
 				ticketLogs: null,
 				transcriptionLogs: null,
+				ticketsCategory: null,
 			},
 			suggestions: null,
 			reports: null,

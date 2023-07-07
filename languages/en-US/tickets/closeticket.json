@@ -1,0 +1,13 @@
+{
+	"DESCRIPTION": "Closes ticket",
+	"USAGE": "",
+	"EXAMPLES": "closeticket",
+	"CLOSE_TICKET": "Close Ticket",
+	"TRANSCRIPT_TICKET": "Get Transcript",
+	"CLOSING_TITLE": "Ticket Closure",
+	"CLOSING_DESC": "The ticket will be closed in 5 seconds",
+	"CLOSING_BY": "Ticket closed by",
+	"CLOSING_CANCELED": "Ticket closure canceled",
+	"CLOSED_TITLE": "Ticket Closed",
+	"TRANSCRIPT": "Transcript from {{channel}}"
+}

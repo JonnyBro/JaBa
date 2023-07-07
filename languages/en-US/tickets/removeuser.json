@@ -1,0 +1,6 @@
+{
+	"DESCRIPTION": "Removes user from ticket",
+	"USAGE": "[@user]",
+	"EXAMPLES": "removeuser user:@jonny_bro",
+	"SUCCESS": "{{user}} removed from the ticket"
+}

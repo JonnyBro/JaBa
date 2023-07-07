@@ -101,9 +101,7 @@ class Help extends BaseCommand {
 
 				const embed = new EmbedBuilder()
 					.setColor(client.config.embed.color)
-					.setFooter({
-						text: client.config.embed.footer,
-					})
+					.setFooter(client.config.embed.footer)
 					.setAuthor({
 						name: interaction.translate("general/help:COMMANDS_IN", { category: arg }),
 					})
@@ -189,9 +187,7 @@ function generateCommandHelp(interaction, command) {
 			},
 		])
 		.setColor(interaction.client.config.embed.color)
-		.setFooter({
-			text: interaction.client.config.embed.footer,
-		});
+		.setFooter(interaction.client.config.embed.footer);
 
 	return embed;
 }

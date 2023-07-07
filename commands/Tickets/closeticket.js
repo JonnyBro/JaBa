@@ -39,7 +39,7 @@ class CloseTicket extends BaseCommand {
 	async execute(client, interaction, data) {
 		await interaction.deferReply();
 
-		if (!interaction.channel.name.includes("support") && !interaction.channel.name.includes("application")) return interaction.error("tickets/adduser:NOT_TICKET", null, { ephemeral: true, edit: true });
+		if (!interaction.channel.name.includes("support")) return interaction.error("tickets/adduser:NOT_TICKET", null, { ephemeral: true, edit: true });
 
 		const embed = new EmbedBuilder()
 			.setTitle(interaction.translate("tickets/closeticket:CLOSING_TITLE"))
@@ -51,14 +51,14 @@ class CloseTicket extends BaseCommand {
 				},
 				{
 					name: interaction.translate("tickets/closeticket:CLOSING_BY"),
-					value: interaction.user.getUsetname(),
+					value: interaction.user.getUsername(),
 				},
 			)
 			.setColor(client.config.embed.color)
 			.setFooter(client.config.embed.footer)
 			.setTimestamp();
 
-		const button = new ButtonBuilder().setCustomId("cancel").setLabel(interaction.translate("common:CANCEL")).setStyle(ButtonStyle.Danger);
+		const button = new ButtonBuilder().setCustomId("cancel_closing").setLabel(interaction.translate("common:CANCEL")).setStyle(ButtonStyle.Danger);
 		const row = new ActionRowBuilder().addComponents(button);
 
 		await interaction.reply({
@@ -66,7 +66,7 @@ class CloseTicket extends BaseCommand {
 			components: [row],
 		});
 
-		const filter = i => i.customId === "cancel";
+		const filter = i => i.customId === "cancel_closing";
 		const collector = interaction.channel.createMessageComponentCollector({ filter, time: 5000 });
 
 		collector.on("collect", async i => {
@@ -75,26 +75,44 @@ class CloseTicket extends BaseCommand {
 		});
 
 		collector.on("end", async (_, reason) => {
-			if (reason === "canceled") {
-				const transcriptionLogs = data.guildData.plugins.tickets.transcriptionLogs;
-				if (transcriptionLogs) interaction.guild.channels.cache.get(transcriptionLogs).send({ content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: `<#${transcriptionLogs}>` }), files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }] });
-				const reversedMessages = await interaction.channel.messages.fetch();
-
+			if (reason !== "canceled") {
+				const transcriptionLogs = data.guildData.plugins.tickets.transcriptionLogs,
+					ticketLogs = data.guildData.plugins.tickets.ticketLogs;
+				const reversedMessages = (await interaction.channel.messages.fetch()).filter(m => !m.author.bot);
 				const messages = Array.from(reversedMessages.values()).reverse();
 
-				let transcript = "";
+				let transcript = "---- TICKET CREATED ----\n";
 				messages.forEach(message => {
-					transcript += `${message.author.username}: ${message.content}\n`;
+					transcript += `[${client.functions.printDate(client, message.createdTimestamp)}] ${message.author.getUsername()}: ${message.content}\n`;
 				});
+				transcript += "---- TICKET CLOSED ----";
 
-				try {
-					await interaction.user.send({ content: `Here is the transcript for your ticket: ${interaction.channel.name}`, files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }] });
-				} catch (error) {
-					console.error(error);
-					await interaction.reply("An error occurred while trying to send the transcript to the user.");
+				if (transcriptionLogs) interaction.guild.channels.cache.get(transcriptionLogs).send({ content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: `<#${interaction.channelId}>` }), files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }] });
+
+				if (ticketLogs) {
+					const logChannel = interaction.guild.channels.cache.get(ticketLogs);
+					const logEmbed = new EmbedBuilder()
+						.setTitle(interaction.translate("tickets/createticketembed:TICKET_CLOSED_TITLE"))
+						.setDescription(`${interaction.user.toString()} (${interaction.channel.toString()})`)
+						.setColor(client.config.embed.color)
+						.setFooter(client.config.embed.footer)
+						.setTimestamp();
+
+					logChannel.send({ embeds: [logEmbed] });
 				}
 
-				await interaction.channel.delete();
+				interaction.channel.send("Closed!");
+
+				try {
+					await interaction.user.send({
+						content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: interaction.channel.name }),
+						files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }],
+					});
+				} catch (e) {
+					await interaction.reply({ content: interaction.translate("misc:CANT_DM"), ephemeral: true });
+				}
+
+				await interaction.channel.permissionOverwrites.edit(interaction.member, { ViewChannel: false, SendMessages: null });
 			}
 		});
 
@@ -108,7 +126,7 @@ class CloseTicket extends BaseCommand {
 				},
 				{
 					name: interaction.translate("tickets/closeticket:CLOSING_BY"),
-					value: interaction.user.getUsetname(),
+					value: interaction.user.getUsername(),
 				},
 			)
 			.setColor(client.config.embed.color)

@@ -79,9 +79,7 @@ class Lovecalc extends BaseCommand {
 				}),
 			)
 			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.config.embed.footer,
-			});
+			.setFooter(client.config.embed.footer);
 
 		interaction.reply({
 			embeds: [embed],

@@ -45,9 +45,7 @@ class Stats extends BaseCommand {
 
 		const statsEmbed = new EmbedBuilder()
 			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.config.embed.footer,
-			})
+			.setFooter(client.config.embed.footer)
 			.setAuthor({
 				name: interaction.translate("common:STATS"),
 			})

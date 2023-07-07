@@ -55,9 +55,7 @@ class Emoji extends BaseCommand {
 				}),
 			})
 			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.config.embed.footer,
-			})
+			.setFooter(client.config.embed.footer)
 			.addFields([
 				{
 					name: interaction.translate("common:NAME"),

@@ -30,7 +30,7 @@ class messageUpdate extends BaseEvent {
 					iconURL: newMessage.author.displayAvatarURL(),
 				})
 				.setColor(client.config.embed.color)
-				.setFooter({ text: client.config.embed.footer })
+				.setFooter(client.config.embed.footer)
 				.setTitle(`${newMessage.author.getUsername()} edited a message!`)
 				.setDescription(`Old Message: \`\`\`${oldMessage.content}\`\`\`\nNew Message: \`\`\`${newMessage.content}\`\`\`\nJump to message: ${newMessage.url}`);
 

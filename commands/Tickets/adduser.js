@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
-class Adduser extends BaseCommand {
+class AddUser extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../../base/JaBa")} client
@@ -52,7 +52,7 @@ class Adduser extends BaseCommand {
 		const member = interaction.options.getMember("user");
 
 		if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true, edit: true });
-		if (!interaction.channel.name.includes("support") && !interaction.channel.name.includes("application")) return interaction.error("tickets/adduser:NOT_TICKET", null, { ephemeral: true, edit: true });
+		if (!interaction.channel.name.includes("support")) return interaction.error("tickets/adduser:NOT_TICKET", null, { ephemeral: true, edit: true });
 
 		await interaction.channel.permissionOverwrites.edit(member, { ViewChannel: true, SendMessages: true });
 
@@ -62,4 +62,4 @@ class Adduser extends BaseCommand {
 	}
 }
 
-module.exports = Adduser;
+module.exports = AddUser;

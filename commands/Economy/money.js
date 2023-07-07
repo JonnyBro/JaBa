@@ -86,9 +86,7 @@ class Money extends BaseCommand {
 				},
 			])
 			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.config.embed.footer,
-			});
+			.setFooter(client.config.embed.footer);
 		interaction.editReply({
 			embeds: [embed],
 		});

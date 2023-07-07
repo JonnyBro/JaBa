@@ -1,0 +1,15 @@
+{
+	"DESCRIPTION": "Create a message with buttons to create tickets",
+	"USAGE": "",
+	"EXAMPLES": "createticketembed",
+	"SUCCESS": "Post created",
+
+	"TICKET_TITLE": "Create a ticket",
+	"TICKET_DESC": "Create a ticket by clicking a button",
+	"TICKET_SUPPORT": "Support",
+	"TICKET_CREATED_TITLE": "Ticket created",
+	"TICKET_CREATED_DESC": "You can click the button below if you want to close it",
+	"TICKET_CLOSED_TITLE": "Ticket closed",
+	"NO_CATEGORY": "Please select a category for tickets before using this command (</config set:1029832475263909920>)",
+	"TICKET_CREATED": "Your ticket ({{channel}}) has been created, please wait for a response from the administration"
+}

@@ -40,9 +40,8 @@ module.exports.init = function (client) {
 								},
 							])
 							.setColor(client.config.embed.color)
-							.setFooter({
-								text: client.config.embed.footer,
-							});
+							.setFooter(client.config.embed.footer);
+
 						dUser.send({
 							embeds: [embed],
 						});

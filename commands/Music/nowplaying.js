@@ -88,9 +88,7 @@ class Nowplaying extends BaseCommand {
 				},
 			])
 			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.config.embed.footer,
-			})
+			.setFooter(client.config.embed.footer)
 			.setTimestamp();
 
 		interaction.editReply({

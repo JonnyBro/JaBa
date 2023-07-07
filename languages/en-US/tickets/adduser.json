@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Adds user to ticket",
+	"USAGE": "[@user]",
+	"EXAMPLES": "adduser user:@jonny_bro",
+	"NOT_TICKET": "This channel is not a ticket",
+	"SUCCESS": "{{user}} added to the ticket"
+}

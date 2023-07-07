@@ -21,7 +21,7 @@ class guildBanAdd extends BaseEvent {
 				iconURL: ban.guild.iconURL(),
 			})
 			.setColor(client.config.embed.color)
-			.setFooter({ text: client.config.embed.footer })
+			.setFooter(client.config.embed.footer)
 			.setDescription(`You were banned from **${ban.guild.name}**!\nReason: **${ban.reason || "Not specified"}**`);
 
 		ban.user.send({

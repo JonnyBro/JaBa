@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField, ChannelType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Config extends BaseCommand {
@@ -47,6 +47,9 @@ class Config extends BaseCommand {
 									{ name: client.translate("administration/config:MODLOGS"), value: "modlogs" },
 									{ name: client.translate("administration/config:REPORTS"), value: "reports" },
 									{ name: client.translate("administration/config:SUGGESTIONS"), value: "suggestions" },
+									{ name: client.translate("administration/config:TICKETSCATEGORY"), value: "tickets.ticketsCategory" },
+									{ name: client.translate("administration/config:TICKETLOGS"), value: "tickets.ticketLogs" },
+									{ name: client.translate("administration/config:TRANSCRIPTIONLOGS"), value: "tickets.transcriptionLogs" },
 									{ name: client.translate("administration/config:MESSAGEUPDATE"), value: "monitoring.messageUpdate" },
 								)
 								.setRequired(true),
@@ -101,9 +104,7 @@ class Config extends BaseCommand {
 					iconURL: interaction.guild.iconURL(),
 				})
 				.setColor(client.config.embed.color)
-				.setFooter({
-					text: client.config.embed.footer,
-				})
+				.setFooter(client.config.embed.footer)
 				.addFields([
 					{
 						name: interaction.translate("administration/config:WELCOME_TITLE"),
@@ -155,10 +156,13 @@ class Config extends BaseCommand {
 					{
 						name: interaction.translate("administration/config:SPECIAL_CHANNELS"),
 						value:
-							`${interaction.translate("administration/config:SUGGESTIONS")}: ${guildData.plugins.suggestions ? `<#${guildData.plugins.suggestions}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
-							`${interaction.translate("administration/config:REPORTS")}: ${guildData.plugins.reports ? `<#${guildData.plugins.reports}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:BIRTHDAYS")}: ${guildData.plugins.birthdays ? `<#${guildData.plugins.birthdays}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}` +
 							`${interaction.translate("administration/config:MODLOGS")}: ${guildData.plugins.modlogs ? `<#${guildData.plugins.modlogs}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
-							`${interaction.translate("administration/config:BIRTHDAYS")}: ${guildData.plugins.birthdays ? `<#${guildData.plugins.birthdays}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}`,
+							`${interaction.translate("administration/config:REPORTS")}: ${guildData.plugins.reports ? `<#${guildData.plugins.reports}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:SUGGESTIONS")}: ${guildData.plugins.suggestions ? `<#${guildData.plugins.suggestions}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:TICKETSCATEGORY")}: ${guildData.plugins.tickets.ticketsCategory ? `<#${guildData.plugins.tickets.ticketsCategory}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:TICKETLOGS")}: ${guildData.plugins.tickets.ticketLogs ? `<#${guildData.plugins.tickets.ticketLogs}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:TRANSCRIPTIONLOGS")}: ${guildData.plugins.tickets.transcriptionLogs ? `<#${guildData.plugins.tickets.transcriptionLogs}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n`,
 					},
 					{
 						name: interaction.translate("administration/config:DASHBOARD_TITLE"),
@@ -185,14 +189,18 @@ class Config extends BaseCommand {
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
  * @param {String} setting
  * @param {Boolean} state
- * @param {import("discord.js").GuildTextBasedChannel} channel
+ * @param {import("discord.js").GuildTextBasedChannel | import("discord.js").CategoryChannel} channel
  * @param {import("../../base/Guild")} guildData
  * @returns
  */
 async function changeSetting(interaction, setting, state, channel, guildData) {
+	const settingSplitted = setting.split(".");
+
+	if (settingSplitted.length === 2 && guildData.plugins[settingSplitted[0]] === undefined) guildData.plugins[settingSplitted[0]] = {};
+
 	if (!state) {
-		guildData.plugins[setting] = null;
-		guildData.markModified(`plugins.${setting}`);
+		guildData.plugins[settingSplitted[0]][settingSplitted[1]] = null;
+		guildData.markModified("plugins");
 		await guildData.save();
 
 		return interaction.reply({
@@ -200,18 +208,20 @@ async function changeSetting(interaction, setting, state, channel, guildData) {
 			ephemeral: true,
 		});
 	} else {
+		if (settingSplitted[1] === "ticketsCategory" && channel.type !== ChannelType.GuildCategory) return interaction.reply({ content: interaction.translate("administration/config:TICKETS_NOT_CATEGORY"), ephemeral: true });
+
 		if (channel) {
-			guildData.plugins[setting] = channel.id;
-			guildData.markModified(`plugins.${setting}`);
+			guildData.plugins[settingSplitted[0]][settingSplitted[1]] = channel.id;
+			guildData.markModified("plugins");
 			await guildData.save();
 
 			return interaction.reply({
-				content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: **${interaction.translate("common:ENABLED")}** (${channel.toString()})`,
+				content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`)}: **${interaction.translate("common:ENABLED")}** (${channel.toString()})`,
 				ephemeral: true,
 			});
 		} else
 			return interaction.reply({
-				content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: ${
+				content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`)}: ${
 					guildData.plugins[setting] ? `**${interaction.translate("common:ENABLED")}** (<#${guildData.plugins[setting]}>)` : `**${interaction.translate("common:DISABLED")}**`
 				}`,
 				ephemeral: true,

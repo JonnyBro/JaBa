@@ -74,9 +74,7 @@ class Suggest extends BaseCommand {
 				},
 			])
 			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.config.embed.footer,
-			});
+			.setFooter(client.config.embed.footer);
 
 		const success = parseEmoji(client.customEmojis.cool).id;
 		const error = parseEmoji(client.customEmojis.notcool).id;

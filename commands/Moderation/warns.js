@@ -62,9 +62,7 @@ class Warns extends BaseCommand {
 				iconURL: member.displayAvatarURL(),
 			})
 			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.config.embed.footer,
-			});
+			.setFooter(client.config.embed.footer);
 
 		if (memberData.sanctions.length === 0) {
 			embed.setDescription(

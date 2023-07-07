@@ -54,9 +54,7 @@ class Achievements extends BaseCommand {
 				name: interaction.translate("economy/achievements:TITLE"),
 			})
 			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.config.embed.footer,
-			});
+			.setFooter(client.config.embed.footer);
 
 		embed.addFields([
 			{

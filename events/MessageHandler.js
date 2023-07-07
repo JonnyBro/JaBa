@@ -29,7 +29,7 @@ class MessageCreate extends BaseEvent {
 
 		if (message.guild && !message.member) await message.guild.members.fetch(message.author.id);
 		if (message.guild) {
-			const guildData = await client.findOrCreateGuild({ id: message.guild.id });
+			const guildData = await client.findOrCreateGuild({ id: message.guildId });
 			const memberData = await client.findOrCreateMember({ id: message.author.id, guildId: message.guild.id });
 
 			message.guild.data = data.guildData = guildData;
@@ -92,7 +92,7 @@ class MessageCreate extends BaseEvent {
 				});
 			}
 
-			if (data.guildData.plugins.automod.enabled && !data.guildData.plugins.automod.ignored.includes(message.channel.id))
+			if (data.guildData.plugins.automod.enabled && !data.guildData.plugins.automod.ignored.includes(message.channelId))
 				if (/(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(message.content))
 					if (!message.channel.permissionsFor(message.member).has(PermissionsBitField.Flags.ManageMessages)) {
 						await message.error("administration/automod:DELETED", null, { mention: true });

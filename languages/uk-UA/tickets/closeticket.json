@@ -1,0 +1,13 @@
+{
+	"DESCRIPTION": "Закрити тікет",
+	"USAGE": "",
+	"EXAMPLES": "closeticket",
+	"CLOSE_TICKET": "Закрити тікет",
+	"TRANSCRIPT_TICKET": "Отримати розшифровку",
+	"CLOSING_TITLE": "Закриття квитка",
+	"CLOSING_DESC": "Тікет буде закрито через 5 секунд",
+	"CLOSING_BY": "Тікет закрито користувачем",
+	"CLOSING_CANCELED": "Скасування закриття квитка",
+	"CLOSED_TITLE": "Тікет закрито",
+	"TRANSCRIPT": "Копія повідомлень з {{channel}}"
+}

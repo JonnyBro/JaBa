@@ -130,9 +130,7 @@ function generateServersEmbeds(interaction, servers) {
 
 		const embed = new EmbedBuilder()
 			.setColor(interaction.client.config.embed.color)
-			.setFooter({
-				text: interaction.client.config.embed.footer,
-			})
+			.setFooter(interaction.client.config.embed.footer)
 			.setTitle(interaction.translate("owner/servers:SERVERS_LIST"))
 			.setDescription(info)
 			.setTimestamp();

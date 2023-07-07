@@ -24,7 +24,9 @@ module.exports = {
 	/* For the embeds (embeded messages) */
 	embed: {
 		color: "#0091fc", // The default color for the embeds
-		footer: "Bot | v" + require("./package.json").version, // And the default footer for the embeds
+		footer: {
+			text: "Bot | v" + require("./package.json").version,
+		}, // And the default footer for the embeds
 	},
 	/* Bot's owner informations */
 	owner: {

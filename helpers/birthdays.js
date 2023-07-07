@@ -34,9 +34,7 @@ module.exports.init = async function (client) {
 											iconURL: client.user.displayAvatarURL(),
 										})
 										.setColor(client.config.embed.color)
-										.setFooter({
-											text: client.config.embed.footer,
-										})
+										.setFooter(client.config.embed.footer)
 										.addFields([
 											{
 												name: client.translate("economy/birthdate:HAPPY_BIRTHDAY"),

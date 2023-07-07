@@ -156,10 +156,8 @@ function generateBoostersEmbeds(client, interaction, boosters, guildData) {
 		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: **${client.functions.printDate(client, member.premiumSince, null, guildData.language)}**`).join("\n");
 
 		const embed = new EmbedBuilder()
-			.setColor(interaction.client.config.embed.color)
-			.setFooter({
-				text: interaction.client.config.embed.footer,
-			})
+			.setColor(client.config.embed.color)
+			.setFooter(client.config.embed.footer)
 			.setTitle(interaction.translate("general/boosters:BOOSTERS_LIST"))
 			.setDescription(info)
 			.setTimestamp();

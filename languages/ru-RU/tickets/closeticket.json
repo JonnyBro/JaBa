@@ -2,6 +2,8 @@
 	"DESCRIPTION": "Закрыть тикет",
 	"USAGE": "",
 	"EXAMPLES": "closeticket",
+	"CLOSE_TICKET": "Закрыть тикет",
+	"TRANSCRIPT_TICKET": "Получить расшифровку",
 	"CLOSING_TITLE": "Закрытие тикета",
 	"CLOSING_DESC": "Тикет закроется через 5 секунд",
 	"CLOSING_BY": "Тикет закрыл",

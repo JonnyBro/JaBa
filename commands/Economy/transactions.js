@@ -58,9 +58,7 @@ class Transactions extends BaseCommand {
 				iconURL: interaction.member.displayAvatarURL(),
 			})
 			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.config.embed.footer,
-			});
+			.setFooter(client.config.embed.footer);
 
 		const transactions = data.memberData.transactions,
 			sortedTransactions = [[], []];

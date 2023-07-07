@@ -57,9 +57,7 @@ class Checkjar extends BaseCommand {
 
 		const embed = new EmbedBuilder()
 			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.config.embed.footer,
-			})
+			.setFooter(client.config.embed.footer)
 			.setTimestamp()
 			.setDescription(`Текущий баланс: **${jar.balance / Math.pow(10, 2)}** грн\nТребуется на след. месяц: **379,18** грн (по курсу евро на 02.07.2023).\nЗдесь указаны последние 10 транзакций.`);
 

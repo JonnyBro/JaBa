@@ -8,6 +8,10 @@
 	"MODLOGS": "Moderation Logs",
 	"REPORTS": "Reports",
 	"SUGGESTIONS": "Suggestions",
+	"TICKETSCATEGORY": "Category For Tickets (They have folder icon)",
+	"TICKETS_NOT_CATEGORY": "Please select a **categry** channel",
+	"TICKETLOGS": "Tickets Logs",
+	"TRANSCRIPTIONLOGS": "Transcripts Logs",
 
 	"MONITORING_CHANNELS": "Monitoring Channels",
 	"MESSAGEUPDATE": "Message Update Logs",

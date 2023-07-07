@@ -1,35 +1,65 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
+const BaseCommand = require("../../base/BaseCommand");
 
-module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('removeuser')
-		.setDescription('Remove a user from a ticket')
-        .addMentionableOption(option =>
-            option.setName('user')
-                .setDescription('The user to remove')
-                .setRequired(true))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
-	async execute(interaction) {
-        try {
-            const user = interaction.options.getMentionable('user');
-            const currentChannel = interaction.channel;
+class RemoveUser extends BaseCommand {
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	constructor(client) {
+		super({
+			command: new SlashCommandBuilder()
+				.setName("removeuser")
+				.setDescription(client.translate("tickets/removeuser:DESCRIPTION"))
+				.setDescriptionLocalizations({
+					uk: client.translate("tickets/removeuser:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("tickets/removeuser:DESCRIPTION", null, "ru-RU"),
+				})
+				.setDMPermission(false)
+				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
+				.addUserOption(option =>
+					option
+						.setName("user")
+						.setDescription(client.translate("common:USER"))
+						.setDescriptionLocalizations({
+							uk: client.translate("common:USER", null, "uk-UA"),
+							ru: client.translate("common:USER", null, "ru-RU"),
+						})
+						.setRequired(true),
+				),
+			aliases: [],
+			dirname: __dirname,
+			ownerOnly: false,
+		});
+	}
 
-            if (currentChannel) {
-                if (!interaction.channel.name.includes('support') && !interaction.channel.name.includes('application')) {
-                    interaction.reply('This command can only be used in a ticket channel.');
-                    return;
-                }
-                const member = await interaction.guild.members.fetch(user.id);
-                await interaction.channel.permissionOverwrites.edit(member, { ViewChannel: false });
-                interaction.reply(`Removed ${user} to the ticket.`);
-            }
-            else {
-                interaction.reply('This channel is not a ticket.');
-            }
-        }
-        catch (error) {
-            console.log(error);
-            interaction.reply('Error adding user to ticket.');
-        }
-	},
-};
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 */
+	async onLoad() {
+		//...
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Object} data
+	 */
+	async execute(client, interaction) {
+		await interaction.deferReply();
+
+		const member = interaction.options.getMember("user");
+
+		if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true, edit: true });
+		if (!interaction.channel.name.includes("support")) return interaction.error("tickets/adduser:NOT_TICKET", null, { ephemeral: true, edit: true });
+
+		await interaction.channel.permissionOverwrites.edit(member, { ViewChannel: false, SendMessages: false });
+
+		interaction.success("tickets/removeuseruser:SUCCESS", {
+			user: member.user.toString(),
+		}, { edit: true });
+	}
+}
+
+module.exports = RemoveUser;

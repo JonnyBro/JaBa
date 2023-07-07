@@ -37,9 +37,7 @@ class Ping extends BaseCommand {
 	async execute(client, interaction) {
 		const embed = new EmbedBuilder()
 			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.config.embed.footer,
-			})
+			.setFooter(client.config.embed.footer)
 			.setAuthor({
 				name: interaction.translate("general/ping:PONG"),
 				iconURL: client.user.avatarURL(),

@@ -1,0 +1,6 @@
+{
+	"DESCRIPTION": "Убрать пользователя из тикета",
+	"USAGE": "[@user]",
+	"EXAMPLES": "removeuser user:@jonny_bro",
+	"SUCCESS": "{{user}} убран из тикета"
+}

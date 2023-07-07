@@ -70,9 +70,7 @@ class NSFW extends BaseCommand {
 
 				const embed = new EmbedBuilder()
 					.setColor(client.config.embed.color)
-					.setFooter({
-						text: client.config.embed.footer,
-					})
+					.setFooter(client.config.embed.footer)
 					.setTitle(res.title)
 					.setDescription(`${interaction.translate("fun/memes:SUBREDDIT")}: **${res.subreddit}**\n${interaction.translate("common:AUTHOR")}: **${res.author}**\n${interaction.translate("fun/memes:UPS")}: **${res.ups}**`)
 					.setImage(res.url)

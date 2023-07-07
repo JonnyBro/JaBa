@@ -109,9 +109,7 @@ class Minecraft extends BaseCommand {
 			])
 			.setColor(client.config.embed.color)
 			.setThumbnail(`https://eu.mc-api.net/v3/server/favicon/${ip}`)
-			.setFooter({
-				text: client.config.embed.footer,
-			});
+			.setFooter(client.config.embed.footer);
 
 		interaction.editReply({
 			embeds: [embed],

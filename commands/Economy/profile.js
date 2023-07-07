@@ -133,9 +133,7 @@ class Profile extends BaseCommand {
 				},
 			])
 			.setColor(client.config.embed.color)
-			.setFooter({
-				text: client.config.embed.footer,
-			})
+			.setFooter(client.config.embed.footer)
 			.setTimestamp();
 
 		const buffer = await userData.getAchievements();
