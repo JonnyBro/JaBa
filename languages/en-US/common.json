@@ -60,6 +60,7 @@
 	"STATUS_IDLE": "Idle",
 	"STATUS_OFFLINE": "Offline",
 	"STATUS_ONLINE": "Online",
+	"TICKET": "Ticket",
 	"UNKNOWN": "Unknown",
 	"USER": "User",
 	"USERNAME": "Username",

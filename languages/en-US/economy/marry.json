@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Marry the one you love",
 	"USAGE": "[@user]",
-	"EXAMPLES": "marry user:@Jonny_Bro#4226",
+	"EXAMPLES": "marry user:@jonny_bro",
 	"BOT_USER": "Bots are forever alone ;(",
 	"ALREADY_MARRIED": "You are already married! You can divorce using the `divorce` command",
 	"ALREADY_MARRIED_USER": "You're too late! {{user}} is already married",

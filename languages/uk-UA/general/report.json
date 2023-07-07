@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Надіслати скаргу до спеціального каналу",
 	"USAGE": "[@user] (message)",
-	"EXAMPLES": "report user:@Jonny_Bro#4226 message:Порушення правил",
+	"EXAMPLES": "report user:@jonny_bro message:Порушення правил",
 	"MISSING_CHANNEL": "Канал для скарг не налаштований",
 	"INVALID_USER": "Ви не можете поскаржитися на себе",
 	"SUCCESS": "Ваша скарга надіслана в {{channel}}",

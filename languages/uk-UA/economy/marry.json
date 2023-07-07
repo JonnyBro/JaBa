@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Одружуйтеся з тим, кого любите",
 	"USAGE": "[@user]",
-	"EXAMPLES": "marry user:@Jonny_Bro#4226",
+	"EXAMPLES": "marry user:@jonny_bro",
 	"BOT_USER": "Боти завжди самотні ;(",
 	"ALREADY_MARRIED": "Ви вже одружені! Ви можете розвести за допомогою команди `divorce`",
 	"ALREADY_MARRIED_USER": "Ви запізнилися! {{user}} вже одружений",

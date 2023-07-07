@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Shows user information",
 	"USAGE": "(@user)",
-	"EXAMPLES": "userinfo\nuserinfo user:@Jonny_Bro#4226",
+	"EXAMPLES": "userinfo\nuserinfo user:@jonny_bro",
 	"CUSTOM": "Custom Status",
 	"NO_ACTIVITY": "Not playing",
 	"NO_ROLE": "No role",

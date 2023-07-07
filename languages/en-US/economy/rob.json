@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Attempts to rob a user",
 	"USAGE": "[@user] [amount]",
-	"EXAMPLES": "rob user:@Jonny_Bro#4226 amount:100",
+	"EXAMPLES": "rob user:@jonny_bro amount:100",
 	"BOT_USER": "You cannot rob a bot",
 	"YOURSELF": "You cannot rob yourself",
 	"NOT_ENOUGH_AUTHOR": "You must have at least {{moneyMin}} to rob this user (you currently have {{moneyCurrent}})",

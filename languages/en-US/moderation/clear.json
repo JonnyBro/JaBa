@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Clears messages in a channel",
 	"USAGE": "[option] (@user)",
-	"EXAMPLES": "clear option:10\nclear option:10 user:@Jonny_Bro#4226\nclear option:all",
+	"EXAMPLES": "clear option:10\nclear option:10 user:@jonny_bro\nclear option:all",
 	"OPTION": "Integer / all",
 	"REQUIRE_ID_USER": "Specify a user or ID",
 	"ALL_CONFIRM": "**All messages in the channel will be deleted! Are you sure?**",

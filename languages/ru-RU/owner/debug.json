@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Позволяет изменять данные пользователя",
 	"USAGE": "[set/add] [type] [@user] [int]",
-	"EXAMPLES": "debug set type:Уровень user:@Jonny_Bro#4226 int:100",
+	"EXAMPLES": "debug set type:Уровень user:@jonny_bro int:100",
 	"TYPE": "Тип данных",
 	"SET": "Установить значение",
 	"ADD": "Добавить к значению",

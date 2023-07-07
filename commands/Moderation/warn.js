@@ -34,7 +34,7 @@ class Warn extends BaseCommand {
 
 		if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
 		if (member.id === interaction.member.id) return interaction.error("moderation/warn:YOURSELF", null, { ephemeral: true });
-		if (interaction.guild.ownerId !== interaction.member.id && !(moderationPosition > memberPosition)) return interaction.error("moderation/ban:SUPERIOR", null, { ephemeral: true });
+		if (interaction.guild.ownerId !== interaction.member.id && !(moderationPosition > memberPosition)) return interaction.error("moderation/warn:SUPERIOR", null, { ephemeral: true });
 
 		const memberData = await client.findOrCreateMember({
 			id: member.id,

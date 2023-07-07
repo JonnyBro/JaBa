@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показати список досягнень користувача",
 	"USAGE": "(@user)",
-	"EXAMPLES": "achievements\nachievements user:@Jonny_Bro#4226",
+	"EXAMPLES": "achievements\nachievements user:@jonny_bro",
 	"SEND_CMD": "Використовуйте свою першу команду",
 	"CLAIM_SALARY": "Отримайте зарплату 10 разів",
 	"MARRY": "Знайдіть другу половинку",

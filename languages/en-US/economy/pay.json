@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Sends credits to a user",
 	"USAGE": "[@user] [amount]",
-	"EXAMPLES": "pay user:@Jonny_Bro#4226 amount:1000",
+	"EXAMPLES": "pay user:@jonny_bro amount:1000",
 	"BOT_USER": "Bots don't need money B)",
 	"YOURSELF": "You cannot transfer credits to yourself",
 	"INVALID_AMOUNT": "Please specify an amount",

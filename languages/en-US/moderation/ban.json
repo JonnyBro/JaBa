@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Bans a user",
+	"USAGE": "[@user] [reason]",
+	"EXAMPLES": "ban user:@jonny_bro reason:Violation of server rules",
+	"YOURSELF": "You cannot ban yourself",
+	"SUPERIOR": "You cannot ban this user (or I am unable to do so)",
+	"SUCCESS": "{{user}} has been banned for **{{reason}}**"
+}

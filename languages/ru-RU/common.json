@@ -60,6 +60,7 @@
 	"STATUS_IDLE": "Неактивен",
 	"STATUS_OFFLINE": "Не в сети",
 	"STATUS_ONLINE": "В сети",
+	"TICKET": "Тикет",
 	"UNKNOWN": "Неизвестно",
 	"USER": "Пользователь",
 	"USERNAME": "Имя пользователя",

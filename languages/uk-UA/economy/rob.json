@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Спробувати пограбувати користувача",
 	"USAGE": "[@user] [amount]",
-	"EXAMPLES": "rob user:@Jonny_Bro#4226 amount:100",
+	"EXAMPLES": "rob user:@jonny_bro amount:100",
 	"BOT_USER": "Ви не можете пограбувати бота",
 	"YOURSELF": "Ви не можете пограбувати себе",
 	"NOT_ENOUGH_AUTHOR": "У вас має бути хоча б {{moneyMin}}, щоб грабувати цього користувача (зараз у вас {{moneyCurrent}})",

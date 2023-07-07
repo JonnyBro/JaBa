@@ -1,5 +1,6 @@
 {
 	"BOT_USER": "You cannot do this with the bot.",
+	"CANT_DM": "I cannot DM you. Please check your privacy settings.",
 	"FORCE_STOP": "The game has been forcibly ended, {{user}}, nobody won (the number was {{number}}).",
 	"LEVEL_UP": "You have reached the next level! Your new level is: **{{level}}**",
 	"GUILD_ONLY": "This command can only be used on a server.",

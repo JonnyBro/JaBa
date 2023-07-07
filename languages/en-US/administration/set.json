@@ -1,6 +1,6 @@
 {
 	"DESCRIPTION": "Modify a user's experience, level, credits, or bank",
 	"USAGE": "[type] [@user] [int]",
-	"EXAMPLES": "set type:Level user:@Jonny_Bro#4226 int:10",
+	"EXAMPLES": "set type:Level user:@jonny_bro int:10",
 	"INVALID_NUMBER": "The value must be greater than zero"
 }

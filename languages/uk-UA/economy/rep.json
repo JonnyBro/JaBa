@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Дати репутацію користувачеві",
 	"USAGE": "[@user]",
-	"EXAMPLES": "rep user:@Jonny_Bro#4226",
+	"EXAMPLES": "rep user:@jonny_bro",
 	"COOLDOWN": "Ви повинні почекати **{{time}}** до наступного використання",
 	"BOT_USER": "Боти і так круті B)",
 	"YOURSELF": "Ви не можете дати поінт репутації самому собі",

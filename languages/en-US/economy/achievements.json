@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Shows a user's list of achievements",
 	"USAGE": "(@user)",
-	"EXAMPLES": "achievements\nachievements user:@Jonny_Bro#4226",
+	"EXAMPLES": "achievements\nachievements user:@jonny_bro",
 	"SEND_CMD": "Use your first command",
 	"CLAIM_SALARY": "Claim your salary 10 times",
 	"MARRY": "Find a partner",

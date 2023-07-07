@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Gives reputation to a user",
 	"USAGE": "[@user]",
-	"EXAMPLES": "rep user:@Jonny_Bro#4226",
+	"EXAMPLES": "rep user:@jonny_bro",
 	"COOLDOWN": "You must wait **{{time}}** before using it again",
 	"BOT_USER": "Bots are already cool B)",
 	"YOURSELF": "You cannot give reputation to yourself",

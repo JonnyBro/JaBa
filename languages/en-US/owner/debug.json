@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Allows you to modify user's data",
 	"USAGE": "[set/add] [type] [@user] [int]",
-	"EXAMPLES": "debug set type:Level user:@Jonny_Bro#4226 int:100",
+	"EXAMPLES": "debug set type:Level user:@jonny_bro int:100",
 	"TYPE": "Type of data",
 	"SET": "Set the value",
 	"ADD": "Add to the value",

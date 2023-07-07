@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Kicks a user",
+	"USAGE": "[@user] [reason]",
+	"EXAMPLES": "kick user:@jonny_bro reason:Come back tomorrow when I stop getting offended",
+	"YOURSELF": "You cannot kick yourself",
+	"SUPERIOR": "You cannot kick this user (or I am unable to do so)",
+	"SUCCESS": "{{user}} has been kicked for **{{reason}}**"
+}

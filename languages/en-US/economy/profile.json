@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Shows user profile",
 	"USAGE": "(@user)",
-	"EXAMPLES": "profile\nprofile user:@Jonny_Bro#4226",
+	"EXAMPLES": "profile\nprofile user:@jonny_bro",
 	"BOT_USER": "Bots don't have a profile",
 	"TITLE": "{{user}}'s Profile",
 	"LINK": "Profile",

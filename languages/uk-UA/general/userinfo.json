@@ -1,7 +1,7 @@
 {
 	"DESCRIPTION": "Показати інформацію про користувача",
 	"USAGE": "(@user)",
-	"EXAMPLES": "userinfo\nuserinfo user:@Jonny_Bro#4226",
+	"EXAMPLES": "userinfo\nuserinfo user:@jonny_bro",
 	"CUSTOM": "Стан користувача",
 	"NO_ACTIVITY": "Не грає",
 	"NO_ROLE": "Немає ролі",
