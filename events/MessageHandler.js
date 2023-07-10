@@ -30,7 +30,7 @@ class MessageCreate extends BaseEvent {
 		if (message.guild && !message.member) await message.guild.members.fetch(message.author.id);
 		if (message.guild) {
 			const guildData = await client.findOrCreateGuild({ id: message.guildId });
-			const memberData = await client.findOrCreateMember({ id: message.author.id, guildId: message.guild.id });
+			const memberData = await client.findOrCreateMember({ id: message.author.id, guildId: message.guildId });
 
 			message.guild.data = data.guildData = guildData;
 			data.memberData = memberData;

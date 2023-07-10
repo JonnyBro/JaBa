@@ -33,7 +33,7 @@ class GuildMemberRemove extends BaseEvent {
 		await member.guild.members.fetch();
 
 		const guildData = await client.findOrCreateGuild({
-			id: member.guildId,
+			id: member.guild.id,
 		});
 
 		if (guildData.plugins.goodbye.enabled) {
