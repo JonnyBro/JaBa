@@ -23,7 +23,7 @@ class messageUpdate extends BaseEvent {
 
 		const guildData = await client.findOrCreateGuild({ id: oldMessage.guildId });
 
-		if (guildData.plugins.monitoring.messageUpdate) {
+		if (guildData.plugins?.monitoring?.messageUpdate) {
 			const embed = new EmbedBuilder()
 				.setAuthor({
 					name: newMessage.author.getUsername(),
