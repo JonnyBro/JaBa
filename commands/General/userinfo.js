@@ -43,7 +43,7 @@ class Userinfo extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
-	async execute(client, interaction) {
+	async execute(client, interaction, data) {
 		const member = interaction.options.getMember("user") || interaction.member;
 		const embed = new EmbedBuilder()
 			.setAuthor({
@@ -78,12 +78,12 @@ class Userinfo extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.calendar + " " + interaction.translate("common:CREATION"),
-					value: client.functions.printDate(client, member.user.createdAt),
+					value: client.functions.printDate(client, member.user.createdAt, null, data.guildData.language),
 					inline: true,
 				},
 				{
 					name: client.customEmojis.calendar2 + " " + interaction.translate("common:JOINED"),
-					value: client.functions.printDate(client, member.joinedAt),
+					value: client.functions.printDate(client, member.joinedAt, null, data.guildData.language),
 					inline: true,
 				},
 				{

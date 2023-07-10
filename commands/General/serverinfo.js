@@ -34,7 +34,7 @@ class Serverinfo extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
-	async execute(client, interaction) {
+	async execute(client, interaction, data) {
 		const guild = interaction.guild;
 
 		await guild.members.fetch();
@@ -58,7 +58,7 @@ class Serverinfo extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.calendar + interaction.translate("common:CREATION"),
-					value: client.functions.printDate(client, guild.createdAt),
+					value: client.functions.printDate(client, guild.createdAt, null, data.guildData.language),
 					inline: true,
 				},
 				{

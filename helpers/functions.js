@@ -94,7 +94,7 @@ module.exports = {
 	 * @param {String} locale Language
 	 * @returns {String} Beautified date
 	 */
-	printDate(client, date, format = "", locale = client.defaultLanguage) {
+	printDate(client, date, format = null, locale = client.defaultLanguage) {
 		const languageData = client.languages.find(language => language.name === locale);
 		if (format === "" || format === null) format = languageData.defaultMomentFormat;
 		return moment(new Date(date)).locale(languageData.moment).format(format);

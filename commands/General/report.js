@@ -76,7 +76,7 @@ class Report extends BaseCommand {
 			.addFields([
 				{
 					name: interaction.translate("common:DATE"),
-					value: client.functions.printDate(client, new Date(Date.now())),
+					value: client.functions.printDate(client, new Date(Date.now()), null, data.guildData.language),
 				},
 				{
 					name: interaction.translate("common:AUTHOR"),

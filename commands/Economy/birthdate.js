@@ -93,7 +93,7 @@ class Birthdate extends BaseCommand {
 		await data.userData.save();
 
 		interaction.success("economy/birthdate:SUCCESS", {
-			date: client.functions.printDate(client, d),
+			date: client.functions.printDate(client, d, null, data.guildData.language),
 		});
 	}
 }

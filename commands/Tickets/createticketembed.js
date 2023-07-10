@@ -140,7 +140,7 @@ class CreateTicketEmbed extends BaseCommand {
 
 							let transcript = "---- TICKET CREATED ----\n";
 							messages.forEach(message => {
-								transcript += `[${client.functions.printDate(client, message.createdTimestamp)}] ${message.author.getUsername()}: ${message.content}\n`;
+								transcript += `[${client.functions.printDate(client, message.createdTimestamp, null, interaction.guild.data.language)}] ${message.author.getUsername()}: ${message.content}\n`;
 							});
 							transcript += "---- TICKET CLOSED ----";
 
@@ -180,7 +180,7 @@ class CreateTicketEmbed extends BaseCommand {
 
 					let transcript = "---- TICKET CREATED ----\n";
 					messages.forEach(message => {
-						transcript += `[${client.functions.printDate(client, message.createdTimestamp)}] ${message.author.getUsername()}: ${message.content}\n`;
+						transcript += `[${client.functions.printDate(client, message.createdTimestamp, null, interaction.guild.data.language)}] ${message.author.getUsername()}: ${message.content}\n`;
 					});
 					transcript += "---- TICKET CLOSED ----";
 

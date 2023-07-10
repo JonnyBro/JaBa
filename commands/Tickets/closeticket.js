@@ -83,7 +83,7 @@ class CloseTicket extends BaseCommand {
 
 				let transcript = "---- TICKET CREATED ----\n";
 				messages.forEach(message => {
-					transcript += `[${client.functions.printDate(client, message.createdTimestamp)}] ${message.author.getUsername()}: ${message.content}\n`;
+					transcript += `[${client.functions.printDate(client, message.createdTimestamp, null, data.guildData.language)}] ${message.author.getUsername()}: ${message.content}\n`;
 				});
 				transcript += "---- TICKET CLOSED ----";
 
