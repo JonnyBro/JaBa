@@ -369,7 +369,7 @@ module.exports = client => [
 								id: guild.id,
 							});
 
-							return guildData.plugins.monitoring.messageUpdate;
+							return guildData.plugins?.monitoring?.messageUpdate;
 						},
 						setNew: async ({ guild, newData }) => {
 							const guildData = await client.findOrCreateGuild({
