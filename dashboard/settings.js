@@ -376,6 +376,8 @@ module.exports = client => [
 								id: guild.id,
 							});
 
+							if (guildData.plugins.monitoring === undefined) guildData.plugins.monitoring = {};
+
 							guildData.plugins.monitoring.messageUpdate = newData !== "" ? newData : null;
 							guildData.markModified("plugins.monitoring");
 							await guildData.save();
