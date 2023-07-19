@@ -71,7 +71,7 @@ class JaBa extends Client {
 	}
 
 	/**
-	 * Login into bot account, connect to DB and update docs
+	 * Login into account and connect to DB
 	 */
 	async init() {
 		this.login(this.config.token);
@@ -95,7 +95,7 @@ class JaBa extends Client {
 	}
 
 	/**
-	 * Load commands from directory
+	 * Loads commands from directory
 	 * @param {String} dir Directory where's all commands located
 	 * @returns
 	 */
@@ -155,7 +155,7 @@ class JaBa extends Client {
 	}
 
 	/**
-	 * Load single command in directory
+	 * Loads single command in directory
 	 * @param {String} dir Directory where command is
 	 * @param {String} file Filename of the command
 	 */
@@ -181,7 +181,7 @@ class JaBa extends Client {
 	}
 
 	/**
-	 * Unload command from cache
+	 * Unloads command from cache
 	 * @param {String} dir Directory of the command
 	 * @param {String} name Name of the command
 	 */
@@ -192,7 +192,7 @@ class JaBa extends Client {
 	}
 
 	/**
-	 * Load events from directory
+	 * Loads events from directory
 	 * @param {String} dir Directory where's all events located
 	 * @returns
 	 */
@@ -217,15 +217,14 @@ class JaBa extends Client {
 	}
 
 	/**
-	 * Get default language
-	 * @returns {String} Default bot's language
+	 * @returns {String} Bot's default language
 	 */
 	get defaultLanguage() {
 		return this.languages.find(language => language.default).name;
 	}
 
 	/**
-	 * Translate from key to language
+	 * Translates from a key to language
 	 * @param {String} key Key
 	 * @param {Array} args Arguments for translation
 	 * @param {String} locale Language
@@ -238,7 +237,7 @@ class JaBa extends Client {
 	}
 
 	/**
-	 * Find or create user in DB
+	 * Finds or creates user in DB
 	 * @param {Array} param0 { id: User ID }
 	 * @returns {import("./User")} Mongoose model or JSON of this user
 	 */
@@ -263,7 +262,7 @@ class JaBa extends Client {
 	}
 
 	/**
-	 * Find or create member in DB
+	 * Finds or creates member in DB
 	 * @param {Array} param0 { id: Member ID }
 	 * @returns {import("./Member")} Mongoose model or JSON of this member
 	 */
@@ -294,7 +293,7 @@ class JaBa extends Client {
 	}
 
 	/**
-	 * Find or create guild in DB
+	 * Finds or creates guild in DB
 	 * @param {Array} param0 { id: Guild ID }
 	 * @returns {import("./Guild")} Mongoose model or JSON of this guild
 	 */

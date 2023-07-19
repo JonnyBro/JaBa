@@ -9,16 +9,16 @@ module.exports = {
 	support: {
 		id: "XXXXXXXXXXX", // The ID of the support server
 		logs: "XXXXXXXXXXX", // And the ID of the logs channel of your server (new servers for example)
-		invite: "", // Invite link to your support server
+		invite: "XXXXXXXXXXX", // Invite link to your support server
 	},
 	/* Dashboard configuration */
 	dashboard: {
 		enabled: true, // Whether the dashboard is enabled or not
-		maintanceKey: "", // Your maintance key
+		maintanceKey: "XXXXXXXXXXX", // Your maintance key
 		port: 80, // Dashboard port
 		domain: "http://localhost", // The base URL of the dashboard without / at the end
-		secret: "", // Your Discord Client's Secret
-		logs: "", // The channel ID for logs
+		secret: "XXXXXXXXXXX", // Your Discord Client's Secret
+		logs: "XXXXXXXXXXX", // The channel ID for logs
 	},
 	mongoDB: "mongodb://localhost:27017/discordbot", // The URl of the mongodb database
 	/* For the embeds (embeded messages) */
