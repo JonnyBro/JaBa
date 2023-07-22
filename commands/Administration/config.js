@@ -151,7 +151,7 @@ class Config extends BaseCommand {
 					{
 						name: interaction.translate("administration/config:MONITORING_CHANNELS"),
 						value:
-							`${interaction.translate("administration/config:MESSAGEUPDATE")}: ${guildData.plugins.monitoring.messageUpdate ? `<#${guildData.plugins.monitoring.messageUpdate}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n`,
+							`${interaction.translate("administration/config:MESSAGEUPDATE")}: ${guildData.plugins?.monitoring?.messageUpdate ? `<#${guildData.plugins?.monitoring?.messageUpdate}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n`,
 					},
 					{
 						name: interaction.translate("administration/config:SPECIAL_CHANNELS"),
