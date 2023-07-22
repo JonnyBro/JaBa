@@ -204,7 +204,7 @@ async function changeSetting(interaction, setting, state, channel, guildData) {
 		await guildData.save();
 
 		return interaction.reply({
-			content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: **${interaction.translate("common:DISABLED")}**`,
+			content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`)}: **${interaction.translate("common:DISABLED")}**`,
 			ephemeral: true,
 		});
 	} else {
