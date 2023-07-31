@@ -38,9 +38,10 @@ module.exports = mongoose.model("Guild", new Schema({
 			},
 			monitoring: {
 				memberAdd: null,
-				memberLeave: null,
+				memberRemove: null,
 				memberUpdate: null,
 				messageUpdate: null,
+				messageDelete: null,
 			},
 			tickets: {
 				count: 0,

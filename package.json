@@ -10,17 +10,16 @@
     },
     "author": "Discord: jonny_bro",
     "dependencies": {
-        "@discord-player/extractor": "^4.3.1",
+        "@discord-player/extractor": "^4.4.1",
         "@discordjs/opus": "^0.9.0",
         "@discordjs/rest": "^1.7.1",
         "@discordjs/voice": "^0.16.0",
         "canvas": "^2.10.2",
         "chalk": "^4.1.2",
         "cron": "^2.1.0",
-        "dbd-soft-ui": "^1.6.48-beta.1",
         "discord-api-types": "^0.37.47",
         "discord-giveaways": "^6.0.1",
-        "discord-player": "^6.6.0",
+        "discord-player": "^6.6.2",
         "discord.js": "^14.11.0",
         "gamedig": "^4.0.2",
         "i18next": "^21.9.1",
@@ -51,25 +50,71 @@
             "ecmaVersion": 2020
         },
         "rules": {
-            "arrow-spacing": ["warn", { "before": true, "after": true }],
-            "comma-dangle": ["error", "always-multiline"],
+            "arrow-spacing": [
+                "warn",
+                {
+                    "before": true,
+                    "after": true
+                }
+            ],
+            "comma-dangle": [
+                "error",
+                "always-multiline"
+            ],
             "comma-spacing": "error",
             "comma-style": "error",
-            "dot-location": ["error", "property"],
+            "dot-location": [
+                "error",
+                "property"
+            ],
             "handle-callback-err": "off",
-            "indent": ["error", "tab", { "SwitchCase": 1 }],
+            "indent": [
+                "error",
+                "tab",
+                {
+                    "SwitchCase": 1
+                }
+            ],
             "keyword-spacing": "error",
-            "max-nested-callbacks": ["error", { "max": 4 }],
-            "max-statements-per-line": ["error", { "max": 2 }],
+            "max-nested-callbacks": [
+                "error",
+                {
+                    "max": 4
+                }
+            ],
+            "max-statements-per-line": [
+                "error",
+                {
+                    "max": 2
+                }
+            ],
             "no-console": "off",
             "no-multi-spaces": "error",
-            "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
-            "no-trailing-spaces": ["error"],
+            "no-multiple-empty-lines": [
+                "error",
+                {
+                    "max": 2,
+                    "maxEOF": 1,
+                    "maxBOF": 0
+                }
+            ],
+            "no-trailing-spaces": [
+                "error"
+            ],
             "no-var": "error",
-            "object-curly-spacing": ["error", "always"],
+            "object-curly-spacing": [
+                "error",
+                "always"
+            ],
             "prefer-const": "error",
-            "quotes": ["error", "double"],
-            "semi": ["error", "always"],
+            "quotes": [
+                "error",
+                "double"
+            ],
+            "semi": [
+                "error",
+                "always"
+            ],
             "space-in-parens": "error",
             "space-infix-ops": "error",
             "space-unary-ops": "error",

@@ -11,9 +11,9 @@ class messageUpdate extends BaseEvent {
 
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
-	 * @param {import("discord.js").Message} oldMessage
-	 * @param {import("discord.js").Message} newMessage
+	 * @param {import("../../base/JaBa")} client The Discord client
+	 * @param {import("discord.js").Message} oldMessage The message before the update
+	 * @param {import("discord.js").Message} newMessage The message after the update
 	 */
 	async execute(client, oldMessage, newMessage) {
 		if (oldMessage.guild && oldMessage.guildId === "568120814776614924") return;
