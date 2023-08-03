@@ -15,7 +15,7 @@ class Birthdate extends BaseCommand {
 					uk: client.translate("economy/birthdate:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("economy/birthdate:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false)
+				.setDMPermission(true)
 				.addIntegerOption(option =>
 					option
 						.setName("day")
