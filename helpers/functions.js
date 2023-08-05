@@ -109,7 +109,7 @@ module.exports = {
 	 * @param {String} locale Language
 	 * @returns {String} Time
 	 */
-	convertTime(client, time, type = false, noPrefix = false, locale = this.defaultLanguage) {
+	convertTime(client, time, type = false, noPrefix = false, locale = client.defaultLanguage) {
 		const languageData = client.languages.find(language => language.name === locale);
 		const m = moment(time).locale(languageData.moment);
 		return type ? m.toNow(noPrefix) : m.fromNow(noPrefix);
