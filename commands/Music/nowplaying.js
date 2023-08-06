@@ -62,7 +62,7 @@ class Nowplaying extends BaseCommand {
 				{ name: "\u200B", value: "\u200B", inline: true },
 				{
 					name: interaction.translate("common:VIEWS"),
-					value: track.raw.live ? "" : new Intl.NumberFormat(interaction.client.languages.find(language => language.name === data.guldData.language).moment, { notation: "standard" }).format(track.raw.views),
+					value: track.raw.live ? "" : new Intl.NumberFormat(client.languages.find(language => language.name === data.guildData.language).moment, { notation: "standard" }).format(track.raw.views),
 					inline: true,
 				},
 				{
