@@ -113,6 +113,7 @@ class CloseTicket extends BaseCommand {
 				}
 
 				await interaction.channel.permissionOverwrites.edit(interaction.member, { ViewChannel: false, SendMessages: null });
+				await interaction.channel.setName(`${interaction.channel.name}-closed`);
 			}
 		});
 
