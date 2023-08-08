@@ -119,7 +119,7 @@ class Profile extends BaseCommand {
 				},
 				{
 					name: interaction.translate("economy/profile:BIRTHDATE"),
-					value: !userData.birthdate ? interaction.translate("common:NOT_DEFINED") : client.functions.printDate(client, new Date(userData.birthdate), null, data.guildData.language),
+					value: !userData.birthdate ? interaction.translate("common:NOT_DEFINED") : client.functions.printDate(client, new Date(userData.birthdate), "Do MMMM YYYY", data.guildData.language),
 					inline: true,
 				},
 				{
