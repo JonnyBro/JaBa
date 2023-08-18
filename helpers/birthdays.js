@@ -37,12 +37,12 @@ module.exports.init = async function (client) {
 										.setFooter(client.config.embed.footer)
 										.addFields([
 											{
-												name: client.translate("economy/birthdate:HAPPY_BIRTHDAY"),
+												name: client.translate("economy/birthdate:HAPPY_BIRTHDAY", null, guildData.language),
 												value: client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
 													name: user.username,
 													user: user.id,
-													age: `**${age}** ${client.functions.getNoun(age, client.translate("misc:NOUNS:AGE:1"), client.translate("misc:NOUNS:AGE:2"), client.translate("misc:NOUNS:AGE:5"))}`,
-												}),
+													age: `**${age}** ${client.functions.getNoun(age, client.translate("misc:NOUNS:AGE:1", null, guildData.language), client.translate("misc:NOUNS:AGE:2", null, guildData.language), client.translate("misc:NOUNS:AGE:5", null, guildData.language))}`,
+												}, guildData.language),
 											},
 										]);
 
