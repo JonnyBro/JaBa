@@ -112,7 +112,7 @@ class CloseTicket extends BaseCommand {
 					await interaction.reply({ content: interaction.translate("misc:CANT_DM"), ephemeral: true });
 				}
 
-				const member = interaction.guild.members.cache.find(u => u.user.username.includes(interaction.channel.name.split("-")[0]));
+				const member = interaction.guild.members.cache.find(u => u.user.id === interaction.channel.topic);
 				await interaction.channel.permissionOverwrites.edit(member, { ViewChannel: false, SendMessages: null });
 				await interaction.channel.setName(`${interaction.channel.name}-closed`);
 			}
