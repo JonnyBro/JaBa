@@ -74,10 +74,10 @@ class Profile extends BaseCommand {
 			})
 			.setImage("attachment://achievements.png")
 			.addFields([
-				{
-					name: client.customEmojis.link + " " + interaction.translate("economy/profile:LINK"),
-					value: `[${interaction.translate("economy/profile:LINK_TEXT")}](${client.config.dashboard.domain}/user/${member.user.id}/${interaction.guild.id})`,
-				},
+				// {
+				// 	name: client.customEmojis.link + " " + interaction.translate("economy/profile:LINK"),
+				// 	value: `[${interaction.translate("economy/profile:LINK_TEXT")}](${client.config.dashboard.domain}/user/${member.user.id}/${interaction.guild.id})`,
+				// },
 				{
 					name: interaction.translate("economy/profile:BIO"),
 					value: userData.bio ? userData.bio : interaction.translate("common:UNKNOWN"),

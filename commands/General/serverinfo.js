@@ -47,10 +47,10 @@ class Serverinfo extends BaseCommand {
 			})
 			.setThumbnail(guild.iconURL())
 			.addFields([
-				{
-					name: client.customEmojis.link + " " + interaction.translate("general/serverinfo:LINK"),
-					value: `[${interaction.translate("general/serverinfo:LINK_TEXT")}](${client.config.dashboard.domain}/stats/${guild.id})`,
-				},
+				// {
+				// 	name: client.customEmojis.link + " " + interaction.translate("general/serverinfo:LINK"),
+				// 	value: `[${interaction.translate("general/serverinfo:LINK_TEXT")}](${client.config.dashboard.domain}/stats/${guild.id})`,
+				// },
 				{
 					name: client.customEmojis.title + interaction.translate("common:NAME"),
 					value: guild.name,
