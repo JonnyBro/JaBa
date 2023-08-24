@@ -97,7 +97,9 @@ class Leaderboard extends BaseCommand {
 						value: money,
 						inline: true,
 					},
-				);
+				)
+				.setFooter(client.config.embed.footer)
+				.setTimestamp();
 
 			interaction.editReply({
 				embeds: [embed],
@@ -151,7 +153,9 @@ class Leaderboard extends BaseCommand {
 						value: xp.join("\n"),
 						inline: true,
 					},
-				]);
+				])
+				.setFooter(client.config.embed.footer)
+				.setTimestamp();
 
 			interaction.editReply({
 				embeds: [embed],
@@ -197,7 +201,9 @@ class Leaderboard extends BaseCommand {
 						value: rep,
 						inline: true,
 					},
-				);
+				)
+				.setFooter(client.config.embed.footer)
+				.setTimestamp();
 
 			interaction.editReply({
 				embeds: [embed],

@@ -40,7 +40,7 @@ class Queue extends BaseCommand {
 		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
 		let currentPage = 0;
-		let embeds = generateQueueEmbeds(interaction, queue);
+		let embeds = generateQueueEmbeds(client, interaction, queue);
 
 		const row = new ActionRowBuilder().addComponents(
 			new ButtonBuilder().setCustomId("queue_prev_page").setLabel(interaction.translate("music/queue:PREV_PAGE")).setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
@@ -137,11 +137,12 @@ class Queue extends BaseCommand {
 
 /**
  *
+ * @param {import("../../base/JaBa")} client
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
  * @param {import("discord-player").GuildQueue} queue
  * @returns
  */
-function generateQueueEmbeds(interaction, queue) {
+function generateQueueEmbeds(client, interaction, queue) {
 	const embeds = [];
 	const currentTrack = queue.currentTrack;
 	let k = 10;
@@ -194,6 +195,7 @@ function generateQueueEmbeds(interaction, queue) {
 					currentTrack.requestedBy
 				}\n\n**${interaction.translate("music/queue:NEXT")}**\n${info}`,
 			)
+			.setFooter(client.config.embed.footer)
 			.setTimestamp();
 		embeds.push(embed);
 	}
