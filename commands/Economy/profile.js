@@ -68,7 +68,7 @@ class Profile extends BaseCommand {
 		const profileEmbed = new EmbedBuilder()
 			.setAuthor({
 				name: interaction.translate("economy/profile:TITLE", {
-					user: member.nickname,
+					user: member.user.getUsername(),
 				}),
 				iconURL: member.displayAvatarURL(),
 			})
