@@ -84,7 +84,7 @@ class Slots extends BaseCommand {
 		}, 4000);
 
 		async function end() {
-			let msg = "[ :slot_machine: | **СЛОТЫ** ]\n------------------\n";
+			let msg = "[ :slot_machine: | **SLOTS** ]\n------------------\n";
 
 			i1 = i1 < fruits.length - 1 ? i1 + 1 : 0;
 			i2 = i2 < fruits.length - 1 ? i2 + 1 : 0;
@@ -233,7 +233,7 @@ class Slots extends BaseCommand {
 		}
 
 		async function editMsg() {
-			let msg = "[ :slot_machine: | **СЛОТЫ** ]\n------------------\n";
+			let msg = "[ :slot_machine: | **SLOTS** ]\n------------------\n";
 
 			i1 = i1 < fruits.length - 1 ? i1 + 1 : 0;
 			i2 = i2 < fruits.length - 1 ? i2 + 1 : 0;
