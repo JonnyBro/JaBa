@@ -109,7 +109,7 @@ class Slots extends BaseCommand {
 				const credits = getCredits(amount, true);
 				interaction.followUp({
 					content:
-						"**!! ДЖЕКПОТ !!**\n" +
+						"**!! JACKPOT !!**\n" +
 						interaction.translate("economy/slots:VICTORY", {
 							money: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 							won: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
