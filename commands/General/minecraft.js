@@ -71,7 +71,7 @@ class Minecraft extends BaseCommand {
 
 		const embed = new EmbedBuilder()
 			.setAuthor({
-				name: res.name,
+				name: res.name || "Unknown",
 			})
 			.addFields([
 				{
