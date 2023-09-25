@@ -107,6 +107,7 @@ class Goodbye extends BaseCommand {
 					channelID: null,
 					withImage: null,
 				};
+
 				data.guildData.markModified("plugins.goodbye");
 				await data.guildData.save();
 
@@ -122,6 +123,7 @@ class Goodbye extends BaseCommand {
 					message: message,
 					withImage: image,
 				};
+
 				data.guildData.markModified("plugins.goodbye");
 				await data.guildData.save();
 

@@ -71,8 +71,10 @@ class Remindme extends BaseCommand {
 		};
 
 		data.userData.reminds.push(rData);
+
 		data.userData.markModified("reminds");
 		data.userData.save();
+
 		client.databaseCache.usersReminds.set(interaction.member.id, data.userData);
 
 		interaction.success("general/remindme:SAVED", {

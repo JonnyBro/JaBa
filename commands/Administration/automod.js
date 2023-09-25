@@ -64,6 +64,7 @@ class Automod extends BaseCommand {
 				enabled: true,
 				ignored: [],
 			};
+
 			data.guildData.markModified("plugins.automod");
 			await data.guildData.save();
 
@@ -71,6 +72,7 @@ class Automod extends BaseCommand {
 		} else {
 			if (channel) {
 				data.guildData.plugins.automod.ignored.push(channel.id);
+
 				data.guildData.markModified("plugins.automod");
 				await data.guildData.save();
 
@@ -82,6 +84,7 @@ class Automod extends BaseCommand {
 					enabled: false,
 					ignored: [],
 				};
+
 				data.guildData.markModified("plugins.automod");
 				await data.guildData.save();
 

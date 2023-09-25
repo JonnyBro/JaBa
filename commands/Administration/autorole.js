@@ -65,6 +65,7 @@ class Autorole extends BaseCommand {
 				enabled: true,
 				role: role.id,
 			};
+
 			data.guildData.markModified("plugins.autorole");
 			await data.guildData.save();
 
@@ -76,6 +77,7 @@ class Autorole extends BaseCommand {
 				enabled: false,
 				role: null,
 			};
+
 			data.guildData.markModified("plugins.autorole");
 			await data.guildData.save();
 

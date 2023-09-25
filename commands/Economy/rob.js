@@ -87,6 +87,7 @@ class Rob extends BaseCommand {
 				randomNum = client.functions.randomNum(1, 2);
 
 			memberData.cooldowns.rob = toWait;
+
 			memberData.markModified("cooldowns");
 			await memberData.save();
 
@@ -100,7 +101,6 @@ class Rob extends BaseCommand {
 
 			data.memberData.markModified("money");
 			memberData.markModified("money");
-
 			await data.memberData.save();
 			await memberData.save();
 		} else {
@@ -118,7 +118,6 @@ class Rob extends BaseCommand {
 
 			data.memberData.markModified("money");
 			memberData.markModified("money");
-
 			await data.memberData.save();
 			await memberData.save();
 		}

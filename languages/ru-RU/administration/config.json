@@ -15,6 +15,7 @@
 
 	"MONITORING_CHANNELS": "Каналы мониторинга",
 	"MESSAGEUPDATE": "Логи изменения сообщений",
+	"MESSAGEDELETE": "Логи удаления сообщений",
 
 	"AUTOMOD_TITLE": "Автомодерация",
 	"AUTOMOD_CONTENT": "Автомодерация включена.\nИгнорируемые каналы: {{channels}}",

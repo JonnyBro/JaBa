@@ -20,6 +20,7 @@ class GuildCreate extends BaseEvent {
 		if (!userData.achievements.invite.achieved) {
 			userData.achievements.invite.progress.now = 1;
 			userData.achievements.invite.achieved = true;
+
 			userData.markModified("achievements.invite");
 			await userData.save();
 		}

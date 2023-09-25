@@ -102,6 +102,7 @@ class MessageCreate extends BaseEvent {
 			const afkReason = data.userData.afk;
 			if (afkReason) {
 				data.userData.afk = null;
+
 				data.userData.markModified("afk");
 				await data.userData.save();
 
@@ -152,7 +153,6 @@ async function updateXp(client, msg, memberData) {
 
 	memberData.markModified("exp");
 	memberData.markModified("level");
-
 	await memberData.save();
 }
 

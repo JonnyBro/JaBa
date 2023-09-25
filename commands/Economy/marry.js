@@ -132,6 +132,7 @@ class Marry extends BaseCommand {
 
 				data.userData.markModified("lover");
 				await data.userData.save();
+
 				userData.markModified("lover");
 				await userData.save();
 
@@ -151,6 +152,7 @@ class Marry extends BaseCommand {
 					sent = true;
 					userData.achievements.married.achieved = true;
 					userData.achievements.married.progress.now = 1;
+
 					userData.markModified("achievements.married");
 					await userData.save();
 				}
@@ -159,6 +161,7 @@ class Marry extends BaseCommand {
 					if (!sent) interaction.followUp(messageOptions);
 					data.userData.achievements.married.achieved = true;
 					data.userData.achievements.married.progress.now = 1;
+
 					data.userData.markModified("achievements.married");
 					await data.userData.save();
 				}

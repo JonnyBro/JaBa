@@ -51,6 +51,7 @@ class Config extends BaseCommand {
 									{ name: client.translate("administration/config:TICKETLOGS"), value: "tickets.ticketLogs" },
 									{ name: client.translate("administration/config:TRANSCRIPTIONLOGS"), value: "tickets.transcriptionLogs" },
 									{ name: client.translate("administration/config:MESSAGEUPDATE"), value: "monitoring.messageUpdate" },
+									{ name: client.translate("administration/config:MESSAGEDELETE"), value: "monitoring.messageDelete" },
 								)
 								.setRequired(true),
 						)
@@ -151,7 +152,8 @@ class Config extends BaseCommand {
 					{
 						name: interaction.translate("administration/config:MONITORING_CHANNELS"),
 						value:
-							`${interaction.translate("administration/config:MESSAGEUPDATE")}: ${guildData.plugins?.monitoring?.messageUpdate ? `<#${guildData.plugins?.monitoring?.messageUpdate}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n`,
+							`${interaction.translate("administration/config:MESSAGEUPDATE")}: ${guildData.plugins?.monitoring?.messageUpdate ? `<#${guildData.plugins?.monitoring?.messageUpdate}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:MESSAGEDELETE")}: ${guildData.plugins?.monitoring?.messageDelete ? `<#${guildData.plugins?.monitoring?.messageDelete}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n`,
 					},
 					{
 						name: interaction.translate("administration/config:SPECIAL_CHANNELS"),
@@ -200,6 +202,7 @@ async function changeSetting(interaction, setting, state, channel, guildData) {
 
 	if (!state) {
 		guildData.plugins[settingSplitted[0]][settingSplitted[1]] = null;
+
 		guildData.markModified("plugins");
 		await guildData.save();
 
@@ -212,6 +215,7 @@ async function changeSetting(interaction, setting, state, channel, guildData) {
 
 		if (channel) {
 			guildData.plugins[settingSplitted[0]][settingSplitted[1]] = channel.id;
+
 			guildData.markModified("plugins");
 			await guildData.save();
 

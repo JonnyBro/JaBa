@@ -39,6 +39,7 @@ class Divorce extends BaseCommand {
 		const user = client.users.cache.get(data.userData.lover) || (await client.users.fetch(data.userData.lover));
 
 		data.userData.lover = null;
+
 		data.user.markModified("lover");
 		await data.userData.save();
 
@@ -46,6 +47,7 @@ class Divorce extends BaseCommand {
 			id: user.id,
 		});
 		oldLover.lover = null;
+
 		oldLover.markModified("lover");
 		await oldLover.save();
 

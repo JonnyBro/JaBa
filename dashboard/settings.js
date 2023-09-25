@@ -32,6 +32,7 @@ module.exports = client => [
 					});
 
 					guildData.language = newData;
+
 					guildData.markModified("language");
 					await guildData.save();
 
@@ -61,6 +62,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.welcome.enabled = newData;
+
 							guildData.markModified("plugins.welcome");
 							await guildData.save();
 
@@ -85,6 +87,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.welcome.withImage = newData;
+
 							guildData.markModified("plugins.welcome");
 							await guildData.save();
 
@@ -109,6 +112,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.welcome.message = newData !== "" ? newData : null;
+
 							guildData.markModified("plugins.welcome");
 							await guildData.save();
 
@@ -133,6 +137,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.welcome.channel = newData !== "" ? newData : null;
+
 							guildData.markModified("plugins.welcome");
 							await guildData.save();
 
@@ -164,6 +169,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.goodbye.enabled = newData;
+
 							guildData.markModified("plugins.goodbye");
 							await guildData.save();
 
@@ -188,6 +194,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.goodbye.withImage = newData;
+
 							guildData.markModified("plugins.goodbye");
 							await guildData.save();
 
@@ -212,6 +219,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.goodbye.message = newData !== "" ? newData : null;
+
 							guildData.markModified("plugins.goodbye");
 							await guildData.save();
 
@@ -236,6 +244,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.goodbye.channel = newData !== "" ? newData : null;
+
 							guildData.markModified("plugins.goodbye");
 							await guildData.save();
 
@@ -267,6 +276,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.autorole.enabled = newData;
+
 							guildData.markModified("plugins.autorole");
 							await guildData.save();
 
@@ -291,6 +301,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.autorole.role = newData !== "" ? newData : null;
+
 							guildData.markModified("plugins.autorole");
 							await guildData.save();
 
@@ -322,6 +333,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.automod.enabled = newData;
+
 							guildData.markModified("plugins.automod");
 							await guildData.save();
 
@@ -346,6 +358,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.automod.ignored = newData;
+
 							guildData.markModified("plugins.automod");
 							await guildData.save();
 
@@ -362,7 +375,7 @@ module.exports = client => [
 					{
 						optionId: "monitoring_messageupdate",
 						optionName: "Message Update Channel",
-						optionDescription: "Select a channel for messages updates logs to go to. Select \"-\" to disable",
+						optionDescription: "Select a channel for messages update logs to go to. Select \"-\" to disable",
 						optionType: DBD.formTypes.channelsSelect(false, [ChannelType.GuildText]),
 						getActualSet: async ({ guild }) => {
 							const guildData = await client.findOrCreateGuild({
@@ -379,6 +392,34 @@ module.exports = client => [
 							if (guildData.plugins.monitoring === undefined) guildData.plugins.monitoring = {};
 
 							guildData.plugins.monitoring.messageUpdate = newData !== "" ? newData : null;
+
+							guildData.markModified("plugins.monitoring");
+							await guildData.save();
+
+							return;
+						},
+					},
+					{
+						optionId: "monitoring_messagedelete",
+						optionName: "Message Deletion Channel",
+						optionDescription: "Select a channel for messages deletion logs to go to. Select \"-\" to disable",
+						optionType: DBD.formTypes.channelsSelect(false, [ChannelType.GuildText]),
+						getActualSet: async ({ guild }) => {
+							const guildData = await client.findOrCreateGuild({
+								id: guild.id,
+							});
+
+							return guildData.plugins?.monitoring?.messageDelete;
+						},
+						setNew: async ({ guild, newData }) => {
+							const guildData = await client.findOrCreateGuild({
+								id: guild.id,
+							});
+
+							if (guildData.plugins.monitoring === undefined) guildData.plugins.monitoring = {};
+
+							guildData.plugins.monitoring.messageDelete = newData !== "" ? newData : null;
+
 							guildData.markModified("plugins.monitoring");
 							await guildData.save();
 
@@ -410,6 +451,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.suggestions = newData !== "" ? newData : null;
+
 							guildData.markModified("plugins.suggestions");
 							await guildData.save();
 
@@ -434,6 +476,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.reports = newData !== "" ? newData : null;
+
 							guildData.markModified("plugins.reports");
 							await guildData.save();
 
@@ -458,6 +501,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.birthdays = newData !== "" ? newData : null;
+
 							guildData.markModified("plugins.birthdays");
 							await guildData.save();
 
@@ -482,6 +526,7 @@ module.exports = client => [
 							});
 
 							guildData.plugins.modlogs = newData !== "" ? newData : null;
+
 							guildData.markModified("plugins.modlogs");
 							await guildData.save();
 

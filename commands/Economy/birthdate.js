@@ -89,6 +89,7 @@ class Birthdate extends BaseCommand {
 		if (d.getTime() < Date.now() - 2.523e12) return interaction.error("economy/birthdate:DATE_TOO_LOW");
 
 		data.userData.birthdate = d;
+
 		data.userData.markModified("birthdate");
 		await data.userData.save();
 

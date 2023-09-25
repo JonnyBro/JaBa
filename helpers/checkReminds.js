@@ -47,6 +47,7 @@ module.exports.init = function (client) {
 						});
 					});
 					user.reminds = user.reminds.filter(r => r.sendAt >= dateNow);
+
 					user.markModified("reminds");
 					await user.save();
 

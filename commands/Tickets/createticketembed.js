@@ -44,6 +44,7 @@ class CreateTicketEmbed extends BaseCommand {
 					if (guildData.plugins.tickets.count === undefined) guildData.plugins.tickets.count = 0;
 
 					guildData.plugins.tickets.count++;
+
 					guildData.markModified("plugins.tickets");
 					guildData.save();
 

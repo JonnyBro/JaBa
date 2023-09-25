@@ -1,1 +1,0 @@
-require("play-dl").authorization();

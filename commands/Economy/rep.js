@@ -61,6 +61,7 @@ class Rep extends BaseCommand {
 		if (!data.userData.cooldowns) data.userData.cooldowns = {};
 
 		data.userData.cooldowns.rep = toWait;
+
 		data.userData.markModified("cooldowns");
 		await data.userData.save();
 
@@ -84,6 +85,7 @@ class Rep extends BaseCommand {
 					],
 				});
 			}
+
 			userData.markModified("achievements.rep");
 		}
 		await userData.save();

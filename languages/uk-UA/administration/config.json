@@ -13,8 +13,9 @@
 	"TICKETLOGS": "Логи тікетів",
 	"TRANSCRIPTIONLOGS": "Логи розшифровок",
 
-	"MONITORING_CHANNELS": "Каналы мониторинга",
-	"MESSAGEUPDATE": "Логи изменения сообщений",
+	"MONITORING_CHANNELS": "Канали моніторингу",
+	"MESSAGEUPDATE": "Логи зміни повідомлень",
+	"MESSAGEDELETE": "Логи видалення повідомлень",
 
 	"AUTOMOD_TITLE": "Автомодерація",
 	"AUTOMOD_CONTENT": "Автомодерація включена.\nІгноровані канали: {{channels}}",

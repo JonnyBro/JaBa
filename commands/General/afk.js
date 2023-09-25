@@ -50,6 +50,7 @@ class Afk extends BaseCommand {
 		const reason = interaction.options.getString("message");
 
 		data.userData.afk = reason;
+
 		data.userData.markModified("afk");
 		await data.userData.save();
 

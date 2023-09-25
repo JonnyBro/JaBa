@@ -46,9 +46,11 @@ class Work extends BaseCommand {
 
 		const toWait = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
 		data.memberData.cooldowns.work = toWait;
-		data.memberData.markModified("cooldowns");
-
 		data.memberData.workStreak = (data.memberData.workStreak || 0) + 1;
+
+		data.memberData.markModified("cooldowns");
+		data.memberData.markModified("workStreak");
+
 		await data.memberData.save();
 
 		const embed = new EmbedBuilder()
@@ -98,6 +100,7 @@ class Work extends BaseCommand {
 		}
 
 		data.memberData.money += won;
+
 		data.memberData.markModified("money");
 		await data.memberData.save();
 
@@ -124,6 +127,7 @@ class Work extends BaseCommand {
 				];
 				data.userData.achievements.work.achieved = true;
 			}
+
 			data.userData.markModified("achievements.work");
 			await data.userData.save();
 		}

@@ -38,6 +38,7 @@ class ImportMee6 extends BaseCommand {
 		const level = (await Mee6Api.getUserXp(interaction.guildId, interaction.member)).level;
 
 		data.memberData.level = level;
+
 		data.markModified("memberData.level");
 		await data.memberData.save();
 

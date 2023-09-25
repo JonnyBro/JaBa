@@ -1,33 +1,17 @@
+# Mac OS files
+.DS_Store
+
 # Bot Configuration
 /config.js
 
 # DB
 /giveaways.json
 
-# commands.md
-**/commands.md
-
-# Data
-/.data
-
 # Clips
 /clips
-
-# Mac OS files
-.DS_Store
-
-# IDE
-.vscode
 
 # Node
 node_modules
 
 # SQlite
 /json.sqlite
-
-# Sessions Store
-sessions
-
-# SSL
-/*.crt
-/*.key

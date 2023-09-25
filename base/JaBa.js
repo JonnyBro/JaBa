@@ -281,8 +281,8 @@ class JaBa extends Client {
 
 			if (guildData) {
 				guildData.members.push(memberData._id);
-				guildData.markModified("members");
 
+				guildData.markModified("members");
 				await guildData.save();
 			}
 

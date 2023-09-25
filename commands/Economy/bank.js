@@ -68,6 +68,7 @@ class Bank extends BaseCommand {
 
 			data.memberData.money -= credits;
 			data.memberData.bankSold += credits;
+
 			data.memberData.markModified("money");
 			data.memberData.markModified("bankSold");
 			await data.memberData.save();
@@ -102,6 +103,7 @@ class Bank extends BaseCommand {
 
 			data.memberData.money += credits;
 			data.memberData.bankSold -= credits;
+
 			data.memberData.markModified("money");
 			data.memberData.markModified("bankSold");
 			await data.memberData.save();

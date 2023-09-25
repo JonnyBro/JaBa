@@ -107,6 +107,7 @@ class Welcome extends BaseCommand {
 					channelID: null,
 					withImage: null,
 				};
+
 				data.guildData.markModified("plugins.welcome");
 				await data.guildData.save();
 
@@ -122,6 +123,7 @@ class Welcome extends BaseCommand {
 					message: message,
 					withImage: image,
 				};
+
 				data.guildData.markModified("plugins.welcome");
 				await data.guildData.save();
 
