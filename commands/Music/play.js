@@ -61,7 +61,7 @@ class Play extends BaseCommand {
 
 		if (!searchResult.hasTracks()) return interaction.error("music/play:NO_RESULT", { query }, { edit: true });
 		else {
-			client.player.play(interaction.member.voice.channel, searchResult, {
+			const { queue } = await client.player.play(interaction.member.voice.channel, searchResult, {
 				nodeOptions: {
 					metadata: {
 						client,
@@ -76,13 +76,20 @@ class Play extends BaseCommand {
 				maxSize: 200,
 				maxHistorySize: 50,
 			});
+
+			interaction.editReply({
+				content: interaction.translate("music/play:ADDED_QUEUE", {
+					songName: searchResult.hasPlaylist() ? searchResult.playlist.title : searchResult.tracks[0].title,
+				}),
+			});
+
+			if (query.match(/&t=[[0-9]+/g) != null) {
+				const time = query.match(/&t=[[0-9]+/g)[0].split("=")[1];
+
+				queue.node.seek(time * 1000);
+			}
 		}
 
-		interaction.editReply({
-			content: interaction.translate("music/play:ADDED_QUEUE", {
-				songName: searchResult.hasPlaylist() ? searchResult.playlist.title : searchResult.tracks[0].title,
-			}),
-		});
 	}
 
 	/**
@@ -93,7 +100,13 @@ class Play extends BaseCommand {
 	 */
 	async autocompleteRun(client, interaction) {
 		const query = interaction.options.getString("query");
-		if (query.includes("http") || query === "") return;
+		if (query === "") return;
+		if (query.includes("http")) return interaction.respond([
+			{
+				name: "Current link",
+				value: query,
+			},
+		]);
 
 		const results = await client.player.search(query);
 
