@@ -5,5 +5,5 @@
 	"TIME": "Time (e.g., 10s, 5m, 2h, 1d, 3w)",
 	"SAVED": "Reminder `{{message}}` saved for **{{time}}**",
 	"TITLE": "Reminder from JaBa",
-	"CREATED": "Reminder created for: **{{time}}**"
+	"CREATED": "Reminder created: **{{time}}**"
 }

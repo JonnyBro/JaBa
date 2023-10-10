@@ -14,7 +14,7 @@ module.exports.update = function (client) {
 		if (!categories.includes(cmd.category)) categories.push(cmd.category);
 	});
 
-	let text = `# JaBa имеет **${commands.length} ${client.functions.getNoun(commands.length, "команда", "команды", "команд")}** в **${categories.length} ${client.functions.getNoun(categories.length, "категории", "категориях", "категориях")}**!  \n\n#### Содержимое таблицы  \n**Название**: Название команды  \n**Описание**: Описание команды  \n**Использование**: Использование команды ( [] - обязательно, () - необязательно )  \n**Разрешено использование**: Где можно использовать команду  \n\n`;
+	let text = `# JaBa has **${commands.length} ${client.functions.getNoun(commands.length, "command", "commands", "commands")}** in **${categories.length} ${client.functions.getNoun(categories.length, "category", "categories", "categories")}**!  \n\n#### Table content  \n**Name**: Command name  \n**Description**: Command description  \n**Usage**: How to use the command (*[]* - required, *()* - optional)  \n**Accessible in**: Where you can use the command  \n\n`;
 
 	// categories.sort(function(a, b) {
 	// 	const aCmdsSize = commands.filter(cmd => cmd.category === a).size;
@@ -24,10 +24,10 @@ module.exports.update = function (client) {
 	// })
 
 	categories.sort().forEach(cat => {
-		const categoriesArray = [["Название", "Описание", "Использование", "Разрешено использование"]];
+		const categoriesArray = [["Name", "Description", "Usage", "Accessible in"]];
 		const cmds = [...new Map(commands.filter(cmd => cmd.category === cat).map(v => [v.constructor.name, v])).values()];
 
-		text += `### ${cat} (${cmds.length} ${client.functions.getNoun(cmds.length, "команда", "команды", "команд")})\n\n`;
+		text += `### ${cat} (${cmds.length} ${client.functions.getNoun(cmds.length, "command", "commands", "commands")})\n\n`;
 		cmds.sort(function (a, b) {
 			if (a.command.name < b.command.name) return -1;
 			else return 1;
@@ -36,7 +36,7 @@ module.exports.update = function (client) {
 				`**${cmd.command.name}** ${cmd.aliases.length ? `**(${cmd.aliases.join(", ")})**` : ""}`,
 				client.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:DESCRIPTION`),
 				`${cmd.command.name} ${client.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`).replace(/\n/, " \\| ")}`,
-				cmd.command.dm_permission ? "На сервере и в ЛС бота" : "Только на сервере",
+				cmd.command.dm_permission ? "Servers/DMs" : "Only on servers",
 			]);
 		});
 		text += `${table(categoriesArray)}\n\n`;

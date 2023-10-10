@@ -16,9 +16,10 @@ module.exports = {
 	 * @returns {String} Invite Link
 	 */
 	async createInvite(client, guildId) {
-		const guild = client.guilds.cache.get(guildId);
-		const member = guild.members.me;
-		const channel = guild.channels.cache.find(ch => (ch.permissionsFor(member.id).has(PermissionsBitField.Flags.CreateInstantInvite) && ch.type === ChannelType.GuildText) || ch.type === "GUILD_VOICE");
+		const guild = client.guilds.cache.get(guildId),
+			member = guild.members.me,
+			channel = guild.channels.cache.find(ch => (ch.permissionsFor(member.id).has(PermissionsBitField.Flags.CreateInstantInvite) && ch.type === ChannelType.GuildText) || ch.type === "GUILD_VOICE");
+
 		if (channel) return (await channel.createInvite()).url || "No channels found or missing permissions";
 	},
 
@@ -83,6 +84,7 @@ module.exports = {
 	randomNum(min, max) {
 		min = Math.ceil(min);
 		max = Math.floor(max);
+
 		return Math.floor(Math.random() * (max - min + 1) + min);
 	},
 
@@ -97,6 +99,7 @@ module.exports = {
 	printDate(client, date, format = null, locale = client.defaultLanguage) {
 		const languageData = client.languages.find(language => language.name === locale);
 		if (format === "" || format === null) format = languageData.defaultMomentFormat;
+
 		return moment(new Date(date)).locale(languageData.moment).format(format);
 	},
 
@@ -112,6 +115,7 @@ module.exports = {
 	convertTime(client, time, type = false, noPrefix = false, locale = client.defaultLanguage) {
 		const languageData = client.languages.find(language => language.name === locale);
 		const m = moment(time).locale(languageData.moment);
+
 		return type ? m.toNow(noPrefix) : m.fromNow(noPrefix);
 	},
 

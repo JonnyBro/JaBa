@@ -9,18 +9,19 @@ module.exports.init = function (client) {
 	client.usersData.find({ reminds: { $gt: [] } }).then(users => {
 		for (const user of users) {
 			if (!client.users.cache.has(user.id)) client.users.fetch(user.id);
+
 			client.databaseCache.usersReminds.set(user.id, user);
 		}
 	});
 
 	setInterval(async function () {
-		const dateNow = Date.now();
 		client.databaseCache.usersReminds.forEach(async user => {
-			const dUser = client.users.cache.get(user.id);
+			const cachedUser = client.users.cache.get(user.id);
 
-			if (dUser) {
-				const reminds = user.reminds;
-				const mustSent = reminds.filter(r => r.sendAt < dateNow);
+			if (cachedUser) {
+				const dateNow = Date.now(),
+					reminds = user.reminds,
+					mustSent = reminds.filter(r => r.sendAt < dateNow);
 
 				if (mustSent.length > 0) {
 					mustSent.forEach(r => {
@@ -42,7 +43,7 @@ module.exports.init = function (client) {
 							.setColor(client.config.embed.color)
 							.setFooter(client.config.embed.footer);
 
-						dUser.send({
+						cachedUser.send({
 							embeds: [embed],
 						});
 					});
