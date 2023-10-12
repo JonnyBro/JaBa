@@ -12,7 +12,8 @@ BaseInteraction.prototype.translate = function (key, args) {
 };
 
 BaseInteraction.prototype.replyT = function (key, args, options = {}) {
-	const string = options.prefixEmoji ? `${this.client.customEmojis[options.prefixEmoji]} | ${string}` : this.translate(key, args, this.guild ? this.guild.data.language : "en-US");
+	const translated = this.translate(key, args, this.guild ? this.guild.data.language : "en-US");
+	const string = options.prefixEmoji ? `${this.client.customEmojis[options.prefixEmoji]} | ${translated}` : translated;
 
 	if (options.edit) return this.editReply({ content: string, ephemeral: options.ephemeral || false });
 	else return this.reply({ content: string, ephemeral: options.ephemeral || false });
@@ -38,7 +39,8 @@ Message.prototype.translate = function (key, args) {
 };
 
 Message.prototype.replyT = function (key, args, options = {}) {
-	const string = options.prefixEmoji ? `${this.client.customEmojis[options.prefixEmoji]} | ${string}` : this.translate(key, args, this.guild ? this.guild.data.language : "en-US");
+	const translated = this.translate(key, args, this.guild ? this.guild.data.language : "en-US");
+	const string = options.prefixEmoji ? `${this.client.customEmojis[options.prefixEmoji]} | ${translated}` : translated;
 
 	if (options.edit) return this.edit({ content: string, allowedMentions: { repliedUser: options.mention ? true : false } });
 	else return this.reply({ content: string, allowedMentions: { repliedUser: options.mention ? true : false } });
