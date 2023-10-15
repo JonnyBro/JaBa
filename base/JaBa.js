@@ -277,7 +277,7 @@ class JaBa extends Client {
 			memberData = new this.membersData({ id: memberID, guildID: guildId });
 			await memberData.save();
 
-			const guildData = await this.findOrCreateGuild({ id: guildId });
+			const guildData = await this.findOrCreateGuild(guildId);
 
 			if (guildData) {
 				guildData.members.push(memberData._id);
@@ -297,7 +297,7 @@ class JaBa extends Client {
 	 * @param {Array} param0 { id: Guild ID }
 	 * @returns {import("./Guild")} Mongoose model or JSON of this guild
 	 */
-	async findOrCreateGuild({ id: guildId }) {
+	async findOrCreateGuild(guildId) {
 		let guildData = await this.guildsData.findOne({ id: guildId }).populate("members");
 
 		if (guildData) {

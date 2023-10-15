@@ -6,12 +6,12 @@ const { CronJob } = require("cron"),
  * @param {import("../base/JaBa")} client
  */
 module.exports.init = async function (client) {
-	new CronJob("0 5 * * *", async function () {
+	const cronjob = new CronJob("0 5 * * *", async function () {
 		client.guilds.cache.forEach(async guild => {
-			const guildData = await client.findOrCreateGuild({ id: guild.id });
+			const guildData = await client.findOrCreateGuild(guild.id);
 
 			if (guildData.plugins.birthdays) {
-				const channel = client.channels.cache.get(guildData.plugins.birthdays),
+				const channel = client.channels.cache.get(guildData.plugins.birthdays) || await client.channels.fetch(guildData.plugins.birthdays),
 					date = new Date(),
 					currentDay = date.getDate(),
 					currentMonth = date.getMonth(),
@@ -60,6 +60,7 @@ module.exports.init = async function (client) {
 	},
 	null,
 	true,
-	"Europe/Moscow",
 	);
+
+	cronjob.start();
 };

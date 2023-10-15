@@ -32,9 +32,7 @@ class GuildMemberAdd extends BaseEvent {
 
 		await member.guild.members.fetch();
 
-		const guildData = await client.findOrCreateGuild({
-			id: member.guild.id,
-		});
+		const guildData = await client.findOrCreateGuild(member.guild.id);
 
 		if (guildData.plugins.autorole.enabled) member.roles.add(guildData.plugins.autorole.role);
 
