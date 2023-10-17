@@ -46,7 +46,7 @@ class CreateTicketEmbed extends BaseCommand {
 					guildData.plugins.tickets.count++;
 
 					guildData.markModified("plugins.tickets");
-					guildData.save();
+					await guildData.save();
 
 					const channel = await interaction.guild.channels.create({
 						name: `${interaction.user.username}-support-${guildData.plugins.tickets.count}`,

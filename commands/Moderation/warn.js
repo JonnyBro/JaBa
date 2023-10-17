@@ -179,7 +179,7 @@ class Warn extends BaseCommand {
 			memberData.sanctions.push(caseInfo);
 
 			memberData.markModified("sanctions");
-			memberData.save();
+			await memberData.save();
 
 			if (data.guildData.plugins.modlogs) {
 				const channel = interaction.guild.channels.cache.get(data.guildData.plugins.modlogs);

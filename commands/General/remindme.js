@@ -73,13 +73,13 @@ class Remindme extends BaseCommand {
 		data.userData.reminds.push(rData);
 
 		data.userData.markModified("reminds");
-		data.userData.save();
+		await data.userData.save();
 
 		client.databaseCache.usersReminds.set(interaction.user.id, data.userData);
 
 		interaction.success("general/remindme:SAVED", {
 			message,
-			time: moment(rData.sendAt).locale(data.guildData.language).format("dddd, Do MMMM YYYY, HH:mm:ss"),
+			time: moment(rData.sendAt).locale(data.guildData.language || "en-US").format("dddd, Do MMMM YYYY, HH:mm:ss"),
 		}, { edit: true });
 	}
 }
