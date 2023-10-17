@@ -149,7 +149,7 @@ class Selectroles extends BaseCommand {
 			const menu = row.components[0];
 			if (menu) {
 				for (const o of menu.options) {
-					if (o.value === option[0].value) return interaction.error("administration/selectroles:ALREADY_IN_MENU");
+					if (o.value === option[0].value) return interaction.error("administration/selectroles:ALREADY_IN_MENU", null, { edit: true });
 				}
 
 				row = ActionRowBuilder.from(row).setComponents(
