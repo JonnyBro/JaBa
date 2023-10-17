@@ -9,7 +9,7 @@
 	"DATE_TOO_LOW": "Are you over 80 years old? :eyes:",
 	"DATE_TOO_HIGH": "Hmm... You haven't been born yet",
 	"HAPPY_BIRTHDAY": "Happy Birthday",
-	"HAPPY_BIRTHDAY_MESSAGE": "Happy birthday to {{name}} (<@{{user}}>)! Today, they have turned {{age}}!",
+	"HAPPY_BIRTHDAY_MESSAGE": "Happy birthday to <@{{user}}>! Today, they have turned {{age}}!",
 	"SUCCESS": "Your date of birth has been set to **{{date}}**",
 
 	"JANUARY": "January",
