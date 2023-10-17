@@ -31,7 +31,7 @@ module.exports.init = function (client) {
 							})
 							.setDescription(
 								client.translate("general/remindme:CREATED", {
-									time: moment(r.createdAt).tz("Europe/Moscow").locale(client.defaultLanguage).format("dddd, Do MMMM YYYY, HH:mm:ss"),
+									time: moment(r.createdAt).locale(client.defaultLanguage).format("dddd, Do MMMM YYYY, HH:mm:ss"),
 								}),
 							)
 							.addFields([
