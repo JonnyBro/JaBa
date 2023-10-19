@@ -130,10 +130,7 @@ class Marry extends BaseCommand {
 				data.userData.lover = member.id;
 				userData.lover = interaction.member.id;
 
-				data.userData.markModified("lover");
 				await data.userData.save();
-
-				userData.markModified("lover");
 				await userData.save();
 
 				const messageOptions = {
@@ -153,7 +150,6 @@ class Marry extends BaseCommand {
 					userData.achievements.married.achieved = true;
 					userData.achievements.married.progress.now = 1;
 
-					userData.markModified("achievements.married");
 					await userData.save();
 				}
 
@@ -162,7 +158,6 @@ class Marry extends BaseCommand {
 					data.userData.achievements.married.achieved = true;
 					data.userData.achievements.married.progress.now = 1;
 
-					data.userData.markModified("achievements.married");
 					await data.userData.save();
 				}
 

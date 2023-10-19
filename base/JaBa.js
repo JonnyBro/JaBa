@@ -77,15 +77,12 @@ class JaBa extends Client {
 		this.login(this.config.token);
 
 		mongoose
-			.connect(this.config.mongoDB, {
-				useNewUrlParser: true,
-				useUnifiedTopology: true,
-			})
+			.connect(this.config.mongoDB)
 			.then(() => {
 				this.logger.log("Connected to the Mongodb database.", "log");
 			})
 			.catch(err => {
-				this.logger.log(`Unable to connect to the Mongodb database. Error: ${err}`, "error");
+				this.logger.log(`Unable to connect to the Mongodb database.\nError: ${err}`, "error");
 			});
 
 		await this.player.extractors.loadDefault();
@@ -282,7 +279,6 @@ class JaBa extends Client {
 			if (guildData) {
 				guildData.members.push(memberData._id);
 
-				guildData.markModified("members");
 				await guildData.save();
 			}
 

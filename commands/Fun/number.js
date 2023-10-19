@@ -96,9 +96,9 @@ class Number extends BaseCommand {
 					};
 					data.memberData.transactions.push(info);
 
-					data.memberData.markModified("transactions");
 					await memberData.save();
 				}
+
 				collector.stop();
 			}
 

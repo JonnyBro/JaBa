@@ -129,9 +129,6 @@ class Slots extends BaseCommand {
 				data.memberData.money += toAdd;
 				data.memberData.transactions.push(info);
 
-				data.memberData.markModified("money");
-				data.memberData.markModified("transactions");
-
 				if (!data.userData.achievements.slots.achieved) {
 					data.userData.achievements.slots.progress.now += 1;
 					if (data.userData.achievements.slots.progress.now === data.userData.achievements.slots.progress.total) {
@@ -146,9 +143,9 @@ class Slots extends BaseCommand {
 						});
 					}
 
-					data.userData.markModified("achievements.slots");
 					await data.userData.save();
 				}
+
 				await data.memberData.save();
 
 				return;
@@ -180,9 +177,6 @@ class Slots extends BaseCommand {
 				data.memberData.money += toAdd;
 				data.memberData.transactions.push(info);
 
-				data.memberData.markModified("money");
-				data.memberData.markModified("transactions");
-
 				if (!data.userData.achievements.slots.achieved) {
 					data.userData.achievements.slots.progress.now += 1;
 					if (data.userData.achievements.slots.progress.now === data.userData.achievements.slots.progress.total) {
@@ -197,10 +191,11 @@ class Slots extends BaseCommand {
 						});
 					}
 
-					data.userData.markModified("achievements.slots");
 					await data.userData.save();
 				}
+
 				await data.memberData.save();
+
 				return;
 			}
 
@@ -222,16 +217,14 @@ class Slots extends BaseCommand {
 			data.memberData.money -= amount;
 			data.memberData.transactions.push(info);
 
-			data.memberData.markModified("money");
-			data.memberData.markModified("transactions");
-
 			if (!data.userData.achievements.slots.achieved) {
 				data.userData.achievements.slots.progress.now = 0;
 
-				data.userData.markModified("achievements.slots");
 				await data.userData.save();
 			}
+
 			await data.memberData.save();
+
 			return;
 		}
 

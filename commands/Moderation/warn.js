@@ -178,7 +178,6 @@ class Warn extends BaseCommand {
 
 			memberData.sanctions.push(caseInfo);
 
-			memberData.markModified("sanctions");
 			await memberData.save();
 
 			if (data.guildData.plugins.modlogs) {

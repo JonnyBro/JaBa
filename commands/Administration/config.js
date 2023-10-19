@@ -203,7 +203,6 @@ async function changeSetting(interaction, setting, state, channel, guildData) {
 	if (!state) {
 		guildData.plugins[settingSplitted[0]][settingSplitted[1]] = null;
 
-		guildData.markModified("plugins");
 		await guildData.save();
 
 		return interaction.reply({
@@ -216,7 +215,6 @@ async function changeSetting(interaction, setting, state, channel, guildData) {
 		if (channel) {
 			guildData.plugins[settingSplitted[0]][settingSplitted[1]] = channel.id;
 
-			guildData.markModified("plugins");
 			await guildData.save();
 
 			return interaction.reply({

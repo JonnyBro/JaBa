@@ -25,7 +25,6 @@ class GuildMemberUpdate extends BaseEvent {
 			userData.achievements.tip.progress.now = 1;
 			userData.achievements.tip.achieved = true;
 
-			userData.markModified("achievements.tip");
 			await userData.save();
 
 			newMember.send({

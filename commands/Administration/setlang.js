@@ -52,7 +52,6 @@ class Setlang extends BaseCommand {
 
 		data.guildData.language = language.name;
 
-		data.guildData.markModified("language");
 		await data.guildData.save();
 
 		return interaction.success("administration/setlang:SUCCESS", {

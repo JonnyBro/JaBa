@@ -55,7 +55,6 @@ class Clearwarns extends BaseCommand {
 
 		memberData.sanctions = [];
 
-		memberData.markModified("sanctions");
 		await memberData.save();
 
 		interaction.success("moderation/clearwarns:SUCCESS", {

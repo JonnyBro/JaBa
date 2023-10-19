@@ -51,7 +51,6 @@ class CommandHandler extends BaseEvent {
 			userData.achievements.firstCommand.progress.now = 1;
 			userData.achievements.firstCommand.achieved = true;
 
-			userData.markModified("achievements.firstCommand");
 			await userData.save();
 
 			interaction.user.send(args);

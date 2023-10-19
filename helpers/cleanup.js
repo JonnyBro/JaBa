@@ -30,7 +30,6 @@ module.exports.init = async function (client) {
 					const index = transactions.indexOf(transaction);
 					transactions.splice(index, 1);
 
-					member.markModified("transactions");
 					await member.save();
 				}
 			}

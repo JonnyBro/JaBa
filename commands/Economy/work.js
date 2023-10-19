@@ -48,9 +48,6 @@ class Work extends BaseCommand {
 		data.memberData.cooldowns.work = toWait;
 		data.memberData.workStreak = (data.memberData.workStreak || 0) + 1;
 
-		data.memberData.markModified("cooldowns");
-		data.memberData.markModified("workStreak");
-
 		await data.memberData.save();
 
 		const embed = new EmbedBuilder()
@@ -101,7 +98,6 @@ class Work extends BaseCommand {
 
 		data.memberData.money += won;
 
-		data.memberData.markModified("money");
 		await data.memberData.save();
 
 		const info = {
@@ -128,7 +124,6 @@ class Work extends BaseCommand {
 				data.userData.achievements.work.achieved = true;
 			}
 
-			data.userData.markModified("achievements.work");
 			await data.userData.save();
 		}
 
