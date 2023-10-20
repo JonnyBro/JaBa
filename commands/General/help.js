@@ -61,7 +61,6 @@ class Help extends BaseCommand {
 			if (!categories.includes(c.category)) {
 				if (c.category === "Owner" && interaction.user.id !== client.config.owner.id) return;
 				if (c.category === "IAT" && interaction.guildId !== "1039187019957555252") return;
-				if (c.category === "SunCountry" && interaction.guildId !== "600970971410857996") return;
 
 				categories.push(c.category);
 			}

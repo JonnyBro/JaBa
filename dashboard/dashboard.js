@@ -4,6 +4,12 @@ const SoftUI = require("./dashboard-core/theme/dbd-soft-ui"),
 
 const { PermissionsBitField } = require("discord.js");
 
+const locales = {
+	"en-US": require("../languages/en-US/dashboard.json"),
+	"ru-RU": require("../languages/ru-RU/dashboard.json"),
+	"uk-UA": require("../languages/uk-UA/dashboard.json"),
+};
+
 /**
  *
  * @param {import("../base/JaBa")} client
@@ -31,7 +37,7 @@ module.exports.load = async client => {
 			subTitle: "",
 			hideAlias: true,
 			hideDescription: false,
-			hideSidebarItem: c === "Owner" || c === "IAT" || c === "SunCountry" ? true : false,
+			hideSidebarItem: c === "Owner" || c === "IAT" ? true : false,
 			list: commands.filter(v => v._category === c),
 		};
 	});
@@ -53,7 +59,6 @@ module.exports.load = async client => {
 		bot: client,
 		ownerIDs: [client.config.owner.id],
 		requiredPermissions: PermissionsBitField.Flags.ViewChannel,
-		minimizedConsoleLogs: true,
 		invite: {
 			clientId: client.config.userId,
 			scopes: ["bot", "applications.commands"],
@@ -171,7 +176,7 @@ module.exports.load = async client => {
 					image: "",
 					link: {
 						enabled: false,
-						url: "https://google.com",
+						url: "https://github.com/JonnyBro",
 					},
 				},
 				graph: {
@@ -199,9 +204,9 @@ module.exports.load = async client => {
 			},
 			commands: categories,
 			locales: {
-				enUS: require("../languages/en-US/dashboard.json"),
-				ruRU: require("../languages/ru-RU/dashboard.json"),
-				ukUA: require("../languages/uk-UA/dashboard.json"),
+				enUS: locales["en-US"],
+				ruRU: locales["ru-RU"],
+				ukUA: locales["uk-UA"],
 			},
 		}),
 		customPages: [
