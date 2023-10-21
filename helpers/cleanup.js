@@ -44,6 +44,22 @@ module.exports.init = async function (client) {
 						client.databaseCache.users.delete(u.id);
 						client.usersData.deleteOne({ id: u.id });
 						client.logger.log(`Removed from database deleted user - ID: ${u.id} Username: ${u.username}`);
+
+						client.usersData.save();
+					}
+				});
+			}
+		});
+
+		client.membersData.find({}, function (err, res) {
+			for (const user of res) {
+				client.users.fetch(user.id).then(u => {
+					if (u.username.match(/.*Deleted User.* [A-z0-9]+/g)) {
+						client.databaseCache.members.delete(u.id);
+						client.membersData.deleteOne({ id: u.id });
+						client.logger.log(`Removed from database deleted user - ID: ${u.id} Username: ${u.username}`);
+
+						client.membersData.save();
 					}
 				});
 			}

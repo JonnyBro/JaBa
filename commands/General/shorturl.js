@@ -47,7 +47,7 @@ class Shorturl extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const url = interaction.options.getString("url");
-		const res = await fetch(`http://jababot.ru/yourls/yourls-api.php?signature=${client.config.apiKeys.jababot_yourls}&action=shorturl&url=${encodeURIComponent(url)}&format=json`).then(res => res.json());
+		const res = await fetch(`http://plsgo.ru/yourls-api.php?signature=${client.config.apiKeys.jababot_yourls}&action=shorturl&url=${encodeURIComponent(url)}&format=json`).then(res => res.json());
 
 		interaction.reply({
 			content: `<${res.shorturl}>`,

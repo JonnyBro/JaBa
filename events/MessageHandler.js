@@ -39,7 +39,7 @@ class MessageCreate extends BaseEvent {
 		if (message.guild) {
 			await updateXp(client, message, data.memberData);
 
-			if (message.content.includes("discord.com/channels/")) {
+			if (message.content.match(/(https|http):\/\/(ptb\.|canary\.)?(discord.com)\/(channels)\/\d+\/\d+\/\d+/g)) {
 				const link = message.content.match(/(https|http):\/\/(ptb\.|canary\.)?(discord.com)\/(channels)\/\d+\/\d+\/\d+/g)[0],
 					ids = link.match(/\d+/g),
 					channelId = ids[1],
@@ -54,32 +54,34 @@ class MessageCreate extends BaseEvent {
 						iconURL: "https://wynem.com/assets/images/icons/quote.webp",
 					})
 					.setThumbnail(msg.author.displayAvatarURL())
-					.setDescription(msg.content !== "" ? msg.content : `*${message.translate("common:MISSING")}*`)
-					.addFields([
-						{
-							name: message.translate("misc:QUOTE_ATTACHED"),
-							value:
-								msg.attachments.size > 0
-									? msg.attachments
-										.map(a => {
-											return `[${a.name}](${a.url})`;
-										})
-										.join("\n")
-									: `*${message.translate("common:MISSING")}*`,
-						},
-					])
 					.setFooter({
 						text: message.translate("misc:QUOTE_FOOTER", { user: message.author.getUsername() }),
 					})
 					.setColor(client.config.embed.color)
 					.setTimestamp(msg.createdTimestamp);
 
+				if (msg.content !== "") embed.addFields([
+					{
+						name: message.translate("misc:QUOTE_CONTENT"),
+						value: msg.content,
+					},
+				]);
+
+				if (msg.attachments.size > 0) {
+					embed.addFields([
+						{
+							name: message.translate("misc:QUOTE_ATTACHED"),
+							value: msg.attachments.map(a => { return `[${a.name}](${a.url})`; }).join(", "),
+						},
+					]);
+				}
+
 				const row = new ActionRowBuilder().addComponents(
 					new ButtonBuilder().setLabel(message.translate("misc:QUOTE_JUMP")).setStyle(ButtonStyle.Link).setURL(msg.url),
 					new ButtonBuilder().setCustomId("quote_delete").setEmoji("1102200816582000750").setStyle(ButtonStyle.Danger),
 				);
 
-				const reply = await message.reply({
+				await message.reply({
 					embeds: [embed],
 					components: [row],
 				});
@@ -88,7 +90,11 @@ class MessageCreate extends BaseEvent {
 				const collector = message.channel.createMessageComponentCollector({ filter, time: 60 * 1000 });
 
 				collector.on("collect", async i => {
-					if (i.isButton() && i.customId === "quote_delete") if (reply.deletable) reply.delete();
+					if (i.isButton() && i.customId === "quote_delete") {
+						console.log(i.message);
+
+						if (i.message.deletable) i.message.delete();
+					}
 				});
 			}
 
