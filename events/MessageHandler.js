@@ -68,6 +68,8 @@ class MessageCreate extends BaseEvent {
 				]);
 
 				if (msg.attachments.size > 0) {
+					if (msg.attachments.find(a => a.contentType.includes("image/"))) embed.setImage(msg.attachments.find(a => a.contentType.includes("image/")).url);
+
 					embed.addFields([
 						{
 							name: message.translate("misc:QUOTE_ATTACHED"),
@@ -91,8 +93,6 @@ class MessageCreate extends BaseEvent {
 
 				collector.on("collect", async i => {
 					if (i.isButton() && i.customId === "quote_delete") {
-						console.log(i.message);
-
 						if (i.message.deletable) i.message.delete();
 					}
 				});
