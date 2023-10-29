@@ -58,9 +58,9 @@ class Skipto extends BaseCommand {
 			queue.node.skipTo(queue.tracks.at(position - 1));
 
 			interaction.success("music/skipto:SUCCESS", {
-				position,
+				track: queue.tracks.at(position - 1).title,
 			});
-		} else return interaction.error("music/skipto:ERROR", { position: position });
+		} else return interaction.error("music/skipto:ERROR", { position });
 	}
 }
 
