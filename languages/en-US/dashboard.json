@@ -68,7 +68,7 @@
 				"maintenance": "Under Maintenance"
 			}
 		},
-		"sweetalert": {
+		"notify": {
 			"errors": {
 				"settingsSave": "Failed to save setttings"
 			},

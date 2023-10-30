@@ -68,7 +68,7 @@
 				"maintenance": "Техобслуживание"
 			}
 		},
-		"sweetalert": {
+		"notify": {
 			"errors": {
 				"settingsSave": "Произошла ошибка при сохранении настроек."
 			},

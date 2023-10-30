@@ -187,7 +187,7 @@ module.exports.load = async client => {
 					max: 100,
 				},
 			},
-			sweetalert: {
+			notify: {
 				errors: {
 					settingsSave: "Failed to save setttings",
 				},
