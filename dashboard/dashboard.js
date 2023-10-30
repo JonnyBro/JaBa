@@ -55,7 +55,7 @@ module.exports.load = async client => {
 		// },
 		cookiesSecret: client.config.dashboard.secret,
 		domain: client.config.dashboard.domain,
-		redirectUri: `${client.config.dashboard.domain}${client.config.dashboard.port !== 80 ? `:${client.config.dashboard.port}` : ""}/discord/callback`,
+		redirectUri: `${client.config.dashboard.domain}/discord/callback`,
 		bot: client,
 		ownerIDs: [client.config.owner.id],
 		requiredPermissions: PermissionsBitField.Flags.ViewChannel,
@@ -63,7 +63,7 @@ module.exports.load = async client => {
 			clientId: client.config.userId,
 			scopes: ["bot", "applications.commands"],
 			permissions: "8",
-			redirectUri: `${client.config.dashboard.domain}${client.config.dashboard.port !== 80 ? `:${client.config.dashboard.port}` : ""}`,
+			redirectUri: `${client.config.dashboard.domain}`,
 		},
 		supportServer: {
 			slash: "/support",
