@@ -235,10 +235,10 @@ class JaBa extends Client {
 
 	/**
 	 * Finds or creates user in DB
-	 * @param {Array} param0 { id: User ID }
-	 * @returns {import("./User")} Mongoose model or JSON of this user
+	 * @param {String} userID User ID
+	 * @returns {import("./User")} Mongoose model
 	 */
-	async findOrCreateUser({ id: userID }) {
+	async findOrCreateUser(userID) {
 		if (this.databaseCache.users.get(userID)) return this.databaseCache.users.get(userID);
 		else {
 			let userData = await this.usersData.findOne({ id: userID });
@@ -260,8 +260,8 @@ class JaBa extends Client {
 
 	/**
 	 * Finds or creates member in DB
-	 * @param {Array} param0 { id: Member ID }
-	 * @returns {import("./Member")} Mongoose model or JSON of this member
+	 * @param {Array} { id: Member ID, Guild ID }
+	 * @returns {import("./Member")} Mongoose model
 	 */
 	async findOrCreateMember({ id: memberID, guildId }) {
 		let memberData = await this.membersData.findOne({ guildID: guildId, id: memberID });
@@ -290,8 +290,8 @@ class JaBa extends Client {
 
 	/**
 	 * Finds or creates guild in DB
-	 * @param {Array} param0 { id: Guild ID }
-	 * @returns {import("./Guild")} Mongoose model or JSON of this guild
+	 * @param {String} guildId Guild ID
+	 * @returns {import("./Guild")} Mongoose model
 	 */
 	async findOrCreateGuild(guildId) {
 		let guildData = await this.guildsData.findOne({ id: guildId }).populate("members");

@@ -17,25 +17,44 @@ class Automod extends BaseCommand {
 				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
-				.addBooleanOption(option =>
-					option
-						.setName("state")
-						.setDescription(client.translate("common:STATE"))
+				.addSubcommand(subcommand =>
+					subcommand
+						.setName("toggle")
+						.setDescription(client.translate("administration/automod:TOGGLE"))
 						.setDescriptionLocalizations({
-							uk: client.translate("common:STATE", null, "uk-UA"),
-							ru: client.translate("common:STATE", null, "ru-RU"),
+							uk: client.translate("administration/automod:TOGGLE", null, "uk-UA"),
+							ru: client.translate("administration/automod:TOGGLE", null, "ru-RU"),
 						})
-						.setRequired(true),
+						.addBooleanOption(option =>
+							option
+								.setName("state")
+								.setDescription(client.translate("common:STATE"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:STATE", null, "uk-UA"),
+									ru: client.translate("common:STATE", null, "ru-RU"),
+								})
+								.setRequired(true),
+						),
 				)
-				.addChannelOption(option =>
-					option
-						.setName("channel")
-						.setDescription(client.translate("common:CHANNEL"))
+				.addSubcommand(subcommand =>
+					subcommand
+						.setName("ignore")
+						.setDescription(client.translate("administration/automod:IGNORE"))
 						.setDescriptionLocalizations({
-							uk: client.translate("common:CHANNEL", null, "uk-UA"),
-							ru: client.translate("common:CHANNEL", null, "ru-RU"),
+							uk: client.translate("administration/automod:IGNORE", null, "uk-UA"),
+							ru: client.translate("administration/automod:IGNORE", null, "ru-RU"),
 						})
-						.addChannelTypes(ChannelType.GuildText),
+						.addChannelOption(option =>
+							option
+								.setName("channel")
+								.setDescription(client.translate("common:CHANNEL"))
+								.setDescriptionLocalizations({
+									uk: client.translate("common:CHANNEL", null, "uk-UA"),
+									ru: client.translate("common:CHANNEL", null, "ru-RU"),
+								})
+								.addChannelTypes(ChannelType.GuildText)
+								.setRequired(true),
+						),
 				),
 			aliases: [],
 			dirname: __dirname,
@@ -57,36 +76,26 @@ class Automod extends BaseCommand {
 	 */
 	async execute(client, interaction, data) {
 		const state = interaction.options.getBoolean("state"),
-			channel = interaction.options.getChannel("channel");
+			channel = interaction.options.getChannel("channel"),
+			command = interaction.options.getSubcommand();
 
-		if (state) {
+		if (command === "toggle") {
 			data.guildData.plugins.automod = {
-				enabled: true,
+				enabled: state,
 				ignored: [],
 			};
 
 			await data.guildData.save();
 
-			return interaction.success("administration/automod:ENABLED");
-		} else {
-			if (channel) {
-				data.guildData.plugins.automod.ignored.push(channel.id);
+			interaction.success(`administration/automod:${state ? "ENABLED" : "DISABLED"}`);
+		} else if (command === "ignore") {
+			data.guildData.plugins.automod.ignored.push(channel.id);
 
-				await data.guildData.save();
+			await data.guildData.save();
 
-				interaction.success("administration/automod:DISABLED_CHANNEL", {
-					channel: channel.toString(),
-				});
-			} else {
-				data.guildData.plugins.automod = {
-					enabled: false,
-					ignored: [],
-				};
-
-				await data.guildData.save();
-
-				interaction.success("administration/automod:DISABLED");
-			}
+			interaction.success("administration/automod:DISABLED_CHANNEL", {
+				channel: channel.toString(),
+			});
 		}
 	}
 }

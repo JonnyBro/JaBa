@@ -36,6 +36,7 @@ class Staff extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		await interaction.guild.members.fetch();
+
 		const administrators = interaction.guild.members.cache.filter(m => m.permissions.has(PermissionsBitField.Flags.Administrator) && !m.user.bot);
 		const moderators = interaction.guild.members.cache.filter(m => !administrators.has(m.id) && m.permissions.has(PermissionsBitField.Flags.ManageMessages) && !m.user.bot);
 		const embed = new EmbedBuilder()

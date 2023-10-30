@@ -2,6 +2,8 @@
 	"DESCRIPTION": "Включить или отключить автоудаление ссылок-приглашений",
 	"USAGE": "[state] (#channel)",
 	"EXAMPLES": "automod state:True\nautomod state:False channel:#general\nautomod state:False",
+	"TOGGLE": "Переключить автомод",
+	"IGNORE": "Игнорировать канал",
 	"ENABLED": "Ссылки-приглашения будут удаляться автоматически\nИспользуйте `automod false #channel` для игнорирования канала",
 	"DISABLED_CHANNEL": "Автомодерация не будет выполняться в {{channel}}",
 	"DISABLED": "Автомодерация отключена",
