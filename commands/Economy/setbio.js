@@ -50,6 +50,7 @@ class Setbio extends BaseCommand {
 
 		data.userData.bio = newBio;
 
+		data.userData.markModified();
 		await data.userData.save();
 
 		interaction.success("economy/setbio:SUCCESS");

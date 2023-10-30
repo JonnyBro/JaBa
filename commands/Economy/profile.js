@@ -50,7 +50,7 @@ class Profile extends BaseCommand {
 		if (member.user.bot) return interaction.error("economy/profile:BOT_USER");
 
 		const memberData = member.id === interaction.user.id ? data.memberData : await client.findOrCreateMember({ id: member.id, guildId: interaction.guildId });
-		const userData = member.id === interaction.user.id ? data.userData : await client.findOrCreateUser({ id: member.id });
+		const userData = member.id === interaction.user.id ? data.userData : await client.findOrCreateUser(member.id);
 		if (userData.lover && !client.users.cache.find(u => u.id === userData.lover)) await client.users.fetch(userData.lover, true);
 
 		const guilds = client.guilds.cache.filter(g => g.members.cache.find(m => m.id === member.id));

@@ -69,6 +69,7 @@ class Bank extends BaseCommand {
 			data.memberData.money -= credits;
 			data.memberData.bankSold += credits;
 
+			data.memberData.markModified();
 			await data.memberData.save();
 
 			const info = {
@@ -102,6 +103,7 @@ class Bank extends BaseCommand {
 			data.memberData.money += credits;
 			data.memberData.bankSold -= credits;
 
+			data.memberData.markModified();
 			await data.memberData.save();
 
 			interaction.success("economy/bank:SUCCESS_WD", {

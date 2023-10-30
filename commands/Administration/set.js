@@ -88,6 +88,7 @@ class Set extends BaseCommand {
 			case "level": {
 				memberData.level = int;
 
+				memberData.markModified();
 				await memberData.save();
 
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -99,6 +100,7 @@ class Set extends BaseCommand {
 			case "xp": {
 				memberData.exp = int;
 
+				memberData.markModified();
 				await memberData.save();
 
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -110,6 +112,7 @@ class Set extends BaseCommand {
 			case "credits": {
 				memberData.money = int;
 
+				memberData.markModified();
 				await memberData.save();
 
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -121,6 +124,7 @@ class Set extends BaseCommand {
 			case "bank": {
 				memberData.bankSold = int;
 
+				memberData.markModified();
 				await memberData.save();
 
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {

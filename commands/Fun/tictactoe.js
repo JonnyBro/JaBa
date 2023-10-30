@@ -58,15 +58,17 @@ class TicTacToe extends BaseCommand {
 
 			memberData.money += 100;
 
-			await memberData.save();
-
 			const info = {
 				user: interaction.translate("economy/transactions:TTT"),
 				amount: 100,
 				date: Date.now(),
 				type: "got",
 			};
+
 			memberData.transactions.push(info);
+
+			memberData.markModified();
+			await memberData.save();
 		});
 	}
 }

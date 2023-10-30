@@ -143,9 +143,11 @@ class Slots extends BaseCommand {
 						});
 					}
 
+					data.userData.markModified();
 					await data.userData.save();
 				}
 
+				data.memberData.markModified();
 				await data.memberData.save();
 
 				return;
@@ -191,9 +193,11 @@ class Slots extends BaseCommand {
 						});
 					}
 
+					data.userData.markModified();
 					await data.userData.save();
 				}
 
+				data.memberData.markModified();
 				await data.memberData.save();
 
 				return;
@@ -220,9 +224,11 @@ class Slots extends BaseCommand {
 			if (!data.userData.achievements.slots.achieved) {
 				data.userData.achievements.slots.progress.now = 0;
 
+				data.userData.markModified();
 				await data.userData.save();
 			}
 
+			data.memberData.markModified();
 			await data.memberData.save();
 
 			return;

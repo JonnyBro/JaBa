@@ -62,11 +62,10 @@ class Rep extends BaseCommand {
 
 		data.userData.cooldowns.rep = toWait;
 
+		data.userData.markModified();
 		await data.userData.save();
 
-		const userData = await client.findOrCreateUser({
-			id: user.id,
-		});
+		const userData = await client.findOrCreateUser(user.id);
 
 		userData.rep++;
 
@@ -86,6 +85,7 @@ class Rep extends BaseCommand {
 			}
 		}
 
+		userData.markModified();
 		await userData.save();
 
 		interaction.success("economy/rep:SUCCESS", {

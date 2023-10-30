@@ -138,7 +138,8 @@ class GuildMemberAdd extends BaseEvent {
 						content: message,
 						files: [attachment],
 					});
-				} else channel.send({ content: message });
+				} else
+					channel.send({ content: message });
 			}
 		}
 	}

@@ -52,9 +52,7 @@ class Marry extends BaseCommand {
 		if (member.user.bot) return interaction.error("economy/marry:BOT_USER");
 		if (member.id === interaction.member.id) return interaction.error("economy/marry:YOURSELF");
 
-		const userData = await client.findOrCreateUser({
-			id: member.id,
-		});
+		const userData = await client.findOrCreateUser(member.id);
 		if (userData.lover) return interaction.error("economy/marry:ALREADY_MARRIED_USER", { user: member.toString() });
 
 		for (const requester in pendings) {
@@ -130,6 +128,8 @@ class Marry extends BaseCommand {
 				data.userData.lover = member.id;
 				userData.lover = interaction.member.id;
 
+				data.userData.markModified();
+				userData.markModified();
 				await data.userData.save();
 				await userData.save();
 
@@ -150,6 +150,7 @@ class Marry extends BaseCommand {
 					userData.achievements.married.achieved = true;
 					userData.achievements.married.progress.now = 1;
 
+					userData.markModified();
 					await userData.save();
 				}
 
@@ -158,6 +159,7 @@ class Marry extends BaseCommand {
 					data.userData.achievements.married.achieved = true;
 					data.userData.achievements.married.progress.now = 1;
 
+					data.userData.markModified();
 					await data.userData.save();
 				}
 

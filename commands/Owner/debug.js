@@ -136,9 +136,7 @@ class Debug extends BaseCommand {
 			const member = interaction.options.getMember("user");
 			if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
 
-			const userData = await client.findOrCreateUser({
-					id: member.id,
-				}),
+			const userData = await client.findOrCreateUser(member.id),
 				memberData = await client.findOrCreateMember({
 					id: member.id,
 					guildId: interaction.guildId,
@@ -148,6 +146,7 @@ class Debug extends BaseCommand {
 				case "level": {
 					memberData.level = int;
 
+					memberData.markModified();
 					await memberData.save();
 
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -159,6 +158,7 @@ class Debug extends BaseCommand {
 				case "xp": {
 					memberData.exp = int;
 
+					memberData.markModified();
 					await memberData.save();
 
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -170,6 +170,7 @@ class Debug extends BaseCommand {
 				case "credits": {
 					memberData.money = int;
 
+					memberData.markModified();
 					await memberData.save();
 
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -181,6 +182,7 @@ class Debug extends BaseCommand {
 				case "bank": {
 					memberData.bankSold = int;
 
+					memberData.markModified();
 					await memberData.save();
 
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -192,6 +194,7 @@ class Debug extends BaseCommand {
 				case "rep": {
 					userData.rep = int;
 
+					userData.markModified();
 					await userData.save();
 
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -207,9 +210,7 @@ class Debug extends BaseCommand {
 			const member = interaction.options.getMember("target");
 			if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
 
-			const userData = await client.findOrCreateUser({
-					id: member.id,
-				}),
+			const userData = await client.findOrCreateUser(member.id),
 				memberData = await client.findOrCreateMember({
 					id: member.id,
 					guildId: interaction.guildId,
@@ -219,6 +220,7 @@ class Debug extends BaseCommand {
 				case "level": {
 					memberData.level += int;
 
+					memberData.markModified();
 					await memberData.save();
 
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -230,6 +232,7 @@ class Debug extends BaseCommand {
 				case "xp": {
 					memberData.exp += int;
 
+					memberData.markModified();
 					await memberData.save();
 
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -241,6 +244,7 @@ class Debug extends BaseCommand {
 				case "credits": {
 					memberData.money += int;
 
+					memberData.markModified();
 					await memberData.save();
 
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -252,6 +256,7 @@ class Debug extends BaseCommand {
 				case "bank": {
 					memberData.bankSold += int;
 
+					memberData.markModified();
 					await memberData.save();
 
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -263,6 +268,7 @@ class Debug extends BaseCommand {
 				case "rep": {
 					userData.rep += int;
 
+					userData.markModified();
 					await userData.save();
 
 					return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {

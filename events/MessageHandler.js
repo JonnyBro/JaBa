@@ -24,7 +24,7 @@ class MessageCreate extends BaseEvent {
 		if (message.author.bot) return;
 		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) return message.replyT("misc:HELLO_SERVER", null, { mention: true });
 
-		const userData = await client.findOrCreateUser({ id: message.author.id });
+		const userData = await client.findOrCreateUser(message.author.id);
 		data.userData = userData;
 
 		if (message.guild && !message.member) await message.guild.members.fetch(message.author.id);
@@ -105,10 +105,10 @@ class MessageCreate extends BaseEvent {
 						message.delete();
 					}
 
-			const afkReason = data.userData.afk;
-			if (afkReason) {
+			if (data.userData.afk) {
 				data.userData.afk = null;
 
+				data.userData.markModified();
 				await data.userData.save();
 
 				message.replyT("general/afk:DELETED", {
@@ -117,7 +117,7 @@ class MessageCreate extends BaseEvent {
 			}
 
 			message.mentions.users.forEach(async u => {
-				const userData = await client.findOrCreateUser({ id: u.id });
+				const userData = await client.findOrCreateUser(u.id);
 
 				if (userData.afk) message.replyT("general/afk:IS_AFK", { user: u.getUsername(), reason: userData.afk }, { ephemeral: true });
 			});
@@ -156,6 +156,7 @@ async function updateXp(client, msg, memberData) {
 		}, { mention: false });
 	} else memberData.exp = parseInt(newXp, 10);
 
+	memberData.markModified();
 	await memberData.save();
 }
 

@@ -29,6 +29,7 @@ module.exports = client => [
 
 					guildData.language = newData;
 
+					guildData.markModified();
 					await guildData.save();
 
 					return;
@@ -54,6 +55,7 @@ module.exports = client => [
 
 							guildData.plugins.welcome.enabled = newData;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -74,6 +76,7 @@ module.exports = client => [
 
 							guildData.plugins.welcome.withImage = newData;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -94,6 +97,7 @@ module.exports = client => [
 
 							guildData.plugins.welcome.message = newData !== "" ? newData : null;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -114,6 +118,7 @@ module.exports = client => [
 
 							guildData.plugins.welcome.channel = newData !== "" ? newData : null;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -141,6 +146,7 @@ module.exports = client => [
 
 							guildData.plugins.goodbye.enabled = newData;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -161,6 +167,7 @@ module.exports = client => [
 
 							guildData.plugins.goodbye.withImage = newData;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -181,6 +188,7 @@ module.exports = client => [
 
 							guildData.plugins.goodbye.message = newData !== "" ? newData : null;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -201,6 +209,7 @@ module.exports = client => [
 
 							guildData.plugins.goodbye.channel = newData !== "" ? newData : null;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -228,6 +237,7 @@ module.exports = client => [
 
 							guildData.plugins.autorole.enabled = newData;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -248,6 +258,7 @@ module.exports = client => [
 
 							guildData.plugins.autorole.role = newData !== "" ? newData : null;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -275,6 +286,7 @@ module.exports = client => [
 
 							guildData.plugins.automod.enabled = newData;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -295,6 +307,7 @@ module.exports = client => [
 
 							guildData.plugins.automod.ignored = newData;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -324,6 +337,7 @@ module.exports = client => [
 
 							guildData.plugins.monitoring.messageUpdate = newData !== "" ? newData : null;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -346,6 +360,7 @@ module.exports = client => [
 
 							guildData.plugins.monitoring.messageDelete = newData !== "" ? newData : null;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -373,6 +388,7 @@ module.exports = client => [
 
 							guildData.plugins.suggestions = newData !== "" ? newData : null;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -393,6 +409,7 @@ module.exports = client => [
 
 							guildData.plugins.reports = newData !== "" ? newData : null;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -413,6 +430,7 @@ module.exports = client => [
 
 							guildData.plugins.birthdays = newData !== "" ? newData : null;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;
@@ -433,6 +451,7 @@ module.exports = client => [
 
 							guildData.plugins.modlogs = newData !== "" ? newData : null;
 
+							guildData.markModified("plugins");
 							await guildData.save();
 
 							return;

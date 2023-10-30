@@ -18,7 +18,7 @@ class CommandHandler extends BaseEvent {
 		const command = client.commands.get(interaction.commandName);
 		const data = [];
 
-		const userData = await client.findOrCreateUser({ id: interaction.user.id });
+		const userData = await client.findOrCreateUser(interaction.user.id);
 		data.userData = userData;
 
 		if (interaction.inGuild()) {
@@ -51,6 +51,7 @@ class CommandHandler extends BaseEvent {
 			userData.achievements.firstCommand.progress.now = 1;
 			userData.achievements.firstCommand.achieved = true;
 
+			userData.markModified("achievements");
 			await userData.save();
 
 			interaction.user.send(args);

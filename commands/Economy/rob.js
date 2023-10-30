@@ -88,6 +88,7 @@ class Rob extends BaseCommand {
 
 			memberData.cooldowns.rob = toWait;
 
+			memberData.markModified();
 			await memberData.save();
 
 			interaction.replyT("economy/rob:ROB_WON_" + randomNum, {
@@ -98,6 +99,8 @@ class Rob extends BaseCommand {
 			data.memberData.money += amount;
 			memberData.money -= amount;
 
+			data.memberData.markModified();
+			memberData.markModified();
 			await data.memberData.save();
 			await memberData.save();
 		} else {
@@ -113,6 +116,8 @@ class Rob extends BaseCommand {
 			data.memberData.money -= potentiallyLose;
 			memberData.money += won;
 
+			data.memberData.markModified();
+			memberData.markModified();
 			await data.memberData.save();
 			await memberData.save();
 		}

@@ -73,10 +73,12 @@ class Pay extends BaseCommand {
 
 		data.memberData.money -= amount;
 
+		data.memberData.markModified();
 		await data.memberData.save();
 
 		memberData.money += amount;
 
+		memberData.markModified();
 		await memberData.save();
 
 		const info1 = {

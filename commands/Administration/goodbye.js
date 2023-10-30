@@ -108,6 +108,7 @@ class Goodbye extends BaseCommand {
 					withImage: null,
 				};
 
+				data.guildData.markModified("plugins.goodbye");
 				await data.guildData.save();
 
 				interaction.success("administration/goodbye:DISABLED");
@@ -123,6 +124,7 @@ class Goodbye extends BaseCommand {
 					withImage: image,
 				};
 
+				data.guildData.markModified("plugins.goodbye");
 				await data.guildData.save();
 
 				interaction.success("administration/goodbye:ENABLED", {
