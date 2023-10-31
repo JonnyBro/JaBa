@@ -20,7 +20,6 @@
         "discord-api-types": "^0.37.62",
         "discord-giveaways": "^6.0.1",
         "discord-player": "^6.6.6",
-        "discord-player-yandexmusic": "^0.0.12",
         "discord.js": "^14.13.0",
         "gamedig": "^4.1.0",
         "i18next": "^21.10.0",

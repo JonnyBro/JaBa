@@ -1,6 +1,5 @@
 const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
 	{ Player } = require("discord-player"),
-	{ YandexMusicExtractor } = require("discord-player-yandexmusic"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ REST } = require("@discordjs/rest"),
 	{ Routes } = require("discord-api-types/v10");
@@ -37,7 +36,6 @@ class JaBa extends Client {
 		this.player = new Player(this);
 
 		this.player.extractors.loadDefault();
-		this.player.extractors.register(YandexMusicExtractor, { access_token: this.config.apiKeys.yandex.token, uid: this.config.apiKeys.yandex.uid });
 
 		this.player.events.on("playerStart", async (queue, track) => {
 			const m = await queue.metadata.channel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language) });
