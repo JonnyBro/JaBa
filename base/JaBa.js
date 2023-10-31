@@ -250,7 +250,6 @@ class JaBa extends Client {
 			} else {
 				userData = new this.usersData({ id: userID });
 
-				userData.markModified();
 				await userData.save();
 
 				this.databaseCache.users.set(userID, userData);
@@ -275,7 +274,6 @@ class JaBa extends Client {
 		} else {
 			memberData = new this.membersData({ id: memberID, guildID: guildId });
 
-			memberData.markModified();
 			await memberData.save();
 
 			const guildData = await this.findOrCreateGuild(guildId);
@@ -283,7 +281,6 @@ class JaBa extends Client {
 			if (guildData) {
 				guildData.members.push(memberData._id);
 
-				guildData.markModified("members");
 				await guildData.save();
 			}
 
@@ -308,7 +305,6 @@ class JaBa extends Client {
 		} else {
 			guildData = new this.guildsData({ id: guildId });
 
-			guildData.markModified();
 			await guildData.save();
 
 			this.databaseCache.guilds.set(guildId, guildData);

@@ -39,7 +39,7 @@ class ImportMee6 extends BaseCommand {
 
 		data.memberData.level = level;
 
-		data.memberData.markModified();
+		data.memberData.markModified("level");
 		await data.memberData.save();
 
 		interaction.editReply({

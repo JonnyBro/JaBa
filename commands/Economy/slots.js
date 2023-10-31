@@ -143,11 +143,12 @@ class Slots extends BaseCommand {
 						});
 					}
 
-					data.userData.markModified();
+					data.userData.markModified("achievements");
 					await data.userData.save();
 				}
 
-				data.memberData.markModified();
+				data.memberData.markModified("money");
+				data.memberData.markModified("transactions");
 				await data.memberData.save();
 
 				return;
@@ -193,11 +194,12 @@ class Slots extends BaseCommand {
 						});
 					}
 
-					data.userData.markModified();
+					data.userData.markModified("achievements");
 					await data.userData.save();
 				}
 
-				data.memberData.markModified();
+				data.memberData.markModified("money");
+				data.memberData.markModified("transactions");
 				await data.memberData.save();
 
 				return;
@@ -224,11 +226,12 @@ class Slots extends BaseCommand {
 			if (!data.userData.achievements.slots.achieved) {
 				data.userData.achievements.slots.progress.now = 0;
 
-				data.userData.markModified();
+				data.userData.markModified("achievements");
 				await data.userData.save();
 			}
 
-			data.memberData.markModified();
+			data.memberData.markModified("money");
+			data.memberData.markModified("transactions");
 			await data.memberData.save();
 
 			return;

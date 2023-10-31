@@ -26,8 +26,29 @@ class NSFW extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 */
-	async onLoad() {
-		//...
+	async onLoad(client) {
+		client.on("interactionCreate", async interaction => {
+			if (!interaction.isStringSelectMenu()) return;
+
+			if (interaction.customId === "nsfw_select") {
+				await interaction.deferUpdate();
+
+				const tag = interaction?.values[0];
+				const res = await fetch(`https://meme-api.com/gimme/${tag}`).then(response => response.json());
+
+				const embed = new EmbedBuilder()
+					.setColor(client.config.embed.color)
+					.setFooter(client.config.embed.footer)
+					.setTitle(res.title)
+					.setDescription(`${interaction.translate("fun/memes:SUBREDDIT")}: **${res.subreddit}**\n${interaction.translate("common:AUTHOR")}: **${res.author}**\n${interaction.translate("fun/memes:UPS")}: **${res.ups}**`)
+					.setImage(res.url)
+					.setTimestamp();
+
+				await interaction.editReply({
+					embeds: [embed],
+				});
+			}
+		});
 	}
 	/**
 	 *
@@ -51,41 +72,11 @@ class NSFW extends BaseCommand {
 
 		const row = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId("nsfw_select").setPlaceholder(client.translate("common:NOTHING_SELECTED")).addOptions(tags));
 
-		const msg = await interaction.editReply({
+		await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
 			ephemeral: true,
 			fetchReply: true,
 			components: [row],
-		});
-
-		const filter = i => i.user.id === interaction.user.id;
-		const collector = msg.createMessageComponentCollector({ filter, idle: 2 * 60 * 1000 });
-
-		collector.on("collect", async i => {
-			if (i.isStringSelectMenu() && i.customId === "nsfw_select") {
-				i.deferUpdate();
-
-				const tag = i?.values[0];
-				const res = await fetch(`https://meme-api.com/gimme/${tag}`).then(response => response.json());
-
-				const embed = new EmbedBuilder()
-					.setColor(client.config.embed.color)
-					.setFooter(client.config.embed.footer)
-					.setTitle(res.title)
-					.setDescription(`${interaction.translate("fun/memes:SUBREDDIT")}: **${res.subreddit}**\n${interaction.translate("common:AUTHOR")}: **${res.author}**\n${interaction.translate("fun/memes:UPS")}: **${res.ups}**`)
-					.setImage(res.url)
-					.setTimestamp();
-
-				await interaction.editReply({
-					embeds: [embed],
-				});
-			}
-		});
-
-		collector.on("end", () => {
-			return interaction.editReply({
-				components: [],
-			});
 		});
 	}
 }

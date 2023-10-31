@@ -30,6 +30,7 @@ class CommandHandler extends BaseEvent {
 		}
 
 		if (interaction.isAutocomplete()) return await command.autocompleteRun(client, interaction);
+		if (interaction.isButton() && interaction.customId === "quote_delete" && interaction.message.deletable) return interaction.message.delete();
 		if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isCommand()) return;
 
 		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { ephemeral: true });

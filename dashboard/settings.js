@@ -29,7 +29,7 @@ module.exports = client => [
 
 					guildData.language = newData;
 
-					guildData.markModified();
+					guildData.markModified("language");
 					await guildData.save();
 
 					return;
@@ -464,7 +464,7 @@ module.exports = client => [
 	{
 		categoryId: "test",
 		categoryName: "test settings",
-		categoryDescription: "ooga booba",
+		categoryDescription: "ooga booga",
 		categoryPermissions: PermissionsBitField.Flags.ViewChannel,
 		categoryOptionsList: [
 			{

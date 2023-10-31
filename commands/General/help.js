@@ -35,8 +35,43 @@ class Help extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 */
-	async onLoad() {
-		//...
+	async onLoad(client) {
+		client.on("interactionCreate", async interaction => {
+			if (!interaction.isStringSelectMenu()) return;
+
+			if (interaction.customId === "help_category_select") {
+				await interaction.deferUpdate();
+
+				const arg = interaction?.values[0];
+				const categoryCommands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()]
+					.filter(cmd => cmd.category === arg)
+					.map(c => {
+						return {
+							name: `**${c.command.name}**`,
+							value: interaction.translate(`${arg.toLowerCase()}/${c.command.name}:DESCRIPTION`),
+						};
+					});
+
+				const embed = new EmbedBuilder()
+					.setColor(client.config.embed.color)
+					.setFooter(client.config.embed.footer)
+					.setAuthor({
+						name: interaction.translate("general/help:COMMANDS_IN", { category: arg }),
+					})
+					.addFields(categoryCommands)
+					.addFields([
+						{
+							name: "\u200B",
+							value: interaction.translate("general/help:INFO"),
+						},
+					]);
+
+				return interaction.editReply({
+					content: null,
+					embeds: [embed],
+				});
+			}
+		});
 	}
 	/**
 	 *
@@ -75,54 +110,10 @@ class Help extends BaseCommand {
 
 		const row = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId("help_category_select").setPlaceholder(client.translate("common:NOTHING_SELECTED")).addOptions(categoriesRows));
 
-		const msg = await interaction.editReply({
+		await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
 			fetchReply: true,
 			components: [row],
-		});
-
-		const filter = i => i.user.id === interaction.user.id;
-		const collector = msg.createMessageComponentCollector({ filter, idle: 15 * 1000 });
-
-		collector.on("collect", async i => {
-			if (i.isStringSelectMenu() && i.customId === "help_category_select") {
-				i.deferUpdate();
-
-				const arg = i?.values[0];
-				const categoryCommands = commands
-					.filter(cmd => cmd.category === arg)
-					.map(c => {
-						return {
-							name: `**${c.command.name}**`,
-							value: interaction.translate(`${arg.toLowerCase()}/${c.command.name}:DESCRIPTION`),
-						};
-					});
-
-				const embed = new EmbedBuilder()
-					.setColor(client.config.embed.color)
-					.setFooter(client.config.embed.footer)
-					.setAuthor({
-						name: interaction.translate("general/help:COMMANDS_IN", { category: arg }),
-					})
-					.addFields(categoryCommands)
-					.addFields([
-						{
-							name: "\u200B",
-							value: interaction.translate("general/help:INFO"),
-						},
-					]);
-
-				return interaction.editReply({
-					content: null,
-					embeds: [embed],
-				});
-			}
-		});
-
-		collector.on("end", () => {
-			return interaction.editReply({
-				components: [],
-			});
 		});
 	}
 

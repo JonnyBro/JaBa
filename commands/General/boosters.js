@@ -25,44 +25,26 @@ class Boosters extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 */
-	async onLoad() {
-		//...
-	}
-	/**
-	 *
-	 * @param {import("../../base/JaBa")} client
-	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
-	 */
-	async execute(client, interaction, data) {
-		await interaction.deferReply();
+	async onLoad(client) {
+		client.on("interactionCreate", async interaction => {
+			if (!interaction.isButton()) return;
 
-		let currentPage = 0;
-		const boosters = (await interaction.guild.members.fetch()).filter(m => m.premiumSince);
-		if (boosters.size === 0) return interaction.error("general/boosters:NO_BOOSTERS", null, { edit: true });
+			if (interaction.customId.includes("boosters_")) {
+				const guildData = client.findOrCreateGuild(interaction.guildId),
+					boosters = (await interaction.guild.members.fetch()).filter(m => m.premiumSince),
+					embeds = generateBoostersEmbeds(client, interaction, boosters, guildData);
 
-		const embeds = generateBoostersEmbeds(client, interaction, boosters, data.guildData);
+				const row = new ActionRowBuilder().addComponents(
+					new ButtonBuilder().setCustomId("boosters_prev_page").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
+					new ButtonBuilder().setCustomId("boosters_next_page").setStyle(ButtonStyle.Primary).setEmoji("➡️"),
+					new ButtonBuilder().setCustomId("boosters_jump_page").setStyle(ButtonStyle.Secondary).setEmoji("↗️"),
+					new ButtonBuilder().setCustomId("boosters_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
+				);
 
-		const row = new ActionRowBuilder().addComponents(
-			new ButtonBuilder().setCustomId("boosters_prev_page").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
-			new ButtonBuilder().setCustomId("boosters_next_page").setStyle(ButtonStyle.Primary).setEmoji("➡️"),
-			new ButtonBuilder().setCustomId("boosters_jump_page").setStyle(ButtonStyle.Secondary).setEmoji("↗️"),
-			new ButtonBuilder().setCustomId("boosters_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
-		);
+				let currentPage = 0;
 
-		await interaction.editReply({
-			content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
-			embeds: [embeds[currentPage]],
-			components: [row],
-		});
-
-		const filter = i => i.user.id === interaction.user.id;
-		const collector = interaction.guild === null ? (await interaction.user.createDM()).createMessageComponentCollector({ filter, idle: 20 * 1000 }) : interaction.channel.createMessageComponentCollector({ filter, idle: 20 * 1000 });
-
-		collector.on("collect", async i => {
-			if (i.isButton()) {
-				if (i.customId === "boosters_prev_page") {
-					i.deferUpdate();
+				if (interaction.customId === "boosters_prev_page") {
+					await interaction.deferUpdate();
 
 					if (currentPage !== 0) {
 						--currentPage;
@@ -72,8 +54,8 @@ class Boosters extends BaseCommand {
 							components: [row],
 						});
 					}
-				} else if (i.customId === "boosters_next_page") {
-					i.deferUpdate();
+				} else if (interaction.customId === "boosters_next_page") {
+					await interaction.deferUpdate();
 
 					if (currentPage < embeds.length - 1) {
 						currentPage++;
@@ -83,8 +65,8 @@ class Boosters extends BaseCommand {
 							components: [row],
 						});
 					}
-				} else if (i.customId === "boosters_jump_page") {
-					i.deferUpdate();
+				} else if (interaction.customId === "boosters_jump_page") {
+					await interaction.deferUpdate();
 
 					const msg = await interaction.followUp({
 						content: interaction.translate("misc:JUMP_TO_PAGE", {
@@ -114,21 +96,45 @@ class Boosters extends BaseCommand {
 							return;
 						}
 					});
-				} else if (i.customId === "boosters_stop") {
-					i.deferUpdate();
-					collector.stop();
+				} else if (interaction.customId === "boosters_stop") {
+					await interaction.deferUpdate();
+
+					row.components.forEach(component => {
+						component.setDisabled(true);
+					});
+
+					return interaction.editReply({
+						components: [row],
+					});
 				}
 			}
 		});
+	}
+	/**
+	 *
+	 * @param {import("../../base/JaBa")} client
+	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
+	 * @param {Object} data
+	 */
+	async execute(client, interaction, data) {
+		await interaction.deferReply();
 
-		collector.on("end", () => {
-			row.components.forEach(component => {
-				component.setDisabled(true);
-			});
+		const boosters = (await interaction.guild.members.fetch()).filter(m => m.premiumSince);
+		if (boosters.size === 0) return interaction.error("general/boosters:NO_BOOSTERS", null, { edit: true });
 
-			return interaction.editReply({
-				components: [row],
-			});
+		const embeds = generateBoostersEmbeds(client, interaction, boosters, data.guildData);
+
+		const row = new ActionRowBuilder().addComponents(
+			new ButtonBuilder().setCustomId("boosters_prev_page").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
+			new ButtonBuilder().setCustomId("boosters_next_page").setStyle(ButtonStyle.Primary).setEmoji("➡️"),
+			new ButtonBuilder().setCustomId("boosters_jump_page").setStyle(ButtonStyle.Secondary).setEmoji("↗️"),
+			new ButtonBuilder().setCustomId("boosters_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
+		);
+
+		await interaction.editReply({
+			content: `${interaction.translate("common:PAGE")}: **1**/**${embeds.length}**`,
+			embeds: [embeds[0]],
+			components: [row],
 		});
 	}
 }

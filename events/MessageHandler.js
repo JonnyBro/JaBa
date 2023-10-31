@@ -83,18 +83,9 @@ class MessageCreate extends BaseEvent {
 					new ButtonBuilder().setCustomId("quote_delete").setEmoji("1102200816582000750").setStyle(ButtonStyle.Danger),
 				);
 
-				await message.reply({
+				message.reply({
 					embeds: [embed],
 					components: [row],
-				});
-
-				const filter = i => i.user.id === message.author.id;
-				const collector = message.channel.createMessageComponentCollector({ filter, time: 60 * 1000 });
-
-				collector.on("collect", async i => {
-					if (i.isButton() && i.customId === "quote_delete") {
-						if (i.message.deletable) i.message.delete();
-					}
 				});
 			}
 
@@ -108,7 +99,7 @@ class MessageCreate extends BaseEvent {
 			if (data.userData.afk) {
 				data.userData.afk = null;
 
-				data.userData.markModified();
+				data.userData.markModified("afk");
 				await data.userData.save();
 
 				message.replyT("general/afk:DELETED", {
@@ -156,7 +147,8 @@ async function updateXp(client, msg, memberData) {
 		}, { mention: false });
 	} else memberData.exp = parseInt(newXp, 10);
 
-	memberData.markModified();
+	memberData.markModified("level");
+	memberData.markModified("exp");
 	await memberData.save();
 }
 

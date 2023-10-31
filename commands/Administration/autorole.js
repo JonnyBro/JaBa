@@ -55,33 +55,28 @@ class Autorole extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
-		const state = interaction.options.getBoolean("state");
+		const state = interaction.options.getBoolean("state"),
+			role = interaction.options.getRole("role");
 
-		if (state) {
-			const role = interaction.options.getRole("role");
-			if (!role) return interaction.error("administration/autorole:MISSING_ROLE");
+		data.guildData.plugins.autorole = {
+			enabled: state,
+			role,
+		};
 
-			data.guildData.plugins.autorole = {
-				enabled: true,
-				role: role.id,
-			};
-
+		if (state && role) {
 			data.guildData.markModified("plugins.autorole");
 			await data.guildData.save();
 
-			interaction.success("administration/autorole:SUCCESS_ENABLED", {
+			interaction.success("administration/autorole:ENABLED", {
 				role: role.toString(),
 			});
 		} else {
-			data.guildData.plugins.autorole = {
-				enabled: false,
-				role: null,
-			};
+			data.guildData.plugins.autorole.enabled = false;
 
 			data.guildData.markModified("plugins.autorole");
 			await data.guildData.save();
 
-			interaction.success("administration/autorole:SUCCESS_DISABLED");
+			interaction.success("administration/autorole:DISABLED");
 		}
 	}
 }

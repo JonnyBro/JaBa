@@ -128,8 +128,8 @@ class Marry extends BaseCommand {
 				data.userData.lover = member.id;
 				userData.lover = interaction.member.id;
 
-				data.userData.markModified();
-				userData.markModified();
+				data.userData.markModified("lover");
+				userData.markModified("lover");
 				await data.userData.save();
 				await userData.save();
 
@@ -150,7 +150,7 @@ class Marry extends BaseCommand {
 					userData.achievements.married.achieved = true;
 					userData.achievements.married.progress.now = 1;
 
-					userData.markModified();
+					userData.markModified("achievements");
 					await userData.save();
 				}
 
@@ -159,7 +159,7 @@ class Marry extends BaseCommand {
 					data.userData.achievements.married.achieved = true;
 					data.userData.achievements.married.progress.now = 1;
 
-					data.userData.markModified();
+					data.userData.markModified("achievements");
 					await data.userData.save();
 				}
 

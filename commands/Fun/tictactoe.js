@@ -67,7 +67,8 @@ class TicTacToe extends BaseCommand {
 
 			memberData.transactions.push(info);
 
-			memberData.markModified();
+			memberData.markModified("money");
+			memberData.markModified("transactions");
 			await memberData.save();
 		});
 	}
