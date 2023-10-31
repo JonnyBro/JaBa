@@ -35,6 +35,9 @@ dependencies:
   discord-player:
     specifier: ^6.6.6
     version: 6.6.6(@discord-player/extractor@4.4.5)(@discordjs/opus@0.9.0)
+  discord-player-yandexmusic:
+    specifier: ^0.0.12
+    version: 0.0.12(@discord-player/extractor@4.4.5)(@discordjs/opus@0.9.0)
   discord.js:
     specifier: ^14.13.0
     version: 14.13.0
@@ -62,9 +65,9 @@ dependencies:
   node-fetch:
     specifier: ^2.7.0
     version: 2.7.0
-  youtube-ext:
-    specifier: ^1.1.16
-    version: 1.1.16
+  play-dl:
+    specifier: ^1.9.7
+    version: 1.9.7
 
 devDependencies:
   eslint:
@@ -478,6 +481,14 @@ packages:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
     dev: true
 
+  /axios@0.21.4:
+    resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
+    dependencies:
+      follow-redirects: 1.15.3
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
@@ -720,6 +731,23 @@ packages:
       deepmerge-ts: 4.3.0
       discord.js: 14.13.0
       serialize-javascript: 6.0.1
+    dev: false
+
+  /discord-player-yandexmusic@0.0.12(@discord-player/extractor@4.4.5)(@discordjs/opus@0.9.0):
+    resolution: {integrity: sha512-oqLeF4QQXo35XCYWkGewUxgyyUmE0v9bhl+Ie7aRApt7MZstXPOWTBfXldcdaamea8iag8IqyD1KVl+wyUqV3g==}
+    dependencies:
+      discord-player: 6.6.6(@discord-player/extractor@4.4.5)(@discordjs/opus@0.9.0)
+      tslint-config-prettier: 1.18.0
+      ym-api-meowed: 1.2.9
+    transitivePeerDependencies:
+      - '@discord-player/extractor'
+      - '@discordjs/opus'
+      - bufferutil
+      - debug
+      - ffmpeg-static
+      - node-opus
+      - opusscript
+      - utf-8-validate
     dev: false
 
   /discord-player@6.6.6(@discord-player/extractor@4.4.5)(@discordjs/opus@0.9.0):
@@ -993,6 +1021,16 @@ packages:
   /flatted@3.2.9:
     resolution: {integrity: sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==}
     dev: true
+
+  /follow-redirects@1.15.3:
+    resolution: {integrity: sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: false
 
   /form-data-encoder@2.1.4:
     resolution: {integrity: sha512-yDYSgNMraqvnxiEXO4hi88+YZxaHC6QKzb5N84iRCTDeRO7ZALpir/lVmf/uXUhnwUr2O4HU8s/n6x+yNjQkHw==}
@@ -1658,6 +1696,17 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
+  /play-audio@0.5.2:
+    resolution: {integrity: sha512-ZAqHUKkQLix2Iga7pPbsf1LpUoBjcpwU93F1l3qBIfxYddQLhxS6GKmS0d3jV8kSVaUbr6NnOEcEMFvuX93SWQ==}
+    dev: false
+
+  /play-dl@1.9.7:
+    resolution: {integrity: sha512-KpgerWxUCY4s9Mhze2qdqPhiqd8Ve6HufpH9mBH3FN+vux55qSh6WJKDabfie8IBHN7lnrAlYcT/UdGax58c2A==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      play-audio: 0.5.2
+    dev: false
+
   /prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -2011,6 +2060,12 @@ packages:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
     dev: false
 
+  /tslint-config-prettier@1.18.0:
+    resolution: {integrity: sha512-xPw9PgNPLG3iKRxmK7DWr+Ea/SzrvfHtjFt5LBl61gk2UBG/DB9kCXRjv+xyIU1rUtnayLeMUVJBcMX8Z17nDg==}
+    engines: {node: '>=4.0.0'}
+    hasBin: true
+    dev: false
+
   /type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
@@ -2118,6 +2173,19 @@ packages:
         optional: true
     dev: false
 
+  /xml2js@0.4.23:
+    resolution: {integrity: sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==}
+    engines: {node: '>=4.0.0'}
+    dependencies:
+      sax: 1.2.4
+      xmlbuilder: 11.0.1
+    dev: false
+
+  /xmlbuilder@11.0.1:
+    resolution: {integrity: sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==}
+    engines: {node: '>=4.0'}
+    dev: false
+
   /xmlbuilder@8.2.2:
     resolution: {integrity: sha512-eKRAFz04jghooy8muekqzo8uCSVNeyRedbuJrp0fovbLIi7wlsYtdUn3vBAAPq2Y3/0xMz2WMEUQ8yhVVO9Stw==}
     engines: {node: '>=4.0'}
@@ -2135,16 +2203,19 @@ packages:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
     dev: false
 
+  /ym-api-meowed@1.2.9:
+    resolution: {integrity: sha512-zdVgJ3OYWz9DQqzblTl4dM5dm5DcGktRo5hle3L6QjK2NqxnKczk7//2hQqB907m4M9lx7FDier28VLdp5RKNw==}
+    dependencies:
+      axios: 0.21.4
+      xml2js: 0.4.23
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
-
-  /youtube-ext@1.1.16:
-    resolution: {integrity: sha512-vyzHSwxlCAwqWUxZKJ/5g139BgnbmZFTy9I0nxDwqlbAh74dB1LjayCoB5BgLaaIkSMruEQwlf5bF+EeR235qA==}
-    dependencies:
-      undici: 5.27.0
-    dev: false
 
   /youtube-sr@4.3.9:
     resolution: {integrity: sha512-wPGEgVevSn32BJu5jiSHdvoryUCTCIM9LYT+yMDDpUfaev2Dh46dB+4qU31NgJ9XOsNxGlEKmc9qxUO5L0CE/Q==}

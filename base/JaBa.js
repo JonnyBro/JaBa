@@ -1,5 +1,6 @@
 const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
 	{ Player } = require("discord-player"),
+	{ YandexMusicExtractor } = require("discord-player-yandexmusic"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ REST } = require("@discordjs/rest"),
 	{ Routes } = require("discord-api-types/v10");
@@ -33,9 +34,10 @@ class JaBa extends Client {
 		this.databaseCache.members = new Collection();
 		this.databaseCache.usersReminds = new Collection();
 
-		this.player = Player.singleton(this, {
-			autoRegisterExtractor: false,
-		});
+		this.player = new Player(this);
+
+		this.player.extractors.loadDefault();
+		this.player.extractors.register(YandexMusicExtractor, { access_token: this.config.apiKeys.yandex.token, uid: this.config.apiKeys.yandex.uid });
 
 		this.player.events.on("playerStart", async (queue, track) => {
 			const m = await queue.metadata.channel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language) });
@@ -51,12 +53,12 @@ class JaBa extends Client {
 		this.player.events.on("emptyQueue", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)));
 		this.player.events.on("emptyChannel", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.channel.guild.data.language)));
 		this.player.events.on("playerError", (queue, e) => {
-			console.log(e);
 			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
+			console.log(e);
 		});
 		this.player.events.on("error", (queue, e) => {
-			console.log(e);
 			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
+			console.log(e);
 		});
 
 		this.giveawaysManager = new GiveawaysManager(this, {
