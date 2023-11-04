@@ -59,18 +59,18 @@ class Loop extends BaseCommand {
 		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { edit: true });
 
 		const translated = {
-			"AUTOPLAY": interaction.translate("music/loop:AUTOPLAY_ENABLED"),
-			"QUEUE": interaction.translate("music/loop:QUEUE_ENABLED"),
-			"TRACK": interaction.translate("music/loop:TRACK_ENABLED"),
-			"OFF": interaction.translate("music/loop:LOOP_DISABLED"),
+			"3": interaction.translate("music/loop:AUTOPLAY_ENABLED"),
+			"2": interaction.translate("music/loop:QUEUE_ENABLED"),
+			"1": interaction.translate("music/loop:TRACK_ENABLED"),
+			"0": interaction.translate("music/loop:LOOP_DISABLED"),
 		};
 
 		const type = interaction.options.getString("option"),
-			mode = QueueRepeatMode[type];
+			mode = type === "3" ? QueueRepeatMode.AUTOPLAY : type === "2" ? QueueRepeatMode.QUEUE : type === "1" ? QueueRepeatMode.TRACK : QueueRepeatMode.OFF;
 
 		queue.setRepeatMode(mode);
 
-		interaction.reply({ content: translated[mode] });
+		interaction.reply({ content: translated[type] });
 	}
 }
 

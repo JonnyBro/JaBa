@@ -92,12 +92,11 @@ class Nowplaying extends BaseCommand {
 
 					const filter = i => i.user.id === interaction.user.id,
 						collected = await msg.awaitMessageComponent({ filter, time: 10 * 1000 }),
-						mode = QueueRepeatMode[collected.values[0]],
+						mode = collected.values[0] === "3" ? QueueRepeatMode.AUTOPLAY : collected.values[0] === "2" ? QueueRepeatMode.QUEUE : collected.values[0] === "1" ? QueueRepeatMode.TRACK : QueueRepeatMode.OFF,
 						translated = {
-							"AUTOPLAY": interaction.translate("music/loop:AUTOPLAY_ENABLED"),
-							"QUEUE": interaction.translate("music/loop:QUEUE_ENABLED"),
-							"TRACK": interaction.translate("music/loop:TRACK_ENABLED"),
-							"OFF": interaction.translate("music/loop:LOOP_DISABLED"),
+							"3": interaction.translate("music/loop:AUTOPLAY_ENABLED"),
+							"2": interaction.translate("music/loop:QUEUE_ENABLED"),
+							"1": interaction.translate("music/loop:TRACK_ENABLED"),
 							"0": interaction.translate("music/loop:LOOP_DISABLED"),
 						};
 
@@ -105,7 +104,7 @@ class Nowplaying extends BaseCommand {
 
 					queue.setRepeatMode(mode);
 
-					await interaction.followUp({ content: translated[mode] });
+					await interaction.followUp({ content: translated[collected.values[0]] });
 
 					const embed = await updateEmbed(interaction, queue);
 
@@ -220,13 +219,14 @@ async function updateEmbed(interaction, queue) {
 	const progressBar = queue.node.createProgressBar(),
 		track = queue.currentTrack,
 		data = await interaction.client.guildsData.findOne({ id: interaction.guildId }),
+		mode = queue.repeatMode === QueueRepeatMode.AUTOPLAY ? "3" : queue.repeatMode === QueueRepeatMode.QUEUE ? "2" : queue.repeatMode === QueueRepeatMode.TRACK ? "1" : "0",
 		translated = {
-			"AUTOPLAY": interaction.translate("music/nowplaying:AUTOPLAY"),
-			"QUEUE": interaction.translate("music/nowplaying:QUEUE"),
-			"TRACK": interaction.translate("music/nowplaying:TRACK"),
-			"OFF": interaction.translate("common:DISABLED"),
+			"3": interaction.translate("music/nowplaying:AUTOPLAY"),
+			"2": interaction.translate("music/nowplaying:QUEUE"),
+			"1": interaction.translate("music/nowplaying:TRACK"),
 			"0": interaction.translate("common:DISABLED"),
 		};
+
 
 	const embed = new EmbedBuilder()
 		.setAuthor({
@@ -261,7 +261,7 @@ async function updateEmbed(interaction, queue) {
 			},
 			{
 				name: "\u200b",
-				value: `${interaction.translate("music/nowplaying:REPEAT")}: \`${translated[queue.repeatMode]}\``,
+				value: `${interaction.translate("music/nowplaying:REPEAT")}: \`${translated[mode]}\``,
 			},
 		])
 		.setColor(interaction.client.config.embed.color)
