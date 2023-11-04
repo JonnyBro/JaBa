@@ -6,7 +6,7 @@ User.prototype.getUsername = function () {
 
 BaseInteraction.prototype.translate = function (key, args, emoji) {
 	const lang = this.client.translations.get(this.guild.data.language ?? "en-US");
-	const string = emoji ? `${this.client.customEmojis[emoji]} | ${lang(key, args)}` : lang(key, args);
+	const string = emoji !== undefined ? `${this.client.customEmojis[emoji]} | ${lang(key, args)}` : lang(key, args);
 
 	return string;
 };
@@ -33,7 +33,7 @@ BaseInteraction.prototype.error = function (key, args, options = {}) {
 
 Message.prototype.translate = function (key, args, emoji) {
 	const lang = this.client.translations.get(this.guild.data.language ?? "en-US");
-	const string = emoji ? `${this.client.customEmojis[emoji]} | ${lang(key, args)}` : lang(key, args);
+	const string = emoji !== undefined ? `${this.client.customEmojis[emoji]} | ${lang(key, args)}` : lang(key, args);
 
 	return string;
 };
