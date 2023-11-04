@@ -1,14 +1,18 @@
 const { ContextMenuCommandBuilder, ModalBuilder, EmbedBuilder, ActionRowBuilder, TextInputBuilder, ApplicationCommandType, PermissionsBitField, TextInputStyle } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
-class Warn extends BaseCommand {
+class WarnContext extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 */
 	constructor() {
 		super({
-			command: new ContextMenuCommandBuilder().setName("warn").setType(ApplicationCommandType.User).setDMPermission(false).setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages),
+			command: new ContextMenuCommandBuilder()
+				.setName("Warn")
+				.setType(ApplicationCommandType.User)
+				.setDMPermission(false)
+				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages),
 			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
@@ -200,4 +204,4 @@ class Warn extends BaseCommand {
 	}
 }
 
-module.exports = Warn;
+module.exports = WarnContext;

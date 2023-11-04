@@ -80,16 +80,16 @@ class Play extends BaseCommand {
 			interaction.editReply({
 				content: interaction.translate("music/play:ADDED_QUEUE", {
 					songName: searchResult.hasPlaylist() ? searchResult.playlist.title : searchResult.tracks[0].title,
-				}),
+				}, "success"),
 			});
 
-			if (query.match(/&t=[[0-9]+/g) != null) {
+			// TODO: Seeks currently playing D:
+			if (query.match(/&t=[[0-9]+/g) !== null) {
 				const time = query.match(/&t=[[0-9]+/g)[0].split("=")[1];
 
 				queue.node.seek(time * 1000);
 			}
 		}
-
 	}
 
 	/**
@@ -100,8 +100,9 @@ class Play extends BaseCommand {
 	 */
 	async autocompleteRun(client, interaction) {
 		const query = interaction.options.getString("query");
+
 		if (query === "") return;
-		if (query.includes("http")) return interaction.respond([
+		if (query.startsWith("http")) return interaction.respond([
 			{
 				name: "Current link",
 				value: query,

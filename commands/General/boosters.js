@@ -29,7 +29,7 @@ class Boosters extends BaseCommand {
 		client.on("interactionCreate", async interaction => {
 			if (!interaction.isButton()) return;
 
-			if (interaction.customId.includes("boosters_")) {
+			if (interaction.customId.startsWith("boosters_")) {
 				const guildData = client.findOrCreateGuild(interaction.guildId),
 					boosters = (await interaction.guild.members.fetch()).filter(m => m.premiumSince),
 					embeds = generateBoostersEmbeds(client, interaction, boosters, guildData);
@@ -41,7 +41,7 @@ class Boosters extends BaseCommand {
 					new ButtonBuilder().setCustomId("boosters_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
 				);
 
-				let currentPage = 0;
+				let currentPage = Number(interaction.message.content.match(/\d+/g)[0]) - 1 ?? 0;
 
 				if (interaction.customId === "boosters_prev_page") {
 					await interaction.deferUpdate();

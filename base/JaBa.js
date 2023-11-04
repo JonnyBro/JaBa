@@ -38,14 +38,21 @@ class JaBa extends Client {
 		this.player.extractors.loadDefault();
 
 		this.player.events.on("playerStart", async (queue, track) => {
-			const m = await queue.metadata.channel.send({ content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language) });
+			const m = (await queue.metadata.channel.send({
+				content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language),
+			})).id;
+
 			if (track.durationMS > 1)
 				setTimeout(() => {
-					if (m.deletable) m.delete();
+					const message = queue.metadata.channel.messages.cache.get(m);
+
+					if (message.deletable) message.delete();
 				}, track.durationMS);
 			else
 				setTimeout(() => {
-					if (m.deletable) m.delete();
+					const message = queue.metadata.channel.messages.cache.get(m);
+
+					if (message.deletable) message.delete();
 				}, 5 * 60 * 1000); // m * s * ms
 		});
 		this.player.events.on("emptyQueue", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)));
@@ -227,10 +234,9 @@ class JaBa extends Client {
 	 * @param {String} locale Language
 	 */
 	translate(key, args, locale = this.defaultLanguage) {
-		const language = this.translations.get(locale);
-		if (!language) throw "Invalid language set in data.";
+		const lang = this.translations.get(locale);
 
-		return language(key, args);
+		return lang(key, args);
 	}
 
 	/**

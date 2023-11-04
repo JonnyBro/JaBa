@@ -3,6 +3,7 @@
 	"USAGE": "",
 	"EXAMPLES": "nowplaying",
 	"CURRENTLY_PLAYING": "Currently playing",
+	"LINK": "Send a link in chat",
 	"T_TITLE": "Title",
 	"T_AUTHOR": "Author",
 	"T_DURATION": "Duration",

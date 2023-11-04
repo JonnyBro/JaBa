@@ -17,11 +17,11 @@ const locales = {
 module.exports.load = async client => {
 	const commands = client.commands.map(v => {
 		return {
-			_category: v.category,
 			commandName: v.command.name,
 			commandDescription: client.translate(`${v.category.toLowerCase()}/${v.command.name}:DESCRIPTION`),
 			commandUsage: client.translate(`${v.category.toLowerCase()}/${v.command.name}:USAGE`),
 			commandAlias: "",
+			_category: v.category,
 		};
 	});
 	let categories = [];
@@ -48,11 +48,6 @@ module.exports.load = async client => {
 			id: client.config.userId,
 			secret: client.config.dashboard.secret,
 		},
-		// SSL: {
-		// 	enabled: false,
-		// 	key: fs.readFileSync(`${__dirname}/../jababot-cloudflare.key`, "utf-8"),
-		// 	cert: fs.readFileSync(`${__dirname}/../jababot-cloudflare.crt`, "utf-8"),
-		// },
 		cookiesSecret: client.config.dashboard.secret,
 		domain: client.config.dashboard.domain,
 		redirectUri: `${client.config.dashboard.domain}/discord/callback`,

@@ -46,7 +46,7 @@ class ImportMee6 extends BaseCommand {
 			content: interaction.translate("owner/debug:SUCCESS_LEVEL", {
 				user: interaction.member.toString(),
 				amount: level,
-			}),
+			}, "success"),
 		});
 	}
 }

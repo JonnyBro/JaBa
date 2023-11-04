@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js"),
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require("discord.js"),
 	{ QueueRepeatMode } = require("discord-player");
 const BaseCommand = require("../../base/BaseCommand");
 
@@ -26,8 +26,156 @@ class Nowplaying extends BaseCommand {
 	 *
 	 * @param {import("../../base/JaBa")} client
 	 */
-	async onLoad() {
-		//...
+	async onLoad(client) {
+		client.on("interactionCreate", async interaction => {
+			if (!interaction.isButton()) return;
+
+			if (interaction.customId.startsWith("nowp_")) {
+				const voice = interaction.member.voice.channel;
+				if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+
+				const queue = client.player.nodes.get(interaction.guildId);
+				if (!queue) return interaction.error("music/play:NOT_PLAYING");
+
+				const row1 = new ActionRowBuilder().addComponents(
+					new ButtonBuilder().setCustomId("nowp_prev_track").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
+					new ButtonBuilder().setCustomId("nowp_loop").setStyle(ButtonStyle.Secondary).setEmoji("🔁"),
+					new ButtonBuilder().setCustomId("nowp_add_track").setStyle(ButtonStyle.Success).setEmoji("▶️"),
+					new ButtonBuilder().setCustomId("nowp_next_track").setStyle(ButtonStyle.Primary).setEmoji("➡️"),
+				);
+
+				const row2 = new ActionRowBuilder().addComponents(
+					new ButtonBuilder().setCustomId("nowp_queue").setStyle(ButtonStyle.Secondary).setEmoji("ℹ️"),
+					new ButtonBuilder().setCustomId("nowp_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
+				);
+
+				if (interaction.customId === "nowp_prev_track") {
+					await interaction.deferUpdate();
+
+					if (queue.history.isEmpty()) return interaction.followUp({ content: interaction.translate("music/back:NO_PREV_SONG", null, "error"), ephemeral: true });
+
+					queue.history.back();
+
+					await interaction.followUp({ content: interaction.translate("music/back:SUCCESS", null, "success"), ephemeral: true });
+
+					const embed = await updateEmbed(interaction, queue);
+
+					interaction.editReply({
+						embeds: [embed],
+					});
+				} else if (interaction.customId === "nowp_loop") {
+					await interaction.deferUpdate();
+
+					const selectMenu = new StringSelectMenuBuilder()
+						.setCustomId("nowp_select")
+						.setPlaceholder(interaction.translate("common:NOTHING_SELECTED"))
+						.addOptions(
+							new StringSelectMenuOptionBuilder()
+								.setLabel(interaction.translate("music/loop:AUTOPLAY"))
+								.setValue("3"),
+							new StringSelectMenuOptionBuilder()
+								.setLabel(interaction.translate("music/loop:QUEUE"))
+								.setValue("2"),
+							new StringSelectMenuOptionBuilder()
+								.setLabel(interaction.translate("music/loop:TRACK"))
+								.setValue("1"),
+							new StringSelectMenuOptionBuilder()
+								.setLabel(interaction.translate("music/loop:DISABLE"))
+								.setValue("0"),
+						);
+
+					const selectRow = new ActionRowBuilder().addComponents(selectMenu),
+						msg = await interaction.followUp({
+							components: [selectRow],
+							ephemeral: true,
+						});
+
+					const filter = i => i.user.id === interaction.user.id,
+						collected = await msg.awaitMessageComponent({ filter, time: 10 * 1000 }),
+						mode = QueueRepeatMode[collected.values[0]],
+						translated = {
+							"AUTOPLAY": interaction.translate("music/loop:AUTOPLAY_ENABLED", null, "success"),
+							"QUEUE": interaction.translate("music/loop:QUEUE_ENABLED", null, "success"),
+							"TRACK": interaction.translate("music/loop:TRACK_ENABLED", null, "success"),
+							"OFF": interaction.translate("music/loop:LOOP_DISABLED", null, "success"),
+							"0": interaction.translate("music/loop:LOOP_DISABLED", null, "success"),
+						};
+
+					await collected.deferUpdate();
+
+					queue.setRepeatMode(mode);
+
+					await interaction.followUp({ content: translated[mode] });
+
+					const embed = await updateEmbed(interaction, queue);
+
+					interaction.editReply({
+						embeds: [embed],
+					});
+				} else if (interaction.customId === "nowp_add_track") {
+					await interaction.deferUpdate();
+
+					await interaction.followUp({
+						content: interaction.translate("music/nowplaying:LINK"),
+						ephemeral: true,
+					});
+
+					const filter = m => m.author.id === interaction.user.id && m.content.startsWith("http"),
+						collected = (await interaction.channel.awaitMessages({ filter, time: 10 * 1000, max: 1 })).first(),
+						query = collected.content.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g)[0],
+						searchResult = await client.player.search(query, {
+							requestedBy: interaction.user,
+						});
+
+					if (!searchResult.hasTracks()) return interaction.error("music/play:NO_RESULT", { query: query }, { edit: true });
+					else queue.addTrack(searchResult);
+
+					if (collected.deletable) collected.delete();
+
+					await interaction.followUp({
+						content: interaction.translate("music/play:ADDED_QUEUE", {
+							songName: searchResult.hasPlaylist() ? searchResult.playlist.title : searchResult.tracks[0].title,
+						}, "success"),
+					});
+
+					const embed = await updateEmbed(interaction, queue);
+
+					interaction.editReply({
+						embeds: [embed],
+					});
+				} else if (interaction.customId === "nowp_next_track") {
+					await interaction.deferUpdate();
+
+					queue.node.skip();
+
+					await interaction.followUp({ content: interaction.translate("music/skip:SUCCESS", null, "success"), ephemeral: true });
+
+					const embed = await updateEmbed(interaction, queue);
+
+					interaction.editReply({
+						embeds: [embed],
+					});
+				} else if (interaction.customId === "nowp_queue") {
+					await interaction.deferUpdate();
+
+					client.commands.get("queue").execute(client, interaction);
+				} else if (interaction.customId === "nowp_stop") {
+					await interaction.deferUpdate();
+
+					row1.components.forEach(component => {
+						component.setDisabled(true);
+					});
+
+					row2.components.forEach(component => {
+						component.setDisabled(true);
+					});
+
+					return interaction.editReply({
+						components: [row1, row2],
+					});
+				}
+			}
+		});
 	}
 	/**
 	 *
@@ -35,66 +183,92 @@ class Nowplaying extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
+	async execute(client, interaction) {
 		await interaction.deferReply();
 
 		const queue = client.player.nodes.get(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { edit: true });
-		const progressBar = queue.node.createProgressBar(),
-			track = queue.currentTrack;
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
-				name: interaction.translate("music/nowplaying:CURRENTLY_PLAYING"),
-			})
-			.setThumbnail(track.thumbnail)
-			.addFields([
-				{
-					name: interaction.translate("music/nowplaying:T_TITLE"),
-					value: `[${track.title}](${track.url})`,
-					inline: true,
-				},
-				{
-					name: interaction.translate("music/nowplaying:T_AUTHOR"),
-					value: track.author || interaction.translate("common:UNKNOWN"),
-					inline: true,
-				},
-				{ name: "\u200B", value: "\u200B", inline: true },
-				{
-					name: interaction.translate("common:VIEWS"),
-					value: track.raw.live ? "" : new Intl.NumberFormat(client.languages.find(language => language.name === data.guildData.language).moment, { notation: "standard" }).format(track.raw.views),
-					inline: true,
-				},
-				{
-					name: interaction.translate("music/queue:ADDED"),
-					value: track.requestedBy.toString(),
-					inline: true,
-				},
-				{
-					name: interaction.translate("music/nowplaying:T_DURATION"),
-					value: progressBar,
-				},
-				{
-					name: "\u200b",
-					value: `${interaction.translate("music/nowplaying:REPEAT")}: \`${
-						queue.repeatMode === QueueRepeatMode.AUTOPLAY
-							? interaction.translate("music/nowplaying:AUTOPLAY")
-							: queue.repeatMode === QueueRepeatMode.QUEUE
-								? interaction.translate("music/nowplaying:QUEUE")
-								: queue.repeatMode === QueueRepeatMode.TRACK
-									? interaction.translate("music/nowplaying:TRACK")
-									: interaction.translate("common:DISABLED")
-					}\``,
-				},
-			])
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer)
-			.setTimestamp();
+		const row1 = new ActionRowBuilder().addComponents(
+			new ButtonBuilder().setCustomId("nowp_prev_track").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
+			new ButtonBuilder().setCustomId("nowp_loop").setStyle(ButtonStyle.Secondary).setEmoji("🔁"),
+			new ButtonBuilder().setCustomId("nowp_add_track").setStyle(ButtonStyle.Success).setEmoji("▶️"),
+			new ButtonBuilder().setCustomId("nowp_next_track").setStyle(ButtonStyle.Primary).setEmoji("➡️"),
+		);
+
+		const row2 = new ActionRowBuilder().addComponents(
+			new ButtonBuilder().setCustomId("nowp_queue").setStyle(ButtonStyle.Secondary).setEmoji("ℹ️"),
+			new ButtonBuilder().setCustomId("nowp_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
+		);
+
+		const embed = await updateEmbed(interaction, queue);
 
 		interaction.editReply({
 			embeds: [embed],
+			components: [row1, row2],
 		});
 	}
+}
+
+/**
+ *
+ * @param {import("discord.js").ChatInputCommandInteraction} interaction
+ * @param {import("discord-player").GuildQueue} queue
+ * @returns
+ */
+async function updateEmbed(interaction, queue) {
+	const progressBar = queue.node.createProgressBar(),
+		track = queue.currentTrack,
+		data = await interaction.client.guildsData.findOne({ id: interaction.guildId }),
+		translated = {
+			"AUTOPLAY": interaction.translate("music/nowplaying:AUTOPLAY"),
+			"QUEUE": interaction.translate("music/nowplaying:QUEUE"),
+			"TRACK": interaction.translate("music/nowplaying:TRACK"),
+			"OFF": interaction.translate("common:DISABLED"),
+			"0": interaction.translate("common:DISABLED"),
+		};
+
+	const embed = new EmbedBuilder()
+		.setAuthor({
+			name: interaction.translate("music/nowplaying:CURRENTLY_PLAYING"),
+		})
+		.setThumbnail(track.thumbnail)
+		.addFields([
+			{
+				name: interaction.translate("music/nowplaying:T_TITLE"),
+				value: `[${track.title}](${track.url})`,
+				inline: true,
+			},
+			{
+				name: interaction.translate("music/nowplaying:T_AUTHOR"),
+				value: track.author || interaction.translate("common:UNKNOWN"),
+				inline: true,
+			},
+			{ name: "\u200B", value: "\u200B", inline: true },
+			{
+				name: interaction.translate("common:VIEWS"),
+				value: track.raw.live ? "Live" : new Intl.NumberFormat(interaction.client.languages.find(language => language.name === data.language).moment, { notation: "standard" }).format(track.raw.views),
+				inline: true,
+			},
+			{
+				name: interaction.translate("music/queue:ADDED"),
+				value: track.requestedBy.toString(),
+				inline: true,
+			},
+			{
+				name: interaction.translate("music/nowplaying:T_DURATION"),
+				value: progressBar,
+			},
+			{
+				name: "\u200b",
+				value: `${interaction.translate("music/nowplaying:REPEAT")}: \`${translated[queue.repeatMode]}\``,
+			},
+		])
+		.setColor(interaction.client.config.embed.color)
+		.setFooter(interaction.client.config.embed.footer)
+		.setTimestamp();
+
+	return embed;
 }
 
 module.exports = Nowplaying;

@@ -70,7 +70,7 @@ class NSFW extends BaseCommand {
 			),
 		);
 
-		const row = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId("nsfw_select").setPlaceholder(client.translate("common:NOTHING_SELECTED")).addOptions(tags));
+		const row = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId("nsfw_select").setPlaceholder(interaction.translate("common:NOTHING_SELECTED")).addOptions(tags));
 
 		await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),

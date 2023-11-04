@@ -68,10 +68,9 @@ class Memes extends BaseCommand {
 			),
 		);
 
-		const row = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId("memes_select").setPlaceholder(client.translate("common:NOTHING_SELECTED")).addOptions(tags));
+		const row = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId("memes_select").setPlaceholder(interaction.translate("common:NOTHING_SELECTED")).addOptions(tags));
 
 		await interaction.editReply({
-			content: interaction.translate("common:AVAILABLE_OPTIONS"),
 			components: [row],
 		});
 	}

@@ -58,12 +58,20 @@ class Loop extends BaseCommand {
 		const queue = client.player.nodes.get(interaction.guildId);
 		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { edit: true });
 
+		const translated = {
+			"AUTOPLAY": interaction.translate("music/loop:AUTOPLAY_ENABLED", null, "success"),
+			"QUEUE": interaction.translate("music/loop:QUEUE_ENABLED", null, "success"),
+			"TRACK": interaction.translate("music/loop:TRACK_ENABLED", null, "success"),
+			"OFF": interaction.translate("music/loop:LOOP_DISABLED", null, "success"),
+			"0": interaction.translate("music/loop:LOOP_DISABLED", null, "success"),
+		};
+
 		const type = interaction.options.getString("option"),
-			mode = type === "3" ? QueueRepeatMode.AUTOPLAY : type === "2" ? QueueRepeatMode.QUEUE : type === "1" ? QueueRepeatMode.TRACK : QueueRepeatMode.OFF;
+			mode = QueueRepeatMode[type];
 
 		queue.setRepeatMode(mode);
 
-		interaction.success(`music/loop:${type === "3" ? "AUTOPLAY_ENABLED" : type === "2" ? "QUEUE_ENABLED" : type === "1" ? "TRACK_ENABLED" : "LOOP_DISABLED"}`);
+		interaction.reply({ content: translated[type] });
 	}
 }
 

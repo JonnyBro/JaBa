@@ -61,7 +61,7 @@ class CloseTicket extends BaseCommand {
 		const button = new ButtonBuilder().setCustomId("cancel_closing").setLabel(interaction.translate("common:CANCEL")).setStyle(ButtonStyle.Danger);
 		const row = new ActionRowBuilder().addComponents(button);
 
-		await interaction.reply({
+		await interaction.editReply({
 			embeds: [embed],
 			components: [row],
 		});

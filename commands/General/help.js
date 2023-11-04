@@ -108,10 +108,9 @@ class Help extends BaseCommand {
 			};
 		});
 
-		const row = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId("help_category_select").setPlaceholder(client.translate("common:NOTHING_SELECTED")).addOptions(categoriesRows));
+		const row = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId("help_category_select").setPlaceholder(interaction.translate("common:NOTHING_SELECTED")).addOptions(categoriesRows));
 
 		await interaction.editReply({
-			content: interaction.translate("common:AVAILABLE_OPTIONS"),
 			fetchReply: true,
 			components: [row],
 		});
