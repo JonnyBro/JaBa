@@ -63,7 +63,6 @@ class Loop extends BaseCommand {
 			"QUEUE": interaction.translate("music/loop:QUEUE_ENABLED"),
 			"TRACK": interaction.translate("music/loop:TRACK_ENABLED"),
 			"OFF": interaction.translate("music/loop:LOOP_DISABLED"),
-			"0": interaction.translate("music/loop:LOOP_DISABLED"),
 		};
 
 		const type = interaction.options.getString("option"),
@@ -71,7 +70,7 @@ class Loop extends BaseCommand {
 
 		queue.setRepeatMode(mode);
 
-		interaction.reply({ content: translated[type] });
+		interaction.reply({ content: translated[mode] });
 	}
 }
 
