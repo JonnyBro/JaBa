@@ -4,11 +4,11 @@ User.prototype.getUsername = function () {
 	return this.discriminator === "0" ? this.username : this.tag;
 };
 
-BaseInteraction.prototype.translate = function (key, args, emoji) {
-	const lang = this.client.translations.get(this.guild.data.language ?? "en-US");
-	const string = emoji !== undefined ? `${this.client.customEmojis[emoji]} | ${lang(key, args)}` : lang(key, args);
+BaseInteraction.prototype.translate = function (key, args) {
+	const language = this.client.translations.get(this.guild ? this.guild.data.language : "en-US");
+	if (!language) throw "Interaction: Invalid language set in data.";
 
-	return string;
+	return language(key, args);
 };
 
 BaseInteraction.prototype.replyT = function (key, args, options = {}) {
@@ -31,11 +31,11 @@ BaseInteraction.prototype.error = function (key, args, options = {}) {
 	return this.replyT(key, args, options);
 };
 
-Message.prototype.translate = function (key, args, emoji) {
-	const lang = this.client.translations.get(this.guild.data.language ?? "en-US");
-	const string = emoji !== undefined ? `${this.client.customEmojis[emoji]} | ${lang(key, args)}` : lang(key, args);
+Message.prototype.translate = function (key, args) {
+	const language = this.client.translations.get(this.guild ? this.guild.data.language : "en-US");
+	if (!language) throw "Message: Invalid language set in data.";
 
-	return string;
+	return language(key, args);
 };
 
 Message.prototype.replyT = function (key, args, options = {}) {

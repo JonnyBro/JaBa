@@ -102,7 +102,7 @@ class Selectroles extends BaseCommand {
 				}
 
 				interaction.reply({
-					content: interaction.translate("administration/selectroles:ROLES_UPDATED", null, "success"),
+					content: interaction.translate("administration/selectroles:ROLES_UPDATED"),
 					ephemeral: true,
 				});
 			}

@@ -207,7 +207,7 @@ async function changeSetting(interaction, setting, state, channel, guildData) {
 		await guildData.save();
 
 		return interaction.reply({
-			content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`, null, "success")}: **${interaction.translate("common:DISABLED", null, "success")}**`,
+			content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`)}: **${interaction.translate("common:DISABLED")}**`,
 			ephemeral: true,
 		});
 	} else {
@@ -226,7 +226,7 @@ async function changeSetting(interaction, setting, state, channel, guildData) {
 		} else
 			return interaction.reply({
 				content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`)}: ${
-					guildData.plugins[setting] ? `**${interaction.translate("common:ENABLED", null, "success")}** (<#${guildData.plugins[setting]}>)` : `**${interaction.translate("common:DISABLED", null, "success")}**`
+					guildData.plugins[setting] ? `**${interaction.translate("common:ENABLED")}** (<#${guildData.plugins[setting]}>)` : `**${interaction.translate("common:DISABLED")}**`
 				}`,
 				ephemeral: true,
 			});

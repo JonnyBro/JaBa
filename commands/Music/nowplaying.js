@@ -56,7 +56,7 @@ class Nowplaying extends BaseCommand {
 
 					queue.history.back();
 
-					await interaction.followUp({ content: interaction.translate("music/back:SUCCESS", null, "success"), ephemeral: true });
+					await interaction.followUp({ content: interaction.translate("music/back:SUCCESS"), ephemeral: true });
 
 					const embed = await updateEmbed(interaction, queue);
 
@@ -94,11 +94,11 @@ class Nowplaying extends BaseCommand {
 						collected = await msg.awaitMessageComponent({ filter, time: 10 * 1000 }),
 						mode = QueueRepeatMode[collected.values[0]],
 						translated = {
-							"AUTOPLAY": interaction.translate("music/loop:AUTOPLAY_ENABLED", null, "success"),
-							"QUEUE": interaction.translate("music/loop:QUEUE_ENABLED", null, "success"),
-							"TRACK": interaction.translate("music/loop:TRACK_ENABLED", null, "success"),
-							"OFF": interaction.translate("music/loop:LOOP_DISABLED", null, "success"),
-							"0": interaction.translate("music/loop:LOOP_DISABLED", null, "success"),
+							"AUTOPLAY": interaction.translate("music/loop:AUTOPLAY_ENABLED"),
+							"QUEUE": interaction.translate("music/loop:QUEUE_ENABLED"),
+							"TRACK": interaction.translate("music/loop:TRACK_ENABLED"),
+							"OFF": interaction.translate("music/loop:LOOP_DISABLED"),
+							"0": interaction.translate("music/loop:LOOP_DISABLED"),
 						};
 
 					await collected.deferUpdate();
@@ -135,7 +135,7 @@ class Nowplaying extends BaseCommand {
 					await interaction.followUp({
 						content: interaction.translate("music/play:ADDED_QUEUE", {
 							songName: searchResult.hasPlaylist() ? searchResult.playlist.title : searchResult.tracks[0].title,
-						}, "success"),
+						}),
 					});
 
 					const embed = await updateEmbed(interaction, queue);
@@ -148,7 +148,7 @@ class Nowplaying extends BaseCommand {
 
 					queue.node.skip();
 
-					await interaction.followUp({ content: interaction.translate("music/skip:SUCCESS", null, "success"), ephemeral: true });
+					await interaction.followUp({ content: interaction.translate("music/skip:SUCCESS"), ephemeral: true });
 
 					const embed = await updateEmbed(interaction, queue);
 

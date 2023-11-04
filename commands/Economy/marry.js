@@ -167,7 +167,7 @@ class Marry extends BaseCommand {
 					content: interaction.translate("economy/marry:SUCCESS", {
 						creator: interaction.member.toString(),
 						partner: member.toString(),
-					}, "success"),
+					}),
 					components: [],
 				});
 			} else return interaction.editReply({
