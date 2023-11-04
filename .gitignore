@@ -1,5 +1,6 @@
-# Mac OS files
+# Trash
 .DS_Store
+Thumbs.db
 
 # Bot Configuration
 /config.js
