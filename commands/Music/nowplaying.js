@@ -39,14 +39,14 @@ class Nowplaying extends BaseCommand {
 
 				const row1 = new ActionRowBuilder().addComponents(
 					new ButtonBuilder().setCustomId("nowp_prev_track").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
-					new ButtonBuilder().setCustomId("nowp_loop").setStyle(ButtonStyle.Secondary).setEmoji("🔁"),
+					new ButtonBuilder().setCustomId("nowp_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
 					new ButtonBuilder().setCustomId("nowp_add_track").setStyle(ButtonStyle.Success).setEmoji("▶️"),
 					new ButtonBuilder().setCustomId("nowp_next_track").setStyle(ButtonStyle.Primary).setEmoji("➡️"),
+					new ButtonBuilder().setCustomId("nowp_loop").setStyle(ButtonStyle.Secondary).setEmoji("🔁"),
 				);
 
 				const row2 = new ActionRowBuilder().addComponents(
 					new ButtonBuilder().setCustomId("nowp_queue").setStyle(ButtonStyle.Secondary).setEmoji("ℹ️"),
-					new ButtonBuilder().setCustomId("nowp_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
 				);
 
 				if (interaction.customId === "nowp_prev_track") {
@@ -191,14 +191,14 @@ class Nowplaying extends BaseCommand {
 
 		const row1 = new ActionRowBuilder().addComponents(
 			new ButtonBuilder().setCustomId("nowp_prev_track").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
-			new ButtonBuilder().setCustomId("nowp_loop").setStyle(ButtonStyle.Secondary).setEmoji("🔁"),
+			new ButtonBuilder().setCustomId("nowp_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
 			new ButtonBuilder().setCustomId("nowp_add_track").setStyle(ButtonStyle.Success).setEmoji("▶️"),
 			new ButtonBuilder().setCustomId("nowp_next_track").setStyle(ButtonStyle.Primary).setEmoji("➡️"),
+			new ButtonBuilder().setCustomId("nowp_loop").setStyle(ButtonStyle.Secondary).setEmoji("🔁"),
 		);
 
 		const row2 = new ActionRowBuilder().addComponents(
 			new ButtonBuilder().setCustomId("nowp_queue").setStyle(ButtonStyle.Secondary).setEmoji("ℹ️"),
-			new ButtonBuilder().setCustomId("nowp_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
 		);
 
 		const embed = await updateEmbed(interaction, queue);
