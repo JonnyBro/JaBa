@@ -5,7 +5,7 @@ const BaseCommand = require("../../base/BaseCommand");
 class Nowplaying extends BaseCommand {
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../base/Client")} client
 	 */
 	constructor(client) {
 		super({
@@ -24,7 +24,7 @@ class Nowplaying extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	async onLoad(client) {
 		client.on("interactionCreate", async interaction => {
@@ -161,6 +161,9 @@ class Nowplaying extends BaseCommand {
 				} else if (interaction.customId === "nowp_stop") {
 					await interaction.deferUpdate();
 
+					queue.delete();
+					await interaction.followUp({ content: interaction.translate("music/stop:SUCCESS") });
+
 					row1.components.forEach(component => {
 						component.setDisabled(true);
 					});
@@ -178,7 +181,7 @@ class Nowplaying extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */

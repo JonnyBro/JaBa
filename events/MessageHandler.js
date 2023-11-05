@@ -13,7 +13,7 @@ class MessageCreate extends BaseEvent {
 
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../base/Client")} client
 	 * @param {import("discord.js").Message} message
 	 */
 	async execute(client, message) {
@@ -120,7 +120,7 @@ class MessageCreate extends BaseEvent {
 
 /**
  *
- * @param {import("../base/JaBa")} client
+ * @param {import("../base/Client")} client
  * @param {import("discord.js").Message} msg
  * @param {import("../base/Member")} memberData
  * @returns

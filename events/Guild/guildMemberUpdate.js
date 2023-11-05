@@ -10,7 +10,7 @@ class GuildMemberUpdate extends BaseEvent {
 
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").GuildMember} oldMember
 	 * @param {import("discord.js").GuildMember} newMember
 	 */

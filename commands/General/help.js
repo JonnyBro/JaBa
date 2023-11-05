@@ -4,7 +4,7 @@ const BaseCommand = require("../../base/BaseCommand");
 class Help extends BaseCommand {
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../base/Client")} client
 	 */
 	constructor(client) {
 		super({
@@ -33,7 +33,7 @@ class Help extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	async onLoad(client) {
 		client.on("interactionCreate", async interaction => {
@@ -75,7 +75,7 @@ class Help extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
@@ -118,7 +118,7 @@ class Help extends BaseCommand {
 
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").AutocompleteInteraction} interaction
 	 * @returns
 	 */

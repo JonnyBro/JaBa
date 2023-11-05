@@ -4,7 +4,7 @@ const BaseCommand = require("../../base/BaseCommand");
 class AvatarContext extends BaseCommand {
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	constructor() {
 		super({
@@ -19,14 +19,14 @@ class AvatarContext extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	async onLoad() {
 		//...
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").UserContextMenuCommandInteraction} interaction
 	 * @param {Object} data
 	 */

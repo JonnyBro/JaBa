@@ -4,7 +4,7 @@ const BaseCommand = require("../../base/BaseCommand");
 class Servers extends BaseCommand {
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../base/Client")} client
 	 */
 	constructor(client) {
 		super({
@@ -23,14 +23,14 @@ class Servers extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	async onLoad() {
 		//...
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */

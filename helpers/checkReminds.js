@@ -3,7 +3,7 @@ const moment = require("moment");
 
 /**
  *
- * @param {import("../base/JaBa")} client
+ * @param {import("../base/Client")} client
  */
 module.exports.init = function (client) {
 	client.usersData.find({ reminds: { $gt: [] } }).then(users => {

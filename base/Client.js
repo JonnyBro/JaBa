@@ -10,7 +10,7 @@ const BaseEvent = require("./BaseEvent.js"),
 	fs = require("fs").promises,
 	mongoose = require("mongoose");
 
-class JaBa extends Client {
+class JaBaClient extends Client {
 	constructor(options) {
 		super(options);
 		this.config = require("../config");
@@ -320,4 +320,4 @@ class JaBa extends Client {
 	}
 }
 
-module.exports = JaBa;
+module.exports = JaBaClient;

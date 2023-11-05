@@ -11,7 +11,7 @@ class messageDelete extends BaseEvent {
 
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client The Discord Client
+	 * @param {import("../../base/Client")} client The Discord Client
 	 * @param {import("discord.js").Message} message The deleted message
 	 */
 	async execute(client, message) {

@@ -11,7 +11,7 @@ class CommandHandler extends BaseEvent {
 
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../base/Client")} client
 	 * @param {import("discord.js").BaseInteraction} interaction
 	 */
 	async execute(client, interaction) {

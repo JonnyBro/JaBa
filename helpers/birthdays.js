@@ -3,7 +3,7 @@ const { CronJob } = require("cron"),
 
 /**
  *
- * @param {import("../base/JaBa")} client
+ * @param {import("../base/Client")} client
  */
 module.exports.init = async function (client) {
 	const cronjob = new CronJob("0 5 * * *", async function () {

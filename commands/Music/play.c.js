@@ -4,7 +4,7 @@ const BaseCommand = require("../../base/BaseCommand");
 class PlayContext extends BaseCommand {
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	constructor() {
 		super({
@@ -19,14 +19,14 @@ class PlayContext extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	async onLoad() {
 		//...
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").MessageContextMenuCommandInteraction} interaction
 	 * @param {Object} data
 	 */
@@ -49,7 +49,6 @@ class PlayContext extends BaseCommand {
 			const { queue } = await client.player.play(interaction.member.voice.channel, searchResult, {
 				nodeOptions: {
 					metadata: {
-						client,
 						channel: interaction.channel,
 						requestedBy: interaction.user,
 					},

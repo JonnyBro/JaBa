@@ -10,10 +10,10 @@ moment.relativeTimeThreshold("M", 12);
 
 module.exports = {
 	/**
-	 * Create invite link to guild
-	 * @param {import("../base/JaBa")} client Discord client
-	 * @param {String} guildId Guild's ID
-	 * @returns {String} Invite Link
+	 * Creates Invite Link to The Guild
+	 * @param {import("../base/Client")} client Discord Client
+	 * @param {String} guildId ID of The Guild
+	 * @returns {String} Invite Link to This Guild
 	 */
 	async createInvite(client, guildId) {
 		const guild = client.guilds.cache.get(guildId),
@@ -24,9 +24,9 @@ module.exports = {
 	},
 
 	/**
-	 * Calls a callback for each element in collection async
-	 * @param {Array} collection
-	 * @param {Function} callback
+	 * Calls a Callback for Each Element in Collection Asynchronously
+	 * @param {Array} collection Collection
+	 * @param {Function} callback Function to Perform on Collection
 	 * @returns {Promise}
 	 */
 	async asyncForEach(collection, callback) {
@@ -38,10 +38,10 @@ module.exports = {
 	},
 
 	/**
-	 * Sorts array by key
-	 * @param {Array} array Array to sort
+	 * Sorts an Array by Key
+	 * @param {Array} array Array to Sort
 	 * @param {Number} key Key
-	 * @returns {Array} Sorted array
+	 * @returns {Array} Sorted Array
 	 */
 	sortByKey(array, key) {
 		return array.sort(function (a, b) {
@@ -52,13 +52,15 @@ module.exports = {
 	},
 
 	/**
-	 * Shuffles the array
-	 * @param {*} pArray Array to shuffle
-	 * @returns {Array} Shuffled array
+	 * Shuffles the Array
+	 * @param {Array} pArray Array to Shuffle
+	 * @returns {Array} Shuffled Array
 	 */
 	shuffle(pArray) {
 		const array = [];
+
 		pArray.forEach(element => array.push(element));
+
 		let currentIndex = array.length,
 			temporaryValue,
 			randomIndex;
@@ -76,9 +78,9 @@ module.exports = {
 	},
 
 	/**
-	 * Returns a random integer between min (inclusive) and max (inclusive)
-	 * @param {Number} min Min
-	 * @param {Number} max Max
+	 * Returns a Random Number Between min (inclusive) And max (inclusive)
+	 * @param {Number} min Min value (inclusive)
+	 * @param {Number} max Max value (inclusive)
 	 * @returns {Number} Integer
 	 */
 	randomNum(min, max) {
@@ -89,12 +91,12 @@ module.exports = {
 	},
 
 	/**
-	 * Beautify date
-	 * @param {import("../base/JaBa")} client Discord client
+	 * Beautifies the given Date
+	 * @param {import("../base/Client")} client Discord Client
 	 * @param {Date} date Date
-	 * @param {String | null} format Format for moment
+	 * @param {String | null} format Format for Moment
 	 * @param {String} locale Language
-	 * @returns {String} Beautified date
+	 * @returns {String} Beautified Date
 	 */
 	printDate(client, date, format = null, locale = client.defaultLanguage) {
 		const languageData = client.languages.find(language => language.name === locale);
@@ -104,23 +106,23 @@ module.exports = {
 	},
 
 	/**
-	 * Converts given time
-	 * @param {import("../base/JaBa")} client Discord client
+	 * Converts the Given Time
+	 * @param {import("../base/Client")} client Discord Client
 	 * @param {String} time Time
 	 * @param {Boolean} type Type (To now = true or from now = false)
-	 * @param {Boolean} noPrefix Use prefix?
+	 * @param {Boolean} prefix Include Prefix
 	 * @param {String} locale Language
 	 * @returns {String} Time
 	 */
-	convertTime(client, time, type = false, noPrefix = false, locale = client.defaultLanguage) {
+	convertTime(client, time, type = false, prefix = true, locale = client.defaultLanguage) {
 		const languageData = client.languages.find(language => language.name === locale);
 		const m = moment(time).locale(languageData.moment);
 
-		return type ? m.toNow(noPrefix) : m.fromNow(noPrefix);
+		return type ? m.toNow(!prefix) : m.fromNow(!prefix);
 	},
 
 	/**
-	 * Get a noun for number
+	 * Get a Noun for Number
 	 * @param {Number} number Number
 	 * @param {String} one String for one
 	 * @param {String} two String for two

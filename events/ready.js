@@ -10,7 +10,7 @@ class Ready extends BaseEvent {
 	}
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../base/Client")} client
 	 */
 	async execute(client) {
 		const commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()];

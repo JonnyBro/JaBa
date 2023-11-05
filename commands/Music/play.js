@@ -4,7 +4,7 @@ const BaseCommand = require("../../base/BaseCommand");
 class Play extends BaseCommand {
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../base/Client")} client
 	 */
 	constructor(client) {
 		super({
@@ -34,14 +34,14 @@ class Play extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	async onLoad() {
 		//...
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
@@ -64,7 +64,6 @@ class Play extends BaseCommand {
 			const { queue } = await client.player.play(interaction.member.voice.channel, searchResult, {
 				nodeOptions: {
 					metadata: {
-						client,
 						channel: interaction.channel,
 						requestedBy: interaction.user,
 					},
@@ -94,7 +93,7 @@ class Play extends BaseCommand {
 
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").AutocompleteInteraction} interaction
 	 * @returns
 	 */

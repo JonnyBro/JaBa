@@ -6,7 +6,7 @@ const BaseCommand = require("../../base/BaseCommand"),
 class Clips extends BaseCommand {
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../base/Client")} client
 	 */
 	constructor(client) {
 		super({
@@ -36,14 +36,14 @@ class Clips extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	async onLoad() {
 		//...
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
@@ -60,7 +60,6 @@ class Clips extends BaseCommand {
 		client.player.play(interaction.member.voice.channel, query, {
 			nodeOptions: {
 				metadata: {
-					client,
 					channel: interaction.channel,
 					requestedBy: interaction.user,
 				},
@@ -82,7 +81,7 @@ class Clips extends BaseCommand {
 
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").AutocompleteInteraction} interaction
 	 * @returns
 	 */

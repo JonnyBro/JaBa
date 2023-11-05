@@ -24,7 +24,7 @@ class GuildMemberRemove extends BaseEvent {
 
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").GuildMember} member
 	 */
 	async execute(client, member) {

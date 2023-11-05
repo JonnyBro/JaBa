@@ -16,7 +16,7 @@ function setDaysTimeout(callback, days) {
 
 /**
  *
- * @param {import("../base/JaBa")} client
+ * @param {import("../base/Client")} client
  */
 module.exports.init = async function (client) {
 	setDaysTimeout(async () => {

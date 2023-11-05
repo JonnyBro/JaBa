@@ -11,7 +11,7 @@ class messageUpdate extends BaseEvent {
 
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client The Discord client
+	 * @param {import("../../base/Client")} client The Discord client
 	 * @param {import("discord.js").Message} oldMessage The message before the update
 	 * @param {import("discord.js").Message} newMessage The message after the update
 	 */

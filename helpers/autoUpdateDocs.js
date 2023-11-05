@@ -3,7 +3,7 @@ const table = require("markdown-table"),
 
 /**
  *
- * @param {import("../base/JaBa")} client
+ * @param {import("../base/Client")} client
  */
 module.exports.update = function (client) {
 	const commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()],

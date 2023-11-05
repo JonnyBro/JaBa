@@ -4,7 +4,7 @@ const BaseCommand = require("../../base/BaseCommand");
 class CreateTicketEmbed extends BaseCommand {
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	constructor(client) {
 		super({
@@ -25,7 +25,7 @@ class CreateTicketEmbed extends BaseCommand {
 
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	async onLoad(client) {
 		client.on("interactionCreate", async interaction => {
@@ -202,7 +202,7 @@ class CreateTicketEmbed extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */

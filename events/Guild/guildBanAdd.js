@@ -11,7 +11,7 @@ class guildBanAdd extends BaseEvent {
 
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").GuildBan} ban
 	 */
 	async execute(client, ban) {

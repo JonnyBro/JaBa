@@ -5,7 +5,7 @@ const BaseCommand = require("../../base/BaseCommand"),
 class Number extends BaseCommand {
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../base/Client")} client
 	 */
 	constructor(client) {
 		super({
@@ -24,14 +24,14 @@ class Number extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	async onLoad() {
 		//...
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
@@ -60,7 +60,7 @@ class Number extends BaseCommand {
 			const parsedNumber = parseInt(msg.content, 10);
 
 			if (parsedNumber === number) {
-				const time = client.functions.convertTime(client, gameCreatedAt, false, false, data.guildData.language);
+				const time = client.functions.convertTime(client, gameCreatedAt, false, true, data.guildData.language);
 				interaction.channel.send({
 					content: interaction.translate("fun/number:GAME_STATS", {
 						winner: msg.author.toString(),

@@ -4,7 +4,7 @@ const BaseCommand = require("../../base/BaseCommand");
 class Rep extends BaseCommand {
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../base/Client")} client
 	 */
 	constructor(client) {
 		super({
@@ -33,14 +33,14 @@ class Rep extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	async onLoad() {
 		//...
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
@@ -49,7 +49,7 @@ class Rep extends BaseCommand {
 		if (isInCooldown) {
 			if (isInCooldown > Date.now())
 				return interaction.error("economy/rep:COOLDOWN", {
-					time: client.functions.convertTime(client, isInCooldown, true, true, data.guildData.language),
+					time: client.functions.convertTime(client, isInCooldown, true, false, data.guildData.language),
 				});
 		}
 

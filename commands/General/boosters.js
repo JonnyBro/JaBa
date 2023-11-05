@@ -4,7 +4,7 @@ const BaseCommand = require("../../base/BaseCommand");
 class Boosters extends BaseCommand {
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../base/Client")} client
 	 */
 	constructor(client) {
 		super({
@@ -23,7 +23,7 @@ class Boosters extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	async onLoad(client) {
 		client.on("interactionCreate", async interaction => {
@@ -112,7 +112,7 @@ class Boosters extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
@@ -141,7 +141,7 @@ class Boosters extends BaseCommand {
 
 /**
  *
- * @param {import("../../base/JaBa")} client
+ * @param {import("../../base/Client")} client
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
  * @param {Array} boosters
  * @param {import("../../base/Guild")} guildData

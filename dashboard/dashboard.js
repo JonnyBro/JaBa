@@ -12,7 +12,7 @@ const locales = {
 
 /**
  *
- * @param {import("../base/JaBa")} client
+ * @param {import("../base/Client")} client
  */
 module.exports.load = async client => {
 	const commands = client.commands.map(v => {

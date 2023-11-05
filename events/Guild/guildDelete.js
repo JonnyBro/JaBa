@@ -11,7 +11,7 @@ class GuildDelete extends BaseEvent {
 
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").Guild} guild
 	 */
 	async execute(client, guild) {

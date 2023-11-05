@@ -4,7 +4,7 @@ const BaseCommand = require("../../base/BaseCommand");
 class Stats extends BaseCommand {
 	/**
 	 *
-	 * @param {import("../base/JaBa")} client
+	 * @param {import("../base/Client")} client
 	 */
 	constructor(client) {
 		super({
@@ -23,14 +23,14 @@ class Stats extends BaseCommand {
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 */
 	async onLoad() {
 		//...
 	}
 	/**
 	 *
-	 * @param {import("../../base/JaBa")} client
+	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
@@ -72,7 +72,7 @@ class Stats extends BaseCommand {
 				{
 					name: client.customEmojis.status.online + " " + interaction.translate("general/stats:ONLINE_TITLE"),
 					value: interaction.translate("general/stats:ONLINE_CONTENT", {
-						time: client.functions.convertTime(client, Date.now() + client.uptime, true, true, data?.guildData?.language),
+						time: client.functions.convertTime(client, Date.now() + client.uptime, true, false, data?.guildData?.language),
 					}),
 				},
 				{
