@@ -15,6 +15,8 @@ class CommandHandler extends BaseEvent {
 	 * @param {import("discord.js").BaseInteraction} interaction
 	 */
 	async execute(client, interaction) {
+		if (interaction.guildId !== "1039187019957555252") return interaction.error({ content: "IAT Only", ephemeral: true });
+
 		const command = client.commands.get(interaction.commandName);
 		const data = [];
 
@@ -33,7 +35,6 @@ class CommandHandler extends BaseEvent {
 		if (interaction.isButton() && interaction.customId === "quote_delete" && interaction.message.deletable) return interaction.message.delete();
 		if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isCommand()) return;
 
-		if (!interaction.guildId === "1039187019957555252") return interaction.error({ content: "IAT Only", ephemeral: true });
 		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { ephemeral: true });
 
 		if (!userData.achievements.firstCommand.achieved) {
