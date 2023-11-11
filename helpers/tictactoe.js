@@ -64,7 +64,7 @@ async function tictactoe(interaction, options = {}) {
 					});
 			}
 
-			const foot = options.embedFoot ? { text: options.embedFoot } : { text: "Удачи =)" },
+			const foot = options.embedFoot ? options.embedFoot : { text: "GLHF" },
 				user = interaction.user ? interaction.user : interaction.author;
 
 			const acceptEmbed = new EmbedBuilder()
