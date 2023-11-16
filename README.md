@@ -3,8 +3,7 @@
 # JaBa Bot
 
 [![](https://img.shields.io/discord/892727526911258654?logo=discord&&colorB=00BFFF&label=%D0%9A%D0%BE%D0%BF%D0%B8%D0%BF%D0%B0%D1%81%D1%82%D0%B5%D1%80%D1%8B&style=flat-square)](https://discord.gg/Ptkj2n9nzZ)
-[![](https://img.shields.io/discord/568120814776614924.svg?logo=discord&colorB=00BFFF&label=Atlanta%20Emojis)](https://discord.gg/NPkySYKMkN)
-[![](https://img.shields.io/badge/discord.js-v14.11.0-blue.svg?logo=npm)](https://github.com/discordjs/discord.js)
+[![](https://img.shields.io/badge/discord.js-v14.13.0-blue.svg?logo=npm)](https://github.com/discordjs/discord.js)
 [![](https://www.codefactor.io/repository/github/JonnyBro/JaBa/badge)](https://www.codefactor.io/repository/github/JonnyBro/JaBa)
 [![](https://img.shields.io/github/license/JonnyBro/JaBa?label=%D0%9B%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F%20&style=flat-square)](https://github.com/JonnyBro/JaBa/blob/main/LICENSE)<br>
 JaBa это *Discord* бот с открытым (теперь) исходным кодом, написанный [Jonny_Bro](https://github.com/JonnyBro) на JavaScript с помощью [discord.js](https://github.com/discordjs/discord.js) и [Mongoose](https://mongoosejs.com). Поставьте звёздочку если вам нравится что я делаю :3
