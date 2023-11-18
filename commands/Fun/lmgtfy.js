@@ -60,13 +60,13 @@ class LMGTFY extends BaseCommand {
 
 		const query = interaction.options.getString("query").replace(/[' '_]/g, "+"),
 			short = interaction.options.getBoolean("short"),
-			url = `https://letmegooglethat.com/?q=${query}`;
+			url = `https://letmegooglethat.com/?q=${encodeURIComponent(query)}`;
 
 		if (short) {
-			const res = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`).then(res => res.text());
+			const res = await fetch(`https://plsgo.ru/yourls-api.php?signature=${client.config.apiKeys.jababot_yourls}&action=shorturl&url=${encodeURIComponent(url)}&format=json`).then(res => res.json());
 
 			interaction.editReply({
-				content: `<${res}>`,
+				content: `<${res.shorturl}>`,
 			});
 		} else {
 			interaction.editReply({
