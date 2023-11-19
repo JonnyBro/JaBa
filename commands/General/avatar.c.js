@@ -9,7 +9,7 @@ class AvatarContext extends BaseCommand {
 	constructor() {
 		super({
 			command: new ContextMenuCommandBuilder()
-				.setName("Avatar")
+				.setName("Get Avatar")
 				.setType(ApplicationCommandType.User)
 				.setDMPermission(false),
 			aliases: [],

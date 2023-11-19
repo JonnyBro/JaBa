@@ -99,9 +99,7 @@ class CreateTicketEmbed extends BaseCommand {
 					const row = new ActionRowBuilder().addComponents(closeButton, transcriptButton);
 
 					await channel.send({ embeds: [embed], components: [row] });
-				}
-
-				if (button.customId === "close_ticket") {
+				} else if (button.customId === "close_ticket") {
 					const embed = new EmbedBuilder()
 						.setTitle(interaction.translate("tickets/closeticket:CLOSING_TITLE"))
 						.setDescription(interaction.translate("tickets/closeticket:CLOSING_DESC"))
@@ -174,9 +172,7 @@ class CreateTicketEmbed extends BaseCommand {
 							await interaction.channel.setName(`${interaction.channel.name}-closed`);
 						}
 					});
-				}
-
-				if (button.customId === "transcript_ticket") {
+				} else if (button.customId === "transcript_ticket") {
 					await interaction.deferUpdate();
 
 					const reversedMessages = (await interaction.channel.messages.fetch()).filter(m => !m.author.bot);

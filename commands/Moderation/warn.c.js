@@ -9,7 +9,7 @@ class WarnContext extends BaseCommand {
 	constructor() {
 		super({
 			command: new ContextMenuCommandBuilder()
-				.setName("Warn")
+				.setName("Give Warn")
 				.setType(ApplicationCommandType.User)
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages),
