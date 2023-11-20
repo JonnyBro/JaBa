@@ -205,10 +205,21 @@ class Nowplaying extends BaseCommand {
 
 		const embed = await updateEmbed(interaction, queue);
 
-		interaction.editReply({
+		const message = await interaction.editReply({
 			embeds: [embed],
 			components: [row1, row2],
 		});
+
+		const i = setInterval(async function () {
+			if (message && message.editable && queue.isPlaying()) {
+				const e = await updateEmbed(interaction, queue);
+
+				message.edit({
+					embeds: [e],
+					components: [row1, row2],
+				});
+			} else clearInterval(i);
+		}, 2 * 60 * 1000);
 	}
 }
 

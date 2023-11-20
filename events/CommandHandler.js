@@ -29,7 +29,7 @@ class CommandHandler extends BaseEvent {
 			data.memberData = memberData;
 		}
 
-		if (command.dirname.includes("IAT") && interaction.guildId !== "1039187019957555252") return interaction.reply({ content: "IAT Only", ephemeral: true });
+		if (command?.dirname.includes("IAT") && interaction.guildId !== "1039187019957555252") return interaction.reply({ content: "IAT Only", ephemeral: true });
 		if (interaction.isAutocomplete()) return await command.autocompleteRun(client, interaction);
 		if (interaction.isButton() && interaction.customId === "quote_delete" && interaction.message.deletable) return interaction.message.delete();
 		if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isCommand()) return;
