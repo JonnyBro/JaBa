@@ -33,7 +33,10 @@ class PlayContext extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply();
 
-		const query = interaction.targetMessage.content.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g)[0],
+		const links = interaction.targetMessage.content.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g);
+		if (!links) return interaction.error("music/play:NO_LINK", null, { edit: true });
+
+		const query = links[0],
 			voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { edit: true });
 
