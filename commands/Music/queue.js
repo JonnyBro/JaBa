@@ -157,10 +157,9 @@ function generateQueueEmbeds(client, interaction, queue) {
 	const embeds = [],
 		currentTrack = queue.currentTrack,
 		translated = {
-			"AUTOPLAY": interaction.translate("music/nowplaying:AUTOPLAY"),
-			"QUEUE": interaction.translate("music/nowplaying:QUEUE"),
-			"TRACK": interaction.translate("music/nowplaying:TRACK"),
-			"OFF": interaction.translate("common:DISABLED"),
+			"3": interaction.translate("music/loop:AUTOPLAY"),
+			"2": interaction.translate("music/loop:QUEUE"),
+			"1": interaction.translate("music/loop:TRACK"),
 			"0": interaction.translate("common:DISABLED"),
 		};
 

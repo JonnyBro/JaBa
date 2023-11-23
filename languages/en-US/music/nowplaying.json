@@ -9,8 +9,5 @@
 	"T_DURATION": "Duration",
 	"T_DESCRIPTION": "Description",
 	"NO_DESCRIPTION": "No description",
-	"REPEAT": "Repeat",
-	"AUTOPLAY": "Autoplay",
-	"QUEUE": "Queue",
-	"TRACK": "Track"
+	"REPEAT": "Repeat"
 }

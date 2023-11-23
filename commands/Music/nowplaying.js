@@ -235,9 +235,9 @@ async function updateEmbed(interaction, queue) {
 		data = await interaction.client.guildsData.findOne({ id: interaction.guildId }),
 		mode = queue.repeatMode === QueueRepeatMode.AUTOPLAY ? "3" : queue.repeatMode === QueueRepeatMode.QUEUE ? "2" : queue.repeatMode === QueueRepeatMode.TRACK ? "1" : "0",
 		translated = {
-			"3": interaction.translate("music/nowplaying:AUTOPLAY"),
-			"2": interaction.translate("music/nowplaying:QUEUE"),
-			"1": interaction.translate("music/nowplaying:TRACK"),
+			"3": interaction.translate("music/loop:AUTOPLAY"),
+			"2": interaction.translate("music/loop:QUEUE"),
+			"1": interaction.translate("music/loop:TRACK"),
 			"0": interaction.translate("common:DISABLED"),
 		};
 

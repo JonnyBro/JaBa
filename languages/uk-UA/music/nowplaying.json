@@ -9,8 +9,5 @@
 	"T_DURATION": "Тривалість",
 	"T_DESCRIPTION": "Опис",
 	"NO_DESCRIPTION": "Опис відсутній",
-	"REPEAT": "Повтор",
-	"AUTOPLAY": "Автовідтворення",
-	"QUEUE": "Черги",
-	"TRACK": "Трека"
+	"REPEAT": "Повтор"
 }
