@@ -158,13 +158,13 @@ class Config extends BaseCommand {
 					{
 						name: interaction.translate("administration/config:SPECIAL_CHANNELS"),
 						value:
-							`${interaction.translate("administration/config:BIRTHDAYS")}: ${guildData.plugins.birthdays ? `<#${guildData.plugins.birthdays}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
-							`${interaction.translate("administration/config:MODLOGS")}: ${guildData.plugins.modlogs ? `<#${guildData.plugins.modlogs}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
-							`${interaction.translate("administration/config:REPORTS")}: ${guildData.plugins.reports ? `<#${guildData.plugins.reports}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
-							`${interaction.translate("administration/config:SUGGESTIONS")}: ${guildData.plugins.suggestions ? `<#${guildData.plugins.suggestions}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
-							`${interaction.translate("administration/config:TICKETSCATEGORY")}: ${guildData.plugins.tickets.ticketsCategory ? `<#${guildData.plugins.tickets.ticketsCategory}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
-							`${interaction.translate("administration/config:TICKETLOGS")}: ${guildData.plugins.tickets.ticketLogs ? `<#${guildData.plugins.tickets.ticketLogs}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
-							`${interaction.translate("administration/config:TRANSCRIPTIONLOGS")}: ${guildData.plugins.tickets.transcriptionLogs ? `<#${guildData.plugins.tickets.transcriptionLogs}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n`,
+							`${interaction.translate("administration/config:BIRTHDAYS")}: ${guildData.plugins?.birthdays ? `<#${guildData.plugins.birthdays}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:MODLOGS")}: ${guildData.plugins?.modlogs ? `<#${guildData.plugins.modlogs}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:REPORTS")}: ${guildData.plugins?.reports ? `<#${guildData.plugins.reports}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:SUGGESTIONS")}: ${guildData.plugins?.suggestions ? `<#${guildData.plugins.suggestions}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:TICKETSCATEGORY")}: ${guildData.plugins?.tickets?.ticketsCategory ? `<#${guildData.plugins?.tickets?.ticketsCategory}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:TICKETLOGS")}: ${guildData.plugins?.tickets?.ticketLogs ? `<#${guildData.plugins?.tickets?.ticketLogs}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
+							`${interaction.translate("administration/config:TRANSCRIPTIONLOGS")}: ${guildData.plugins?.tickets?.transcriptionLogs ? `<#${guildData.plugins?.tickets?.transcriptionLogs}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n`,
 					},
 					{
 						name: interaction.translate("administration/config:DASHBOARD_TITLE"),

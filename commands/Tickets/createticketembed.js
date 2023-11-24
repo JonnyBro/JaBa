@@ -144,7 +144,7 @@ class CreateTicketEmbed extends BaseCommand {
 							});
 							transcript += "---- TICKET CLOSED ----";
 
-							interaction.guild.channels.cache.get(transcriptionLogs).send({ content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: `<#${interaction.channelId}>` }), files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }] });
+							if (transcriptionLogs !== null) interaction.guild.channels.cache.get(transcriptionLogs).send({ content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: `<#${interaction.channelId}>` }), files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }] });
 
 							const logChannel = interaction.guild.channels.cache.get(ticketLogs);
 							const logEmbed = new EmbedBuilder()
