@@ -219,7 +219,7 @@ class Nowplaying extends BaseCommand {
 					components: [row1, row2],
 				});
 			} else clearInterval(i);
-		}, 2 * 60 * 1000);
+		}, 1 * 60 * 1000);
 	}
 }
 

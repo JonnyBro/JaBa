@@ -46,13 +46,13 @@ class JaBaClient extends Client {
 				setTimeout(() => {
 					const message = queue.metadata.channel.messages.cache.get(m);
 
-					if (message.deletable) message.delete();
+					if (message && message.deletable) message.delete();
 				}, track.durationMS);
 			else
 				setTimeout(() => {
 					const message = queue.metadata.channel.messages.cache.get(m);
 
-					if (message.deletable) message.delete();
+					if (message && message.deletable) message.delete();
 				}, 5 * 60 * 1000); // m * s * ms
 		});
 		this.player.events.on("emptyQueue", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)));
