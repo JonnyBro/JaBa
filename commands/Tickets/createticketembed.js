@@ -41,6 +41,12 @@ class CreateTicketEmbed extends BaseCommand {
 				const button = interaction.component;
 
 				if (button.customId === "support_ticket") {
+					if (interaction.guild.channels.cache.get(ticketsCategory).children.cache.size >= 50) {
+						const sorted = interaction.guild.channels.cache.get(ticketsCategory).children.cache.sort((ch1, ch2) => ch1.createdTimestamp - ch2.createdTimestamp);
+
+						await sorted.first().delete();
+					}
+
 					if (guildData.plugins.tickets.count === undefined) guildData.plugins.tickets.count = 0;
 
 					guildData.plugins.tickets.count++;
