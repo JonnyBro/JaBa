@@ -69,7 +69,7 @@ class Transactions extends BaseCommand {
 			array.push(
 				`${interaction.translate("economy/transactions:T_USER_" + t.type.toUpperCase())}: ${t.user}\n${interaction.translate("economy/transactions:T_AMOUNT")}: ${t.amount}\n${interaction.translate(
 					"economy/transactions:T_DATE",
-				)}: ${client.functions.printDate(client, t.date, "Do MMMM YYYY, HH:mm", data.guildData.language)}\n`,
+				)}: ${client.functions.printDate(client, t.date, "Do MMMM YYYY, HH:mm", interaction.getLocale())}\n`,
 			);
 		});
 

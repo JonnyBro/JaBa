@@ -60,7 +60,7 @@ class Suggest extends BaseCommand {
 			.addFields([
 				{
 					name: interaction.translate("common:DATE"),
-					value: client.functions.printDate(client, new Date(Date.now()), null, data.guildData.language),
+					value: client.functions.printDate(client, new Date(Date.now()), null, interaction.getLocale()),
 				},
 				{
 					name: interaction.translate("common:AUTHOR"),

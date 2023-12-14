@@ -114,12 +114,12 @@ class Profile extends BaseCommand {
 				},
 				{
 					name: interaction.translate("economy/profile:REGISTERED"),
-					value: client.functions.printDate(client, new Date(memberData.registeredAt), null, data.guildData.language),
+					value: client.functions.printDate(client, new Date(memberData.registeredAt), null, interaction.getLocale()),
 					inline: true,
 				},
 				{
 					name: interaction.translate("economy/profile:BIRTHDATE"),
-					value: !userData.birthdate ? interaction.translate("common:NOT_DEFINED") : client.functions.printDate(client, new Date(userData.birthdate), "Do MMMM YYYY", data.guildData.language),
+					value: !userData.birthdate ? interaction.translate("common:NOT_DEFINED") : client.functions.printDate(client, new Date(userData.birthdate), "Do MMMM YYYY", interaction.getLocale()),
 					inline: true,
 				},
 				{

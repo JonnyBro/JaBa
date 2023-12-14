@@ -79,7 +79,7 @@ class Remindme extends BaseCommand {
 
 		interaction.success("general/remindme:SAVED", {
 			message,
-			time: moment(rData.sendAt).locale(data?.guildData?.language || "en-US").format("dddd, Do MMMM YYYY, HH:mm:ss"),
+			time: moment(rData.sendAt).locale(interaction.getLocale()).format("dddd, Do MMMM YYYY, HH:mm:ss"),
 		}, { edit: true });
 	}
 }

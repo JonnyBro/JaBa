@@ -116,13 +116,13 @@ class Boosters extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
+	async execute(client, interaction) {
 		await interaction.deferReply();
 
 		const boosters = (await interaction.guild.members.fetch()).filter(m => m.premiumSince);
 		if (boosters.size === 0) return interaction.error("general/boosters:NO_BOOSTERS", null, { edit: true });
 
-		const embeds = generateBoostersEmbeds(client, interaction, boosters, data.guildData);
+		const embeds = generateBoostersEmbeds(client, interaction, boosters);
 
 		const row = new ActionRowBuilder().addComponents(
 			new ButtonBuilder().setCustomId("boosters_prev_page").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
@@ -144,10 +144,9 @@ class Boosters extends BaseCommand {
  * @param {import("../../base/Client")} client
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
  * @param {Array} boosters
- * @param {import("../../base/Guild")} guildData
  * @returns
  */
-function generateBoostersEmbeds(client, interaction, boosters, guildData) {
+function generateBoostersEmbeds(client, interaction, boosters) {
 	const embeds = [];
 	let k = 10;
 
@@ -159,7 +158,7 @@ function generateBoostersEmbeds(client, interaction, boosters, guildData) {
 		let j = i;
 		k += 10;
 
-		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: **${client.functions.printDate(client, member.premiumSince, null, guildData.language)}**`).join("\n");
+		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: **${client.functions.printDate(client, member.premiumSince, null, interaction.getLocale())}**`).join("\n");
 
 		const embed = new EmbedBuilder()
 			.setTitle(interaction.translate("general/boosters:BOOSTERS_LIST"))

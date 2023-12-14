@@ -49,7 +49,7 @@ class Rep extends BaseCommand {
 		if (isInCooldown) {
 			if (isInCooldown > Date.now())
 				return interaction.error("economy/rep:COOLDOWN", {
-					time: client.functions.convertTime(client, isInCooldown, true, false, data.guildData.language),
+					time: client.functions.convertTime(client, isInCooldown, true, false, interaction.getLocale()),
 				});
 		}
 

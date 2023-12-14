@@ -60,7 +60,7 @@ class Number extends BaseCommand {
 			const parsedNumber = parseInt(msg.content, 10);
 
 			if (parsedNumber === number) {
-				const time = client.functions.convertTime(client, gameCreatedAt, false, true, data.guildData.language);
+				const time = client.functions.convertTime(client, gameCreatedAt, false, true, interaction.getLocale());
 				interaction.channel.send({
 					content: interaction.translate("fun/number:GAME_STATS", {
 						winner: msg.author.toString(),

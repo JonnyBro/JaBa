@@ -39,7 +39,7 @@ class Work extends BaseCommand {
 		if (isInCooldown) {
 			if (isInCooldown > Date.now())
 				return interaction.error("economy/work:COOLDOWN", {
-					time: client.functions.convertTime(client, isInCooldown, true, false, data.guildData.language),
+					time: client.functions.convertTime(client, isInCooldown, true, false, interaction.getLocale()),
 				});
 		}
 		if (Date.now() > data.memberData.cooldowns.work + 24 * 60 * 60 * 1000) data.memberData.workStreak = 0;

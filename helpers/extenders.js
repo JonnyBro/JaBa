@@ -4,15 +4,19 @@ User.prototype.getUsername = function () {
 	return this.discriminator === "0" ? this.username : this.tag;
 };
 
+BaseInteraction.prototype.getLocale = function () {
+	return this.guild ? this.guild.data.language : "en-US";
+};
+
 BaseInteraction.prototype.translate = function (key, args) {
-	const language = this.client.translations.get(this.guild ? this.guild.data.language : "en-US");
+	const language = this.client.translations.get(this.getLocale());
 	if (!language) throw "Interaction: Invalid language set in data.";
 
 	return language(key, args);
 };
 
 BaseInteraction.prototype.replyT = async function (key, args, options = {}) {
-	const translated = this.translate(key, args, this.guild.data.language ?? "en-US");
+	const translated = this.translate(key, args, this.getLocale());
 	const string = options.prefixEmoji ? `${this.client.customEmojis[options.prefixEmoji]} | ${translated}` : translated;
 
 	if (options.edit) return await this.editReply({ content: string, ephemeral: options.ephemeral || false });
