@@ -38,7 +38,7 @@ class Boosters extends BaseCommand {
 					new ButtonBuilder().setCustomId("boosters_prev_page").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
 					new ButtonBuilder().setCustomId("boosters_next_page").setStyle(ButtonStyle.Primary).setEmoji("➡️"),
 					new ButtonBuilder().setCustomId("boosters_jump_page").setStyle(ButtonStyle.Secondary).setEmoji("↗️"),
-					new ButtonBuilder().setCustomId("boosters_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
+					new ButtonBuilder().setCustomId("boosters_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
 				);
 
 				let currentPage = Number(interaction.message.content.match(/\d+/g)[0]) - 1 ?? 0;
@@ -128,7 +128,7 @@ class Boosters extends BaseCommand {
 			new ButtonBuilder().setCustomId("boosters_prev_page").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
 			new ButtonBuilder().setCustomId("boosters_next_page").setStyle(ButtonStyle.Primary).setEmoji("➡️"),
 			new ButtonBuilder().setCustomId("boosters_jump_page").setStyle(ButtonStyle.Secondary).setEmoji("↗️"),
-			new ButtonBuilder().setCustomId("boosters_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
+			new ButtonBuilder().setCustomId("boosters_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
 		);
 
 		await interaction.editReply({

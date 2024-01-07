@@ -43,7 +43,7 @@ class Servers extends BaseCommand {
 		const row = new ActionRowBuilder().addComponents(
 			new ButtonBuilder().setCustomId("servers_prev_page").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
 			new ButtonBuilder().setCustomId("servers_next_page").setStyle(ButtonStyle.Primary).setEmoji("➡️"),
-			new ButtonBuilder().setCustomId("servers_stop").setStyle(ButtonStyle.Danger).setEmoji("⏹️"),
+			new ButtonBuilder().setCustomId("servers_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
 		);
 
 		await interaction.editReply({
