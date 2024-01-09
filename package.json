@@ -17,7 +17,7 @@
         "canvas": "^2.11.2",
         "chalk": "^4.1.2",
         "cron": "^2.4.4",
-        "discord-api-types": "^0.37.65",
+        "discord-api-types": "^0.37.67",
         "discord-giveaways": "^6.0.1",
         "discord-player": "^6.6.6",
         "discord.js": "^14.14.1",
