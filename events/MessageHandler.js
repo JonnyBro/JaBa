@@ -45,7 +45,7 @@ class MessageCreate extends BaseEvent {
 					channelId = ids[1],
 					messageId = ids[2];
 
-				const msg = await client.channels.cache.get(channelId).messages.fetch(messageId);
+				const msg = await message.guild.channels.cache.get(channelId).messages.fetch(messageId);
 				const embed = new EmbedBuilder()
 					.setAuthor({
 						name: message.translate("misc:QUOTE_TITLE", {
