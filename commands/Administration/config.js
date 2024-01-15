@@ -198,38 +198,70 @@ class Config extends BaseCommand {
 async function changeSetting(interaction, setting, state, channel, guildData) {
 	const settingSplitted = setting.split(".");
 
-	if (settingSplitted.length === 2 && guildData.plugins[settingSplitted[0]] === undefined) guildData.plugins[settingSplitted[0]] = {};
+	if (settingSplitted.length === 2) {
+		if (guildData.plugins[settingSplitted[0]] === undefined) guildData.plugins[settingSplitted[0]] = {};
 
-	if (!state) {
-		guildData.plugins[settingSplitted[0]][settingSplitted[1]] = null;
-
-		guildData.markModified(`plugins.${settingSplitted[0]}`);
-		await guildData.save();
-
-		return interaction.reply({
-			content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`)}: **${interaction.translate("common:DISABLED")}**`,
-			ephemeral: true,
-		});
-	} else {
-		if (settingSplitted[1] === "ticketsCategory" && channel.type !== ChannelType.GuildCategory) return interaction.reply({ content: interaction.translate("administration/config:TICKETS_NOT_CATEGORY"), ephemeral: true });
-
-		if (channel) {
-			guildData.plugins[settingSplitted[0]][settingSplitted[1]] = channel.id;
+		if (!state) {
+			guildData.plugins[settingSplitted[0]][settingSplitted[1]] = null;
 
 			guildData.markModified(`plugins.${settingSplitted[0]}`);
 			await guildData.save();
 
 			return interaction.reply({
-				content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`)}: **${interaction.translate("common:ENABLED")}** (${channel.toString()})`,
+				content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`)}: **${interaction.translate("common:DISABLED")}**`,
 				ephemeral: true,
 			});
-		} else
+		} else {
+			if (settingSplitted[1] === "ticketsCategory" && channel.type !== ChannelType.GuildCategory) return interaction.reply({ content: interaction.translate("administration/config:TICKETS_NOT_CATEGORY"), ephemeral: true });
+
+			if (channel) {
+				guildData.plugins[settingSplitted[0]][settingSplitted[1]] = channel.id;
+
+				guildData.markModified(`plugins.${settingSplitted[0]}`);
+				await guildData.save();
+
+				return interaction.reply({
+					content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`)}: **${interaction.translate("common:ENABLED")}** (${channel.toString()})`,
+					ephemeral: true,
+				});
+			} else
+				return interaction.reply({
+					content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`)}: ${
+						guildData.plugins[setting] ? `**${interaction.translate("common:ENABLED")}** (<#${guildData.plugins[setting]}>)` : `**${interaction.translate("common:DISABLED")}**`
+					}`,
+					ephemeral: true,
+				});
+		}
+	} else {
+		if (!state) {
+			guildData.plugins[setting] = null;
+
+			guildData.markModified(`plugins.${setting}`);
+			await guildData.save();
+
 			return interaction.reply({
-				content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`)}: ${
-					guildData.plugins[setting] ? `**${interaction.translate("common:ENABLED")}** (<#${guildData.plugins[setting]}>)` : `**${interaction.translate("common:DISABLED")}**`
-				}`,
+				content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: **${interaction.translate("common:DISABLED")}**`,
 				ephemeral: true,
 			});
+		} else {
+			if (channel) {
+				guildData.plugins[setting] = channel.id;
+
+				guildData.markModified(`plugins.${setting}`);
+				await guildData.save();
+
+				return interaction.reply({
+					content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: **${interaction.translate("common:ENABLED")}** (${channel.toString()})`,
+					ephemeral: true,
+				});
+			} else
+				return interaction.reply({
+					content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: ${
+						guildData.plugins[setting] ? `**${interaction.translate("common:ENABLED")}** (<#${guildData.plugins[setting]}>)` : `**${interaction.translate("common:DISABLED")}**`
+					}`,
+					ephemeral: true,
+				});
+		}
 	}
 }
 

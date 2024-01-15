@@ -73,7 +73,7 @@ class Reload extends BaseCommand {
 		const command = interaction.options.getString("command"),
 			results = client.commands.filter(c => c.command.name.includes(command));
 
-		return interaction.respond(
+		return await interaction.respond(
 			results
 				.map(c => c)
 				.slice(0, 25)

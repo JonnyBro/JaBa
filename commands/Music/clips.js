@@ -90,7 +90,7 @@ class Clips extends BaseCommand {
 			files = fs.readdirSync("./clips"),
 			results = files.filter(f => f.includes(query));
 
-		return interaction.respond(
+		return await interaction.respond(
 			results.slice(0, 25).map(file => ({
 				name: file.substring(0, file.length - 4),
 				value: `./clips/${file}`,

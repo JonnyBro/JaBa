@@ -71,7 +71,7 @@ class Volume extends BaseCommand {
 		const int = interaction.options.getInteger("int"),
 			results = Array.from({ length: 100 }, (_, k) => k + 1).filter(i => i.toString().includes(int));
 
-		return interaction.respond(
+		return await interaction.respond(
 			results.slice(0, 25).map(i => ({
 				name: i,
 				value: i,

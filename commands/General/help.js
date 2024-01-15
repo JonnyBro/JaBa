@@ -127,7 +127,7 @@ class Help extends BaseCommand {
 			commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()],
 			results = commands.filter(c => c.command.name.includes(command));
 
-		return interaction.respond(
+		return await interaction.respond(
 			results.slice(0, 25).map(command => ({
 				name: command.command.name,
 				value: command.command.name,

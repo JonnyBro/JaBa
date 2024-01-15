@@ -110,12 +110,17 @@ class Play extends BaseCommand {
 
 		const results = await client.player.search(query);
 
-		return interaction.respond(
+		return results.tracks.length > 0 ? await interaction.respond(
 			results.tracks.slice(0, 10).map(track => ({
 				name: (`${track.author} - ${track.title}`.length >= 100) & (`${track.author} - ${track.title}`.slice(0, 80) + "...") || `${track.author} - ${track.title}`,
 				value: track.url,
 			})),
-		);
+		) : await interaction.respond([
+			{
+				name: "Nothing",
+				value: "Nothing",
+			},
+		]);
 	}
 }
 
