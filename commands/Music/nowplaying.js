@@ -119,6 +119,7 @@ class Nowplaying extends BaseCommand {
 						ephemeral: true,
 					});
 
+					// TODO: Fix collected if user doesnt send anything
 					const filter = m => m.author.id === interaction.user.id && m.content.startsWith("http"),
 						collected = (await interaction.channel.awaitMessages({ filter, time: 10 * 1000, max: 1 })).first(),
 						query = collected.content.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g)[0],

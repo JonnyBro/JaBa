@@ -59,18 +59,19 @@ class Remindme extends BaseCommand {
 	async execute(client, interaction, data) {
 		await interaction.deferReply({ ephemeral: true });
 
-		const time = interaction.options.getString("time");
-		const message = interaction.options.getString("message");
-		const dateNow = Date.now();
 		if (!data.userData.reminds) data.userData.reminds = [];
+		// TODO: rework this shit
+		const time = interaction.options.getString("time"),
+			message = interaction.options.getString("message"),
+			dateNow = Date.now();
 
-		const rData = {
+		const reminderData = {
 			message: message,
 			createdAt: dateNow,
 			sendAt: dateNow + ms(time),
 		};
 
-		data.userData.reminds.push(rData);
+		data.userData.reminds.push(reminderData);
 
 		data.userData.markModified("reminds");
 		await data.userData.save();
@@ -79,7 +80,7 @@ class Remindme extends BaseCommand {
 
 		interaction.success("general/remindme:SAVED", {
 			message,
-			time: moment(rData.sendAt).locale(interaction.getLocale()).format("dddd, Do MMMM YYYY, HH:mm:ss"),
+			time: moment(reminderData.sendAt).locale(interaction.getLocale()).format("Do MMMM YYYY, HH:mm:ss"),
 		}, { edit: true });
 	}
 }
