@@ -27,14 +27,19 @@ module.exports.init = function (client) {
 					mustSent.forEach(r => {
 						const embed = new EmbedBuilder()
 							.setAuthor({
-								name: client.translate("general/remindme:TITLE"),
+								name: client.translate("general/remindme:EMBED_TITLE"),
 							})
-							.setDescription(
-								client.translate("general/remindme:CREATED", {
-									time: moment(r.createdAt).locale(client.defaultLanguage).format("dddd, Do MMMM YYYY, HH:mm:ss"),
-								}),
-							)
 							.addFields([
+								{
+									name: client.translate("general/remindme:EMBED_CREATED"),
+									value: moment(r.createdAt).locale(client.defaultLanguage).format("Do MMMM YYYY, HH:mm:ss"),
+									inline: true,
+								},
+								{
+									name: client.translate("general/remindme:EMBED_TIME"),
+									value: moment(r.sendAt).locale(client.defaultLanguage).format("Do MMMM YYYY, HH:mm:ss"),
+									inline: true,
+								},
 								{
 									name: client.translate("common:MESSAGE"),
 									value: r.message,

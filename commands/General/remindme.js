@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	ms = require("ms"),
 	moment = require("moment");
@@ -60,15 +60,13 @@ class Remindme extends BaseCommand {
 		await interaction.deferReply({ ephemeral: true });
 
 		if (!data.userData.reminds) data.userData.reminds = [];
-		// TODO: rework this shit
-		const time = interaction.options.getString("time"),
-			message = interaction.options.getString("message"),
-			dateNow = Date.now();
+
+		const dateNow = Date.now();
 
 		const reminderData = {
-			message: message,
+			message: interaction.options.getString("message"),
 			createdAt: dateNow,
-			sendAt: dateNow + ms(time),
+			sendAt: dateNow + ms(interaction.options.getString("time")),
 		};
 
 		data.userData.reminds.push(reminderData);
@@ -78,10 +76,26 @@ class Remindme extends BaseCommand {
 
 		client.databaseCache.usersReminds.set(interaction.user.id, data.userData);
 
-		interaction.success("general/remindme:SAVED", {
-			message,
-			time: moment(reminderData.sendAt).locale(interaction.getLocale()).format("Do MMMM YYYY, HH:mm:ss"),
-		}, { edit: true });
+		const embed = new EmbedBuilder()
+			.setAuthor({
+				name: interaction.translate("general/remindme:EMBED_SAVED"),
+			})
+			.addFields([
+				{
+					name: interaction.translate("general/remindme:EMBED_TIME"),
+					value: moment(reminderData.sendAt).locale(interaction.getLocale()).format("Do MMMM YYYY, HH:mm:ss"),
+				},
+				{
+					name: interaction.translate("common:MESSAGE"),
+					value: reminderData.message,
+				},
+			])
+			.setColor(client.config.embed.color)
+			.setFooter(client.config.embed.footer);
+
+		interaction.editReply({
+			embeds: [embed],
+		});
 	}
 }
 

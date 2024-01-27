@@ -3,7 +3,8 @@
 	"USAGE": "[time] [message]",
 	"EXAMPLES": "remindme time:12h message:Use the command 'work'\nremindme time:5m message:Get the chicken from the freezer!",
 	"TIME": "Time (e.g., 10s, 5m, 2h, 1d, 3w)",
-	"SAVED": "Reminder `{{message}}` saved for **{{time}}**",
-	"TITLE": "Reminder from JaBa",
-	"CREATED": "Reminder created: **{{time}}**"
+	"EMBED_SAVED": "Remind saved!",
+	"EMBED_TIME": "Reminder was set to",
+	"EMBED_TITLE": "Remind",
+	"EMBED_CREATED": "Created"
 }

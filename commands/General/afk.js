@@ -45,7 +45,7 @@ class Afk extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
-		interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply({ ephemeral: true });
 
 		const reason = interaction.options.getString("message");
 
