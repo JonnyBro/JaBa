@@ -111,11 +111,11 @@ class Goodbye extends BaseCommand {
 				data.guildData.markModified("plugins.goodbye");
 				await data.guildData.save();
 
-				interaction.success("administration/goodbye:DISABLED");
+				interaction.success("administration/goodbye:DISABLED", null, { ephemeral: true });
 			} else {
 				const channel = interaction.options.getChannel("channel") || interaction.channel;
 				const message = interaction.options.getString("message") || interaction.translate("administration/goodbye:DEFAULT_MESSAGE");
-				const image = interaction.options.getBoolean("image") || true;
+				const image = interaction.options.getBoolean("image") === true ? true : false;
 
 				data.guildData.plugins.goodbye = {
 					enabled: true,
@@ -128,7 +128,7 @@ class Goodbye extends BaseCommand {
 				await data.guildData.save();
 
 				interaction.success("administration/goodbye:ENABLED", {
-					channel: `<#${data.guildData.plugins.goodbye.channel}>`,
+					channel: `${channel.toString()}`,
 				}, { ephemeral: true });
 			}
 		}

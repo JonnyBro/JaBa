@@ -111,11 +111,11 @@ class Welcome extends BaseCommand {
 				data.guildData.markModified("plugins.welcome");
 				await data.guildData.save();
 
-				interaction.success("administration/welcome:DISABLED");
+				interaction.success("administration/welcome:DISABLED", null, { ephemeral: true });
 			} else {
 				const channel = interaction.options.getChannel("channel") || interaction.channel;
 				const message = interaction.options.getString("message") || interaction.translate("administration/welcome:DEFAULT_MESSAGE");
-				const image = interaction.options.getBoolean("image") || true;
+				const image = interaction.options.getBoolean("image") === true ? true : false;
 
 				data.guildData.plugins.welcome = {
 					enabled: true,
@@ -128,7 +128,7 @@ class Welcome extends BaseCommand {
 				await data.guildData.save();
 
 				interaction.success("administration/welcome:ENABLED", {
-					channel: `<#${data.guildData.plugins.welcome.channel}>`,
+					channel: `${channel.toString()}`,
 				}, { ephemeral: true });
 			}
 		}
