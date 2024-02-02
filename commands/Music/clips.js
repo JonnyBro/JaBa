@@ -59,10 +59,7 @@ class Clips extends BaseCommand {
 
 		client.player.play(interaction.member.voice.channel, query, {
 			nodeOptions: {
-				metadata: {
-					channel: interaction.channel,
-					requestedBy: interaction.user,
-				},
+				metadata: interaction,
 			},
 			searchEngine: QueryType.FILE,
 			selfDeaf: true,

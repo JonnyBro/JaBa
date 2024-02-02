@@ -63,10 +63,7 @@ class Play extends BaseCommand {
 		else {
 			const { queue } = await client.player.play(interaction.member.voice.channel, searchResult, {
 				nodeOptions: {
-					metadata: {
-						channel: interaction.channel,
-						requestedBy: interaction.user,
-					},
+					metadata: interaction,
 				},
 				selfDeaf: true,
 				leaveOnEnd: false,

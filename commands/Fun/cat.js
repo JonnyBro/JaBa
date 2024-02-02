@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
-class Crab extends BaseCommand {
+class Cat extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../base/Client")} client
@@ -10,11 +10,11 @@ class Crab extends BaseCommand {
 	constructor(client) {
 		super({
 			command: new SlashCommandBuilder()
-				.setName("crab")
-				.setDescription(client.translate("fun/crab:DESCRIPTION"))
+				.setName("cat")
+				.setDescription(client.translate("fun/cat:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					uk: client.translate("fun/crab:DESCRIPTION", null, "uk-UA"),
-					ru: client.translate("fun/crab:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("fun/cat:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("fun/cat:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true),
 			aliases: [],
@@ -38,12 +38,11 @@ class Crab extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply();
 
-		const res = await fetch("https://and-here-is-my-code.glitch.me/img/crab").then(response => response.json());
+		const res = await fetch("https://api.thecatapi.com/v1/images/search").then(r => r.json());
+		const cat = res[0].url;
 
-		interaction.editReply({
-			content: res.Link,
-		});
+		await interaction.editReply({ content: cat });
 	}
 }
 
-module.exports = Crab;
+module.exports = Cat;

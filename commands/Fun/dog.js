@@ -38,11 +38,10 @@ class Dog extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply();
 
-		const res = await fetch("https://and-here-is-my-code.glitch.me/img/dog").then(response => response.json());
+		const res = await fetch("https://dog.ceo/api/breeds/image/random").then(r => r.json());
+		const dog = res.message;
 
-		interaction.editReply({
-			content: res.Link,
-		});
+		await interaction.editReply({ content: dog });
 	}
 }
 
