@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch"),
 	moment = require("moment");
@@ -18,18 +18,11 @@ class Checkjar extends BaseCommand {
 					ru: client.translate("iat/checkjar:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -55,18 +48,16 @@ class Checkjar extends BaseCommand {
 			},
 		}).then(res => res.json());
 
-		const embed = new EmbedBuilder()
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer)
-			.setTimestamp()
-			.setDescription(`Текущий баланс: **${jar.balance / Math.pow(10, 2)}** грн\nТребуется на след. месяц: **379,18** грн (по курсу евро на 02.07.2023).\nЗдесь указаны последние 10 транзакций.`);
+		const embed = client.embed({
+			description: `Текущий баланс: **${jar.balance / Math.pow(10, 2)}** грн\nТребуется на след. месяц: **379,18** грн (по курсу евро на 02.07.2023).\nЗдесь указаны последние 10 транзакций.`,
+		});
 
 		jarTransactions.length = 10;
 
 		jarTransactions.forEach(t => {
 			const time = moment.unix(t.time);
 
-			embed.addFields([
+			embed.data.fields.push([
 				{
 					name: `${t.description}`,
 					value: `Дата: ${time.locale("uk-UA").format("DD MMMM YYYY, HH:mm")}\nСумма: ${t.amount / Math.pow(10, 2)} грн`,

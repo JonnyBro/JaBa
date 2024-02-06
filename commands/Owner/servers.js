@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Servers extends BaseCommand {
@@ -16,18 +16,11 @@ class Servers extends BaseCommand {
 					ru: client.translate("owner/servers:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: true,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -128,12 +121,11 @@ function generateServersEmbeds(interaction, servers) {
 			)
 			.join("\n");
 
-		const embed = new EmbedBuilder()
-			.setTitle(interaction.translate("owner/servers:SERVERS_LIST"))
-			.setDescription(info)
-			.setColor(interaction.client.config.embed.color)
-			.setFooter(interaction.client.config.embed.footer)
-			.setTimestamp();
+		const embed = interaction.client.embed({
+			title: interaction.translate("owner/servers:SERVERS_LIST"),
+			Description: info,
+		});
+
 		embeds.push(embed);
 	}
 

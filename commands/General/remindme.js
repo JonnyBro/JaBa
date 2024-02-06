@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	ms = require("ms"),
 	moment = require("moment");
@@ -38,18 +38,11 @@ class Remindme extends BaseCommand {
 						})
 						.setRequired(true),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -76,11 +69,9 @@ class Remindme extends BaseCommand {
 
 		client.databaseCache.usersReminds.set(interaction.user.id, data.userData);
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
-				name: interaction.translate("general/remindme:EMBED_SAVED"),
-			})
-			.addFields([
+		const embed = client.embed({
+			author: interaction.translate("general/remindme:EMBED_SAVED"),
+			fields: [
 				{
 					name: interaction.translate("general/remindme:EMBED_TIME"),
 					value: moment(reminderData.sendAt).locale(interaction.getLocale()).format("Do MMMM YYYY, HH:mm:ss"),
@@ -89,9 +80,8 @@ class Remindme extends BaseCommand {
 					name: interaction.translate("common:MESSAGE"),
 					value: reminderData.message,
 				},
-			])
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer);
+			],
+		});
 
 		interaction.editReply({
 			embeds: [embed],

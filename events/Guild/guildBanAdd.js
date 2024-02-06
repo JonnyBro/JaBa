@@ -1,5 +1,4 @@
-const { EmbedBuilder } = require("discord.js"),
-	BaseEvent = require("../../base/BaseEvent");
+const BaseEvent = require("../../base/BaseEvent");
 
 class guildBanAdd extends BaseEvent {
 	constructor() {
@@ -15,18 +14,19 @@ class guildBanAdd extends BaseEvent {
 	 * @param {import("discord.js").GuildBan} ban
 	 */
 	async execute(client, ban) {
-		const embed = new EmbedBuilder()
-			.setAuthor({
+		const embed = client.embed({
+			author: {
 				name: client.user.getUsername(),
 				iconURL: ban.guild.iconURL(),
-			})
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer)
-			.setDescription(`You were banned from **${ban.guild.name}**!\nReason: **${ban.reason || "Not specified"}**`);
-
-		ban.user.send({
-			embeds: [embed],
+			},
+			description: `You were banned from **${ban.guild.name}**!\nReason: **${ban.reason || "Not specified"}**`,
 		});
+
+		try {
+			ban.user.send({
+				embeds: [embed],
+			});
+		} catch (e) { /**/ }
 	}
 }
 

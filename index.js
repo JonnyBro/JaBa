@@ -18,9 +18,12 @@ const client = new Client({
 	await client.init();
 })();
 
-client.on("disconnect", () => client.logger.log("Bot is disconnecting...", "warn"))
-	.on("reconnecting", () => client.logger.log("Bot reconnecting...", "warn"))
-	.on("warn", warn => client.logger.log(warn, "warn"))
-	.on("error", e => client.logger.log(`${e.message}\n${e.stack}`, "error"));
-process.on("unhandledRejection", e => console.log(e));
-process.on("uncaughtException", e => console.log(e));
+client
+	.on("disconnect", () => client.logger.warn("Bot is disconnecting..."))
+	.on("reconnecting", () => client.logger.warn("Bot reconnecting..."))
+	.on("warn", warn => client.logger.warn(warn))
+	.on("error", e => client.logger.error(`${e.message}\n${e.stack}`));
+
+process
+	.on("unhandledRejection", e => console.log(e))
+	.on("uncaughtException", e => console.log(e));

@@ -1,5 +1,4 @@
-const { EmbedBuilder } = require("discord.js"),
-	BaseEvent = require("../../base/BaseEvent");
+const BaseEvent = require("../../base/BaseEvent");
 
 class messageUpdate extends BaseEvent {
 	constructor() {
@@ -24,15 +23,14 @@ class messageUpdate extends BaseEvent {
 		const guildData = await client.findOrCreateGuild(oldMessage.guildId);
 
 		if (guildData.plugins?.monitoring?.messageUpdate) {
-			const embed = new EmbedBuilder()
-				.setAuthor({
+			const embed = client.embed({
+				author: {
 					name: newMessage.author.getUsername(),
 					iconURL: newMessage.author.displayAvatarURL(),
-				})
-				.setColor(client.config.embed.color)
-				.setFooter(client.config.embed.footer)
-				.setTitle(`${newMessage.author.getUsername()} edited a message!`)
-				.setDescription(`Old Message: \`\`\`${oldMessage.content}\`\`\`\nNew Message: \`\`\`${newMessage.content}\`\`\`\nJump to message: ${newMessage.url}`);
+				},
+				title: `${newMessage.author.getUsername()} edited a message!`,
+				description: `Old Message: \`\`\`${oldMessage.content}\`\`\`\nNew Message: \`\`\`${newMessage.content}\`\`\`\nJump to message: ${newMessage.url}`,
+			});
 
 			newMessage.guild.channels.cache.get(guildData.plugins.monitoring.messageUpdate).send({
 				embeds: [embed],

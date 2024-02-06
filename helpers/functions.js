@@ -1,4 +1,3 @@
-const { PermissionsBitField, ChannelType } = require("discord.js");
 const moment = require("moment");
 
 moment.relativeTimeThreshold("ss", 5);
@@ -9,20 +8,6 @@ moment.relativeTimeThreshold("d", 24);
 moment.relativeTimeThreshold("M", 12);
 
 module.exports = {
-	/**
-	 * Creates Invite Link to The Guild
-	 * @param {import("../base/Client")} client Discord Client
-	 * @param {String} guildId ID of The Guild
-	 * @returns {String} Invite Link to This Guild
-	 */
-	async createInvite(client, guildId) {
-		const guild = client.guilds.cache.get(guildId),
-			member = guild.members.me,
-			channel = guild.channels.cache.find(ch => (ch.permissionsFor(member.id).has(PermissionsBitField.Flags.CreateInstantInvite) && ch.type === ChannelType.GuildText) || ch.type === "GUILD_VOICE");
-
-		if (channel) return (await channel.createInvite()).url || "No channels found or missing permissions";
-	},
-
 	/**
 	 * Calls a Callback for Each Element in Collection Asynchronously
 	 * @param {Array} collection Collection

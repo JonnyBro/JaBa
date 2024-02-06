@@ -60,18 +60,11 @@ class Birthdate extends BaseCommand {
 						})
 						.setRequired(true),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -82,11 +75,12 @@ class Birthdate extends BaseCommand {
 		const day = interaction.options.getInteger("day"),
 			month = interaction.options.getInteger("month"),
 			year = interaction.options.getInteger("year"),
-			d = new Date(year, month - 1, day);
+			date = new Date(year, month - 1, day),
+			d = Math.floor(date.getTime() / 1000);
 
-		if (!(day == d.getDate() && month - 1 == d.getMonth() && year == d.getFullYear())) return interaction.error("economy/birthdate:INVALID_DATE");
-		if (d.getTime() > Date.now()) return interaction.error("economy/birthdate:DATE_TOO_HIGH");
-		if (d.getTime() < Date.now() - 2.523e12) return interaction.error("economy/birthdate:DATE_TOO_LOW");
+		if (!(day == date.getDate() && month - 1 == date.getMonth() && year == date.getFullYear())) return interaction.error("economy/birthdate:INVALID_DATE");
+		if (date.getTime() > Date.now()) return interaction.error("economy/birthdate:DATE_TOO_HIGH");
+		if (date.getTime() < Date.now() - 2.523e12) return interaction.error("economy/birthdate:DATE_TOO_LOW");
 
 		data.userData.birthdate = d;
 
@@ -94,7 +88,7 @@ class Birthdate extends BaseCommand {
 		await data.userData.save();
 
 		interaction.success("economy/birthdate:SUCCESS", {
-			date: client.functions.printDate(client, d, "Do MMMM YYYY", interaction.getLocale()),
+			date: `<t:${d}:D>`,
 		});
 	}
 }

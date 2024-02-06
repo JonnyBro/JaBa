@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	gamedig = require("gamedig");
 
@@ -27,18 +27,11 @@ class Minecraft extends BaseCommand {
 						})
 						.setRequired(true),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -69,11 +62,10 @@ class Minecraft extends BaseCommand {
 
 		if (!res) return interaction.error("general/minecraft:FAILED", null, { edit: true });
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
-				name: res.name || "Unknown",
-			})
-			.addFields([
+		const embed = client.embed({
+			author: { name: res.name || "Unknown" },
+			thumbnail: `https://eu.mc-api.net/v3/server/favicon/${ip}`,
+			fields: [
 				{
 					name: interaction.translate("general/minecraft:FIELD_STATUS"),
 					value: interaction.translate("general/minecraft:ONLINE"),
@@ -106,10 +98,8 @@ class Minecraft extends BaseCommand {
 					name: interaction.translate("general/minecraft:FIELD_PING"),
 					value: res.raw.vanilla.ping.toString(),
 				},
-			])
-			.setColor(client.config.embed.color)
-			.setThumbnail(`https://eu.mc-api.net/v3/server/favicon/${ip}`)
-			.setFooter(client.config.embed.footer);
+			],
+		});
 
 		interaction.editReply({
 			embeds: [embed],

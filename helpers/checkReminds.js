@@ -1,4 +1,3 @@
-const { EmbedBuilder } = require("discord.js");
 const moment = require("moment");
 
 /**
@@ -25,11 +24,9 @@ module.exports.init = function (client) {
 
 				if (mustSent.length > 0) {
 					mustSent.forEach(r => {
-						const embed = new EmbedBuilder()
-							.setAuthor({
-								name: client.translate("general/remindme:EMBED_TITLE"),
-							})
-							.addFields([
+						const embed = client.embed({
+							author: client.translate("general/remindme:EMBED_TITLE"),
+							fields: [
 								{
 									name: client.translate("general/remindme:EMBED_CREATED"),
 									value: moment(r.createdAt).locale(client.defaultLanguage).format("Do MMMM YYYY, HH:mm:ss"),
@@ -44,14 +41,14 @@ module.exports.init = function (client) {
 									name: client.translate("common:MESSAGE"),
 									value: r.message,
 								},
-							])
-							.setColor(client.config.embed.color)
-							.setFooter(client.config.embed.footer);
+							],
+						});
 
 						cachedUser.send({
 							embeds: [embed],
 						});
 					});
+
 					user.reminds = user.reminds.filter(r => r.sendAt >= dateNow);
 
 					user.markModified("reminds");

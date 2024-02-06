@@ -1,4 +1,4 @@
-const { PermissionsBitField, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const BaseEvent = require("../base/BaseEvent");
 
 const xpCooldown = {};
@@ -46,19 +46,19 @@ class MessageCreate extends BaseEvent {
 					messageId = ids[2];
 
 				const msg = await message.guild.channels.cache.get(channelId).messages.fetch(messageId);
-				const embed = new EmbedBuilder()
-					.setAuthor({
+				const embed = client.embed({
+					author: {
 						name: message.translate("misc:QUOTE_TITLE", {
 							user: msg.author.getUsername(),
 						}),
 						iconURL: "https://wynem.com/assets/images/icons/quote.webp",
-					})
-					.setThumbnail(msg.author.displayAvatarURL())
-					.setFooter({
+					},
+					thumbnail: msg.author.displayAvatarURL(),
+					footer: {
 						text: message.translate("misc:QUOTE_FOOTER", { user: message.author.getUsername() }),
-					})
-					.setColor(client.config.embed.color)
-					.setTimestamp(msg.createdTimestamp);
+					},
+					timestamp: msg.createdTimestamp,
+				});
 
 				if (msg.content !== "") embed.addFields([
 					{

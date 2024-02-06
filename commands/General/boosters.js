@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Boosters extends BaseCommand {
@@ -16,11 +16,11 @@ class Boosters extends BaseCommand {
 					ru: client.translate("general/boosters:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -110,6 +110,7 @@ class Boosters extends BaseCommand {
 			}
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -158,14 +159,13 @@ function generateBoostersEmbeds(client, interaction, boosters) {
 		let j = i;
 		k += 10;
 
-		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: **${client.functions.printDate(client, member.premiumSince, null, interaction.getLocale())}**`).join("\n");
+		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: **${Math.floor(new Date(member.premiumSince).getTime() / 1000)}**`).join("\n");
 
-		const embed = new EmbedBuilder()
-			.setTitle(interaction.translate("general/boosters:BOOSTERS_LIST"))
-			.setDescription(info)
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer)
-			.setTimestamp();
+		const embed = client.embed({
+			title: interaction.translate("general/boosters:BOOSTERS_LIST"),
+			description: info,
+		});
+
 		embeds.push(embed);
 	}
 

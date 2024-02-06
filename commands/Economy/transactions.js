@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Transactions extends BaseCommand {
@@ -25,18 +25,11 @@ class Transactions extends BaseCommand {
 							ru: client.translate("economy/transactions:CLEAR", null, "ru-RU"),
 						}),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -53,14 +46,12 @@ class Transactions extends BaseCommand {
 			return interaction.success("economy/transactions:CLEARED", null, { ephemeral: true });
 		}
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
+		const embed = client.embed({
+			author: {
 				name: interaction.translate("economy/transactions:EMBED_TRANSACTIONS"),
 				iconURL: interaction.member.displayAvatarURL(),
-			})
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer);
-
+			},
+		});
 		const transactions = data.memberData.transactions,
 			sortedTransactions = [[], []];
 
@@ -69,15 +60,15 @@ class Transactions extends BaseCommand {
 			array.push(
 				`${interaction.translate("economy/transactions:T_USER_" + t.type.toUpperCase())}: ${t.user}\n${interaction.translate("economy/transactions:T_AMOUNT")}: ${t.amount}\n${interaction.translate(
 					"economy/transactions:T_DATE",
-				)}: ${client.functions.printDate(client, t.date, "Do MMMM YYYY, HH:mm", interaction.getLocale())}\n`,
+				)}: <t:${Math.floor(t.date / 1000)}:f>\n`,
 			);
 		});
 
 		if (transactions.length < 1) {
-			embed.setDescription(interaction.translate("economy/transactions:NO_TRANSACTIONS"));
+			embed.data.description = interaction.translate("economy/transactions:NO_TRANSACTIONS");
 		} else {
 			if (sortedTransactions[0].length > 0)
-				embed.addFields([
+				embed.data.fields.push([
 					{
 						name: interaction.translate("economy/transactions:T_GOT"),
 						value: sortedTransactions[0].join("\n"),
@@ -85,7 +76,7 @@ class Transactions extends BaseCommand {
 					},
 				]);
 			if (sortedTransactions[1].length > 0)
-				embed.addFields([
+				embed.data.fields.push([
 					{
 						name: interaction.translate("economy/transactions:T_SEND"),
 						value: sortedTransactions[1].join("\n"),

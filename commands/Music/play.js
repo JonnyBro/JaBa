@@ -1,4 +1,5 @@
-const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField } = require("discord.js"),
+	{ QueryType } = require("discord-player");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Play extends BaseCommand {
@@ -27,18 +28,11 @@ class Play extends BaseCommand {
 						.setRequired(true)
 						.setAutocomplete(true),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -61,7 +55,7 @@ class Play extends BaseCommand {
 
 		if (!searchResult.hasTracks()) return interaction.error("music/play:NO_RESULT", { query }, { edit: true });
 		else {
-			const { queue } = await client.player.play(interaction.member.voice.channel, searchResult, {
+			await client.player.play(interaction.member.voice.channel, searchResult, {
 				nodeOptions: {
 					metadata: interaction,
 				},
@@ -78,13 +72,6 @@ class Play extends BaseCommand {
 					songName: searchResult.hasPlaylist() ? searchResult.playlist.title : searchResult.tracks[0].title,
 				}),
 			});
-
-			// TODO: Seeks currently playing D:
-			if (query.match(/&t=[[0-9]+/g) !== null) {
-				const time = query.match(/&t=[[0-9]+/g)[0].split("=")[1];
-
-				queue.node.seek(time * 1000);
-			}
 		}
 	}
 
@@ -98,26 +85,35 @@ class Play extends BaseCommand {
 		const query = interaction.options.getString("query");
 
 		if (query === "") return;
-		if (query.startsWith("http")) return interaction.respond([
-			{
-				name: "Current link",
-				value: query,
-			},
-		]);
+		if (query.startsWith("http"))
+			return interaction.respond([
+				{
+					name: "Current link",
+					value: query,
+				},
+			]);
 
-		const results = await client.player.search(query);
+		const youtubeResults = await client.player.search(query, { searchEngine: QueryType.YOUTUBE });
+		const spotifyResults = await client.player.search(query, { searchEngine: QueryType.SPOTIFY_SEARCH });
+		const tracks = [];
 
-		return results.tracks.length > 0 ? await interaction.respond(
-			results.tracks.slice(0, 10).map(track => ({
-				name: (`${track.author} - ${track.title}`.length >= 100) & (`${track.author} - ${track.title}`.slice(0, 80) + "...") || `${track.author} - ${track.title}`,
-				value: track.url,
-			})),
-		) : await interaction.respond([
-			{
-				name: "Nothing",
-				value: "Nothing",
-			},
-		]);
+		youtubeResults.tracks
+			.slice(0, 5)
+			.map(t => ({
+				name: `YouTube: ${`${t.title} - ${t.author} (${t.duration})`.length > 75 ? `${`${t.title} - ${t.author}`.substring(0, 75)}... (${t.duration})` : `${t.title} - ${t.author} (${t.duration})`}`,
+				value: t.url,
+			}))
+			.forEach(t => tracks.push({ name: t.name, value: t.value }));
+
+		spotifyResults.tracks
+			.slice(0, 5)
+			.map(t => ({
+				name: `Spotify: ${`${t.title} - ${t.author} (${t.duration})`.length > 75 ? `${`${t.title} - ${t.author}`.substring(0, 75)}... (${t.duration})` : `${t.title} - ${t.author} (${t.duration})`}`,
+				value: t.url,
+			}))
+			.forEach(t => tracks.push({ name: t.name, value: t.value }));
+
+		return interaction.respond(tracks);
 	}
 }
 

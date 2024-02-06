@@ -75,11 +75,11 @@ class Selectroles extends BaseCommand {
 								.setRequired(true),
 						),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -108,6 +108,7 @@ class Selectroles extends BaseCommand {
 			}
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client

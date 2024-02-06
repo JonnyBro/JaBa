@@ -7,7 +7,7 @@
 	"VERSIONS_TITLE": "• __Використовується__",
 	"RAM_TITLE": "• __Використання ОЗУ__",
 	"ONLINE_TITLE": "• __Онлайн__",
-	"ONLINE_CONTENT": "Працюю вже {{time}}",
+	"ONLINE_CONTENT": "Був запущений {{time}}",
 	"MUSIC_TITLE": "• __Музика__",
 	"MUSIC_CONTENT": "Граю музику на {{count}}",
 	"CREDITS_TITLE": ":heart: • __Додаткова інформація__",

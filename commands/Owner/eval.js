@@ -26,18 +26,11 @@ class Eval extends BaseCommand {
 						})
 						.setRequired(true),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: true,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client

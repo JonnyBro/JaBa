@@ -17,18 +17,11 @@ class Dog extends BaseCommand {
 					ru: client.translate("fun/dog:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -41,7 +34,11 @@ class Dog extends BaseCommand {
 		const res = await fetch("https://dog.ceo/api/breeds/image/random").then(r => r.json());
 		const dog = res.message;
 
-		await interaction.editReply({ content: dog });
+		const embed = client.embed({
+			image: dog,
+		});
+
+		await interaction.editReply({ embeds: [embed] });
 	}
 }
 

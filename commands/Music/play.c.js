@@ -12,18 +12,11 @@ class PlayContext extends BaseCommand {
 				.setName("Add to Queue")
 				.setType(ApplicationCommandType.Message)
 				.setDMPermission(false),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client

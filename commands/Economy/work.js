@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, parseEmoji } = require("discord.js");
+const { SlashCommandBuilder, parseEmoji } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Work extends BaseCommand {
@@ -16,18 +16,11 @@ class Work extends BaseCommand {
 					ru: client.translate("economy/work:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -36,15 +29,17 @@ class Work extends BaseCommand {
 	 */
 	async execute(client, interaction, data) {
 		const isInCooldown = data.memberData.cooldowns?.work;
+
 		if (isInCooldown) {
 			if (isInCooldown > Date.now())
 				return interaction.error("economy/work:COOLDOWN", {
-					time: client.functions.convertTime(client, isInCooldown, true, false, interaction.getLocale()),
+					time: `<t:${Math.floor(isInCooldown / 1000)}:R>`,
 				});
 		}
+
 		if (Date.now() > data.memberData.cooldowns.work + 24 * 60 * 60 * 1000) data.memberData.workStreak = 0;
 
-		const toWait = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+		const toWait = Math.floor((Date.now() + 24 * 60 * 60 * 1000) / 1000); // 24 hours
 		data.memberData.cooldowns.work = toWait;
 		data.memberData.workStreak = (data.memberData.workStreak || 0) + 1;
 
@@ -52,19 +47,19 @@ class Work extends BaseCommand {
 		data.memberData.markModified("workStreak");
 		await data.memberData.save();
 
-		const embed = new EmbedBuilder()
-			.setFooter({
+		const embed = client.embed({
+			footer: {
 				text: interaction.translate("economy/work:AWARD"),
 				iconURL: interaction.member.displayAvatarURL(),
-			})
-			.setColor(client.config.embed.color);
+			},
+		});
 
 		const award = [client.customEmojis.letters.a, client.customEmojis.letters.w, client.customEmojis.letters.a, client.customEmojis.letters.r, client.customEmojis.letters.d];
 		let won = 200;
 
 		if (data.memberData.workStreak >= 5) {
 			won += 200;
-			embed.addFields([
+			embed.fields = [
 				{
 					name: interaction.translate("economy/work:SALARY"),
 					value: interaction.translate("economy/work:SALARY_CONTENT", {
@@ -75,7 +70,7 @@ class Work extends BaseCommand {
 					name: interaction.translate("economy/work:STREAK"),
 					value: interaction.translate("economy/work:STREAK_CONTENT"),
 				},
-			]);
+			];
 			data.memberData.workStreak = 0;
 		} else {
 			for (let i = 0; i < award.length; i++) {
@@ -84,7 +79,7 @@ class Work extends BaseCommand {
 					award[i] = `:regional_indicator_${letter.toLowerCase()}:`;
 				}
 			}
-			embed.addFields([
+			embed.fields = [
 				{
 					name: interaction.translate("economy/work:SALARY"),
 					value: interaction.translate("economy/work:SALARY_CONTENT", {
@@ -95,7 +90,7 @@ class Work extends BaseCommand {
 					name: interaction.translate("economy/work:STREAK"),
 					value: award.join(""),
 				},
-			]);
+			];
 		}
 
 		data.memberData.money += won;

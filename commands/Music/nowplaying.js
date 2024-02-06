@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require("discord.js"),
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require("discord.js"),
 	{ QueueRepeatMode } = require("discord-player");
 const BaseCommand = require("../../base/BaseCommand");
 
@@ -17,11 +17,11 @@ class Nowplaying extends BaseCommand {
 					ru: client.translate("music/nowplaying:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -119,7 +119,7 @@ class Nowplaying extends BaseCommand {
 						ephemeral: true,
 					});
 
-					// TODO: Fix collected if user doesnt send anything
+					// TODO Fix error in collected if user doesnt send anything
 					const filter = m => m.author.id === interaction.user.id && m.content.startsWith("http"),
 						collected = (await interaction.channel.awaitMessages({ filter, time: 10 * 1000, max: 1 })).first(),
 						query = collected.content.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g)[0],
@@ -180,6 +180,7 @@ class Nowplaying extends BaseCommand {
 			}
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -242,13 +243,10 @@ async function updateEmbed(interaction, queue) {
 			"0": interaction.translate("common:DISABLED"),
 		};
 
-
-	const embed = new EmbedBuilder()
-		.setAuthor({
-			name: interaction.translate("music/nowplaying:CURRENTLY_PLAYING"),
-		})
-		.setThumbnail(track.thumbnail)
-		.addFields([
+	const embed = interaction.client.embed({
+		author: interaction.translate("music/nowplaying:CURRENTLY_PLAYING"),
+		thumbnail: track.thumbnail || null,
+		fields: [
 			{
 				name: interaction.translate("music/nowplaying:T_TITLE"),
 				value: `[${track.title}](${track.url})`,
@@ -278,10 +276,8 @@ async function updateEmbed(interaction, queue) {
 				name: "\u200b",
 				value: `${interaction.translate("music/nowplaying:REPEAT")}: \`${translated[mode]}\``,
 			},
-		])
-		.setColor(interaction.client.config.embed.color)
-		.setFooter(interaction.client.config.embed.footer)
-		.setTimestamp();
+		],
+	});
 
 	return embed;
 }

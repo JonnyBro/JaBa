@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Profile extends BaseCommand {
@@ -25,18 +25,11 @@ class Profile extends BaseCommand {
 							ru: client.translate("common:USER", null, "ru-RU"),
 						}),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -65,19 +58,15 @@ class Profile extends BaseCommand {
 
 		const lover = client.users.cache.get(userData.lover);
 
-		const profileEmbed = new EmbedBuilder()
-			.setAuthor({
+		const embed = client.embed({
+			author: {
 				name: interaction.translate("economy/profile:TITLE", {
 					user: member.user.getUsername(),
 				}),
 				iconURL: member.displayAvatarURL(),
-			})
-			.setImage("attachment://achievements.png")
-			.addFields([
-				// {
-				// 	name: client.customEmojis.link + " " + interaction.translate("economy/profile:LINK"),
-				// 	value: `[${interaction.translate("economy/profile:LINK_TEXT")}](${client.config.dashboard.domain}/user/${member.user.id}/${interaction.guild.id})`,
-				// },
+			},
+			image: "attachment://achievements.png",
+			fields: [
 				{
 					name: interaction.translate("economy/profile:BIO"),
 					value: userData.bio ? userData.bio : interaction.translate("common:UNKNOWN"),
@@ -114,12 +103,12 @@ class Profile extends BaseCommand {
 				},
 				{
 					name: interaction.translate("economy/profile:REGISTERED"),
-					value: client.functions.printDate(client, new Date(memberData.registeredAt), null, interaction.getLocale()),
+					value: `<t:${Math.floor(memberData.registeredAt / 1000)}:f>`,
 					inline: true,
 				},
 				{
 					name: interaction.translate("economy/profile:BIRTHDATE"),
-					value: !userData.birthdate ? interaction.translate("common:NOT_DEFINED") : client.functions.printDate(client, new Date(userData.birthdate), "Do MMMM YYYY", interaction.getLocale()),
+					value: !userData.birthdate ? interaction.translate("common:NOT_DEFINED") : `<t:${userData.birthdate}:D>`,
 					inline: true,
 				},
 				{
@@ -131,15 +120,13 @@ class Profile extends BaseCommand {
 					name: interaction.translate("economy/profile:ACHIEVEMENTS"),
 					value: interaction.translate("economy/profile:ACHIEVEMENTS_CONTENT"),
 				},
-			])
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer)
-			.setTimestamp();
+			],
+		});
 
 		const buffer = await userData.getAchievements();
 
 		interaction.editReply({
-			embeds: [profileEmbed],
+			embeds: [embed],
 			files: [
 				{
 					name: "achievements.png",

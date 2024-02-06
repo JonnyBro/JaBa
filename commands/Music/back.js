@@ -16,18 +16,11 @@ class Back extends BaseCommand {
 					ru: client.translate("music/back:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client

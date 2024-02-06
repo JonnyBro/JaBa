@@ -34,18 +34,11 @@ class Avatar extends BaseCommand {
 							ru: client.translate("general/avatar:SERVER", null, "ru-RU"),
 						}),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -54,14 +47,11 @@ class Avatar extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const member = interaction.options.getMember("user") || interaction.member;
-		const avatarURL = interaction.options.getBoolean("server") ? member.avatarURL({ size: 512 }) : member.user.avatarURL({ size: 512 });
+		const avatarURL = interaction.options.getBoolean("server") ? member.avatarURL({ size: 2048 }) : member.user.avatarURL({ size: 2048 });
+		const embed = client.embed({ image: avatarURL });
 
 		interaction.reply({
-			files: [
-				{
-					attachment: avatarURL,
-				},
-			],
+			embeds: [embed],
 		});
 	}
 }

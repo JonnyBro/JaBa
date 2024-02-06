@@ -26,35 +26,39 @@ function format(tDate) {
 }
 
 module.exports = class Logger {
-	static log(content, type = "log") {
+	static log(content) {
 		const date = `[${format(new Date(Date.now()))}]:`;
-		switch (type) {
-			case "log": {
-				return console.log(`${date} ${bgBlue(type.toUpperCase())} ${content} `);
-			}
 
-			case "warn": {
-				return console.log(`${date} ${black.bgYellow(type.toUpperCase())} ${content} `);
-			}
+		return console.log(`${date} ${bgBlue("LOG")} ${content}`);
+	}
 
-			case "error": {
-				return console.log(`${date} ${black.bgRed(type.toUpperCase())} ${content} `);
-			}
+	static warn(content) {
+		const date = `[${format(new Date(Date.now()))}]:`;
 
-			case "debug": {
-				return console.log(`${date} ${green(type.toUpperCase())} ${content} `);
-			}
+		return console.log(`${date} ${black.bgYellow("WARN")} ${content}`);
+	}
 
-			case "cmd": {
-				return console.log(`${date} ${black.bgWhite(type.toUpperCase())} ${content}`);
-			}
+	static error(content) {
+		const date = `[${format(new Date(Date.now()))}]:`;
 
-			case "ready": {
-				return console.log(`${date} ${black.bgGreen(type.toUpperCase())} ${content}`);
-			}
+		return console.log(`${date} ${black.bgRed("ERROR")} ${content}`);
+	}
 
-			default:
-				throw new TypeError("Logger type must be either warn, debug, log, ready, cmd or error.");
-		}
+	static debug(content) {
+		const date = `[${format(new Date(Date.now()))}]:`;
+
+		return console.log(`${date} ${green("DEBUG")} ${content}`);
+	}
+
+	static cmd(content) {
+		const date = `[${format(new Date(Date.now()))}]:`;
+
+		return console.log(`${date} ${black.bgWhite("CMD")} ${content}`);
+	}
+
+	static ready(content) {
+		const date = `[${format(new Date(Date.now()))}]:`;
+
+		return console.log(`${date} ${black.bgGreen("READY")} ${content}`);
 	}
 };

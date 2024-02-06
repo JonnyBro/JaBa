@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, parseEmoji } = require("discord.js");
+const { SlashCommandBuilder, parseEmoji } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Suggest extends BaseCommand {
@@ -26,18 +26,11 @@ class Suggest extends BaseCommand {
 						})
 						.setRequired(true),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -45,22 +38,22 @@ class Suggest extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
-		const suggChannel = interaction.guild.channels.cache.get(data.guildData.plugins.suggestions);
-		if (!suggChannel) return interaction.error("general/suggest:MISSING_CHANNEL");
+		const channel = interaction.guild.channels.cache.get(data.guildData.plugins.suggestions);
+		if (!channel) return interaction.error("general/suggest:MISSING_CHANNEL");
 
 		const suggestion = interaction.options.getString("message");
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
+		const embed = client.embed({
+			author: {
 				name: interaction.translate("general/suggest:TITLE", {
 					user: interaction.user.getUsername(),
 				}),
 				iconURL: interaction.member.displayAvatarURL(),
-			})
-			.addFields([
+			},
+			fields: [
 				{
 					name: interaction.translate("common:DATE"),
-					value: client.functions.printDate(client, new Date(Date.now()), null, interaction.getLocale()),
+					value: `<t:${Math.floor(Date.now() / 1000)}:D>`,
 				},
 				{
 					name: interaction.translate("common:AUTHOR"),
@@ -72,14 +65,13 @@ class Suggest extends BaseCommand {
 					value: suggestion,
 					inline: true,
 				},
-			])
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer);
+			],
+		});
 
 		const success = parseEmoji(client.customEmojis.cool).id;
 		const error = parseEmoji(client.customEmojis.notcool).id;
 
-		suggChannel.send({
+		channel.send({
 			embeds: [embed],
 		}).then(async m => {
 			await m.react(success);
@@ -87,7 +79,7 @@ class Suggest extends BaseCommand {
 		});
 
 		interaction.success("general/suggest:SUCCESS", {
-			channel: suggChannel.toString(),
+			channel: channel.toString(),
 		}, { ephemeral: true });
 	}
 }

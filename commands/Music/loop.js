@@ -33,18 +33,11 @@ class Loop extends BaseCommand {
 							{ name: client.translate("music/loop:DISABLE"), value: "0" },
 						),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client

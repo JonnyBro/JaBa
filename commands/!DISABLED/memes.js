@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
@@ -17,11 +17,11 @@ class Memes extends BaseCommand {
 					ru: client.translate("fun/memes:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -36,13 +36,11 @@ class Memes extends BaseCommand {
 				const tag = interaction.values[0];
 				const res = await fetch(`https://meme-api.com/gimme/${tag}`).then(response => response.json());
 
-				const embed = new EmbedBuilder()
-					.setColor(client.config.embed.color)
-					.setFooter(client.config.embed.footer)
-					.setTitle(res.title)
-					.setDescription(`${interaction.translate("fun/memes:SUBREDDIT")}: **${res.subreddit}**\n${interaction.translate("common:AUTHOR")}: **${res.author}**\n${interaction.translate("fun/memes:UPS")}: **${res.ups}**`)
-					.setImage(res.url)
-					.setTimestamp();
+				const embed = client.embed({
+					title: res.title,
+					description: `${interaction.translate("fun/memes:SUBREDDIT")}: **${res.subreddit}**\n${interaction.translate("common:AUTHOR")}: **${res.author}**\n${interaction.translate("fun/memes:UPS")}: **${res.ups}**`,
+					image: res.url,
+				});
 
 				await interaction.editReply({
 					embeds: [embed],
@@ -50,6 +48,7 @@ class Memes extends BaseCommand {
 			}
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client

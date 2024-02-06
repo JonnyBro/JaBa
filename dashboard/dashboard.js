@@ -216,8 +216,8 @@ module.exports.load = async client => {
 	});
 
 	await Dashboard.init().then(() => {
-		client.logger.log(`Dashboard launched on port ${client.config.dashboard.port}`, "ready");
+		client.logger.ready(`Dashboard launched on port ${client.config.dashboard.port}`);
 	}).catch(err => {
-		client.logger.log(`Dashboard failed to initialize:\n${err}`, "error");
+		client.logger.error(`Dashboard failed to initialize:\n${err}`);
 	});
 };

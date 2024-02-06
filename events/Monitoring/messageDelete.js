@@ -1,5 +1,4 @@
-const { EmbedBuilder } = require("discord.js"),
-	BaseEvent = require("../../base/BaseEvent");
+const BaseEvent = require("../../base/BaseEvent");
 
 class messageDelete extends BaseEvent {
 	constructor() {
@@ -21,15 +20,14 @@ class messageDelete extends BaseEvent {
 		const guildData = await client.findOrCreateGuild(message.guildId);
 
 		if (guildData.plugins?.monitoring?.messageDelete) {
-			const embed = new EmbedBuilder()
-				.setAuthor({
+			const embed = client.embed({
+				author: {
 					name: message.author.getUsername(),
 					iconURL: message.author.displayAvatarURL(),
-				})
-				.setColor(client.config.embed.color)
-				.setFooter(client.config.embed.footer)
-				.setTitle(`${message.author.getUsername()} deleted a message!`)
-				.setDescription(`Message content was: \`\`\`${message.content}\`\`\``);
+				},
+				title: `${message.author.getUsername()} deleted a message!`,
+				description: `Message content was: \`\`\`${message.content}\`\`\``,
+			});
 
 			message.guild.channels.cache.get(guildData.plugins.monitoring.messageDelete).send({
 				embeds: [embed],

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Leaderboard extends BaseCommand {
@@ -27,18 +27,11 @@ class Leaderboard extends BaseCommand {
 						.setRequired(true)
 						.setChoices({ name: client.translate("common:LEVEL"), value: "level" }, { name: client.translate("common:MONEY"), value: "money" }, { name: client.translate("common:REP"), value: "rep" }),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -55,6 +48,15 @@ class Leaderboard extends BaseCommand {
 				content: interaction.translate("economy/leaderboard:MOBILE"),
 				ephemeral: true,
 			});
+
+		const embed = client.embed({
+			author: {
+				name: interaction.translate("economy/leaderboard:TABLE", {
+					name: interaction.guild.name,
+				}),
+				iconURL: interaction.guild.iconURL(),
+			},
+		});
 
 		if (type === "money") {
 			const membersLeaderboard = [],
@@ -78,28 +80,18 @@ class Leaderboard extends BaseCommand {
 				money += `${data.money}\n`;
 			}
 
-			const embed = new EmbedBuilder()
-				.setAuthor({
-					name: interaction.translate("economy/leaderboard:TABLE", {
-						name: interaction.guild.name,
-					}),
-					iconURL: interaction.guild.iconURL(),
-				})
-				.setColor(client.config.embed.color)
-				.addFields(
-					{
-						name: interaction.translate("common:USER"),
-						value: userNames,
-						inline: true,
-					},
-					{
-						name: interaction.translate("common:CREDITS"),
-						value: money,
-						inline: true,
-					},
-				)
-				.setFooter(client.config.embed.footer)
-				.setTimestamp();
+			embed.fields = [
+				{
+					name: interaction.translate("common:USER"),
+					value: userNames,
+					inline: true,
+				},
+				{
+					name: interaction.translate("common:CREDITS"),
+					value: money,
+					inline: true,
+				},
+			];
 
 			interaction.editReply({
 				embeds: [embed],
@@ -129,33 +121,23 @@ class Leaderboard extends BaseCommand {
 				xp.push(`${data.xp} / ${5 * (data.level * data.level) + 80 * data.level + 100}`);
 			}
 
-			const embed = new EmbedBuilder()
-				.setAuthor({
-					name: interaction.translate("economy/leaderboard:TABLE", {
-						name: interaction.guild.name,
-					}),
-					iconURL: interaction.guild.iconURL(),
-				})
-				.setColor(client.config.embed.color)
-				.addFields([
-					{
-						name: interaction.translate("common:USER"),
-						value: userNames.join("\n"),
-						inline: true,
-					},
-					{
-						name: interaction.translate("common:LEVEL"),
-						value: level.join("\n"),
-						inline: true,
-					},
-					{
-						name: interaction.translate("common:XP"),
-						value: xp.join("\n"),
-						inline: true,
-					},
-				])
-				.setFooter(client.config.embed.footer)
-				.setTimestamp();
+			embed.fields = [
+				{
+					name: interaction.translate("common:USER"),
+					value: userNames.join("\n"),
+					inline: true,
+				},
+				{
+					name: interaction.translate("common:LEVEL"),
+					value: level.join("\n"),
+					inline: true,
+				},
+				{
+					name: interaction.translate("common:XP"),
+					value: xp.join("\n"),
+					inline: true,
+				},
+			];
 
 			interaction.editReply({
 				embeds: [embed],
@@ -182,28 +164,18 @@ class Leaderboard extends BaseCommand {
 				rep += `${data.rep}\n`;
 			}
 
-			const embed = new EmbedBuilder()
-				.setAuthor({
-					name: interaction.translate("economy/leaderboard:TABLE", {
-						name: interaction.guild.name,
-					}),
-					iconURL: interaction.guild.iconURL(),
-				})
-				.setColor(client.config.embed.color)
-				.addFields(
-					{
-						name: interaction.translate("common:USER"),
-						value: userNames,
-						inline: true,
-					},
-					{
-						name: interaction.translate("common:REP"),
-						value: rep,
-						inline: true,
-					},
-				)
-				.setFooter(client.config.embed.footer)
-				.setTimestamp();
+			embed.fields = [
+				{
+					name: interaction.translate("common:USER"),
+					value: userNames,
+					inline: true,
+				},
+				{
+					name: interaction.translate("common:REP"),
+					value: rep,
+					inline: true,
+				},
+			];
 
 			interaction.editReply({
 				embeds: [embed],

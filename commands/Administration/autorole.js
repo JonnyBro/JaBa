@@ -36,18 +36,11 @@ class Autorole extends BaseCommand {
 							ru: client.translate("common:ROLE", null, "ru-RU"),
 						}),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client

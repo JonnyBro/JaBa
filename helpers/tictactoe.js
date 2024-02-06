@@ -1,21 +1,27 @@
 // Thanks to simply-djs for this =)
 
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
+const { ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
 
 /**
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
  * @param {Array} options
- */
-/**
- slash => Boolean
- userSlash => String
- resultBtn => Boolean
- embedFoot => String
- embedColor => HexColor
- timeoutEmbedColor => HexColor
- xEmoji => (Emoji ID) String
- oEmoji => (Emoji ID) String
- idleEmoji => (Emoji ID) String
+ * slash => Boolean
+ *
+ * userSlash => String
+ *
+ * resultBtn => Boolean
+ *
+ * embedFoot => String
+ *
+ * embedColor => HexColor
+ *
+ * timeoutEmbedColor => HexColor
+ *
+ * xEmoji => (Emoji ID) String
+ *
+ * oEmoji => (Emoji ID) String
+ *
+ * idleEmoji => (Emoji ID) String
  */
 async function tictactoe(interaction, options = {}) {
 	// eslint-disable-next-line no-async-promise-executor
@@ -64,22 +70,21 @@ async function tictactoe(interaction, options = {}) {
 					});
 			}
 
-			const foot = options.embedFoot ? options.embedFoot : { text: "GLHF" },
+			const footer = options.embedFoot ? options.embedFoot : { text: "GLHF" },
+				color = options.embedColor || "#075FFF",
 				user = interaction.user ? interaction.user : interaction.author;
 
-			const acceptEmbed = new EmbedBuilder()
-				.setTitle(
-					interaction.translate("fun/tictactoe:REQUEST_WAIT", {
-						user: opponent.getUsername(),
-					}),
-				)
-				.setAuthor({
+			const acceptEmbed = client.embed({
+				author: {
 					name: user.getUsername(),
 					iconURL: user.displayAvatarURL(),
-				})
-				.setColor(options.embedColor || "#075FFF")
-				.setFooter(foot)
-				.setTimestamp();
+				},
+				title: interaction.translate("fun/tictactoe:REQUEST_WAIT", {
+					user: opponent.getUsername(),
+				}),
+				color,
+				footer,
+			});
 
 			const accept = new ButtonBuilder().setLabel(interaction.translate("common:ACCEPT")).setStyle(ButtonStyle.Success).setCustomId("acceptttt");
 			const decline = new ButtonBuilder().setLabel(interaction.translate("common:DECLINE")).setStyle(ButtonStyle.Danger).setCustomId("declinettt");
@@ -179,11 +184,11 @@ async function tictactoe(interaction, options = {}) {
 						},
 					};
 
-					const epm = new EmbedBuilder()
-						.setTitle(interaction.translate("fun/tictactoe:DESCRIPTION"))
-						.setColor(options.embedColor || "#075FFF")
-						.setFooter(foot)
-						.setTimestamp();
+					const epm = client.embed({
+						title: interaction.translate("fun/tictactoe:DESCRIPTION"),
+						color,
+						footer,
+					});
 
 					let msg;
 					if (interaction.commandId)
@@ -592,16 +597,17 @@ async function tictactoe(interaction, options = {}) {
 
 			collector.on("end", (_, reason) => {
 				if (reason == "time") {
-					const embed = new EmbedBuilder()
-						.setTitle(interaction.translate("fun/tictactoe:NO_ANSWER_TITLE"))
-						.setAuthor({
+					const embed = client.embed({
+						author: {
 							name: user.getUsername(),
 							iconURL: user.displayAvatarURL(),
-						})
-						.setColor(options.timeoutEmbedColor || "#C90000")
-						.setFooter(foot)
-						.setTimestamp()
-						.setDescription(interaction.translate("misc:TIMED_OUT"));
+						},
+						title: interaction.translate("fun/tictactoe:NO_ANSWER_TITLE"),
+						description: interaction.translate("misc:TIMED_OUT"),
+						color: options.timeoutEmbedColor || "#C90000",
+						footer,
+					});
+
 					m.interaction.editReply({
 						content: interaction.translate("fun/tictactoe:NOT_ANSWERED", {
 							user: opponent.id,
@@ -611,20 +617,19 @@ async function tictactoe(interaction, options = {}) {
 					});
 				}
 				if (reason == "decline") {
-					const embed = new EmbedBuilder()
-						.setTitle(interaction.translate("fun/tictactoe:CANCELED"))
-						.setAuthor({
+					const embed = client.embed({
+						author: {
 							name: user.getUsername(),
 							iconURL: user.displayAvatarURL(),
-						})
-						.setColor(options.timeoutEmbedColor || "#C90000")
-						.setFooter(foot)
-						.setTimestamp()
-						.setDescription(
-							interaction.translate("fun/tictactoe:CANCELED_DESC", {
-								user: opponent.id,
-							}),
-						);
+						},
+						title: interaction.translate("fun/tictactoe:CANCELED"),
+						description: interaction.translate("fun/tictactoe:CANCELED_DESC", {
+							user: opponent.id,
+						}),
+						color: options.timeoutEmbedColor || "#C90000",
+						footer,
+					});
+
 					m.interaction.editReply({
 						embeds: [embed],
 						components: [],

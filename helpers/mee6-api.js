@@ -1,6 +1,6 @@
 /* eslint-disable no-constant-condition */
-
 // Thanks to mee6-levels-api =)
+
 const fetch = require("node-fetch");
 
 const fetchMee6 = async args => {

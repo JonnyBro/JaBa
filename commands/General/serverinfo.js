@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ChannelType } = require("discord.js");
+const { SlashCommandBuilder, ChannelType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Serverinfo extends BaseCommand {
@@ -16,18 +16,11 @@ class Serverinfo extends BaseCommand {
 					ru: client.translate("general/serverinfo:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -40,17 +33,10 @@ class Serverinfo extends BaseCommand {
 		await guild.members.fetch();
 		const owner = await guild.fetchOwner();
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
-				name: guild.name,
-				iconURL: guild.iconURL(),
-			})
-			.setThumbnail(guild.iconURL())
-			.addFields([
-				// {
-				// 	name: client.customEmojis.link + " " + interaction.translate("general/serverinfo:LINK"),
-				// 	value: `[${interaction.translate("general/serverinfo:LINK_TEXT")}](${client.config.dashboard.domain}/stats/${guild.id})`,
-				// },
+		const embed = client.embed({
+			author: guild.name,
+			thumbnail: guild.iconURL(),
+			fields: [
 				{
 					name: client.customEmojis.title + interaction.translate("common:NAME"),
 					value: guild.name,
@@ -58,7 +44,7 @@ class Serverinfo extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.calendar + interaction.translate("common:CREATION"),
-					value: client.functions.printDate(client, guild.createdAt, null, interaction.getLocale()),
+					value: `<t:${guild.createdTimestamp}:D>`,
 					inline: true,
 				},
 				{
@@ -124,10 +110,8 @@ class Serverinfo extends BaseCommand {
 						)}`,
 					inline: true,
 				},
-			])
-
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer);
+			],
+		});
 
 		interaction.reply({
 			embeds: [embed],

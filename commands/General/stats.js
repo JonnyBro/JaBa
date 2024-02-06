@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField, version } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, version: djsVersion } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Stats extends BaseCommand {
@@ -16,18 +16,11 @@ class Stats extends BaseCommand {
 					ru: client.translate("general/stats:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -43,14 +36,10 @@ class Stats extends BaseCommand {
 		});
 		users = users - hiddenGuildMembersCount;
 
-		const statsEmbed = new EmbedBuilder()
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer)
-			.setAuthor({
-				name: interaction.translate("common:STATS"),
-			})
-			.setDescription(interaction.translate("general/stats:MADE"))
-			.addFields([
+		const embed = client.embed({
+			author: interaction.translate("common:STATS"),
+			descirption: interaction.translate("general/stats:MADE"),
+			fields: [
 				{
 					name: client.customEmojis.stats + " " + interaction.translate("general/stats:COUNTS_TITLE"),
 					value: interaction.translate("general/stats:COUNTS_CONTENT", {
@@ -61,7 +50,7 @@ class Stats extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.version + " " + interaction.translate("general/stats:VERSIONS_TITLE"),
-					value: `\`Discord.js: v${version}\`\n\`Nodejs: v${process.versions.node}\``,
+					value: `\`Discord.js: v${djsVersion}\`\n\`Nodejs: v${process.versions.node}\``,
 					inline: true,
 				},
 				{
@@ -72,7 +61,7 @@ class Stats extends BaseCommand {
 				{
 					name: client.customEmojis.status.online + " " + interaction.translate("general/stats:ONLINE_TITLE"),
 					value: interaction.translate("general/stats:ONLINE_CONTENT", {
-						time: client.functions.convertTime(client, Date.now() + client.uptime, true, false, interaction.getLocale()),
+						time: `<t:${Math.floor((Date.now() + client.uptime) / 1000)}:R>`,
 					}),
 				},
 				{
@@ -100,10 +89,11 @@ class Stats extends BaseCommand {
 						owner: client.config.owner.id,
 					}),
 				},
-			]);
+			],
+		});
 
 		interaction.reply({
-			embeds: [statsEmbed],
+			embeds: [embed],
 		});
 	}
 }

@@ -1,4 +1,4 @@
-const { ContextMenuCommandBuilder, ModalBuilder, EmbedBuilder, ActionRowBuilder, TextInputBuilder, ApplicationCommandType, PermissionsBitField, TextInputStyle } = require("discord.js");
+const { ContextMenuCommandBuilder, ModalBuilder, ActionRowBuilder, TextInputBuilder, ApplicationCommandType, PermissionsBitField, TextInputStyle } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class WarnContext extends BaseCommand {
@@ -13,18 +13,11 @@ class WarnContext extends BaseCommand {
 				.setType(ApplicationCommandType.User)
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -89,21 +82,25 @@ class WarnContext extends BaseCommand {
 				reason,
 			};
 
-			const embed = new EmbedBuilder().addFields([
-				{
-					name: interaction.translate("common:USER"),
-					value: `\`${member.user.getUsername()}\` (${member.user.toString()})`,
-				},
-				{
-					name: interaction.translate("common:MODERATOR"),
-					value: `\`${interaction.user.getUsername()}\` (${interaction.user.toString()})`,
-				},
-				{
-					name: interaction.translate("common:REASON"),
-					value: reason,
-					inline: true,
-				},
-			]);
+			const embed = client.embed({
+				author: interaction.translate("moderation/warn:WARN"),
+				fields: [
+					{
+						name: interaction.translate("common:USER"),
+						value: `\`${member.user.getUsername()}\` (${member.user.toString()})`,
+					},
+					{
+						name: interaction.translate("common:MODERATOR"),
+						value: `\`${interaction.user.getUsername()}\` (${interaction.user.toString()})`,
+					},
+					{
+						name: interaction.translate("common:REASON"),
+						value: reason,
+						inline: true,
+					},
+				],
+			});
+
 			/*
 			if (banCount) {
 				if (sanctions >= banCount) {
@@ -163,22 +160,20 @@ class WarnContext extends BaseCommand {
 						}),
 					});
 				}
-			}
-			*/
-			member.send({
-				content: interaction.translate("moderation/warn:WARNED_DM", {
-					user: member.user.getUsername(),
-					server: interaction.guild.name,
-					moderator: interaction.user.getUsername(),
-					reason,
-				}),
-			});
+			} */
 
-			embed
-				.setAuthor({
-					name: interaction.translate("moderation/warn:WARN"),
-				})
-				.setColor(client.config.embed.color);
+			try {
+				await member.send({
+					content: interaction.translate("moderation/warn:WARNED_DM", {
+						user: member.user.getUsername(),
+						server: interaction.guild.name,
+						moderator: interaction.user.getUsername(),
+						reason,
+					}),
+				});
+			} catch (e) {
+				interaction.followUp({ content: interaction.translate("misc:CANT_DM"), ephemeral: true });
+			}
 
 			memberData.sanctions.push(caseInfo);
 

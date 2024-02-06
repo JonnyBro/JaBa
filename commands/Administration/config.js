@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField, ChannelType } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, ChannelType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Config extends BaseCommand {
@@ -75,18 +75,11 @@ class Config extends BaseCommand {
 								}),
 						),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -99,14 +92,12 @@ class Config extends BaseCommand {
 		if (command === "list") {
 			const guildData = data.guildData;
 
-			const embed = new EmbedBuilder()
-				.setAuthor({
+			const embed = client.embed({
+				author: {
 					name: interaction.guild.name,
 					iconURL: interaction.guild.iconURL(),
-				})
-				.setColor(client.config.embed.color)
-				.setFooter(client.config.embed.footer)
-				.addFields([
+				},
+				fields: [
 					{
 						name: interaction.translate("administration/config:WELCOME_TITLE"),
 						value: guildData.plugins.welcome.enabled
@@ -170,7 +161,8 @@ class Config extends BaseCommand {
 						name: interaction.translate("administration/config:DASHBOARD_TITLE"),
 						value: `[${interaction.translate("administration/config:DASHBOARD_CONTENT")}](${client.config.dashboard.domain})`,
 					},
-				]);
+				],
+			});
 
 			interaction.reply({
 				embeds: [embed],

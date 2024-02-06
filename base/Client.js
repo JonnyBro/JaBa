@@ -1,4 +1,4 @@
-const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder } = require("discord.js"),
+const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder, EmbedBuilder, PermissionsBitField, ChannelType } = require("discord.js"),
 	{ Player } = require("discord-player"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ REST } = require("@discordjs/rest"),
@@ -13,6 +13,7 @@ const BaseEvent = require("./BaseEvent.js"),
 class JaBaClient extends Client {
 	constructor(options) {
 		super(options);
+
 		this.config = require("../config");
 		this.customEmojis = require("../emojis");
 		this.languages = require("../languages/language-meta");
@@ -38,9 +39,11 @@ class JaBaClient extends Client {
 		this.player.extractors.loadDefault();
 
 		this.player.events.on("playerStart", async (queue, track) => {
-			const m = (await queue.metadata.channel.send({
-				content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language),
-			})).id;
+			const m = (
+				await queue.metadata.channel.send({
+					content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language),
+				})
+			).id;
 
 			if (track.durationMS > 1)
 				setTimeout(() => {
@@ -53,7 +56,7 @@ class JaBaClient extends Client {
 					const message = queue.metadata.channel.messages.cache.get(m);
 
 					if (message && message.deletable) message.delete();
-				}, 5 * 60 * 1000); // m * s * ms
+				}, 5 * 60 * 1000);
 		});
 		this.player.events.on("emptyQueue", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)));
 		this.player.events.on("emptyChannel", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.channel.guild.data.language)));
@@ -78,7 +81,7 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * Login into account and connect to DB
+	 * Logins into the account and connects to the database
 	 */
 	async init() {
 		this.login(this.config.token);
@@ -86,22 +89,19 @@ class JaBaClient extends Client {
 		mongoose
 			.connect(this.config.mongoDB)
 			.then(() => {
-				this.logger.log("Connected to the Mongodb database.", "log");
+				this.logger.log("Connected to the Mongodb database.");
 			})
 			.catch(err => {
-				this.logger.log(`Unable to connect to the Mongodb database.\nError: ${err}`, "error");
+				this.logger.error(`Unable to connect to the Mongodb database.\nError: ${err}`);
 			});
-
-		await this.player.extractors.loadDefault();
 
 		// const autoUpdateDocs = require("../helpers/autoUpdateDocs");
 		// autoUpdateDocs.update(this);
 	}
 
 	/**
-	 * Loads commands from directory
-	 * @param {String} dir Directory where's all commands located
-	 * @returns
+	 * Loads all commands from directory
+	 * @param {String} dir Directory where commands are located
 	 */
 	async loadCommands(dir) {
 		const rest = new REST().setToken(this.config.token),
@@ -121,21 +121,15 @@ class JaBaClient extends Client {
 
 				if (file.endsWith(".js")) {
 					const Command = require(path.join(folder, file));
+
 					if (Command.prototype instanceof BaseCommand) {
 						const command = new Command(this);
 						this.commands.set(command.command.name, command);
-						const aliases = [];
-						if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0)
-							command.aliases.forEach(alias => {
-								const command_alias = command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder ? { ...command.command.toJSON() } : { ...command.command };
-								command_alias.name = alias;
-								aliases.push(command_alias);
-								this.commands.set(alias, command);
-							});
 
-						commands.push(command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder ? command.command.toJSON() : command.command, ...aliases);
+						if (command.onLoad && typeof command.onLoad === "function") await command.onLoad(this);
 
-						if (command.onLoad || typeof command.onLoad === "function") await command.onLoad(this);
+						commands.push(command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder ? command.command.toJSON() : command.command);
+
 						this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
 					}
 				}
@@ -143,80 +137,12 @@ class JaBaClient extends Client {
 		}
 
 		try {
-			if (this.config.production)
-				await rest.put(Routes.applicationCommands(this.config.userId), {
-					body: commands,
-				});
-			else
-				await rest.put(Routes.applicationGuildCommands(this.config.userId, this.config.support.id), {
-					body: commands,
-				});
+			if (this.config.production) await rest.put(Routes.applicationCommands(this.config.userId), { body: commands });
+			else await rest.put(Routes.applicationGuildCommands(this.config.userId, this.config.support.id), { body: commands });
 
 			this.logger.log("Successfully registered application commands.");
 		} catch (err) {
-			this.logger.log("Cannot load commands: " + err.message, "error");
-		}
-	}
-
-	/**
-	 * Loads single command in directory
-	 * @param {String} dir Directory where command is
-	 * @param {String} file Filename of the command
-	 */
-	async loadCommand(dir, file) {
-		const Command = require(path.join(dir, `${file}.js`));
-		if (Command.prototype instanceof BaseCommand) {
-			const command = new Command(this);
-			this.commands.set(command.command.name, command);
-			const aliases = [];
-			if (command.aliases && Array.isArray(command.aliases) && command.aliases.length > 0)
-				command.aliases.forEach(alias => {
-					const command_alias = command.command instanceof SlashCommandBuilder ? { ...command.command.toJSON() } : { ...command.command };
-					command_alias.name = alias;
-					aliases.push(command_alias);
-					this.commands.set(alias, command);
-				});
-
-			if (command.onLoad || typeof command.onLoad === "function") await command.onLoad(this);
-			this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
-
-			return;
-		}
-	}
-
-	/**
-	 * Unloads command from cache
-	 * @param {String} dir Directory of the command
-	 * @param {String} name Name of the command
-	 */
-	async unloadCommand(dir, name) {
-		delete require.cache[require.resolve(`${dir}${path.sep}${name}.js`)];
-
-		return;
-	}
-
-	/**
-	 * Loads events from directory
-	 * @param {String} dir Directory where's all events located
-	 * @returns
-	 */
-	async loadEvents(dir) {
-		const filePath = path.join(__dirname, dir);
-		const files = await fs.readdir(filePath);
-		for (let index = 0; index < files.length; index++) {
-			const file = files[index];
-			const stat = await fs.lstat(path.join(filePath, file));
-			if (stat.isDirectory()) this.loadEvents(path.join(dir, file));
-			if (file.endsWith(".js")) {
-				const Event = require(path.join(filePath, file));
-				if (Event.prototype instanceof BaseEvent) {
-					const event = new Event();
-					if (!event.name || !event.name.length) return console.error(`Cannot load "${file}" event file: Event name is not set!`);
-					if (event.once) this.once(event.name, event.execute.bind(event, this));
-					else this.on(event.name, event.execute.bind(event, this));
-					this.logger.log(`Successfully loaded "${file}" event file. (Event: ${event.name})`);
-				}
-			}
+			this.logger.error(`Error during commands registration!\n${err.message}`);
 		}
 	}
 
@@ -240,35 +166,127 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * Finds or creates user in DB
-	 * @param {String} userID User ID
-	 * @returns {import("./User")} Mongoose model
+	 * Returns an embed created from given data
+	 * @param {Object} data Data for embed
+	 * @returns {import("discord.js").Embed}
 	 */
-	async findOrCreateUser(userID) {
-		if (this.databaseCache.users.get(userID)) return this.databaseCache.users.get(userID);
-		else {
-			let userData = await this.usersData.findOne({ id: userID });
+	embed(data) {
+		const embed = new EmbedBuilder()
+			.setTitle(data.title || null)
+			.setDescription(data.description || null)
+			.setThumbnail(data.thumbnail || null)
+			.addFields(data.fields || [])
+			.setImage(data.image || null)
+			.setURL(data.url || null)
+			.setColor(data.color || this.config.embed.color)
+			.setFooter(data.footer || this.config.embed.footer)
+			.setTimestamp(data.timestamp || null);
 
-			if (userData) {
-				this.databaseCache.users.set(userID, userData);
+		if (typeof data.author === "string") embed.setAuthor({ name: data.author, iconURL: this.user.avatarURL() });
+		else if (typeof data.author === "object" && (data.author.iconURL !== null || data.author.iconURL !== undefined)) embed.setAuthor({ name: data.author.name, iconURL: this.user.avatarURL() });
+		else if (!data.author) embed.setAuthor(null);
+		else embed.setAuthor(data.author);
 
-				return userData;
-			} else {
-				userData = new this.usersData({ id: userID });
+		return embed;
+	}
 
-				await userData.save();
+	/**
+	 * Creates an invite link for guild
+	 * @param {String} guildId Guild ID
+	 * @returns {String} Invite link
+	 */
+	async createInvite(guildId) {
+		const guild = this.guilds.cache.get(guildId),
+			member = guild.members.me,
+			channel = guild.channels.cache.find(ch => ch.permissionsFor(member.id).has(PermissionsBitField.FLAGS.CREATE_INSTANT_INVITE) && (ch.type === ChannelType.GuildText || ch.type === ChannelType.GuildVoice));
 
-				this.databaseCache.users.set(userID, userData);
+		if (channel) return (await channel.createInvite()).url || "No channels found or missing permissions";
+	}
 
-				return userData;
+	/**
+	 * Loads a single command from directory
+	 * @param {String} dir Directory where command is located
+	 * @param {String} file Filename of the command
+	 */
+	async loadCommand(dir, file) {
+		const Command = require(path.join(dir, `${file}.js`));
+		if (!(Command.prototype instanceof BaseCommand)) return this.logger.error("Tried to load a non-command file!");
+
+		const command = new Command(this);
+		this.commands.set(command.command.name, command);
+
+		if (command.onLoad && typeof command.onLoad === "function") await command.onLoad(this);
+
+		return this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
+	}
+
+	/**
+	 * Unloads a command
+	 * @param {String} dir Directory where command is located
+	 * @param {String} name Command name
+	 * @returns
+	 */
+	async unloadCommand(dir, name) {
+		delete require.cache[require.resolve(`${dir}${path.sep}${name}.js`)];
+
+		return;
+	}
+
+	/**
+	 * Loads all events from directory recursively
+	 * @param {String} dir Directory where events are located
+	 */
+	async loadEvents(dir) {
+		const filePath = path.join(__dirname, dir);
+		const files = await fs.readdir(filePath);
+
+		for (let index = 0; index < files.length; index++) {
+			const file = files[index];
+			const stat = await fs.lstat(path.join(filePath, file));
+			if (stat.isDirectory()) this.loadEvents(path.join(dir, file));
+
+			if (file.endsWith(".js")) {
+				const Event = require(path.join(filePath, file));
+
+				if (Event.prototype instanceof BaseEvent) {
+					const event = new Event();
+					if (!event.name || !event.name.length) return console.error(`Cannot load "${file}" event file: Event name is not set!`);
+					if (event.once) this.once(event.name, event.execute.bind(event, this));
+					else this.on(event.name, event.execute.bind(event, this));
+
+					this.logger.log(`Successfully loaded "${file}" event file. (Event: ${event.name})`);
+				}
 			}
 		}
 	}
 
 	/**
-	 * Finds or creates member in DB
+	 * Finds or creates a user in the database
+	 * @param {String} userID User ID
+	 * @returns {Promise<import("./User")>} Mongoose model
+	 */
+	async findOrCreateUser(userID) {
+		let userData = await this.usersData.findOne({ id: userID });
+
+		if (userData) {
+			this.databaseCache.users.set(userID, userData);
+
+			return userData;
+		} else {
+			userData = new this.usersData({ id: userID });
+
+			await userData.save();
+
+			this.databaseCache.users.set(userID, userData);
+
+			return userData;
+		}
+	}
+
+	/**
+	 * Finds or creates a guild's member in the database
 	 * @param {Array} { id: Member ID, Guild ID }
-	 * @returns {import("./Member")} Mongoose model
+	 * @returns {Promise<import("./Member")>} Mongoose model
 	 */
 	async findOrCreateMember({ id: memberID, guildId }) {
 		let memberData = await this.membersData.findOne({ guildID: guildId, id: memberID });
@@ -299,7 +317,7 @@ class JaBaClient extends Client {
 	/**
 	 * Finds or creates guild in DB
 	 * @param {String} guildId Guild ID
-	 * @returns {import("./Guild")} Mongoose model
+	 * @returns {Promise<import("./Guild")>} Mongoose model
 	 */
 	async findOrCreateGuild(guildId) {
 		let guildData = await this.guildsData.findOne({ id: guildId }).populate("members");

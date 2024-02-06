@@ -7,7 +7,7 @@
 	"VERSIONS_TITLE": "• __Used__",
 	"RAM_TITLE": "• __RAM Usage__",
 	"ONLINE_TITLE": "• __Online__",
-	"ONLINE_CONTENT": "Been online for {{time}}",
+	"ONLINE_CONTENT": "Was started {{time}}",
 	"MUSIC_TITLE": "• __Music__",
 	"MUSIC_CONTENT": "Playing music on {{count}}",
 	"CREDITS_TITLE": ":heart: • __Additional Information__",

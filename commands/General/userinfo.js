@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Userinfo extends BaseCommand {
@@ -25,18 +25,11 @@ class Userinfo extends BaseCommand {
 							ru: client.translate("common:USER", null, "ru-RU"),
 						}),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -45,17 +38,14 @@ class Userinfo extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const member = interaction.options.getMember("user") || interaction.member;
-		const embed = new EmbedBuilder()
-			.setAuthor({
+
+		const embed = client.embed({
+			author: {
 				name: `${member.user.getUsername()} (${member.id})`,
 				iconURL: member.displayAvatarURL(),
-			})
-			.setThumbnail(
-				member.displayAvatarURL({
-					size: 512,
-				}),
-			)
-			.addFields([
+			},
+			thumbnail: member.displayAvatarURL(),
+			fields: [
 				{
 					name: ":man: " + interaction.translate("common:USERNAME"),
 					value: member.user.getUsername(),
@@ -66,11 +56,6 @@ class Userinfo extends BaseCommand {
 					value: member.nickname || interaction.translate("general/userinfo:NO_NICKNAME"),
 					inline: true,
 				},
-				// {
-				// 	name: client.customEmojis.status[member.presence.status] + " " + interaction.translate("common:STATUS"),
-				// 	value: interaction.translate(`common:STATUS_${member.presence.status.toUpperCase()}`),
-				// 	inline: true,
-				// },
 				{
 					name: client.customEmojis.bot + " " + interaction.translate("common:ROBOT"),
 					value: member.user.bot ? interaction.translate("common:YES") : interaction.translate("common:NO"),
@@ -78,12 +63,12 @@ class Userinfo extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.calendar + " " + interaction.translate("common:CREATION"),
-					value: client.functions.printDate(client, member.user.createdAt, null, interaction.getLocale()),
+					value: `<t:${member.user.createdTimestamp}:D>`,
 					inline: true,
 				},
 				{
 					name: client.customEmojis.calendar2 + " " + interaction.translate("common:JOINED"),
-					value: client.functions.printDate(client, member.joinedAt, null, interaction.getLocale()),
+					value: `<t:${member.joinedTimestamp}:D>`,
 					inline: true,
 				},
 				{
@@ -102,28 +87,8 @@ class Userinfo extends BaseCommand {
 							: member.roles.cache.size < 1 ? interaction.translate("general/userinfo:NO_ROLE") : member.roles.cache.map(r => r).filter(r => r.id !== interaction.guild.roles.everyone.id).slice(0, 10).join(", "),
 					inline: true,
 				},
-			])
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer);
-
-		/*
-		if (member.presence.activities[0]?.name === "Custom Status") {
-			embed.addFields([
-				{
-					name: client.customEmojis.games + " " + interaction.translate("common:ACTIVITY"),
-					value: member.presence.activities[0] ? `${interaction.translate("general/userinfo:CUSTOM")}\n${member.presence.activities[0].state || interaction.translate("common:NOT_DEFINED")}` : interaction.translate("general/userinfo:NO_ACTIVITY"),
-					inline: true,
-				},
-			]);
-		} else {
-			embed.addFields([
-				{
-					name: client.customEmojis.games + " " + interaction.translate("common:ACTIVITY"),
-					value: member.presence.activities[0] ? `${member.presence.activities[0].name}\n${member.presence.activities[0].details}\n${member.presence.activities[0].state}` : interaction.translate("general/userinfo:NO_ACTIVITY"),
-					inline: true,
-				},
-			]);
-		} */
+			],
+		});
 
 		interaction.reply({
 			embeds: [embed],

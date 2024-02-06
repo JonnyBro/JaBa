@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Help extends BaseCommand {
@@ -26,11 +26,11 @@ class Help extends BaseCommand {
 						})
 						.setAutocomplete(true),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -52,19 +52,15 @@ class Help extends BaseCommand {
 						};
 					});
 
-				const embed = new EmbedBuilder()
-					.setColor(client.config.embed.color)
-					.setFooter(client.config.embed.footer)
-					.setAuthor({
+				const embed = client.embed({
+					author: {
 						name: interaction.translate("general/help:COMMANDS_IN", { category: arg }),
-					})
-					.addFields(categoryCommands)
-					.addFields([
-						{
-							name: "\u200B",
-							value: interaction.translate("general/help:INFO"),
-						},
-					]);
+					},
+					fields: categoryCommands.concat({
+						name: "\u200B",
+						value: interaction.translate("general/help:INFO"),
+					}),
+				});
 
 				return interaction.editReply({
 					content: null,
@@ -73,6 +69,7 @@ class Help extends BaseCommand {
 			}
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -83,23 +80,14 @@ class Help extends BaseCommand {
 		await interaction.deferReply();
 
 		const commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()];
-		const categories = [];
+		const categories = [... new Set(commands.map(c => c.category))];
 		const command = interaction.options.getString("command");
 
 		if (command) {
-			if (commands.find(c => c.command.name === command).category === "Owner" && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { edit: true, ephemeral: true });
-
-			return interaction.editReply({ embeds: [generateCommandHelp(interaction, command)] });
+			if (commands.find(c => c.command.name === command).category === "Owner" && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { edit: true });
+			else if (commands.find(c => c.command.name === command).category === "IAT" && interaction.guildId !== "1039187019957555252") return interaction.error("misc:OWNER_ONLY", null, { edit: true });
+			else return interaction.editReply({ embeds: [generateCommandHelp(interaction, command)] });
 		}
-
-		commands.forEach(c => {
-			if (!categories.includes(c.category)) {
-				if (c.category === "Owner" && interaction.user.id !== client.config.owner.id) return;
-				if (c.category === "IAT" && interaction.guildId !== "1039187019957555252") return;
-
-				categories.push(c.category);
-			}
-		});
 
 		const categoriesRows = categories.sort().map(c => {
 			return {
@@ -145,38 +133,36 @@ function generateCommandHelp(interaction, command) {
 	const cmd = interaction.client.commands.get(command);
 	if (!cmd) return interaction.error("general/help:NOT_FOUND", { command }, { edit: true });
 
-	const usage = interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`) === "" ? interaction.translate("misc:NO_ARGS") : interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`);
+	if (cmd.category === "Owner" && interaction.user.id !== interaction.client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { edit: true });
+	else if (cmd.category === "IAT" && interaction.guildId !== "1039187019957555252") return interaction.error("misc:OWNER_ONLY", null, { edit: true });
 
-	const embed = new EmbedBuilder()
-		.setAuthor({
+	const embed = interaction.client.embed({
+		author: {
 			name: interaction.translate("general/help:CMD_TITLE", {
 				cmd: cmd.command.name,
 			}),
-		})
-		.addFields([
+		},
+		fields: [
 			{
 				name: interaction.translate("general/help:FIELD_DESCRIPTION"),
 				value: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:DESCRIPTION`),
 			},
 			{
 				name: interaction.translate("general/help:FIELD_USAGE"),
-				value: `*${cmd.command.dm_permission === false ? interaction.translate("general/help:GUILD_ONLY") : interaction.translate("general/help:NOT_GUILD_ONLY")}*\n\n` + usage,
+				value: `*${cmd.command.dm_permission === false ? interaction.translate("general/help:GUILD_ONLY") : interaction.translate("general/help:NOT_GUILD_ONLY")}*\n\n${
+					interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`) === "" ? interaction.translate("misc:NO_ARGS") : interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:USAGE`)
+				}`,
 			},
 			{
 				name: interaction.translate("general/help:FIELD_EXAMPLES"),
 				value: interaction.translate(`${cmd.category.toLowerCase()}/${cmd.command.name}:EXAMPLES`),
 			},
-			// {
-			// 	name: interaction.translate("general/help:FIELD_ALIASES"),
-			// 	value: cmd.aliases.length > 0 ? cmd.aliases.map(a => `${a}`).join("\n") : interaction.translate("general/help:NO_ALIAS")
-			// },
 			{
 				name: interaction.translate("general/help:FIELD_PERMISSIONS"),
 				value: cmd.command.default_member_permissions > 0 ? interaction.translate(`misc:PERMISSIONS:${getPermName(cmd.command.default_member_permissions)}`) : interaction.translate("general/help:NO_REQUIRED_PERMISSION"),
 			},
-		])
-		.setColor(interaction.client.config.embed.color)
-		.setFooter(interaction.client.config.embed.footer);
+		],
+	});
 
 	return embed;
 }

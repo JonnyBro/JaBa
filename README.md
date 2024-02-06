@@ -6,7 +6,7 @@
 [![](https://img.shields.io/badge/discord.js-v14.13.0-blue.svg?logo=npm)](https://github.com/discordjs/discord.js)
 [![](https://www.codefactor.io/repository/github/JonnyBro/JaBa/badge)](https://www.codefactor.io/repository/github/JonnyBro/JaBa)
 [![](https://img.shields.io/github/license/JonnyBro/JaBa?label=%D0%9B%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F%20&style=flat-square)](https://github.com/JonnyBro/JaBa/blob/main/LICENSE)<br>
-JaBa это *Discord* бот с открытым (теперь) исходным кодом, написанный [Jonny_Bro](https://github.com/JonnyBro) на JavaScript с помощью [discord.js](https://github.com/discordjs/discord.js) и [Mongoose](https://mongoosejs.com). Поставьте звёздочку если вам нравится что я делаю :3
+JaBa это *Discord* бот с открытым (теперь) исходным кодом, написанный [Jonny_Bro](https://github.com/JonnyBro) на JavaScript с помощью [discord.js](https://github.com/discordjs/discord.js) и [Mongoose](https://mongoosejs.com).
 
 ## Функционал
 
@@ -31,15 +31,12 @@ JaBa имеет множество функций, вот **8 основных �
 * 👑 **Команды владельца**: `eval`, `getinvite`, `servers-list` и ещё **2** команды!
 
 > [!NOTE]
-> [Список изменений](/dashboard/docs/updates.md)\
-> [Полный список команд](http://jababot.ru:8080/commands)
+> [Список изменений](https://blog.jababot.ru)\
+> [Полный список команд](https://dash.jababot.ru/commands)
 
 ## *Относительно* мощная панель управления
 
 У JaBa есть своя панель управления с доступом к настройке параметров сервера!
-<!-- <img align="left" style="float: centrer; margin: 0 10px 0 0;" src="https://example.com" height="200" width="350"/>
-<img align="center" style="float: left; margin: 0 10px 0 0;" src="https://example.com" height="200" width="350"/>
-<img align="center" style="float: centrer; margin: 0 10px 0 0;" src="https://example.com" height="200" width="350"/> -->
 
 ## Установка
 
@@ -57,11 +54,11 @@ JaBa имеет множество функций, вот **8 основных �
 
 ## Ссылки
 
-* [Список команд](http://jababot.ru:8080/commands)
-* [Инструкция по установке](https://github.com/JonnyBro/JaBa/wiki/Установка-JaBa-на-своей-машине)
+* [Список команд](https://dash.jababot.ru/commands)
+* [Инструкция по установке](https://github.com/JonnyBro/JaBa/wiki/Self-Hosting)
 * [Discord](https://discord.gg/Ptkj2n9nzZ)
 * [Github](https://github.com/JonnyBro/JaBa/)
-* [Панель управления](http://jababot.ru)
+* [Панель управления](https://dash.jababot.ru)
 
 ## Поддержка
 

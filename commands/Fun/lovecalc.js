@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	md5 = require("md5");
 
@@ -36,18 +36,11 @@ class Lovecalc extends BaseCommand {
 							ru: client.translate("common:USER", null, "ru-RU"),
 						}),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -67,19 +60,16 @@ class Lovecalc extends BaseCommand {
 			.join("");
 		const percent = parseInt(string.slice(0, 2), 10);
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
+		const embed = client.embed({
+			author: {
 				name: `❤️ ${interaction.translate("fun/lovecalc:DESCRIPTION")}`,
-			})
-			.setDescription(
-				interaction.translate("fun/lovecalc:CONTENT", {
-					percent,
-					firstMember: firstMember.user.toString(),
-					secondMember: secondMember.user.toString(),
-				}),
-			)
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer);
+			},
+			description: interaction.translate("fun/lovecalc:CONTENT", {
+				percent,
+				firstMember: firstMember.user.toString(),
+				secondMember: secondMember.user.toString(),
+			}),
+		});
 
 		interaction.reply({
 			embeds: [embed],

@@ -26,18 +26,11 @@ class Rep extends BaseCommand {
 						})
 						.setRequired(true),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -46,10 +39,11 @@ class Rep extends BaseCommand {
 	 */
 	async execute(client, interaction, data) {
 		const isInCooldown = data.userData.cooldowns?.rep;
+
 		if (isInCooldown) {
 			if (isInCooldown > Date.now())
 				return interaction.error("economy/rep:COOLDOWN", {
-					time: client.functions.convertTime(client, isInCooldown, true, false, interaction.getLocale()),
+					time: `<t:${Math.floor(isInCooldown / 1000)}:R>`,
 				});
 		}
 
@@ -57,7 +51,7 @@ class Rep extends BaseCommand {
 		if (user.bot) return interaction.error("economy/rep:BOT_USER");
 		if (user.id === interaction.user.id) return interaction.error("economy/rep:YOURSELF");
 
-		const toWait = Date.now() + 21600000; // 12 hours
+		const toWait = Math.floor((Date.now() + 12 * 60 * 60 * 1000) / 1000); // 12 hours
 		if (!data.userData.cooldowns) data.userData.cooldowns = {};
 
 		data.userData.cooldowns.rep = toWait;

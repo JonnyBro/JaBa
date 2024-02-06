@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, parseEmoji } = require("discord.js");
+const { SlashCommandBuilder, parseEmoji } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Report extends BaseCommand {
@@ -36,18 +36,11 @@ class Report extends BaseCommand {
 						})
 						.setRequired(true),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -63,20 +56,17 @@ class Report extends BaseCommand {
 
 		const rep = interaction.options.getString("message");
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
+		const embed = client.embed({
+			author: {
 				name: interaction.translate("general/report:TITLE", {
 					user: member.user.getUsername(),
 				}),
-				iconURL: interaction.user.displayAvatarURL({
-					extension: "png",
-					size: 512,
-				}),
-			})
-			.addFields([
+				iconURL: interaction.user.displayAvatarURL(),
+			},
+			fields: [
 				{
 					name: interaction.translate("common:DATE"),
-					value: client.functions.printDate(client, new Date(Date.now()), null, interaction.getLocale()),
+					value: `<t:${Math.floor(Date.now() / 1000)}:D>`,
 				},
 				{
 					name: interaction.translate("common:AUTHOR"),
@@ -93,9 +83,8 @@ class Report extends BaseCommand {
 					value: rep,
 					inline: true,
 				},
-			])
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer);
+			],
+		});
 
 		const success = parseEmoji(client.customEmojis.cool).id;
 		const error = parseEmoji(client.customEmojis.notcool).id;

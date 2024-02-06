@@ -28,18 +28,11 @@ class Setlang extends BaseCommand {
 						.setRequired(true)
 						.setChoices({ name: "English", value: "en-US" }, { name: "Русский", value: "ru-RU" }, { name: "Українська", value: "uk-UA" }),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client

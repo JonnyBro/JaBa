@@ -1,4 +1,4 @@
-const { PermissionsBitField, ActivityType } = require("discord.js");
+const { ActivityType } = require("discord.js");
 const BaseEvent = require("../base/BaseEvent");
 
 class Ready extends BaseEvent {
@@ -31,9 +31,8 @@ class Ready extends BaseEvent {
 
 		if (client.config.dashboard.enabled) await client.dashboard.load(client);
 
-		client.logger.log(`Loaded a total of ${commands.length} command(s).`, "ready");
-		client.logger.log(`${client.user.getUsername()}, ready to serve ${tUsers} members in ${tServers} servers.`, "ready");
-		client.logger.log(`Invite Link: ${client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: [PermissionsBitField.Flags.Administrator] })}`, "ready");
+		client.logger.ready(`Loaded a total of ${commands.length} command(s).`);
+		client.logger.ready(`${client.user.getUsername()}, ready to serve ${tUsers} members in ${tServers} servers.`);
 
 		console.timeEnd("botReady");
 

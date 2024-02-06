@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Money extends BaseCommand {
@@ -25,18 +25,11 @@ class Money extends BaseCommand {
 							ru: client.translate("common:USER", null, "ru-RU"),
 						}),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -61,14 +54,14 @@ class Money extends BaseCommand {
 			globalMoney += data.money + data.bankSold;
 		});
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
+		const embed = client.embed({
+			author: {
 				name: interaction.translate("economy/money:TITLE", {
 					user: member.user.getUsername(),
 				}),
 				iconURL: member.user.displayAvatarURL(),
-			})
-			.addFields([
+			},
+			fields: [
 				{
 					name: interaction.translate("economy/profile:CASH"),
 					value: `**${memberData.money}** ${client.functions.getNoun(memberData.money, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
@@ -84,9 +77,9 @@ class Money extends BaseCommand {
 					value: `**${globalMoney}** ${client.functions.getNoun(globalMoney, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 					inline: true,
 				},
-			])
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer);
+			],
+		});
+
 		interaction.editReply({
 			embeds: [embed],
 		});

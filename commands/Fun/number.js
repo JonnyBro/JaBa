@@ -17,18 +17,11 @@ class Number extends BaseCommand {
 					ru: client.translate("fun/number:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -60,12 +53,11 @@ class Number extends BaseCommand {
 			const parsedNumber = parseInt(msg.content, 10);
 
 			if (parsedNumber === number) {
-				const time = client.functions.convertTime(client, gameCreatedAt, false, true, interaction.getLocale());
 				interaction.channel.send({
 					content: interaction.translate("fun/number:GAME_STATS", {
 						winner: msg.author.toString(),
 						number,
-						time,
+						time: `<t:${Math.floor(gameCreatedAt / 1000)}:R>`,
 						participantCount: participants.length,
 						participants: participants.map(p => `<@${p}>`).join(", "),
 					}),

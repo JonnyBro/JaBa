@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Poll extends BaseCommand {
@@ -27,18 +27,11 @@ class Poll extends BaseCommand {
 						})
 						.setRequired(true),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -95,12 +88,9 @@ class Poll extends BaseCommand {
 				const cool = client.emojis.cache.find(e => e.name === client.customEmojis.cool.split(":")[1]);
 				const notcool = client.emojis.cache.find(e => e.name === client.customEmojis.notcool.split(":")[1]);
 
-				const embed = new EmbedBuilder()
-					.setAuthor({
-						name: interaction.translate("moderation/poll:TITLE"),
-					})
-					.setColor(client.config.embed.color)
-					.addFields([
+				const embed = client.embed({
+					author: interaction.translate("moderation/poll:TITLE"),
+					fields: [
 						{
 							name: "\u200b",
 							value: question,
@@ -112,7 +102,8 @@ class Poll extends BaseCommand {
 								error: notcool.toString(),
 							}),
 						},
-					]);
+					],
+				});
 
 				return interaction.channel.send({
 					content: mention,

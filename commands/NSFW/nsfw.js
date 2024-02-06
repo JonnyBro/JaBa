@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, AttachmentBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
@@ -17,11 +17,11 @@ class NSFW extends BaseCommand {
 					ru: client.translate("nsfw/nsfw:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -33,23 +33,24 @@ class NSFW extends BaseCommand {
 			if (interaction.customId === "nsfw_select") {
 				await interaction.deferUpdate();
 
-				const tag = interaction?.values[0];
-				const res = await fetch(`https://meme-api.com/gimme/${tag}`).then(response => response.json());
+				const tag = interaction?.values[0],
+					splitted = tag.split("_"),
+					res = await fetch(`https://nsfw-api-p302.onrender.com/media/${splitted[0].charAt(0).toLowerCase()}/${splitted[1].toLowerCase()}`).then(async r => await r.buffer()),
+					image = new AttachmentBuilder(res, { name: "image.jpeg" });
 
-				const embed = new EmbedBuilder()
-					.setColor(client.config.embed.color)
-					.setFooter(client.config.embed.footer)
-					.setTitle(res.title)
-					.setDescription(`${interaction.translate("fun/memes:SUBREDDIT")}: **${res.subreddit}**\n${interaction.translate("common:AUTHOR")}: **${res.author}**\n${interaction.translate("fun/memes:UPS")}: **${res.ups}**`)
-					.setImage(res.url)
-					.setTimestamp();
+				const embed = client.embed({
+					title: "xd",
+					image: "attachment://image.jpeg",
+				});
 
 				await interaction.editReply({
 					embeds: [embed],
+					files: [image],
 				});
 			}
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -59,23 +60,23 @@ class NSFW extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });
 
-		if (interaction.guildId && !interaction.channel.nsfw) return interaction.replyT("misc:NSFW_COMMAND", null, { edit: true });
+		if (interaction.guildId && !interaction.channel.nsfw) return interaction.error("misc:NSFW_COMMAND", null, { edit: true, ephemeral: true });
 
-		const tags = ["hentai", "ecchi", "lewdanimegirls", "hentaifemdom", "animefeets", "animebooty", "biganimetiddies", "sideoppai", "ahegao"].map(tag =>
-			JSON.parse(
-				JSON.stringify({
-					label: tag,
-					value: tag,
-				}),
-			),
-		);
+		const tags = ["Hentai_Vanila", "Hentai_Yaoi", "Hentai_Yuri", "Hentai_BDSM", "Hentai_Trap", "Real_Ass", "Real_Boobs", "Real_Pussy"]
+			.map(tag =>
+				JSON.parse(
+					JSON.stringify({
+						label: `(${tag.split("_")[0]}) ${tag.split("_")[1]}`,
+						value: tag,
+					}),
+				),
+			);
 
-		const row = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId("nsfw_select").setPlaceholder(interaction.translate("common:NOTHING_SELECTED")).addOptions(tags));
+		const row = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId("nsfw_select").setPlaceholder(interaction.translate("common:NOTHING_SELECTED")).addOptions(tags.slice(0, 25)));
 
 		await interaction.editReply({
 			content: interaction.translate("common:AVAILABLE_OPTIONS"),
 			ephemeral: true,
-			fetchReply: true,
 			components: [row],
 		});
 	}

@@ -17,18 +17,11 @@ class Cat extends BaseCommand {
 					ru: client.translate("fun/cat:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -41,7 +34,11 @@ class Cat extends BaseCommand {
 		const res = await fetch("https://api.thecatapi.com/v1/images/search").then(r => r.json());
 		const cat = res[0].url;
 
-		await interaction.editReply({ content: cat });
+		const embed = client.embed({
+			image: cat,
+		});
+
+		await interaction.editReply({ embeds: [embed] });
 	}
 }
 

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, parseEmoji } = require("discord.js");
+const { SlashCommandBuilder, parseEmoji } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Emoji extends BaseCommand {
@@ -26,18 +26,11 @@ class Emoji extends BaseCommand {
 						})
 						.setRequired(true),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -48,15 +41,13 @@ class Emoji extends BaseCommand {
 		const rawEmoji = interaction.options.getString("emoji");
 		const parsedEmoji = parseEmoji(rawEmoji);
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
+		const embed = client.embed({
+			author: {
 				name: interaction.translate("general/emoji:TITLE", {
 					emoji: parsedEmoji.name,
 				}),
-			})
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer)
-			.addFields([
+			},
+			fields: [
 				{
 					name: interaction.translate("common:NAME"),
 					value: parsedEmoji.name,
@@ -73,7 +64,8 @@ class Emoji extends BaseCommand {
 					name: interaction.translate("general/emoji:LINK"),
 					value: `https://cdn.discordapp.com/emojis/${parsedEmoji.id}.${parsedEmoji.animated ? "gif" : "png"}`,
 				},
-			]);
+			],
+		});
 
 		interaction.reply({
 			embeds: [embed],

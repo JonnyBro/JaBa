@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Warns extends BaseCommand {
@@ -27,18 +27,11 @@ class Warns extends BaseCommand {
 						})
 						.setRequired(true),
 				),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -54,34 +47,30 @@ class Warns extends BaseCommand {
 			guildId: interaction.guildId,
 		});
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
+		const embed = client.embed({
+			author: {
 				name: interaction.translate("moderation/warns:SANCTIONS_OF", {
 					member: member.user.getUsername(),
 				}),
 				iconURL: member.displayAvatarURL(),
-			})
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer);
+			},
+		});
 
 		if (memberData.sanctions.length === 0) {
-			embed.setDescription(
-				interaction.translate("moderation/warns:NO_SANCTIONS", {
-					member: member.user.getUsername(),
-				}),
-			);
+			embed.data.description = interaction.translate("moderation/warns:NO_SANCTIONS", {
+				member: member.user.getUsername(),
+			});
+
 			return interaction.reply({
 				embeds: [embed],
 			});
 		} else {
 			memberData.sanctions.forEach(sanction => {
-				embed.addFields([
-					{
-						name: sanction.type,
-						value: `${interaction.translate("common:MODERATOR")}: <@${sanction.moderator}>\n${interaction.translate("common:REASON")}: ${sanction.reason}`,
-						inline: true,
-					},
-				]);
+				embed.data.fields.push({
+					name: sanction.type,
+					value: `${interaction.translate("common:MODERATOR")}: <@${sanction.moderator}>\n${interaction.translate("common:REASON")}: ${sanction.reason}`,
+					inline: true,
+				});
 			});
 		}
 

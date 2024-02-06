@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class CloseTicket extends BaseCommand {
@@ -17,19 +17,11 @@ class CloseTicket extends BaseCommand {
 				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
 
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -41,10 +33,10 @@ class CloseTicket extends BaseCommand {
 
 		if (!interaction.channel.name.includes("support")) return interaction.error("tickets/adduser:NOT_TICKET", null, { ephemeral: true, edit: true });
 
-		const embed = new EmbedBuilder()
-			.setTitle(interaction.translate("tickets/closeticket:CLOSING_TITLE"))
-			.setDescription(interaction.translate("tickets/closeticket:CLOSING_DESC"))
-			.addFields(
+		const embed = client.embed({
+			title: interaction.translate("tickets/closeticket:CLOSING_TITLE"),
+			description: interaction.translate("tickets/closeticket:CLOSING_DESC"),
+			fields: [
 				{
 					name: interaction.translate("common:TICKET"),
 					value: interaction.channel.name,
@@ -53,10 +45,8 @@ class CloseTicket extends BaseCommand {
 					name: interaction.translate("tickets/closeticket:CLOSING_BY"),
 					value: interaction.user.getUsername(),
 				},
-			)
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer)
-			.setTimestamp();
+			],
+		});
 
 		const button = new ButtonBuilder().setCustomId("cancel_closing").setLabel(interaction.translate("common:CANCEL")).setStyle(ButtonStyle.Danger);
 		const row = new ActionRowBuilder().addComponents(button);
@@ -91,12 +81,10 @@ class CloseTicket extends BaseCommand {
 
 				if (ticketLogs) {
 					const logChannel = interaction.guild.channels.cache.get(ticketLogs);
-					const logEmbed = new EmbedBuilder()
-						.setTitle(interaction.translate("tickets/createticketembed:TICKET_CLOSED_TITLE"))
-						.setDescription(`${interaction.user.toString()} (${interaction.channel.toString()})`)
-						.setColor(client.config.embed.color)
-						.setFooter(client.config.embed.footer)
-						.setTimestamp();
+					const logEmbed = client.embed({
+						title: interaction.translate("tickets/createticketembed:TICKET_CLOSED_TITLE"),
+						description: `${interaction.user.toString()} (${interaction.channel.toString()})`,
+					});
 
 					logChannel.send({ embeds: [logEmbed] });
 				}
@@ -109,7 +97,7 @@ class CloseTicket extends BaseCommand {
 						files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }],
 					});
 				} catch (e) {
-					await interaction.reply({ content: interaction.translate("misc:CANT_DM"), ephemeral: true });
+					interaction.reply({ content: interaction.translate("misc:CANT_DM"), ephemeral: true });
 				}
 
 				const member = interaction.guild.members.cache.find(u => u.user.id === interaction.channel.topic);
@@ -119,9 +107,9 @@ class CloseTicket extends BaseCommand {
 		});
 
 		const ticketLogs = data.guildData.plugins.tickets.ticketLogs;
-		const logEmbed = new EmbedBuilder()
-			.setTitle(interaction.translate("tickets/closeticket:CLOSED_TITLE"))
-			.addFields(
+		const logEmbed = client.embed({
+			title: interaction.translate("tickets/closeticket:CLOSED_TITLE"),
+			fields: [
 				{
 					name: interaction.translate("common:TICKET"),
 					value: interaction.channel.name,
@@ -130,10 +118,8 @@ class CloseTicket extends BaseCommand {
 					name: interaction.translate("tickets/closeticket:CLOSING_BY"),
 					value: interaction.user.getUsername(),
 				},
-			)
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer)
-			.setTimestamp();
+			],
+		});
 
 		if (ticketLogs) interaction.guild.channels.cache.get(ticketLogs).send({ embeds: [logEmbed] });
 	}

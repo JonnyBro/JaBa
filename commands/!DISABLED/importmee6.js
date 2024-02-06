@@ -14,18 +14,11 @@ class ImportMee6 extends BaseCommand {
 				.setDescription(client.translate("economy/importmee6:DESCRIPTION"))
 				.setDescriptionLocalizations({ uk: client.translate("economy/importmee6:DESCRIPTION", null, "uk-UA"), ru: client.translate("economy/importmee6:DESCRIPTION", null, "ru-RU") })
 				.setDMPermission(false),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client

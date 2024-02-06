@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ChannelType } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, ButtonBuilder, ButtonStyle, ActionRowBuilder, ChannelType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class CreateTicketEmbed extends BaseCommand {
@@ -17,7 +17,6 @@ class CreateTicketEmbed extends BaseCommand {
 				})
 				.setDMPermission(false)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
@@ -72,12 +71,10 @@ class CreateTicketEmbed extends BaseCommand {
 					});
 
 					const logChannel = interaction.guild.channels.cache.get(ticketLogs);
-					const logEmbed = new EmbedBuilder()
-						.setTitle(interaction.translate("tickets/createticketembed:TICKET_CREATED_TITLE"))
-						.setDescription(`${interaction.user.toString()} (${channel.toString()})`)
-						.setColor(client.config.embed.color)
-						.setFooter(client.config.embed.footer)
-						.setTimestamp();
+					const logEmbed = client.embed({
+						title: interaction.translate("tickets/createticketembed:TICKET_CREATED_TITLE"),
+						description: `${interaction.user.toString()} (${channel.toString()})`,
+					});
 
 					await logChannel.send({ embeds: [logEmbed] });
 					await interaction.success("tickets/createticketembed:TICKET_CREATED", {
@@ -86,13 +83,14 @@ class CreateTicketEmbed extends BaseCommand {
 
 					await channel.send(`<@${interaction.user.id}>`);
 
-					const embed = new EmbedBuilder()
-						.setTitle("Support Ticket")
-						.setAuthor({ name: interaction.user.getUsername(), iconURL: interaction.user.displayAvatarURL() })
-						.setDescription(interaction.translate("tickets/createticketembed:TICKET_CREATED_DESC"))
-						.setColor(client.config.embed.color)
-						.setFooter(client.config.embed.footer)
-						.setTimestamp();
+					const embed = client.embed({
+						author: {
+							name: interaction.user.getUsername(),
+							iconURL: interaction.user.displayAvatarURL(),
+						},
+						title: "Support Ticket",
+						description: interaction.translate("tickets/createticketembed:TICKET_CREATED_DESC"),
+					});
 
 					const closeButton = new ButtonBuilder()
 						.setCustomId("close_ticket")
@@ -106,10 +104,10 @@ class CreateTicketEmbed extends BaseCommand {
 
 					await channel.send({ embeds: [embed], components: [row] });
 				} else if (button.customId === "close_ticket") {
-					const embed = new EmbedBuilder()
-						.setTitle(interaction.translate("tickets/closeticket:CLOSING_TITLE"))
-						.setDescription(interaction.translate("tickets/closeticket:CLOSING_DESC"))
-						.addFields(
+					const embed = client.embed({
+						title: interaction.translate("tickets/closeticket:CLOSING_TITLE"),
+						description: interaction.translate("tickets/closeticket:CLOSING_DESC"),
+						fields: [
 							{
 								name: interaction.translate("common:TICKET"),
 								value: interaction.channel.name,
@@ -118,10 +116,8 @@ class CreateTicketEmbed extends BaseCommand {
 								name: interaction.translate("tickets/closeticket:CLOSING_BY"),
 								value: interaction.user.getUsername(),
 							},
-						)
-						.setColor(client.config.embed.color)
-						.setFooter(client.config.embed.footer)
-						.setTimestamp();
+						],
+					});
 
 					const button = new ButtonBuilder().setCustomId("cancel_closing").setLabel(interaction.translate("common:CANCEL")).setStyle(ButtonStyle.Danger);
 					const row = new ActionRowBuilder().addComponents(button);
@@ -144,36 +140,37 @@ class CreateTicketEmbed extends BaseCommand {
 							const reversedMessages = (await interaction.channel.messages.fetch()).filter(m => !m.author.bot);
 							const messages = Array.from(reversedMessages.values()).reverse();
 
-							let transcript = "---- TICKET CREATED ----\n";
-							messages.forEach(message => {
-								transcript += `[${client.functions.printDate(client, message.createdTimestamp, null, interaction.getLocale())}] ${message.author.getUsername()}: ${message.content}\n`;
-							});
-							transcript += "---- TICKET CLOSED ----";
+							if (messages.length > 1) {
+								let transcript = "---- TICKET CREATED ----\n";
+								messages.forEach(message => {
+									transcript += `[${client.functions.printDate(client, message.createdTimestamp, null, interaction.getLocale())}] ${message.author.getUsername()}: ${message.content}\n`;
+								});
+								transcript += "---- TICKET CLOSED ----\n";
 
-							if (transcriptionLogs !== null) interaction.guild.channels.cache.get(transcriptionLogs).send({ content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: `<#${interaction.channelId}>` }), files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }] });
+								if (transcriptionLogs !== null) interaction.guild.channels.cache.get(transcriptionLogs).send({ content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: `<#${interaction.channelId}>` }), files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }] });
+
+								try {
+									await interaction.user.send({
+										content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: interaction.channel.name }),
+										files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }],
+									});
+								} catch (e) {
+									interaction.followUp({ content: interaction.translate("misc:CANT_DM"), ephemeral: true });
+								}
+							}
 
 							const logChannel = interaction.guild.channels.cache.get(ticketLogs);
-							const logEmbed = new EmbedBuilder()
-								.setTitle(interaction.translate("tickets/createticketembed:TICKET_CLOSED_TITLE"))
-								.setDescription(`${interaction.user.toString()} (${interaction.channel.toString()})`)
-								.setColor(client.config.embed.color)
-								.setFooter(client.config.embed.footer)
-								.setTimestamp();
+							const logEmbed = client.embed({
+								title: interaction.translate("tickets/createticketembed:TICKET_CLOSED_TITLE"),
+								description: `${interaction.user.toString()} (${interaction.channel.toString()})`,
+							});
 
 							logChannel.send({ embeds: [logEmbed] });
 
 							interaction.channel.send("Closed!");
 
-							try {
-								await interaction.user.send({
-									content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: interaction.channel.name }),
-									files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }],
-								});
-							} catch (e) {
-								await interaction.reply({ content: interaction.translate("misc:CANT_DM"), ephemeral: true });
-							}
-
 							const member = interaction.guild.members.cache.find(u => u.user.id === interaction.channel.topic);
+
 							await interaction.channel.permissionOverwrites.edit(member, { ViewChannel: false, SendMessages: null });
 							await interaction.channel.setName(`${interaction.channel.name}-closed`);
 						}
@@ -184,24 +181,27 @@ class CreateTicketEmbed extends BaseCommand {
 					const reversedMessages = (await interaction.channel.messages.fetch()).filter(m => !m.author.bot);
 					const messages = Array.from(reversedMessages.values()).reverse();
 
-					let transcript = "---- TICKET CREATED ----\n";
-					messages.forEach(message => {
-						transcript += `[${client.functions.printDate(client, message.createdTimestamp, null, interaction.getLocale())}] ${message.author.getUsername()}: ${message.content}\n`;
-					});
-					transcript += "---- TICKET CLOSED ----";
-
-					try {
-						await interaction.user.send({
-							content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: `<#${interaction.channelId}>` }),
-							files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }],
+					if (messages.length > 1) {
+						let transcript = "---- TICKET CREATED ----\n";
+						messages.forEach(message => {
+							transcript += `[${client.functions.printDate(client, message.createdTimestamp, null, interaction.getLocale())}] ${message.author.getUsername()}: ${message.content}\n`;
 						});
-					} catch (error) {
-						await interaction.followUp({ content: interaction.translate("misc:CANT_DM"), ephemeral: true });
-					}
+						transcript += "---- TICKET CLOSED ----\n";
+
+						try {
+							await interaction.user.send({
+								content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: `<#${interaction.channelId}>` }),
+								files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }],
+							});
+						} catch (error) {
+							interaction.followUp({ content: interaction.translate("misc:CANT_DM"), ephemeral: true });
+						}
+					} else return;
 				}
 			}
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -213,11 +213,10 @@ class CreateTicketEmbed extends BaseCommand {
 
 		await interaction.deferReply({ ephemeral: true });
 
-		const embed = new EmbedBuilder()
-			.setTitle(interaction.translate("tickets/createticketembed:TICKET_TITLE"))
-			.setDescription(interaction.translate("tickets/createticketembed:TICKET_DESC"))
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer);
+		const embed = client.embed({
+			title: interaction.translate("tickets/createticketembed:TICKET_TITLE"),
+			description: interaction.translate("tickets/createticketembed:TICKET_DESC"),
+		});
 
 		const supportButton = new ButtonBuilder().setCustomId("support_ticket").setLabel(interaction.translate("tickets/createticketembed:TICKET_SUPPORT")).setStyle(ButtonStyle.Primary);
 		const row = new ActionRowBuilder().addComponents(supportButton);

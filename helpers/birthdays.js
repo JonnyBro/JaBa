@@ -1,11 +1,10 @@
-const { CronJob } = require("cron"),
-	{ EmbedBuilder } = require("discord.js");
+const { CronJob } = require("cron");
 
 /**
  *
  * @param {import("../base/Client")} client
  */
-module.exports.init = async function (client) {
+module.exports.init = async client => {
 	const cronjob = new CronJob("0 5 * * *", async function () {
 		client.guilds.cache.forEach(async guild => {
 			const guildData = await client.findOrCreateGuild(guild.id);
@@ -22,35 +21,34 @@ module.exports.init = async function (client) {
 						for (const user of users) {
 							if (!guild.members.cache.find(m => m.id === user.id)) return;
 
-							const userDate = new Date(user.birthdate),
+							const userDate = new Date(user.birthdate * 1000),
 								day = userDate.getDate(),
 								month = userDate.getMonth(),
 								year = userDate.getFullYear(),
 								age = currentYear - year;
 
 							if (currentMonth === month && currentDay === day) {
-								const embed = new EmbedBuilder()
-									.setAuthor({
-										name: client.user.getUsername(),
-										iconURL: client.user.displayAvatarURL(),
-									})
-									.setColor(client.config.embed.color)
-									.setFooter(client.config.embed.footer)
-									.addFields([
+								const embed = client.embed({
+									author: client.user.getUsername(),
+									fields: [
 										{
 											name: client.translate("economy/birthdate:HAPPY_BIRTHDAY", null, guildData.language),
 											value: client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
-												name: user.username,
 												user: user.id,
-												age: `**${age}** ${client.functions.getNoun(age, client.translate("misc:NOUNS:AGE:1", null, guildData.language), client.translate("misc:NOUNS:AGE:2", null, guildData.language), client.translate("misc:NOUNS:AGE:5", null, guildData.language))}`,
+												age: `**${age}** ${client.functions.getNoun(
+													age,
+													client.translate("misc:NOUNS:AGE:1", null, guildData.language),
+													client.translate("misc:NOUNS:AGE:2", null, guildData.language),
+													client.translate("misc:NOUNS:AGE:5", null, guildData.language),
+												)}`,
 											}, guildData.language),
 										},
-									]);
-
-								const msg = await channel.send({
-									embeds: [embed],
+									],
 								});
-								await msg.react("🎉");
+
+								channel.send({
+									embeds: [embed],
+								}).then(m => m.react("🎉"));
 							}
 						}
 					});
@@ -65,7 +63,7 @@ module.exports.init = async function (client) {
 	cronjob.start();
 };
 
-module.exports.run = async function (client) {
+module.exports.run = async client => {
 	client.guilds.cache.forEach(async guild => {
 		const guildData = await client.findOrCreateGuild(guild.id);
 
@@ -88,28 +86,27 @@ module.exports.run = async function (client) {
 							age = currentYear - year;
 
 						if (currentMonth === month && currentDay === day) {
-							const embed = new EmbedBuilder()
-								.setAuthor({
-									name: client.user.getUsername(),
-									iconURL: client.user.displayAvatarURL(),
-								})
-								.setColor(client.config.embed.color)
-								.setFooter(client.config.embed.footer)
-								.addFields([
+							const embed = client.embed({
+								author: client.user.getUsername(),
+								fields: [
 									{
 										name: client.translate("economy/birthdate:HAPPY_BIRTHDAY", null, guildData.language),
 										value: client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
-											name: user.username,
 											user: user.id,
-											age: `**${age}** ${client.functions.getNoun(age, client.translate("misc:NOUNS:AGE:1", null, guildData.language), client.translate("misc:NOUNS:AGE:2", null, guildData.language), client.translate("misc:NOUNS:AGE:5", null, guildData.language))}`,
+											age: `**${age}** ${client.functions.getNoun(
+												age,
+												client.translate("misc:NOUNS:AGE:1", null, guildData.language),
+												client.translate("misc:NOUNS:AGE:2", null, guildData.language),
+												client.translate("misc:NOUNS:AGE:5", null, guildData.language),
+											)}`,
 										}, guildData.language),
 									},
-								]);
-
-							const msg = await channel.send({
-								embeds: [embed],
+								],
 							});
-							await msg.react("🎉");
+
+							channel.send({
+								embeds: [embed],
+							}).then(m => m.react("🎉"));
 						}
 					}
 				});

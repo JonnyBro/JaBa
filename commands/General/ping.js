@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Ping extends BaseCommand {
@@ -16,18 +16,11 @@ class Ping extends BaseCommand {
 					ru: client.translate("general/ping:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(true),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -35,18 +28,14 @@ class Ping extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		const embed = new EmbedBuilder()
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer)
-			.setAuthor({
+		const embed = client.embed({
+			author: {
 				name: interaction.translate("general/ping:PONG"),
-				iconURL: client.user.avatarURL(),
-			})
-			.setDescription(
-				interaction.translate("general/ping:PING", {
-					ping: Math.round(client.ws.ping),
-				}),
-			);
+			},
+			description: interaction.translate("general/ping:PING", {
+				ping: Math.round(client.ws.ping),
+			}),
+		});
 
 		interaction.reply({
 			embeds: [embed],

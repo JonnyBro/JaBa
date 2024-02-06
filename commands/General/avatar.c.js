@@ -12,18 +12,11 @@ class AvatarContext extends BaseCommand {
 				.setName("Get Avatar")
 				.setType(ApplicationCommandType.User)
 				.setDMPermission(false),
-			aliases: [],
 			dirname: __dirname,
 			ownerOnly: false,
 		});
 	}
-	/**
-	 *
-	 * @param {import("../../base/Client")} client
-	 */
-	async onLoad() {
-		//...
-	}
+
 	/**
 	 *
 	 * @param {import("../../base/Client")} client
@@ -31,14 +24,11 @@ class AvatarContext extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		const avatar = interaction.targetUser.avatarURL({ size: 2048 });
+		const avatarURL = interaction.targetUser.avatarURL({ size: 2048 });
+		const embed = client.embed({ image: avatarURL });
 
 		interaction.reply({
-			files: [
-				{
-					attachment: avatar,
-				},
-			],
+			embeds: [embed],
 		});
 	}
 }

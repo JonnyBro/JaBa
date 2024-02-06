@@ -1,5 +1,4 @@
-const { EmbedBuilder } = require("discord.js"),
-	BaseEvent = require("../../base/BaseEvent");
+const BaseEvent = require("../../base/BaseEvent");
 
 class GuildDelete extends BaseEvent {
 	constructor() {
@@ -15,17 +14,19 @@ class GuildDelete extends BaseEvent {
 	 * @param {import("discord.js").Guild} guild
 	 */
 	async execute(client, guild) {
-		const embed = new EmbedBuilder()
-			.setAuthor({
-				name: guild.name,
-				iconURL: guild.iconURL(),
-			})
-			.setColor(client.config.embed.color)
-			.setFooter(client.config.embed.footer)
-			.setDescription(`Вышел с сервера **${guild.name}**.`);
-		client.channels.cache.get(client.config.support.logs).send({
-			embeds: [embed],
-		});
+		if (client.config.support.logs) {
+			const embed = client.embed({
+				author: {
+					name: guild.name,
+					iconURL: guild.iconURL(),
+				},
+				description: `Left from guild **${guild.name}**.`,
+			});
+
+			client.channels.cache.get(client.config.support.logs).send({
+				embeds: [embed],
+			});
+		}
 	}
 }
 

@@ -8,10 +8,6 @@ class BaseCommand {
 		 */
 		this.command = options.command;
 		/**
-		 * @type {Array<String>}
-		 */
-		this.aliases = options.aliases || [];
-		/**
 		 * @type {Boolean}
 		 */
 		this.ownerOnly = (options.ownerOnly === true ? true : false) || false;
