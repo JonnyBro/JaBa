@@ -49,7 +49,6 @@ class Avatar extends BaseCommand {
 		const member = interaction.options.getMember("user") || interaction.member;
 		const avatarURL = interaction.options.getBoolean("server") ? member.displayAvatarURL({ size: 2048 }) : member.user.displayAvatarURL({ size: 2048 });
 		const embed = client.embed({ image: avatarURL });
-		console.log(avatarURL);
 
 		interaction.reply({
 			embeds: [embed],
