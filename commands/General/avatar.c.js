@@ -24,7 +24,7 @@ class AvatarContext extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		const avatarURL = interaction.targetUser.avatarURL({ size: 2048 });
+		const avatarURL = interaction.targetUser.displayAvatarURL({ size: 2048 });
 		const embed = client.embed({ image: avatarURL });
 
 		interaction.reply({

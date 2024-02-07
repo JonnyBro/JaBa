@@ -53,7 +53,9 @@ class CommandHandler extends BaseEvent {
 			userData.markModified("achievements");
 			await userData.save();
 
-			interaction.user.send(args);
+			try {
+				interaction.user.send(args);
+			} catch (e) { /**/ }
 		}
 
 		client.logger.cmd(`User ${interaction.user.getUsername()} used ${command.command.name} in ${interaction.guild ? interaction.guild.name : "DM"} with arguments: ${interaction.options.data.length > 0 ? interaction.options.data.map(arg => { return `${arg.name}: ${arg.value}`; }).join(", ") : "no args" }`);
