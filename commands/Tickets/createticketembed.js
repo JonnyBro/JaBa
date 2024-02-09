@@ -30,13 +30,15 @@ class CreateTicketEmbed extends BaseCommand {
 		client.on("interactionCreate", async interaction => {
 			if (!interaction.isButton()) return;
 
-			const guildData = await client.findOrCreateGuild(interaction.guildId);
-
-			const ticketsCategory = guildData.plugins.tickets.ticketsCategory,
-				ticketLogs = guildData.plugins.tickets.ticketLogs,
-				transcriptionLogs = guildData.plugins.tickets.transcriptionLogs;
-
 			if (interaction.isButton()) {
+				interaction.data = [];
+				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
+
+				const guildData = interaction.guild.data,
+					ticketsCategory = guildData.plugins.tickets.ticketsCategory,
+					ticketLogs = guildData.plugins.tickets.ticketLogs,
+					transcriptionLogs = guildData.plugins.tickets.transcriptionLogs;
+
 				const button = interaction.component;
 
 				if (button.customId === "support_ticket") {
@@ -206,10 +208,11 @@ class CreateTicketEmbed extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		if (!data.guildData.plugins.tickets.ticketsCategory) return interaction.error("tickets/createticketembed:NO_CATEGORY");
+	async execute(client, interaction) {
+		const guildData = interaction.data.guild;
+
+		if (!guildData.plugins.tickets.ticketsCategory) return interaction.error("tickets/createticketembed:NO_CATEGORY");
 
 		await interaction.deferReply({ ephemeral: true });
 

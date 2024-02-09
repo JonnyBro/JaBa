@@ -34,13 +34,12 @@ class Achievements extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
+	async execute(client, interaction) {
 		const user = interaction.options.getUser("user") || interaction.member;
 		if (user.bot) return interaction.error("economy/profile:BOT_USER");
 
-		const userData = user.id === interaction.user.id ? data.userData : await client.findOrCreateUser(user.id);
+		const userData = user.id === interaction.user.id ? interaction.data.user : await client.findOrCreateUser(user.id);
 
 		const embed = client.embed({
 			author: {

@@ -45,7 +45,6 @@ class Lovecalc extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const firstMember = interaction.options.getMember("first_member"),

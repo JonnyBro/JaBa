@@ -21,7 +21,6 @@ class PlayContext extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").MessageContextMenuCommandInteraction} interaction
-	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply();

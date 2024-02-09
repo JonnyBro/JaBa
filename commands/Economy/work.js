@@ -25,10 +25,10 @@ class Work extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		const isInCooldown = data.memberData.cooldowns?.work;
+	async execute(client, interaction) {
+		const { member: memberData, user: userData } = interaction.data,
+			isInCooldown = memberData.cooldowns?.work;
 
 		if (isInCooldown) {
 			if (isInCooldown > Date.now())
@@ -37,15 +37,15 @@ class Work extends BaseCommand {
 				});
 		}
 
-		if (Date.now() > data.memberData.cooldowns.work + 24 * 60 * 60 * 1000) data.memberData.workStreak = 0;
+		if (Date.now() > memberData.cooldowns.work + 24 * 60 * 60 * 1000) memberData.workStreak = 0;
 
 		const toWait = Math.floor((Date.now() + 24 * 60 * 60 * 1000) / 1000); // 24 hours
-		data.memberData.cooldowns.work = toWait;
-		data.memberData.workStreak = (data.memberData.workStreak || 0) + 1;
+		memberData.cooldowns.work = toWait;
+		memberData.workStreak = (memberData.workStreak || 0) + 1;
 
-		data.memberData.markModified("cooldowns");
-		data.memberData.markModified("workStreak");
-		await data.memberData.save();
+		memberData.markModified("cooldowns");
+		memberData.markModified("workStreak");
+		await memberData.save();
 
 		const embed = client.embed({
 			footer: {
@@ -57,7 +57,7 @@ class Work extends BaseCommand {
 		const award = [client.customEmojis.letters.a, client.customEmojis.letters.w, client.customEmojis.letters.a, client.customEmojis.letters.r, client.customEmojis.letters.d];
 		let won = 200;
 
-		if (data.memberData.workStreak >= 5) {
+		if (memberData.workStreak >= 5) {
 			won += 200;
 			embed.fields = [
 				{
@@ -71,10 +71,11 @@ class Work extends BaseCommand {
 					value: interaction.translate("economy/work:STREAK_CONTENT"),
 				},
 			];
-			data.memberData.workStreak = 0;
+
+			memberData.workStreak = 0;
 		} else {
 			for (let i = 0; i < award.length; i++) {
-				if (data.memberData.workStreak > i) {
+				if (memberData.workStreak > i) {
 					const letter = parseEmoji(award[i]).name.split("_")[1];
 					award[i] = `:regional_indicator_${letter.toLowerCase()}:`;
 				}
@@ -93,10 +94,10 @@ class Work extends BaseCommand {
 			];
 		}
 
-		data.memberData.money += won;
+		memberData.money += won;
 
-		data.memberData.markModified("money");
-		await data.memberData.save();
+		memberData.markModified("money");
+		await memberData.save();
 
 		const info = {
 			user: interaction.translate("economy/work:SALARY"),
@@ -104,26 +105,26 @@ class Work extends BaseCommand {
 			date: Date.now(),
 			type: "got",
 		};
-		data.memberData.transactions.push(info);
+		memberData.transactions.push(info);
 
 		const messageOptions = {
 			embeds: [embed],
 		};
 
-		if (!data.userData.achievements.work.achieved) {
-			data.userData.achievements.work.progress.now += 1;
-			if (data.userData.achievements.work.progress.now === data.userData.achievements.work.progress.total) {
+		if (!userData.achievements.work.achieved) {
+			userData.achievements.work.progress.now += 1;
+			if (userData.achievements.work.progress.now === userData.achievements.work.progress.total) {
 				messageOptions.files = [
 					{
 						name: "unlocked.png",
 						attachment: "./assets/img/achievements/achievement_unlocked1.png",
 					},
 				];
-				data.userData.achievements.work.achieved = true;
+				userData.achievements.work.achieved = true;
 			}
 
-			data.userData.markModified("achievements");
-			await data.userData.save();
+			userData.markModified("achievements");
+			await userData.save();
 		}
 
 		interaction.reply(messageOptions);

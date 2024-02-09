@@ -35,10 +35,10 @@ class Rep extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		const isInCooldown = data.userData.cooldowns?.rep;
+	async execute(client, interaction) {
+		const userData = interaction.data.user,
+			isInCooldown = userData.cooldowns?.rep;
 
 		if (isInCooldown) {
 			if (isInCooldown > Date.now())
@@ -52,21 +52,21 @@ class Rep extends BaseCommand {
 		if (user.id === interaction.user.id) return interaction.error("economy/rep:YOURSELF");
 
 		const toWait = Math.floor((Date.now() + 12 * 60 * 60 * 1000) / 1000); // 12 hours
-		if (!data.userData.cooldowns) data.userData.cooldowns = {};
+		if (!userData.cooldowns) userData.cooldowns = {};
 
-		data.userData.cooldowns.rep = toWait;
+		userData.cooldowns.rep = toWait;
 
-		data.userData.markModified("cooldowns");
-		await data.userData.save();
+		userData.markModified("cooldowns");
+		await userData.save();
 
-		const userData = await client.findOrCreateUser(user.id);
+		const otherUserData = await client.findOrCreateUser(user.id);
 
-		userData.rep++;
+		otherUserData.rep++;
 
-		if (!userData.achievements.rep.achieved) {
-			userData.achievements.rep.progress.now = userData.rep > userData.achievements.rep.progress.total ? userData.achievements.rep.progress.total : userData.rep;
-			if (userData.achievements.rep.progress.now >= userData.achievements.rep.progress.total) {
-				userData.achievements.rep.achieved = true;
+		if (!otherUserData.achievements.rep.achieved) {
+			otherUserData.achievements.rep.progress.now = otherUserData.rep > otherUserData.achievements.rep.progress.total ? otherUserData.achievements.rep.progress.total : otherUserData.rep;
+			if (otherUserData.achievements.rep.progress.now >= otherUserData.achievements.rep.progress.total) {
+				otherUserData.achievements.rep.achieved = true;
 				interaction.followUp({
 					content: `${user}`,
 					files: [
@@ -79,8 +79,8 @@ class Rep extends BaseCommand {
 			}
 		}
 
-		userData.markModified("rep");
-		await userData.save();
+		otherUserData.markModified("rep");
+		await otherUserData.save();
 
 		interaction.success("economy/rep:SUCCESS", {
 			user: user.toString(),

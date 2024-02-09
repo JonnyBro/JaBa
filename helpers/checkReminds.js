@@ -1,5 +1,3 @@
-const moment = require("moment");
-
 /**
  *
  * @param {import("../base/Client")} client
@@ -29,12 +27,12 @@ module.exports.init = function (client) {
 							fields: [
 								{
 									name: client.translate("general/remindme:EMBED_CREATED"),
-									value: moment(r.createdAt).locale(client.defaultLanguage).format("Do MMMM YYYY, HH:mm:ss"),
+									value: `<t:${r.createdAt}:f>`,
 									inline: true,
 								},
 								{
 									name: client.translate("general/remindme:EMBED_TIME"),
-									value: moment(r.sendAt).locale(client.defaultLanguage).format("Do MMMM YYYY, HH:mm:ss"),
+									value: `<t:${r.sendAt}:f>`,
 									inline: true,
 								},
 								{

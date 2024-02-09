@@ -30,6 +30,9 @@ class Queue extends BaseCommand {
 			if (!interaction.isButton()) return;
 
 			if (interaction.customId.startsWith("queue_")) {
+				interaction.data = [];
+				interaction.data.guld = await client.findOrCreateGuild(interaction.guildId);
+
 				const queue = client.player.nodes.get(interaction.guildId);
 				if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
@@ -119,7 +122,6 @@ class Queue extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const queue = client.player.nodes.get(interaction.guildId);

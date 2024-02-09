@@ -25,10 +25,9 @@ class Serverinfo extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		const guild = interaction.guild;
+		const { guild } = interaction;
 
 		await guild.members.fetch();
 		const owner = await guild.fetchOwner();

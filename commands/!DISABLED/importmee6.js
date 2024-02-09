@@ -23,17 +23,18 @@ class ImportMee6 extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
+	async execute(client, interaction) {
 		await interaction.deferReply();
 
 		const level = (await Mee6Api.getUserXp(interaction.guildId, interaction.member)).level;
 
-		data.memberData.level = level;
+		interaction.data.member.level = level;
+		interaction.data.member.exp = 0;
 
-		data.memberData.markModified("level");
-		await data.memberData.save();
+		interaction.data.member.markModified("level");
+		interaction.data.member.markModified("exp");
+		await interaction.data.member.save();
 
 		interaction.editReply({
 			content: interaction.translate("owner/debug:SUCCESS_LEVEL", {

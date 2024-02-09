@@ -31,6 +31,9 @@ class Nowplaying extends BaseCommand {
 			if (!interaction.isButton()) return;
 
 			if (interaction.customId.startsWith("nowp_")) {
+				interaction.data = [];
+				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
+
 				const voice = interaction.member.voice.channel;
 				if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
 
@@ -119,18 +122,21 @@ class Nowplaying extends BaseCommand {
 						ephemeral: true,
 					});
 
-					// TODO Fix error in collected if user doesnt send anything
 					const filter = m => m.author.id === interaction.user.id && m.content.startsWith("http"),
-						collected = (await interaction.channel.awaitMessages({ filter, time: 10 * 1000, max: 1 })).first(),
+						collect = await interaction.channel.awaitMessages({ filter, time: 10 * 1000, max: 1 });
+					if (collect.size < 1) return;
+
+
+					const collected = collect.first(),
 						query = collected.content.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g)[0],
 						searchResult = await client.player.search(query, {
 							requestedBy: interaction.user,
 						});
 
+					if (collected.deletable) collected.delete();
+
 					if (!searchResult.hasTracks()) return interaction.error("music/play:NO_RESULT", { query: query }, { edit: true });
 					else queue.addTrack(searchResult);
-
-					if (collected.deletable) collected.delete();
 
 					await interaction.followUp({
 						content: interaction.translate("music/play:ADDED_QUEUE", {
@@ -221,7 +227,7 @@ class Nowplaying extends BaseCommand {
 					components: [row1, row2],
 				});
 			} else clearInterval(i);
-		}, 1 * 60 * 1000);
+		}, 60 * 1000);
 	}
 }
 
@@ -234,7 +240,6 @@ class Nowplaying extends BaseCommand {
 async function updateEmbed(interaction, queue) {
 	const progressBar = queue.node.createProgressBar(),
 		track = queue.currentTrack,
-		data = await interaction.client.guildsData.findOne({ id: interaction.guildId }),
 		mode = queue.repeatMode === QueueRepeatMode.AUTOPLAY ? "3" : queue.repeatMode === QueueRepeatMode.QUEUE ? "2" : queue.repeatMode === QueueRepeatMode.TRACK ? "1" : "0",
 		translated = {
 			"3": interaction.translate("music/loop:AUTOPLAY"),
@@ -260,7 +265,7 @@ async function updateEmbed(interaction, queue) {
 			{ name: "\u200B", value: "\u200B", inline: true },
 			{
 				name: interaction.translate("common:VIEWS"),
-				value: track.raw.live ? "Live" : new Intl.NumberFormat(interaction.client.languages.find(language => language.name === data.language).moment, { notation: "standard" }).format(track.raw.views),
+				value: track.raw.live ? "Live" : new Intl.NumberFormat(interaction.client.defaultLanguage.moment, { notation: "standard" }).format(track.raw.views),
 				inline: true,
 			},
 			{

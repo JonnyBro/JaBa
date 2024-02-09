@@ -83,7 +83,7 @@ module.exports = {
 	 * @param {String} locale Language
 	 * @returns {String} Beautified Date
 	 */
-	printDate(client, date, format = null, locale = client.defaultLanguage) {
+	printDate(client, date, format = null, locale = client.defaultLanguage.name) {
 		const languageData = client.languages.find(language => language.name === locale);
 		if (format === "" || format === null) format = languageData.defaultMomentFormat;
 
@@ -99,7 +99,7 @@ module.exports = {
 	 * @param {String} locale Language
 	 * @returns {String} Time
 	 */
-	convertTime(client, time, type = false, prefix = true, locale = client.defaultLanguage) {
+	convertTime(client, time, type = false, prefix = true, locale = client.defaultLanguage.name) {
 		const languageData = client.languages.find(language => language.name === locale);
 		const m = moment(time).locale(languageData.moment);
 

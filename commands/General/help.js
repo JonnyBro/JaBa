@@ -42,6 +42,9 @@ class Help extends BaseCommand {
 			if (interaction.customId === "help_category_select") {
 				await interaction.deferUpdate();
 
+				interaction.data = [];
+				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
+
 				const arg = interaction?.values[0];
 				const categoryCommands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()]
 					.filter(cmd => cmd.category === arg)

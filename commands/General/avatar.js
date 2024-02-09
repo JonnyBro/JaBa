@@ -43,7 +43,6 @@ class Avatar extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const member = interaction.options.getMember("user") || interaction.member;

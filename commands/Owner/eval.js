@@ -35,10 +35,8 @@ class Eval extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	// eslint-disable-next-line no-unused-vars
-	async execute(client, interaction, data) {
+	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });
 
 		const code = interaction.options.getString("code");

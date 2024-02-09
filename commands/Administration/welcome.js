@@ -81,10 +81,10 @@ class Welcome extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		const command = interaction.options.getSubcommand();
+	async execute(client, interaction) {
+		const guildData = interaction.data.guild,
+			command = interaction.options.getSubcommand();
 
 		if (command === "test") {
 			client.emit("guildMemberAdd", interaction.member);
@@ -94,15 +94,15 @@ class Welcome extends BaseCommand {
 			const state = interaction.options.getBoolean("state");
 
 			if (!state) {
-				data.guildData.plugins.welcome = {
+				guildData.plugins.welcome = {
 					enabled: false,
 					message: null,
 					channelID: null,
 					withImage: null,
 				};
 
-				data.guildData.markModified("plugins.welcome");
-				await data.guildData.save();
+				guildData.markModified("plugins.welcome");
+				await guildData.save();
 
 				interaction.success("administration/welcome:DISABLED", null, { ephemeral: true });
 			} else {
@@ -110,15 +110,15 @@ class Welcome extends BaseCommand {
 				const message = interaction.options.getString("message") || interaction.translate("administration/welcome:DEFAULT_MESSAGE");
 				const image = interaction.options.getBoolean("image") === true ? true : false;
 
-				data.guildData.plugins.welcome = {
+				guildData.plugins.welcome = {
 					enabled: true,
 					channel: channel.id,
 					message: message,
 					withImage: image,
 				};
 
-				data.guildData.markModified("plugins.welcome");
-				await data.guildData.save();
+				guildData.markModified("plugins.welcome");
+				await guildData.save();
 
 				interaction.success("administration/welcome:ENABLED", {
 					channel: `${channel.toString()}`,

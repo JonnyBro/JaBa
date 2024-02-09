@@ -34,14 +34,15 @@ class Transactions extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		if (interaction.options.getBoolean("clear")) {
-			data.memberData.transactions = [];
+	async execute(client, interaction) {
+		const memberData = interaction.data.member;
 
-			data.memberData.markModified("transactions");
-			await data.memberData.save();
+		if (interaction.options.getBoolean("clear")) {
+			memberData.transactions = [];
+
+			memberData.markModified("transactions");
+			await memberData.save();
 
 			return interaction.success("economy/transactions:CLEARED", null, { ephemeral: true });
 		}
@@ -52,7 +53,7 @@ class Transactions extends BaseCommand {
 				iconURL: interaction.member.displayAvatarURL(),
 			},
 		});
-		const transactions = data.memberData.transactions,
+		const transactions = memberData.transactions,
 			sortedTransactions = [[], []];
 
 		transactions.slice(-20).forEach(t => {

@@ -69,10 +69,10 @@ class Birthdate extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		const day = interaction.options.getInteger("day"),
+	async execute(client, interaction) {
+		const userData = interaction.data.user,
+			day = interaction.options.getInteger("day"),
 			month = interaction.options.getInteger("month"),
 			year = interaction.options.getInteger("year"),
 			date = new Date(year, month - 1, day),
@@ -82,10 +82,10 @@ class Birthdate extends BaseCommand {
 		if (date.getTime() > Date.now()) return interaction.error("economy/birthdate:DATE_TOO_HIGH");
 		if (date.getTime() < Date.now() - 2.523e12) return interaction.error("economy/birthdate:DATE_TOO_LOW");
 
-		data.userData.birthdate = d;
+		userData.birthdate = d;
 
-		data.userData.markModified("birthdate");
-		await data.userData.save();
+		userData.markModified("birthdate");
+		await userData.save();
 
 		interaction.success("economy/birthdate:SUCCESS", {
 			date: `<t:${d}:D>`,

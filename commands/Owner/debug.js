@@ -117,7 +117,6 @@ class Debug extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Array} data
 	 */
 	async execute(client, interaction) {
 		const command = interaction.options.getSubcommand();

@@ -55,12 +55,13 @@ class Checkjar extends BaseCommand {
 		jarTransactions.length = 10;
 
 		jarTransactions.forEach(t => {
+			// TODO
 			const time = moment.unix(t.time);
 
 			embed.data.fields.push([
 				{
 					name: `${t.description}`,
-					value: `Дата: ${time.locale("uk-UA").format("DD MMMM YYYY, HH:mm")}\nСумма: ${t.amount / Math.pow(10, 2)} грн`,
+					value: `Дата: <t:${time}:D>\nСумма: ${t.amount / Math.pow(10, 2)} грн`,
 				},
 			]);
 		});

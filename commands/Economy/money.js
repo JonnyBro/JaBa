@@ -34,17 +34,17 @@ class Money extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
+	async execute(client, interaction) {
 		await interaction.deferReply();
 
 		const member = interaction.options.getMember("user") || interaction.member;
 		if (member.user.bot) return interaction.error("economy/money:BOT_USER");
 
-		const memberData = member.id === interaction.user.id ? data.memberData : await client.findOrCreateMember({ id: member.id, guildId: interaction.guildId });
+		const memberData = member.id === interaction.user.id ? interaction.data.member : await client.findOrCreateMember({ id: member.id, guildId: interaction.guildId });
 
 		const guilds = client.guilds.cache.filter(g => g.members.cache.find(m => m.id === member.id));
+
 		let globalMoney = 0;
 		await client.functions.asyncForEach(guilds, async guild => {
 			const data = await client.findOrCreateMember({

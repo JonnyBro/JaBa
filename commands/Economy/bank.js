@@ -46,25 +46,26 @@ class Bank extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		const choice = interaction.options.getString("option");
+	async execute(client, interaction) {
+		const memberData = interaction.data.member,
+			choice = interaction.options.getString("option");
 
 		if (choice === "deposit") {
-			const credits = interaction.options.getString("credits").toLowerCase() === "all" ? data.memberData.money : interaction.options.getString("credits");
+			const credits = interaction.options.getString("credits").toLowerCase() === "all" ? memberData.money : interaction.options.getString("credits");
+
 			if (isNaN(credits) || credits < 1) return interaction.error("misc:OPTION_NAN_ALL");
-			if (data.memberData.money < credits)
+			if (memberData.money < credits)
 				return interaction.error("economy/bank:NOT_ENOUGH_CREDIT", {
 					money: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 				});
 
-			data.memberData.money -= credits;
-			data.memberData.bankSold += credits;
+			memberData.money -= credits;
+			memberData.bankSold += credits;
 
-			data.memberData.markModified("money");
-			data.memberData.markModified("bankSold");
-			await data.memberData.save();
+			memberData.markModified("money");
+			memberData.markModified("bankSold");
+			await memberData.save();
 
 			const info = {
 				user: interaction.translate("economy/transactions:BANK"),
@@ -72,15 +73,16 @@ class Bank extends BaseCommand {
 				date: Date.now(),
 				type: "send",
 			};
-			data.memberData.transactions.push(info);
+			memberData.transactions.push(info);
 
 			interaction.success("economy/bank:SUCCESS_DEP", {
 				money: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 			});
 		} else {
-			const credits = interaction.options.getString("credits") === "all" ? data.memberData.bankSold : interaction.options.getString("credits");
+			const credits = interaction.options.getString("credits") === "all" ? memberData.bankSold : interaction.options.getString("credits");
+
 			if (isNaN(credits) || credits < 1) return interaction.error("misc:OPTION_NAN_ALL");
-			if (data.memberData.bankSold < credits)
+			if (memberData.bankSold < credits)
 				return interaction.error("economy/bank:NOT_ENOUGH_BANK", {
 					money: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 				});
@@ -92,14 +94,14 @@ class Bank extends BaseCommand {
 				type: "got",
 			};
 
-			data.memberData.transactions.push(info);
+			memberData.transactions.push(info);
 
-			data.memberData.money += credits;
-			data.memberData.bankSold -= credits;
+			memberData.money += credits;
+			memberData.bankSold -= credits;
 
-			data.memberData.markModified("money");
-			data.memberData.markModified("bankSold");
-			await data.memberData.save();
+			memberData.markModified("money");
+			memberData.markModified("bankSold");
+			await memberData.save();
 
 			interaction.success("economy/bank:SUCCESS_WD", {
 				money: `**${credits}** ${client.functions.getNoun(credits, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,

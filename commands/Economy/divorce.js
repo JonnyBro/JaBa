@@ -25,16 +25,17 @@ class Divorce extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		if (!data.userData.lover) return interaction.error("economy/divorce:NOT_MARRIED");
-		const user = client.users.cache.get(data.userData.lover) || (await client.users.fetch(data.userData.lover));
+	async execute(client, interaction) {
+		const userData = interaction.data.user;
 
-		data.userData.lover = null;
+		if (!userData.lover) return interaction.error("economy/divorce:NOT_MARRIED");
+		const user = client.users.cache.get(userData.lover) || await client.users.fetch(userData.lover);
 
-		data.userData.markModified("lover");
-		await data.userData.save();
+		userData.lover = null;
+
+		userData.markModified("lover");
+		await userData.save();
 
 		const oldLover = await client.findOrCreateUser(user.id);
 		oldLover.lover = null;
@@ -46,11 +47,13 @@ class Divorce extends BaseCommand {
 			user: user.toString(),
 		});
 
-		user.send({
-			content: interaction.translate("economy/divorce:DIVORCED_U", {
-				user: interaction.member.toString(),
-			}),
-		});
+		try {
+			user.send({
+				content: interaction.translate("economy/divorce:DIVORCED_U", {
+					user: interaction.member.toString(),
+				}),
+			});
+		} catch (e) { /**/ }
 	}
 }
 

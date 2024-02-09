@@ -30,9 +30,11 @@ class Boosters extends BaseCommand {
 			if (!interaction.isButton()) return;
 
 			if (interaction.customId.startsWith("boosters_")) {
-				const guildData = client.findOrCreateGuild(interaction.guildId),
-					boosters = (await interaction.guild.members.fetch()).filter(m => m.premiumSince),
-					embeds = generateBoostersEmbeds(client, interaction, boosters, guildData);
+				interaction.data = [];
+				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
+
+				const boosters = (await interaction.guild.members.fetch()).filter(m => m.premiumSince),
+					embeds = generateBoostersEmbeds(client, interaction, boosters);
 
 				const row = new ActionRowBuilder().addComponents(
 					new ButtonBuilder().setCustomId("boosters_prev_page").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
@@ -115,7 +117,6 @@ class Boosters extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply();

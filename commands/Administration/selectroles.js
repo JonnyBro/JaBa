@@ -89,6 +89,9 @@ class Selectroles extends BaseCommand {
 			if (!interaction.isStringSelectMenu()) return;
 
 			if (interaction.customId === "auto_roles") {
+				interaction.data = [];
+				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
+
 				const removed = interaction.component.options.filter(option => {
 					return !interaction.values.includes(option.value);
 				});
@@ -113,7 +116,6 @@ class Selectroles extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });

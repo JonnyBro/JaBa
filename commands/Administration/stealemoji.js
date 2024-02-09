@@ -36,16 +36,14 @@ class Stealemoji extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		const parsedEmoji = parseEmoji(interaction.options.getString("emoji")),
-			ext = parsedEmoji.animated ? "gif" : "png";
+		const parsedEmoji = parseEmoji(interaction.options.getString("emoji"));
 
 		interaction.guild.emojis
 			.create({
 				name: parsedEmoji.name,
-				attachment: `https://cdn.discordapp.com/emojis/${parsedEmoji.id}.${ext}`,
+				attachment: `https://cdn.discordapp.com/emojis/${parsedEmoji.id}.${parsedEmoji.animated ? "gif" : "png"}`,
 			})
 			.then(emoji =>
 				interaction.success("administration/stealemoji:SUCCESS", {

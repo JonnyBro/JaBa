@@ -22,9 +22,8 @@ class WarnContext extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").UserContextMenuCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
+	async execute(client, interaction) {
 		const member = interaction.targetMember,
 			memberPosition = member.roles.highest.position,
 			moderationPosition = interaction.member.roles.highest.position;
@@ -180,8 +179,10 @@ class WarnContext extends BaseCommand {
 			memberData.markModified("sanctions");
 			await memberData.save();
 
-			if (data.guildData.plugins.modlogs) {
-				const channel = interaction.guild.channels.cache.get(data.guildData.plugins.modlogs);
+			const guildData = interaction.data.guild;
+
+			if (guildData.plugins.modlogs) {
+				const channel = interaction.guild.channels.cache.get(guildData.plugins.modlogs);
 				if (!channel) return;
 
 				channel.send({

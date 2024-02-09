@@ -35,13 +35,13 @@ class Slots extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
+	async execute(client, interaction) {
 		await interaction.deferReply();
 
-		const amount = interaction.options.getInteger("amount");
-		if (amount > data.memberData.money)
+		const { member: memberData, user: userData } = interaction.data,
+			amount = interaction.options.getInteger("amount");
+		if (amount > memberData.money)
 			return interaction.error("economy/slots:NOT_ENOUGH", {
 				money: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 			}, { edit: true });
@@ -119,13 +119,13 @@ class Slots extends BaseCommand {
 					type: "got",
 				};
 
-				data.memberData.money += toAdd;
-				data.memberData.transactions.push(info);
+				memberData.money += toAdd;
+				memberData.transactions.push(info);
 
-				if (!data.userData.achievements.slots.achieved) {
-					data.userData.achievements.slots.progress.now += 1;
-					if (data.userData.achievements.slots.progress.now === data.userData.achievements.slots.progress.total) {
-						data.userData.achievements.slots.achieved = true;
+				if (!userData.achievements.slots.achieved) {
+					userData.achievements.slots.progress.now += 1;
+					if (userData.achievements.slots.progress.now === userData.achievements.slots.progress.total) {
+						userData.achievements.slots.achieved = true;
 						interaction.followUp({
 							files: [
 								{
@@ -136,13 +136,13 @@ class Slots extends BaseCommand {
 						});
 					}
 
-					data.userData.markModified("achievements");
-					await data.userData.save();
+					userData.markModified("achievements");
+					await userData.save();
 				}
 
-				data.memberData.markModified("money");
-				data.memberData.markModified("transactions");
-				await data.memberData.save();
+				memberData.markModified("money");
+				memberData.markModified("transactions");
+				await memberData.save();
 
 				return;
 			}
@@ -170,13 +170,13 @@ class Slots extends BaseCommand {
 					type: "got",
 				};
 
-				data.memberData.money += toAdd;
-				data.memberData.transactions.push(info);
+				memberData.money += toAdd;
+				memberData.transactions.push(info);
 
-				if (!data.userData.achievements.slots.achieved) {
-					data.userData.achievements.slots.progress.now += 1;
-					if (data.userData.achievements.slots.progress.now === data.userData.achievements.slots.progress.total) {
-						data.userData.achievements.slots.achieved = true;
+				if (!userData.achievements.slots.achieved) {
+					userData.achievements.slots.progress.now += 1;
+					if (userData.achievements.slots.progress.now === userData.achievements.slots.progress.total) {
+						userData.achievements.slots.achieved = true;
 						interaction.followUp({
 							files: [
 								{
@@ -187,13 +187,13 @@ class Slots extends BaseCommand {
 						});
 					}
 
-					data.userData.markModified("achievements");
-					await data.userData.save();
+					userData.markModified("achievements");
+					await userData.save();
 				}
 
-				data.memberData.markModified("money");
-				data.memberData.markModified("transactions");
-				await data.memberData.save();
+				memberData.markModified("money");
+				memberData.markModified("transactions");
+				await memberData.save();
 
 				return;
 			}
@@ -213,19 +213,19 @@ class Slots extends BaseCommand {
 				type: "send",
 			};
 
-			data.memberData.money -= amount;
-			data.memberData.transactions.push(info);
+			memberData.money -= amount;
+			memberData.transactions.push(info);
 
-			if (!data.userData.achievements.slots.achieved) {
-				data.userData.achievements.slots.progress.now = 0;
+			if (!userData.achievements.slots.achieved) {
+				userData.achievements.slots.progress.now = 0;
 
-				data.userData.markModified("achievements");
-				await data.userData.save();
+				userData.markModified("achievements");
+				await userData.save();
 			}
 
-			data.memberData.markModified("money");
-			data.memberData.markModified("transactions");
-			await data.memberData.save();
+			memberData.markModified("money");
+			memberData.markModified("transactions");
+			await memberData.save();
 
 			return;
 		}

@@ -37,16 +37,16 @@ class Setlang extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		const lang = interaction.options.getString("language"),
+	async execute(client, interaction) {
+		const guildData = interaction.data.guild,
+			lang = interaction.options.getString("language"),
 			language = client.languages.find(l => l.name === lang);
 
-		data.guildData.language = language.name;
+		guildData.language = language.name;
 
-		data.guildData.markModified("language");
-		await data.guildData.save();
+		guildData.markModified("language");
+		await guildData.save();
 
 		return interaction.success("administration/setlang:SUCCESS", {
 			lang: language.nativeName,

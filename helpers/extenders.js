@@ -5,7 +5,7 @@ User.prototype.getUsername = function () {
 };
 
 BaseInteraction.prototype.getLocale = function () {
-	return this.guild ? this.guild.data.language : "en-US";
+	return this.guild ? this.data?.guild?.language : "en-US";
 };
 
 BaseInteraction.prototype.translate = function (key, args) {
@@ -35,15 +35,19 @@ BaseInteraction.prototype.error = async function (key, args, options = {}) {
 	return await this.replyT(key, args, options);
 };
 
+Message.prototype.getLocale = function () {
+	return this.guild ? this.data?.guild?.language : "en-US";
+};
+
 Message.prototype.translate = function (key, args) {
-	const language = this.client.translations.get(this.guild ? this.guild.data.language : "en-US");
+	const language = this.client.translations.get(this.getLocale());
 	if (!language) throw "Message: Invalid language set in data.";
 
 	return language(key, args);
 };
 
 Message.prototype.replyT = async function (key, args, options = {}) {
-	const translated = this.translate(key, args, this.guild.data.language ?? "en-US");
+	const translated = this.translate(key, args, this.getLocale());
 	const string = options.prefixEmoji ? `${this.client.customEmojis[options.prefixEmoji]} | ${translated}` : translated;
 
 	if (options.edit) return await this.edit({ content: string, allowedMentions: { repliedUser: options.mention ? true : false } });

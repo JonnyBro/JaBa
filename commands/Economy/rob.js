@@ -45,32 +45,32 @@ class Rob extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		const member = interaction.options.getMember("user");
-		if (member.user.bot) return interaction.error("economy/pay:BOT_USER");
-		if (member.id === interaction.member.id) return interaction.error("economy/rob:YOURSELF");
+	async execute(client, interaction) {
+		const memberData = interaction.data.member,
+			otherMember = interaction.options.getMember("user");
+		if (otherMember.user.bot) return interaction.error("economy/pay:BOT_USER");
+		if (otherMember.id === interaction.member.id) return interaction.error("economy/rob:YOURSELF");
 
 		const amount = interaction.options.getInteger("amount");
 		if (amount <= 0) return interaction.error("misc:MORE_THAN_ZERO");
 
-		const memberData = await client.findOrCreateMember({
-			id: member.id,
+		const otherMemberData = await client.findOrCreateMember({
+			id: otherMember.id,
 			guildId: interaction.guildId,
 		});
-		if (amount > memberData.money) return interaction.error("economy/rob:NOT_ENOUGH_MEMBER", { user: member.toString() });
+		if (amount > otherMemberData.money) return interaction.error("economy/rob:NOT_ENOUGH_MEMBER", { user: otherMember.toString() });
 
-		const isInCooldown = memberData.cooldowns.rob || 0;
+		const isInCooldown = otherMemberData.cooldowns.rob || 0;
 		if (isInCooldown) {
-			if (isInCooldown > Date.now()) return interaction.error("economy/rob:COOLDOWN", { user: member.toString() });
+			if (isInCooldown > Date.now()) return interaction.error("economy/rob:COOLDOWN", { user: otherMember.toString() });
 		}
 
 		const potentiallyLose = Math.floor(amount * 1.5);
-		if (potentiallyLose > data.memberData.money)
+		if (potentiallyLose > memberData.money)
 			return interaction.error("economy/rob:NOT_ENOUGH_AUTHOR", {
 				moneyMin: `**${potentiallyLose}** ${client.functions.getNoun(potentiallyLose, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-				moneyCurrent: `**${data.memberData.money}** ${client.functions.getNoun(data.memberData.money, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
+				moneyCurrent: `**${memberData.money}** ${client.functions.getNoun(memberData.money, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 			});
 
 		const itsAWon = Math.floor(client.functions.randomNum(0, 100) < 25);
@@ -79,23 +79,23 @@ class Rob extends BaseCommand {
 			const toWait = Date.now() + 6 * 60 * 60 * 1000,
 				randomNum = client.functions.randomNum(1, 2);
 
-			memberData.cooldowns.rob = toWait;
+			otherMemberData.cooldowns.rob = toWait;
 
-			memberData.markModified("cooldowns");
-			await memberData.save();
+			otherMemberData.markModified("cooldowns");
+			await otherMemberData.save();
 
 			interaction.replyT("economy/rob:ROB_WON_" + randomNum, {
 				money: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-				user: member.toString(),
+				user: otherMember.toString(),
 			});
 
-			data.memberData.money += amount;
-			memberData.money -= amount;
+			memberData.money += amount;
+			otherMemberData.money -= amount;
 
-			data.memberData.markModified("money");
 			memberData.markModified("money");
-			await data.memberData.save();
+			otherMemberData.markModified("money");
 			await memberData.save();
+			await otherMemberData.save();
 		} else {
 			const won = Math.floor(amount * 0.9),
 				randomNum = client.functions.randomNum(1, 2);
@@ -103,16 +103,16 @@ class Rob extends BaseCommand {
 			interaction.replyT("economy/rob:ROB_LOSE_" + randomNum, {
 				fine: `**${potentiallyLose}** ${client.functions.getNoun(potentiallyLose, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 				offset: `**${won}** ${client.functions.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
-				user: member.toString(),
+				user: otherMember.toString(),
 			});
 
-			data.memberData.money -= potentiallyLose;
-			memberData.money += won;
+			memberData.money -= potentiallyLose;
+			otherMemberData.money += won;
 
-			data.memberData.markModified("money");
 			memberData.markModified("money");
-			await data.memberData.save();
+			otherMemberData.markModified("money");
 			await memberData.save();
+			await otherMemberData.save();
 		}
 	}
 }

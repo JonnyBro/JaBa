@@ -35,17 +35,17 @@ class Afk extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
+	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });
 
-		const reason = interaction.options.getString("message");
+		const userData = interaction.data.user,
+			reason = interaction.options.getString("message");
 
-		data.userData.afk = reason;
+		userData.afk = reason;
 
-		data.userData.markModified("afk");
-		await data.userData.save();
+		userData.markModified("afk");
+		await userData.save();
 
 		interaction.success("general/afk:SUCCESS", {
 			reason,

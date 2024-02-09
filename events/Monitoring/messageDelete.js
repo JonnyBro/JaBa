@@ -17,7 +17,7 @@ class messageDelete extends BaseEvent {
 		if (message.guild && message.guildId === "568120814776614924") return;
 		if (message.author.bot) return;
 
-		const guildData = await client.findOrCreateGuild(message.guildId);
+		const guildData = message.data.guild;
 
 		if (guildData.plugins?.monitoring?.messageDelete) {
 			const embed = client.embed({

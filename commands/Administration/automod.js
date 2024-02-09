@@ -65,28 +65,28 @@ class Automod extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		const state = interaction.options.getBoolean("state"),
+	async execute(client, interaction) {
+		const { data } = interaction,
+			state = interaction.options.getBoolean("state"),
 			channel = interaction.options.getChannel("channel"),
 			command = interaction.options.getSubcommand();
 
 		if (command === "toggle") {
-			data.guildData.plugins.automod = {
+			data.guild.plugins.automod = {
 				enabled: state,
 				ignored: [],
 			};
 
-			data.guildData.markModified("plugins.automod");
-			await data.guildData.save();
+			data.guild.markModified("plugins.automod");
+			await data.guild.save();
 
 			interaction.success(`administration/automod:${state ? "ENABLED" : "DISABLED"}`);
 		} else if (command === "ignore") {
-			data.guildData.plugins.automod.ignored.push(channel.id);
+			data.guild.plugins.automod.ignored.push(channel.id);
 
-			data.guildData.markModified("plugins.automod");
-			await data.guildData.save();
+			data.guild.markModified("plugins.automod");
+			await data.guild.save();
 
 			interaction.success("administration/automod:DISABLED_CHANNEL", {
 				channel: channel.toString(),

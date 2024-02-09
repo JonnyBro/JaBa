@@ -81,10 +81,10 @@ class Goodbye extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		const command = interaction.options.getSubcommand();
+	async execute(client, interaction) {
+		const guildData = interaction.data.guild,
+			command = interaction.options.getSubcommand();
 
 		if (command === "test") {
 			client.emit("guildMemberRemove", interaction.member);
@@ -94,15 +94,15 @@ class Goodbye extends BaseCommand {
 			const state = interaction.options.getBoolean("state");
 
 			if (!state) {
-				data.guildData.plugins.goodbye = {
+				guildData.plugins.goodbye = {
 					enabled: false,
 					message: null,
 					channelID: null,
 					withImage: null,
 				};
 
-				data.guildData.markModified("plugins.goodbye");
-				await data.guildData.save();
+				guildData.markModified("plugins.goodbye");
+				await guildData.save();
 
 				interaction.success("administration/goodbye:DISABLED", null, { ephemeral: true });
 			} else {
@@ -110,15 +110,15 @@ class Goodbye extends BaseCommand {
 				const message = interaction.options.getString("message") || interaction.translate("administration/goodbye:DEFAULT_MESSAGE");
 				const image = interaction.options.getBoolean("image") === true ? true : false;
 
-				data.guildData.plugins.goodbye = {
+				guildData.plugins.goodbye = {
 					enabled: true,
 					channel: channel.id,
 					message: message,
 					withImage: image,
 				};
 
-				data.guildData.markModified("plugins.goodbye");
-				await data.guildData.save();
+				guildData.markModified("plugins.goodbye");
+				await guildData.save();
 
 				interaction.success("administration/goodbye:ENABLED", {
 					channel: `${channel.toString()}`,

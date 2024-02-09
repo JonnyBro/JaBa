@@ -25,7 +25,6 @@ class Stats extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const hiddenGuildMembersCount = client.guilds.cache.get("568120814776614924").memberCount;

@@ -19,25 +19,24 @@ class MessageCreate extends BaseEvent {
 	async execute(client, message) {
 		if (message.guild && message.guild.id === "568120814776614924") return;
 
-		const data = {};
+		const data = [];
 
 		if (message.author.bot) return;
 		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) return message.replyT("misc:HELLO_SERVER", null, { mention: true });
 
-		const userData = await client.findOrCreateUser(message.author.id);
-		data.userData = userData;
+		data.user = await client.findOrCreateUser(message.author.id);
 
-		if (message.guild && !message.member) await message.guild.members.fetch(message.author.id);
 		if (message.guild) {
-			const guildData = await client.findOrCreateGuild(message.guildId);
-			const memberData = await client.findOrCreateMember({ id: message.author.id, guildId: message.guildId });
+			if (!message.member) await message.guild.members.fetch(message.author.id);
 
-			message.guild.data = data.guildData = guildData;
-			data.memberData = memberData;
+			data.guild = await client.findOrCreateGuild(message.guildId);
+			data.member = await client.findOrCreateMember({ id: message.author.id, guildId: message.guildId });
 		}
 
+		message.data = data;
+
 		if (message.guild) {
-			await updateXp(client, message, data.memberData);
+			await updateXp(message);
 
 			if (message.content.match(/(https|http):\/\/(ptb\.|canary\.)?(discord.com)\/(channels)\/\d+\/\d+\/\d+/g)) {
 				const link = message.content.match(/(https|http):\/\/(ptb\.|canary\.)?(discord.com)\/(channels)\/\d+\/\d+\/\d+/g)[0],
@@ -89,18 +88,18 @@ class MessageCreate extends BaseEvent {
 				});
 			}
 
-			if (data.guildData.plugins.automod.enabled && !data.guildData.plugins.automod.ignored.includes(message.channelId))
+			if (message.data.guild.plugins.automod.enabled && !message.data.guild.plugins.automod.ignored.includes(message.channelId))
 				if (/(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(message.content))
 					if (!message.channel.permissionsFor(message.member).has(PermissionsBitField.Flags.ManageMessages)) {
 						await message.error("administration/automod:DELETED", null, { mention: true });
 						message.delete();
 					}
 
-			if (data.userData.afk) {
-				data.userData.afk = null;
+			if (message.data.user.afk) {
+				message.data.user.afk = null;
 
-				data.userData.markModified("afk");
-				await data.userData.save();
+				message.data.user.markModified("afk");
+				await message.data.user.save();
 
 				message.replyT("general/afk:DELETED", {
 					user: message.author.username,
@@ -121,28 +120,28 @@ class MessageCreate extends BaseEvent {
 /**
  *
  * @param {import("../base/Client")} client
- * @param {import("discord.js").Message} msg
- * @param {import("../base/Member")} memberData
+ * @param {import("discord.js").Message} message
  * @returns
  */
-async function updateXp(client, msg, memberData) {
-	const points = parseInt(memberData.exp),
+async function updateXp(message) {
+	const memberData = message.data.member,
+		points = parseInt(memberData.exp),
 		level = parseInt(memberData.level),
-		isInCooldown = xpCooldown[msg.author.id];
+		isInCooldown = xpCooldown[message.author.id];
 
 	if (isInCooldown) if (isInCooldown > Date.now()) return;
 
 	const toWait = Date.now() + 60 * 1000; // 1 min
-	xpCooldown[msg.author.id] = toWait;
+	xpCooldown[message.author.id] = toWait;
 
-	const won = client.functions.randomNum(1, 2);
+	const won = message.client.functions.randomNum(1, 2);
 	const newXp = parseInt(points + won, 10);
 	const neededXp = 5 * (level * level) + 80 * level + 100;
 
 	if (newXp > neededXp) {
 		memberData.level = parseInt(level + 1, 10);
 		memberData.exp = 0;
-		msg.replyT("misc:LEVEL_UP", {
+		message.replyT("misc:LEVEL_UP", {
 			level: memberData.level,
 		}, { mention: false });
 	} else memberData.exp = parseInt(newXp, 10);

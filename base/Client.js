@@ -41,7 +41,7 @@ class JaBaClient extends Client {
 		this.player.events.on("playerStart", async (queue, track) => {
 			const m = (
 				await queue.metadata.channel.send({
-					content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.channel.guild.data.language),
+					content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.data.guild.language),
 				})
 			).id;
 
@@ -58,14 +58,14 @@ class JaBaClient extends Client {
 					if (message && message.deletable) message.delete();
 				}, 5 * 60 * 1000);
 		});
-		this.player.events.on("emptyQueue", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.channel.guild.data.language)));
-		this.player.events.on("emptyChannel", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.channel.guild.data.language)));
+		this.player.events.on("emptyQueue", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.data.guild.language)));
+		this.player.events.on("emptyChannel", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.data.guild.language)));
 		this.player.events.on("playerError", (queue, e) => {
-			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
+			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.data.guild.language) });
 			console.log(e);
 		});
 		this.player.events.on("error", (queue, e) => {
-			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.channel.guild.data.language) });
+			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.data.guild.language) });
 			console.log(e);
 		});
 
@@ -150,7 +150,7 @@ class JaBaClient extends Client {
 	 * @returns {String} Bot's default language
 	 */
 	get defaultLanguage() {
-		return this.languages.find(language => language.default).name;
+		return this.languages.find(language => language.default);
 	}
 
 	/**
@@ -159,7 +159,7 @@ class JaBaClient extends Client {
 	 * @param {Array} args Arguments for translation
 	 * @param {String} locale Language
 	 */
-	translate(key, args, locale = this.defaultLanguage) {
+	translate(key, args, locale = this.defaultLanguage.name) {
 		const lang = this.translations.get(locale);
 
 		return lang(key, args);
@@ -224,7 +224,7 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * Unloads a command
+	 * Removes a command from cache
 	 * @param {String} dir Directory where command is located
 	 * @param {String} name Command name
 	 * @returns

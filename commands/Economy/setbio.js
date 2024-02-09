@@ -35,16 +35,16 @@ class Setbio extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		const newBio = interaction.options.getString("text");
+	async execute(client, interaction) {
+		const userData = interaction.data.user,
+			newBio = interaction.options.getString("text");
 		if (newBio.length > 150) return interaction.error("economy/setbio:MAX_CHARACTERS");
 
-		data.userData.bio = newBio;
+		userData.bio = newBio;
 
-		data.userData.markModified("bio");
-		await data.userData.save();
+		userData.markModified("bio");
+		await userData.save();
 
 		interaction.success("economy/setbio:SUCCESS");
 	}

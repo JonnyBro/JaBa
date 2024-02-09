@@ -20,7 +20,7 @@ class messageUpdate extends BaseEvent {
 
 		if (oldMessage.content === newMessage.content) return;
 
-		const guildData = await client.findOrCreateGuild(oldMessage.guildId);
+		const guildData = newMessage.data.guild;
 
 		if (guildData.plugins?.monitoring?.messageUpdate) {
 			const embed = client.embed({

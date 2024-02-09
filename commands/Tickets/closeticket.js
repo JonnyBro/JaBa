@@ -26,10 +26,11 @@ class CloseTicket extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
+	async execute(client, interaction) {
 		await interaction.deferReply();
+
+		const guildData = interaction.data.guild;
 
 		if (!interaction.channel.name.includes("support")) return interaction.error("tickets/adduser:NOT_TICKET", null, { ephemeral: true, edit: true });
 
@@ -66,8 +67,8 @@ class CloseTicket extends BaseCommand {
 
 		collector.on("end", async (_, reason) => {
 			if (reason !== "canceled") {
-				const transcriptionLogs = data.guildData.plugins.tickets.transcriptionLogs,
-					ticketLogs = data.guildData.plugins.tickets.ticketLogs;
+				const transcriptionLogs = guildData.plugins.tickets.transcriptionLogs,
+					ticketLogs = guildData.plugins.tickets.ticketLogs;
 				const reversedMessages = (await interaction.channel.messages.fetch()).filter(m => !m.author.bot);
 				const messages = Array.from(reversedMessages.values()).reverse();
 
@@ -106,7 +107,7 @@ class CloseTicket extends BaseCommand {
 			}
 		});
 
-		const ticketLogs = data.guildData.plugins.tickets.ticketLogs;
+		const ticketLogs = guildData.plugins.tickets.ticketLogs;
 		const logEmbed = client.embed({
 			title: interaction.translate("tickets/closeticket:CLOSED_TITLE"),
 			fields: [

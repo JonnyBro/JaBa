@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
-	ms = require("ms"),
-	moment = require("moment");
+	ms = require("ms");
 
 class Remindme extends BaseCommand {
 	/**
@@ -47,38 +46,39 @@ class Remindme extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
+	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });
 
-		if (!data.userData.reminds) data.userData.reminds = [];
+		const userData = interaction.data.user;
+
+		if (!userData.reminds) userData.reminds = [];
 
 		const dateNow = Date.now();
 
-		const reminderData = {
+		const reminder = {
 			message: interaction.options.getString("message"),
-			createdAt: dateNow,
-			sendAt: dateNow + ms(interaction.options.getString("time")),
+			createdAt: Math.floor(dateNow / 1000),
+			sendAt: Math.floor((dateNow + ms(interaction.options.getString("time"))) / 1000),
 		};
 
-		data.userData.reminds.push(reminderData);
+		userData.reminds.push(reminder);
 
-		data.userData.markModified("reminds");
-		await data.userData.save();
+		userData.markModified("reminds");
+		await userData.save();
 
-		client.databaseCache.usersReminds.set(interaction.user.id, data.userData);
+		client.databaseCache.usersReminds.set(interaction.user.id, userData);
 
 		const embed = client.embed({
 			author: interaction.translate("general/remindme:EMBED_SAVED"),
 			fields: [
 				{
 					name: interaction.translate("general/remindme:EMBED_TIME"),
-					value: moment(reminderData.sendAt).locale(interaction.getLocale()).format("Do MMMM YYYY, HH:mm:ss"),
+					value: `<t:${reminder.sendAt}:R>`,
 				},
 				{
 					name: interaction.translate("common:MESSAGE"),
-					value: reminderData.message,
+					value: reminder.message,
 				},
 			],
 		});

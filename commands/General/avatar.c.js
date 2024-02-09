@@ -21,7 +21,6 @@ class AvatarContext extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").UserContextMenuCommandInteraction} interaction
-	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		const avatarURL = interaction.targetUser.displayAvatarURL({ size: 2048 });

@@ -26,7 +26,6 @@ class Number extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
 	async execute(client, interaction, data) {
 		if (currentGames[interaction.guildId]) return interaction.error("fun/number:GAME_RUNNING");

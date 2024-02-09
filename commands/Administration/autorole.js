@@ -45,29 +45,29 @@ class Autorole extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		const state = interaction.options.getBoolean("state"),
+	async execute(client, interaction) {
+		const guildData = interaction.data.guild,
+			state = interaction.options.getBoolean("state"),
 			role = interaction.options.getRole("role");
 
-		data.guildData.plugins.autorole = {
+		guildData.plugins.autorole = {
 			enabled: state,
 			role,
 		};
 
 		if (state && role) {
-			data.guildData.markModified("plugins.autorole");
-			await data.guildData.save();
+			guildData.markModified("plugins.autorole");
+			await guildData.save();
 
 			interaction.success("administration/autorole:ENABLED", {
 				role: role.toString(),
 			});
 		} else {
-			data.guildData.plugins.autorole.enabled = false;
+			guildData.plugins.autorole.enabled = false;
 
-			data.guildData.markModified("plugins.autorole");
-			await data.guildData.save();
+			guildData.markModified("plugins.autorole");
+			await guildData.save();
 
 			interaction.success("administration/autorole:DISABLED");
 		}

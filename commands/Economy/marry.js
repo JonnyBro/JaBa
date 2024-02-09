@@ -36,17 +36,18 @@ class Marry extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		if (data.userData.lover) return interaction.error("economy/marry:ALREADY_MARRIED");
+	async execute(client, interaction) {
+		const userData = interaction.data.user;
+
+		if (userData.lover) return interaction.error("economy/marry:ALREADY_MARRIED");
 
 		const member = interaction.options.getMember("user");
 		if (member.user.bot) return interaction.error("economy/marry:BOT_USER");
 		if (member.id === interaction.member.id) return interaction.error("economy/marry:YOURSELF");
 
-		const userData = await client.findOrCreateUser(member.id);
-		if (userData.lover) return interaction.error("economy/marry:ALREADY_MARRIED_USER", { user: member.toString() });
+		const otherUserData = await client.findOrCreateUser(member.id);
+		if (otherUserData.lover) return interaction.error("economy/marry:ALREADY_MARRIED_USER", { user: member.toString() });
 
 		for (const requester in pendings) {
 			const receiver = pendings[requester];
@@ -118,13 +119,13 @@ class Marry extends BaseCommand {
 			}
 
 			if (reason) {
-				data.userData.lover = member.id;
-				userData.lover = interaction.member.id;
+				userData.lover = member.id;
+				otherUserData.lover = interaction.member.id;
 
-				data.userData.markModified("lover");
 				userData.markModified("lover");
-				await data.userData.save();
+				otherUserData.markModified("lover");
 				await userData.save();
+				await otherUserData.save();
 
 				const messageOptions = {
 					content: `${member.toString()} :heart: ${interaction.member.toString()}`,
@@ -137,23 +138,23 @@ class Marry extends BaseCommand {
 				};
 
 				let sent = false;
-				if (!userData.achievements.married.achieved) {
+				if (!otherUserData.achievements.married.achieved) {
 					interaction.followUp(messageOptions);
 					sent = true;
+					otherUserData.achievements.married.achieved = true;
+					otherUserData.achievements.married.progress.now = 1;
+
+					otherUserData.markModified("achievements");
+					await otherUserData.save();
+				}
+
+				if (!userData.achievements.married.achieved) {
+					if (!sent) interaction.followUp(messageOptions);
 					userData.achievements.married.achieved = true;
 					userData.achievements.married.progress.now = 1;
 
 					userData.markModified("achievements");
 					await userData.save();
-				}
-
-				if (!data.userData.achievements.married.achieved) {
-					if (!sent) interaction.followUp(messageOptions);
-					data.userData.achievements.married.achieved = true;
-					data.userData.achievements.married.progress.now = 1;
-
-					data.userData.markModified("achievements");
-					await data.userData.save();
 				}
 
 				return interaction.editReply({

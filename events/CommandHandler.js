@@ -16,27 +16,27 @@ class CommandHandler extends BaseEvent {
 	 */
 	async execute(client, interaction) {
 		const command = client.commands.get(interaction.commandName);
+
 		const data = [];
 
-		const userData = await client.findOrCreateUser(interaction.user.id);
-		data.userData = userData;
+		data.user = await client.findOrCreateUser(interaction.user.id);
 
 		if (interaction.inGuild()) {
-			const guildData = await client.findOrCreateGuild(interaction.guildId);
-			const memberData = await client.findOrCreateMember({ id: interaction.member.id, guildId: interaction.guildId });
-
-			interaction.guild.data = data.guildData = guildData;
-			data.memberData = memberData;
+			data.guild = await client.findOrCreateGuild(interaction.guildId);
+			data.member = await client.findOrCreateMember({ id: interaction.member.id, guildId: interaction.guildId });
 		}
 
-		if (command?.dirname.includes("IAT") && interaction.guildId !== "1039187019957555252") return interaction.reply({ content: "IAT Only", ephemeral: true });
-		if (interaction.isAutocomplete()) return await command.autocompleteRun(client, interaction);
+		interaction.data = data;
+
 		if (interaction.isButton() && interaction.customId === "quote_delete" && interaction.message.deletable) return interaction.message.delete();
+		if (interaction.isAutocomplete()) return await command.autocompleteRun(client, interaction);
+
 		if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isCommand()) return;
 
+		if (command?.dirname.includes("IAT") && interaction.guildId !== "1039187019957555252") return interaction.reply({ content: "IAT Only", ephemeral: true });
 		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { ephemeral: true });
 
-		if (!userData.achievements.firstCommand.achieved) {
+		if (!interaction.data.user.achievements.firstCommand.achieved) {
 			const args = {
 				content: interaction.user.toString(),
 				files: [
@@ -47,20 +47,29 @@ class CommandHandler extends BaseEvent {
 				],
 			};
 
-			userData.achievements.firstCommand.progress.now = 1;
-			userData.achievements.firstCommand.achieved = true;
+			interaction.data.user.achievements.firstCommand.progress.now = 1;
+			interaction.data.user.achievements.firstCommand.achieved = true;
 
-			userData.markModified("achievements");
-			await userData.save();
+			interaction.data.user.markModified("achievements");
+			await interaction.data.user.save();
 
 			try {
 				interaction.user.send(args);
 			} catch (e) { /**/ }
 		}
 
-		client.logger.cmd(`User ${interaction.user.getUsername()} used ${command.command.name} in ${interaction.guild ? interaction.guild.name : "DM"} with arguments: ${interaction.options.data.length > 0 ? interaction.options.data.map(arg => { return `${arg.name}: ${arg.value}`; }).join(", ") : "no args" }`);
+		client.logger.cmd(
+			`User ${interaction.user.getUsername()} used ${command.command.name} in ${interaction.guild ? interaction.guild.name : "DM"} with arguments: ${
+				interaction.options.data.length > 0
+					? interaction.options.data
+						.map(arg => {
+							return `${arg.name}: ${arg.value}`;
+						}).join(", ")
+					: "no args"
+			}`,
+		);
 
-		return command.execute(client, interaction, data);
+		return command.execute(client, interaction);
 	}
 }
 

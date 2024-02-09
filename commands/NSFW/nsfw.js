@@ -33,6 +33,9 @@ class NSFW extends BaseCommand {
 			if (interaction.customId === "nsfw_select") {
 				await interaction.deferUpdate();
 
+				interaction.data = [];
+				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
+
 				const tag = interaction?.values[0],
 					splitted = tag.split("_"),
 					res = await fetch(`https://nsfw-api-p302.onrender.com/media/${splitted[0].charAt(0).toLowerCase()}/${splitted[1].toLowerCase()}`).then(async r => await r.buffer()),
@@ -55,12 +58,11 @@ class NSFW extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: true });
 
-		if (interaction.guildId && !interaction.channel.nsfw) return interaction.error("misc:NSFW_COMMAND", null, { edit: true, ephemeral: true });
+		if (interaction.guild && !interaction.channel.nsfw) return interaction.error("misc:NSFW_COMMAND", null, { edit: true, ephemeral: true });
 
 		const tags = ["Hentai_Vanila", "Hentai_Yaoi", "Hentai_Yuri", "Hentai_BDSM", "Hentai_Trap", "Real_Ass", "Real_Boobs", "Real_Pussy"]
 			.map(tag =>

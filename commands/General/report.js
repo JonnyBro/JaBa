@@ -45,10 +45,10 @@ class Report extends BaseCommand {
 	 *
 	 * @param {import("../../base/Client")} client
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
-	 * @param {Object} data
 	 */
-	async execute(client, interaction, data) {
-		const repChannel = interaction.guild.channels.cache.get(data.guildData.plugins.reports);
+	async execute(client, interaction) {
+		const guildData = interaction.data.guild,
+			repChannel = interaction.guild.channels.cache.get(guildData.plugins.reports);
 		if (!repChannel) return interaction.error("general/report:MISSING_CHANNEL");
 
 		const member = interaction.options.getMember("user");
