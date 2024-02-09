@@ -12,23 +12,23 @@ JaBa is an open source Discord Bot written by [Jonny_Bro](https://github.com/Jon
 
 JaBa offers:
 
-* **/** Slash and Context commands.
-* ✉️ Supports commands in DMs.
-* 🇷🇺 Localization support (any language; English, Russian and Ukrainian now).
-* ⚙️ Dashboard for changing various settings.\
+* Slash and Context commands.
+* Supports commands in DMs.
+* Localization support (any language; English, Russian and Ukrainian now).
+* Dashboard for changing various settings.\
 
 ## Commands
 
 JaBa does many thing, here is **8 main categories**:
 
-* 👩‍💼 **Administration**: `automod`, `autorole`, `config`, `goodbye`, `selectroles`, `stealemoji` and **3** more!
-* 🚓 **Moderation**: `clear`, `giveaway`, `poll`, `warn` and **4** more!
-* 🎵 **Music**: `play`, `skip`, `queue`, `nowplaying`, `shuffle` and **8** more!
-* 💰 **Economy**: `profile`, `work`, `achievements`, `slots`, `tictactoe`, `leaderboard` and **9** more!
-* 👻 **Fun**: `8ball`, `crab`, `lmgtfy`, `lovecalc`, `memes` and **2** more!
-* 🖨️ **General**: `afk`, `avatar`, `boosters`, `minecraft`, `remindme`, `shorturl`, `serverinfo`, `userinfo`, `whois` and **7** more!
-* ❤ **NSFW**: `nsfw` =)
-* 👑 **Bot's owner commands**: `eval`, `servers`, `reload` and **2** more!
+* **Administration**: `automod`, `autorole`, `config`, `goodbye`, `selectroles`, `stealemoji` and **3** more!
+* **Moderation**: `clear`, `giveaway`, `poll`, `warn` and **4** more!
+* **Music**: `play`, `skip`, `queue`, `nowplaying`, `shuffle` and **8** more!
+* **Economy**: `profile`, `work`, `achievements`, `slots`, `tictactoe`, `leaderboard` and **9** more!
+* **Fun**: `8ball`, `crab`, `lmgtfy`, `lovecalc`, `memes` and **2** more!
+* **General**: `afk`, `avatar`, `boosters`, `minecraft`, `remindme`, `shorturl`, `serverinfo`, `userinfo`, `whois` and **7** more!
+* **NSFW**: `nsfw` =)
+* **Bot's owner commands**: `eval`, `servers`, `reload` and **2** more!
 
 ## *Kinda* Cool Dashboard
 
