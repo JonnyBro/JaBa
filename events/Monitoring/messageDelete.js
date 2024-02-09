@@ -25,8 +25,8 @@ class messageDelete extends BaseEvent {
 					name: message.author.getUsername(),
 					iconURL: message.author.displayAvatarURL(),
 				},
-				title: `${message.author.getUsername()} deleted a message!`,
-				description: `Message content was: \`\`\`${message.content}\`\`\``,
+				title: message.translate("common:MONITORING:DELETE:TITLE", { user: message.author.getUsername() }),
+				description: message.translate("common:MONITORING:DELETE:DESCRIPTION", { content: message.content, channel: message.channel.toString(), time: message.createdTimestamp }),
 			});
 
 			message.guild.channels.cache.get(guildData.plugins.monitoring.messageDelete).send({

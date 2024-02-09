@@ -21,6 +21,17 @@
 	"QUOTE_JUMP": "Перейти до",
 	"QUOTE_FOOTER": "Цитував {{user}}",
 
+	"MONITORING": {
+		"DELETE": {
+			"TITLE": "{{user}} видалив повідомлення!",
+			"DESCRIPTION": "Вміст повідомлення було: ```{{content}}```\nКанал: {{channel}}\nЧас створення: {{time}}"
+		},
+		"UPDATE": {
+			"TITLE": "{{user}} оновив повідомлення!",
+			"DESCRIPTION": "Старе повідомлення: ```{{oldContent}}```\nНове повідомлення: ```{{newContent}}```\nПерейти до повідомлення: {{url}}"
+		}
+	},
+
 	"PERMISSIONS": {
 		"CreateInstantInvite": "Створення запрошення",
 		"KickMembers": "Виганяти учасників",

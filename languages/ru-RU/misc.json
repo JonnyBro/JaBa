@@ -21,6 +21,17 @@
 	"QUOTE_JUMP": "Перейти к",
 	"QUOTE_FOOTER": "Цитировал {{user}}",
 
+	"MONITORING": {
+		"DELETE": {
+			"TITLE": "{{user}} удалил сообщение!",
+			"DESCRIPTION": "Содержимое сообщения было: ```{{content}}```\nКанал: {{channel}}\nВремя создания: {{time}}"
+		},
+		"UPDATE": {
+			"TITLE": "{{user}} обновил сообщение!",
+			"DESCRIPTION": "Старое сообщение: ```{{oldContent}}```\nНовое сообщение: ```{{newContent}}```\nПерейти к сообщению: {{url}}"
+		}
+	},
+
 	"PERMISSIONS": {
 		"CreateInstantInvite": "Создание приглашения",
 		"KickMembers": "Выгонять участников",

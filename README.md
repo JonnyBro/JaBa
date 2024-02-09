@@ -15,7 +15,8 @@ JaBa offers:
 * Slash and Context commands.
 * Supports commands in DMs.
 * Localization support (any language; English, Russian and Ukrainian now).
-* Dashboard for changing various settings.\
+* Dashboard for changing various settings.
+* Basic messages monitoring (Updating and deletion).
 
 ## Commands
 
