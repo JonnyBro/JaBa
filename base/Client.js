@@ -179,12 +179,15 @@ class JaBaClient extends Client {
 			.setImage(data.image || null)
 			.setURL(data.url || null)
 			.setColor(data.color || this.config.embed.color)
-			.setFooter(data.footer || this.config.embed.footer)
-			.setTimestamp(data.timestamp || null);
+			.setFooter(data.footer || this.config.embed.footer);
+
+		if (data.timestamp) embed.setTimestamp(data.timestamp);
+		else if (data.timestamp === null) embed.setTimestamp(null);
+		else embed.setTimestamp();
 
 		if (typeof data.author === "string") embed.setAuthor({ name: data.author, iconURL: this.user.avatarURL() });
 		else if (typeof data.author === "object" && (data.author.iconURL !== null || data.author.iconURL !== undefined)) embed.setAuthor({ name: data.author.name, iconURL: this.user.avatarURL() });
-		else if (!data.author) embed.setAuthor(null);
+		else if (!data.author || data.author === null) embed.setAuthor(null);
 		else embed.setAuthor(data.author);
 
 		return embed;
