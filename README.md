@@ -2,74 +2,69 @@
 
 # JaBa Bot
 
-[![](https://img.shields.io/discord/892727526911258654?logo=discord&&colorB=00BFFF&label=%D0%9A%D0%BE%D0%BF%D0%B8%D0%BF%D0%B0%D1%81%D1%82%D0%B5%D1%80%D1%8B&style=flat-square)](https://discord.gg/Ptkj2n9nzZ)
-[![](https://img.shields.io/badge/discord.js-v14.13.0-blue.svg?logo=npm)](https://github.com/discordjs/discord.js)
-[![](https://www.codefactor.io/repository/github/JonnyBro/JaBa/badge)](https://www.codefactor.io/repository/github/JonnyBro/JaBa)
-[![](https://img.shields.io/github/license/JonnyBro/JaBa?label=%D0%9B%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F%20&style=flat-square)](https://github.com/JonnyBro/JaBa/blob/main/LICENSE)<br>
-JaBa это *Discord* бот с открытым (теперь) исходным кодом, написанный [Jonny_Bro](https://github.com/JonnyBro) на JavaScript с помощью [discord.js](https://github.com/discordjs/discord.js) и [Mongoose](https://mongoosejs.com).
+[![image](https://img.shields.io/discord/892727526911258654?logo=discord&&colorB=00BFFF&label=%D0%9A%D0%BE%D0%BF%D0%B8%D0%BF%D0%B0%D1%81%D1%82%D0%B5%D1%80%D1%8B&style=flat-square)](https://discord.gg/Ptkj2n9nzZ)
+[![image](https://img.shields.io/badge/discord.js-v14.13.0-blue.svg?logo=npm)](https://github.com/discordjs/discord.js)
+[![image](https://www.codefactor.io/repository/github/JonnyBro/JaBa/badge)](https://www.codefactor.io/repository/github/JonnyBro/JaBa)
+[![image](https://img.shields.io/github/license/JonnyBro/JaBa?label=%D0%9B%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F%20&style=flat-square)](https://github.com/JonnyBro/JaBa/blob/main/LICENSE)\
+JaBa is an open source Discord Bot written by [Jonny_Bro](https://github.com/JonnyBro) using [discord.js](https://github.com/discordjs/discord.js) and [Mongoose](https://mongoosejs.com).
 
-## Функционал
+## Functionality
 
-JaBa предлагает:
+JaBa offers:
 
-* **/** Поддержка слэш-команд.
-* ✉️ Поддержка команд в личных сообщениях.
-* 🇷🇺 Поддержка локализации (любое кол-во языков).
-* ⚙️ Панель управления для настройки разнообразных параметров бота, для каждого сервера отдельно.<br>
+* **/** Slash and Context commands.
+* ✉️ Supports commands in DMs.
+* 🇷🇺 Localization support (any language; English, Russian and Ukrainian now).
+* ⚙️ Dashboard for changing various settings.\
 
-## Множество команд
+## Commands
 
-JaBa имеет множество функций, вот **8 основных категорий**:
+JaBa does many thing, here is **8 main categories**:
 
-* 👩‍💼 **Администрирование**: `automod`, `autorole`, `config`, `goodbye`, `selectroles`, `stealemoji` и ещё **3** команды!
-* 🚓 **Модерация**: `clear`, `giveaway`, `poll`, `warn` и ещё **3** команды!
-* 🎵 **Музыка**: `play`, `skip`, `queue`, `nowplaying`, `shuffle` и ещё **7** команд!
-* 💰 **Экономика**: `profile`, `work`, `achievements`, `slots`, `tictactoe`, `leaderboard` и ещё **12** команд!
-* 👻 **Веселье**: `8ball`, `crab`, `lmgtfy`, `lovecalc`, `memes` и ещё **2** команды!
-* 🖨️ **Основные**: `afk`, `avatar`, `boosters`, `minecraft`, `remindme`, `shorturl`, `serverinfo`, `userinfo`, `whois` и ещё **7** команд!
+* 👩‍💼 **Administration**: `automod`, `autorole`, `config`, `goodbye`, `selectroles`, `stealemoji` and **3** more!
+* 🚓 **Moderation**: `clear`, `giveaway`, `poll`, `warn` and **4** more!
+* 🎵 **Music**: `play`, `skip`, `queue`, `nowplaying`, `shuffle` and **8** more!
+* 💰 **Economy**: `profile`, `work`, `achievements`, `slots`, `tictactoe`, `leaderboard` and **9** more!
+* 👻 **Fun**: `8ball`, `crab`, `lmgtfy`, `lovecalc`, `memes` and **2** more!
+* 🖨️ **General**: `afk`, `avatar`, `boosters`, `minecraft`, `remindme`, `shorturl`, `serverinfo`, `userinfo`, `whois` and **7** more!
 * ❤ **NSFW**: `nsfw` =)
-* 👑 **Команды владельца**: `eval`, `getinvite`, `servers-list` и ещё **2** команды!
+* 👑 **Bot's owner commands**: `eval`, `servers`, `reload` and **2** more!
 
-> [!NOTE]
-> [Список изменений](https://blog.jababot.ru)\
-> [Полный список команд](https://dash.jababot.ru/commands)
+## *Kinda* Cool Dashboard
 
-## *Относительно* мощная панель управления
+JaBa has it's own dashboard to change server's settings!
 
-У JaBa есть своя панель управления с доступом к настройке параметров сервера!
+## Get The Bot
 
-## Установка
+### Ready To Use
 
-### Приглашение бота
+You can invite JaBa on your server, message me (@jonny_bro) on Discord, find @JaBa#9042 on the server that uses it or join my [Server](https://discord.gg/NPkySYKMkN).
 
-Вы можете пригласить JaBa на свой сервер, для этого вам нужно написать @jonny_bro в Discord или найти @JaBa#9042 на другом сервере.
 > [!IMPORTANT]
-> Я решил сделать так, чтобы не было проблем с YouTube!
+> I'm not sharing the invite link or YouTube will cry
 
-### Хостинг своей версии
+### Selfhosting
 
-Вы можете модифицировать код JaBa и запустить его на своей машине!\
-\
-Для этого следуйте [данной инструкции](https://github.com/JonnyBro/JaBa/wiki/Self-Hosting) (English)!
+You can host JaBa yourself!\
+Use [this instruction](https://github.com/JonnyBro/JaBa/wiki/Self-Hosting) to learn how!
 
-## Ссылки
+## Links
 
-* [Список команд](https://dash.jababot.ru/commands)
-* [Инструкция по установке](https://github.com/JonnyBro/JaBa/wiki/Self-Hosting)
+* [Changelog](https://blog.jababot.ru)
+* [Full commands list](https://dash.jababot.ru/commands)
 * [Discord](https://discord.gg/Ptkj2n9nzZ)
 * [Github](https://github.com/JonnyBro/JaBa/)
-* [Панель управления](https://dash.jababot.ru)
+* [Dashboard](https://dash.jababot.ru)
 
-## Поддержка
+## Support
 
-Перед **созданием сообщения об ошибке или вопросе**, пожалуйста, убедитесь что оно ещё не создано: [тык](/issues).\
-Если у вас есть какие-либо вопросы, вы можете задать их на моём [Discord сервере](https://discord.gg/NPkySYKMkN).\
-Если вы хотите помочь в разработке, можете создать форк и отправить запрос на вытягивание: [тык](/pulls)!
+If you have any questions you can ask them on my [Discord Server](https://discord.gg/NPkySYKMkN).\
+If you want to contribute, feel free to fork this repo and making a pull request!
 
 # TODO
 
-* [ ] Доделать панель управления.
+* [ ] Finish and release *dashboard-core* submodule.
 
-## Лицения
+## License
 
-JaBa использует лицензию *GNU GPL v3.0*. Вся информация о лицензии имеется в [LICENSE](LICENSE).
+JaBa uses *GNU GPL v3.0* license. You can find it here [LICENSE](LICENSE).
