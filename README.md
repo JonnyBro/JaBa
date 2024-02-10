@@ -14,9 +14,9 @@ JaBa offers:
 
 * Slash and Context commands.
 * Supports commands in DMs.
-* Localization support (any language; English, Russian and Ukrainian now).
+* Localization support (any language; English, Russian and Ukrainian for now).
 * Dashboard for changing various settings.
-* Basic messages monitoring (Updating and deletion).
+* Basic messages monitoring (updating and deletion).
 
 ## Commands
 
@@ -46,7 +46,7 @@ You can invite JaBa on your server, message me (@jonny_bro) on Discord, find @Ja
 
 ### Selfhosting
 
-You can host JaBa yourself!\
+You can host JaBa yourself.\
 Use [this instruction](https://github.com/JonnyBro/JaBa/wiki/Self-Hosting) to learn how!
 
 ## Links
