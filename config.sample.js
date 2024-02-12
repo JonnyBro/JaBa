@@ -9,7 +9,7 @@ module.exports = {
 	/* For the support server */
 	support: {
 		id: "123456789098765432", // The ID of the support server
-		logs: "123456789098765432", // And the ID of the logs channel of your server (new servers for example)
+		logs: "123456789098765432", // And the ID of the logs channel of your server (when bot joins or leaves a guild)
 		invite: "https://discord.gg/discord", // Invite link to your support server
 	},
 	/* Dashboard configuration */
