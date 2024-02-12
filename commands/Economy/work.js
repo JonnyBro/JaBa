@@ -59,7 +59,7 @@ class Work extends BaseCommand {
 
 		if (memberData.workStreak >= 5) {
 			won += 200;
-			embed.fields = [
+			embed.data.fields = [
 				{
 					name: interaction.translate("economy/work:SALARY"),
 					value: interaction.translate("economy/work:SALARY_CONTENT", {
@@ -80,7 +80,7 @@ class Work extends BaseCommand {
 					award[i] = `:regional_indicator_${letter.toLowerCase()}:`;
 				}
 			}
-			embed.fields = [
+			embed.data.fields = [
 				{
 					name: interaction.translate("economy/work:SALARY"),
 					value: interaction.translate("economy/work:SALARY_CONTENT", {
