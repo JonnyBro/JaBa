@@ -4,6 +4,7 @@ module.exports = {
 	/* ID of Bot's user */
 	userId: "123456789098765432",
 	/* Set to true for production */
+	/* If set to false, commands only will be registered on the support.id server */
 	production: true,
 	/* For the support server */
 	support: {
