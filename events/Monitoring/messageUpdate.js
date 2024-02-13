@@ -28,8 +28,8 @@ class messageUpdate extends BaseEvent {
 					name: newMessage.author.getUsername(),
 					iconURL: newMessage.author.displayAvatarURL(),
 				},
-				title: newMessage.translate("common:MONITORING:UPDATE:TITLE", { user: newMessage.author.getUsername() }),
-				description: newMessage.translate("common:MONITORING:UPDATE:DESCRIPTION", { oldContent: oldMessage.content, newContent: newMessage.content, url: newMessage.url }),
+				title: newMessage.translate("misc:MONITORING:UPDATE:TITLE", { user: newMessage.author.getUsername() }),
+				description: newMessage.translate("misc:MONITORING:UPDATE:DESCRIPTION", { oldContent: oldMessage.content, newContent: newMessage.content, url: newMessage.url }),
 			});
 
 			newMessage.guild.channels.cache.get(guildData.plugins.monitoring.messageUpdate).send({
