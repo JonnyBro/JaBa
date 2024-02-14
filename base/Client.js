@@ -137,8 +137,8 @@ class JaBaClient extends Client {
 		}
 
 		try {
-			if (this.config.production) await rest.put(Routes.applicationCommands(this.config.userId), { body: commands });
-			else await rest.put(Routes.applicationGuildCommands(this.config.userId, this.config.support.id), { body: commands });
+			if (this.config.production) await rest.put(Routes.applicationCommands(this.user.id), { body: commands });
+			else await rest.put(Routes.applicationGuildCommands(this.user.id, this.config.support.id), { body: commands });
 
 			this.logger.log("Successfully registered application commands.");
 		} catch (err) {
@@ -177,17 +177,23 @@ class JaBaClient extends Client {
 			.setThumbnail(data.thumbnail || null)
 			.addFields(data.fields || [])
 			.setImage(data.image || null)
-			.setURL(data.url || null)
-			.setColor(data.color || this.config.embed.color)
-			.setFooter(data.footer || this.config.embed.footer);
+			.setURL(data.url || null);
+
+		if (data.color) embed.setColor(data.color);
+		else if (data.color === null) embed.setColor(null);
+		else embed.setColor(this.config.embed.color);
+
+		if (data.footer) embed.setFooter(data.footer);
+		else if (data.footer === null) embed.setFooter(null);
+		else embed.setFooter(this.config.embed.footer);
 
 		if (data.timestamp) embed.setTimestamp(data.timestamp);
 		else if (data.timestamp === null) embed.setTimestamp(null);
 		else embed.setTimestamp();
 
-		if (typeof data.author === "string") embed.setAuthor({ name: data.author, iconURL: this.user.avatarURL() });
+		if (!data.author || data.author === null) embed.setAuthor(null);
+		else if (typeof data.author === "string") embed.setAuthor({ name: data.author, iconURL: this.user.avatarURL() });
 		else if (typeof data.author === "object" && (data.author.iconURL !== null || data.author.iconURL !== undefined)) embed.setAuthor({ name: data.author.name, iconURL: this.user.avatarURL() });
-		else if (!data.author || data.author === null) embed.setAuthor(null);
 		else embed.setAuthor(data.author);
 
 		return embed;

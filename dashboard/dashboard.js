@@ -45,7 +45,7 @@ module.exports.load = async client => {
 	const Dashboard = new DBD.Dashboard({
 		port: client.config.dashboard.port,
 		client: {
-			id: client.config.userId,
+			id: client.user.id,
 			secret: client.config.dashboard.secret,
 		},
 		cookiesSecret: client.config.dashboard.secret,
@@ -55,7 +55,7 @@ module.exports.load = async client => {
 		ownerIDs: [client.config.owner.id],
 		requiredPermissions: PermissionsBitField.Flags.ViewChannel,
 		invite: {
-			clientId: client.config.userId,
+			clientId: client.user.id,
 			scopes: ["bot", "applications.commands"],
 			permissions: "8",
 			redirectUri: `${client.config.dashboard.domain}`,
