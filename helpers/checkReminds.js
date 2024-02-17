@@ -16,7 +16,7 @@ module.exports.init = function (client) {
 			const cachedUser = client.users.cache.get(user.id);
 
 			if (cachedUser) {
-				const dateNow = Date.now(),
+				const dateNow = Math.floor(Date.now() / 1000),
 					reminds = user.reminds,
 					mustSent = reminds.filter(r => r.sendAt < dateNow);
 
