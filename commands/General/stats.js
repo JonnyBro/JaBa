@@ -60,7 +60,7 @@ class Stats extends BaseCommand {
 				{
 					name: client.customEmojis.status.online + " " + interaction.translate("general/stats:ONLINE_TITLE"),
 					value: interaction.translate("general/stats:ONLINE_CONTENT", {
-						time: `<t:${Math.floor((Date.now() + client.uptime) / 1000)}:R>`,
+						time: `<t:${Math.floor((Date.now() - client.uptime) / 1000)}:R>`,
 					}),
 				},
 				{
