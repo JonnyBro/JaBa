@@ -137,12 +137,12 @@ class JaBaClient extends Client {
 		}
 
 		try {
-			if (this.config.production) await rest.put(Routes.applicationCommands(this.user.id), { body: commands });
-			else await rest.put(Routes.applicationGuildCommands(this.user.id, this.config.support.id), { body: commands });
+			if (this.config.production) await rest.put(Routes.applicationCommands(this.config.userId), { body: commands });
+			else await rest.put(Routes.applicationGuildCommands(this.config.userId, this.config.support.id), { body: commands });
 
 			this.logger.log("Successfully registered application commands.");
 		} catch (err) {
-			this.logger.error(`Error during commands registration!\n${err.message}`);
+			console.log(err);
 		}
 	}
 

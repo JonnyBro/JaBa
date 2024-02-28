@@ -55,10 +55,17 @@ class LMGTFY extends BaseCommand {
 			url = `https://letmegooglethat.com/?q=${encodeURIComponent(query)}`;
 
 		if (short) {
-			const res = await fetch(`https://plsgo.ru/yourls-api.php?signature=${client.config.apiKeys.jababot_yourls}&action=shorturl&url=${encodeURIComponent(url)}&format=json`).then(res => res.json());
+			const res = await fetch("https://plsgo.ru/rest/v3/short-urls", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Api-Key": client.config.apiKeys.shlink,
+				},
+				body: new URLSearchParams({ longUrl: url }),
+			}).then(res => res.json());
 
 			interaction.editReply({
-				content: `<${res.shorturl}>`,
+				content: `<${res.shortUrl}>`,
 			});
 		} else {
 			interaction.editReply({

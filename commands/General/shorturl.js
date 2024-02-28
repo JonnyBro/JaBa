@@ -38,12 +38,20 @@ class Shorturl extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
-		const url = interaction.options.getString("url");
-		const res = await fetch(`https://plsgo.ru/yourls-api.php?signature=${client.config.apiKeys.jababot_yourls}&action=shorturl&url=${encodeURIComponent(url)}&format=json`).then(res => res.json());
+		await interaction.deferReply({ ephemeral: true });
 
-		interaction.reply({
-			content: `<${res.shorturl}>`,
-			ephemeral: true,
+		const url = interaction.options.getString("url");
+		const res = await fetch("https://plsgo.ru/rest/v3/short-urls", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+				"X-Api-Key": client.config.apiKeys.shlink,
+			},
+			body: new URLSearchParams({ longUrl: url }),
+		}).then(res => res.json());
+
+		interaction.editReply({
+			content: `<${res.shortUrl}>`,
 		});
 	}
 }

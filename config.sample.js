@@ -1,6 +1,8 @@
 module.exports = {
 	/* The token of your Discord Bot */
 	token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+	/* UserID of your Discord Bot */
+	userId: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 	/* The URL of the MongoDB database */
 	mongoDB: "mongodb://127.0.0.1:27017/discordbot",
 	/* Set to true for production */
@@ -34,6 +36,6 @@ module.exports = {
 	},
 	/* Add your own API keys here */
 	apiKeys: {
-
+		shlink: "12345678-1234-1234-1234-123456789098", /* Shlink.io REST API key */
 	},
 };
