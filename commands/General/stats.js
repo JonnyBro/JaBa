@@ -54,7 +54,7 @@ class Stats extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.ram + " " + interaction.translate("general/stats:RAM_TITLE"),
-					value: `\`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB\``,
+					value: `\`${Math.floor(process.memoryUsage().heapUsed / 1024 / 1024)}MB\``,
 					inline: true,
 				},
 				{
