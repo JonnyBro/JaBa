@@ -68,7 +68,7 @@ class Play extends BaseCommand {
 
 			interaction.editReply({
 				content: interaction.translate("music/play:ADDED_QUEUE", {
-					songName: searchResult.hasPlaylist() ? searchResult.playlist.title : searchResult.tracks[0].title,
+					songName: searchResult.hasPlaylist() ? searchResult.playlist.title : `${searchResult.tracks[0].title} - ${searchResult.tracks[0].author}`,
 				}),
 			});
 		}

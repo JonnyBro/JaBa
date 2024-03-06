@@ -41,7 +41,7 @@ class JaBaClient extends Client {
 		this.player.events.on("playerStart", async (queue, track) => {
 			const m = (
 				await queue.metadata.channel.send({
-					content: this.translate("music/play:NOW_PLAYING", { songName: track.title }, queue.metadata.data.guild.language),
+					content: this.translate("music/play:NOW_PLAYING", { songName: `${track.title} - ${track.author}` }, queue.metadata.data.guild.language),
 				})
 			).id;
 

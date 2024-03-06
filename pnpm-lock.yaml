@@ -30,8 +30,8 @@ dependencies:
     specifier: ^2.4.4
     version: 2.4.4
   discord-api-types:
-    specifier: ^0.37.68
-    version: 0.37.68
+    specifier: ^0.37.71
+    version: 0.37.71
   discord-giveaways:
     specifier: ^6.0.1
     version: 6.0.1(discord.js@14.14.1)
@@ -735,8 +735,8 @@ packages:
     resolution: {integrity: sha512-o/dXNFfhBpYHpQFdT6FWzeO7pKc838QeeZ9d91CfVAtpr5XLK4B/zYxQbYgPdoMiTDvJfzcsLW5naXgmHGDNXw==}
     dev: false
 
-  /discord-api-types@0.37.68:
-    resolution: {integrity: sha512-KmRAd3kjsgHnkani0R6RvLPIyE3T1ExvVquCyWWautU4tbFmGyici14h9L/rqF6DR4LAi/+R8ITWdX2B+MpkrA==}
+  /discord-api-types@0.37.71:
+    resolution: {integrity: sha512-oYDVWoiQdblr9DpwOgpi5d78dVhPcoN9YZCCqYZf2T0v9+iICs7k2bYGumoHuYMtaIitpp5aQNs+2guVkgjbOA==}
     dev: false
 
   /discord-giveaways@6.0.1(discord.js@14.14.1):
@@ -778,7 +778,7 @@ packages:
       '@discord-player/ffmpeg': 0.1.0
       '@discord-player/opus': 0.1.2
       '@types/ws': 8.5.10
-      discord-api-types: 0.37.68
+      discord-api-types: 0.37.71
       prism-media: 1.3.5(@discordjs/opus@0.9.0)
       tslib: 2.6.2
       ws: 8.14.2

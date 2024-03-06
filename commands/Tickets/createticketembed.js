@@ -35,9 +35,9 @@ class CreateTicketEmbed extends BaseCommand {
 				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
 
 				const guildData = interaction.guild.data,
-					ticketsCategory = guildData.plugins.tickets.ticketsCategory,
-					ticketLogs = guildData.plugins.tickets.ticketLogs,
-					transcriptionLogs = guildData.plugins.tickets.transcriptionLogs;
+					ticketsCategory = guildData.plugins?.tickets?.ticketsCategory,
+					ticketLogs = guildData.plugins?.tickets?.ticketLogs,
+					transcriptionLogs = guildData.plugins?.tickets?.transcriptionLogs;
 
 				const button = interaction.component;
 
