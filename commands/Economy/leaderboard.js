@@ -79,7 +79,7 @@ class Leaderboard extends BaseCommand {
 				money += `${data.money}\n`;
 			}
 
-			embed.fields = [
+			embed.data.fields = [
 				{
 					name: interaction.translate("common:USER"),
 					value: userNames,
@@ -120,7 +120,7 @@ class Leaderboard extends BaseCommand {
 				xp.push(`${data.xp} / ${5 * (data.level * data.level) + 80 * data.level + 100}`);
 			}
 
-			embed.fields = [
+			embed.data.fields = [
 				{
 					name: interaction.translate("common:USER"),
 					value: userNames.join("\n"),
@@ -163,7 +163,7 @@ class Leaderboard extends BaseCommand {
 				rep += `${data.rep}\n`;
 			}
 
-			embed.fields = [
+			embed.data.fields = [
 				{
 					name: interaction.translate("common:USER"),
 					value: userNames,
