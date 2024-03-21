@@ -42,7 +42,6 @@ class NSFW extends BaseCommand {
 					image = new AttachmentBuilder(res, { name: "image.jpeg" });
 
 				const embed = client.embed({
-					title: "xd",
 					image: "attachment://image.jpeg",
 				});
 
