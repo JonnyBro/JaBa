@@ -1,4 +1,4 @@
 [submodule "dashboard/dashboard-core"]
 	path = dashboard/dashboard-core
-	url = http://192.168.1.200:3000/jonny_bro/dashboard-core
+	url = https://git.jonnybro.ru/jonny_bro/dashboard-core
 	branch = main
