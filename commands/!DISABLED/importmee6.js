@@ -12,7 +12,10 @@ class ImportMee6 extends BaseCommand {
 			command: new SlashCommandBuilder()
 				.setName("importmee6")
 				.setDescription(client.translate("economy/importmee6:DESCRIPTION"))
-				.setDescriptionLocalizations({ uk: client.translate("economy/importmee6:DESCRIPTION", null, "uk-UA"), ru: client.translate("economy/importmee6:DESCRIPTION", null, "ru-RU") })
+				.setDescriptionLocalizations({
+					uk: client.translate("economy/importmee6:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("economy/importmee6:DESCRIPTION", null, "ru-RU"),
+				})
 				.setDMPermission(false),
 			dirname: __dirname,
 			ownerOnly: false,

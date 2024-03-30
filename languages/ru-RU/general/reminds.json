@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Список ваших напоминаний",
+	"USAGE": "",
+	"EXAMPLES": "reminds",
+	"NO_REMINDS": "Напоминания отсутствуют",
+	"REMINDS_LIST": "Список Напоминаний"
+}

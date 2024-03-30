@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Lists your reminds",
+	"USAGE": "",
+	"EXAMPLES": "reminds",
+	"NO_REMINDS": "No reminds found",
+	"REMINDS_LIST": "Reminds List"
+}

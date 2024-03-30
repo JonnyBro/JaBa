@@ -1,0 +1,5 @@
+{
+	"DESCRIPTION": "Добавляет эмодзи на сервер по ссылке",
+	"USAGE": "[link] [name]",
+	"EXAMPLES": "addemoji link:https://google.com name:google"
+}
