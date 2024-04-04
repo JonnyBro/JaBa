@@ -122,7 +122,7 @@ function generateServersEmbeds(interaction, servers) {
 
 		const embed = interaction.client.embed({
 			title: interaction.translate("owner/servers:SERVERS_LIST"),
-			Description: info,
+			description: info,
 		});
 
 		embeds.push(embed);
