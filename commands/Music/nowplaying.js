@@ -278,7 +278,7 @@ async function updateEmbed(interaction, queue) {
 				value: progressBar,
 			},
 			{
-				name: "\u200b",
+				name: "\u200B",
 				value: `${interaction.translate("music/nowplaying:REPEAT")}: \`${translated[mode]}\``,
 			},
 		],

@@ -1,18 +1,12 @@
 const moment = require("moment");
 
-moment.relativeTimeThreshold("ss", 5);
-moment.relativeTimeThreshold("s", 60);
-moment.relativeTimeThreshold("m", 60);
-moment.relativeTimeThreshold("h", 60);
-moment.relativeTimeThreshold("d", 24);
-moment.relativeTimeThreshold("M", 12);
-
 module.exports = {
 	/**
-	 * Calls a Callback for Each Element in Collection Asynchronously
-	 * @param {Array} collection Collection
-	 * @param {Function} callback Function to Perform on Collection
-	 * @returns {Promise}
+	 * Asynchronously iterates over a collection and executes a callback function for each item.
+	 *
+	 * @param {any[]} collection - The collection to iterate over.
+	 * @param {(item: any) => Promise<void>} callback - The async callback function to execute for each item in the collection.
+	 * @returns {Promise<void>} A promise that resolves when all items in the collection have been processed.
 	 */
 	async asyncForEach(collection, callback) {
 		const allPromises = collection.map(async key => {
@@ -23,10 +17,11 @@ module.exports = {
 	},
 
 	/**
-	 * Sorts an Array by Key
-	 * @param {Array} array Array to Sort
-	 * @param {Number} key Key
-	 * @returns {Array} Sorted Array
+	 * Sorts an array by the specified key in ascending order.
+	 *
+	 * @param {any[]} array - The array to sort.
+	 * @param {string} key - The key to sort the array by.
+	 * @returns {any[]} The sorted array.
 	 */
 	sortByKey(array, key) {
 		return array.sort(function (a, b) {
@@ -37,9 +32,10 @@ module.exports = {
 	},
 
 	/**
-	 * Shuffles the Array
-	 * @param {Array} pArray Array to Shuffle
-	 * @returns {Array} Shuffled Array
+	 * Shuffles the elements of the provided array in-place.
+	 *
+	 * @param {any[]} pArray - The array to shuffle.
+	 * @returns {any[]} The shuffled array.
 	 */
 	shuffle(pArray) {
 		const array = [];
@@ -63,10 +59,11 @@ module.exports = {
 	},
 
 	/**
-	 * Returns a Random Number Between min (inclusive) And max (inclusive)
-	 * @param {Number} min Min value (inclusive)
-	 * @param {Number} max Max value (inclusive)
-	 * @returns {Number} Integer
+	 * Generates a random integer between the specified minimum and maximum values (inclusive).
+	 *
+	 * @param {number} min - The minimum value (inclusive).
+	 * @param {number} max - The maximum value (inclusive).
+	 * @returns {number} A random integer between min and max.
 	 */
 	randomNum(min, max) {
 		min = Math.ceil(min);
@@ -76,12 +73,13 @@ module.exports = {
 	},
 
 	/**
-	 * Beautifies the given Date
-	 * @param {import("../base/Client")} client Discord Client
-	 * @param {Date} date Date
-	 * @param {String | null} format Format for Moment
-	 * @param {String} locale Language
-	 * @returns {String} Beautified Date
+	 * Formats a date for the specified client and locale.
+	 *
+	 * @param {Object} client - The client object containing language data.
+	 * @param {string} date - The date to format.
+	 * @param {string} [format=null] - The date format to use. If not provided, the default format for the client's language will be used.
+	 * @param {string} [locale=client.defaultLanguage.name] - The locale to use for formatting the date.
+	 * @returns {string} The formatted date.
 	 */
 	printDate(client, date, format = null, locale = client.defaultLanguage.name) {
 		const languageData = client.languages.find(language => language.name === locale);
@@ -91,13 +89,14 @@ module.exports = {
 	},
 
 	/**
-	 * Converts the Given Time
-	 * @param {import("../base/Client")} client Discord Client
-	 * @param {String} time Time
-	 * @param {Boolean} type Type (To now = true or from now = false)
-	 * @param {Boolean} prefix Include Prefix
-	 * @param {String} locale Language
-	 * @returns {String} Time
+	 * Formats a time value relative to the current time.
+	 *
+	 * @param {Object} client - The client object containing language data.
+	 * @param {string|number|Date} time - The time value to format.
+	 * @param {boolean} [type=false] - If true, formats the time as "X time ago", otherwise formats it as "in X time".
+	 * @param {boolean} [prefix=true] - If true, includes a prefix like "in" or "ago" in the formatted time.
+	 * @param {string} [locale=client.defaultLanguage.name] - The locale to use for formatting the time.
+	 * @returns {string} The formatted time value.
 	 */
 	convertTime(client, time, type = false, prefix = true, locale = client.defaultLanguage.name) {
 		const languageData = client.languages.find(language => language.name === locale);
@@ -107,12 +106,13 @@ module.exports = {
 	},
 
 	/**
-	 * Get a Noun for Number
-	 * @param {Number} number Number
-	 * @param {String} one String for one
-	 * @param {String} two String for two
-	 * @param {String} five String for five
-	 * @returns
+	 * Generates the appropriate noun form based on the given number and noun forms.
+	 *
+	 * @param {number} number - The number to use for determining the noun form.
+	 * @param {string} one - The noun form for the singular case.
+	 * @param {string} two - The noun form for the dual case.
+	 * @param {string} five - The noun form for the plural case.
+	 * @returns {string} The appropriate noun form based on the given number.
 	 */
 	getNoun(number, one, two, five) {
 		let n = Math.abs(number);

@@ -91,11 +91,11 @@ class Poll extends BaseCommand {
 					author: interaction.translate("moderation/poll:TITLE"),
 					fields: [
 						{
-							name: "\u200b",
+							name: "\u200B",
 							value: question,
 						},
 						{
-							name: "\u200b",
+							name: "\u200B",
 							value: interaction.translate("moderation/poll:REACT", {
 								success: cool.toString(),
 								error: notcool.toString(),

@@ -81,7 +81,11 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * Logins into the account and connects to the database
+	 * Initializes the client by logging in with the provided token and connecting to the MongoDB database.
+	 *
+	 * This method is called during the client's startup process to set up the necessary connections and resources.
+	 *
+	 * @returns {Promise<void>} A Promise that resolves when the client is fully initialized.
 	 */
 	async init() {
 		this.login(this.config.token);
@@ -100,8 +104,14 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * Loads all commands from directory
-	 * @param {String} dir Directory where commands are located
+	 * Loads all the commands from the specified directory and registers them with the Discord API.
+	 *
+	 * This method is responsible for dynamically loading all the command files from the specified directory,
+	 * creating instances of the corresponding command classes, and registering the commands with the Discord API.
+	 * It also handles any additional setup or initialization required by the loaded commands.
+	 *
+	 * @param {string} dir - The directory path where the command files are located.
+	 * @returns {Promise<void>} A Promise that resolves when all the commands have been loaded and registered.
 	 */
 	async loadCommands(dir) {
 		const rest = new REST().setToken(this.config.token),
@@ -147,17 +157,19 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * @returns {String} Bot's default language
+	 * Returns the default language from the list of available languages.
+	 * @returns {Language} The default language.
 	 */
 	get defaultLanguage() {
 		return this.languages.find(language => language.default);
 	}
 
 	/**
-	 * Translates from a key to language
-	 * @param {String} key Key
-	 * @param {Array} args Arguments for translation
-	 * @param {String} locale Language
+	 * Translates a key using the specified locale, or the default language if no locale is provided.
+	 * @param {string} key The translation key to look up.
+	 * @param {any[]} args Any arguments to pass to the translation function.
+	 * @param {string} [locale=this.defaultLanguage.name] The locale to use for the translation. Defaults to the default language.
+	 * @returns {string} The translated string.
 	 */
 	translate(key, args, locale = this.defaultLanguage.name) {
 		const lang = this.translations.get(locale);
@@ -166,9 +178,19 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * Returns an embed created from given data
-	 * @param {Object} data Data for embed
-	 * @returns {import("discord.js").Embed}
+	 * Generates an EmbedBuilder instance with the provided data.
+	 * @param {Object} data - The data to use for the embed.
+	 * @param {string} [data.title] - The title of the embed.
+	 * @param {string} [data.description] - The description of the embed.
+	 * @param {string} [data.thumbnail] - The URL of the thumbnail image for the embed.
+	 * @param {Object[]} [data.fields] - An array of field objects for the embed.
+	 * @param {string} [data.image] - The URL of the image for the embed.
+	 * @param {string} [data.url] - The URL to be used as the embed's hyperlink.
+	 * @param {number} [data.color] - The color of the embed's border. If not provided, the default color from the client's configuration will be used.
+	 * @param {string} [data.footer] - The text to be displayed as the embed's footer. If not provided, the default footer from the client's configuration will be used.
+	 * @param {Date} [data.timestamp] - The timestamp to be displayed in the embed's footer. If not provided, the current timestamp will be used.
+	 * @param {string|Object} [data.author] - The author information for the embed. Can be a string (name) or an object with `name` and/or `iconURL` properties.
+	 * @returns {EmbedBuilder} The generated EmbedBuilder instance.
 	 */
 	embed(data) {
 		const embed = new EmbedBuilder()
@@ -193,16 +215,16 @@ class JaBaClient extends Client {
 
 		if (!data.author || data.author === null) embed.setAuthor(null);
 		else if (typeof data.author === "string") embed.setAuthor({ name: data.author, iconURL: this.user.avatarURL() });
-		else if (typeof data.author === "object" && (data.author.iconURL !== null || data.author.iconURL !== undefined)) embed.setAuthor({ name: data.author.name, iconURL: this.user.avatarURL() });
+		else if (typeof data.author === "object" && (data.author.iconURL !== null || data.author.iconURL !== undefined)) embed.setAuthor({ name: data.author.name, iconURL: data.author.iconURL });
 		else embed.setAuthor(data.author);
 
 		return embed;
 	}
 
 	/**
-	 * Creates an invite link for guild
-	 * @param {String} guildId Guild ID
-	 * @returns {String} Invite link
+	 * Creates an invite for the specified guild.
+	 * @param {string} guildId - The ID of the guild to create the invite for.
+	 * @returns {Promise<string>} The URL of the created invite, or an error message if no suitable channel was found or the bot lacks the necessary permissions.
 	 */
 	async createInvite(guildId) {
 		const guild = this.guilds.cache.get(guildId),
@@ -213,9 +235,10 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * Loads a single command from directory
-	 * @param {String} dir Directory where command is located
-	 * @param {String} file Filename of the command
+	 * Loads a command from the specified directory and file.
+	 * @param {string} dir - The directory containing the command file.
+	 * @param {string} file - The name of the command file (without the .js extension).
+	 * @returns {Promise<string>} A log message indicating the successful loading of the command.
 	 */
 	async loadCommand(dir, file) {
 		const Command = require(path.join(dir, `${file}.js`));
@@ -230,10 +253,10 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * Removes a command from cache
-	 * @param {String} dir Directory where command is located
-	 * @param {String} name Command name
-	 * @returns
+	 * Unloads a command from the specified directory and file.
+	 * @param {string} dir - The directory containing the command file.
+	 * @param {string} name - The name of the command file (without the .js extension).
+	 * @returns {void} This method does not return a value.
 	 */
 	async unloadCommand(dir, name) {
 		delete require.cache[require.resolve(`${dir}${path.sep}${name}.js`)];
@@ -242,8 +265,9 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * Loads all events from directory recursively
-	 * @param {String} dir Directory where events are located
+	 * Loads all event files from the specified directory and its subdirectories.
+	 * @param {string} dir - The directory containing the event files.
+	 * @returns {void} This method does not return a value.
 	 */
 	async loadEvents(dir) {
 		const filePath = path.join(__dirname, dir);
@@ -270,9 +294,9 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * Finds or creates a user in the database
-	 * @param {String} userID User ID
-	 * @returns {Promise<import("./User")>} Mongoose model
+	 * Finds or creates a user in the database based on the provided user ID.
+	 * @param {string} userID - The ID of the user to find or create.
+	 * @returns {Promise<Object>} The user data object, either retrieved from the database or newly created.
 	 */
 	async findOrCreateUser(userID) {
 		let userData = await this.usersData.findOne({ id: userID });
@@ -293,9 +317,11 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * Finds or creates a guild's member in the database
-	 * @param {Array} { id: Member ID, Guild ID }
-	 * @returns {Promise<import("./Member")>} Mongoose model
+	 * Finds or creates a member in the database based on the provided member ID and guild ID.
+	 * @param {Object} options - The options for finding or creating the member.
+	 * @param {string} options.id - The ID of the member to find or create.
+	 * @param {string} options.guildId - The ID of the guild the member belongs to.
+	 * @returns {Promise<Object>} The member data object, either retrieved from the database or newly created.
 	 */
 	async findOrCreateMember({ id: memberID, guildId }) {
 		let memberData = await this.membersData.findOne({ guildID: guildId, id: memberID });
@@ -324,9 +350,9 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * Finds or creates guild in DB
-	 * @param {String} guildId Guild ID
-	 * @returns {Promise<import("./Guild")>} Mongoose model
+	 * Finds or creates a guild in the database based on the provided guild ID.
+	 * @param {string} guildId - The ID of the guild to find or create.
+	 * @returns {Promise<Object>} The guild data object, either retrieved from the database or newly created.
 	 */
 	async findOrCreateGuild(guildId) {
 		let guildData = await this.guildsData.findOne({ id: guildId }).populate("members");
