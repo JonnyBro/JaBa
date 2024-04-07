@@ -9,10 +9,10 @@ Thumbs.db
 /giveaways.json
 
 # Clips
-/clips
+/clips/*
 
 # Node
 node_modules
 
-# SQlite
+# Dashboard DB
 /json.sqlite
