@@ -60,7 +60,7 @@ class Courses extends BaseCommand {
 				},
 				{
 					name: interaction.translate("beatrun.ru/courses:UPLOADER"),
-					value: `[${response.course.uploader.name}](https://steamcommunity.com/profiles/${response.course.uploader.userid})`,
+					value: `[${response.course.uploader.name || response.course.uploader.userid}](https://steamcommunity.com/profiles/${response.course.uploader.userid})`,
 					inline: true,
 				},
 				{
