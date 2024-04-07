@@ -1,4 +1,4 @@
-<img width="150" height="150" align="left" style="float: left; margin: 0 10px 0 0;" src="https://cdn.discordapp.com/attachments/1005529755296206940/1090005990717534269/af98d49ebc9bf28b40b45ed5a0a623b4.webp">
+<img width="150" height="150" align="left" style="float: left; margin: 0 10px 0 0;" src="https://images-ext-1.discordapp.net/external/khumNb7SPgoX2KAmnB5-37LF8Hsg_gb9BithY5gaO_w/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/708637495054565426/e1e9a50ec08988d1b25c13f8bd4801bd.webp">
 
 # JaBa Bot
 
