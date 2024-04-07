@@ -86,11 +86,11 @@ class WarnContext extends BaseCommand {
 				fields: [
 					{
 						name: interaction.translate("common:USER"),
-						value: `\`${member.user.getUsername()}\` (${member.user.toString()})`,
+						value: member.user.toString(),
 					},
 					{
 						name: interaction.translate("common:MODERATOR"),
-						value: `\`${interaction.user.getUsername()}\` (${interaction.user.toString()})`,
+						value: interaction.user.toString(),
 					},
 					{
 						name: interaction.translate("common:REASON"),
@@ -164,9 +164,9 @@ class WarnContext extends BaseCommand {
 			try {
 				await member.send({
 					content: interaction.translate("moderation/warn:WARNED_DM", {
-						user: member.user.getUsername(),
+						user: member.toString(),
 						server: interaction.guild.name,
-						moderator: interaction.user.getUsername(),
+						moderator: interaction.user.toString(),
 						reason,
 					}),
 				});

@@ -119,22 +119,17 @@ class Clear extends BaseCommand {
 		} else {
 			if (isNaN(option) || parseInt(option) < 1) return interaction.error("misc:OPTION_NAN_ALL", null, { ephemeral: true });
 
-			let messages = await interaction.channel.messages.fetch({
-				limit: option,
-			});
+			let messages = await interaction.channel.messages.fetch({ limit: option });
 
 			if (user_id && member) return interaction.replyT("moderation/clear:REQUIRE_ID_USER", null, { edit: true });
 			if (user_id || member) messages = messages.filter(m => m.author.id === (user_id || member.id));
 
-			interaction.channel.bulkDelete(
-				messages.filter(m => !m.pinned),
-				true,
-			);
+			interaction.channel.bulkDelete(messages.filter(m => !m.pinned), true);
 
 			if (member || user_id) {
 				interaction.replyT("moderation/clear:CLEARED_MEMBER", {
 					amount: `**${option}** ${client.functions.getNoun(option, interaction.translate("misc:NOUNS:MESSAGES:1"), interaction.translate("misc:NOUNS:MESSAGES:2"), interaction.translate("misc:NOUNS:MESSAGES:5"))}`,
-					user: (member && member.user.getUsername()) || user_id,
+					user: user_id || member.toString(),
 				}, { edit: true });
 			} else {
 				interaction.replyT("moderation/clear:CLEARED", {
