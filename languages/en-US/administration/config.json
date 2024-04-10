@@ -4,7 +4,7 @@
 	"EXAMPLES": "config list\nconfig set setting:reports state:True channel:#reports",
 
 	"SPECIAL_CHANNELS": "Special Channels",
-	"BIRTHDAYS": "Birthday Greetings",
+	"BIRTHDAYS": "Birthdays Announcements",
 	"MODLOGS": "Moderation Logs",
 	"REPORTS": "Reports",
 	"SUGGESTIONS": "Suggestions",

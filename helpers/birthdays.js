@@ -13,7 +13,7 @@ module.exports.init = async client => {
 				const channel = guild.channels.cache.get(guildData.plugins.birthdays),
 					date = new Date(),
 					currentDay = date.getDate(),
-					currentMonth = date.getMonth(),
+					currentMonth = date.getMonth() + 1,
 					currentYear = date.getFullYear();
 
 				if (channel) {
@@ -23,7 +23,7 @@ module.exports.init = async client => {
 
 							const userDate = new Date(user.birthdate * 1000),
 								day = userDate.getDate(),
-								month = userDate.getMonth(),
+								month = userDate.getMonth() + 1,
 								year = userDate.getFullYear(),
 								age = currentYear - year;
 
@@ -71,7 +71,7 @@ module.exports.run = async client => {
 			const channel = guild.channels.cache.get(guildData.plugins.birthdays),
 				date = new Date(),
 				currentDay = date.getDate(),
-				currentMonth = date.getMonth(),
+				currentMonth = date.getMonth() + 1,
 				currentYear = date.getFullYear();
 
 			if (channel) {
@@ -79,9 +79,9 @@ module.exports.run = async client => {
 					for (const user of users) {
 						if (!guild.members.cache.find(m => m.id === user.id)) return;
 
-						const userDate = new Date(user.birthdate),
+						const userDate = new Date(user.birthdate * 1000),
 							day = userDate.getDate(),
-							month = userDate.getMonth(),
+							month = userDate.getMonth() + 1,
 							year = userDate.getFullYear(),
 							age = currentYear - year;
 
