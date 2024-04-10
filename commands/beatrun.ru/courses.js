@@ -43,24 +43,25 @@ class Courses extends BaseCommand {
 
 		const code = interaction.options.getString("code");
 
-		const response = await fetch(`https://courses.beatrun.ru/api/stats/${code}`).then(res => res.json());
+		const response = await fetch(`https://courses.beatrun.ru/api/info/${code}`).then(res => res.json());
+		const course = response.data;
 
 		if (response.res === 401) return interaction.error("beatrun.ru/courses:NOT_FOUND", null, { ephemeral: true, edit: true });
 
 		const embed = client.embed({
 			title: code,
-			description: `[${interaction.translate("beatrun.ru/courses:DOWNLOAD")}](https://courses.beatrun.ru/${response.course.path})`,
-			thumbnail: response.course.mapimg,
+			description: `[${interaction.translate("beatrun.ru/courses:DOWNLOAD")}](https://courses.beatrun.ru/${course.path})`,
+			thumbnail: course.mapimg,
 			url: `https://courses.beatrun.ru/?search=${code}`,
 			fields: [
 				{
 					name: interaction.translate("beatrun.ru/courses:MAP"),
-					value: `[${response.course.map}](https://steamcommunity.com/sharedfiles/filedetails/?id=${response.course.mapid})`,
+					value: `[${course.map}](https://steamcommunity.com/sharedfiles/filedetails/?id=${course.mapid})`,
 					inline: true,
 				},
 				{
 					name: interaction.translate("beatrun.ru/courses:UPLOADER"),
-					value: `[${response.course.uploader.name || response.course.uploader.userid}](https://steamcommunity.com/profiles/${response.course.uploader.userid})`,
+					value: `[${course.uploader.name || course.uploader.userid}](https://steamcommunity.com/profiles/${course.uploader.userid})`,
 					inline: true,
 				},
 				{
@@ -70,12 +71,12 @@ class Courses extends BaseCommand {
 				},
 				{
 					name: interaction.translate("beatrun.ru/courses:DATE"),
-					value: `<t:${Math.floor(response.course.time / 1000)}:D>`,
+					value: `<t:${Math.floor(course.time / 1000)}:D>`,
 					inline: true,
 				},
 				{
 					name: interaction.translate("beatrun.ru/courses:PLAYS"),
-					value: `${response.course.plays || 0}`,
+					value: `${course.plays || 0}`,
 					inline: true,
 				},
 			],
