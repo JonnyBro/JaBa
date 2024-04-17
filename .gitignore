@@ -16,3 +16,6 @@ node_modules
 
 # Dashboard DB
 /json.sqlite
+
+# Cookies
+cookies.json
