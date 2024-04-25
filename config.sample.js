@@ -8,6 +8,14 @@ module.exports = {
 	/* Set to true for production */
 	/* If set to false, commands only will be registered on the support.id server */
 	production: true,
+	/* Lavalink Nodes */
+	lavalinkNodes: {
+		id: "localhost",
+		host: "localhost",
+		port: 2333,
+		authorization: "strongpassword",
+		secure: true,
+	},
 	/* Support server */
 	support: {
 		id: "123456789098765432", // The ID of the support server

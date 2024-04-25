@@ -1,7 +1,7 @@
 const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder, EmbedBuilder, PermissionsBitField, ChannelType } = require("discord.js"),
-	{ Player } = require("discord-player"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ REST } = require("@discordjs/rest"),
+	{ LavalinkManager } = require("lavalink-client"),
 	{ Routes } = require("discord-api-types/v10");
 
 const BaseEvent = require("./BaseEvent.js"),
@@ -34,39 +34,61 @@ class JaBaClient extends Client {
 		this.databaseCache.members = new Collection();
 		this.databaseCache.usersReminds = new Collection();
 
-		this.player = new Player(this);
+		this.lavalink = new LavalinkManager({
+			nodes: [this.config.lavalinkNodes],
+			sendToShard: (guildId, payload) => this.guilds.cache.get(guildId)?.shard?.send(payload),
+			client: {
+				id: this.config.userId,
+				username: "JaBa",
+			},
+			autoSkip: true,
+			playerOptions: {
+				defaultSearchPlatform: "ytmsearch",
+				volumeDecrementer: 1,
+				onDisconnect: {
+					autoReconnect: false,
+					destroyPlayer: true,
+				},
+				onEmptyQueue: {
+					destroyAfterMs: 5000,
+				},
+			},
+		});
 
-		this.player.extractors.loadDefault();
+		this.lavalink.on("trackStart", async (player, track) => {
+			const guildData = await this.findOrCreateGuild(player.guildId),
+				channel = this.channels.cache.get(player.textChannelId);
 
-		this.player.events.on("playerStart", async (queue, track) => {
 			const m = (
-				await queue.metadata.channel.send({
-					content: this.translate("music/play:NOW_PLAYING", { songName: `${track.title} - ${track.author}` }, queue.metadata.data.guild.language),
+				await channel.send({
+					content: this.translate("music/play:NOW_PLAYING", { songName: `${track.info.title} - ${track.info.author}` }, guildData.language),
 				})
 			).id;
 
-			if (track.durationMS > 1)
+			if (track.info.duration > 1)
 				setTimeout(() => {
-					const message = queue.metadata.channel.messages.cache.get(m);
+					const message = channel.messages.cache.get(m);
 
 					if (message && message.deletable) message.delete();
-				}, track.durationMS);
+				}, track.info.duration);
 			else
 				setTimeout(() => {
-					const message = queue.metadata.channel.messages.cache.get(m);
+					const message = channel.messages.cache.get(m);
 
 					if (message && message.deletable) message.delete();
 				}, 5 * 60 * 1000);
 		});
-		this.player.events.on("emptyQueue", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.data.guild.language)));
-		this.player.events.on("emptyChannel", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.data.guild.language)));
-		this.player.events.on("playerError", (queue, e) => {
-			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.data.guild.language) });
-			console.log(e);
+		this.lavalink.on("queueEnd", async player => {
+			const guildData = await this.findOrCreateGuild(player.guildId),
+				channel = this.channels.cache.get(player.textChannelId);
+
+			channel.send(this.translate("music/play:QUEUE_ENDED", null, guildData.language));
 		});
-		this.player.events.on("error", (queue, e) => {
-			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.data.guild.language) });
-			console.log(e);
+		this.lavalink.on("trackError", async player => {
+			const guildData = await this.findOrCreateGuild(player.guildId),
+				channel = this.channels.cache.get(player.textChannelId);
+
+			channel.send({ content: this.translate("music/play:ERR_OCCURRED", null, guildData.language) });
 		});
 
 		this.giveawaysManager = new GiveawaysManager(this, {
@@ -296,8 +318,8 @@ class JaBaClient extends Client {
 	/**
 	 * Finds or creates a user in the database based on the provided user ID.
 	 * @param {string} userID - The ID of the user to find or create.
-	 * @returns {Promise<Object>} The user data object, either retrieved from the database or newly created.
-	 */
+	 * @returns {import("./User")} The user data object, either retrieved from the database or newly created.
+	*/
 	async findOrCreateUser(userID) {
 		let userData = await this.usersData.findOne({ id: userID });
 
@@ -321,7 +343,7 @@ class JaBaClient extends Client {
 	 * @param {Object} options - The options for finding or creating the member.
 	 * @param {string} options.id - The ID of the member to find or create.
 	 * @param {string} options.guildId - The ID of the guild the member belongs to.
-	 * @returns {Promise<Object>} The member data object, either retrieved from the database or newly created.
+	 * @returns {import("./Member")} The member data object, either retrieved from the database or newly created.
 	 */
 	async findOrCreateMember({ id: memberID, guildId }) {
 		let memberData = await this.membersData.findOne({ guildID: guildId, id: memberID });
@@ -352,7 +374,7 @@ class JaBaClient extends Client {
 	/**
 	 * Finds or creates a guild in the database based on the provided guild ID.
 	 * @param {string} guildId - The ID of the guild to find or create.
-	 * @returns {Promise<Object>} The guild data object, either retrieved from the database or newly created.
+	 * @returns {import("./Guild")} The guild data object, either retrieved from the database or newly created.
 	 */
 	async findOrCreateGuild(guildId) {
 		let guildData = await this.guildsData.findOne({ id: guildId }).populate("members");
