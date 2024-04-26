@@ -109,8 +109,6 @@ class Number extends BaseCommand {
 					}),
 				});
 
-				channel.setArchived(true);
-
 				const deleteYes = new ButtonBuilder()
 					.setCustomId("number_delete_yes")
 					.setLabel(interaction.translate("common:YES"))
@@ -141,6 +139,7 @@ class Number extends BaseCommand {
 
 		collector.on("end", (_, reason) => {
 			delete currentGames[interaction.guildId];
+
 			if (reason === "time") return interaction.editReply({ content: interaction.translate("fun/number:DEFEAT", { number }) });
 			else if (reason === "force") return interaction.editReply({ content: interaction.translate("misc:FORCE_STOP", { user: interaction.member.toString(), number }) });
 		});
@@ -158,8 +157,10 @@ class Number extends BaseCommand {
 
 			if (interaction.customId === "number_delete_yes")
 				interaction.channel.delete();
-			else if (interaction.customId === "number_delete_no")
-				interaction.message.delete();
+			else if (interaction.customId === "number_delete_no") {
+				await interaction.message.delete();
+				interaction.channel.setArchived(true);
+			}
 		});
 	}
 }
