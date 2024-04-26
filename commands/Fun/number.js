@@ -31,7 +31,7 @@ class Number extends BaseCommand {
 		if (currentGames[interaction.guildId]) return interaction.error("fun/number:GAME_RUNNING");
 
 		const participants = [],
-			number = client.functions.randomNum(100, 101);
+			number = client.functions.randomNum(1000, 5000);
 
 		await interaction.replyT("fun/number:GAME_START");
 
