@@ -206,7 +206,7 @@ class JaBaClient extends Client {
 	 * @param {Object[]} [data.fields] - An array of field objects for the embed.
 	 * @param {string} [data.image] - The URL of the image for the embed.
 	 * @param {string} [data.url] - The URL to be used as the embed's hyperlink.
-	 * @param {number} [data.color] - The color of the embed's border. If not provided, the default color from the client's configuration will be used.
+	 * @param {string} [data.color] - The HEX color of the embed's border. If not provided, the default color from the client's configuration will be used.
 	 * @param {string} [data.footer] - The text to be displayed as the embed's footer. If not provided, the default footer from the client's configuration will be used.
 	 * @param {Date} [data.timestamp] - The timestamp to be displayed in the embed's footer. If not provided, the current timestamp will be used.
 	 * @param {string|Object} [data.author] - The author information for the embed. Can be a string (name) or an object with `name` and/or `iconURL` properties.
@@ -316,7 +316,7 @@ class JaBaClient extends Client {
 	/**
 	 * Finds or creates a user in the database based on the provided user ID.
 	 * @param {string} userID - The ID of the user to find or create.
-	 * @returns {import("./User")} The user data object, either retrieved from the database or newly created.
+	 * @returns {Promise<import("./User")>} The user data object, either retrieved from the database or newly created.
 	*/
 	async findOrCreateUser(userID) {
 		let userData = await this.usersData.findOne({ id: userID });
@@ -341,7 +341,7 @@ class JaBaClient extends Client {
 	 * @param {Object} options - The options for finding or creating the member.
 	 * @param {string} options.id - The ID of the member to find or create.
 	 * @param {string} options.guildId - The ID of the guild the member belongs to.
-	 * @returns {import("./Member")} The member data object, either retrieved from the database or newly created.
+	 * @returns {Promise<import("./Member")>} The member data object, either retrieved from the database or newly created.
 	 */
 	async findOrCreateMember({ id: memberID, guildId }) {
 		let memberData = await this.membersData.findOne({ guildID: guildId, id: memberID });
@@ -372,7 +372,7 @@ class JaBaClient extends Client {
 	/**
 	 * Finds or creates a guild in the database based on the provided guild ID.
 	 * @param {string} guildId - The ID of the guild to find or create.
-	 * @returns {import("./Guild")} The guild data object, either retrieved from the database or newly created.
+	 * @returns {Promise<import("./Guild")>} The guild data object, either retrieved from the database or newly created.
 	 */
 	async findOrCreateGuild(guildId) {
 		let guildData = await this.guildsData.findOne({ id: guildId }).populate("members");
