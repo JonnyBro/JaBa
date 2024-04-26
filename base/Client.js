@@ -25,8 +25,6 @@ class JaBaClient extends Client {
 		this.usersData = require("../base/User");
 		this.membersData = require("../base/Member");
 		this.dashboard = require("../dashboard/dashboard");
-		this.states = {};
-		this.knownGuilds = [];
 
 		this.databaseCache = {};
 		this.databaseCache.users = new Collection();
