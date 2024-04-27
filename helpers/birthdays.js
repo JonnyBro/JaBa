@@ -10,7 +10,7 @@ module.exports.init = async client => {
 			const guildData = await client.findOrCreateGuild(guild.id);
 
 			if (guildData.plugins.birthdays) {
-				const channel = guild.channels.cache.get(guildData.plugins.birthdays),
+				const channel = await guild.channels.fetch(guildData.plugins.birthdays),
 					date = new Date(),
 					currentDay = date.getDate(),
 					currentMonth = date.getMonth() + 1,
@@ -68,7 +68,7 @@ module.exports.run = async client => {
 		const guildData = await client.findOrCreateGuild(guild.id);
 
 		if (guildData.plugins.birthdays) {
-			const channel = guild.channels.cache.get(guildData.plugins.birthdays),
+			const channel = await guild.channels.fetch(guildData.plugins.birthdays),
 				date = new Date(),
 				currentDay = date.getDate(),
 				currentMonth = date.getMonth() + 1,
