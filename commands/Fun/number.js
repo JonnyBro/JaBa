@@ -153,13 +153,14 @@ class Number extends BaseCommand {
 		client.on("interactionCreate", async interaction => {
 			if (!interaction.isButton()) return;
 
-			await interaction.deferUpdate();
+			if (interaction.customId.startsWith("number_")) {
+				await interaction.deferUpdate();
 
-			if (interaction.customId === "number_delete_yes")
-				interaction.channel.delete();
-			else if (interaction.customId === "number_delete_no") {
-				await interaction.message.delete();
-				interaction.channel.setArchived(true);
+				if (interaction.customId === "number_delete_yes") interaction.channel.delete();
+				else if (interaction.customId === "number_delete_no") {
+					await interaction.message.delete();
+					interaction.channel.setArchived(true);
+				}
 			}
 		});
 	}

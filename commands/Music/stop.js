@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
-class Skip extends BaseCommand {
+class Stop extends BaseCommand {
 	/**
 	 *
 	 * @param {import("../base/Client")} client
@@ -9,11 +9,11 @@ class Skip extends BaseCommand {
 	constructor(client) {
 		super({
 			command: new SlashCommandBuilder()
-				.setName("skip")
-				.setDescription(client.translate("music/skip:DESCRIPTION"))
+				.setName("stop")
+				.setDescription(client.translate("music/stop:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					uk: client.translate("music/skip:DESCRIPTION", null, "uk-UA"),
-					ru: client.translate("music/skip:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("music/stop:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("music/stop:DESCRIPTION", null, "ru-RU"),
 				})
 				.setDMPermission(false),
 			dirname: __dirname,
@@ -30,12 +30,12 @@ class Skip extends BaseCommand {
 		const voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
 
-		const queue = client.player.nodes.get(interaction.guildId);
-		if (!queue) return interaction.error("music/play:NOT_PLAYING");
+		const player = client.lavalink.getPlayer(interaction.guildId);
+		if (!player) return interaction.error("music/play:NOT_PLAYING");
 
-		queue.node.skip();
-		interaction.success("music/skip:SUCCESS");
+		await player.destroy();
+		interaction.success("music/stop:SUCCESS");
 	}
 }
 
-module.exports = Skip;
+module.exports = Stop;

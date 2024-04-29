@@ -59,14 +59,16 @@ class Play extends BaseCommand {
 
 		const res = await player.search({ query }, interaction.member);
 
-		await player.queue.add(res.tracks[0]);
+		if (res.loadType === "playlist") await player.queue.add(res.tracks);
+		else if (res.loadType === "search") await player.queue.add(res.tracks[0]);
+		else if (res.loadType === "track") await player.queue.add(res.tracks[0]);
+		else console.log(res);
 
 		if (!player.playing) await player.play();
 
 		interaction.editReply({
 			content: interaction.translate("music/play:ADDED_QUEUE", {
-				// songName: searchResult.hasPlaylist() ? searchResult.playlist.title : `${searchResult.tracks[0].title} - ${searchResult.tracks[0].author}`,
-				songName: res.tracks[0].info.title,
+				songName: res.loadType === "playlist" ? res.playlist.name : `${res.tracks[0].info.title} - ${res.tracks[0].info.author}`,
 			}),
 		});
 	}

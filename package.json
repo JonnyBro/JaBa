@@ -8,7 +8,7 @@
         "start": "node .",
         "lint": "eslint . --ext .js --ignore-pattern \"dashboard-core/\""
     },
-    "author": "Discord: @jonny_bro",
+    "author": "@jonny_bro",
     "dependencies": {
         "@discordjs/opus": "^0.9.0",
         "@discordjs/rest": "^2.2.0",

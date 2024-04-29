@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js"),
-	{ QueueRepeatMode } = require("discord-player");
+const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Loop extends BaseCommand {
@@ -27,10 +26,10 @@ class Loop extends BaseCommand {
 						})
 						.setRequired(true)
 						.setChoices(
-							{ name: client.translate("music/loop:AUTOPLAY"), value: "3" },
-							{ name: client.translate("music/loop:QUEUE"), value: "2" },
-							{ name: client.translate("music/loop:TRACK"), value: "1" },
-							{ name: client.translate("music/loop:DISABLE"), value: "0" },
+							// { name: client.translate("music/loop:AUTOPLAY"), value: "3" },
+							{ name: client.translate("music/loop:QUEUE"), value: "queue" },
+							{ name: client.translate("music/loop:TRACK"), value: "track" },
+							{ name: client.translate("music/loop:DISABLE"), value: "off" },
 						),
 				),
 			dirname: __dirname,
@@ -44,25 +43,25 @@ class Loop extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply();
+
 		const voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { edit: true });
 
-		const queue = client.player.nodes.get(interaction.guildId);
-		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { edit: true });
+		const player = client.lavalink.getPlayer(interaction.guildId);
+		if (!player) return interaction.error("music/play:NOT_PLAYING", null, { edit: true });
+
+		const type = interaction.options.getString("option");
 
 		const translated = {
-			"3": interaction.translate("music/loop:AUTOPLAY_ENABLED"),
-			"2": interaction.translate("music/loop:QUEUE_ENABLED"),
-			"1": interaction.translate("music/loop:TRACK_ENABLED"),
-			"0": interaction.translate("music/loop:LOOP_DISABLED"),
+			// "3": interaction.translate("music/loop:AUTOPLAY_ENABLED"),
+			"queue": interaction.translate("music/loop:QUEUE_ENABLED"),
+			"track": interaction.translate("music/loop:TRACK_ENABLED"),
+			"off": interaction.translate("music/loop:LOOP_DISABLED"),
 		};
 
-		const type = interaction.options.getString("option"),
-			mode = type === "3" ? QueueRepeatMode.AUTOPLAY : type === "2" ? QueueRepeatMode.QUEUE : type === "1" ? QueueRepeatMode.TRACK : QueueRepeatMode.OFF;
-
-		queue.setRepeatMode(mode);
-
-		interaction.reply({ content: translated[type] });
+		await player.setRepeatMode(type);
+		interaction.editReply({ content: translated[type] });
 	}
 }
 

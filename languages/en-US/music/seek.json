@@ -1,7 +1,7 @@
 {
-	"DESCRIPTION": "Rewinds the current track to the specified position",
+	"DESCRIPTION": "Seeks the current track to the specified time",
 	"USAGE": "[time]",
 	"EXAMPLES": "seek time:60",
 	"TIME": "Time in seconds",
-	"SUCCESS": "Track rewinded to {{time}}"
+	"SUCCESS": "Seeked to {{time}}"
 }

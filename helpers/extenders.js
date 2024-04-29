@@ -5,7 +5,7 @@ User.prototype.getUsername = function () {
 };
 
 BaseInteraction.prototype.getLocale = function () {
-	return this.guild ? this.data?.guild?.language : "en-US";
+	return this.data?.guild?.language ?? "en-US";
 };
 
 BaseInteraction.prototype.translate = function (key, args) {
@@ -36,7 +36,7 @@ BaseInteraction.prototype.error = async function (key, args, options = {}) {
 };
 
 Message.prototype.getLocale = function () {
-	return this.guild ? this.data?.guild?.language : "en-US";
+	return this.data?.guild?.language ?? "en-US";
 };
 
 Message.prototype.translate = function (key, args) {

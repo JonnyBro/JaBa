@@ -29,9 +29,6 @@ class Ready extends BaseEvent {
 		const checkReminds = require("../helpers/checkReminds");
 		checkReminds.init(client);
 
-		await client.lavalink.init({ ...client.user });
-		client.on("raw", d => client.lavalink.sendRawData(d));
-
 		if (client.config.dashboard.enabled) await client.dashboard.load(client);
 
 		client.logger.ready(`Loaded a total of ${commands.length} command(s).`);
@@ -64,6 +61,10 @@ class Ready extends BaseEvent {
 			if (status[i + 1]) i++;
 			else i = 0;
 		}, 30 * 1000); // Every 30 seconds
+
+		await client.lavalink.init({ ...client.user });
+		client.on("raw", d => client.lavalink.sendRawData(d));
+		client.logger.ready("Lavalink ready.");
 	}
 }
 
