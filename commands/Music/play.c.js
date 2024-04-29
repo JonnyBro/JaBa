@@ -30,7 +30,7 @@ class PlayContext extends BaseCommand {
 
 		const query = links[0],
 			voice = interaction.member.voice;
-		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { edit: true });
+		if (!voice.channel) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { edit: true });
 
 		const perms = voice.channel.permissionsFor(client.user);
 		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.error("music/play:VOICE_CHANNEL_CONNECT", null, { edit: true });
