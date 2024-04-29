@@ -8,5 +8,6 @@
 	"WON": "{{winner}} has won {{credits}}",
 	"DEFEAT": "No one guessed the number! It was **{{number}}**",
 	"GAME_STATS": "🎉 | {{winner}} has guessed the number! It was **{{number}}**!\n\n**Statistics:**\n*-* __**Duration**__: {{time}}\n*-* __**Participants ({{participantCount}})**__: {{participants}}",
-	"GAME_RUNNING": "The game is already in progress"
+	"GAME_RUNNING": "The game is already in progress",
+	"DELETE_CHANNEL": "Game has ended. Do you want to delete this channel?"
 }

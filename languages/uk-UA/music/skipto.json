@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Перейти на заданий трек",
-	"USAGE": "[position]",
-	"EXAMPLES": "skipto position:3",
-	"POSITION": "Номер треку в черзі",
-	"SUCCESS": "Перехід на трек **{{track}}**",
-	"ERROR": "На позиції {{position}} нічого не знайдено",
-	"NO_PREV_SONG": "Ви не можете перейти назад, для цього використовуйте команду `back`"
-}

@@ -29,42 +29,37 @@ class PlayContext extends BaseCommand {
 		if (!links) return interaction.error("music/play:NO_LINK", null, { edit: true });
 
 		const query = links[0],
-			voice = interaction.member.voice.channel;
+			voice = interaction.member.voice;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { edit: true });
 
-		const perms = voice.permissionsFor(client.user);
+		const perms = voice.channel.permissionsFor(client.user);
 		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.error("music/play:VOICE_CHANNEL_CONNECT", null, { edit: true });
 
-		const searchResult = await client.player.search(query, {
-			requestedBy: interaction.user,
+		const player = await client.lavalink.createPlayer({
+			guildId: interaction.guildId,
+			voiceChannelId: voice.channelId,
+			textChannelId: interaction.channelId,
+			selfDeaf: true,
+			selfMute: false,
+			volume: 100,
 		});
 
-		if (!searchResult.hasTracks()) return interaction.error("music/play:NO_RESULT", { query }, { edit: true });
-		else {
-			const { queue } = await client.player.play(interaction.member.voice.channel, searchResult, {
-				nodeOptions: {
-					metadata: interaction,
-				},
-				selfDeaf: true,
-				leaveOnEnd: false,
-				leaveOnStop: true,
-				skipOnNoStream: true,
-				maxSize: 200,
-				maxHistorySize: 50,
-			});
+		await player.connect();
 
-			interaction.editReply({
-				content: interaction.translate("music/play:ADDED_QUEUE", {
-					songName: searchResult.hasPlaylist() ? searchResult.playlist.title : searchResult.tracks[0].title,
-				}),
-			});
+		const res = await player.search({ query }, interaction.member);
 
-			if (client.player.nodes.get(interaction.guildId).currentTrack.url === query && query.match(/&t=[[0-9]+/g) !== null) {
-				const time = query.match(/&t=[[0-9]+/g)[0].split("=")[1];
+		if (res.loadType === "playlist") await player.queue.add(res.tracks);
+		else if (res.loadType === "search") await player.queue.add(res.tracks[0]);
+		else if (res.loadType === "track") await player.queue.add(res.tracks[0]);
+		else console.log(res);
 
-				queue.node.seek(time * 1000);
-			}
-		}
+		if (!player.playing) await player.play();
+
+		interaction.editReply({
+			content: interaction.translate("music/play:ADDED_QUEUE", {
+				songName: res.loadType === "playlist" ? res.playlist.name : `${res.tracks[0].info.title} - ${res.tracks[0].info.author}`,
+			}),
+		});
 	}
 }
 

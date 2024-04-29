@@ -30,10 +30,10 @@ class Stop extends BaseCommand {
 		const voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
 
-		const queue = client.player.nodes.get(interaction.guildId);
-		if (!queue) return interaction.error("music/play:NOT_PLAYING");
+		const player = client.lavalink.getPlayer(interaction.guildId);
+		if (!player) return interaction.error("music/play:NOT_PLAYING");
 
-		queue.delete();
+		await player.destroy();
 		interaction.success("music/stop:SUCCESS");
 	}
 }

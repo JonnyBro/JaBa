@@ -1,5 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField } = require("discord.js"),
-	{ QueryType } = require("discord-player");
+const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Play extends BaseCommand {
@@ -25,8 +24,7 @@ class Play extends BaseCommand {
 							uk: client.translate("music/play:QUERY", null, "uk-UA"),
 							ru: client.translate("music/play:QUERY", null, "ru-RU"),
 						})
-						.setRequired(true)
-						.setAutocomplete(true),
+						.setRequired(true),
 				),
 			dirname: __dirname,
 			ownerOnly: false,
@@ -42,36 +40,37 @@ class Play extends BaseCommand {
 		await interaction.deferReply();
 
 		const query = interaction.options.getString("query"),
-			voice = interaction.member.voice.channel;
+			voice = interaction.member.voice;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { edit: true });
 
-		const perms = voice.permissionsFor(client.user);
+		const perms = voice.channel.permissionsFor(client.user);
 		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.error("music/play:VOICE_CHANNEL_CONNECT", null, { edit: true });
 
-		const searchResult = await client.player.search(query, {
-			requestedBy: interaction.user,
+		const player = await client.lavalink.createPlayer({
+			guildId: interaction.guildId,
+			voiceChannelId: voice.channelId,
+			textChannelId: interaction.channelId,
+			selfDeaf: true,
+			selfMute: false,
+			volume: 100,
 		});
 
-		if (!searchResult.hasTracks()) return interaction.error("music/play:NO_RESULT", { query }, { edit: true });
-		else {
-			await client.player.play(interaction.member.voice.channel, searchResult, {
-				nodeOptions: {
-					metadata: interaction,
-				},
-				selfDeaf: true,
-				leaveOnEnd: false,
-				leaveOnStop: true,
-				skipOnNoStream: true,
-				maxSize: 200,
-				maxHistorySize: 50,
-			});
+		await player.connect();
 
-			interaction.editReply({
-				content: interaction.translate("music/play:ADDED_QUEUE", {
-					songName: searchResult.hasPlaylist() ? searchResult.playlist.title : `${searchResult.tracks[0].title} - ${searchResult.tracks[0].author}`,
-				}),
-			});
-		}
+		const res = await player.search({ query }, interaction.member);
+
+		if (res.loadType === "playlist") await player.queue.add(res.tracks);
+		else if (res.loadType === "search") await player.queue.add(res.tracks[0]);
+		else if (res.loadType === "track") await player.queue.add(res.tracks[0]);
+		else console.log(res);
+
+		if (!player.playing) await player.play();
+
+		interaction.editReply({
+			content: interaction.translate("music/play:ADDED_QUEUE", {
+				songName: res.loadType === "playlist" ? res.playlist.name : `${res.tracks[0].info.title} - ${res.tracks[0].info.author}`,
+			}),
+		});
 	}
 
 	/**
@@ -80,40 +79,34 @@ class Play extends BaseCommand {
 	 * @param {import("discord.js").AutocompleteInteraction} interaction
 	 * @returns
 	 */
-	async autocompleteRun(client, interaction) {
-		const query = interaction.options.getString("query");
+	// async autocompleteRun(client, interaction) { // TODO: Works from time to time
+	// 	const query = interaction.options.getString("query");
+	// 	if (query === "") return;
 
-		if (query === "") return;
-		if (query.startsWith("http"))
-			return interaction.respond([
-				{
-					name: "Current link",
-					value: query,
-				},
-			]);
+	// 	if (!client.lavalink.players.get(interaction.guildId)) {
+	// 		const player = await client.lavalink.createPlayer({
+	// 			guildId: interaction.guildId,
+	// 			voiceChannelId: interaction.member.voice.channelId,
+	// 			textChannelId: interaction.channelId,
+	// 			selfDeaf: true,
+	// 			selfMute: false,
+	// 			volume: 100,
+	// 		});
 
-		const youtubeResults = await client.player.search(query, { searchEngine: QueryType.YOUTUBE });
-		const spotifyResults = await client.player.search(query, { searchEngine: QueryType.SPOTIFY_SEARCH });
-		const tracks = [];
+	// 		const results = await player.search({ query }, interaction.member);
+	// 		if (results.loadType === "empty") return interaction.respond([{ name: "Nothing found", "value": "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }]);
+	// 		const tracks = [];
 
-		youtubeResults.tracks
-			.slice(0, 5)
-			.map(t => ({
-				name: `YouTube: ${`${t.title} - ${t.author} (${t.duration})`.length > 75 ? `${`${t.title} - ${t.author}`.substring(0, 75)}... (${t.duration})` : `${t.title} - ${t.author} (${t.duration})`}`,
-				value: t.url,
-			}))
-			.forEach(t => tracks.push({ name: t.name, value: t.value }));
+	// 		results.tracks
+	// 			.map(t => ({
+	// 				name: `YouTube: ${`${t.info.title} - ${t.info.author} (${client.functions.printDate(client, t.info.duration, null, interaction.data.guild.lanugage)})`.length > 75 ? `${`${t.info.title} - ${t.info.author}`.substring(0, 75)}... (${client.functions.printDate(client, t.info.duration, null, interaction.data.guild.lanugage)})` : `${t.info.title} - ${t.info.author} (${client.functions.printDate(client, t.info.duration, null, interaction.data.guild.lanugage)})`}`,
+	// 				value: t.info.uri,
+	// 			}))
+	// 			.forEach(t => tracks.push({ name: t.name, value: t.value }));
 
-		spotifyResults.tracks
-			.slice(0, 5)
-			.map(t => ({
-				name: `Spotify: ${`${t.title} - ${t.author} (${t.duration})`.length > 75 ? `${`${t.title} - ${t.author}`.substring(0, 75)}... (${t.duration})` : `${t.title} - ${t.author} (${t.duration})`}`,
-				value: t.url,
-			}))
-			.forEach(t => tracks.push({ name: t.name, value: t.value }));
-
-		return interaction.respond(tracks);
-	}
+	// 		return interaction.respond(tracks);
+	// 	}
+	// }
 }
 
 module.exports = Play;

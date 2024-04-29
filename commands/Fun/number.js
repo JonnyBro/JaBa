@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageCollector } = require("discord.js");
+const { SlashCommandBuilder, MessageCollector, ButtonBuilder, ActionRowBuilder, ButtonStyle, ThreadAutoArchiveDuration } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	currentGames = {};
 
@@ -35,39 +35,47 @@ class Number extends BaseCommand {
 
 		await interaction.replyT("fun/number:GAME_START");
 
-		const gameCreatedAt = Date.now();
+		let channel;
 
+		if (interaction.channel.isThread()) channel = interaction.channel;
+		else
+			channel = await interaction.channel.threads.create({
+				name: `number-guessing-${client.functions.randomNum(10000, 20000)}`,
+				autoArchiveDuration: ThreadAutoArchiveDuration.OneHour,
+			});
+
+		const gameCreatedAt = Date.now();
 		const filter = m => !m.author.bot;
-		const collector = new MessageCollector(interaction.channel, {
+		const collector = new MessageCollector(channel, {
 			filter,
 			time: 5 * 60 * 1000,
 		});
 		currentGames[interaction.guildId] = true;
 
 		collector.on("collect", async msg => {
-			if (!participants.includes(msg.author.id)) participants.push(msg.author.id);
+			if (!participants.includes(msg.author)) participants.push(msg.author);
 			if (msg.content === "STOP") return collector.stop("force");
 			if (isNaN(msg.content)) return;
 
 			const parsedNumber = parseInt(msg.content, 10);
 
 			if (parsedNumber === number) {
-				interaction.channel.send({
+				channel.send({
 					content: interaction.translate("fun/number:GAME_STATS", {
 						winner: msg.author.toString(),
 						number,
 						time: `<t:${Math.floor(gameCreatedAt / 1000)}:R>`,
 						participantCount: participants.length,
-						participants: participants.map(p => `<@${p}>`).join(", "),
+						participants: participants.map(p => p.toString()).join(", "),
 					}),
 				});
 
 				if (participants.length > 1) {
 					const won = 100 * (participants.length * 0.5);
 
-					interaction.channel.send({
+					channel.send({
 						content: interaction.translate("fun/number:WON", {
-							winner: msg.author.username,
+							winner: msg.author.toString(),
 							credits: `**${won}** ${client.functions.getNoun(won, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 						}),
 					});
@@ -91,6 +99,31 @@ class Number extends BaseCommand {
 					await memberData.save();
 				}
 
+				interaction.editReply({
+					content: interaction.translate("fun/number:GAME_STATS", {
+						winner: msg.author.toString(),
+						number,
+						time: `<t:${Math.floor(gameCreatedAt / 1000)}:R>`,
+						participantCount: participants.length,
+						participants: participants.map(p => p.toString()).join(", "),
+					}),
+				});
+
+				const deleteYes = new ButtonBuilder()
+					.setCustomId("number_delete_yes")
+					.setLabel(interaction.translate("common:YES"))
+					.setStyle(ButtonStyle.Danger);
+				const deleteNo = new ButtonBuilder()
+					.setCustomId("number_delete_no")
+					.setLabel(interaction.translate("common:NO"))
+					.setStyle(ButtonStyle.Secondary);
+				const row = new ActionRowBuilder().addComponents(deleteYes, deleteNo);
+
+				channel.send({
+					content: interaction.translate("fun/number:DELETE_CHANNEL"),
+					components: [row],
+				});
+
 				collector.stop();
 			}
 
@@ -106,8 +139,29 @@ class Number extends BaseCommand {
 
 		collector.on("end", (_, reason) => {
 			delete currentGames[interaction.guildId];
+
 			if (reason === "time") return interaction.editReply({ content: interaction.translate("fun/number:DEFEAT", { number }) });
 			else if (reason === "force") return interaction.editReply({ content: interaction.translate("misc:FORCE_STOP", { user: interaction.member.toString(), number }) });
+		});
+	}
+
+	/**
+	 *
+	 * @param {import("../../base/Client")} client
+	 */
+	async onLoad(client) {
+		client.on("interactionCreate", async interaction => {
+			if (!interaction.isButton()) return;
+
+			if (interaction.customId.startsWith("number_")) {
+				await interaction.deferUpdate();
+
+				if (interaction.customId === "number_delete_yes") interaction.channel.delete();
+				else if (interaction.customId === "number_delete_no") {
+					await interaction.message.delete();
+					interaction.channel.setArchived(true);
+				}
+			}
 		});
 	}
 }

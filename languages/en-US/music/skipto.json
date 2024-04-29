@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Jumps to a specified track",
-	"USAGE": "[position]",
-	"EXAMPLES": "skipto position:3",
-	"POSITION": "Track number in the queue",
-	"SUCCESS": "Jumped to track **{{track}}**",
-	"ERROR": "Nothing found at position {{position}}",
-	"NO_PREV_SONG": "You cannot go back, use the `back` command for that"
-}

@@ -21,8 +21,8 @@ const client = new Client({
 client
 	.on("disconnect", () => client.logger.warn("Bot is disconnecting..."))
 	.on("reconnecting", () => client.logger.warn("Bot reconnecting..."))
-	.on("warn", warn => client.logger.warn(warn))
-	.on("error", e => client.logger.error(`${e.message}\n${e.stack}`));
+	.on("warn", warn => console.log(warn))
+	.on("error", e => console.log(e));
 
 process
 	.on("unhandledRejection", e => console.log(e))

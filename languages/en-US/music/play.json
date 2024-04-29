@@ -13,5 +13,5 @@
 	"ADDED_QUEUE": "**{{songName}}** has been added to the queue",
 	"STOP_DISCONNECTED": "Playback stopped because I left the voice channel",
 	"STOP_EMPTY": "Playback stopped because everyone has left the voice channel",
-	"ERR_OCCURRED": "An error occurred...\n```{{error}}```"
+	"ERR_OCCURRED": "An error occurred, skipping track..."
 }
