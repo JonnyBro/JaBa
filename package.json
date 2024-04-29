@@ -1,6 +1,6 @@
 {
     "name": "jaba",
-    "version": "4.5.0",
+    "version": "4.6.0",
     "description": "My Discord Bot",
     "main": "index.js",
     "scripts": {
