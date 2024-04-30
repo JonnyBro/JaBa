@@ -32,7 +32,15 @@ class JaBaClient extends Client {
 		this.databaseCache.members = new Collection();
 		this.databaseCache.usersReminds = new Collection();
 
-		this.player = new Player(this);
+		this.player = new Player(this, {
+			ytdlOptions: {
+				requestOptions: {
+					headers: {
+						cookie: this.config.youtubeCookie,
+					},
+				},
+			},
+		});
 		this.player.extractors.loadDefault(null, {
 			SpotifyExtractor: {
 				clientId: this.config.spotify.clientId,
