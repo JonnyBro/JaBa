@@ -55,7 +55,6 @@ class Checkjar extends BaseCommand {
 		jarTransactions.length = 10;
 
 		jarTransactions.forEach(t => {
-			// TODO
 			const time = moment.unix(t.time);
 
 			embed.data.fields.push([
