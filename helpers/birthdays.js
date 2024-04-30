@@ -8,10 +8,10 @@ module.exports.init = async client => {
 	const cronjob = new CronJob("0 5 * * *", async function () {
 		client.guilds.cache.forEach(async guild => {
 			const guildData = await client.findOrCreateGuild(guild.id);
+			const channel = guildData.plugins.birthdays ? client.channels.cache.get(guildData.plugins.birthdays) || (await client.channels.fetch(guildData.plugins.birthdays)) : null;
 
 			if (guildData.plugins.birthdays && client.channels.cache.get(guildData.plugins.birthdays)) {
-				const channel = client.channels.cache.get(guildData.plugins.birthdays),
-					date = new Date(),
+				const date = new Date(),
 					currentDay = date.getDate(),
 					currentMonth = date.getMonth() + 1,
 					currentYear = date.getFullYear();
@@ -63,13 +63,17 @@ module.exports.init = async client => {
 	cronjob.start();
 };
 
+/**
+ *
+ * @param {import("../base/Client")} client
+ */
 module.exports.run = async client => {
 	client.guilds.cache.forEach(async guild => {
 		const guildData = await client.findOrCreateGuild(guild.id);
+		const channel = guildData.plugins.birthdays ? client.channels.cache.get(guildData.plugins.birthdays) || (await client.channels.fetch(guildData.plugins.birthdays)) : null;
 
-		if (guildData.plugins.birthdays && client.channels.cache.get(guildData.plugins.birthdays)) {
-			const channel = client.channels.cache.get(guildData.plugins.birthdays),
-				date = new Date(),
+		if (guildData.plugins.birthdays) {
+			const date = new Date(),
 				currentDay = date.getDate(),
 				currentMonth = date.getMonth() + 1,
 				currentYear = date.getFullYear();
