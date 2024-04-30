@@ -46,18 +46,20 @@ class Skip extends BaseCommand {
 		const position = interaction.options.getInteger("position");
 
 		if (position) {
-			if (position <= 0) return interaction.error("music/skipto:NO_PREV_SONG");
+			if (position <= 0) return interaction.error("music/skip:NO_PREV_SONG");
 
 			if (queue.tracks.at(position - 1)) {
 				queue.node.skipTo(queue.tracks.at(position - 1));
 
-				interaction.success("music/skipto:SUCCESS", {
+				interaction.success("music/skip:SUCCESS", {
 					track: queue.tracks.at(0).title,
 				});
-			} else return interaction.error("music/skipto:ERROR", { position });
+			} else return interaction.error("music/skip:ERROR", { position });
 		} else {
 			queue.node.skip();
-			interaction.success("music/skip:SUCCESS");
+			interaction.success("music/skip:SUCCESS", {
+				track: queue.tracks.at(0).title,
+			});
 		}
 	}
 }
