@@ -20,7 +20,7 @@ BaseInteraction.prototype.translate = function (key, args, locale) {
 };
 
 BaseInteraction.prototype.replyT = async function (key, args, options = {}) {
-	const translated = this.translate(key, args, this.getLocale());
+	const translated = this.translate(key, args, this.getLocale() || options.locale || "en-US");
 	const string = options.prefixEmoji ? `${this.client.customEmojis[options.prefixEmoji]} | ${translated}` : translated;
 
 	if (options.edit) return this.editReply({ content: string, ephemeral: options.ephemeral || false });
@@ -51,7 +51,7 @@ Message.prototype.translate = function (key, args, locale) {
 };
 
 Message.prototype.replyT = async function (key, args, options = {}) {
-	const translated = this.translate(key, args, this.getLocale());
+	const translated = this.translate(key, args, this.getLocale() || options.locale || "en-US");
 	const string = options.prefixEmoji ? `${this.client.customEmojis[options.prefixEmoji]} | ${translated}` : translated;
 
 	if (options.edit) return this.edit({ content: string, allowedMentions: { repliedUser: options.mention ? true : false } });

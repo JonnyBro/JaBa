@@ -31,14 +31,13 @@ class Nowplaying extends BaseCommand {
 			if (!interaction.isButton()) return;
 
 			if (interaction.customId.startsWith("nowp_")) {
-				interaction.data = [];
-				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
+				const locale = (await client.findOrCreateGuild(interaction.guildId)).language;
 
 				const voice = interaction.member.voice.channel;
-				if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
+				if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { locale });
 
 				const queue = client.player.nodes.get(interaction.guildId);
-				if (!queue) return interaction.error("music/play:NOT_PLAYING");
+				if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { locale });
 
 				const row1 = new ActionRowBuilder().addComponents(
 					new ButtonBuilder().setCustomId("nowp_prev_track").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
@@ -55,11 +54,11 @@ class Nowplaying extends BaseCommand {
 				if (interaction.customId === "nowp_prev_track") {
 					await interaction.deferUpdate();
 
-					if (queue.history.isEmpty()) return interaction.followUp({ content: interaction.translate("music/back:NO_PREV_SONG", null, "error"), ephemeral: true });
+					if (queue.history.isEmpty()) return interaction.followUp({ content: interaction.translate("music/back:NO_PREV_SONG", null, locale), ephemeral: true });
 
 					queue.history.back();
 
-					await interaction.followUp({ content: interaction.translate("music/back:SUCCESS"), ephemeral: true });
+					await interaction.followUp({ content: interaction.translate("music/back:SUCCESS", null, locale), ephemeral: true });
 
 					const embed = await updateEmbed(interaction, queue);
 
@@ -71,19 +70,19 @@ class Nowplaying extends BaseCommand {
 
 					const selectMenu = new StringSelectMenuBuilder()
 						.setCustomId("nowp_select")
-						.setPlaceholder(interaction.translate("common:NOTHING_SELECTED"))
+						.setPlaceholder(interaction.translate("common:NOTHING_SELECTED", null, locale))
 						.addOptions(
 							new StringSelectMenuOptionBuilder()
-								.setLabel(interaction.translate("music/loop:AUTOPLAY"))
+								.setLabel(interaction.translate("music/loop:AUTOPLAY", null, locale))
 								.setValue("3"),
 							new StringSelectMenuOptionBuilder()
-								.setLabel(interaction.translate("music/loop:QUEUE"))
+								.setLabel(interaction.translate("music/loop:QUEUE", null, locale))
 								.setValue("2"),
 							new StringSelectMenuOptionBuilder()
-								.setLabel(interaction.translate("music/loop:TRACK"))
+								.setLabel(interaction.translate("music/loop:TRACK", null, locale))
 								.setValue("1"),
 							new StringSelectMenuOptionBuilder()
-								.setLabel(interaction.translate("music/loop:DISABLE"))
+								.setLabel(interaction.translate("music/loop:DISABLE", null, locale))
 								.setValue("0"),
 						);
 
@@ -97,10 +96,10 @@ class Nowplaying extends BaseCommand {
 						collected = await msg.awaitMessageComponent({ filter, time: 10 * 1000 }),
 						mode = collected.values[0] === "3" ? QueueRepeatMode.AUTOPLAY : collected.values[0] === "2" ? QueueRepeatMode.QUEUE : collected.values[0] === "1" ? QueueRepeatMode.TRACK : QueueRepeatMode.OFF,
 						translated = {
-							"3": interaction.translate("music/loop:AUTOPLAY_ENABLED"),
-							"2": interaction.translate("music/loop:QUEUE_ENABLED"),
-							"1": interaction.translate("music/loop:TRACK_ENABLED"),
-							"0": interaction.translate("music/loop:LOOP_DISABLED"),
+							"3": interaction.translate("music/loop:AUTOPLAY_ENABLED", null, locale),
+							"2": interaction.translate("music/loop:QUEUE_ENABLED", null, locale),
+							"1": interaction.translate("music/loop:TRACK_ENABLED", null, locale),
+							"0": interaction.translate("music/loop:LOOP_DISABLED", null, locale),
 						};
 
 					await collected.deferUpdate();
@@ -118,7 +117,7 @@ class Nowplaying extends BaseCommand {
 					await interaction.deferUpdate();
 
 					await interaction.followUp({
-						content: interaction.translate("music/nowplaying:LINK"),
+						content: interaction.translate("music/nowplaying:LINK", null, locale),
 						ephemeral: true,
 					});
 
@@ -135,13 +134,13 @@ class Nowplaying extends BaseCommand {
 
 					if (collected.deletable) collected.delete();
 
-					if (!searchResult.hasTracks()) return interaction.error("music/play:NO_RESULT", { query: query }, { edit: true });
+					if (!searchResult.hasTracks()) return interaction.error("music/play:NO_RESULT", { query: query }, { edit: true, locale });
 					else queue.addTrack(searchResult);
 
 					await interaction.followUp({
 						content: interaction.translate("music/play:ADDED_QUEUE", {
 							songName: searchResult.hasPlaylist() ? searchResult.playlist.title : searchResult.tracks[0].title,
-						}),
+						}, locale),
 					});
 
 					const embed = await updateEmbed(interaction, queue);
@@ -154,7 +153,12 @@ class Nowplaying extends BaseCommand {
 
 					queue.node.skip();
 
-					await interaction.followUp({ content: interaction.translate("music/skip:SUCCESS"), ephemeral: true });
+					await interaction.followUp({
+						content: interaction.success("music/skipto:SUCCESS", {
+							track: `${queue.tracks.at(0).title} - ${queue.tracks.at(0).author}`,
+						}, { locale }),
+						ephemeral: true,
+					});
 
 					const embed = await updateEmbed(interaction, queue);
 
@@ -169,7 +173,7 @@ class Nowplaying extends BaseCommand {
 					await interaction.deferUpdate();
 
 					queue.delete();
-					await interaction.followUp({ content: interaction.translate("music/stop:SUCCESS") });
+					await interaction.followUp({ content: interaction.translate("music/stop:SUCCESS", null, locale) });
 
 					row1.components.forEach(component => {
 						component.setDisabled(true);

@@ -52,13 +52,13 @@ class Skip extends BaseCommand {
 				queue.node.skipTo(queue.tracks.at(position - 1));
 
 				interaction.success("music/skip:SUCCESS", {
-					track: queue.tracks.at(0).title,
+					track: `${queue.tracks.at(0).title} - ${queue.tracks.at(0).author}`,
 				});
 			} else return interaction.error("music/skip:ERROR", { position });
 		} else {
 			queue.node.skip();
 			interaction.success("music/skip:SUCCESS", {
-				track: queue.tracks.at(0).title,
+				track: `${queue.tracks.at(0).title} - ${queue.tracks.at(0).author}`,
 			});
 		}
 	}
