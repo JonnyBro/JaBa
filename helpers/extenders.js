@@ -1,15 +1,19 @@
-const { Message, BaseInteraction, User } = require("discord.js");
+const { Message, BaseInteraction, User, GuildMember } = require("discord.js");
 
 User.prototype.getUsername = function () {
 	return this.discriminator === "0" ? this.username : this.tag;
 };
 
-BaseInteraction.prototype.getLocale = function () {
-	return this.data?.guild?.language ?? "en-US";
+GuildMember.prototype.getUsername = function () {
+	return this.user.discriminator === "0" ? this.user.username : this.user.tag;
 };
 
-BaseInteraction.prototype.translate = function (key, args) {
-	const language = this.client.translations.get(this.getLocale());
+BaseInteraction.prototype.getLocale = function () {
+	return this.data?.guild?.language;
+};
+
+BaseInteraction.prototype.translate = function (key, args, locale) {
+	const language = this.client.translations.get(this.getLocale() || locale || "en-US");
 	if (!language) throw "Interaction: Invalid language set in data.";
 
 	return language(key, args);
@@ -36,11 +40,11 @@ BaseInteraction.prototype.error = async function (key, args, options = {}) {
 };
 
 Message.prototype.getLocale = function () {
-	return this.data?.guild?.language ?? "en-US";
+	return this.data?.guild?.language;
 };
 
-Message.prototype.translate = function (key, args) {
-	const language = this.client.translations.get(this.getLocale());
+Message.prototype.translate = function (key, args, locale) {
+	const language = this.client.translations.get(this.getLocale() || locale || "en-US");
 	if (!language) throw "Message: Invalid language set in data.";
 
 	return language(key, args);

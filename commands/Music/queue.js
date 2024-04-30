@@ -30,13 +30,12 @@ class Queue extends BaseCommand {
 			if (!interaction.isButton()) return;
 
 			if (interaction.customId.startsWith("queue_")) {
-				interaction.data = [];
-				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
+				const locale = (await client.findOrCreateGuild(interaction.guildId)).language;
 
 				const player = client.lavalink.getPlayer(interaction.guildId);
 				if (!player) return interaction.error("music/play:NOT_PLAYING");
 
-				const { embeds, size } = generateQueueEmbeds(interaction, player);
+				const { embeds, size } = generateQueueEmbeds(interaction, player, locale);
 
 				let currentPage = Number(interaction.message.content.match(/\d+/g)[0]) - 1 ?? 0;
 
@@ -54,7 +53,7 @@ class Queue extends BaseCommand {
 						--currentPage;
 
 						interaction.editReply({
-							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${size}**`,
+							content: `${interaction.translate("common:PAGE", null, locale)}: **${currentPage + 1}**/**${size}**`,
 							embeds: [embeds[currentPage]],
 							components: [row],
 						});
@@ -66,7 +65,7 @@ class Queue extends BaseCommand {
 						currentPage++;
 
 						interaction.editReply({
-							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${size}**`,
+							content: `${interaction.translate("common:PAGE", null, locale)}: **${currentPage + 1}**/**${size}**`,
 							embeds: [embeds[currentPage]],
 							components: [row],
 						});
@@ -76,7 +75,7 @@ class Queue extends BaseCommand {
 
 					const selectMenu = new StringSelectMenuBuilder()
 						.setCustomId("queue_select")
-						.setPlaceholder(interaction.translate("common:NOTHING_SELECTED"));
+						.setPlaceholder(interaction.translate("common:NOTHING_SELECTED", null, locale));
 
 					for (let i = 0; i < size; i++) {
 						selectMenu.addOptions(
@@ -99,7 +98,7 @@ class Queue extends BaseCommand {
 					await collected.deferUpdate();
 
 					return interaction.editReply({
-						content: `${interaction.translate("common:PAGE")}: **${page + 1}**/**${size}**`,
+						content: `${interaction.translate("common:PAGE", null, locale)}: **${page + 1}**/**${size}**`,
 						embeds: [embeds[page]],
 						components: [row],
 					});
@@ -153,27 +152,28 @@ class Queue extends BaseCommand {
  *
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
  * @param {import("lavalink-client").Player} player
+ * @param {string} locale
  * @returns
  */
-function generateQueueEmbeds(interaction, player) {
+function generateQueueEmbeds(interaction, player, locale) {
 	const embeds = [],
 		currentTrack = player.queue.current,
 		translated = {
 			// "3": interaction.translate("music/loop:AUTOPLAY"),
-			"queue": interaction.translate("music/loop:QUEUE"),
-			"track": interaction.translate("music/loop:TRACK"),
-			"off": interaction.translate("common:DISABLED"),
+			"queue": interaction.translate("music/loop:QUEUE", null, locale),
+			"track": interaction.translate("music/loop:TRACK", null, locale),
+			"off": interaction.translate("common:DISABLED", null, locale),
 		};
 
 	let k = 10;
 
 	if (!player.queue.tracks.length) {
 		const embed = interaction.client.embed({
-			title: interaction.translate("music/nowplaying:CURRENTLY_PLAYING"),
+			title: interaction.translate("music/nowplaying:CURRENTLY_PLAYING", null, locale),
 			thumbnail: currentTrack.info.artworkUrl || null,
-			description: `${interaction.translate("music/nowplaying:REPEAT")}: \`${translated[player.repeatMode]}\`\n${
-				currentTrack.info.uri.startsWith("./clips") ? `${currentTrack.info.title} (clips)` : `[${currentTrack.info.title}](${currentTrack.info.uri})`
-			}\n> ${interaction.translate("music/queue:ADDED")} ${currentTrack.requester.toString()}\n\n**${interaction.translate("music/queue:NEXT")}**\n${interaction.translate("music/queue:NO_QUEUE")}`,
+			description: `${interaction.translate("music/nowplaying:REPEAT", null, locale)}: \`${translated[player.repeatMode]}\`\n${
+				currentTrack.info.uri.startsWith("./clips", null, locale) ? `${currentTrack.info.title} (clips)` : `[${currentTrack.info.title}](${currentTrack.info.uri})`
+			}\n> ${interaction.translate("music/queue:ADDED", null, locale)} ${currentTrack.requester.toString()}\n\n**${interaction.translate("music/queue:NEXT", null, locale)}**\n${interaction.translate("music/queue:NO_QUEUE", null, locale)}`,
 		});
 
 		embeds.push(embed);
@@ -186,14 +186,14 @@ function generateQueueEmbeds(interaction, player) {
 		let j = i;
 		k += 10;
 
-		const info = current.map(track => `${++j}. ${track.info.uri.startsWith("./clips") ? `${track.info.title} (clips)` : `[${track.info.title}](${track.info.uri})`}\n> ${interaction.translate("music/queue:ADDED")} ${track.requester.toString()}`).join("\n");
+		const info = current.map(track => `${++j}. ${track.info.uri.startsWith("./clips") ? `${track.info.title} (clips)` : `[${track.info.title}](${track.info.uri})`}\n> ${interaction.translate("music/queue:ADDED", null, locale)} ${track.requester.toString()}`).join("\n");
 
 		const embed = interaction.client.embed({
-			title: interaction.translate("music/nowplaying:CURRENTLY_PLAYING"),
+			title: interaction.translate("music/nowplaying:CURRENTLY_PLAYING", null, locale),
 			thumbnail: currentTrack.info.artworkUrl || null,
-			description: `${interaction.translate("music/nowplaying:REPEAT")}: \`${translated[player.repeatMode]}\`\n${
+			description: `${interaction.translate("music/nowplaying:REPEAT", null, locale)}: \`${translated[player.repeatMode]}\`\n${
 				currentTrack.info.uri.startsWith("./clips") ? `${currentTrack.info.title} (clips)` : `[${currentTrack.info.title}](${currentTrack.info.uri})`
-			}\n * ${interaction.translate("music/queue:ADDED")} ${currentTrack.requester.toString()}\n\n**${interaction.translate("music/queue:NEXT")}**\n${info}`,
+			}\n * ${interaction.translate("music/queue:ADDED", null, locale)} ${currentTrack.requester.toString()}\n\n**${interaction.translate("music/queue:NEXT", null, locale)}**\n${info}`,
 		});
 
 		embeds.push(embed);
