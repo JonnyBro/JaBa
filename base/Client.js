@@ -1,7 +1,7 @@
 const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder, EmbedBuilder, PermissionsBitField, ChannelType } = require("discord.js"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ REST } = require("@discordjs/rest"),
-	{ LavalinkManager } = require("lavalink-client"),
+	{ Player } = require("discord-player"),
 	{ Routes } = require("discord-api-types/v10");
 
 const BaseEvent = require("./BaseEvent.js"),
@@ -32,61 +32,43 @@ class JaBaClient extends Client {
 		this.databaseCache.members = new Collection();
 		this.databaseCache.usersReminds = new Collection();
 
-		this.lavalink = new LavalinkManager({
-			nodes: [this.config.lavalinkNodes],
-			sendToShard: (guildId, payload) => this.guilds.cache.get(guildId)?.shard?.send(payload),
-			client: {
-				id: this.config.userId,
-				username: "JaBa",
-			},
-			autoSkip: true,
-			playerOptions: {
-				defaultSearchPlatform: "ytmsearch",
-				volumeDecrementer: 1,
-				onDisconnect: {
-					autoReconnect: false,
-					destroyPlayer: true,
-				},
-				onEmptyQueue: {
-					destroyAfterMs: 5000,
-				},
+		this.player = new Player(this);
+		this.player.extractors.loadDefault(null, {
+			SpotifyExtractor: {
+				clientId: this.config.spotify.clientId,
+				clientSecret: this.config.spotify.clientSecret,
 			},
 		});
 
-		this.lavalink.on("trackStart", async (player, track) => {
-			const guildData = await this.findOrCreateGuild(player.guildId),
-				channel = this.channels.cache.get(player.textChannelId);
-
+		this.player.events.on("playerStart", async (queue, track) => {
 			const m = (
-				await channel.send({
-					content: this.translate("music/play:NOW_PLAYING", { songName: `${track.info.title} - ${track.info.author}` }, guildData.language),
+				await queue.metadata.channel.send({
+					content: this.translate("music/play:NOW_PLAYING", { songName: `${track.title} - ${track.author}` }, queue.metadata.data.guild.language),
 				})
 			).id;
 
-			if (track.info.duration > 1)
+			if (track.durationMS > 1)
 				setTimeout(() => {
-					const message = channel.messages.cache.get(m);
+					const message = queue.metadata.channel.messages.cache.get(m);
 
 					if (message && message.deletable) message.delete();
-				}, track.info.duration);
+				}, track.durationMS);
 			else
 				setTimeout(() => {
-					const message = channel.messages.cache.get(m);
+					const message = queue.metadata.channel.messages.cache.get(m);
 
 					if (message && message.deletable) message.delete();
 				}, 5 * 60 * 1000);
 		});
-		this.lavalink.on("queueEnd", async player => {
-			const guildData = await this.findOrCreateGuild(player.guildId),
-				channel = this.channels.cache.get(player.textChannelId);
-
-			channel.send(this.translate("music/play:QUEUE_ENDED", null, guildData.language));
+		this.player.events.on("emptyQueue", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.data.guild.language)));
+		this.player.events.on("emptyChannel", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.data.guild.language)));
+		this.player.events.on("playerError", (queue, e) => {
+			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.data.guild.language) });
+			console.log(e);
 		});
-		this.lavalink.on("trackError", async player => {
-			const guildData = await this.findOrCreateGuild(player.guildId),
-				channel = this.channels.cache.get(player.textChannelId);
-
-			channel.send({ content: this.translate("music/play:ERR_OCCURRED", null, guildData.language) });
+		this.player.events.on("error", (queue, e) => {
+			queue.metadata.channel.send({ content: this.translate("music/play:ERR_OCCURRED", { error: e.message }, queue.metadata.data.guild.language) });
+			console.log(e);
 		});
 
 		this.giveawaysManager = new GiveawaysManager(this, {

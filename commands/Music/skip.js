@@ -40,26 +40,25 @@ class Skip extends BaseCommand {
 		const voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
 
-		const player = client.lavalink.getPlayer(interaction.guildId);
-		if (!player) return interaction.error("music/play:NOT_PLAYING");
+		const queue = client.player.nodes.get(interaction.guildId);
+		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
 		const position = interaction.options.getInteger("position");
 
 		if (position) {
-			if (position <= 0) return interaction.error("music/skip:NO_PREV_SONG");
+			if (position <= 0) return interaction.error("music/skipto:NO_PREV_SONG");
 
-			if (player.queue.tracks[position]) {
-				await player.skip(position);
+			if (queue.tracks.at(position - 1)) {
+				queue.node.skipTo(queue.tracks.at(position - 1));
 
-				return interaction.success("music/skip:SUCCESS", {
-					track: player.queue.current.info.title,
+				interaction.success("music/skipto:SUCCESS", {
+					track: queue.tracks.at(0).title,
 				});
-			} else return interaction.error("music/skip:ERROR", { position });
+			} else return interaction.error("music/skipto:ERROR", { position });
 		} else {
-			await player.skip();
+			queue.node.skip();
 			interaction.success("music/skip:SUCCESS");
 		}
-
 	}
 }
 

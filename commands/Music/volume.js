@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
-const numbers = Array.from({ length: 100 }, (_, k) => k + 1);
 
 class Volume extends BaseCommand {
 	/**
@@ -42,13 +41,13 @@ class Volume extends BaseCommand {
 		const voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { ephemeral: true });
 
-		const player = client.lavalink.getPlayer(interaction.guildId);
-		if (!player) return interaction.error("music/play:NOT_PLAYING", null, { ephemeral: true });
+		const queue = client.player.nodes.get(interaction.guildId);
+		if (!queue) return interaction.error("music/play:NOT_PLAYING", null, { ephemeral: true });
 
 		const volume = interaction.options.getInteger("int");
 		if (volume <= 0 || volume > 100) return interaction.error("misc:INVALID_NUMBER_RANGE", { min: 1, max: 100 });
 
-		await player.setVolume(volume);
+		queue.node.setVolume(volume);
 		interaction.success("music/volume:SUCCESS", {
 			volume,
 		});
@@ -62,7 +61,7 @@ class Volume extends BaseCommand {
 	 */
 	async autocompleteRun(client, interaction) {
 		const int = interaction.options.getInteger("int"),
-			results = numbers.filter(i => i.toString().includes(int));
+			results = Array.from({ length: 100 }, (_, k) => k + 1).filter(i => i.toString().includes(int));
 
 		return await interaction.respond(
 			results.slice(0, 25).map(i => ({

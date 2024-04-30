@@ -40,11 +40,10 @@ class Seek extends BaseCommand {
 			voice = interaction.member.voice.channel;
 		if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL");
 
-		const player = client.lavalink.getPlayer(interaction.guildId);
-		if (!player) return interaction.error("music/play:NOT_PLAYING");
+		const queue = client.player.nodes.get(interaction.guildId);
+		if (!queue) return interaction.error("music/play:NOT_PLAYING");
 
-		await player.seek(time * 1000);
-
+		queue.node.seek(time * 1000);
 		interaction.success("music/seek:SUCCESS", {
 			time: `**${time}** ${client.functions.getNoun(time, interaction.translate("misc:NOUNS:SECONDS:1"), interaction.translate("misc:NOUNS:SECONDS:2"), interaction.translate("misc:NOUNS:SECONDS:5"))}`,
 		});
