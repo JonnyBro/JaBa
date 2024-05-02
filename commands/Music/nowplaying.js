@@ -154,9 +154,9 @@ class Nowplaying extends BaseCommand {
 					queue.node.skip();
 
 					await interaction.followUp({
-						content: interaction.success("music/skipto:SUCCESS", {
+						content: interaction.translate("music/skipto:SUCCESS", {
 							track: `${queue.tracks.at(0).title} - ${queue.tracks.at(0).author}`,
-						}, { locale }),
+						}, locale),
 						ephemeral: true,
 					});
 
