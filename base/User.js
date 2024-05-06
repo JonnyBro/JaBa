@@ -103,7 +103,7 @@ userSchema.method("getAchievements", async function () {
 	let dim = 0;
 
 	for (let i = 0; i < images.length; i++) {
-		await ctx.drawImage(images[i], dim, 10, 350, 200);
+		ctx.drawImage(images[i], dim, 10, 350, 200);
 		dim += 200;
 	}
 
