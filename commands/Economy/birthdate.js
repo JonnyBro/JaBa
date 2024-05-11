@@ -75,8 +75,11 @@ class Birthdate extends BaseCommand {
 			day = interaction.options.getInteger("day"),
 			month = interaction.options.getInteger("month"),
 			year = interaction.options.getInteger("year"),
-			date = new Date(year, month - 1, day),
-			d = Math.floor(date.getTime() / 1000);
+			date = new Date(year, month - 1, day);
+
+		date.setHours(12);
+
+		const d = Math.floor(date.getTime() / 1000);
 
 		if (!(day == date.getDate() && month - 1 == date.getMonth() && year == date.getFullYear())) return interaction.error("economy/birthdate:INVALID_DATE");
 		if (date.getTime() > Date.now()) return interaction.error("economy/birthdate:DATE_TOO_HIGH");
