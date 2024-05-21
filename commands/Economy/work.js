@@ -37,7 +37,7 @@ class Work extends BaseCommand {
 				});
 		}
 
-		if (Date.now() > memberData.cooldowns.work + 24 * 60 * 60 * 1000) memberData.workStreak = 0;
+		if (Date.now() > Math.floor(memberData.cooldowns.work + 24 * 60 * 60 * 1000) / 1000) memberData.workStreak = 0;
 
 		const toWait = Math.floor((Date.now() + 24 * 60 * 60 * 1000) / 1000); // 24 hours
 		memberData.cooldowns.work = toWait;
