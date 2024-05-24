@@ -49,7 +49,6 @@ module.exports.init = function (client) {
 
 					user.reminds = user.reminds.filter(r => r.sendAt >= dateNow);
 
-					user.markModified("reminds");
 					await user.save();
 
 					if (user.reminds.length === 0) client.databaseCache.usersReminds.delete(user.id);

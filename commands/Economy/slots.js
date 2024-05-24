@@ -135,13 +135,8 @@ class Slots extends BaseCommand {
 							],
 						});
 					}
-
-					userData.markModified("achievements");
-					await userData.save();
 				}
 
-				memberData.markModified("money");
-				memberData.markModified("transactions");
 				await memberData.save();
 
 				return;
@@ -186,13 +181,8 @@ class Slots extends BaseCommand {
 							],
 						});
 					}
-
-					userData.markModified("achievements");
-					await userData.save();
 				}
 
-				memberData.markModified("money");
-				memberData.markModified("transactions");
 				await memberData.save();
 
 				return;
@@ -216,15 +206,8 @@ class Slots extends BaseCommand {
 			memberData.money -= amount;
 			memberData.transactions.push(info);
 
-			if (!userData.achievements.slots.achieved) {
-				userData.achievements.slots.progress.now = 0;
+			if (!userData.achievements.slots.achieved) userData.achievements.slots.progress.now = 0;
 
-				userData.markModified("achievements");
-				await userData.save();
-			}
-
-			memberData.markModified("money");
-			memberData.markModified("transactions");
 			await memberData.save();
 
 			return;

@@ -80,10 +80,7 @@ class Number extends BaseCommand {
 						}),
 					});
 
-					const memberData = await client.findOrCreateMember({
-						id: msg.author.id,
-						guildId: interaction.guildId,
-					});
+					const memberData = await client.findOrCreateMember(msg.author.id, interaction.guildId);
 
 					memberData.money += won;
 
@@ -95,7 +92,6 @@ class Number extends BaseCommand {
 					};
 					data.memberData.transactions.push(info);
 
-					memberData.markModified("transactions");
 					await memberData.save();
 				}
 

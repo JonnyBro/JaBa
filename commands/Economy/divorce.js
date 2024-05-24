@@ -34,13 +34,11 @@ class Divorce extends BaseCommand {
 
 		userData.lover = null;
 
-		userData.markModified("lover");
 		await userData.save();
 
 		const oldLover = await client.findOrCreateUser(user.id);
 		oldLover.lover = null;
 
-		oldLover.markModified("lover");
 		await oldLover.save();
 
 		interaction.success("economy/divorce:DIVORCED", {

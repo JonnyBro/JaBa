@@ -40,14 +40,10 @@ class Clearwarns extends BaseCommand {
 	async execute(client, interaction) {
 		const member = interaction.options.getMember("user");
 
-		const memberData = await client.findOrCreateMember({
-			id: member.id,
-			guildId: interaction.guildId,
-		});
+		const memberData = await client.findOrCreateMember(member.id, interaction.guildId);
 
 		memberData.sanctions = [];
 
-		memberData.markModified("sanctions");
 		await memberData.save();
 
 		interaction.success("moderation/clearwarns:SUCCESS", {

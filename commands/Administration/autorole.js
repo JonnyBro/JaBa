@@ -57,7 +57,6 @@ class Autorole extends BaseCommand {
 		};
 
 		if (state && role) {
-			guildData.markModified("plugins.autorole");
 			await guildData.save();
 
 			interaction.success("administration/autorole:ENABLED", {
@@ -66,7 +65,6 @@ class Autorole extends BaseCommand {
 		} else {
 			guildData.plugins.autorole.enabled = false;
 
-			guildData.markModified("plugins.autorole");
 			await guildData.save();
 
 			interaction.success("administration/autorole:DISABLED");

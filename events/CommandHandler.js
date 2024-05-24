@@ -23,7 +23,7 @@ class CommandHandler extends BaseEvent {
 
 		if (interaction.inGuild()) {
 			data.guild = await client.findOrCreateGuild(interaction.guildId);
-			data.member = await client.findOrCreateMember({ id: interaction.member.id, guildId: interaction.guildId });
+			data.member = await client.findOrCreateMember(interaction.member.id, interaction.guildId);
 		}
 
 		interaction.data = data;
@@ -50,7 +50,6 @@ class CommandHandler extends BaseEvent {
 			interaction.data.user.achievements.firstCommand.progress.now = 1;
 			interaction.data.user.achievements.firstCommand.achieved = true;
 
-			interaction.data.user.markModified("achievements");
 			await interaction.data.user.save();
 
 			try {

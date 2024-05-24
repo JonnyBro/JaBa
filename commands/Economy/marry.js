@@ -122,11 +122,6 @@ class Marry extends BaseCommand {
 				userData.lover = member.id;
 				otherUserData.lover = interaction.member.id;
 
-				userData.markModified("lover");
-				otherUserData.markModified("lover");
-				await userData.save();
-				await otherUserData.save();
-
 				const messageOptions = {
 					content: `${member.toString()} :heart: ${interaction.member.toString()}`,
 					files: [
@@ -143,19 +138,16 @@ class Marry extends BaseCommand {
 					sent = true;
 					otherUserData.achievements.married.achieved = true;
 					otherUserData.achievements.married.progress.now = 1;
-
-					otherUserData.markModified("achievements");
-					await otherUserData.save();
 				}
 
 				if (!userData.achievements.married.achieved) {
 					if (!sent) interaction.followUp(messageOptions);
 					userData.achievements.married.achieved = true;
 					userData.achievements.married.progress.now = 1;
-
-					userData.markModified("achievements");
-					await userData.save();
 				}
+
+				await userData.save();
+				await otherUserData.save();
 
 				return interaction.editReply({
 					content: interaction.translate("economy/marry:SUCCESS", {

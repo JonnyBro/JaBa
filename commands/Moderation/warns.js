@@ -41,10 +41,7 @@ class Warns extends BaseCommand {
 		const member = interaction.options.getMember("user");
 		if (member.user.bot) return interaction.error("misc:BOT_USER");
 
-		const memberData = await client.findOrCreateMember({
-			id: member.id,
-			guildId: interaction.guildId,
-		});
+		const memberData = await client.findOrCreateMember(member.id, interaction.guildId);
 
 		const embed = client.embed({
 			author: {

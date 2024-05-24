@@ -101,7 +101,6 @@ class Welcome extends BaseCommand {
 					withImage: null,
 				};
 
-				guildData.markModified("plugins.welcome");
 				await guildData.save();
 
 				interaction.success("administration/welcome:DISABLED", null, { ephemeral: true });
@@ -117,7 +116,6 @@ class Welcome extends BaseCommand {
 					withImage: image,
 				};
 
-				guildData.markModified("plugins.welcome");
 				await guildData.save();
 
 				interaction.success("administration/welcome:ENABLED", {

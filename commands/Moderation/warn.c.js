@@ -32,10 +32,7 @@ class WarnContext extends BaseCommand {
 		if (member.id === interaction.member.id) return interaction.error("moderation/warn:YOURSELF", null, { ephemeral: true });
 		if (interaction.guild.ownerId !== interaction.member.id && !(moderationPosition > memberPosition)) return interaction.error("moderation/warn:SUPERIOR", null, { ephemeral: true });
 
-		const memberData = await client.findOrCreateMember({
-			id: member.id,
-			guildId: interaction.guildId,
-		});
+		const memberData = await client.findOrCreateMember(member.id, interaction.guildId);
 
 		const modal = new ModalBuilder()
 			.setCustomId("warn_modal")
@@ -176,7 +173,6 @@ class WarnContext extends BaseCommand {
 
 			memberData.sanctions.push(caseInfo);
 
-			memberData.markModified("sanctions");
 			await memberData.save();
 
 			const guildData = interaction.data.guild;

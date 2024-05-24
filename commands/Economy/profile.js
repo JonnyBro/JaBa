@@ -41,17 +41,14 @@ class Profile extends BaseCommand {
 		const member = interaction.options.getMember("user") || interaction.member;
 		if (member.user.bot) return interaction.error("economy/profile:BOT_USER");
 
-		const memberData = member.id === interaction.user.id ? interaction.data.member : await client.findOrCreateMember({ id: member.id, guildId: interaction.guildId });
+		const memberData = member.id === interaction.user.id ? interaction.data.member : await client.findOrCreateMember(member.id, interaction.guildId);
 		const userData = member.id === interaction.user.id ? interaction.data.user : await client.findOrCreateUser(member.id);
 		if (userData.lover && !client.users.cache.find(u => u.id === userData.lover)) await client.users.fetch(userData.lover, true);
 
 		const guilds = client.guilds.cache.filter(g => g.members.cache.find(m => m.id === member.id));
 		let globalMoney = 0;
 		await client.functions.asyncForEach(guilds, async guild => {
-			const data = await client.findOrCreateMember({
-				id: member.id,
-				guildId: guild.id,
-			});
+			const data = await client.findOrCreateMember(member.id, guild.id);
 			globalMoney += data.money + data.bankSold;
 		});
 

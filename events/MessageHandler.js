@@ -30,7 +30,7 @@ class MessageCreate extends BaseEvent {
 			if (!message.member) await message.guild.members.fetch(message.author.id);
 
 			data.guild = await client.findOrCreateGuild(message.guildId);
-			data.member = await client.findOrCreateMember({ id: message.author.id, guildId: message.guildId });
+			data.member = await client.findOrCreateMember(message.author.id, message.guildId);
 		}
 
 		message.data = data;
@@ -98,7 +98,6 @@ class MessageCreate extends BaseEvent {
 			if (message.data.user.afk) {
 				message.data.user.afk = null;
 
-				message.data.user.markModified("afk");
 				await message.data.user.save();
 
 				message.replyT("general/afk:DELETED", {
@@ -146,8 +145,6 @@ async function updateXp(message) {
 		}, { mention: false });
 	} else memberData.exp = parseInt(newXp, 10);
 
-	memberData.markModified("level");
-	memberData.markModified("exp");
 	await memberData.save();
 }
 

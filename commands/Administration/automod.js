@@ -78,14 +78,12 @@ class Automod extends BaseCommand {
 				ignored: [],
 			};
 
-			data.guild.markModified("plugins.automod");
 			await data.guild.save();
 
 			interaction.success(`administration/automod:${state ? "ENABLED" : "DISABLED"}`);
 		} else if (command === "ignore") {
 			data.guild.plugins.automod.ignored.push(channel.id);
 
-			data.guild.markModified("plugins.automod");
 			await data.guild.save();
 
 			interaction.success("administration/automod:DISABLED_CHANNEL", {

@@ -43,10 +43,7 @@ class TicTacToe extends BaseCommand {
 			embedColor: client.config.embed.color,
 			embedFoot: client.config.embed.footer,
 		}).then(async winner => {
-			const memberData = await client.findOrCreateMember({
-				id: winner.id,
-				guildId: interaction.guildId,
-			});
+			const memberData = await client.findOrCreateMember(winner.id, interaction.guildId);
 
 			memberData.money += 100;
 
@@ -59,8 +56,6 @@ class TicTacToe extends BaseCommand {
 
 			memberData.transactions.push(info);
 
-			memberData.markModified("money");
-			memberData.markModified("transactions");
 			await memberData.save();
 		});
 	}

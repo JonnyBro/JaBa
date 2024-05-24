@@ -55,10 +55,7 @@ class Rob extends BaseCommand {
 		const amount = interaction.options.getInteger("amount");
 		if (amount <= 0) return interaction.error("misc:MORE_THAN_ZERO");
 
-		const otherMemberData = await client.findOrCreateMember({
-			id: otherMember.id,
-			guildId: interaction.guildId,
-		});
+		const otherMemberData = await client.findOrCreateMember(otherMember.id, interaction.guildId);
 		if (amount > otherMemberData.money) return interaction.error("economy/rob:NOT_ENOUGH_MEMBER", { user: otherMember.toString() });
 
 		const isInCooldown = otherMemberData.cooldowns.rob || 0;
@@ -81,9 +78,6 @@ class Rob extends BaseCommand {
 
 			otherMemberData.cooldowns.rob = toWait;
 
-			otherMemberData.markModified("cooldowns");
-			await otherMemberData.save();
-
 			interaction.replyT("economy/rob:ROB_WON_" + randomNum, {
 				money: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDIT:1"), interaction.translate("misc:NOUNS:CREDIT:2"), interaction.translate("misc:NOUNS:CREDIT:5"))}`,
 				user: otherMember.toString(),
@@ -92,8 +86,6 @@ class Rob extends BaseCommand {
 			memberData.money += amount;
 			otherMemberData.money -= amount;
 
-			memberData.markModified("money");
-			otherMemberData.markModified("money");
 			await memberData.save();
 			await otherMemberData.save();
 		} else {
@@ -109,8 +101,6 @@ class Rob extends BaseCommand {
 			memberData.money -= potentiallyLose;
 			otherMemberData.money += won;
 
-			memberData.markModified("money");
-			otherMemberData.markModified("money");
 			await memberData.save();
 			await otherMemberData.save();
 		}

@@ -51,9 +51,6 @@ class CreateTicketEmbed extends BaseCommand {
 
 				guildData.plugins.tickets.count++;
 
-				guildData.markModified("plugins.tickets");
-				await guildData.save();
-
 				const channel = await interaction.guild.channels.create({
 					name: `${interaction.user.username}-support-${guildData.plugins.tickets.count}`,
 					topic: interaction.user.id,
@@ -102,6 +99,8 @@ class CreateTicketEmbed extends BaseCommand {
 					.setLabel(interaction.translate("tickets/closeticket:TRANSCRIPT_TICKET"))
 					.setStyle(ButtonStyle.Secondary);
 				const row = new ActionRowBuilder().addComponents(closeButton, transcriptButton);
+
+				await guildData.save();
 
 				await channel.send({ embeds: [embed], components: [row] });
 			} else if (button.customId === "close_ticket") {

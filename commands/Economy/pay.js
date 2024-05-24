@@ -59,20 +59,10 @@ class Pay extends BaseCommand {
 				amount: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDITS:1"), interaction.translate("misc:NOUNS:CREDITS:2"), interaction.translate("misc:NOUNS:CREDITS:5"))}`,
 			});
 
-		const otherMemberData = await client.findOrCreateMember({
-			id: otherMember.id,
-			guildId: interaction.guildId,
-		});
+		const otherMemberData = await client.findOrCreateMember(otherMember.id, interaction.guildId);
 
 		memberData.money -= amount;
-
-		memberData.markModified("money");
-		await memberData.save();
-
 		otherMemberData.money += amount;
-
-		otherMemberData.markModified("money");
-		await otherMemberData.save();
 
 		const info1 = {
 			user: otherMember.user.getUsername(),
@@ -89,6 +79,9 @@ class Pay extends BaseCommand {
 			type: "got",
 		};
 		otherMemberData.transactions.push(info2);
+
+		await memberData.save();
+		await otherMemberData.save();
 
 		interaction.success("economy/pay:SUCCESS", {
 			user: otherMember.toString(),

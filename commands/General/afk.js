@@ -44,7 +44,6 @@ class Afk extends BaseCommand {
 
 		userData.afk = reason;
 
-		userData.markModified("afk");
 		await userData.save();
 
 		interaction.success("general/afk:SUCCESS", {

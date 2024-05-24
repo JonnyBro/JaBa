@@ -30,22 +30,15 @@ class Work extends BaseCommand {
 		const { member: memberData, user: userData } = interaction.data,
 			isInCooldown = memberData.cooldowns?.work;
 
-		if (isInCooldown) {
-			if (isInCooldown > Date.now())
-				return interaction.error("economy/work:COOLDOWN", {
-					time: `<t:${Math.floor(isInCooldown / 1000)}:R>`,
-				});
-		}
+		if (isInCooldown && isInCooldown > 0 && isInCooldown > Math.floor(Date.now() / 1000))
+			return interaction.error("economy/work:COOLDOWN", {
+				time: `<t:${Math.floor(isInCooldown)}:R>`,
+			});
 
-		if (Date.now() > Math.floor(memberData.cooldowns.work + 24 * 60 * 60 * 1000) / 1000) memberData.workStreak = 0;
+		if (Math.floor(Date.now() / 1000) > Math.floor(memberData.cooldowns.work + 24 * 60 * 60)) memberData.workStreak = 0;
 
-		const toWait = Math.floor((Date.now() + 24 * 60 * 60 * 1000) / 1000); // 24 hours
-		memberData.cooldowns.work = toWait;
+		memberData.cooldowns.work = Math.floor(Date.now() / 1000) + 24 * 60 * 60; // 24 hours
 		memberData.workStreak = (memberData.workStreak || 0) + 1;
-
-		memberData.markModified("cooldowns");
-		memberData.markModified("workStreak");
-		await memberData.save();
 
 		const embed = client.embed({
 			footer: {
@@ -96,9 +89,6 @@ class Work extends BaseCommand {
 
 		memberData.money += won;
 
-		memberData.markModified("money");
-		await memberData.save();
-
 		const info = {
 			user: interaction.translate("economy/work:SALARY"),
 			amount: won,
@@ -123,9 +113,10 @@ class Work extends BaseCommand {
 				userData.achievements.work.achieved = true;
 			}
 
-			userData.markModified("achievements");
 			await userData.save();
 		}
+
+		await memberData.save();
 
 		interaction.reply(messageOptions);
 	}

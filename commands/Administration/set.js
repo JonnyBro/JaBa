@@ -68,10 +68,7 @@ class Set extends BaseCommand {
 			member = interaction.options.getMember("user");
 		if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
 
-		const memberData = await client.findOrCreateMember({
-			id: member.id,
-			guildId: interaction.guildId,
-		});
+		const memberData = await client.findOrCreateMember(member.id, interaction.guildId);
 
 		const int = interaction.options.getInteger("int");
 		if (int < 0) return interaction.error("administration/set:INVALID_NUMBER", null, { ephemeral: true });
@@ -80,7 +77,6 @@ class Set extends BaseCommand {
 			case "level": {
 				memberData.level = int;
 
-				memberData.markModified("level");
 				await memberData.save();
 
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -92,7 +88,6 @@ class Set extends BaseCommand {
 			case "xp": {
 				memberData.exp = int;
 
-				memberData.markModified("exp");
 				await memberData.save();
 
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -104,7 +99,6 @@ class Set extends BaseCommand {
 			case "credits": {
 				memberData.money = int;
 
-				memberData.markModified("money");
 				await memberData.save();
 
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {
@@ -116,7 +110,6 @@ class Set extends BaseCommand {
 			case "bank": {
 				memberData.bankSold = int;
 
-				memberData.markModified("bankSold");
 				await memberData.save();
 
 				return interaction.success(`owner/debug:SUCCESS_${type.toUpperCase()}`, {

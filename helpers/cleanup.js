@@ -30,7 +30,6 @@ module.exports.init = async function (client) {
 					const index = transactions.indexOf(transaction);
 					transactions.splice(index, 1);
 
-					member.markModified("transactions");
 					await member.save();
 				}
 			}
@@ -40,14 +39,13 @@ module.exports.init = async function (client) {
 	setDaysTimeout(async () => {
 		client.usersData.find({}, function (err, res) {
 			for (const user of res) {
-				client.users.fetch(user.id).then(u => {
+				client.users.fetch(user.id).then(async u => {
 					if (u.username.match(/.*Deleted User.* [A-z0-9]+/g)) {
 						client.databaseCache.users.delete(u.id);
 						client.usersData.deleteOne({ id: u.id });
 						client.logger.log(`Removed from database deleted user - ID: ${u.id} Username: ${u.username}`);
 
-						client.usersData.markModified();
-						client.usersData.save();
+						await client.usersData.save();
 					}
 				});
 			}
@@ -55,14 +53,13 @@ module.exports.init = async function (client) {
 
 		client.membersData.find({}, function (err, res) {
 			for (const user of res) {
-				client.users.fetch(user.id).then(u => {
+				client.users.fetch(user.id).then(async u => {
 					if (u.username.match(/.*Deleted User.* [A-z0-9]+/g)) {
 						client.databaseCache.members.delete(u.id);
 						client.membersData.deleteOne({ id: u.id });
 						client.logger.log(`Removed from database deleted user - ID: ${u.id} Username: ${u.username}`);
 
-						client.membersData.markModified();
-						client.membersData.save();
+						await client.membersData.save();
 					}
 				});
 			}

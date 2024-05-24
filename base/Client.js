@@ -328,20 +328,19 @@ class JaBaClient extends Client {
 
 	/**
 	 * Finds or creates a member in the database based on the provided member ID and guild ID.
-	 * @param {Object} options - The options for finding or creating the member.
-	 * @param {string} options.id - The ID of the member to find or create.
-	 * @param {string} options.guildId - The ID of the guild the member belongs to.
+	 * @param {string} memberId - The ID of the member to find or create.
+	 * @param {string} guildId - The ID of the guild the member belongs to.
 	 * @returns {Promise<import("./Member")>} The member data object, either retrieved from the database or newly created.
 	 */
-	async findOrCreateMember({ id: memberID, guildId }) {
-		let memberData = await this.membersData.findOne({ guildID: guildId, id: memberID });
+	async findOrCreateMember(memberId, guildId) {
+		let memberData = await this.membersData.findOne({ guildID: guildId, id: memberId });
 
 		if (memberData) {
-			this.databaseCache.members.set(`${memberID}${guildId}`, memberData);
+			this.databaseCache.members.set(`${memberId}${guildId}`, memberData);
 
 			return memberData;
 		} else {
-			memberData = new this.membersData({ id: memberID, guildID: guildId });
+			memberData = new this.membersData({ id: memberId, guildID: guildId });
 
 			await memberData.save();
 
@@ -353,7 +352,7 @@ class JaBaClient extends Client {
 				await guildData.save();
 			}
 
-			this.databaseCache.members.set(`${memberID}${guildId}`, memberData);
+			this.databaseCache.members.set(`${memberId}/${guildId}`, memberData);
 
 			return memberData;
 		}

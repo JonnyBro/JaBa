@@ -87,7 +87,6 @@ class Birthdate extends BaseCommand {
 
 		userData.birthdate = d;
 
-		userData.markModified("birthdate");
 		await userData.save();
 
 		interaction.success("economy/birthdate:SUCCESS", {
