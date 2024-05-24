@@ -43,7 +43,7 @@ class Help extends BaseCommand {
 				await interaction.deferUpdate();
 
 				interaction.data = [];
-				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
+				interaction.data.guild = await client.getGuildData(interaction.guildId);
 
 				const arg = interaction?.values[0];
 				const categoryCommands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()]

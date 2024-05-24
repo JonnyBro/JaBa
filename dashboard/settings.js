@@ -20,12 +20,12 @@ module.exports = client => [
 					Ukrainian: "uk-UA",
 				}),
 				getActualSet: async ({ guild }) => {
-					const guildData = await client.findOrCreateGuild(guild.id);
+					const guildData = await client.getGuildData(guild.id);
 
 					return guildData.language;
 				},
 				setNew: async ({ guild, newData }) => {
-					const guildData = await client.findOrCreateGuild(guild.id);
+					const guildData = await client.getGuildData(guild.id);
 
 					guildData.language = newData;
 
@@ -45,12 +45,12 @@ module.exports = client => [
 						optionDescription: "Toggle welcome messages sending",
 						optionType: DBD.formTypes.switch(),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.welcome.enabled;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.welcome.enabled = newData;
 
@@ -65,12 +65,12 @@ module.exports = client => [
 						optionDescription: "Toggle sending an image with welcome message",
 						optionType: DBD.formTypes.switch(),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.welcome.withImage;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.welcome.withImage = newData;
 
@@ -85,12 +85,12 @@ module.exports = client => [
 						optionDescription: "Change welcome message (You can use {user}, {server} and {membercount} wildcards)",
 						optionType: DBD.formTypes.input("Welcome, {user}!", 2, 100, false, false),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.welcome.message;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.welcome.message = newData !== "" ? newData : null;
 
@@ -105,12 +105,12 @@ module.exports = client => [
 						optionDescription: "Select a channel for welcome messages",
 						optionType: DBD.formTypes.channelsSelect(false, [ChannelType.GuildText]),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.welcome.channel;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.welcome.channel = newData !== "" ? newData : null;
 
@@ -132,12 +132,12 @@ module.exports = client => [
 						optionDescription: "Toggle goodbye messages sending",
 						optionType: DBD.formTypes.switch(),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.goodbye.enabled;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.goodbye.enabled = newData;
 
@@ -152,12 +152,12 @@ module.exports = client => [
 						optionDescription: "Toggle sending an image with goodbye message",
 						optionType: DBD.formTypes.switch(),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.goodbye.withImage;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.goodbye.withImage = newData;
 
@@ -172,12 +172,12 @@ module.exports = client => [
 						optionDescription: "Change goodbye message (You can use {user}, {server} and {membercount} wildcards)",
 						optionType: DBD.formTypes.input("goodbye, {user}!", 2, 100, false, false),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.goodbye.message;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.goodbye.message = newData !== "" ? newData : null;
 
@@ -192,12 +192,12 @@ module.exports = client => [
 						optionDescription: "Select a channel for goodbye messages",
 						optionType: DBD.formTypes.channelsSelect(false, [ChannelType.GuildText]),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.goodbye.channel;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.goodbye.channel = newData !== "" ? newData : null;
 
@@ -219,12 +219,12 @@ module.exports = client => [
 						optionDescription: "Toggle auto role granting for new members",
 						optionType: DBD.formTypes.switch(),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.autorole.enabled;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.autorole.enabled = newData;
 
@@ -239,12 +239,12 @@ module.exports = client => [
 						optionDescription: "Select a role for auto role. Select \"-\" to disable",
 						optionType: DBD.formTypes.rolesSelect(false, false, true),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.autorole.role;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.autorole.role = newData !== "" ? newData : null;
 
@@ -266,12 +266,12 @@ module.exports = client => [
 						optionDescription: "Toggle auto mod. It will remove invite links from non-moderators",
 						optionType: DBD.formTypes.switch(),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.automod.enabled;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.automod.enabled = newData;
 
@@ -286,12 +286,12 @@ module.exports = client => [
 						optionDescription: "Select a channels for auto mod to ignore",
 						optionType: DBD.formTypes.channelsMultiSelect(false, false, [ChannelType.GuildText]),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.automod.ignored;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.automod.ignored = newData;
 
@@ -313,12 +313,12 @@ module.exports = client => [
 						optionDescription: "Select a channel for messages update logs to go to. Select \"-\" to disable",
 						optionType: DBD.formTypes.channelsSelect(false, [ChannelType.GuildText]),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins?.monitoring?.messageUpdate;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							if (guildData.plugins.monitoring === undefined) guildData.plugins.monitoring = {};
 
@@ -335,12 +335,12 @@ module.exports = client => [
 						optionDescription: "Select a channel for messages deletion logs to go to. Select \"-\" to disable",
 						optionType: DBD.formTypes.channelsSelect(false, [ChannelType.GuildText]),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins?.monitoring?.messageDelete;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							if (guildData.plugins.monitoring === undefined) guildData.plugins.monitoring = {};
 
@@ -364,12 +364,12 @@ module.exports = client => [
 						optionDescription: "Select a channel for suggestions to go to",
 						optionType: DBD.formTypes.channelsSelect(false, [ChannelType.GuildText]),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.suggestions;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.suggestions = newData !== "" ? newData : null;
 
@@ -384,12 +384,12 @@ module.exports = client => [
 						optionDescription: "Select a channel for reports to go to. Select \"-\" to disable",
 						optionType: DBD.formTypes.channelsSelect(false, [ChannelType.GuildText]),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.reports;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.reports = newData !== "" ? newData : null;
 
@@ -404,12 +404,12 @@ module.exports = client => [
 						optionDescription: "Select a channel for birthdays message to go to. Select \"-\" to disable",
 						optionType: DBD.formTypes.channelsSelect(false, [ChannelType.GuildText]),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.birthdays;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.birthdays = newData !== "" ? newData : null;
 
@@ -424,12 +424,12 @@ module.exports = client => [
 						optionDescription: "Select a channel for moderation logs to go to (warns). Select \"-\" to disable",
 						optionType: DBD.formTypes.channelsSelect(false, [ChannelType.GuildText]),
 						getActualSet: async ({ guild }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							return guildData.plugins.modlogs;
 						},
 						setNew: async ({ guild, newData }) => {
-							const guildData = await client.findOrCreateGuild(guild.id);
+							const guildData = await client.getGuildData(guild.id);
 
 							guildData.plugins.modlogs = newData !== "" ? newData : null;
 

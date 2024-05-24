@@ -68,7 +68,7 @@ class Set extends BaseCommand {
 			member = interaction.options.getMember("user");
 		if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
 
-		const memberData = await client.findOrCreateMember(member.id, interaction.guildId);
+		const memberData = await client.getMemberData(member.id, interaction.guildId);
 
 		const int = interaction.options.getInteger("int");
 		if (int < 0) return interaction.error("administration/set:INVALID_NUMBER", null, { ephemeral: true });

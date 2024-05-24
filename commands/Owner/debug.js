@@ -128,8 +128,8 @@ class Debug extends BaseCommand {
 			const member = interaction.options.getMember("user");
 			if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
 
-			const userData = await client.findOrCreateUser(member.id),
-				memberData = await client.findOrCreateMember(member.id, interaction.guildId);
+			const userData = await client.getUserData(member.id),
+				memberData = await client.getMemberData(member.id, interaction.guildId);
 
 			switch (type) {
 				case "level": {
@@ -194,8 +194,8 @@ class Debug extends BaseCommand {
 			const member = interaction.options.getMember("target");
 			if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
 
-			const userData = await client.findOrCreateUser(member.id),
-				memberData = await client.findOrCreateMember(member.id, interaction.guildId);
+			const userData = await client.getUserData(member.id),
+				memberData = await client.getMemberData(member.id, interaction.guildId);
 
 			switch (type) {
 				case "level": {

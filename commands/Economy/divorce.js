@@ -36,7 +36,7 @@ class Divorce extends BaseCommand {
 
 		await userData.save();
 
-		const oldLover = await client.findOrCreateUser(user.id);
+		const oldLover = await client.getUserData(user.id);
 		oldLover.lover = null;
 
 		await oldLover.save();

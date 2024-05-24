@@ -31,7 +31,7 @@ class Boosters extends BaseCommand {
 
 			if (interaction.customId.startsWith("boosters_")) {
 				interaction.data = [];
-				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
+				interaction.data.guild = await client.getGuildData(interaction.guildId);
 
 				const boosters = (await interaction.guild.members.fetch()).filter(m => m.premiumSince),
 					embeds = generateBoostersEmbeds(interaction, boosters);

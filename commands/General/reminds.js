@@ -31,8 +31,8 @@ class Reminds extends BaseCommand {
 
 			if (interaction.customId.startsWith("reminds_")) {
 				interaction.data = [];
-				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
-				interaction.data.user = await client.findOrCreateUser(interaction.user.id);
+				interaction.data.guild = await client.getGuildData(interaction.guildId);
+				interaction.data.user = await client.getUserData(interaction.user.id);
 
 				const reminds = interaction.data.user.reminds,
 					embeds = generateRemindsEmbeds(interaction, reminds);

@@ -7,7 +7,7 @@ const { CronJob } = require("cron");
 module.exports.init = async client => {
 	const cronjob = new CronJob("0 5 * * *", async function () {
 		client.guilds.cache.forEach(async guild => {
-			const guildData = await client.findOrCreateGuild(guild.id);
+			const guildData = await client.getGuildData(guild.id);
 			const channel = guildData.plugins.birthdays ? client.channels.cache.get(guildData.plugins.birthdays) || (await client.channels.fetch(guildData.plugins.birthdays)) : null;
 
 			if (guildData.plugins.birthdays && client.channels.cache.get(guildData.plugins.birthdays)) {
@@ -69,7 +69,7 @@ module.exports.init = async client => {
  */
 module.exports.run = async client => {
 	client.guilds.cache.forEach(async guild => {
-		const guildData = await client.findOrCreateGuild(guild.id);
+		const guildData = await client.getGuildData(guild.id);
 		const channel = guildData.plugins.birthdays ? client.channels.cache.get(guildData.plugins.birthdays) || (await client.channels.fetch(guildData.plugins.birthdays)) : null;
 
 		if (guildData.plugins.birthdays) {

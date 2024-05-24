@@ -80,7 +80,7 @@ class Number extends BaseCommand {
 						}),
 					});
 
-					const memberData = await client.findOrCreateMember(msg.author.id, interaction.guildId);
+					const memberData = await client.getMemberData(msg.author.id, interaction.guildId);
 
 					memberData.money += won;
 

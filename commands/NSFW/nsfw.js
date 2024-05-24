@@ -34,7 +34,7 @@ class NSFW extends BaseCommand {
 				await interaction.deferUpdate();
 
 				interaction.data = [];
-				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
+				interaction.data.guild = await client.getGuildData(interaction.guildId);
 
 				const tag = interaction?.values[0],
 					splitted = tag.split("_"),

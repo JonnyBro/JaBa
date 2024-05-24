@@ -30,7 +30,7 @@ class Queue extends BaseCommand {
 			if (!interaction.isButton()) return;
 
 			if (interaction.customId.startsWith("queue_")) {
-				const locale = (await client.findOrCreateGuild(interaction.guildId)).language;
+				const locale = (await client.getGuildData(interaction.guildId)).language;
 
 				const queue = client.player.nodes.get(interaction.guildId);
 				if (!queue) return interaction.error("music/play:NOT_PLAYING", null, locale);

@@ -33,7 +33,7 @@ class Memes extends BaseCommand {
 			if (interaction.customId === "memes_select") {
 				interaction.deferUpdate();
 
-				interaction.guild.data = await client.findOrCreateGuild(interaction.guildId);
+				interaction.guild.data = await client.getGuildData(interaction.guildId);
 
 				const tag = interaction.values[0];
 				const res = await fetch(`https://meme-api.com/gimme/${tag}`).then(response => response.json());

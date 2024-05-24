@@ -31,7 +31,7 @@ class Nowplaying extends BaseCommand {
 			if (!interaction.isButton()) return;
 
 			if (interaction.customId.startsWith("nowp_")) {
-				const locale = (await client.findOrCreateGuild(interaction.guildId)).language;
+				const locale = (await client.getGuildData(interaction.guildId)).language;
 
 				const voice = interaction.member.voice.channel;
 				if (!voice) return interaction.error("music/play:NO_VOICE_CHANNEL", null, { locale });

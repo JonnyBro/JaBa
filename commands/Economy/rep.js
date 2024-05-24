@@ -56,7 +56,7 @@ class Rep extends BaseCommand {
 
 		userData.cooldowns.rep = toWait;
 
-		const otherUserData = await client.findOrCreateUser(user.id);
+		const otherUserData = await client.getUserData(user.id);
 
 		otherUserData.rep++;
 

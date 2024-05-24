@@ -20,7 +20,7 @@ class GuildMemberUpdate extends BaseEvent {
 		if (oldMember.roles.cache.some(r => r.id === "940149470975365191")) return;
 
 		if (newMember?.roles.cache.some(r => r.id === "940149470975365191")) {
-			const userData = await client.findOrCreateUser(newMember.id);
+			const userData = await client.getUserData(newMember.id);
 
 			userData.achievements.tip.progress.now = 1;
 			userData.achievements.tip.achieved = true;

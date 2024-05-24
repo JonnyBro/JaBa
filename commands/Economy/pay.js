@@ -59,7 +59,7 @@ class Pay extends BaseCommand {
 				amount: `**${amount}** ${client.functions.getNoun(amount, interaction.translate("misc:NOUNS:CREDITS:1"), interaction.translate("misc:NOUNS:CREDITS:2"), interaction.translate("misc:NOUNS:CREDITS:5"))}`,
 			});
 
-		const otherMemberData = await client.findOrCreateMember(otherMember.id, interaction.guildId);
+		const otherMemberData = await client.getMemberData(otherMember.id, interaction.guildId);
 
 		memberData.money -= amount;
 		otherMemberData.money += amount;

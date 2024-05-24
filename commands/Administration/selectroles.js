@@ -90,7 +90,7 @@ class Selectroles extends BaseCommand {
 
 			if (interaction.customId === "auto_roles") {
 				interaction.data = [];
-				interaction.data.guild = await client.findOrCreateGuild(interaction.guildId);
+				interaction.data.guild = await client.getGuildData(interaction.guildId);
 
 				const removed = interaction.component.options.filter(option => {
 					return !interaction.values.includes(option.value);

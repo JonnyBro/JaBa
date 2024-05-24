@@ -24,13 +24,13 @@ class MessageCreate extends BaseEvent {
 		if (message.author.bot) return;
 		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) return message.replyT("misc:HELLO_SERVER", null, { mention: true });
 
-		data.user = await client.findOrCreateUser(message.author.id);
+		data.user = await client.getUserData(message.author.id);
 
 		if (message.guild) {
 			if (!message.member) await message.guild.members.fetch(message.author.id);
 
-			data.guild = await client.findOrCreateGuild(message.guildId);
-			data.member = await client.findOrCreateMember(message.author.id, message.guildId);
+			data.guild = await client.getGuildData(message.guildId);
+			data.member = await client.getMemberData(message.author.id, message.guildId);
 		}
 
 		message.data = data;
@@ -106,7 +106,7 @@ class MessageCreate extends BaseEvent {
 			}
 
 			message.mentions.users.forEach(async u => {
-				const userData = await client.findOrCreateUser(u.id);
+				const userData = await client.getUserData(u.id);
 
 				if (userData.afk) message.replyT("general/afk:IS_AFK", { user: u.getUsername(), reason: userData.afk }, { ephemeral: true });
 			});

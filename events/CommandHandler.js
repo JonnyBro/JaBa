@@ -19,11 +19,11 @@ class CommandHandler extends BaseEvent {
 
 		const data = [];
 
-		data.user = await client.findOrCreateUser(interaction.user.id);
+		data.user = await client.getUserData(interaction.user.id);
 
 		if (interaction.inGuild()) {
-			data.guild = await client.findOrCreateGuild(interaction.guildId);
-			data.member = await client.findOrCreateMember(interaction.member.id, interaction.guildId);
+			data.guild = await client.getGuildData(interaction.guildId);
+			data.member = await client.getMemberData(interaction.member.id, interaction.guildId);
 		}
 
 		interaction.data = data;
