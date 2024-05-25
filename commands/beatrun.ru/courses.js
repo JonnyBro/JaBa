@@ -43,14 +43,14 @@ class Courses extends BaseCommand {
 
 		const code = interaction.options.getString("code");
 
-		const response = await fetch(`https://courses.beatrun.ru/api/info/${code}`).then(res => res.json());
+		const response = await fetch(`https://courses.jonnybro.ru/api/info/${code}`).then(res => res.json());
 		const course = response.data;
 
 		if (response.res === 401) return interaction.error("beatrun.ru/courses:NOT_FOUND", null, { ephemeral: true, edit: true });
 
 		const embed = client.embed({
 			title: code,
-			description: `[${interaction.translate("beatrun.ru/courses:DOWNLOAD")}](https://courses.beatrun.ru/${course.path})`,
+			description: `[${interaction.translate("beatrun.ru/courses:DOWNLOAD")}](https://courses.jonnybro.ru/${course.path})`,
 			thumbnail: course.mapimg,
 			url: `https://courses.beatrun.ru/?search=${code}`,
 			fields: [
