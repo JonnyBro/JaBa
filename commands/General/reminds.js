@@ -15,7 +15,7 @@ class Reminds extends BaseCommand {
 					uk: client.translate("general/reminds:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/reminds:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false),
+				.setDMPermission(true),
 			dirname: __dirname,
 			ownerOnly: false,
 		});
@@ -120,7 +120,7 @@ class Reminds extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
-		await interaction.deferReply();
+		await interaction.deferReply({ ephemeral: true });
 
 		const reminds = interaction.data.user.reminds;
 		if (reminds.length === 0) return interaction.error("general/reminds:NO_REMINDS", null, { edit: true });
@@ -138,6 +138,7 @@ class Reminds extends BaseCommand {
 			content: `${interaction.translate("common:PAGE")}: **1**/**${embeds.length}**`,
 			embeds: [embeds[0]],
 			components: [row],
+			ephemeral: true,
 		});
 	}
 }

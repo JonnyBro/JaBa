@@ -35,7 +35,7 @@ class Work extends BaseCommand {
 				time: `<t:${Math.floor(isInCooldown)}:R>`,
 			});
 
-		if (Math.floor(Date.now() / 1000) > Math.floor(memberData.cooldowns.work + 24 * 60 * 60)) memberData.workStreak = 0;
+		if (Math.floor(Date.now() / 1000) > Math.floor(memberData.cooldowns.work + 30 * 60 * 60)) memberData.workStreak = 0;
 
 		memberData.cooldowns.work = Math.floor(Date.now() / 1000) + 24 * 60 * 60; // 24 hours
 		memberData.workStreak = (memberData.workStreak || 0) + 1;
