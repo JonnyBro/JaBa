@@ -30,14 +30,14 @@ class Work extends BaseCommand {
 		const { member: memberData, user: userData } = interaction.data,
 			isInCooldown = memberData.cooldowns?.work;
 
-		if (isInCooldown && isInCooldown > 0 && isInCooldown > Math.floor(Date.now() / 1000))
+		if (isInCooldown && isInCooldown > Date.now())
 			return interaction.error("economy/work:COOLDOWN", {
-				time: `<t:${Math.floor(isInCooldown)}:R>`,
+				time: `<t:${Math.floor(isInCooldown / 1000)}:R>`,
 			});
 
-		if (Math.floor(Date.now() / 1000) > Math.floor(memberData.cooldowns.work + 30 * 60 * 60)) memberData.workStreak = 0;
+		if (Date.now() > memberData.cooldowns.work + 30 * 60 * 60 * 1000) memberData.workStreak = 0;
 
-		memberData.cooldowns.work = Math.floor(Date.now() / 1000) + 24 * 60 * 60; // 24 hours
+		memberData.cooldowns.work = Date.now() + 24 * 60 * 60 * 1000;
 		memberData.workStreak = (memberData.workStreak || 0) + 1;
 
 		const embed = client.embed({
@@ -113,9 +113,11 @@ class Work extends BaseCommand {
 				userData.achievements.work.achieved = true;
 			}
 
+			userData.markModified("achievements");
 			await userData.save();
 		}
 
+		memberData.markModified("cooldowns");
 		await memberData.save();
 
 		interaction.reply(messageOptions);

@@ -41,6 +41,7 @@ class Transactions extends BaseCommand {
 		if (interaction.options.getBoolean("clear")) {
 			memberData.transactions = [];
 
+			memberData.markModified("transactions");
 			await memberData.save();
 
 			return interaction.success("economy/transactions:CLEARED", null, { ephemeral: true });

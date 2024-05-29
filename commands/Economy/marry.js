@@ -146,6 +146,8 @@ class Marry extends BaseCommand {
 					userData.achievements.married.progress.now = 1;
 				}
 
+				userData.markModified("achievements");
+				otherUserData.markModified("achievements");
 				await userData.save();
 				await otherUserData.save();
 
