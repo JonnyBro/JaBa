@@ -1,5 +1,7 @@
 # Discord Bot Dashboard Template
 
+> Made By <https://github.com/fuma-nama>
+
 ![banner](./document/preview-new.png)
 
 Using Typescript, Next.js 13, React 18 and Chakra ui 2.0
