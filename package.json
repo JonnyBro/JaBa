@@ -4,9 +4,7 @@
     "description": "My Discord Bot",
     "main": "index.js",
     "scripts": {
-        "preinstall": "npx only-allow pnpm",
-        "start": "node .",
-        "lint": "eslint . --ext .js --ignore-pattern \"dashboard-core/\""
+        "start": "node ."
     },
     "author": "@jonny_bro",
     "dependencies": {
