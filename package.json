@@ -4,6 +4,7 @@
     "description": "My Discord Bot",
     "main": "index.js",
     "scripts": {
+        "preinstall": "npx only-allow pnpm",
         "start": "node ."
     },
     "author": "@jonny_bro",
