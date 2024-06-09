@@ -28,16 +28,13 @@ class Work extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const { member: memberData, user: userData } = interaction.data,
-			isInCooldown = memberData.cooldowns?.work;
+			cooldown = memberData.cooldowns?.work,
+			now = Date.now();
 
-		if (isInCooldown && isInCooldown > Date.now())
-			return interaction.error("economy/work:COOLDOWN", {
-				time: `<t:${Math.floor(isInCooldown / 1000)}:R>`,
-			});
+		if (now < cooldown) return interaction.error("economy/work:COOLDOWN", { time: `<t:${Math.floor(cooldown / 1000)}:R>` });
+		if (Math.abs(cooldown - now) > 30 * 60 * 60 * 1000) memberData.workStreak = 0;
 
-		if (Date.now() > memberData.cooldowns.work + 30 * 60 * 60 * 1000) memberData.workStreak = 0;
-
-		memberData.cooldowns.work = Date.now() + 24 * 60 * 60 * 1000;
+		memberData.cooldowns.work = now + 24 * 60 * 60 * 1000;
 		memberData.workStreak = (memberData.workStreak || 0) + 1;
 
 		const embed = client.embed({
