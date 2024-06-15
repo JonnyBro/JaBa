@@ -83,13 +83,15 @@ class Welcome extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		const guildData = interaction.data.guild,
 			command = interaction.options.getSubcommand();
 
 		if (command === "test") {
-			client.emit("guildMemberAdd", interaction.member);
+			client.emit("guildMemberAdd", client, interaction.member);
 
-			interaction.success("administration/goodbye:TEST_SUCCESS", null, { ephemeral: true });
+			interaction.success("administration/goodbye:TEST_SUCCESS", null, { edit: true });
 		} else {
 			const state = interaction.options.getBoolean("state");
 
@@ -103,7 +105,7 @@ class Welcome extends BaseCommand {
 
 				await guildData.save();
 
-				interaction.success("administration/welcome:DISABLED", null, { ephemeral: true });
+				interaction.success("administration/welcome:DISABLED", null);
 			} else {
 				const channel = interaction.options.getChannel("channel") || interaction.channel;
 				const message = interaction.options.getString("message") || interaction.translate("administration/welcome:DEFAULT_MESSAGE");
@@ -120,7 +122,7 @@ class Welcome extends BaseCommand {
 
 				interaction.success("administration/welcome:ENABLED", {
 					channel: `${channel.toString()}`,
-				}, { ephemeral: true });
+				}, { edit: true });
 			}
 		}
 	}

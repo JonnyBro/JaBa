@@ -1,18 +1,7 @@
-const Canvas = require("canvas"),
+const Canvas = require("@napi-rs/canvas"),
 	BaseEvent = require("../../base/BaseEvent"),
 	{ AttachmentBuilder } = require("discord.js"),
-	{ resolve } = require("path");
-
-Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "RubikMonoOne" });
-Canvas.registerFont(resolve("./assets/fonts/KeepCalm-Medium.ttf"), { family: "KeepCalm" });
-
-const applyText = (canvas, text, defaultFontSize, width, font) => {
-	const ctx = canvas.getContext("2d");
-	do ctx.font = `${(defaultFontSize -= 1)}px ${font}`;
-	while (ctx.measureText(text).width > width);
-
-	return ctx.font;
-};
+	{ applyText } = require("../../helpers/functions");
 
 class GuildMemberRemove extends BaseEvent {
 	constructor() {
@@ -135,7 +124,7 @@ class GuildMemberRemove extends BaseEvent {
 					);
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 
-					const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: "goodbye-image.png" });
+					const attachment = new AttachmentBuilder((await canvas.encode("png")), { name: "goodbye-image.png" });
 
 					channel.send({
 						content: message,

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose"),
-	Canvas = require("canvas");
+	Canvas = require("@napi-rs/canvas");
 
 const genToken = () => {
 	let token = "";
@@ -107,7 +107,7 @@ userSchema.method("getAchievements", async function () {
 		dim += 200;
 	}
 
-	return canvas.toBuffer();
+	return (await canvas.encode("png"));
 });
 
 module.exports = mongoose.model("User", userSchema);
