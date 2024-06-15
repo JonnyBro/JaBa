@@ -1,6 +1,6 @@
 const moment = require("moment"),
-	resolve = require("path"),
-	Canvas = require("@napi-rs/canvas");
+	Canvas = require("@napi-rs/canvas"),
+	{ resolve } = require("path");
 
 Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "RubikMonoOne" });
 Canvas.registerFont(resolve("./assets/fonts/KeepCalm-Medium.ttf"), { family: "KeepCalm" });
