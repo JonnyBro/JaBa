@@ -1,9 +1,9 @@
 const moment = require("moment"),
-	Canvas = require("@napi-rs/canvas"),
+	{ GlobalFonts } = require("@napi-rs/canvas"),
 	{ resolve } = require("path");
 
-Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "RubikMonoOne" });
-Canvas.registerFont(resolve("./assets/fonts/KeepCalm-Medium.ttf"), { family: "KeepCalm" });
+GlobalFonts.registerFromPath(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), "RubikMonoOne");
+GlobalFonts.registerFromPath(resolve("./assets/fonts/KeepCalm-Medium.ttf"), "KeepCalm");
 
 module.exports = {
 	/**
