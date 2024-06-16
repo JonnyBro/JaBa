@@ -109,7 +109,7 @@ class Goodbye extends BaseCommand {
 			} else {
 				const channel = interaction.options.getChannel("channel") || interaction.channel;
 				const message = interaction.options.getString("message") || interaction.translate("administration/goodbye:DEFAULT_MESSAGE");
-				const image = interaction.options.getBoolean("image") === true ? true : false;
+				const image = interaction.options.getBoolean("image") || false;
 
 				guildData.plugins.goodbye = {
 					enabled: true,
@@ -122,7 +122,7 @@ class Goodbye extends BaseCommand {
 
 				interaction.success("administration/goodbye:ENABLED", {
 					channel: `${channel.toString()}`,
-				}, { ephemeral: true });
+				}, { edit: true });
 			}
 		}
 	}

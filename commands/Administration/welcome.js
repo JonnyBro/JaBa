@@ -109,7 +109,7 @@ class Welcome extends BaseCommand {
 			} else {
 				const channel = interaction.options.getChannel("channel") || interaction.channel;
 				const message = interaction.options.getString("message") || interaction.translate("administration/welcome:DEFAULT_MESSAGE");
-				const image = interaction.options.getBoolean("image") === true ? true : false;
+				const image = interaction.options.getBoolean("image") || false;
 
 				guildData.plugins.welcome = {
 					enabled: true,
