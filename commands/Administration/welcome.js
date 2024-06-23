@@ -61,16 +61,16 @@ class Welcome extends BaseCommand {
 									uk: client.translate("administration/goodbye:MESSAGE", null, "uk-UA"),
 									ru: client.translate("administration/goodbye:MESSAGE", null, "ru-RU"),
 								}),
-						)
-						.addBooleanOption(option =>
-							option
-								.setName("image")
-								.setDescription(client.translate("administration/goodbye:IMAGE"))
-								.setDescriptionLocalizations({
-									uk: client.translate("administration/goodbye:IMAGE", null, "uk-UA"),
-									ru: client.translate("administration/goodbye:IMAGE", null, "ru-RU"),
-								}),
 						),
+					// .addBooleanOption(option =>
+					// 	option
+					// 		.setName("image")
+					// 		.setDescription(client.translate("administration/goodbye:IMAGE"))
+					// 		.setDescriptionLocalizations({
+					// 			uk: client.translate("administration/goodbye:IMAGE", null, "uk-UA"),
+					// 			ru: client.translate("administration/goodbye:IMAGE", null, "ru-RU"),
+					// 		}),
+					// ),
 				),
 			dirname: __dirname,
 			ownerOnly: false,
@@ -103,13 +103,14 @@ class Welcome extends BaseCommand {
 					withImage: null,
 				};
 
+				await guildData.markModified("plugins.welcome");
 				await guildData.save();
 
 				interaction.success("administration/welcome:DISABLED", null);
 			} else {
 				const channel = interaction.options.getChannel("channel") || interaction.channel;
 				const message = interaction.options.getString("message") || interaction.translate("administration/welcome:DEFAULT_MESSAGE");
-				const image = interaction.options.getBoolean("image") || false;
+				const image = false; // interaction.options.getBoolean("image") || false;
 
 				guildData.plugins.welcome = {
 					enabled: true,
@@ -118,6 +119,7 @@ class Welcome extends BaseCommand {
 					withImage: image,
 				};
 
+				await guildData.markModified("plugins.welcome");
 				await guildData.save();
 
 				interaction.success("administration/welcome:ENABLED", {

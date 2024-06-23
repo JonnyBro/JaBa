@@ -1,7 +1,9 @@
-const Canvas = require("@napi-rs/canvas"),
-	BaseEvent = require("../../base/BaseEvent"),
-	{ AttachmentBuilder } = require("discord.js"),
-	{ applyText } = require("../../helpers/functions");
+// const Canvas = require("@napi-rs/canvas"),
+// 	BaseEvent = require("../../base/BaseEvent"),
+// 	{ AttachmentBuilder } = require("discord.js"),
+// 	{ applyText } = require("../../helpers/functions");
+
+const BaseEvent = require("../../base/BaseEvent");
 
 class GuildMemberRemove extends BaseEvent {
 	constructor() {
@@ -32,6 +34,7 @@ class GuildMemberRemove extends BaseEvent {
 					.replace(/{server}/g, member.guild.name)
 					.replace(/{membercount}/g, member.guild.memberCount);
 
+				/*
 				if (guildData.plugins.goodbye.withImage) {
 					const canvas = Canvas.createCanvas(1024, 450),
 						ctx = canvas.getContext("2d");
@@ -130,8 +133,9 @@ class GuildMemberRemove extends BaseEvent {
 						content: message,
 						files: [attachment],
 					});
-				} else
-					channel.send({ content: message });
+				} else */
+
+				channel.send({ content: message });
 			}
 		}
 	}
