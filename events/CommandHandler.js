@@ -58,13 +58,13 @@ class CommandHandler extends BaseEvent {
 		}
 
 		client.logger.cmd(
-			`User ${interaction.user.getUsername()} used ${command.command.name} in ${interaction.guild ? interaction.guild.name : "DM"} with arguments: ${
+			`[${interaction.guild ? interaction.guild.name : "DM"}]: [${interaction.user.getUsername()}] => /${command.command.name}${
 				interaction.options.data.length > 0
-					? interaction.options.data
+					? ", args: " + interaction.options.data
 						.map(arg => {
 							return `${arg.name}: ${arg.value}`;
 						}).join(", ")
-					: "no args"
+					: ""
 			}`,
 		);
 
