@@ -33,14 +33,13 @@ class CreateTicketEmbed extends BaseCommand {
 			interaction.data = [];
 			interaction.data.guild = await client.getGuildData(interaction.guildId);
 
-			const guildData = interaction.data.guild,
-				ticketsCategory = guildData.plugins?.tickets?.ticketsCategory,
-				ticketLogs = guildData.plugins?.tickets?.ticketLogs,
-				transcriptionLogs = guildData.plugins?.tickets?.transcriptionLogs;
-
 			const button = interaction.component;
 
 			if (button.customId === "support_ticket") {
+				const guildData = interaction.data.guild,
+					ticketsCategory = guildData.plugins.tickets.ticketsCategory,
+					ticketLogs = guildData.plugins.tickets.ticketLogs;
+
 				if (interaction.guild.channels.cache.get(ticketsCategory).children.cache.size >= 50) {
 					const sorted = interaction.guild.channels.cache.get(ticketsCategory).children.cache.sort((ch1, ch2) => ch1.createdTimestamp - ch2.createdTimestamp);
 
@@ -137,8 +136,10 @@ class CreateTicketEmbed extends BaseCommand {
 
 				collector.on("end", async (_, reason) => {
 					if (reason !== "canceled") {
-						const reversedMessages = (await interaction.channel.messages.fetch()).filter(m => !m.author.bot);
-						const messages = Array.from(reversedMessages.values()).reverse();
+						const reversedMessages = (await interaction.channel.messages.fetch()).filter(m => !m.author.bot),
+							messages = Array.from(reversedMessages.values()).reverse(),
+							transcriptionLogs = interaction.data.guild.plugins.tickets.transcriptionLogs,
+							ticketLogs = interaction.data.guild.plugins.tickets.ticketLogs;
 
 						if (messages.length > 1) {
 							let transcript = "---- TICKET CREATED ----\n";

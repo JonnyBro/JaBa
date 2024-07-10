@@ -56,7 +56,7 @@ module.exports.init = async client => {
 					});
 				}
 			} catch (err) {
-				if (err.code === 10003) console.log("Unknown channel");
+				if (err.code === 10003) console.log(`No channel found for ${guild.name}`);
 				else throw err;
 			}
 		});
