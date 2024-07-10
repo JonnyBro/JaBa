@@ -124,7 +124,7 @@ class Boosters extends BaseCommand {
 		const boosters = (await interaction.guild.members.fetch()).filter(m => m.premiumSince);
 		if (boosters.size === 0) return interaction.error("general/boosters:NO_BOOSTERS", null, { edit: true });
 
-		const embeds = generateBoostersEmbeds(client, interaction, boosters);
+		const embeds = generateBoostersEmbeds(interaction, boosters);
 
 		const row = new ActionRowBuilder().addComponents(
 			new ButtonBuilder().setCustomId("boosters_prev_page").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
@@ -159,7 +159,7 @@ function generateBoostersEmbeds(interaction, boosters) {
 		let j = i;
 		k += 10;
 
-		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: **${Math.floor(new Date(member.premiumSince).getTime() / 1000)}**`).join("\n");
+		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: <t:${member.premiumSince}:f>`).join("\n");
 
 		const embed = interaction.client.embed({
 			title: interaction.translate("general/boosters:BOOSTERS_LIST"),
