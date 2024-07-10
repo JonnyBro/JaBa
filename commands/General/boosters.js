@@ -159,7 +159,7 @@ function generateBoostersEmbeds(interaction, boosters) {
 		let j = i;
 		k += 10;
 
-		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: <t:${member.premiumSinceTimestamp}:f>`).join("\n");
+		const info = current.map(member => `${++j}. ${member.toString()} | ${interaction.translate("general/boosters:BOOSTER_SINCE")}: <t:${Math.floor(member.premiumSinceTimestamp / 1000)}:f>`).join("\n");
 
 		const embed = interaction.client.embed({
 			title: interaction.translate("general/boosters:BOOSTERS_LIST"),
