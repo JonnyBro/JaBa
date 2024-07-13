@@ -1,8 +1,6 @@
 # Discord Bot Dashboard Template
 
-> Made By <https://github.com/fuma-nama>
-
-![banner](./document/preview-new.png)
+> Forked from [here](https://github.com/FileEditor97/discord-bot-dashboard)
 
 Using Typescript, Next.js 13, React 18 and Chakra ui 2.0
 
@@ -168,9 +166,7 @@ Moreover, you can use redis instead of connecting to the bot server directly
 
 The client will pass their access token via the `Authorization` header
 
-```js
-Bearer MY_TOKEN_1212112
-```
+`Bearer MY_TOKEN_1212112`
 
 ### Required Routes
 

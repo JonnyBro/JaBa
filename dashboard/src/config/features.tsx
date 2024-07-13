@@ -23,16 +23,6 @@ const { T } = createI18n(provider, {
     memes: 'Memes Time',
     'memes description': 'Send memes everyday',
   },
-  cn: {
-    music: '音樂播放器',
-    'music description': '在您的 Discord 服務器中播放音樂',
-    gaming: '遊戲',
-    'gaming description': 'Enjoy playing games with your friends',
-    'reaction role': '反應角色',
-    'reaction role description': '單擊按鈕時為用戶賦予角色',
-    memes: '模因時間',
-    'memes description': '每天發送模因',
-  },
 });
 
 /**

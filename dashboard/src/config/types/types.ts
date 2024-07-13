@@ -8,9 +8,9 @@ export type AppConfig = {
    */
   name: string;
   /**
-   * icon (react component)
+   * Image Url
    */
-  icon?: (props: any) => ReactElement;
+  icon: string;
   /**
    * Guild settings
    */

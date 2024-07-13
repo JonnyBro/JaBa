@@ -50,7 +50,7 @@ export function GuildSelect() {
       </Button>
     );
 
-  if (guilds.status === 'loading')
+  if (guilds.status === 'pending')
     return (
       <SimpleGrid columns={{ base: 1, md: 2, xl: 3 }} gap={3}>
         <Skeleton minH="88px" rounded="2xl" />

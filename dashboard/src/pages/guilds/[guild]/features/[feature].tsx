@@ -45,7 +45,7 @@ function NotEnabled() {
       <Text color="TextSecondary">{t.error['not enabled description']}</Text>
       <Button
         mt={3}
-        isLoading={enable.isLoading}
+        isLoading={enable.isPending}
         onClick={() => enable.mutate({ enabled: true, guild, feature })}
         variant="action"
         px={6}

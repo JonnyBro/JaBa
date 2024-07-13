@@ -1,4 +1,3 @@
-import { Box, Center } from '@chakra-ui/layout';
 import AppLayout from '../app';
 import { ReactNode } from 'react';
 import GuildNavbar from './guild-navbar';

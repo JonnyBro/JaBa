@@ -61,16 +61,16 @@ class Welcome extends BaseCommand {
 									uk: client.translate("administration/goodbye:MESSAGE", null, "uk-UA"),
 									ru: client.translate("administration/goodbye:MESSAGE", null, "ru-RU"),
 								}),
-						)
-						.addBooleanOption(option =>
-							option
-								.setName("image")
-								.setDescription(client.translate("administration/goodbye:IMAGE"))
-								.setDescriptionLocalizations({
-									uk: client.translate("administration/goodbye:IMAGE", null, "uk-UA"),
-									ru: client.translate("administration/goodbye:IMAGE", null, "ru-RU"),
-								}),
 						),
+					// .addBooleanOption(option =>
+					// 	option
+					// 		.setName("image")
+					// 		.setDescription(client.translate("administration/goodbye:IMAGE"))
+					// 		.setDescriptionLocalizations({
+					// 			uk: client.translate("administration/goodbye:IMAGE", null, "uk-UA"),
+					// 			ru: client.translate("administration/goodbye:IMAGE", null, "ru-RU"),
+					// 		}),
+					// ),
 				),
 			dirname: __dirname,
 			ownerOnly: false,
@@ -83,13 +83,15 @@ class Welcome extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		const guildData = interaction.data.guild,
 			command = interaction.options.getSubcommand();
 
 		if (command === "test") {
-			client.emit("guildMemberAdd", interaction.member);
+			client.emit("guildMemberAdd", client, interaction.member);
 
-			interaction.success("administration/goodbye:TEST_SUCCESS", null, { ephemeral: true });
+			interaction.success("administration/goodbye:TEST_SUCCESS", null, { edit: true });
 		} else {
 			const state = interaction.options.getBoolean("state");
 
@@ -101,13 +103,14 @@ class Welcome extends BaseCommand {
 					withImage: null,
 				};
 
+				guildData.markModified("plugins.welcome");
 				await guildData.save();
 
-				interaction.success("administration/welcome:DISABLED", null, { ephemeral: true });
+				interaction.success("administration/welcome:DISABLED", null);
 			} else {
 				const channel = interaction.options.getChannel("channel") || interaction.channel;
 				const message = interaction.options.getString("message") || interaction.translate("administration/welcome:DEFAULT_MESSAGE");
-				const image = interaction.options.getBoolean("image") === true ? true : false;
+				const image = false; // interaction.options.getBoolean("image") || false;
 
 				guildData.plugins.welcome = {
 					enabled: true,
@@ -116,11 +119,12 @@ class Welcome extends BaseCommand {
 					withImage: image,
 				};
 
+				guildData.markModified("plugins.welcome");
 				await guildData.save();
 
 				interaction.success("administration/welcome:ENABLED", {
 					channel: `${channel.toString()}`,
-				}, { ephemeral: true });
+				}, { edit: true });
 			}
 		}
 	}

@@ -1,12 +1,12 @@
-<img width="150" height="150" align="left" style="float: left; margin: 0 10px 0 0;" src="https://images-ext-1.discordapp.net/external/khumNb7SPgoX2KAmnB5-37LF8Hsg_gb9BithY5gaO_w/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/708637495054565426/e1e9a50ec08988d1b25c13f8bd4801bd.webp">
-
 # JaBa Bot
+
+![JaBa avatar](https://cdn.discordapp.com/avatars/708637495054565426/e1e9a50ec08988d1b25c13f8bd4801bd.webp?size=128)
+JaBa is an open source Discord Bot written by [Jonny_Bro](https://github.com/JonnyBro) using [discord.js](https://github.com/discordjs/discord.js) and [Mongoose](https://mongoosejs.com).
 
 [![image](https://img.shields.io/discord/892727526911258654?logo=discord&&colorB=00BFFF&label=Discord&style=flat-square)](https://discord.gg/Ptkj2n9nzZ)
 [![image](https://img.shields.io/badge/discord.js-v14.14.1-blue.svg?logo=npm)](https://github.com/discordjs/discord.js)
 [![image](https://www.codefactor.io/repository/github/JonnyBro/JaBa/badge)](https://www.codefactor.io/repository/github/JonnyBro/JaBa)
-[![image](https://img.shields.io/github/license/JonnyBro/JaBa?label=License&style=flat-square)](https://github.com/JonnyBro/JaBa/blob/main/LICENSE)\
-JaBa is an open source Discord Bot written by [Jonny_Bro](https://github.com/JonnyBro) using [discord.js](https://github.com/discordjs/discord.js) and [Mongoose](https://mongoosejs.com).
+[![image](https://img.shields.io/github/license/JonnyBro/JaBa?label=License&style=flat-square)](https://github.com/JonnyBro/JaBa/blob/main/LICENSE)
 
 ## Functionality
 
@@ -62,7 +62,7 @@ Use [this instruction](https://github.com/JonnyBro/JaBa/wiki/Self-Hosting) to le
 If you have any questions you can ask them on my [Discord Server](https://discord.gg/NPkySYKMkN).\
 If you want to contribute, feel free to fork this repo and making a pull request!
 
-# TODO
+## TODO
 
 * [ ] Finish and release *dashboard-core* submodule.
 

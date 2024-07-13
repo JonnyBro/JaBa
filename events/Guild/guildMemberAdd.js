@@ -1,18 +1,9 @@
-const Canvas = require("canvas"),
-	BaseEvent = require("../../base/BaseEvent"),
-	{ AttachmentBuilder } = require("discord.js"),
-	{ resolve } = require("path");
+// const Canvas = require("@napi-rs/canvas"),
+// 	BaseEvent = require("../../base/BaseEvent"),
+// 	{ AttachmentBuilder } = require("discord.js"),
+// 	{ applyText } = require("../../helpers/functions");
 
-Canvas.registerFont(resolve("./assets/fonts/RubikMonoOne-Regular.ttf"), { family: "RubikMonoOne" });
-Canvas.registerFont(resolve("./assets/fonts/KeepCalm-Medium.ttf"), { family: "KeepCalm" });
-
-const applyText = (canvas, text, defaultFontSize, width, font) => {
-	const ctx = canvas.getContext("2d");
-	do ctx.font = `${(defaultFontSize -= 1)}px ${font}`;
-	while (ctx.measureText(text).width > width);
-
-	return ctx.font;
-};
+const BaseEvent = require("../../base/BaseEvent");
 
 class GuildMemberAdd extends BaseEvent {
 	constructor() {
@@ -45,6 +36,7 @@ class GuildMemberAdd extends BaseEvent {
 					.replace(/{server}/g, member.guild.name)
 					.replace(/{membercount}/g, member.guild.memberCount);
 
+				/*
 				if (guildData.plugins.welcome.withImage) {
 					const canvas = Canvas.createCanvas(1024, 450),
 						ctx = canvas.getContext("2d");
@@ -132,14 +124,15 @@ class GuildMemberAdd extends BaseEvent {
 					);
 					ctx.drawImage(avatar, 45, 90, 270, 270);
 
-					const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: "welcome-image.png" });
+					const attachment = new AttachmentBuilder((await canvas.encode("png")), { name: "welcome.png" });
 
 					channel.send({
 						content: message,
 						files: [attachment],
 					});
-				} else
-					channel.send({ content: message });
+				} else */
+
+				channel.send({ content: message });
 			}
 		}
 	}

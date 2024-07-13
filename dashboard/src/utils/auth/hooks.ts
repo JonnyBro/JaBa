@@ -22,7 +22,7 @@ export async function logout() {
     },
   });
 
-  await client.invalidateQueries(Keys.login);
+  await client.invalidateQueries({queryKey: Keys.login});
   await Router.push('/auth/signin');
 }
 
@@ -37,7 +37,10 @@ type SessionResult =
     };
 
 export function useSession(): SessionResult {
-  const { isError, isLoading, data } = useQuery(Keys.login, () => auth());
+  const { isError, isLoading, data } = useQuery({
+    queryKey: Keys.login,
+    queryFn: () => auth()
+  });
 
   if (isError)
     return {
@@ -53,7 +56,7 @@ export function useSession(): SessionResult {
 
   return {
     status: 'authenticated',
-    session: data,
+    session: data!,
   };
 }
 
@@ -64,5 +67,8 @@ export function useAccessToken() {
 }
 
 export function useLogoutMutation() {
-  return useMutation(['logout'], () => logout());
+  return useMutation({
+    mutationKey: ['logout'],
+    mutationFn: () => logout()
+  });
 }

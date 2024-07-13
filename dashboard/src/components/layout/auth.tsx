@@ -1,5 +1,5 @@
 // Chakra imports
-import { Box, HStack, Icon, Spacer, Text } from '@chakra-ui/react';
+import { Box, HStack, Image, Spacer, Text } from '@chakra-ui/react';
 import { config } from '@/config/common';
 import { ReactNode } from 'react';
 import { SelectField } from '../forms/SelectField';
@@ -19,7 +19,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         px={{ base: 5, lg: 10 }}
         py={2}
       >
-        {config.icon != null && <Icon color="TextPrimary" as={config.icon} w={10} h={10} />}
+        {config.icon != null && <Image src={config.icon} boxSize={10} alt='Logo'/>}
         <Text fontWeight="600" fontSize="lg">
           {config.name}
         </Text>

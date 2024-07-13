@@ -44,6 +44,7 @@ export function getServerSession(
 }
 
 export function setServerSession(req: NextApiRequest, res: NextApiResponse, data: AccessToken) {
+  // @ts-ignore
   setCookie(TokenCookie, data, { req, res, ...options });
 }
 
@@ -51,6 +52,7 @@ export async function removeSession(req: NextApiRequest, res: NextApiResponse) {
   const session = getServerSession(req);
 
   if (session.success) {
+    // @ts-ignore
     deleteCookie(TokenCookie, { req, res, ...options });
     await revokeToken(session.data.access_token);
   }

@@ -105,7 +105,7 @@ const ProfilePage: NextPageWithLayout = () => {
           <Button
             leftIcon={<IoLogOut />}
             variant="danger"
-            isLoading={logout.isLoading}
+            isLoading={logout.isPending}
             onClick={() => logout.mutate()}
           >
             {t.logout}

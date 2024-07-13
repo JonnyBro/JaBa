@@ -1,6 +1,6 @@
 import { FaChevronLeft as ChevronLeftIcon } from 'react-icons/fa';
 import { Box, Flex, Text } from '@chakra-ui/layout';
-import { Avatar, Icon, IconButton, SkeletonCircle } from '@chakra-ui/react';
+import { Avatar, Icon, SkeletonCircle } from '@chakra-ui/react';
 import { iconUrl } from '@/api/discord';
 import { useGuildPreview } from '@/api/hooks';
 import { motion } from 'framer-motion';

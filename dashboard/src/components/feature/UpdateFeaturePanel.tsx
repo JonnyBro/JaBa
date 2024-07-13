@@ -41,14 +41,14 @@ export function UpdateFeaturePanel({
           <Text color="TextSecondary">{config.description}</Text>
         </Box>
         <ButtonGroup mt={3}>
-          <Button variant="danger" isLoading={enableMutation.isLoading} onClick={onDisable}>
+          <Button variant="danger" isLoading={enableMutation.isPending} onClick={onDisable}>
             <view.T text={(e) => e.bn.disable} />
           </Button>
         </ButtonGroup>
       </Flex>
 
       {result.component}
-      <Savebar isLoading={mutation.isLoading} result={result} />
+      <Savebar isLoading={mutation.isPending} result={result} />
     </Flex>
   );
 }

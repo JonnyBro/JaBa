@@ -46,7 +46,7 @@ export function FeatureItem({
       <CardFooter as={ButtonGroup} mt={3}>
         <Button
           size={{ base: 'sm', md: 'md' }}
-          disabled={mutation.isLoading}
+          disabled={mutation.isPending}
           {...(enabled
             ? {
                 variant: 'action',
