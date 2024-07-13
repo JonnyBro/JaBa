@@ -1,6 +1,6 @@
-<img width="150" height="150" align="left" style="float: left; margin: 0 10px 0 0;" src="https://images-ext-1.discordapp.net/external/khumNb7SPgoX2KAmnB5-37LF8Hsg_gb9BithY5gaO_w/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/708637495054565426/e1e9a50ec08988d1b25c13f8bd4801bd.webp">
-
 # JaBa Bot
+
+<img width="150" height="150" align="right" style="float: right; margin: 0 10px 0 0;" alt="JaBa Avatar" src="https://images-ext-1.discordapp.net/external/khumNb7SPgoX2KAmnB5-37LF8Hsg_gb9BithY5gaO_w/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/708637495054565426/e1e9a50ec08988d1b25c13f8bd4801bd.webp">
 
 [![image](https://img.shields.io/discord/892727526911258654?logo=discord&&colorB=00BFFF&label=Discord&style=flat-square)](https://discord.gg/Ptkj2n9nzZ)
 [![image](https://img.shields.io/badge/discord.js-v14.14.1-blue.svg?logo=npm)](https://github.com/discordjs/discord.js)
