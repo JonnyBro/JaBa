@@ -194,7 +194,7 @@ async function changeSetting(interaction, setting, state, channel) {
 		if (!state) {
 			data.plugins[settingSplitted[0]][settingSplitted[1]] = null;
 
-			data.markModified(setting);
+			data.markModified(`plugins.${setting}`);
 			await data.save();
 
 			return interaction.reply({
@@ -207,7 +207,7 @@ async function changeSetting(interaction, setting, state, channel) {
 			if (channel) {
 				data.plugins[settingSplitted[0]][settingSplitted[1]] = channel.id;
 
-				data.markModified(setting);
+				data.markModified(`plugins.${setting}`);
 				await data.save();
 
 				return interaction.reply({
@@ -226,7 +226,7 @@ async function changeSetting(interaction, setting, state, channel) {
 		if (!state) {
 			data.plugins[setting] = null;
 
-			data.markModified(setting);
+			data.markModified(`plugins.${setting}`);
 			await data.save();
 
 			return interaction.reply({
@@ -237,7 +237,7 @@ async function changeSetting(interaction, setting, state, channel) {
 			if (channel) {
 				data.plugins[setting] = channel.id;
 
-				data.markModified(setting);
+				data.markModified(`plugins.${setting}`);
 				await data.save();
 
 				return interaction.reply({

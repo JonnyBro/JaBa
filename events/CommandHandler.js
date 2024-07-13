@@ -60,10 +60,11 @@ class CommandHandler extends BaseEvent {
 		client.logger.cmd(
 			`[${interaction.guild ? interaction.guild.name : "DM"}]: [${interaction.user.getUsername()}] => /${command.command.name}${
 				interaction.options.data.length > 0
-					? ", args: " + interaction.options.data
+					? `, args: [${interaction.options.data
 						.map(arg => {
 							return `${arg.name}: ${arg.value}`;
-						}).join(", ")
+						})
+						.join(", ")}]`
 					: ""
 			}`,
 		);
