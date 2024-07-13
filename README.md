@@ -62,7 +62,7 @@ Use [this instruction](https://github.com/JonnyBro/JaBa/wiki/Self-Hosting) to le
 If you have any questions you can ask them on my [Discord Server](https://discord.gg/NPkySYKMkN).\
 If you want to contribute, feel free to fork this repo and making a pull request!
 
-# TODO
+## TODO
 
 * [ ] Finish and release *dashboard-core* submodule.
 
