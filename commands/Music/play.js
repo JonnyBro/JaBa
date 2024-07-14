@@ -49,14 +49,11 @@ class Play extends BaseCommand {
 		if (!perms.has(PermissionsBitField.Flags.Connect) || !perms.has(PermissionsBitField.Flags.Speak)) return interaction.error("music/play:VOICE_CHANNEL_CONNECT", null, { edit: true });
 
 		const searchResult = await client.player.search(query, {
-			requestedBy: interaction.user,
+			requestedBy: interaction.member,
 		});
 
-		if (!searchResult.hasTracks()) {
-			console.log(searchResult);
-
-			return interaction.error("music/play:NO_RESULT", { query }, { edit: true });
-		} else {
+		if (!searchResult.hasTracks()) return interaction.error("music/play:NO_RESULT", { query }, { edit: true, ephemeral: true });
+		else {
 			await client.player.play(voice, searchResult, {
 				nodeOptions: {
 					metadata: interaction,
@@ -85,10 +82,11 @@ class Play extends BaseCommand {
 	 */
 	async autocompleteRun(client, interaction) {
 		const query = interaction.options.getString("query");
-		if (query === "" || query === null) return;
+		if (query === "" || query === null) return interaction.respond([ { name: "No Query Provided", value: "" } ]);
+		if (query.startsWith("http")) return interaction.respond([ { name: "Current Link", value: query } ]);
 
 		const youtubeResults = await client.player.search(query, { searchEngine: QueryType.YOUTUBE });
-		const spotifyResults = await client.player.search(query, { searchEngine: QueryType.SPOTIFY_SEARCH });
+		// const spotifyResults = await client.player.search(query, { searchEngine: QueryType.SPOTIFY_SEARCH });
 		const tracks = [];
 
 		youtubeResults.tracks
@@ -99,13 +97,13 @@ class Play extends BaseCommand {
 			}))
 			.forEach(t => tracks.push({ name: t.name, value: t.value }));
 
-		spotifyResults.tracks
-			.slice(0, 5)
-			.map(t => ({
-				name: `Spotify: ${`${t.title} - ${t.author} (${t.duration})`.length > 75 ? `${`${t.title} - ${t.author}`.substring(0, 75)}... (${t.duration})` : `${t.title} - ${t.author} (${t.duration})`}`,
-				value: t.url,
-			}))
-			.forEach(t => tracks.push({ name: t.name, value: t.value }));
+		// spotifyResults.tracks
+		// 	.slice(0, 5)
+		// 	.map(t => ({
+		// 		name: `Spotify: ${`${t.title} - ${t.author} (${t.duration})`.length > 75 ? `${`${t.title} - ${t.author}`.substring(0, 75)}... (${t.duration})` : `${t.title} - ${t.author} (${t.duration})`}`,
+		// 		value: t.url,
+		// 	}))
+		// 	.forEach(t => tracks.push({ name: t.name, value: t.value }));
 
 		return interaction.respond(tracks);
 	}

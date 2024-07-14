@@ -1,7 +1,9 @@
 const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder, EmbedBuilder, PermissionsBitField, ChannelType } = require("discord.js"),
 	{ GiveawaysManager } = require("discord-giveaways"),
 	{ REST } = require("@discordjs/rest"),
-	{ Player } = require("discord-player"),
+	{ Player: DiscordPlayer } = require("discord-player"),
+	{ SpotifyExtractor } = require("@discord-player/extractor"),
+	{ YoutubeiExtractor, createYoutubeiStream } = require("discord-player-youtubei"),
 	{ Routes } = require("discord-api-types/v10");
 
 const BaseEvent = require("./BaseEvent.js"),
@@ -31,8 +33,17 @@ class JaBaClient extends Client {
 		this.databaseCache.guilds = new Collection();
 		this.databaseCache.members = new Collection();
 		this.databaseCache.usersReminds = new Collection();
+	}
 
-		this.player = new Player(this, {
+	/**
+	 * Initializes the client by logging in with the provided token and connecting to the MongoDB database.
+	 *
+	 * This method is called during the client's startup process to set up the necessary connections and resources.
+	 *
+	 * @returns {Promise<void>} A Promise that resolves when the client is fully initialized.
+	 */
+	async init() {
+		this.player = new DiscordPlayer(this, {
 			ytdlOptions: {
 				requestOptions: {
 					headers: {
@@ -41,12 +52,24 @@ class JaBaClient extends Client {
 				},
 			},
 		});
-		this.player.extractors.loadDefault(null, {
-			SpotifyExtractor: {
-				clientId: this.config.spotify.clientId,
-				clientSecret: this.config.spotify.clientSecret,
-			},
+
+		await this.player.extractors.register(YoutubeiExtractor, {
+			// authentication: {
+			// 	access_token: process.env.YT_ACCESS_TOKEN || "",
+			// 	refresh_token: process.env.YT_REFRESH_TOKEN || "",
+			// 	scope: "https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube-paid-content",
+			// 	token_type: "Bearer",
+			// 	expiry_date: "2024-07-10T11:37:01.093Z",
+			// },
 		});
+
+		await this.player.extractors.register(SpotifyExtractor, {
+			createStream: createYoutubeiStream,
+			clientId: this.config.spotify.clientId,
+			clientSecret: this.config.spotify.clientSecret,
+		});
+
+		await this.player.extractors.loadDefault(ext => !["YouTubeExtractor", "SpotifyExtractor"].includes(ext));
 
 		this.player.events.on("playerStart", async (queue, track) => {
 			const m = (
@@ -88,17 +111,6 @@ class JaBaClient extends Client {
 				reaction: "🎉",
 			},
 		});
-	}
-
-	/**
-	 * Initializes the client by logging in with the provided token and connecting to the MongoDB database.
-	 *
-	 * This method is called during the client's startup process to set up the necessary connections and resources.
-	 *
-	 * @returns {Promise<void>} A Promise that resolves when the client is fully initialized.
-	 */
-	async init() {
-		this.login(this.config.token);
 
 		mongoose
 			.connect(this.config.mongoDB)
@@ -109,8 +121,7 @@ class JaBaClient extends Client {
 				this.logger.error(`Unable to connect to the Mongodb database.\nError: ${err}`);
 			});
 
-		// const autoUpdateDocs = require("../helpers/autoUpdateDocs");
-		// autoUpdateDocs.update(this);
+		this.login(this.config.token);
 	}
 
 	/**
@@ -307,7 +318,7 @@ class JaBaClient extends Client {
 	 * Returns a User data from the database.
 	 * @param {string} userID - The ID of the user to find or create.
 	 * @returns {Promise<import("./User")>} The user data object, either retrieved from the database or newly created.
-	*/
+	 */
 	async getUserData(userID) {
 		let userData = await this.usersData.findOne({ id: userID });
 

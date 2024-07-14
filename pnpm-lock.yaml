@@ -30,14 +30,17 @@ importers:
         specifier: ^2.4.4
         version: 2.4.4
       discord-api-types:
-        specifier: ^0.37.90
-        version: 0.37.90
+        specifier: ^0.37.92
+        version: 0.37.92
       discord-giveaways:
         specifier: ^6.0.1
         version: 6.0.1(discord.js@14.15.3)
       discord-player:
         specifier: ^6.6.10
         version: 6.6.10(@discord-player/extractor@4.4.7)(@discordjs/opus@0.9.0)
+      discord-player-youtubei:
+        specifier: ^1.1.8
+        version: 1.1.8
       discord.js:
         specifier: ^14.15.3
         version: 14.15.3
@@ -462,14 +465,18 @@ packages:
   discord-api-types@0.37.83:
     resolution: {integrity: sha512-urGGYeWtWNYMKnYlZnOnDHm8fVRffQs3U0SpE8RHeiuLKb/u92APS8HoQnPTFbnXmY1vVnXjXO4dOxcAn3J+DA==}
 
-  discord-api-types@0.37.90:
-    resolution: {integrity: sha512-lpOJSGrqHuXoM4FV/2HtjoaJpCClGFHpRNIdZEW8zPINlsCHNSfIwA2EQ8dxeE6k1QhhTuM9ZlOGVYXoU7FLgA==}
+  discord-api-types@0.37.92:
+    resolution: {integrity: sha512-7xnedbQRLRef/O+4jKPyIFwl6YqoyihOG3OSneiRmVJMBk30ph2YuZGcHjeX1Kk/a3yQWeyCKe4RZJB3iECcxg==}
 
   discord-giveaways@6.0.1:
     resolution: {integrity: sha512-hs6Vtb62VdlV7NfB93Phaxc8FW0cH4N1Nkb0bXVZ2npgn73yGOFVmdp8bBP5gsC2ady9OAXXI8Gb66t1IddkFw==}
     engines: {node: '>=16.9.0'}
     peerDependencies:
       discord.js: '>=14.0.0'
+
+  discord-player-youtubei@1.1.8:
+    resolution: {integrity: sha512-gyIa8dTf1RnLhoo3uo79Z2tMYP/l0iTQfwVvsnbUPUV1iSZMdPcSaBIPUNdPu4s0C+OPUnqNo/Ceo7yDEIAptQ==}
+    hasBin: true
 
   discord-player@6.6.10:
     resolution: {integrity: sha512-AOZnJYXOoe2hF2OENwKUIaKJ2H5U8VfxcoMKDXE++9Rnbzd7qD8MQr9Am01T1UiiPf2BWjyHin97EUm1nrTJKA==}
@@ -732,6 +739,9 @@ packages:
 
   isomorphic-unfetch@4.0.2:
     resolution: {integrity: sha512-1Yd+CF/7al18/N2BDbsLBcp6RO3tucSW+jcLq24dqdX5MNbCNTw1z4BsGsp4zNmjr/Izm2cs/cEqZPp4kvWSCA==}
+
+  jintr@2.0.0:
+    resolution: {integrity: sha512-RiVlevxttZ4eHEYB2dXKXDXluzHfRuw0DJQGsYuKCc5IvZj5/GbOakeqVX+Bar/G9kTty9xDJREcxukurkmYLA==}
 
   js-yaml@4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
@@ -1204,6 +1214,10 @@ packages:
     resolution: {integrity: sha512-VviMt2tlMg1BvQ0FKXxrz1eJuyrcISrL2sPfBf7ZskX/FCEc/7LeThQaoygsMJpNqrATWQIsRVx+1Dpe4jaYuQ==}
     engines: {node: '>=18.17'}
 
+  undici@6.19.2:
+    resolution: {integrity: sha512-JfjKqIauur3Q6biAtHJ564e3bWa8VvT+7cSiOJHFbX4Erv6CLGDpg8z+Fmg/1OI/47RA+GI2QZaF48SSaLvyBA==}
+    engines: {node: '>=18.17'}
+
   unfetch@5.0.0:
     resolution: {integrity: sha512-3xM2c89siXg0nHvlmYsQ2zkLASvVMBisZm5lF3gFDqfF2xonNStDJyMpvaOBe0a1Edxmqrf2E0HBdmy9QyZaeg==}
 
@@ -1286,6 +1300,9 @@ packages:
 
   youtube-sr@4.3.11:
     resolution: {integrity: sha512-3oHiS2x7PpMiDRW7Cq8nz1bkAIBOJHoOwkPl/oncM/+A9/3xxMDgMLGW2dsBEP1DHFyRXYTVABgfbdwHF8sXXQ==}
+
+  youtubei.js@10.1.0:
+    resolution: {integrity: sha512-MokZMAnpWH11VYvWuW6qjPiiPmgRl5rfDgPQOpif9qXcVHoVw1hi8ePuRSD0AZSZ+uvWGe8rvas2dzp+Jv5JKQ==}
 
   ytdl-core@4.11.5:
     resolution: {integrity: sha512-27LwsW4n4nyNviRCO1hmr8Wr5J1wLLMawHCQvH8Fk0hiRqrxuIu028WzbJetiYH28K8XDbeinYW4/wcHQD1EXA==}
@@ -1698,13 +1715,18 @@ snapshots:
 
   discord-api-types@0.37.83: {}
 
-  discord-api-types@0.37.90: {}
+  discord-api-types@0.37.92: {}
 
   discord-giveaways@6.0.1(discord.js@14.15.3):
     dependencies:
       deepmerge-ts: 4.3.0
       discord.js: 14.15.3
       serialize-javascript: 6.0.1
+
+  discord-player-youtubei@1.1.8:
+    dependencies:
+      undici: 6.19.2
+      youtubei.js: 10.1.0
 
   discord-player@6.6.10(@discord-player/extractor@4.4.7)(@discordjs/opus@0.9.0):
     dependencies:
@@ -1729,7 +1751,7 @@ snapshots:
       '@discord-player/ffmpeg': 0.1.0
       '@discord-player/opus': 0.1.2
       '@types/ws': 8.5.10
-      discord-api-types: 0.37.90
+      discord-api-types: 0.37.92
       prism-media: 1.3.5(@discordjs/opus@0.9.0)
       tslib: 2.6.2
       ws: 8.14.2
@@ -2062,6 +2084,10 @@ snapshots:
     dependencies:
       node-fetch: 3.3.2
       unfetch: 5.0.0
+
+  jintr@2.0.0:
+    dependencies:
+      acorn: 8.11.2
 
   js-yaml@4.1.0:
     dependencies:
@@ -2489,6 +2515,8 @@ snapshots:
 
   undici@6.15.0: {}
 
+  undici@6.19.2: {}
+
   unfetch@5.0.0: {}
 
   uri-js@4.4.1:
@@ -2541,6 +2569,12 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   youtube-sr@4.3.11: {}
+
+  youtubei.js@10.1.0:
+    dependencies:
+      jintr: 2.0.0
+      tslib: 2.6.2
+      undici: 5.27.2
 
   ytdl-core@4.11.5:
     dependencies:
