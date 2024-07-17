@@ -1,4 +1,5 @@
 const BaseEvent = require("../../base/BaseEvent");
+const { AuditLogEvent } = require("discord.js");
 
 class messageDelete extends BaseEvent {
 	constructor() {
@@ -24,7 +25,7 @@ class messageDelete extends BaseEvent {
 
 			const logs = await message.guild.fetchAuditLogs({
 				limit: 5,
-				type: "MESSAGE_DELETE",
+				type: AuditLogEvent.MessageDelete,
 			});
 
 			const deletedMessage = logs.entries.find(e => e.targetId === message.author.id && e.extra.channel.id && Date.now() - e.createdTimestamp < 20000);
