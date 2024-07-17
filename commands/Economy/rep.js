@@ -49,7 +49,7 @@ class Rep extends BaseCommand {
 
 		const user = interaction.options.getUser("user");
 		if (user.bot) return interaction.error("economy/rep:BOT_USER");
-		if (user.id === interaction.user.id) return interaction.error("economy/rep:YOURSELF");
+		if (user.id === interaction.user.id) return interaction.error("misc:CANT_YOURSELF");
 
 		const toWait = Math.floor((Date.now() + 12 * 60 * 60 * 1000) / 1000); // 12 hours
 		if (!userData.cooldowns) userData.cooldowns = {};

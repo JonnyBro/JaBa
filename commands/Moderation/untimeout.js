@@ -44,7 +44,7 @@ class Ban extends BaseCommand {
 			timedout = member.isCommunicationDisabled();
 
 		if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true, edit: true });
-		if (member.id === interaction.member.id) return interaction.error("moderation/untimeout:YOURSELF", null, { ephemeral: true, edit: true });
+		if (member.id === interaction.member.id) return interaction.error("misc:CANT_YOURSELF", null, { ephemeral: true, edit: true });
 		if (!timedout) return interaction.error("moderation/untimeout:NOT_TIMEDOUT", null, { ephemeral: true, edit: true });
 
 		await member.timeout(null);

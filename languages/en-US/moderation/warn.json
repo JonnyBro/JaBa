@@ -2,7 +2,6 @@
 	"DESCRIPTION": "Issues a warning to a user",
 	"USAGE": "Right-click on the user > Applications > warn (With JaBa avatar)",
 	"EXAMPLES": "warn",
-	"YOURSELF": "You cannot issue a warning to yourself",
 	"SUPERIOR": "You cannot issue a warning to this user",
 	"MODAL_TITLE": "Issue a warning to {{nickname}}",
 	"MODAL_REASON": "Reason for the warning",

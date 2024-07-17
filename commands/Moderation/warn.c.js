@@ -29,7 +29,7 @@ class WarnContext extends BaseCommand {
 			moderationPosition = interaction.member.roles.highest.position;
 
 		if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true });
-		if (member.id === interaction.member.id) return interaction.error("moderation/warn:YOURSELF", null, { ephemeral: true });
+		if (member.id === interaction.member.id) return interaction.error("misc:CANT_YOURSELF", null, { ephemeral: true });
 		if (interaction.guild.ownerId !== interaction.member.id && !(moderationPosition > memberPosition)) return interaction.error("moderation/warn:SUPERIOR", null, { ephemeral: true });
 
 		const memberData = await client.getMemberData(member.id, interaction.guildId);

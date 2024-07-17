@@ -3,7 +3,6 @@
 	"USAGE": "[@user]",
 	"EXAMPLES": "tictactoe user:@jonny_bro",
 	"BOT_USER": "Вы не можете играть против бота!",
-	"YOURSELF": "Вы не можете играть с самим собой!",
 	"INVITE_USER": "<@{{opponent}}>, вам предложили сыграть в крестики-нолики!",
 	"REQUEST_SEND": "Запрос отправлен <@{{opponent}}>",
 	"REQUEST_WAIT": "Ожидаю ответа {{user}}",

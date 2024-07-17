@@ -5,7 +5,6 @@
 	"BOT_USER": "Bots are forever alone ;(",
 	"ALREADY_MARRIED": "You are already married! You can divorce using the `divorce` command",
 	"ALREADY_MARRIED_USER": "You're too late! {{user}} is already married",
-	"YOURSELF": "You cannot marry yourself",
 	"REQUEST_AUTHOR_TO_AMEMBER": "You have already sent a proposal to {{user}}",
 	"REQUEST_AMEMBER_TO_AUTHOR": "{{user}} has sent you a proposal! You can accept or decline it (or wait for the proposal to expire)",
 	"REQUEST_AMEMBER_TO_MEMBER": "{{secondUser}} has already sent a proposal to {{firstUser}}",

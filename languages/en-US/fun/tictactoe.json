@@ -3,7 +3,6 @@
 	"USAGE": "[@user]",
 	"EXAMPLES": "tictactoe user:@jonny_bro",
 	"BOT_USER": "You cannot play against a bot!",
-	"YOURSELF": "You cannot play against yourself!",
 	"INVITE_USER": "<@{{opponent}}>, you have been invited to play Tic Tac Toe!",
 	"REQUEST_SEND": "Request sent to <@{{opponent}}>",
 	"REQUEST_WAIT": "Waiting for {{user}} to respond",

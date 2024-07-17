@@ -39,6 +39,7 @@ class Clearwarns extends BaseCommand {
 	 */
 	async execute(client, interaction) {
 		const member = interaction.options.getMember("user");
+		if (member.user.id === interaction.user.id) return interaction.error("misc:CANT_YOURSELF");
 
 		const memberData = await client.getMemberData(member.id, interaction.guildId);
 

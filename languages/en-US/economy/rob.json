@@ -3,7 +3,6 @@
 	"USAGE": "[@user] [amount]",
 	"EXAMPLES": "rob user:@jonny_bro amount:100",
 	"BOT_USER": "You cannot rob a bot",
-	"YOURSELF": "You cannot rob yourself",
 	"NOT_ENOUGH_AUTHOR": "You must have at least {{moneyMin}} to rob this user (you currently have {{moneyCurrent}})",
 	"NOT_ENOUGH_MEMBER": "You cannot rob {{user}} because they don't have that many credits",
 	"COOLDOWN": "🕵️ {{user}} is under protection... Try again later",

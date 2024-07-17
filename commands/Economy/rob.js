@@ -50,7 +50,7 @@ class Rob extends BaseCommand {
 		const memberData = interaction.data.member,
 			otherMember = interaction.options.getMember("user");
 		if (otherMember.user.bot) return interaction.error("economy/pay:BOT_USER");
-		if (otherMember.id === interaction.member.id) return interaction.error("economy/rob:YOURSELF");
+		if (otherMember.id === interaction.member.id) return interaction.error("misc:CANT_YOURSELF");
 
 		const amount = interaction.options.getInteger("amount");
 		if (amount <= 0) return interaction.error("misc:MORE_THAN_ZERO");

@@ -2,7 +2,6 @@
 	"DESCRIPTION": "Зняти таймаут з користувача",
 	"USAGE": "[@user]",
 	"EXAMPLES": "untimeout user:@jonny_bro",
-	"YOURSELF": "Ви не можете зняти таймаут з себе",
 	"NOT_TIMEDOUT": "Даний користувач не перебуває у таймауті",
 	"SUCCESS": "Таймаут з {{user}} знятий"
 }

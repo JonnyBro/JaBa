@@ -5,7 +5,6 @@
 	"BOT_USER": "Боти завжди самотні ;(",
 	"ALREADY_MARRIED": "Ви вже одружені! Ви можете розвести за допомогою команди `divorce`",
 	"ALREADY_MARRIED_USER": "Ви запізнилися! {{user}} вже одружений",
-	"YOURSELF": "Ви не можете одружитися з собою",
 	"REQUEST_AUTHOR_TO_AMEMBER": "Ви вже надіслали пропозицію {{user}}",
 	"REQUEST_AMEMBER_TO_AUTHOR": "{{user}} надіслала вам пропозицію! Ви можете відмовити або погодитися (або дочекатися закінчення терміну пропозиції)",
 	"REQUEST_AMEMBER_TO_MEMBER": "{{secondUser}} вже надіслала пропозицію {{firstUser}}",

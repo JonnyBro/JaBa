@@ -4,6 +4,5 @@
 	"EXAMPLES": "rep user:@jonny_bro",
 	"COOLDOWN": "You must wait **{{time}}** before using it again",
 	"BOT_USER": "Bots are already cool B)",
-	"YOURSELF": "You cannot give reputation to yourself",
 	"SUCCESS": "You have given a reputation point to {{user}}"
 }

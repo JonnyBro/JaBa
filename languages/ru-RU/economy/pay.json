@@ -3,7 +3,6 @@
 	"USAGE": "[@user] [amount]",
 	"EXAMPLES": "pay user:@jonny_bro amount:1000",
 	"BOT_USER": "Ботам не нужны деньги B)",
-	"YOURSELF": "Вы не можете перевести кредиты самому себе",
 	"INVALID_AMOUNT": "Укажите сумму",
 	"ENOUGH_MONEY": "У вас нет {{amount}}",
 	"SUCCESS": "Вы отправили {{user}} {{amount}}!"

@@ -47,7 +47,7 @@ async function tictactoe(interaction, options = {}) {
 
 				if (opponent.id == (interaction.user ? interaction.user : interaction.author).id)
 					return interaction.reply({
-						content: interaction.translate("fun/tictactoe:YOURSELF"),
+						content: interaction.translate("misc:CANT_YOURSELF"),
 						ephemeral: true,
 					});
 			} else if (!interaction.commandId) {
@@ -66,7 +66,7 @@ async function tictactoe(interaction, options = {}) {
 
 				if (opponent.id === interaction.member.id)
 					return interaction.reply({
-						content: interaction.translate("fun/tictactoe:YOURSELF"),
+						content: interaction.translate("misc:CANT_YOURSELF"),
 					});
 			}
 

@@ -44,7 +44,7 @@ class Marry extends BaseCommand {
 
 		const member = interaction.options.getMember("user");
 		if (member.user.bot) return interaction.error("economy/marry:BOT_USER");
-		if (member.id === interaction.member.id) return interaction.error("economy/marry:YOURSELF");
+		if (member.id === interaction.member.id) return interaction.error("misc:CANT_YOURSELF");
 
 		const otherUserData = await client.getUserData(member.id);
 		if (otherUserData.lover) return interaction.error("economy/marry:ALREADY_MARRIED_USER", { user: member.toString() });

@@ -56,7 +56,7 @@ class Ban extends BaseCommand {
 			moderationPosition = interaction.member.roles.highest.position;
 
 		if (member.user.bot) return interaction.error("misc:BOT_USER", null, { ephemeral: true, edit: true });
-		if (member.id === interaction.member.id) return interaction.error("moderation/ban:YOURSELF", null, { ephemeral: true, edit: true });
+		if (member.id === interaction.member.id) return interaction.error("misc:CANT_YOURSELF", null, { ephemeral: true, edit: true });
 		if (interaction.guild.ownerId !== interaction.member.id && !(moderationPosition > memberPosition) && member.bannable) return interaction.error("moderation/ban:SUPERIOR", null, { ephemeral: true, edit: true });
 
 		await member.ban({
