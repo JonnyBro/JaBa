@@ -1,5 +1,4 @@
 const BaseEvent = require("../../base/BaseEvent");
-const { AuditLogEvent } = require("discord.js");
 
 class messageDelete extends BaseEvent {
 	constructor() {
