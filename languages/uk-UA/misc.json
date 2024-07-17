@@ -24,7 +24,7 @@
 	"MONITORING": {
 		"DELETE": {
 			"TITLE": "{{user}} видалив повідомлення!",
-			"DESCRIPTION": "Вміст повідомлення було: ```{{content}}```\nКанал: {{channel}}\nЧас створення: {{time}}"
+			"DESCRIPTION": "Видалив: {{deletedBy}}\nВміст повідомлення було: ```{{content}}```\nКанал: {{channel}}\nЧас створення: {{time}}"
 		},
 		"UPDATE": {
 			"TITLE": "{{user}} оновив повідомлення!",
