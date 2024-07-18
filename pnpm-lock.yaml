@@ -39,8 +39,8 @@ importers:
         specifier: ^6.6.10
         version: 6.6.10(@discord-player/extractor@4.4.7)(@discordjs/opus@0.9.0)
       discord-player-youtubei:
-        specifier: ^1.1.8
-        version: 1.1.8
+        specifier: ^1.1.10
+        version: 1.1.10
       discord.js:
         specifier: ^14.15.3
         version: 14.15.3
@@ -474,8 +474,8 @@ packages:
     peerDependencies:
       discord.js: '>=14.0.0'
 
-  discord-player-youtubei@1.1.8:
-    resolution: {integrity: sha512-gyIa8dTf1RnLhoo3uo79Z2tMYP/l0iTQfwVvsnbUPUV1iSZMdPcSaBIPUNdPu4s0C+OPUnqNo/Ceo7yDEIAptQ==}
+  discord-player-youtubei@1.1.10:
+    resolution: {integrity: sha512-6ueEViUB4GQ1djQG/IZnWdGwdViJeMFmJteD8QVa+XiztoEkAPlmqpcxia4PDbkFGIrjGmYYFVnVFl+PJSZoAg==}
     hasBin: true
 
   discord-player@6.6.10:
@@ -1723,7 +1723,7 @@ snapshots:
       discord.js: 14.15.3
       serialize-javascript: 6.0.1
 
-  discord-player-youtubei@1.1.8:
+  discord-player-youtubei@1.1.10:
     dependencies:
       undici: 6.19.2
       youtubei.js: 10.1.0
