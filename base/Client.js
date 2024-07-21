@@ -3,7 +3,7 @@ const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder, Embe
 	{ REST } = require("@discordjs/rest"),
 	{ Player: DiscordPlayer } = require("discord-player"),
 	{ SpotifyExtractor } = require("@discord-player/extractor"),
-	{ YoutubeiExtractor, createYoutubeiStream } = require("discord-player-youtubei"),
+	{ YoutubeiExtractor } = require("discord-player-youtubei"),
 	{ Routes } = require("discord-api-types/v10");
 
 const BaseEvent = require("./BaseEvent.js"),
@@ -43,28 +43,11 @@ class JaBaClient extends Client {
 	 * @returns {Promise<void>} A Promise that resolves when the client is fully initialized.
 	 */
 	async init() {
-		this.player = new DiscordPlayer(this, {
-			ytdlOptions: {
-				requestOptions: {
-					headers: {
-						cookie: this.config.youtubeCookie,
-					},
-				},
-			},
-		});
+		this.player = new DiscordPlayer(this);
 
-		await this.player.extractors.register(YoutubeiExtractor, {
-			// authentication: {
-			// 	access_token: process.env.YT_ACCESS_TOKEN || "",
-			// 	refresh_token: process.env.YT_REFRESH_TOKEN || "",
-			// 	scope: "https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube-paid-content",
-			// 	token_type: "Bearer",
-			// 	expiry_date: "2024-07-10T11:37:01.093Z",
-			// },
-		});
+		await this.player.extractors.register(YoutubeiExtractor);
 
 		await this.player.extractors.register(SpotifyExtractor, {
-			createStream: createYoutubeiStream,
 			clientId: this.config.spotify.clientId,
 			clientSecret: this.config.spotify.clientSecret,
 		});

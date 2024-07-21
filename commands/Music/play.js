@@ -86,7 +86,7 @@ class Play extends BaseCommand {
 		if (query.startsWith("http")) return interaction.respond([ { name: "Current Link", value: query } ]);
 
 		const youtubeResults = await client.player.search(query, { searchEngine: QueryType.YOUTUBE });
-		// const spotifyResults = await client.player.search(query, { searchEngine: QueryType.SPOTIFY_SEARCH });
+		const spotifyResults = await client.player.search(query, { searchEngine: QueryType.SPOTIFY_SEARCH });
 		const tracks = [];
 
 		youtubeResults.tracks
@@ -97,13 +97,13 @@ class Play extends BaseCommand {
 			}))
 			.forEach(t => tracks.push({ name: t.name, value: t.value }));
 
-		// spotifyResults.tracks
-		// 	.slice(0, 5)
-		// 	.map(t => ({
-		// 		name: `Spotify: ${`${t.title} - ${t.author} (${t.duration})`.length > 75 ? `${`${t.title} - ${t.author}`.substring(0, 75)}... (${t.duration})` : `${t.title} - ${t.author} (${t.duration})`}`,
-		// 		value: t.url,
-		// 	}))
-		// 	.forEach(t => tracks.push({ name: t.name, value: t.value }));
+		spotifyResults.tracks
+			.slice(0, 5)
+			.map(t => ({
+				name: `Spotify: ${`${t.title} - ${t.author} (${t.duration})`.length > 75 ? `${`${t.title} - ${t.author}`.substring(0, 75)}... (${t.duration})` : `${t.title} - ${t.author} (${t.duration})`}`,
+				value: t.url,
+			}))
+			.forEach(t => tracks.push({ name: t.name, value: t.value }));
 
 		return interaction.respond(tracks);
 	}
