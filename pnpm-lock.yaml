@@ -39,8 +39,8 @@ importers:
         specifier: ^6.7.0
         version: 6.7.0(@discord-player/extractor@4.5.0)(@discordjs/opus@0.9.0)
       discord-player-youtubei:
-        specifier: ^1.1.14
-        version: 1.1.14
+        specifier: ^1.2.0
+        version: 1.2.0
       discord.js:
         specifier: ^14.15.3
         version: 14.15.3
@@ -474,8 +474,8 @@ packages:
     peerDependencies:
       discord.js: '>=14.0.0'
 
-  discord-player-youtubei@1.1.14:
-    resolution: {integrity: sha512-W+eaemsDABUEWiYu0O1WFs8QgBy7b/ZO7+PVX0NZdo8vpIIxodalv6ZA7w9WfSz2YlQnvlSVXGabYodEz4vrkA==}
+  discord-player-youtubei@1.2.0:
+    resolution: {integrity: sha512-zI05CH8qVTNi1NcaUD2XKYwfw4Ye+6Ws9/sGZqoQxTI2LN8rVd0fBs/cX4GbRFevTWVqzZy4LvriQRe8OYJxFg==}
     hasBin: true
 
   discord-player@6.7.0:
@@ -1285,8 +1285,8 @@ packages:
   youtube-sr@4.3.11:
     resolution: {integrity: sha512-3oHiS2x7PpMiDRW7Cq8nz1bkAIBOJHoOwkPl/oncM/+A9/3xxMDgMLGW2dsBEP1DHFyRXYTVABgfbdwHF8sXXQ==}
 
-  youtubei.js@10.1.0:
-    resolution: {integrity: sha512-MokZMAnpWH11VYvWuW6qjPiiPmgRl5rfDgPQOpif9qXcVHoVw1hi8ePuRSD0AZSZ+uvWGe8rvas2dzp+Jv5JKQ==}
+  youtubei.js@10.2.0:
+    resolution: {integrity: sha512-JLKW9AHQ1qrTwBbre1aDkH8UJFmNcc4+kOSaVou5jSY7AzfFPFJK0yvX6afnLst0UVC9wfXHrLiNx93sutVErA==}
 
   ytdl-core@4.11.5:
     resolution: {integrity: sha512-27LwsW4n4nyNviRCO1hmr8Wr5J1wLLMawHCQvH8Fk0hiRqrxuIu028WzbJetiYH28K8XDbeinYW4/wcHQD1EXA==}
@@ -1707,10 +1707,10 @@ snapshots:
       discord.js: 14.15.3
       serialize-javascript: 6.0.1
 
-  discord-player-youtubei@1.1.14:
+  discord-player-youtubei@1.2.0:
     dependencies:
       undici: 6.19.2
-      youtubei.js: 10.1.0
+      youtubei.js: 10.2.0
 
   discord-player@6.7.0(@discord-player/extractor@4.5.0)(@discordjs/opus@0.9.0):
     dependencies:
@@ -2550,7 +2550,7 @@ snapshots:
 
   youtube-sr@4.3.11: {}
 
-  youtubei.js@10.1.0:
+  youtubei.js@10.2.0:
     dependencies:
       jintr: 2.0.0
       tslib: 2.6.2
