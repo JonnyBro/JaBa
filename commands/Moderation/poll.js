@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField, parseEmoji } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Poll extends BaseCommand {
@@ -84,8 +84,8 @@ class Poll extends BaseCommand {
 					});
 				}
 
-				const cool = client.emojis.cache.find(e => e.name === client.customEmojis.cool.split(":")[1]);
-				const notcool = client.emojis.cache.find(e => e.name === client.customEmojis.notcool.split(":")[1]);
+				const cool = parseEmoji(client.customEmojis.cool).id;
+				const notcool = parseEmoji(client.customEmojis.notcool).id;
 
 				const embed = client.embed({
 					author: interaction.translate("moderation/poll:TITLE"),

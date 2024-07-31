@@ -86,14 +86,14 @@ class Report extends BaseCommand {
 			],
 		});
 
-		const success = parseEmoji(client.customEmojis.cool).id;
-		const error = parseEmoji(client.customEmojis.notcool).id;
+		const cool = parseEmoji(client.customEmojis.cool).id;
+		const notcool = parseEmoji(client.customEmojis.notcool).id;
 
 		repChannel.send({
 			embeds: [embed],
 		}).then(async m => {
-			await m.react(success);
-			await m.react(error);
+			await m.react(cool);
+			await m.react(notcool);
 		});
 
 		interaction.success("general/report:SUCCESS", {
