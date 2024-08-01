@@ -45,7 +45,12 @@ class JaBaClient extends Client {
 	async init() {
 		this.player = new DiscordPlayer(this);
 
-		await this.player.extractors.register(YoutubeiExtractor);
+		await this.player.extractors.register(YoutubeiExtractor, {
+			authentication: this.config.youtubeCookie,
+			streamOptions: {
+				useClient: "ANDROID",
+			},
+		});
 
 		await this.player.extractors.register(SpotifyExtractor, {
 			clientId: this.config.spotify.clientId,

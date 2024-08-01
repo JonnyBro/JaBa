@@ -13,6 +13,14 @@ module.exports = {
 		clientId: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 		clientSecret: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 	},
+	/* YouTube Cookie */
+	youtubeCookie: {
+		access_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+		refresh_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+		scope: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+		token_type: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+		expiry_date: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+	},
 	/* Support server */
 	support: {
 		id: "123456789098765432", // The ID of the support server
@@ -41,6 +49,6 @@ module.exports = {
 	},
 	/* Add your own API keys here */
 	apiKeys: {
-		shlink: "12345678-1234-1234-1234-123456789098", /* Shlink.io REST API key */
+		shlink: "12345678-1234-1234-1234-123456789098" /* Shlink.io REST API key */,
 	},
 };

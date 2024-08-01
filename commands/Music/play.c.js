@@ -40,8 +40,6 @@ class PlayContext extends BaseCommand {
 		});
 
 		if (!searchResult.hasTracks()) {
-			console.log(searchResult);
-
 			return interaction.error("music/play:NO_RESULT", { query }, { edit: true });
 		} else {
 			await client.player.play(voice, searchResult, {

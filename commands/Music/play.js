@@ -105,8 +105,6 @@ class Play extends BaseCommand {
 			}))
 			.forEach(t => tracks.push({ name: t.name, value: t.value }));
 
-		console.log(tracks);
-
 		return interaction.respond(tracks);
 	}
 }
