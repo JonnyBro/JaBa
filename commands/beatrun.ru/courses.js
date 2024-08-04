@@ -49,10 +49,10 @@ class Courses extends BaseCommand {
 		if (response.res === 401) return interaction.error("beatrun.ru/courses:NOT_FOUND", null, { ephemeral: true, edit: true });
 
 		const embed = client.embed({
-			title: code,
+			title: course.name,
 			description: `[${interaction.translate("beatrun.ru/courses:DOWNLOAD")}](https://courses.jonnybro.ru/${course.path})`,
 			thumbnail: course.mapimg,
-			url: `https://courses.beatrun.ru/?search=${code}`,
+			url: `https://courses.jonnybro.ru/?search=${code}`,
 			fields: [
 				{
 					name: interaction.translate("beatrun.ru/courses:MAP"),
