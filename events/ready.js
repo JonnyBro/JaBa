@@ -15,13 +15,11 @@ class Ready extends BaseEvent {
 	async execute(client) {
 		const commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()];
 
-		let hiddenGuildMembersCount = client.guilds.cache.get("568120814776614924").memberCount;
-		let tServers = client.guilds.cache.size - 1;
-		let tUsers = 0;
+		let servers = client.guilds.cache.size;
+		let users = 0;
 		client.guilds.cache.forEach(g => {
-			tUsers += g.memberCount;
+			users += g.memberCount;
 		});
-		tUsers = tUsers - hiddenGuildMembersCount;
 
 		const birthdays = require("../helpers/birthdays");
 		birthdays.init(client);
@@ -32,7 +30,7 @@ class Ready extends BaseEvent {
 		if (client.config.dashboard.enabled) await client.dashboard.load(client);
 
 		client.logger.ready(`Loaded a total of ${commands.length} command(s).`);
-		client.logger.ready(`${client.user.getUsername()}, ready to serve ${tUsers} members in ${tServers} servers.`);
+		client.logger.ready(`${client.user.getUsername()}, ready to serve ${users} members in ${servers} servers.`);
 
 		console.timeEnd("botReady");
 
@@ -40,19 +38,17 @@ class Ready extends BaseEvent {
 		const status = [
 			{ name: "/help", type: ActivityType.Watching },
 			{ name: `${commands.length} ${client.functions.getNoun(commands.length, client.translate("misc:NOUNS:COMMANDS:1"), client.translate("misc:NOUNS:COMMANDS:2"), client.translate("misc:NOUNS:COMMANDS:5"))}`, type: ActivityType.Listening },
-			{ name: `${tServers} ${client.functions.getNoun(tServers, client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5"))}`, type: ActivityType.Watching },
-			{ name: `${tUsers} ${client.functions.getNoun(tUsers, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))}`, type: ActivityType.Watching },
+			{ name: `${servers} ${client.functions.getNoun(servers, client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5"))}`, type: ActivityType.Watching },
+			{ name: `${users} ${client.functions.getNoun(users, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))}`, type: ActivityType.Watching },
 		];
 
 		let i = 0;
 		setInterval(async function () {
-			hiddenGuildMembersCount = client.guilds.cache.get("568120814776614924").memberCount;
-			tServers = client.guilds.cache.size - 1;
-			tUsers = 0;
+			servers = client.guilds.cache.size;
+			users = 0;
 			client.guilds.cache.forEach(g => {
-				tUsers += g.memberCount;
+				users += g.memberCount;
 			});
-			tUsers = tUsers - hiddenGuildMembersCount;
 
 			client.user.setActivity(`${status[i].name} | v${version}`, {
 				type: status[i].type,
