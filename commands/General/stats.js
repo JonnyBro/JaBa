@@ -27,13 +27,11 @@ class Stats extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
-		const hiddenGuildMembersCount = client.guilds.cache.get("568120814776614924").memberCount;
-		const servers = client.guilds.cache.size - 1;
+		const servers = client.guilds.cache.size;
 		let users = 0;
 		client.guilds.cache.forEach(g => {
 			users += g.memberCount;
 		});
-		users = users - hiddenGuildMembersCount;
 
 		const embed = client.embed({
 			author: interaction.translate("common:STATS"),
