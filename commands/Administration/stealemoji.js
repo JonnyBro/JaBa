@@ -47,7 +47,7 @@ class Stealemoji extends BaseCommand {
 			})
 			.then(emoji =>
 				interaction.success("administration/stealemoji:SUCCESS", {
-					emoji: emoji.name,
+					emoji: emoji.toString(),
 				}, { ephemeral: true }),
 			)
 			.catch(e => {

@@ -48,7 +48,7 @@ class JaBaClient extends Client {
 		await this.player.extractors.register(YoutubeiExtractor, {
 			authentication: this.config.youtubeCookie,
 			streamOptions: {
-				useClient: "ANDROID",
+				useClient: "WEB",
 			},
 		});
 

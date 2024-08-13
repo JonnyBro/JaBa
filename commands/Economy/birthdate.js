@@ -23,8 +23,7 @@ class Birthdate extends BaseCommand {
 						.setDescriptionLocalizations({
 							uk: client.translate("economy/birthdate:DAY", null, "uk-UA"),
 							ru: client.translate("economy/birthdate:DAY", null, "ru-RU"),
-						})
-						.setRequired(true),
+						}),
 				)
 				.addIntegerOption(option =>
 					option
@@ -34,20 +33,19 @@ class Birthdate extends BaseCommand {
 							uk: client.translate("economy/birthdate:MONTH", null, "uk-UA"),
 							ru: client.translate("economy/birthdate:MONTH", null, "ru-RU"),
 						})
-						.setRequired(true)
 						.setChoices(
-							{ name: client.translate("economy/birthdate:JANUARY"), value: 1 },
-							{ name: client.translate("economy/birthdate:FEBRUARY"), value: 2 },
-							{ name: client.translate("economy/birthdate:MARCH"), value: 3 },
-							{ name: client.translate("economy/birthdate:APRIL"), value: 4 },
-							{ name: client.translate("economy/birthdate:MAY"), value: 5 },
-							{ name: client.translate("economy/birthdate:JUNE"), value: 6 },
-							{ name: client.translate("economy/birthdate:JULY"), value: 7 },
-							{ name: client.translate("economy/birthdate:AUGUST"), value: 8 },
-							{ name: client.translate("economy/birthdate:SEPTEMBER"), value: 9 },
-							{ name: client.translate("economy/birthdate:OCTOBER"), value: 10 },
-							{ name: client.translate("economy/birthdate:NOVEMBER"), value: 11 },
-							{ name: client.translate("economy/birthdate:DECEMBER"), value: 12 },
+							{ name: client.translate("misc:MONTHS:JANUARY"), value: 1 },
+							{ name: client.translate("misc:MONTHS:FEBRUARY"), value: 2 },
+							{ name: client.translate("misc:MONTHS:MARCH"), value: 3 },
+							{ name: client.translate("misc:MONTHS:APRIL"), value: 4 },
+							{ name: client.translate("misc:MONTHS:MAY"), value: 5 },
+							{ name: client.translate("misc:MONTHS:JUNE"), value: 6 },
+							{ name: client.translate("misc:MONTHS:JULY"), value: 7 },
+							{ name: client.translate("misc:MONTHS:AUGUST"), value: 8 },
+							{ name: client.translate("misc:MONTHS:SEPTEMBER"), value: 9 },
+							{ name: client.translate("misc:MONTHS:OCTOBER"), value: 10 },
+							{ name: client.translate("misc:MONTHS:NOVEMBER"), value: 11 },
+							{ name: client.translate("misc:MONTHS:DECEMBER"), value: 12 },
 						),
 				)
 				.addIntegerOption(option =>
@@ -57,8 +55,16 @@ class Birthdate extends BaseCommand {
 						.setDescriptionLocalizations({
 							uk: client.translate("economy/birthdate:YEAR", null, "uk-UA"),
 							ru: client.translate("economy/birthdate:YEAR", null, "ru-RU"),
-						})
-						.setRequired(true),
+						}),
+				)
+				.addBooleanOption(option =>
+					option
+						.setName("clear")
+						.setDescription(client.translate("economy/birthdate:CLEAR"))
+						.setDescriptionLocalizations({
+							uk: client.translate("economy/birthdate:CLEAR", null, "uk-UA"),
+							ru: client.translate("economy/birthdate:CLEAR", null, "ru-RU"),
+						}),
 				),
 			dirname: __dirname,
 			ownerOnly: false,
@@ -71,8 +77,18 @@ class Birthdate extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
-		const userData = interaction.data.user,
-			day = interaction.options.getInteger("day"),
+		const userData = interaction.data.user;
+
+		if (interaction.options.getBoolean("clear")) {
+			userData.birthdate = null;
+			await userData.save();
+
+			return interaction.success("economy/birthdate:SUCCESS", {
+				date: "none",
+			});
+		}
+
+		const day = interaction.options.getInteger("day"),
 			month = interaction.options.getInteger("month"),
 			year = interaction.options.getInteger("year"),
 			date = new Date(year, month - 1, day);

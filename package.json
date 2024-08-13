@@ -1,6 +1,6 @@
 {
     "name": "jaba",
-    "version": "4.6.1",
+    "version": "4.6.3",
     "description": "My Discord Bot",
     "main": "index.js",
     "scripts": {
@@ -8,17 +8,17 @@
     },
     "author": "@jonny_bro",
     "dependencies": {
-        "@discord-player/extractor": "^4.5.0",
+        "@discord-player/extractor": "^4.5.1",
         "@discordjs/opus": "^0.9.0",
         "@discordjs/rest": "^2.3.0",
         "@discordjs/voice": "^0.17.0",
         "@napi-rs/canvas": "^0.1.53",
         "chalk": "^4.1.2",
         "cron": "^2.4.4",
-        "discord-api-types": "^0.37.92",
+        "discord-api-types": "^0.37.93",
         "discord-giveaways": "^6.0.1",
         "discord-player": "^6.7.1",
-        "discord-player-youtubei": "^1.2.4",
+        "discord-player-youtubei": "^1.2.6",
         "discord.js": "^14.15.3",
         "gamedig": "^4.1.0",
         "i18next": "^21.10.0",
@@ -27,8 +27,7 @@
         "moment": "^2.29.4",
         "mongoose": "^7.6.3",
         "ms": "^2.1.3",
-        "node-fetch": "^2.7.0",
-        "ytdl-core": "^4.11.5"
+        "node-fetch": "^2.7.0"
     },
     "devDependencies": {
         "eslint": "^8.56.0"

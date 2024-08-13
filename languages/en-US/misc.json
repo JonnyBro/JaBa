@@ -22,6 +22,21 @@
 	"QUOTE_JUMP": "Jump to",
 	"QUOTE_FOOTER": "Quoted by {{user}}",
 
+	"MONTHS": {
+		"JANUARY": "January",
+		"FEBRUARY": "February",
+		"MARCH": "March",
+		"APRIL": "April",
+		"MAY": "May",
+		"JUNE": "June",
+		"JULY": "July",
+		"AUGUST": "August",
+		"SEPTEMBER": "September",
+		"OCTOBER": "October",
+		"NOVEMBER": "November",
+		"DECEMBER": "December"
+	},
+
 	"MONITORING": {
 		"DELETE": {
 			"TITLE": "{{user}} deleted a message!",

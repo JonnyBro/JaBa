@@ -23,8 +23,7 @@ class Skip extends BaseCommand {
 						.setDescriptionLocalizations({
 							uk: client.translate("music/skip:POSITION", null, "uk-UA"),
 							ru: client.translate("music/skip:POSITION", null, "ru-RU"),
-						})
-						.setRequired(false),
+						}),
 				),
 			dirname: __dirname,
 			ownerOnly: false,

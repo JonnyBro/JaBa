@@ -22,6 +22,21 @@
 	"QUOTE_JUMP": "Перейти к",
 	"QUOTE_FOOTER": "Цитировал {{user}}",
 
+	"MONTHS": {
+		"JANUARY": "Январь",
+		"FEBRUARY": "Февраль",
+		"MARCH": "Март",
+		"APRIL": "Апрель",
+		"MAY": "Май",
+		"JUNE": "Июнь",
+		"JULY": "Июль",
+		"AUGUST": "Август",
+		"SEPTEMBER": "Сентябрь",
+		"OCTOBER": "Октябрь",
+		"NOVEMBER": "Ноябрь",
+		"DECEMBER": "Декабрь"
+	},
+
 	"MONITORING": {
 		"DELETE": {
 			"TITLE": "{{user}} удалил сообщение!",

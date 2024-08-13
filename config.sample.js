@@ -14,13 +14,7 @@ module.exports = {
 		clientSecret: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 	},
 	/* YouTube Cookie */
-	youtubeCookie: {
-		access_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-		refresh_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-		scope: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-		token_type: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-		expiry_date: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-	},
+	youtubeCookie: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 	/* Support server */
 	support: {
 		id: "123456789098765432", // The ID of the support server

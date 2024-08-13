@@ -3,5 +3,7 @@
 	"USAGE": "",
 	"EXAMPLES": "reminds",
 	"NO_REMINDS": "No reminds found",
-	"REMINDS_LIST": "Reminds List"
+	"REMINDS_LIST": "Reminds List",
+	"DELETE": "Delete {{pos}}",
+	"DELETED": "Deleted remind №{{pos}}"
 }
