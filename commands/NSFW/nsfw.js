@@ -38,7 +38,7 @@ class NSFW extends BaseCommand {
 
 				const tag = interaction?.values[0],
 					splitted = tag.split("_"),
-					res = await fetch(`https://nsfw-api.jababot.ru/media/${splitted[0].charAt(0).toLowerCase()}/${splitted[1].toLowerCase()}`).then(async r => await r.buffer()),
+					res = await fetch(`https://nsfw.plsgo.ru/media/${splitted[0].charAt(0).toLowerCase()}/${splitted[1].toLowerCase()}`).then(async r => await r.buffer()),
 					image = new AttachmentBuilder(res, { name: "image.jpeg" });
 
 				const embed = client.embed({
