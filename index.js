@@ -19,10 +19,10 @@ const client = new Client({
 })();
 
 client
-	.on("disconnect", () => client.logger.warn("Bot is disconnecting..."))
+	.on("disconnect", () => client.logger.warn("Bot disconnected."))
 	.on("reconnecting", () => client.logger.warn("Bot reconnecting..."))
-	.on("warn", warn => console.log(warn))
-	.on("error", e => console.log(e));
+	.on("warn", console.log)
+	.on("error", console.log);
 
 process
 	.on("unhandledRejection", e => console.log(e))

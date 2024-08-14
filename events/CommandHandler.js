@@ -33,7 +33,8 @@ class CommandHandler extends BaseEvent {
 
 		if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isCommand()) return;
 
-		if (command?.dirname.includes("IAT") && interaction.guildId !== "1039187019957555252") return interaction.reply({ content: "IAT Only", ephemeral: true });
+		if (command?.dirname.includes("IAT") && interaction.guildId !== "1039187019957555252") return interaction.reply({ content: "IAT only", ephemeral: true });
+		if (command?.dirname.includes("beatrun") && interaction.guildId !== "1113394230002454560") return interaction.reply({ content: "Beatrun.ru only", ephemeral: true });
 		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { ephemeral: true });
 
 		if (!interaction.data.user.achievements.firstCommand.achieved) {

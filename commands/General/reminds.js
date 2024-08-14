@@ -46,22 +46,14 @@ class Reminds extends BaseCommand {
 
 			let currentPage = Number(interaction.message.content.match(/\d+/g)[0]) - 1 ?? 0;
 
-			const row2 = new ActionRowBuilder();
-
-			for (const key in reminds) {
-				row2.addComponents(
-					new ButtonBuilder()
-						.setCustomId(`reminds_delete_${key}`)
-						.setLabel(interaction.translate("general/reminds:DELETE", { pos: parseInt(key) + 1 }))
-						.setStyle(ButtonStyle.Danger),
-				);
-			}
-
 			if (interaction.customId === "reminds_prev_page") {
 				await interaction.deferUpdate();
 
 				if (currentPage !== 0) {
 					--currentPage;
+
+					const row2 = new ActionRowBuilder().addComponents(embeds[currentPage].data._buttons);
+
 					interaction.editReply({
 						content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 						embeds: [embeds[currentPage]],
@@ -73,6 +65,9 @@ class Reminds extends BaseCommand {
 
 				if (currentPage < embeds.length - 1) {
 					currentPage++;
+
+					const row2 = new ActionRowBuilder().addComponents(embeds[currentPage].data._buttons);
+
 					interaction.editReply({
 						content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 						embeds: [embeds[currentPage]],
@@ -96,6 +91,9 @@ class Reminds extends BaseCommand {
 				interaction.channel.awaitMessages({ filter, max: 1, time: 10 * 1000 }).then(collected => {
 					if (embeds[collected.first().content - 1]) {
 						currentPage = collected.first().content - 1;
+
+						const row2 = new ActionRowBuilder().addComponents(embeds[currentPage].data._buttons);
+
 						interaction.editReply({
 							content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
 							embeds: [embeds[currentPage]],
@@ -118,20 +116,32 @@ class Reminds extends BaseCommand {
 				});
 
 				return interaction.editReply({
-					components: [row, row2],
+					components: [row],
 				});
 			} else if (interaction.customId.startsWith("reminds_delete_")) {
 				await interaction.deferUpdate();
 
 				const id = parseInt(interaction.customId.split("_")[2]);
-				const remindToDelete = reminds[id];
+				const remindToDelete = reminds[id - 1];
 
 				interaction.data.user.reminds = reminds.filter(r => r.sendAt !== remindToDelete.sendAt);
 
 				await interaction.data.user.save();
 
+				const embeds = generateRemindsEmbeds(interaction, interaction.data.user.reminds);
+
+				embeds.length <= 5 ? currentPage = 0 : currentPage;
+
+				const row2 = new ActionRowBuilder().addComponents(embeds[currentPage].data._buttons);
+
+				await interaction.editReply({
+					content: `${interaction.translate("common:PAGE")}: **${currentPage + 1}**/**${embeds.length}**`,
+					embeds: [embeds[currentPage]],
+					components: [row, row2],
+				});
+
 				return interaction.followUp({
-					content: `${client.customEmojis.success} | ${interaction.translate("general/reminds:DELETED", { pos: id + 1 })}`,
+					content: `${client.customEmojis.success} | ${interaction.translate("general/reminds:DELETED", { pos: id })}`,
 					ephemeral: true,
 				});
 			}
@@ -158,21 +168,12 @@ class Reminds extends BaseCommand {
 			new ButtonBuilder().setCustomId("reminds_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
 		);
 
-		const row2 = new ActionRowBuilder();
-
-		for (const key in reminds) {
-			row2.addComponents(
-				new ButtonBuilder()
-					.setCustomId(`reminds_delete_${key}`)
-					.setLabel(interaction.translate("general/reminds:DELETE", { pos: parseInt(key) + 1 }))
-					.setStyle(ButtonStyle.Danger),
-			);
-		}
+		const buttonsRow = new ActionRowBuilder().addComponents(embeds[0].data._buttons);
 
 		await interaction.editReply({
 			content: `${interaction.translate("common:PAGE")}: **1**/**${embeds.length}**`,
 			embeds: [embeds[0]],
-			components: [row, row2],
+			components: [row, buttonsRow],
 			ephemeral: true,
 		});
 	}
@@ -203,8 +204,20 @@ function generateRemindsEmbeds(interaction, reminds) {
 			description: info,
 		});
 
+		embed.data._buttons = [];
+
+		for (const key in current) {
+			embed.data._buttons.push(
+				new ButtonBuilder()
+					.setCustomId(`reminds_delete_${parseInt(key) + i + 1}`)
+					.setLabel(interaction.translate("general/reminds:DELETE", { pos: parseInt(key) + i + 1 }))
+					.setStyle(ButtonStyle.Danger),
+			);
+		}
+
 		embeds.push(embed);
 	}
+
 
 	return embeds;
 }
