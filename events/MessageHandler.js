@@ -79,7 +79,7 @@ class MessageCreate extends BaseEvent {
 
 				const row = new ActionRowBuilder().addComponents(
 					new ButtonBuilder().setLabel(message.translate("misc:QUOTE_JUMP")).setStyle(ButtonStyle.Link).setURL(msg.url),
-					new ButtonBuilder().setCustomId("quote_delete").setEmoji("1102200816582000750").setStyle(ButtonStyle.Danger),
+					new ButtonBuilder().setCustomId("quote_delete").setStyle(ButtonStyle.Danger),
 				);
 
 				message.reply({
