@@ -1,0 +1,17 @@
+{
+	"DESCRIPTION": "Shows user/guild information",
+	"USAGE": "",
+	"EXAMPLES": "info server\ninfo user @jonny_bro\ninfo user",
+	"USER": "User info",
+	"CUSTOM": "Custom Status",
+	"NO_ACTIVITY": "Not playing",
+	"NO_ROLE": "No role",
+	"ROLE": "Top Role",
+	"NO_NICKNAME": "No nickname",
+	"MORE_ROLES": "and {{count}} more role(s)",
+	"SERVER": "Server info",
+	"AFK_CHANNEL": "AFK Channel",
+	"BOOSTS": "Number of Boosts",
+	"LINK": "Server Statistics",
+	"LINK_TEXT": "Click here to open the server statistics in the control panel"
+}

@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Shows server information",
-	"USAGE": "",
-	"EXAMPLES": "serverinfo",
-	"AFK_CHANNEL": "AFK Channel",
-	"BOOSTS": "Number of Boosts",
-	"LINK": "Server Statistics",
-	"LINK_TEXT": "Click here to open the server statistics in the control panel"
-}

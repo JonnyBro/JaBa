@@ -130,6 +130,12 @@ class Reminds extends BaseCommand {
 
 				const embeds = generateRemindsEmbeds(interaction, interaction.data.user.reminds);
 
+				if (embeds.length === 0) return interaction.editReply({
+					content: interaction.translate("general/reminds:NO_REMINDS"),
+					embeds: [],
+					components: [],
+				});
+
 				embeds.length <= 5 ? currentPage = 0 : currentPage;
 
 				const row2 = new ActionRowBuilder().addComponents(embeds[currentPage].data._buttons);
