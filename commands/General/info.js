@@ -120,7 +120,7 @@ async function getServerInfo(client, interaction) {
 				inline: true,
 			},
 			{
-				name: client.customEmojis.afk + interaction.translate("general/serverinfo:AFK_CHANNEL"),
+				name: client.customEmojis.afk + interaction.translate("general/info:AFK_CHANNEL"),
 				value: guild.afkChannel?.toString() || interaction.translate("common:MISSING"),
 				inline: true,
 			},
@@ -135,7 +135,7 @@ async function getServerInfo(client, interaction) {
 				inline: true,
 			},
 			{
-				name: client.customEmojis.boost + interaction.translate("general/serverinfo:BOOSTS"),
+				name: client.customEmojis.boost + interaction.translate("general/info:BOOSTS"),
 				value: guild.premiumSubscriptionCount?.toString() || "0",
 				inline: true,
 			},
@@ -192,7 +192,7 @@ function getUserInfo(client, interaction, member) {
 			},
 			{
 				name: client.customEmojis.pencil + " " + interaction.translate("common:NICKNAME"),
-				value: member.nickname || interaction.translate("general/userinfo:NO_NICKNAME"),
+				value: member.nickname || interaction.translate("general/info:NO_NICKNAME"),
 				inline: true,
 			},
 			{
@@ -220,10 +220,10 @@ function getUserInfo(client, interaction, member) {
 				value:
 					member.roles.size > 10
 						? member.roles.cache.map(r => r).filter(r => r.id !== interaction.guild.roles.everyone.id).slice(0, 10).join(", ") + " " +
-					interaction.translate("general/userinfo:MORE_ROLES", {
+					interaction.translate("general/info:MORE_ROLES", {
 						count: member.roles.cache.size - 10,
 					})
-						: member.roles.cache.size < 1 ? interaction.translate("general/userinfo:NO_ROLE") : member.roles.cache.map(r => r).filter(r => r.id !== interaction.guild.roles.everyone.id).slice(0, 10).join(", "),
+						: member.roles.cache.size < 1 ? interaction.translate("general/info:NO_ROLE") : member.roles.cache.map(r => r).filter(r => r.id !== interaction.guild.roles.everyone.id).slice(0, 10).join(", "),
 				inline: true,
 			},
 		],
