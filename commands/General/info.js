@@ -97,7 +97,7 @@ async function getServerInfo(interaction) {
 			},
 			{
 				name: interaction.client.customEmojis.calendar + interaction.translate("common:CREATION"),
-				value: `<t:${guild.createdTimestamp}:D>`,
+				value: `<t:${Math.floor(guild.createdTimestamp / 1000)}:D>`,
 				inline: true,
 			},
 			{
