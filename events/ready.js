@@ -36,22 +36,24 @@ class Ready extends BaseEvent {
 
 		const version = require("../package.json").version;
 		const status = [
-			{ name: "/help", type: ActivityType.Watching },
-			{ name: `${commands.length} ${client.functions.getNoun(commands.length, client.translate("misc:NOUNS:COMMANDS:1"), client.translate("misc:NOUNS:COMMANDS:2"), client.translate("misc:NOUNS:COMMANDS:5"))}`, type: ActivityType.Listening },
-			{ name: `${servers} ${client.functions.getNoun(servers, client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5"))}`, type: ActivityType.Watching },
-			{ name: `${users} ${client.functions.getNoun(users, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))}`, type: ActivityType.Watching },
+			"Use /help to get commands list",
+			`${commands.length} ${client.functions.getNoun(commands.length, client.translate("misc:NOUNS:COMMANDS:1"), client.translate("misc:NOUNS:COMMANDS:2"), client.translate("misc:NOUNS:COMMANDS:5"))} available!`,
+			`Bot is in ${servers} ${client.functions.getNoun(servers, client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5"))}`,
+			`Cached ${users} ${client.functions.getNoun(users, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))}`,
 		];
 
 		let i = 0;
-		setInterval(async function () {
-			servers = client.guilds.cache.size;
+		setInterval(() => {
+			servers = client.guilds.fetch().then(g => g.size);
 			users = 0;
 			client.guilds.cache.forEach(g => {
 				users += g.memberCount;
 			});
 
-			client.user.setActivity(`${status[i].name} | v${version}`, {
-				type: status[i].type,
+			client.user.setActivity({
+				type: ActivityType.Custom,
+				name: "custom",
+				state: `${status[i]} | v${version}`,
 			});
 
 			if (status[i + 1]) i++;
