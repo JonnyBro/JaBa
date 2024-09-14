@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class RemoveUser extends BaseCommand {
@@ -15,7 +15,7 @@ class RemoveUser extends BaseCommand {
 					uk: client.translate("tickets/removeuser:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("tickets/removeuser:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false)
+				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
 				.addUserOption(option =>
 					option

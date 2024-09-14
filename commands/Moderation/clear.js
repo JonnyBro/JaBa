@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Clear extends BaseCommand {
@@ -15,7 +15,7 @@ class Clear extends BaseCommand {
 					uk: client.translate("moderation/clear:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("moderation/clear:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false)
+				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
 				.addStringOption(option =>
 					option

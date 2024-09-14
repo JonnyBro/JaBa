@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Setbio extends BaseCommand {
@@ -15,7 +15,7 @@ class Setbio extends BaseCommand {
 					uk: client.translate("economy/setbio:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("economy/setbio:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true)
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.Guild])
 				.addStringOption(option =>
 					option
 						.setName("text")
@@ -37,6 +37,8 @@ class Setbio extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		const userData = interaction.data.user,
 			newBio = interaction.options.getString("text");
 		if (newBio.length > 150) return interaction.error("economy/setbio:MAX_CHARACTERS");
@@ -45,7 +47,7 @@ class Setbio extends BaseCommand {
 
 		await userData.save();
 
-		interaction.success("economy/setbio:SUCCESS");
+		interaction.success("economy/setbio:SUCCESS", null, { edit: true });
 	}
 }
 

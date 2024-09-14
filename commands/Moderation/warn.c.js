@@ -1,4 +1,4 @@
-const { ContextMenuCommandBuilder, ModalBuilder, ActionRowBuilder, TextInputBuilder, ApplicationCommandType, PermissionsBitField, TextInputStyle } = require("discord.js");
+const { ContextMenuCommandBuilder, ModalBuilder, ActionRowBuilder, TextInputBuilder, ApplicationCommandType, PermissionsBitField, TextInputStyle, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class WarnContext extends BaseCommand {
@@ -11,7 +11,7 @@ class WarnContext extends BaseCommand {
 			command: new ContextMenuCommandBuilder()
 				.setName("Give Warn")
 				.setType(ApplicationCommandType.User)
-				.setDMPermission(false)
+				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages),
 			dirname: __dirname,
 			ownerOnly: false,

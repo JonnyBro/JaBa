@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, parseEmoji } = require("discord.js");
+const { SlashCommandBuilder, parseEmoji, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Work extends BaseCommand {
@@ -15,7 +15,7 @@ class Work extends BaseCommand {
 					uk: client.translate("economy/work:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("economy/work:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false),
+				.setContexts([InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,
 		});

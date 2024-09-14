@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Leaderboard extends BaseCommand {
@@ -15,7 +15,7 @@ class Leaderboard extends BaseCommand {
 					uk: client.translate("economy/leaderboard:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("economy/leaderboard:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false)
+				.setContexts([InteractionContextType.Guild])
 				.addStringOption(option =>
 					option
 						.setName("type")

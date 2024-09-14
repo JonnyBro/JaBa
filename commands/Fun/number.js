@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageCollector, ButtonBuilder, ActionRowBuilder, ButtonStyle, ThreadAutoArchiveDuration } = require("discord.js");
+const { SlashCommandBuilder, MessageCollector, ButtonBuilder, ActionRowBuilder, ButtonStyle, ThreadAutoArchiveDuration, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	currentGames = {};
 
@@ -16,7 +16,7 @@ class Number extends BaseCommand {
 					uk: client.translate("fun/number:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("fun/number:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false),
+				.setContexts([InteractionContextType.Guild, InteractionContextType.PrivateChannel]),
 			dirname: __dirname,
 			ownerOnly: false,
 		});

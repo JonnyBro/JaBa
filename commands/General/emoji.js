@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, parseEmoji } = require("discord.js");
+const { SlashCommandBuilder, parseEmoji, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Emoji extends BaseCommand {
@@ -15,7 +15,7 @@ class Emoji extends BaseCommand {
 					uk: client.translate("general/emoji:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/emoji:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true)
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addStringOption(option =>
 					option
 						.setName("emoji")

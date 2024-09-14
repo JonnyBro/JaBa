@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Divorce extends BaseCommand {
@@ -15,7 +15,7 @@ class Divorce extends BaseCommand {
 					uk: client.translate("economy/divorce:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("economy/divorce:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false),
+				.setContexts([InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,
 		});

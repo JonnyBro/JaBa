@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, PermissionsBitField, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Help extends BaseCommand {
@@ -15,7 +15,7 @@ class Help extends BaseCommand {
 					uk: client.translate("general/help:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/help:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true)
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addStringOption(option =>
 					option
 						.setName("command")

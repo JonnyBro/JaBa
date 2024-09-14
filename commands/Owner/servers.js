@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Servers extends BaseCommand {
@@ -15,7 +15,7 @@ class Servers extends BaseCommand {
 					uk: client.translate("owner/servers:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("owner/servers:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true),
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: true,
 		});

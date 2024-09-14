@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	i18next = require("i18next");
 // autoUpdateDocs = require("../../helpers/autoUpdateDocs");
@@ -17,7 +17,7 @@ class Reload extends BaseCommand {
 					uk: client.translate("owner/reload:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("owner/reload:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true)
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addStringOption(option =>
 					option
 						.setName("command")
@@ -44,7 +44,8 @@ class Reload extends BaseCommand {
 			cmd = client.commands.get(command);
 		if (!cmd) return interaction.error("owner/reload:NOT_FOUND", { command }, { ephemeral: true });
 
-		await client.unloadCommand(`../commands/${cmd.category}`, cmd.command.name);
+		client.unloadCommand(`../commands/${cmd.category}`, cmd.command.name);
+
 		await client.loadCommand(`../commands/${cmd.category}`, cmd.command.name);
 
 		i18next.reloadResources(["ru-RU", "uk-UA", "en-US"]);

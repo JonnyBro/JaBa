@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, version: djsVersion } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, version: discordJsVersion, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Stats extends BaseCommand {
@@ -15,7 +15,7 @@ class Stats extends BaseCommand {
 					uk: client.translate("general/stats:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/stats:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true),
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,
 		});
@@ -47,7 +47,7 @@ class Stats extends BaseCommand {
 				},
 				{
 					name: client.customEmojis.version + " " + interaction.translate("general/stats:VERSIONS_TITLE"),
-					value: `\`Discord.js: v${djsVersion}\`\n\`Nodejs: v${process.versions.node}\``,
+					value: `\`Discord.js: v${discordJsVersion}\`\n\`Nodejs: v${process.versions.node}\``,
 					inline: true,
 				},
 				{

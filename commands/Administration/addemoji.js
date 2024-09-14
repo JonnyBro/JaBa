@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Addemoji extends BaseCommand {
@@ -15,7 +15,7 @@ class Addemoji extends BaseCommand {
 					uk: client.translate("administration/addemoji:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("administration/addemoji:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false)
+				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
 				.addStringOption(option =>
 					option

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Volume extends BaseCommand {
@@ -15,7 +15,7 @@ class Volume extends BaseCommand {
 					uk: client.translate("music/volume:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("music/volume:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false)
+				.setContexts([InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addIntegerOption(option =>
 					option
 						.setName("int")

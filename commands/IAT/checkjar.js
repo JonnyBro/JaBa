@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch"),
 	moment = require("moment");
@@ -17,7 +17,7 @@ class Checkjar extends BaseCommand {
 					uk: client.translate("iat/checkjar:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("iat/checkjar:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false),
+				.setContexts([InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,
 		});

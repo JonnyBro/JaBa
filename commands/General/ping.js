@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Ping extends BaseCommand {
@@ -15,7 +15,7 @@ class Ping extends BaseCommand {
 					uk: client.translate("general/ping:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/ping:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true),
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,
 		});

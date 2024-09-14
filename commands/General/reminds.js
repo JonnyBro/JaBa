@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Reminds extends BaseCommand {
@@ -15,7 +15,7 @@ class Reminds extends BaseCommand {
 					uk: client.translate("general/reminds:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/reminds:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true),
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,
 		});

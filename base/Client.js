@@ -48,7 +48,7 @@ class JaBaClient extends Client {
 		await this.player.extractors.register(YoutubeiExtractor, {
 			authentication: this.config.youtubeCookie,
 			streamOptions: {
-				useClient: "WEB",
+				useClient: "YTMUSIC_ANDROID",
 			},
 		});
 
@@ -267,7 +267,7 @@ class JaBaClient extends Client {
 	 * @param {string} name - The name of the command file (without the .js extension).
 	 * @returns {void} This method does not return a value.
 	 */
-	async unloadCommand(dir, name) {
+	unloadCommand(dir, name) {
 		delete require.cache[require.resolve(`${dir}${path.sep}${name}.js`)];
 
 		return;

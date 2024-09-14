@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Afk extends BaseCommand {
@@ -15,7 +15,7 @@ class Afk extends BaseCommand {
 					uk: client.translate("general/afk:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/afk:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true)
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addStringOption(option =>
 					option
 						.setName("message")

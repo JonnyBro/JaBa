@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Goodbye extends BaseCommand {
@@ -15,7 +15,7 @@ class Goodbye extends BaseCommand {
 					uk: client.translate("administration/goodbye:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("administration/goodbye:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false)
+				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
 				.addSubcommand(subcommand =>
 					subcommand
@@ -26,42 +26,43 @@ class Goodbye extends BaseCommand {
 							ru: client.translate("administration/goodbye:TEST", null, "ru-RU"),
 						}),
 				)
-				.addSubcommand(subcommand =>
-					subcommand
-						.setName("config")
-						.setDescription(client.translate("administration/goodbye:CONFIG"))
-						.setDescriptionLocalizations({
-							uk: client.translate("administration/goodbye:CONFIG", null, "uk-UA"),
-							ru: client.translate("administration/goodbye:CONFIG", null, "ru-RU"),
-						})
-						.addBooleanOption(option =>
-							option
-								.setName("state")
-								.setDescription(client.translate("common:STATE"))
-								.setDescriptionLocalizations({
-									uk: client.translate("common:STATE", null, "uk-UA"),
-									ru: client.translate("common:STATE", null, "ru-RU"),
-								})
-								.setRequired(true),
-						)
-						.addChannelOption(option =>
-							option
-								.setName("channel")
-								.setDescription(client.translate("common:CHANNEL"))
-								.setDescriptionLocalizations({
-									uk: client.translate("common:CHANNEL", null, "uk-UA"),
-									ru: client.translate("common:CHANNEL", null, "ru-RU"),
-								}),
-						)
-						.addStringOption(option =>
-							option
-								.setName("message")
-								.setDescription(client.translate("administration/goodbye:MESSAGE"))
-								.setDescriptionLocalizations({
-									uk: client.translate("administration/goodbye:MESSAGE", null, "uk-UA"),
-									ru: client.translate("administration/goodbye:MESSAGE", null, "ru-RU"),
-								}),
-						),
+				.addSubcommand(
+					subcommand =>
+						subcommand
+							.setName("config")
+							.setDescription(client.translate("administration/goodbye:CONFIG"))
+							.setDescriptionLocalizations({
+								uk: client.translate("administration/goodbye:CONFIG", null, "uk-UA"),
+								ru: client.translate("administration/goodbye:CONFIG", null, "ru-RU"),
+							})
+							.addBooleanOption(option =>
+								option
+									.setName("state")
+									.setDescription(client.translate("common:STATE"))
+									.setDescriptionLocalizations({
+										uk: client.translate("common:STATE", null, "uk-UA"),
+										ru: client.translate("common:STATE", null, "ru-RU"),
+									})
+									.setRequired(true),
+							)
+							.addChannelOption(option =>
+								option
+									.setName("channel")
+									.setDescription(client.translate("common:CHANNEL"))
+									.setDescriptionLocalizations({
+										uk: client.translate("common:CHANNEL", null, "uk-UA"),
+										ru: client.translate("common:CHANNEL", null, "ru-RU"),
+									}),
+							)
+							.addStringOption(option =>
+								option
+									.setName("message")
+									.setDescription(client.translate("administration/goodbye:MESSAGE"))
+									.setDescriptionLocalizations({
+										uk: client.translate("administration/goodbye:MESSAGE", null, "uk-UA"),
+										ru: client.translate("administration/goodbye:MESSAGE", null, "ru-RU"),
+									}),
+							),
 					// .addBooleanOption(option =>
 					// 	option
 					// 		.setName("image")

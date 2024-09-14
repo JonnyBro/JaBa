@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	gamedig = require("gamedig");
 
@@ -16,7 +16,7 @@ class Minecraft extends BaseCommand {
 					uk: client.translate("general/minecraft:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/minecraft:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true)
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addStringOption(option =>
 					option
 						.setName("ip")

@@ -1,4 +1,4 @@
-const { ContextMenuCommandBuilder, ApplicationCommandType } = require("discord.js");
+const { ContextMenuCommandBuilder, ApplicationCommandType, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class AvatarContext extends BaseCommand {
@@ -11,7 +11,7 @@ class AvatarContext extends BaseCommand {
 			command: new ContextMenuCommandBuilder()
 				.setName("Get Avatar")
 				.setType(ApplicationCommandType.User)
-				.setDMPermission(false),
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,
 		});

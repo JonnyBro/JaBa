@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Eightball extends BaseCommand {
@@ -15,7 +15,7 @@ class Eightball extends BaseCommand {
 					uk: client.translate("fun/8ball:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("fun/8ball:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true)
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addStringOption(option =>
 					option
 						.setName("question")

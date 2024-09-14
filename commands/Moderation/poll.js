@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField, parseEmoji } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField, parseEmoji, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Poll extends BaseCommand {
@@ -15,7 +15,7 @@ class Poll extends BaseCommand {
 					uk: client.translate("moderation/poll:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("moderation/poll:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false)
+				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
 				.addStringOption(option =>
 					option

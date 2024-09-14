@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
@@ -16,7 +16,7 @@ class Dog extends BaseCommand {
 					uk: client.translate("fun/dog:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("fun/dog:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true),
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,
 		});

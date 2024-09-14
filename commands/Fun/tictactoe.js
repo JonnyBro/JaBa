@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	tictactoe = require("../../helpers/tictactoe");
 
@@ -16,7 +16,7 @@ class TicTacToe extends BaseCommand {
 					uk: client.translate("fun/tictactoe:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("fun/tictactoe:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false)
+				.setContexts([InteractionContextType.Guild, InteractionContextType.PrivateChannel])
 				.addUserOption(option =>
 					option
 						.setName("user")

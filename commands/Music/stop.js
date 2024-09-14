@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Stop extends BaseCommand {
@@ -15,7 +15,7 @@ class Stop extends BaseCommand {
 					uk: client.translate("music/stop:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("music/stop:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false),
+				.setContexts([InteractionContextType.PrivateChannel, InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,
 		});

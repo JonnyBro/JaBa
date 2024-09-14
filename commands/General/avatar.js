@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Avatar extends BaseCommand {
@@ -15,7 +15,7 @@ class Avatar extends BaseCommand {
 					uk: client.translate("general/avatar:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/avatar:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true)
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addUserOption(option =>
 					option
 						.setName("user")
@@ -45,8 +45,8 @@ class Avatar extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
-		const member = interaction.options.getMember("user") || interaction.member;
-		const avatarURL = interaction.options.getBoolean("server") ? member.displayAvatarURL({ size: 2048 }) : member.user.displayAvatarURL({ size: 2048 });
+		const user = interaction.options.getUser("user") || interaction.user;
+		const avatarURL = interaction.options.getBoolean("server") ? user.displayAvatarURL({ size: 2048 }) : user.avatarURL({ size: 2048 });
 		const embed = client.embed({ image: avatarURL });
 
 		interaction.reply({

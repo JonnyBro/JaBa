@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Pay extends BaseCommand {
@@ -15,7 +15,7 @@ class Pay extends BaseCommand {
 					uk: client.translate("economy/pay:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("economy/pay:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false)
+				.setContexts([InteractionContextType.Guild])
 				.addUserOption(option =>
 					option
 						.setName("user")

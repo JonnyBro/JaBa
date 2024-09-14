@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Eval extends BaseCommand {
@@ -15,7 +15,7 @@ class Eval extends BaseCommand {
 					uk: client.translate("owner/eval:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("owner/eval:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true)
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addStringOption(option =>
 					option
 						.setName("code")

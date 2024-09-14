@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Birthdate extends BaseCommand {
@@ -15,7 +15,7 @@ class Birthdate extends BaseCommand {
 					uk: client.translate("economy/birthdate:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("economy/birthdate:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(true)
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel])
 				.addIntegerOption(option =>
 					option
 						.setName("day")

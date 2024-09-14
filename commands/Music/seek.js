@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Seek extends BaseCommand {
@@ -15,6 +15,7 @@ class Seek extends BaseCommand {
 					uk: client.translate("music/seek:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("music/seek:DESCRIPTION", null, "ru-RU"),
 				})
+				.setContexts([InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addIntegerOption(option =>
 					option
 						.setName("time")

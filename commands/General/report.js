@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, parseEmoji } = require("discord.js");
+const { SlashCommandBuilder, parseEmoji, InteractionContextType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Report extends BaseCommand {
@@ -15,7 +15,7 @@ class Report extends BaseCommand {
 					uk: client.translate("general/report:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/report:DESCRIPTION", null, "ru-RU"),
 				})
-				.setDMPermission(false)
+				.setContexts([InteractionContextType.Guild])
 				.addUserOption(option =>
 					option
 						.setName("user")
