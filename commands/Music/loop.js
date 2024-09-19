@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionContextType } = require("discord.js"),
+const { SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js"),
 	{ QueueRepeatMode } = require("discord-player");
 const BaseCommand = require("../../base/BaseCommand");
 
@@ -16,6 +16,7 @@ class Loop extends BaseCommand {
 					uk: client.translate("music/loop:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("music/loop:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 				.setContexts([InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addStringOption(option =>
 					option

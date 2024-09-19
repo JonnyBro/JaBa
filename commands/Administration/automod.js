@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, ChannelType, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, ChannelType, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Automod extends BaseCommand {
@@ -15,6 +15,7 @@ class Automod extends BaseCommand {
 					uk: client.translate("administration/automod:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("administration/automod:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
 				.addSubcommand(subcommand =>

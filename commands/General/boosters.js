@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Boosters extends BaseCommand {
@@ -15,6 +15,7 @@ class Boosters extends BaseCommand {
 					uk: client.translate("general/boosters:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/boosters:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,

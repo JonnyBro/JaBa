@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Bank extends BaseCommand {
@@ -15,6 +15,7 @@ class Bank extends BaseCommand {
 					uk: client.translate("economy/bank:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("economy/bank:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.addStringOption(option =>
 					option

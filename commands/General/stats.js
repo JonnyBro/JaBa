@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, version: discordJsVersion, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, version: discordJsVersion, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Stats extends BaseCommand {
@@ -15,7 +15,17 @@ class Stats extends BaseCommand {
 					uk: client.translate("general/stats:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/stats:DESCRIPTION", null, "ru-RU"),
 				})
-				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild]),
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
+				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild])
+				.addBooleanOption(option =>
+					option
+						.setName("ephemeral")
+						.setDescription(client.translate("misc:EPHEMERAL_RESPONSE"))
+						.setDescriptionLocalizations({
+							uk: client.translate("misc:EPHEMERAL_RESPONSE", null, "uk-UA"),
+							ru: client.translate("misc:EPHEMERAL_RESPONSE", null, "ru-RU"),
+						}),
+				),
 			dirname: __dirname,
 			ownerOnly: false,
 		});
@@ -27,6 +37,8 @@ class Stats extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply({ ephemeral: interaction.options.getBoolean("ephemeral") || false });
+
 		const servers = client.guilds.cache.size;
 		let users = 0;
 		client.guilds.cache.forEach(g => {
@@ -88,7 +100,7 @@ class Stats extends BaseCommand {
 			],
 		});
 
-		interaction.reply({
+		interaction.editReply({
 			embeds: [embed],
 		});
 	}

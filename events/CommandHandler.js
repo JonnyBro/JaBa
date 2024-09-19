@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionType } = require("discord.js");
+const { InteractionType } = require("discord.js");
 const BaseEvent = require("../base/BaseEvent");
 
 class CommandHandler extends BaseEvent {

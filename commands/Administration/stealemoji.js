@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, parseEmoji, PermissionsBitField, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, parseEmoji, PermissionsBitField, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Stealemoji extends BaseCommand {
@@ -15,6 +15,7 @@ class Stealemoji extends BaseCommand {
 					uk: client.translate("administration/stealemoji:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("administration/stealemoji:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
 				.addStringOption(option =>

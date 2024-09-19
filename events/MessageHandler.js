@@ -108,7 +108,7 @@ class MessageCreate extends BaseEvent {
 			message.mentions.users.forEach(async u => {
 				const userData = await client.getUserData(u.id);
 
-				if (userData.afk) message.replyT("general/afk:IS_AFK", { user: u.getUsername(), reason: userData.afk }, { ephemeral: true });
+				if (userData.afk) message.replyT("general/afk:IS_AFK", { user: u.getUsername(), message: userData.afk }, { ephemeral: true });
 			});
 		}
 

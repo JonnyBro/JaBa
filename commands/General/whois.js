@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
@@ -16,6 +16,7 @@ class Whois extends BaseCommand {
 					uk: client.translate("general/whois:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/whois:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addStringOption(option =>
 					option
@@ -26,6 +27,15 @@ class Whois extends BaseCommand {
 							ru: client.translate("common:IP", null, "ru-RU"),
 						})
 						.setRequired(true),
+				)
+				.addBooleanOption(option =>
+					option
+						.setName("ephemeral")
+						.setDescription(client.translate("misc:EPHEMERAL_RESPONSE"))
+						.setDescriptionLocalizations({
+							uk: client.translate("misc:EPHEMERAL_RESPONSE", null, "uk-UA"),
+							ru: client.translate("misc:EPHEMERAL_RESPONSE", null, "ru-RU"),
+						}),
 				),
 			dirname: __dirname,
 			ownerOnly: false,
@@ -38,12 +48,12 @@ class Whois extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
-		await interaction.deferReply();
+		await interaction.deferReply({ ephemeral: interaction.options.getBoolean("ephemeral") || false });
 
 		const ip = interaction.options.getString("ip"),
 			whois = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,continent,continentCode,country,countryCode,region,regionName,city,zip,timezone,currency,isp,org,as,mobile,proxy,hosting,query`).then(response => response.json());
 
-		if (whois.status === "fail") return interaction.editReply({ content: interaction.translate("general/whois:ERROR", { ip }) });
+		if (whois.status === "fail") return interaction.error("general/whois:ERROR", { ip }, { edit: true });
 
 		const embed = client.embed({
 			title: interaction.translate("general/whois:INFO_ABOUT", {

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Ban extends BaseCommand {
@@ -15,6 +15,7 @@ class Ban extends BaseCommand {
 					uk: client.translate("moderation/untimeout:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("moderation/untimeout:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ModerateMembers)
 				.addUserOption(option =>

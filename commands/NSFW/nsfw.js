@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, AttachmentBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, AttachmentBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
@@ -16,6 +16,7 @@ class NSFW extends BaseCommand {
 					uk: client.translate("nsfw/nsfw:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("nsfw/nsfw:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,

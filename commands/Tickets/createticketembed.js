@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, ButtonBuilder, ButtonStyle, ActionRowBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, ButtonBuilder, ButtonStyle, ActionRowBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class CreateTicketEmbed extends BaseCommand {
@@ -15,6 +15,7 @@ class CreateTicketEmbed extends BaseCommand {
 					uk: client.translate("tickets/createticketembed:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("tickets/createticketembed:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild),
 			dirname: __dirname,

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	md5 = require("md5");
 
@@ -16,6 +16,7 @@ class Lovecalc extends BaseCommand {
 					uk: client.translate("fun/lovecalc:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("fun/lovecalc:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.addUserOption(option =>
 					option

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ChannelType, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, ChannelType, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Info extends BaseCommand {
@@ -15,6 +15,7 @@ class Info extends BaseCommand {
 					uk: client.translate("general/info:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/info:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.addSubcommand(subcommand =>
 					subcommand

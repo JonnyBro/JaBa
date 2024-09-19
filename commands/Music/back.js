@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Back extends BaseCommand {
@@ -15,6 +15,7 @@ class Back extends BaseCommand {
 					uk: client.translate("music/back:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("music/back:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 				.setContexts([InteractionContextType.PrivateChannel, InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,

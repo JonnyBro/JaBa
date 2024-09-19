@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, InteractionContextType } = require("discord.js"),
+const { SlashCommandBuilder, PermissionsBitField, InteractionContextType, ApplicationIntegrationType } = require("discord.js"),
 	{ QueryType } = require("discord-player");
 const BaseCommand = require("../../base/BaseCommand");
 
@@ -16,6 +16,7 @@ class Play extends BaseCommand {
 					uk: client.translate("music/play:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("music/play:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 				.setContexts([InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addStringOption(option =>
 					option

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Money extends BaseCommand {
@@ -15,6 +15,7 @@ class Money extends BaseCommand {
 					uk: client.translate("economy/money:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("economy/money:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.addUserOption(option =>
 					option
@@ -39,10 +40,9 @@ class Money extends BaseCommand {
 		await interaction.deferReply();
 
 		const member = interaction.options.getMember("user") || interaction.member;
-		if (member.user.bot) return interaction.error("economy/money:BOT_USER");
+		if (member.user.bot) return interaction.error("economy/money:BOT_USER", null, { edit: true });
 
 		const memberData = member.id === interaction.user.id ? interaction.data.member : await client.getMemberData(member.id, interaction.guildId);
-
 		const guilds = client.guilds.cache.filter(g => g.members.cache.find(m => m.id === member.id));
 
 		let globalMoney = 0;

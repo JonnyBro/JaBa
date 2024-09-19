@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Goodbye extends BaseCommand {
@@ -15,6 +15,7 @@ class Goodbye extends BaseCommand {
 					uk: client.translate("administration/goodbye:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("administration/goodbye:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
 				.addSubcommand(subcommand =>

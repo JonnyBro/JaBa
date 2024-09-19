@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, ActionRowBuilder, StringSelectMenuBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, ActionRowBuilder, StringSelectMenuBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Selectroles extends BaseCommand {
@@ -15,6 +15,7 @@ class Selectroles extends BaseCommand {
 					uk: client.translate("administration/selectroles:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("administration/selectroles:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
 				.addSubcommand(subcommand =>

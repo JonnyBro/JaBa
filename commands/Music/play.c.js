@@ -1,4 +1,4 @@
-const { ContextMenuCommandBuilder, ApplicationCommandType, PermissionsBitField, InteractionContextType } = require("discord.js");
+const { ContextMenuCommandBuilder, ApplicationCommandType, PermissionsBitField, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class PlayContext extends BaseCommand {
@@ -11,6 +11,7 @@ class PlayContext extends BaseCommand {
 			command: new ContextMenuCommandBuilder()
 				.setName("Add to Queue")
 				.setType(ApplicationCommandType.Message)
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 				.setContexts([InteractionContextType.PrivateChannel, InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,

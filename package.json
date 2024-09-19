@@ -1,6 +1,6 @@
 {
     "name": "jaba",
-    "version": "4.6.5",
+    "version": "4.6.6",
     "description": "My Discord Bot",
     "main": "index.js",
     "scripts": {
@@ -30,7 +30,7 @@
         "node-fetch": "^2.7.0"
     },
     "devDependencies": {
-        "eslint": "^9.10.0"
+        "eslint": "^8.57.1"
     },
     "eslintConfig": {
         "extends": "eslint:recommended",

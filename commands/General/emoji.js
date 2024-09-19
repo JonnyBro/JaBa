@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, parseEmoji, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, parseEmoji, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Emoji extends BaseCommand {
@@ -15,6 +15,7 @@ class Emoji extends BaseCommand {
 					uk: client.translate("general/emoji:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/emoji:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addStringOption(option =>
 					option
@@ -25,6 +26,15 @@ class Emoji extends BaseCommand {
 							ru: client.translate("common:EMOJI", null, "ru-RU"),
 						})
 						.setRequired(true),
+				)
+				.addBooleanOption(option =>
+					option
+						.setName("ephemeral")
+						.setDescription(client.translate("misc:EPHEMERAL_RESPONSE"))
+						.setDescriptionLocalizations({
+							uk: client.translate("misc:EPHEMERAL_RESPONSE", null, "uk-UA"),
+							ru: client.translate("misc:EPHEMERAL_RESPONSE", null, "ru-RU"),
+						}),
 				),
 			dirname: __dirname,
 			ownerOnly: false,
@@ -37,9 +47,10 @@ class Emoji extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply({ ephemeral: interaction.options.getBoolean("ephemeral") || false });
+
 		const rawEmoji = interaction.options.getString("emoji");
 		const parsedEmoji = parseEmoji(rawEmoji);
-
 		const embed = client.embed({
 			author: {
 				name: interaction.translate("general/emoji:TITLE", {
@@ -66,7 +77,7 @@ class Emoji extends BaseCommand {
 			],
 		});
 
-		interaction.reply({
+		interaction.editReply({
 			embeds: [embed],
 		});
 	}

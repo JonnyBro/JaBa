@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Birthdate extends BaseCommand {
@@ -15,6 +15,7 @@ class Birthdate extends BaseCommand {
 					uk: client.translate("economy/birthdate:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("economy/birthdate:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 				.setContexts([InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel])
 				.addIntegerOption(option =>
 					option
@@ -65,6 +66,15 @@ class Birthdate extends BaseCommand {
 							uk: client.translate("economy/birthdate:CLEAR", null, "uk-UA"),
 							ru: client.translate("economy/birthdate:CLEAR", null, "ru-RU"),
 						}),
+				)
+				.addBooleanOption(option =>
+					option
+						.setName("ephemeral")
+						.setDescription(client.translate("misc:EPHEMERAL_RESPONSE"))
+						.setDescriptionLocalizations({
+							uk: client.translate("misc:EPHEMERAL_RESPONSE", null, "uk-UA"),
+							ru: client.translate("misc:EPHEMERAL_RESPONSE", null, "ru-RU"),
+						}),
 				),
 			dirname: __dirname,
 			ownerOnly: false,
@@ -77,6 +87,8 @@ class Birthdate extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply({ ephemeral: interaction.options.getBoolean("ephemeral") || false });
+
 		const userData = interaction.data.user;
 
 		if (interaction.options.getBoolean("clear")) {
@@ -85,7 +97,7 @@ class Birthdate extends BaseCommand {
 
 			return interaction.success("economy/birthdate:SUCCESS", {
 				date: "none",
-			});
+			}, { edit: true });
 		}
 
 		const day = interaction.options.getInteger("day"),
@@ -97,9 +109,9 @@ class Birthdate extends BaseCommand {
 
 		const d = Math.floor(date.getTime() / 1000);
 
-		if (!(day == date.getDate() && month - 1 == date.getMonth() && year == date.getFullYear())) return interaction.error("economy/birthdate:INVALID_DATE");
-		if (date.getTime() > Date.now()) return interaction.error("economy/birthdate:DATE_TOO_HIGH");
-		if (date.getTime() < Date.now() - 2.523e12) return interaction.error("economy/birthdate:DATE_TOO_LOW");
+		if (!(day == date.getDate() && month - 1 == date.getMonth() && year == date.getFullYear())) return interaction.error("economy/birthdate:INVALID_DATE", null, { edit: true });
+		if (date.getTime() > Date.now()) return interaction.error("economy/birthdate:DATE_TOO_HIGH", null, { edit: true });
+		if (date.getTime() < Date.now() - 2.523e12) return interaction.error("economy/birthdate:DATE_TOO_LOW", null, { edit: true });
 
 		userData.birthdate = d;
 
@@ -107,7 +119,7 @@ class Birthdate extends BaseCommand {
 
 		interaction.success("economy/birthdate:SUCCESS", {
 			date: `<t:${d}:D>`,
-		});
+		}, { edit: true });
 	}
 }
 

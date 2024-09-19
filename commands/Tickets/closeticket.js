@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, ButtonBuilder, ButtonStyle, ActionRowBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, ButtonBuilder, ButtonStyle, ActionRowBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class CloseTicket extends BaseCommand {
@@ -15,6 +15,7 @@ class CloseTicket extends BaseCommand {
 					uk: client.translate("tickets/closeticket:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("tickets/closeticket:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages),
 			dirname: __dirname,

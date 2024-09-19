@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Avatar extends BaseCommand {
@@ -15,6 +15,7 @@ class Avatar extends BaseCommand {
 					uk: client.translate("general/avatar:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/avatar:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addUserOption(option =>
 					option
@@ -33,6 +34,15 @@ class Avatar extends BaseCommand {
 							uk: client.translate("general/avatar:SERVER", null, "uk-UA"),
 							ru: client.translate("general/avatar:SERVER", null, "ru-RU"),
 						}),
+				)
+				.addBooleanOption(option =>
+					option
+						.setName("ephemeral")
+						.setDescription(client.translate("misc:EPHEMERAL_RESPONSE"))
+						.setDescriptionLocalizations({
+							uk: client.translate("misc:EPHEMERAL_RESPONSE", null, "uk-UA"),
+							ru: client.translate("misc:EPHEMERAL_RESPONSE", null, "ru-RU"),
+						}),
 				),
 			dirname: __dirname,
 			ownerOnly: false,
@@ -45,11 +55,13 @@ class Avatar extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply({ ephemeral: interaction.options.getBoolean("ephemeral") || false });
+
 		const user = interaction.options.getUser("user") || interaction.user;
 		const avatarURL = interaction.options.getBoolean("server") ? user.displayAvatarURL({ size: 2048 }) : user.avatarURL({ size: 2048 });
 		const embed = client.embed({ image: avatarURL });
 
-		interaction.reply({
+		interaction.editReply({
 			embeds: [embed],
 		});
 	}

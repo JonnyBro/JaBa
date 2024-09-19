@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Debug extends BaseCommand {
@@ -15,6 +15,7 @@ class Debug extends BaseCommand {
 					uk: client.translate("owner/debug:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("owner/debug:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.addSubcommand(subcommand =>
 					subcommand

@@ -2,6 +2,5 @@
 	"DESCRIPTION": "Установить биографию",
 	"USAGE": "[text]",
 	"EXAMPLES": "setbio text:Меня зовут Жоня :shock:",
-	"MAX_CHARACTERS": "Ваша биография не должна превышать 150 символов",
 	"SUCCESS": "Ваша биография изменена"
 }

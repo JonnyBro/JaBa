@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Clear extends BaseCommand {
@@ -15,6 +15,7 @@ class Clear extends BaseCommand {
 					uk: client.translate("moderation/clear:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("moderation/clear:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
 				.addStringOption(option =>
@@ -117,7 +118,7 @@ class Clear extends BaseCommand {
 				}
 			});
 		} else {
-			if (isNaN(option) || parseInt(option) < 1) return interaction.error("misc:OPTION_NAN_ALL", null, { ephemeral: true });
+			if (isNaN(option) || parseInt(option) < 1) return interaction.error("misc:OPTION_NAN_ALL", null, { edit: true });
 
 			let messages = await interaction.channel.messages.fetch({ limit: option });
 

@@ -1,4 +1,4 @@
-const { ContextMenuCommandBuilder, ModalBuilder, ActionRowBuilder, TextInputBuilder, ApplicationCommandType, PermissionsBitField, TextInputStyle, InteractionContextType } = require("discord.js");
+const { ContextMenuCommandBuilder, ModalBuilder, ActionRowBuilder, TextInputBuilder, ApplicationCommandType, PermissionsBitField, TextInputStyle, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class WarnContext extends BaseCommand {
@@ -11,6 +11,7 @@ class WarnContext extends BaseCommand {
 			command: new ContextMenuCommandBuilder()
 				.setName("Give Warn")
 				.setType(ApplicationCommandType.User)
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages),
 			dirname: __dirname,
@@ -66,11 +67,6 @@ class WarnContext extends BaseCommand {
 
 		if (submitted) {
 			const reason = submitted.fields.getTextInputValue("warn_reason");
-
-			// const sanctions = memberData.sanctions.filter(s => s.type === "warn").length;
-			// const banCount = data.guildData.plugins.warnsSanctions.ban;
-			// const kickCount = data.guildData.plugins.warnsSanctions.kick;
-
 			const caseInfo = {
 				moderator: interaction.member.id,
 				date: Date.now(),
@@ -96,67 +92,6 @@ class WarnContext extends BaseCommand {
 					},
 				],
 			});
-
-			/*
-			if (banCount) {
-				if (sanctions >= banCount) {
-					member.send({
-						content: interaction.translate("moderation/ban:BANNED_DM", {
-							user: member.user,
-							moderator: interaction.user.getUsername(),
-							server: interaction.guild.name,
-							reason,
-						}),
-					});
-
-					caseInfo.type = "ban";
-
-					embed
-						.setAuthor({
-							name: interaction.translate("moderation/warn:BAN"),
-						})
-						.setColor(client.config.embed.color);
-
-					interaction.guild.members.ban(member).catch(() => {});
-
-					interaction.followUp({
-						content: interaction.translate("moderation/setwarns:AUTO_BAN", {
-							user: member.user.getUsername(),
-							count: `${banCount} ${client.functions.getNoun(banCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
-						}),
-					});
-				}
-			}
-
-			if (kickCount) {
-				if (sanctions >= kickCount) {
-					member.send({
-						content: interaction.translate("moderation/kick:KICKED_DM", {
-							user: member.user,
-							moderator: interaction.user.getUsername(),
-							server: interaction.guild.name,
-							reason,
-						}),
-					});
-
-					caseInfo.type = "kick";
-
-					embed
-						.setAuthor({
-							name: interaction.translate("moderation/warn:KICK"),
-						})
-						.setColor(client.config.embed.color);
-
-					member.kick().catch(() => {});
-
-					interaction.followUp({
-						content: interaction.translate("moderation/setwarns:AUTO_KICK", {
-							user: member.user.getUsername(),
-							count: `${kickCount} ${client.functions.getNoun(kickCount, interaction.translate("misc:NOUNS:WARNS:1"), interaction.translate("misc:NOUNS:WARNS:2"), interaction.translate("misc:NOUNS:WARNS:5"))}`,
-						}),
-					});
-				}
-			} */
 
 			try {
 				await member.send({

@@ -22,6 +22,7 @@ const { ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require(
  * oEmoji => (Emoji ID) String
  *
  * idleEmoji => (Emoji ID) String
+ * @returns {Promise<import("discord.js").User>}
  */
 async function tictactoe(interaction, options = {}) {
 	// eslint-disable-next-line no-async-promise-executor
@@ -256,8 +257,8 @@ async function tictactoe(interaction, options = {}) {
 
 						if (won["<:O_:863314110560993340>"] != false)
 							if (Args.user == 0) {
-								const wonner = await client.users.fetch(fighters[1]).catch(console.error);
-								resolve(wonner);
+								const won = await client.users.fetch(fighters[1]).catch(console.error);
+								resolve(won);
 
 								if (options.resultBtn === true)
 									return m
@@ -308,8 +309,8 @@ async function tictactoe(interaction, options = {}) {
 											m.react("⭕");
 										});
 							} else if (Args.user == 1) {
-								const wonner = await client.users.fetch(fighters[0]).catch(console.error);
-								resolve(wonner);
+								const won = await client.users.fetch(fighters[0]).catch(console.error);
+								resolve(won);
 
 								if (options.resultBtn === true)
 									return m
@@ -370,8 +371,8 @@ async function tictactoe(interaction, options = {}) {
 						if (Args.c1.emoji == x_emoji && Args.c2.emoji == x_emoji && Args.c3.emoji == x_emoji) won["<:X_:863314044781723668>"] = true;
 						if (won["<:X_:863314044781723668>"] != false)
 							if (Args.user == 0) {
-								const wonner = await client.users.fetch(fighters[1]).catch(console.error);
-								resolve(wonner);
+								const won = await client.users.fetch(fighters[1]).catch(console.error);
+								resolve(won);
 
 								if (options.resultBtn === true)
 									return m
@@ -420,8 +421,8 @@ async function tictactoe(interaction, options = {}) {
 											m.react("❌");
 										});
 							} else if (Args.user == 1) {
-								const wonner = await client.users.fetch(fighters[0]).catch(console.error);
-								resolve(wonner);
+								const won = await client.users.fetch(fighters[0]).catch(console.error);
+								resolve(won);
 
 								if (options.resultBtn === true)
 									return m

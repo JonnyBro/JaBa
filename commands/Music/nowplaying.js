@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, InteractionContextType } = require("discord.js"),
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js"),
 	{ QueueRepeatMode } = require("discord-player");
 const BaseCommand = require("../../base/BaseCommand");
 
@@ -16,6 +16,7 @@ class Nowplaying extends BaseCommand {
 					uk: client.translate("music/nowplaying:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("music/nowplaying:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 				.setContexts([InteractionContextType.PrivateChannel, InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	fetch = require("node-fetch");
 
@@ -16,6 +16,7 @@ class Courses extends BaseCommand {
 					uk: client.translate("beatrun_courses/courses:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("beatrun_courses/courses:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 				.setContexts([InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel])
 				.addStringOption(option =>
 					option
@@ -26,6 +27,15 @@ class Courses extends BaseCommand {
 							ru: client.translate("common:CODE", null, "ru-RU"),
 						})
 						.setRequired(true),
+				)
+				.addBooleanOption(option =>
+					option
+						.setName("ephemeral")
+						.setDescription(client.translate("misc:EPHEMERAL_RESPONSE"))
+						.setDescriptionLocalizations({
+							uk: client.translate("misc:EPHEMERAL_RESPONSE", null, "uk-UA"),
+							ru: client.translate("misc:EPHEMERAL_RESPONSE", null, "ru-RU"),
+						}),
 				),
 			dirname: __dirname,
 			ownerOnly: false,
@@ -39,7 +49,7 @@ class Courses extends BaseCommand {
 	 * @param {Object} data
 	 */
 	async execute(client, interaction) {
-		await interaction.deferReply();
+		await interaction.deferReply({ ephemeral: interaction.options.getBoolean("ephemeral") || false });
 
 		const code = interaction.options.getString("code");
 		const response = await fetch(`https://courses.jonnybro.ru/api/info/${code}`).then(res => res.json()),

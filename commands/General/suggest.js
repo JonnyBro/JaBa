@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, parseEmoji, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, parseEmoji, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Suggest extends BaseCommand {
@@ -15,6 +15,7 @@ class Suggest extends BaseCommand {
 					uk: client.translate("general/suggest:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("general/suggest:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 				.setContexts([InteractionContextType.Guild])
 				.addStringOption(option =>
 					option

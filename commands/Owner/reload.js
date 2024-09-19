@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionContextType } = require("discord.js");
+const { SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
 	i18next = require("i18next");
 // autoUpdateDocs = require("../../helpers/autoUpdateDocs");
@@ -17,6 +17,7 @@ class Reload extends BaseCommand {
 					uk: client.translate("owner/reload:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("owner/reload:DESCRIPTION", null, "ru-RU"),
 				})
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 				.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild])
 				.addStringOption(option =>
 					option
@@ -40,6 +41,8 @@ class Reload extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		const command = interaction.options.getString("command"),
 			cmd = client.commands.get(command);
 		if (!cmd) return interaction.error("owner/reload:NOT_FOUND", { command }, { ephemeral: true });
@@ -53,7 +56,7 @@ class Reload extends BaseCommand {
 
 		interaction.success("owner/reload:SUCCESS", {
 			command: cmd.command.name,
-		}, { ephemeral: true });
+		}, { edit: true });
 	}
 
 	/**
