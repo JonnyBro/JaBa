@@ -18,7 +18,7 @@ class GuildDelete extends BaseEvent {
 			const embed = client.embed({
 				author: {
 					name: guild.name,
-					iconURL: guild.iconURL(),
+					iconURL: guild.iconURL() || client.user.avatarURL(),
 				},
 				description: `Left from guild **${guild.name}**.`,
 			});

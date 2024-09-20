@@ -48,7 +48,7 @@ class GuildCreate extends BaseEvent {
 			const embed = client.embed({
 				author: {
 					name: guild.name,
-					iconURL: guild.iconURL(),
+					iconURL: guild.iconURL() || client.user.avatarURL(),
 				},
 				description: `Joined a new guild **${guild.name}**. It has **${users}** ${client.functions.getNoun(users, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))} and **${bots}** ${client.functions.getNoun(bots, client.translate("misc:NOUNS:BOTS:1"), client.translate("misc:NOUNS:BOTS:2"), client.translate("misc:NOUNS:BOTS:5"))}`,
 			});
