@@ -11,8 +11,8 @@ class PlayContext extends BaseCommand {
 			command: new ContextMenuCommandBuilder()
 				.setName("Add to Queue")
 				.setType(ApplicationCommandType.Message)
-				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
-				.setContexts([InteractionContextType.PrivateChannel, InteractionContextType.Guild]),
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
+				.setContexts([InteractionContextType.Guild]),
 			dirname: __dirname,
 			ownerOnly: false,
 		});

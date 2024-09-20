@@ -15,8 +15,8 @@ class Skip extends BaseCommand {
 					uk: client.translate("music/skip:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("music/skip:DESCRIPTION", null, "ru-RU"),
 				})
-				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
-				.setContexts([InteractionContextType.PrivateChannel, InteractionContextType.Guild])
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
+				.setContexts([InteractionContextType.Guild])
 				.addIntegerOption(option =>
 					option
 						.setName("position")

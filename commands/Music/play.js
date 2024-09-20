@@ -16,8 +16,8 @@ class Play extends BaseCommand {
 					uk: client.translate("music/play:DESCRIPTION", null, "uk-UA"),
 					ru: client.translate("music/play:DESCRIPTION", null, "ru-RU"),
 				})
-				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
-				.setContexts([InteractionContextType.PrivateChannel, InteractionContextType.Guild])
+				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
+				.setContexts([InteractionContextType.Guild])
 				.addStringOption(option =>
 					option
 						.setName("query")
