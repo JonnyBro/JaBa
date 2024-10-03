@@ -23,7 +23,7 @@ class guildBanAdd extends BaseEvent {
 		});
 
 		try {
-			ban.user.send({
+			await ban.user.send({
 				embeds: [embed],
 			});
 		} catch (e) { /**/ }

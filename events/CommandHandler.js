@@ -10,16 +10,15 @@ class CommandHandler extends BaseEvent {
 	}
 
 	/**
-	 *
+	 * Handles command interaction events.
 	 * @param {import("../base/Client")} client
 	 * @param {import("discord.js").CommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
 		const command = client.commands.get(interaction.commandName);
+		if (!command) return interaction.reply({ content: "Command not found!", ephemeral: true });
 
-		const data = [];
-
-		data.user = await client.getUserData(interaction.user.id);
+		const data = { user: await client.getUserData(interaction.user.id) };
 
 		if (interaction.inGuild()) {
 			data.guild = await client.getGuildData(interaction.guildId);
@@ -30,44 +29,39 @@ class CommandHandler extends BaseEvent {
 
 		if (interaction.isButton() && interaction.customId === "quote_delete" && interaction.message.deletable) return interaction.message.delete();
 		if (interaction.isAutocomplete()) return await command.autocompleteRun(client, interaction);
+		if (interaction.type !== InteractionType.ApplicationCommand || !interaction.isCommand()) return;
 
-		if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isCommand()) return;
+		// IAT Guild Command Check
+		if (command?.dirname.includes("IAT") && interaction.guildId !== "1039187019957555252")
+			return interaction.reply({ content: "IAT only", ephemeral: true });
 
-		if (command?.dirname.includes("IAT") && interaction.guildId !== "1039187019957555252") return interaction.reply({ content: "IAT only", ephemeral: true });
-		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { ephemeral: true });
+		// Owner-only command check
+		if (command.ownerOnly && interaction.user.id !== client.config.owner.id)
+			return interaction.error("misc:OWNER_ONLY", null, { ephemeral: true });
 
-		if (!interaction.data.user.achievements.firstCommand.achieved) {
-			const args = {
-				content: interaction.user.toString(),
-				files: [
-					{
-						name: "achievement_unlocked2.png",
-						attachment: "./assets/img/achievements/achievement_unlocked2.png",
-					},
-				],
-			};
-
-			interaction.data.user.achievements.firstCommand.progress.now = 1;
-			interaction.data.user.achievements.firstCommand.achieved = true;
+		// First command achievement check
+		const { firstCommand } = interaction.data.user.achievements;
+		if (!firstCommand.achieved) {
+			firstCommand.progress.now = 1;
+			firstCommand.achieved = true;
 
 			await interaction.data.user.save();
 
+			const achievementMessage = {
+				content: interaction.user.toString(),
+				files: [{ name: "achievement_unlocked2.png", attachment: "./assets/img/achievements/achievement_unlocked2.png" }],
+			};
+
 			try {
-				interaction.user.send(args);
-			} catch (e) { /**/ }
+				await interaction.user.send(achievementMessage);
+			} catch (e) {
+				client.logger.warn("Failed to send achievement message to user:", e);
+			}
 		}
 
-		client.logger.cmd(
-			`[${interaction.guild ? interaction.guild.name : "DM/Private Channel"}]: [${interaction.user.getUsername()}] => /${command.command.name}${
-				interaction.options.data.length > 0
-					? `, args: [${interaction.options.data
-						.map(arg => {
-							return `${arg.name}: ${arg.value}`;
-						})
-						.join(", ")}]`
-					: ""
-			}`,
-		);
+		// Command logging
+		const args = interaction.options.data.map(arg => `${arg.name}: ${arg.value}`).join(", ");
+		client.logger.cmd(`[${interaction.guild ? interaction.guild.name : "DM/Private Channel"}]: [${interaction.user.tag}] => /${command.command.name}${args ? `, args: [${args}]` : ""}`);
 
 		return command.execute(client, interaction);
 	}

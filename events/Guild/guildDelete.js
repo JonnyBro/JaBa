@@ -23,9 +23,13 @@ class GuildDelete extends BaseEvent {
 				description: `Left from guild **${guild.name}**.`,
 			});
 
-			client.channels.cache.get(client.config.support.logs).send({
-				embeds: [embed],
-			});
+			const logChannel = client.channels.cache.get(client.config.support.logs);
+
+			if (logChannel)
+				await logChannel.send({
+					embeds: [embed],
+				});
+			else client.logger.warn(`Log channel not found for guild deletion: ${guild.name}`);
 		}
 	}
 }

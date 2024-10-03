@@ -108,12 +108,10 @@ module.exports.load = async client => {
 					const user = req.session?.user;
 					const username = (user?.discriminator === "0" ? user?.username : user?.tag) || "Guest";
 
-					const hiddenGuildMembersCount = client.guilds.cache.get("568120814776614924").memberCount;
 					let users = 0;
 					client.guilds.cache.forEach(g => {
 						users += g.memberCount;
 					});
-					users = users - hiddenGuildMembersCount;
 
 					const cards = [
 						{

@@ -15,9 +15,7 @@ class messageUpdate extends BaseEvent {
 	 * @param {import("discord.js").Message} newMessage The message after the update
 	 */
 	async execute(client, oldMessage, newMessage) {
-		if (oldMessage.guild && oldMessage.guildId === "568120814776614924") return;
 		if (oldMessage.author.bot) return;
-
 		if (oldMessage.content === newMessage.content) return;
 
 		const guildData = newMessage.data.guild;
@@ -29,12 +27,17 @@ class messageUpdate extends BaseEvent {
 					iconURL: newMessage.author.displayAvatarURL(),
 				},
 				title: newMessage.translate("misc:MONITORING:UPDATE:TITLE", { user: newMessage.author.getUsername() }),
-				description: newMessage.translate("misc:MONITORING:UPDATE:DESCRIPTION", { oldContent: oldMessage.content, newContent: newMessage.content, url: newMessage.url }),
+				description: newMessage.translate("misc:MONITORING:UPDATE:DESCRIPTION", {
+					oldContent: oldMessage.content,
+					newContent: newMessage.content,
+					url: newMessage.url,
+				}),
 			});
 
-			newMessage.guild.channels.cache.get(guildData.plugins.monitoring.messageUpdate).send({
-				embeds: [embed],
-			});
+			const monitoringChannelId = guildData.plugins.monitoring.messageUpdate;
+			const monitoringChannel = newMessage.guild.channels.cache.get(monitoringChannelId);
+
+			if (monitoringChannel) await monitoringChannel.send({ embeds: [embed] });
 		}
 	}
 }

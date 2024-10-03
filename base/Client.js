@@ -103,10 +103,10 @@ class JaBaClient extends Client {
 		mongoose
 			.connect(this.config.mongoDB)
 			.then(() => {
-				this.logger.log("Connected to the Mongodb database.");
+				this.logger.log("Connected to the MongoDB database.");
 			})
 			.catch(err => {
-				this.logger.error(`Unable to connect to the Mongodb database.\nError: ${err}`);
+				this.logger.error(`Unable to connect to the MongoDB database.\nError: ${err}`);
 			});
 
 		this.login(this.config.token);
@@ -115,9 +115,8 @@ class JaBaClient extends Client {
 	/**
 	 * Loads all the commands from the specified directory and registers them with the Discord API.
 	 *
-	 * This method is responsible for dynamically loading all the command files from the specified directory,
-	 * creating instances of the corresponding command classes, and registering the commands with the Discord API.
-	 * It also handles any additional setup or initialization required by the loaded commands.
+	 * This method dynamically loads all command files from the specified directory,
+	 * creates instances of the corresponding command classes, and registers them with the Discord API.
 	 *
 	 * @param {string} dir - The directory path where the command files are located.
 	 * @returns {Promise<void>} A Promise that resolves when all the commands have been loaded and registered.
@@ -125,43 +124,119 @@ class JaBaClient extends Client {
 	async loadCommands(dir) {
 		const rest = new REST().setToken(this.config.token),
 			filePath = path.join(__dirname, dir),
-			folders = (await fs.readdir(filePath)).map(file => path.join(filePath, file)).filter(async path => (await fs.lstat(path)).isDirectory());
+			folders = (await fs.readdir(filePath)).map(file => path.join(filePath, file));
 
 		const commands = [];
-		for (let index = 0; index < folders.length; index++) {
-			const folder = folders[index];
-
-			if (folder.endsWith("!DISABLED")) continue;
-
+		for (const folder of folders) {
 			const files = await fs.readdir(folder);
 
-			for (let index = 0; index < files.length; index++) {
-				const file = files[index];
+			for (const file of files) {
+				if (!file.endsWith(".js")) continue;
 
-				if (file.endsWith(".js")) {
-					const Command = require(path.join(folder, file));
+				const Command = require(path.join(folder, file));
 
-					if (Command.prototype instanceof BaseCommand) {
-						const command = new Command(this);
-						this.commands.set(command.command.name, command);
+				if (!(Command.prototype instanceof BaseCommand)) continue;
 
-						if (command.onLoad && typeof command.onLoad === "function") await command.onLoad(this);
+				const command = new Command(this);
+				this.commands.set(command.command.name, command);
 
-						commands.push(command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder ? command.command.toJSON() : command.command);
+				if (typeof command.onLoad === "function") await command.onLoad(this);
 
-						this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
-					}
-				}
+				commands.push(command.command instanceof SlashCommandBuilder || command.command instanceof ContextMenuCommandBuilder ? command.command.toJSON() : command.command);
+
+				this.logger.log(`Successfully loaded "${file}" command. (Command: ${command.command.name})`);
 			}
 		}
 
 		try {
-			if (this.config.production) await rest.put(Routes.applicationCommands(this.config.userId), { body: commands });
-			else await rest.put(Routes.applicationGuildCommands(this.config.userId, this.config.support.id), { body: commands });
+			const route = this.config.production ? Routes.applicationCommands(this.config.userId) : Routes.applicationGuildCommands(this.config.userId, this.config.support.id);
+
+			await rest.put(route, { body: commands });
 
 			this.logger.log("Successfully registered application commands.");
 		} catch (err) {
-			console.log(err);
+			this.logger.error("Error registering application commands:", err);
+		}
+	}
+
+	/**
+	 * Loads a command from the specified directory and file.
+	 * @param {string} dir - The directory containing the command file.
+	 * @param {string} file - The name of the command file (without the .js extension).
+	 * @returns {Promise<void>} This method does not return a value.
+	 */
+	async loadCommand(dir, file) {
+		try {
+			const Command = require(path.join(dir, `${file}.js`));
+
+			if (!(Command.prototype instanceof BaseCommand)) {
+				return this.logger.error(`Tried to load a non-command file: "${file}.js"`);
+			}
+
+			const command = new Command(this);
+			this.commands.set(command.command.name, command);
+
+			if (typeof command.onLoad === "function") await command.onLoad(this);
+
+			this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
+		} catch (error) {
+			this.logger.error(`Error loading command "${file}":`, error);
+		}
+	}
+
+	/**
+	 * Unloads a command from the specified directory and file.
+	 * @param {string} dir - The directory containing the command file.
+	 * @param {string} name - The name of the command file (without the .js extension).
+	 * @returns {void} This method does not return a value.
+	 */
+	unloadCommand(dir, name) {
+		delete require.cache[require.resolve(`${dir}${path.sep}${name}.js`)];
+
+		return;
+	}
+
+	/**
+	 * Loads all event files from the specified directory and its subdirectories.
+	 * @param {string} dir - The directory containing the event files.
+	 * @returns {Promise<void>} This method does not return a value.
+	 */
+	async loadEvents(dir) {
+		const filePath = path.join(__dirname, dir);
+		const files = await fs.readdir(filePath);
+
+		for (const file of files) {
+			const fullPath = path.join(filePath, file);
+			const stat = await fs.lstat(fullPath);
+
+			if (stat.isDirectory()) {
+				await this.loadEvents(path.join(dir, file));
+				continue;
+			}
+
+			if (file.endsWith(".js")) {
+				try {
+					const Event = require(fullPath);
+
+					if (!(Event.prototype instanceof BaseEvent)) {
+						this.logger.error(`"${file}" is not a valid event file.`);
+						continue;
+					}
+
+					const event = new Event();
+
+					if (!event.name || !event.name.length) {
+						this.logger.error(`Cannot load "${file}" event: Event name is missing!`);
+						continue;
+					}
+
+					event.once ? this.once(event.name, event.execute.bind(event, this)) : this.on(event.name, event.execute.bind(event, this));
+
+					this.logger.log(`Successfully loaded "${file}" event. (Event: ${event.name})`);
+				} catch (error) {
+					this.logger.error(`Error loading event "${file}":`, error);
+				}
+			}
 		}
 	}
 
@@ -195,37 +270,24 @@ class JaBaClient extends Client {
 	 * @param {Object[]} [data.fields] - An array of field objects for the embed.
 	 * @param {string} [data.image] - The URL of the image for the embed.
 	 * @param {string} [data.url] - The URL to be used as the embed's hyperlink.
-	 * @param {string} [data.color] - The HEX color of the embed's border. If not provided, the default color from the client's configuration will be used.
-	 * @param {string} [data.footer] - The text to be displayed as the embed's footer. If not provided, the default footer from the client's configuration will be used.
-	 * @param {Date} [data.timestamp] - The timestamp to be displayed in the embed's footer. If not provided, the current timestamp will be used.
-	 * @param {string|Object} [data.author] - The author information for the embed. Can be a string (name) or an object with `name` and/or `iconURL` properties.
+	 * @param {string} [data.color] - The HEX color of the embed's border.
+	 * @param {string|Object} [data.footer] - The text to be displayed as the embed's footer.
+	 * @param {Date} [data.timestamp] - The timestamp to be displayed in the embed.
+	 * @param {string|Object} [data.author] - The author information for the embed.
 	 * @returns {EmbedBuilder} The generated EmbedBuilder instance.
 	 */
 	embed(data) {
 		const embed = new EmbedBuilder()
-			.setTitle(data.title || null)
-			.setDescription(data.description || null)
-			.setThumbnail(data.thumbnail || null)
-			.addFields(data.fields || [])
-			.setImage(data.image || null)
-			.setURL(data.url || null);
-
-		if (data.color) embed.setColor(data.color);
-		else if (data.color === null) embed.setColor(null);
-		else embed.setColor(this.config.embed.color);
-
-		if (data.footer) embed.setFooter(data.footer);
-		else if (data.footer === null) embed.setFooter(null);
-		else embed.setFooter(this.config.embed.footer);
-
-		if (data.timestamp) embed.setTimestamp(data.timestamp);
-		else if (data.timestamp === null) embed.setTimestamp(null);
-		else embed.setTimestamp();
-
-		if (!data.author || data.author === null) embed.setAuthor(null);
-		else if (typeof data.author === "string") embed.setAuthor({ name: data.author, iconURL: this.user.avatarURL() });
-		else if (typeof data.author === "object" && (data.author.iconURL !== null || data.author.iconURL !== undefined)) embed.setAuthor({ name: data.author.name, iconURL: data.author.iconURL });
-		else embed.setAuthor(data.author);
+			.setTitle(data.title ?? null)
+			.setDescription(data.description ?? null)
+			.setThumbnail(data.thumbnail ?? null)
+			.addFields(data.fields ?? [])
+			.setImage(data.image ?? null)
+			.setURL(data.url ?? null)
+			.setColor(data.color ?? this.config.embed.color)
+			.setFooter(typeof data.footer === "object" ? data.footer : data.footer ? { text: data.footer } : this.config.embed.footer)
+			.setTimestamp(data.timestamp ?? null)
+			.setAuthor(typeof data.author === "string" ? { name: data.author, iconURL: this.user.avatarURL() } : data.author ?? null);
 
 		return embed;
 	}
@@ -244,65 +306,6 @@ class JaBaClient extends Client {
 	}
 
 	/**
-	 * Loads a command from the specified directory and file.
-	 * @param {string} dir - The directory containing the command file.
-	 * @param {string} file - The name of the command file (without the .js extension).
-	 * @returns {Promise<string>} A log message indicating the successful loading of the command.
-	 */
-	async loadCommand(dir, file) {
-		const Command = require(path.join(dir, `${file}.js`));
-		if (!(Command.prototype instanceof BaseCommand)) return this.logger.error("Tried to load a non-command file!");
-
-		const command = new Command(this);
-		this.commands.set(command.command.name, command);
-
-		if (command.onLoad && typeof command.onLoad === "function") await command.onLoad(this);
-
-		return this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
-	}
-
-	/**
-	 * Unloads a command from the specified directory and file.
-	 * @param {string} dir - The directory containing the command file.
-	 * @param {string} name - The name of the command file (without the .js extension).
-	 * @returns {void} This method does not return a value.
-	 */
-	unloadCommand(dir, name) {
-		delete require.cache[require.resolve(`${dir}${path.sep}${name}.js`)];
-
-		return;
-	}
-
-	/**
-	 * Loads all event files from the specified directory and its subdirectories.
-	 * @param {string} dir - The directory containing the event files.
-	 * @returns {void} This method does not return a value.
-	 */
-	async loadEvents(dir) {
-		const filePath = path.join(__dirname, dir);
-		const files = await fs.readdir(filePath);
-
-		for (let index = 0; index < files.length; index++) {
-			const file = files[index];
-			const stat = await fs.lstat(path.join(filePath, file));
-			if (stat.isDirectory()) this.loadEvents(path.join(dir, file));
-
-			if (file.endsWith(".js")) {
-				const Event = require(path.join(filePath, file));
-
-				if (Event.prototype instanceof BaseEvent) {
-					const event = new Event();
-					if (!event.name || !event.name.length) return console.error(`Cannot load "${file}" event file: Event name is not set!`);
-					if (event.once) this.once(event.name, event.execute.bind(event, this));
-					else this.on(event.name, event.execute.bind(event, this));
-
-					this.logger.log(`Successfully loaded "${file}" event file. (Event: ${event.name})`);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Returns a User data from the database.
 	 * @param {string} userID - The ID of the user to find or create.
 	 * @returns {Promise<import("./User")>} The user data object, either retrieved from the database or newly created.
@@ -310,19 +313,14 @@ class JaBaClient extends Client {
 	async getUserData(userID) {
 		let userData = await this.usersData.findOne({ id: userID });
 
-		if (userData) {
-			this.databaseCache.users.set(userID, userData);
-
-			return userData;
-		} else {
+		if (!userData) {
 			userData = new this.usersData({ id: userID });
-
 			await userData.save();
-
-			this.databaseCache.users.set(userID, userData);
-
-			return userData;
 		}
+
+		this.databaseCache.users.set(userID, userData);
+
+		return userData;
 	}
 
 	/**
@@ -334,27 +332,19 @@ class JaBaClient extends Client {
 	async getMemberData(memberId, guildId) {
 		let memberData = await this.membersData.findOne({ guildID: guildId, id: memberId });
 
-		if (memberData) {
-			this.databaseCache.members.set(`${memberId}${guildId}`, memberData);
-
-			return memberData;
-		} else {
+		if (!memberData) {
 			memberData = new this.membersData({ id: memberId, guildID: guildId });
-
 			await memberData.save();
 
 			const guildData = await this.getGuildData(guildId);
-
 			if (guildData) {
 				guildData.members.push(memberData._id);
-
 				await guildData.save();
 			}
-
-			this.databaseCache.members.set(`${memberId}/${guildId}`, memberData);
-
-			return memberData;
 		}
+
+		this.databaseCache.members.set(`${memberId}/${guildId}`, memberData);
+		return memberData;
 	}
 
 	/**
@@ -365,19 +355,14 @@ class JaBaClient extends Client {
 	async getGuildData(guildId) {
 		let guildData = await this.guildsData.findOne({ id: guildId }).populate("members");
 
-		if (guildData) {
-			this.databaseCache.guilds.set(guildId, guildData);
-
-			return guildData;
-		} else {
+		if (!guildData) {
 			guildData = new this.guildsData({ id: guildId });
-
 			await guildData.save();
-
-			this.databaseCache.guilds.set(guildId, guildData);
-
-			return guildData;
 		}
+
+		this.databaseCache.guilds.set(guildId, guildData);
+
+		return guildData;
 	}
 }
 

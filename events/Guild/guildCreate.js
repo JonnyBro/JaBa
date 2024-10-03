@@ -23,23 +23,25 @@ class GuildCreate extends BaseEvent {
 			await userData.save();
 		}
 
-		const thanks = client.embed({
+		const embed = client.embed({
 			author: "Thanks for inviting me to your server!",
-			description: "Use </help:1029832476077596773> in your server to get list of all commands!.",
+			description: "Use </help:1029832476077596773> in your server to get a list of all commands!",
 		});
 
 		try {
 			const owner = await guild.fetchOwner();
-			owner.send({
+			await owner.send({
 				files: [
 					{
 						name: "unlocked.png",
 						attachment: "./assets/img/achievements/achievement_unlocked7.png",
 					},
 				],
-				embeds: [thanks],
+				embeds: [embed],
 			});
-		} catch (e) { /**/ }
+		} catch (e) {
+			client.logger.error(`Failed to send welcome message to guild owner: ${e.message}`);
+		}
 
 		if (client.config.support.logs) {
 			const users = guild.members.cache.filter(m => !m.user.bot).size;
@@ -50,12 +52,20 @@ class GuildCreate extends BaseEvent {
 					name: guild.name,
 					iconURL: guild.iconURL() || client.user.avatarURL(),
 				},
-				description: `Joined a new guild **${guild.name}**. It has **${users}** ${client.functions.getNoun(users, client.translate("misc:NOUNS:USERS:1"), client.translate("misc:NOUNS:USERS:2"), client.translate("misc:NOUNS:USERS:5"))} and **${bots}** ${client.functions.getNoun(bots, client.translate("misc:NOUNS:BOTS:1"), client.translate("misc:NOUNS:BOTS:2"), client.translate("misc:NOUNS:BOTS:5"))}`,
+				description: `Joined a new guild **${guild.name}**. It has **${users}** ${client.functions.getNoun(
+					users,
+					client.translate("misc:NOUNS:USERS:1"),
+					client.translate("misc:NOUNS:USERS:2"),
+					client.translate("misc:NOUNS:USERS:5"),
+				)} and **${bots}** ${client.functions.getNoun(bots, client.translate("misc:NOUNS:BOTS:1"), client.translate("misc:NOUNS:BOTS:2"), client.translate("misc:NOUNS:BOTS:5"))}.`,
 			});
 
-			client.channels.cache.get(client.config.support.logs).send({
-				embeds: [embed],
-			});
+			const logChannel = client.channels.cache.get(client.config.support.logs);
+
+			if (logChannel)
+				await logChannel.send({
+					embeds: [embed],
+				});
 		}
 	}
 }

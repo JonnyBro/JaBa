@@ -8,15 +8,16 @@ class Ready extends BaseEvent {
 			once: false,
 		});
 	}
+
 	/**
 	 *
 	 * @param {import("../base/Client")} client
 	 */
 	async execute(client) {
 		const commands = [...new Map(client.commands.map(v => [v.constructor.name, v])).values()];
-
 		let servers = client.guilds.cache.size;
 		let users = 0;
+
 		client.guilds.cache.forEach(g => {
 			users += g.memberCount;
 		});
@@ -31,7 +32,6 @@ class Ready extends BaseEvent {
 
 		client.logger.ready(`Loaded a total of ${commands.length} command(s).`);
 		client.logger.ready(`${client.user.getUsername()}, ready to serve ${users} members in ${servers} servers.`);
-
 		console.timeEnd("botReady");
 
 		const version = require("../package.json").version;
@@ -44,9 +44,10 @@ class Ready extends BaseEvent {
 		];
 
 		let i = 0;
-		setInterval(() => {
-			servers = client.guilds.fetch().then(g => g.size);
+		setInterval(async () => {
+			servers = (await client.guilds.fetch()).size;
 			users = 0;
+
 			client.guilds.cache.forEach(g => {
 				users += g.memberCount;
 			});
@@ -57,8 +58,7 @@ class Ready extends BaseEvent {
 				state: `${status[i]} | v${version}`,
 			});
 
-			if (status[i + 1]) i++;
-			else i = 0;
+			i = (i + 1) % status.length; // Wrap around to the start when reaching the end
 		}, 30 * 1000); // Every 30 seconds
 	}
 }

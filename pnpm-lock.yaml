@@ -53,6 +53,9 @@ importers:
       i18next-fs-backend:
         specifier: ^1.2.0
         version: 1.2.0
+      markdown-table:
+        specifier: ^2.0.0
+        version: 2.0.0
       md5:
         specifier: ^2.3.0
         version: 2.3.0
@@ -845,6 +848,9 @@ packages:
     resolution: {integrity: sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==}
     engines: {node: '>=8'}
 
+  markdown-table@2.0.0:
+    resolution: {integrity: sha512-Ezda85ToJUBhM6WGaG6veasyym+Tbs3cMAw/ZhOPqXiYsr0jgocBV3j3nx+4lk47plLlIqjwuTm/ywVI+zjJ/A==}
+
   md5@2.3.0:
     resolution: {integrity: sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==}
 
@@ -1076,6 +1082,10 @@ packages:
 
   regenerator-runtime@0.14.1:
     resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
+
+  repeat-string@1.6.1:
+    resolution: {integrity: sha512-PV0dzCYDNfRi1jCDbJzpW7jNNDRuCOG/jI5ctQcGKt/clZD+YcPS3yIlWuTJMmESC8aevCFmWJy5wjAFgNqN6w==}
+    engines: {node: '>=0.10'}
 
   resolve-alpn@1.2.1:
     resolution: {integrity: sha512-0a1F4l73/ZFZOakJnQ3FvkJ2+gSTQWz/r2KE5OdDY0TxPm5h4GkqkWWfM47T7HsbnOtcJVEF4epCVy6u7Q3K+g==}
@@ -2216,6 +2226,10 @@ snapshots:
     dependencies:
       semver: 6.3.1
 
+  markdown-table@2.0.0:
+    dependencies:
+      repeat-string: 1.6.1
+
   md5@2.3.0:
     dependencies:
       charenc: 0.0.2
@@ -2424,6 +2438,8 @@ snapshots:
       readable-stream: 3.6.2
 
   regenerator-runtime@0.14.1: {}
+
+  repeat-string@1.6.1: {}
 
   resolve-alpn@1.2.1: {}
 

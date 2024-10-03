@@ -14,7 +14,6 @@ class messageDelete extends BaseEvent {
 	 * @param {import("discord.js").Message} message The deleted message
 	 */
 	async execute(client, message) {
-		if (message.guild && message.guildId === "568120814776614924") return;
 		if (message.author.bot) return;
 
 		const guildData = message.data.guild;
@@ -26,12 +25,17 @@ class messageDelete extends BaseEvent {
 					iconURL: message.author.displayAvatarURL(),
 				},
 				title: message.translate("misc:MONITORING:DELETE:TITLE", { user: message.author.getUsername() }),
-				description: message.translate("misc:MONITORING:DELETE:DESCRIPTION", { content: message.content, channel: message.channel.toString(), time: `<t:${Math.floor(message.createdTimestamp / 1000)}:f>` }),
+				description: message.translate("misc:MONITORING:DELETE:DESCRIPTION", {
+					content: message.content,
+					channel: message.channel.toString(),
+					time: `<t:${Math.floor(message.createdTimestamp / 1000)}:f>`,
+				}),
 			});
 
-			message.guild.channels.cache.get(guildData.plugins.monitoring.messageDelete).send({
-				embeds: [embed],
-			});
+			const monitoringChannelId = guildData.plugins.monitoring.messageDelete;
+			const monitoringChannel = message.guild.channels.cache.get(monitoringChannelId);
+
+			if (monitoringChannel) await monitoringChannel.send({ embeds: [embed] });
 		}
 	}
 }

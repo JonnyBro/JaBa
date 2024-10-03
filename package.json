@@ -23,6 +23,7 @@
         "gamedig": "^4.1.0",
         "i18next": "^21.10.0",
         "i18next-fs-backend": "^1.2.0",
+        "markdown-table": "^2.0.0",
         "md5": "^2.3.0",
         "moment": "^2.29.4",
         "mongoose": "^7.6.3",
