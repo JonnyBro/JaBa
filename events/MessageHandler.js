@@ -45,62 +45,53 @@ class MessageCreate extends BaseEvent {
 	async handleGuildMessage(client, message) {
 		await updateXp(message);
 
-		if (this.isLinkQuote(message)) await this.handleLinkQuote(client, message);
+		if (message.content.match(/(https|http):\/\/(ptb\.|canary\.)?(discord.com)\/(channels)\/\d+\/\d+\/\d+/g)) await this.handleLinkQuote(client, message);
 		if (message.data.guild.plugins.automod.enabled && !message.data.guild.plugins.automod.ignored.includes(message.channelId)) await this.checkAutomod(message);
 
 		await this.checkAfkStatus(client, message);
 		await this.checkMentionedUsersAfk(client, message);
 	}
 
-	isLinkQuote(message) {
-		return /(https?:\/\/(ptb\.|canary\.)?(discord\.com)\/channels\/\d+\/\d+)/g.test(message.content);
-	}
-
 	async handleLinkQuote(client, message) {
-		const link = message.content.match(/(https?:\/\/(ptb\.|canary\.)?(discord\.com)\/channels\/\d+\/\d+)/g)[0];
+		const link = message.content.match(/(https|http):\/\/(ptb\.|canary\.)?(discord.com)\/(channels)\/\d+\/\d+\/\d+/g)[0];
 		const ids = link.match(/\d+/g);
 		const channelId = ids[1];
 		const messageId = ids[2];
 
 		try {
 			const msg = await message.guild.channels.cache.get(channelId).messages.fetch(messageId);
-			const embed = this.createQuoteEmbed(client, msg, message);
+			const embed = client.embed({
+				author: {
+					name: message.translate("misc:QUOTE_TITLE", { user: msg.author.getUsername() }),
+					iconURL: "https://wynem.com/assets/images/icons/quote.webp",
+				},
+				thumbnail: msg.author.displayAvatarURL(),
+				footer: message.translate("misc:QUOTE_FOOTER", { user: message.author.getUsername() }),
+				timestamp: msg.createdTimestamp,
+			});
+
+			if (msg.content) embed.addFields([{ name: message.translate("misc:QUOTE_CONTENT"), value: msg.content }]);
+			if (msg.attachments.size > 0) {
+				if (msg.attachments.find(a => a.contentType.includes("image/")))
+					embed.setImage(msg.attachments.find(a => a.contentType.includes("image/")).url);
+
+				embed.addFields([
+					{
+						name: message.translate("misc:QUOTE_ATTACHED"),
+						value: msg.attachments.map(a => `[${a.name}](${a.url})`).join(", "),
+					},
+				]);
+			}
+
 			const row = new ActionRowBuilder().addComponents(
-				new ButtonBuilder().setLabel("Jump").setStyle(ButtonStyle.Link).setURL(msg.url),
+				new ButtonBuilder().setLabel(message.translate("misc:QUOTE_JUMP")).setStyle(ButtonStyle.Link).setURL(msg.url),
 				new ButtonBuilder().setCustomId("quote_delete").setEmoji("1273665480451948544").setStyle(ButtonStyle.Danger),
 			);
 
 			await message.reply({ embeds: [embed], components: [row] });
 		} catch (error) {
-			client.logger.error("Failed to fetch quoted message:", error);
+			console.log(error);
 		}
-	}
-
-	createQuoteEmbed(client, msg, message) {
-		const embed = client.embed({
-			author: {
-				name: message.translate("misc:QUOTE_TITLE", { user: msg.author.getUsername() }),
-				iconURL: "https://wynem.com/assets/images/icons/quote.webp",
-			},
-			thumbnail: msg.author.displayAvatarURL(),
-			footer: message.translate("misc:QUOTE_FOOTER"),
-			timestamp: msg.createdTimestamp,
-		});
-
-		if (msg.content) embed.addFields([{ name: message.translate("misc:QUOTE_CONTENT"), value: msg.content }]);
-		if (msg.attachments.size > 0) {
-			const images = msg.attachments.filter(a => a.contentType.includes("image/"));
-			if (images.size > 0) embed.setImage(images.first().url);
-
-			embed.addFields([
-				{
-					name: message.translate("misc:QUOTE_ATTACHED"),
-					value: msg.attachments.map(a => `[${a.name}](${a.url})`).join(", "),
-				},
-			]);
-		}
-
-		return embed;
 	}
 
 	async checkAutomod(message) {
