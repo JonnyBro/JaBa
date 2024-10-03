@@ -137,8 +137,6 @@ class MessageCreate extends BaseEvent {
  */
 async function updateXp(message) {
 	const memberData = message.data.member;
-	let level = parseInt(memberData.level),
-		exp = parseInt(memberData.exp);
 	const isInCooldown = xpCooldown[message.author.id];
 
 	if (isInCooldown && isInCooldown > Date.now()) return;
@@ -147,16 +145,16 @@ async function updateXp(message) {
 	xpCooldown[message.author.id] = toWait;
 
 	const won = message.client.functions.randomNum(1, 2);
-	const newXp = exp + won;
-	const neededXp = 5 * level ** 2 + 80 * level + 100;
+	const newXp = memberData.exp + won;
+	const neededXp = 5 * memberData.level ** 2 + 80 * memberData.level + 100;
 
 	if (newXp > neededXp) {
-		level += 1;
-		exp = 0;
+		memberData.level += 1;
+		memberData.exp = 0;
 
-		message.replyT("misc:LEVEL_UP", { level: level }, { mention: false });
+		message.replyT("misc:LEVEL_UP", { level: memberData.level }, { mention: false });
 	} else {
-		exp = newXp;
+		memberData.exp = newXp;
 	}
 
 	await memberData.save();
