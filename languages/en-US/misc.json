@@ -41,7 +41,7 @@
 
 	"MONITORING": {
 		"DELETE": {
-			"TITLE": "{{user}} deleted a message!",
+			"TITLE": "{{user}}'s message was deleted!",
 			"DESCRIPTION": "Message content was: ```{{content}}```\nChannel: {{channel}}\nTime created: {{time}}"
 		},
 		"UPDATE": {

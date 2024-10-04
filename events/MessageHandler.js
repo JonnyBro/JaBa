@@ -34,7 +34,7 @@ class MessageCreate extends BaseEvent {
 		if (message.guild) {
 			await this.updateXp(message);
 
-			if (message.content.match(/(https|http):\/\/(ptb\.|canary\.)?(discord.com)\/(channels)\/\d+\/\d+\/\d+/g)) await this.handleLinkQuote(client, message);
+			if (message.content.match(/(https|http):\/\/(ptb\.|canary\.)?(discord.com)\/(channels)\/\d+\/\d+\/\d+/g)) return await this.handleLinkQuote(client, message);
 			if (message.data.guild.plugins.automod.enabled && !message.data.guild.plugins.automod.ignored.includes(message.channelId)) await this.checkAutomod(message);
 
 			await this.checkAfkStatus(client, message);
