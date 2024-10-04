@@ -15,6 +15,8 @@ class CommandHandler extends BaseEvent {
 	 * @param {import("discord.js").CommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
+		if (interaction.isButton() && interaction.customId === "quote_delete" && interaction.message.deletable) return interaction.message.delete();
+
 		const command = client.commands.get(interaction.commandName);
 		if (!command) return interaction.reply({ content: "Command not found!", ephemeral: true });
 
@@ -27,7 +29,6 @@ class CommandHandler extends BaseEvent {
 
 		interaction.data = data;
 
-		if (interaction.isButton() && interaction.customId === "quote_delete" && interaction.message.deletable) return interaction.message.delete();
 		if (interaction.isAutocomplete()) return await command.autocompleteRun(client, interaction);
 		if (interaction.type !== InteractionType.ApplicationCommand || !interaction.isCommand()) return;
 
@@ -47,13 +48,13 @@ class CommandHandler extends BaseEvent {
 
 			await interaction.data.user.save();
 
-			const achievementMessage = {
+			const message = {
 				content: interaction.user.toString(),
 				files: [{ name: "achievement_unlocked2.png", attachment: "./assets/img/achievements/achievement_unlocked2.png" }],
 			};
 
 			try {
-				await interaction.user.send(achievementMessage);
+				await interaction.user.send(message);
 			} catch (e) {
 				client.logger.warn("Failed to send achievement message to user:", e);
 			}
