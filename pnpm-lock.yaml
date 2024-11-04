@@ -21,8 +21,8 @@ importers:
         specifier: ^0.17.0
         version: 0.17.0(@discordjs/opus@0.9.0)
       '@napi-rs/canvas':
-        specifier: ^0.1.56
-        version: 0.1.56
+        specifier: ^0.1.59
+        version: 0.1.59
       chalk:
         specifier: ^4.1.2
         version: 4.1.2
@@ -30,8 +30,8 @@ importers:
         specifier: ^2.4.4
         version: 2.4.4
       discord-api-types:
-        specifier: ^0.37.101
-        version: 0.37.101
+        specifier: ^0.37.103
+        version: 0.37.103
       discord-giveaways:
         specifier: ^6.0.1
         version: 6.0.1(discord.js@14.16.3)
@@ -39,8 +39,8 @@ importers:
         specifier: ^6.7.1
         version: 6.7.1(@discord-player/extractor@4.5.1)(@discordjs/opus@0.9.0)
       discord-player-youtubei:
-        specifier: 1.3.2
-        version: 1.3.2
+        specifier: 1.3.4
+        version: 1.3.4
       discord.js:
         specifier: ^14.16.3
         version: 14.16.3
@@ -178,62 +178,62 @@ packages:
   '@mongodb-js/saslprep@1.1.9':
     resolution: {integrity: sha512-tVkljjeEaAhCqTzajSdgbQ6gE6f3oneVwa3iXR6csiEwXXOFsiC6Uh9iAjAhXPtqa/XMDHWjjeNH/77m/Yq2dw==}
 
-  '@napi-rs/canvas-android-arm64@0.1.56':
-    resolution: {integrity: sha512-xBGqW2RZMAupkzar9t3gpbok9r524f3Wlk4PG2qnQdxbsiEND06OB8VxVtTcql6R02uJpXJGnyIhN02Te+GMVQ==}
+  '@napi-rs/canvas-android-arm64@0.1.59':
+    resolution: {integrity: sha512-p4rRL9KIDz57Z+gKLpemX36DB7fVVHmY4DtesMGrnjx4gSBUM2M7LNzbzf4o3oPZGDiHMY0vnvNHR4dKfszNeg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [android]
 
-  '@napi-rs/canvas-darwin-arm64@0.1.56':
-    resolution: {integrity: sha512-Pvuz6Ib9YZTB5MlGL9WSu9a2asUC0DZ1zBHozDiBXr/6Zurs9l/ZH5NxFYTM829BpkdkO8kuI8b8Rz7ek30zzQ==}
+  '@napi-rs/canvas-darwin-arm64@0.1.59':
+    resolution: {integrity: sha512-+8s06WxcM9ilv9PVOl57hvasbwKWMfrrNAYknqMPCn4jpc4XDcLbrM5LTZGhhptlv9jQ9DmHfZ978/xInsMYXw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@napi-rs/canvas-darwin-x64@0.1.56':
-    resolution: {integrity: sha512-O393jWt7G6rg0X1ralbsbBeskSG0iwlkD7mEHhMLJxqRqe+eQn0/xnwhs9l6dUNFC+5dM8LOvfFca4o9Vs2Vww==}
+  '@napi-rs/canvas-darwin-x64@0.1.59':
+    resolution: {integrity: sha512-6kziJHjXdxduYK2L2uuwjEIYoPJednKq+C81MCm3fPobXE4HBKs0JGXwq3GkWNe340U340vmagwXiFi6muEy+g==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@napi-rs/canvas-linux-arm-gnueabihf@0.1.56':
-    resolution: {integrity: sha512-30NFb5lrF3YEwAO5XuATxpWDSXaBAgaFVswPJ+hYcAUyE3IkPPIFRY4ijQEh4frcSBvrzFGGYdNSoC18oLLWaQ==}
+  '@napi-rs/canvas-linux-arm-gnueabihf@0.1.59':
+    resolution: {integrity: sha512-eCkyS7jojNmaUPaVFdNjAyS0R3isrJtUfRf1vRP6K50GRuHso3vwQRbZBPKM71qHdjPDylfaQc5H6/M7epyD+w==}
     engines: {node: '>= 10'}
     cpu: [arm]
     os: [linux]
 
-  '@napi-rs/canvas-linux-arm64-gnu@0.1.56':
-    resolution: {integrity: sha512-ODbWH9TLvba+39UxFwPn2Hm1ImALmWOZ0pEv5do/pz0439326Oz49hlfGot4KmkSBeKK81knWxRj9EXMSPwXPg==}
+  '@napi-rs/canvas-linux-arm64-gnu@0.1.59':
+    resolution: {integrity: sha512-1u4++lbsolP1MAPViuDoZmgmDLKlV0iJnlHN2dfwgbu3t53P0l3jIT1oCIAiWil0OlrWtDF24JbY7LUUGH5aHg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@napi-rs/canvas-linux-arm64-musl@0.1.56':
-    resolution: {integrity: sha512-zqE4nz8CWiJJ0q5By7q9CDPicNkc0oyErgavK3ZV279zJL7Aapd3cIqayT6ynECArg7GgBl2WYSvr5AaRFmYgg==}
+  '@napi-rs/canvas-linux-arm64-musl@0.1.59':
+    resolution: {integrity: sha512-eqevZ2kWPxeAnvhxl7U5tf6AiMnhlO4w2Hci79WQkfeirqQG6RRM4Jnxbh9iO3jkAnnOXmM4r+S3UrOcfIx1Rg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@napi-rs/canvas-linux-x64-gnu@0.1.56':
-    resolution: {integrity: sha512-JTnGAtJBQMhfSpN8/rbMnf5oxuO/juUNa0n4LA0LlW0JS9UBpmsS2BwFNCakFqOeAPaqIM6sFFsK3M4hve+Esw==}
+  '@napi-rs/canvas-linux-x64-gnu@0.1.59':
+    resolution: {integrity: sha512-F+T63RnLt0qYUXhbOpaome3vIWLW4xoQRmhTnkKDzOtBSnKVP7sCM6E5/5tByOFCR3fTj4ksMeeHy8zJScEExA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@napi-rs/canvas-linux-x64-musl@0.1.56':
-    resolution: {integrity: sha512-mpws7DhVDIj8ZKa/qcnUVLAm0fxD9RK5ojfNNSI9TOzn2E0f+GUXx8sGsCxDpMVMtN+mtyrMwRqH3F3rTUMWXw==}
+  '@napi-rs/canvas-linux-x64-musl@0.1.59':
+    resolution: {integrity: sha512-HhUgpTGQUR2VRslEC5Idf6s0hhamJiVlEh2k3AG9XXOwX6fg0xXkqm84DPiOCLzsO5bqtJEo+rh03BUSDcf53g==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@napi-rs/canvas-win32-x64-msvc@0.1.56':
-    resolution: {integrity: sha512-VKAAkgXF+lbFvRFawPOtkfV/P7ogAgWTu5FMCIiBn0Gc3vnkKFG2cLo/IHIJ7FuriToKEidkJGT88iAh7W7GDA==}
+  '@napi-rs/canvas-win32-x64-msvc@0.1.59':
+    resolution: {integrity: sha512-bYMiZJsKPkU7HEoYI5E0alOSV1EkaigY4VEgGHPK9W/qGMmNFsxdbURQqa5h3zbhZTK5QRSdYYqowcTEYVIlug==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
 
-  '@napi-rs/canvas@0.1.56':
-    resolution: {integrity: sha512-SujSchzG6lLc/wT+Mwxam/w30Kk2sFTiU6bLFcidecKSmlhenAhGMQhZh2iGFfKoh2+8iit0jrt99n6TqReICQ==}
+  '@napi-rs/canvas@0.1.59':
+    resolution: {integrity: sha512-3vUtQ8DzYcz9xy86UUe8OfDiXNuuLB9zFAUs5N/I2GpkY/MWBJ2M7w5FqH380oC44IzYOWaOMLWCPfNZBsbBww==}
     engines: {node: '>= 10'}
 
   '@nodelib/fs.scandir@2.1.5':
@@ -356,6 +356,9 @@ packages:
 
   barse@0.4.3:
     resolution: {integrity: sha512-UEpvriJqAn8zuVinYICuKoPttZy3XxXEoqX/V2uYAL4zzJRuNzCK3+20nAu3YUIa2U7G53kf90wfBIp9/A+Odw==}
+
+  bgutils-js@3.1.0:
+    resolution: {integrity: sha512-2S80c/B4OQFubJLD5ddRRp74utrvjA70x9U0RsIVK7gJaDnaPrbw+bnXWxnEnc0euLznmO9jxOtTTC7FxGmv6w==}
 
   boolbase@1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
@@ -482,8 +485,8 @@ packages:
   discord-api-types@0.37.100:
     resolution: {integrity: sha512-a8zvUI0GYYwDtScfRd/TtaNBDTXwP5DiDVX7K5OmE+DRT57gBqKnwtOC5Ol8z0mRW8KQfETIgiB8U0YZ9NXiCA==}
 
-  discord-api-types@0.37.101:
-    resolution: {integrity: sha512-2wizd94t7G3A8U5Phr3AiuL4gSvhqistDwWnlk1VLTit8BI1jWUncFqFQNdPbHqS3661+Nx/iEyIwtVjPuBP3w==}
+  discord-api-types@0.37.103:
+    resolution: {integrity: sha512-r+qitxXKe2l6KFw5odPdZSSqdEou+7eNC7BfbZ7mny5Me/K06wCTeKUMVeH/YsI9+4QQudskeQ307kr/7ppQ1A==}
 
   discord-api-types@0.37.83:
     resolution: {integrity: sha512-urGGYeWtWNYMKnYlZnOnDHm8fVRffQs3U0SpE8RHeiuLKb/u92APS8HoQnPTFbnXmY1vVnXjXO4dOxcAn3J+DA==}
@@ -497,8 +500,8 @@ packages:
     peerDependencies:
       discord.js: '>=14.0.0'
 
-  discord-player-youtubei@1.3.2:
-    resolution: {integrity: sha512-NtKtLiR9HMYfTDXYvBeQCE+k3eegjB+ttaBq7gYdldIghBZ4fYHb0ERsAcY6lN4bQyAq0DaPFRIRbyk9Pi0TSg==}
+  discord-player-youtubei@1.3.4:
+    resolution: {integrity: sha512-8CHI32h7BR+9wX2gMfpnnmbkhfERzelOQtLJ285ZUMP9pfg2iBdzJZAFk6oecHzEtPQhe/fv9qZukiy1C97LVQ==}
     hasBin: true
 
   discord-player@6.7.1:
@@ -688,6 +691,10 @@ packages:
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
+  happy-dom@15.8.3:
+    resolution: {integrity: sha512-YR9nUWN/T2bH7pPLEYMhTp4DQExPH+mC4KulJDgimCb+FY3Er0Vp6SOOcBXrNfMTri3lAk9uSZqUTG2hgZOYwg==}
+    engines: {node: '>=18.0.0'}
+
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
@@ -783,8 +790,8 @@ packages:
   isomorphic-unfetch@4.0.2:
     resolution: {integrity: sha512-1Yd+CF/7al18/N2BDbsLBcp6RO3tucSW+jcLq24dqdX5MNbCNTw1z4BsGsp4zNmjr/Izm2cs/cEqZPp4kvWSCA==}
 
-  jintr@2.1.1:
-    resolution: {integrity: sha512-89cwX4ouogeDGOBsEVsVYsnWWvWjchmwXBB4kiBhmjOKw19FiOKhNhMhpxhTlK2ctl7DS+d/ethfmuBpzoNNgA==}
+  jintr@3.0.2:
+    resolution: {integrity: sha512-5g2EBudeJFOopjAX4exAv5OCCW1DgUISfoioCsm1h9Q9HJ41LmnZ6J52PCsqBlQihsmp0VDuxreAVzM7yk5nFA==}
 
   js-yaml@4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
@@ -1266,6 +1273,10 @@ packages:
     resolution: {integrity: sha512-U8uCCl2x9TK3WANvmBavymRzxbfFYG+tAu+fgx3zxQy3qdagQqBLwJVrdyO1TBfUXvfKveMKJZhpvUYoOjM+4g==}
     engines: {node: '>=18.17'}
 
+  undici@6.20.1:
+    resolution: {integrity: sha512-AjQF1QsmqfJys+LXfGTNum+qw4S88CojRInG/6t31W/1fk6G59s92bnAvGz5Cmur+kQv2SURXEvvudLmbrE8QA==}
+    engines: {node: '>=18.17'}
+
   unfetch@5.0.0:
     resolution: {integrity: sha512-3xM2c89siXg0nHvlmYsQ2zkLASvVMBisZm5lF3gFDqfF2xonNStDJyMpvaOBe0a1Edxmqrf2E0HBdmy9QyZaeg==}
 
@@ -1287,6 +1298,10 @@ packages:
 
   webidl-conversions@7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
+    engines: {node: '>=12'}
+
+  whatwg-mimetype@3.0.0:
+    resolution: {integrity: sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==}
     engines: {node: '>=12'}
 
   whatwg-url@11.0.0:
@@ -1341,8 +1356,8 @@ packages:
   youtube-sr@4.3.11:
     resolution: {integrity: sha512-3oHiS2x7PpMiDRW7Cq8nz1bkAIBOJHoOwkPl/oncM/+A9/3xxMDgMLGW2dsBEP1DHFyRXYTVABgfbdwHF8sXXQ==}
 
-  youtubei.js@10.5.0:
-    resolution: {integrity: sha512-iyA+VF28c15tCCKH9ExM2RKC3zYiHzA/eixGlJ3vERANkuI+xYKzAZ4vtOhmyqwrAddu88R/DkzEsmpph5NWjg==}
+  youtubei.js@11.0.1:
+    resolution: {integrity: sha512-ZsbOd+5XF2Ofi3FrLMfYd+f9g9H8xswlouFhjhOqbwT68dMJtX6CRGsHNj5VTFCR/+L/865x1lnUlllB2dDDTA==}
 
 snapshots:
 
@@ -1502,44 +1517,44 @@ snapshots:
       sparse-bitfield: 3.0.3
     optional: true
 
-  '@napi-rs/canvas-android-arm64@0.1.56':
+  '@napi-rs/canvas-android-arm64@0.1.59':
     optional: true
 
-  '@napi-rs/canvas-darwin-arm64@0.1.56':
+  '@napi-rs/canvas-darwin-arm64@0.1.59':
     optional: true
 
-  '@napi-rs/canvas-darwin-x64@0.1.56':
+  '@napi-rs/canvas-darwin-x64@0.1.59':
     optional: true
 
-  '@napi-rs/canvas-linux-arm-gnueabihf@0.1.56':
+  '@napi-rs/canvas-linux-arm-gnueabihf@0.1.59':
     optional: true
 
-  '@napi-rs/canvas-linux-arm64-gnu@0.1.56':
+  '@napi-rs/canvas-linux-arm64-gnu@0.1.59':
     optional: true
 
-  '@napi-rs/canvas-linux-arm64-musl@0.1.56':
+  '@napi-rs/canvas-linux-arm64-musl@0.1.59':
     optional: true
 
-  '@napi-rs/canvas-linux-x64-gnu@0.1.56':
+  '@napi-rs/canvas-linux-x64-gnu@0.1.59':
     optional: true
 
-  '@napi-rs/canvas-linux-x64-musl@0.1.56':
+  '@napi-rs/canvas-linux-x64-musl@0.1.59':
     optional: true
 
-  '@napi-rs/canvas-win32-x64-msvc@0.1.56':
+  '@napi-rs/canvas-win32-x64-msvc@0.1.59':
     optional: true
 
-  '@napi-rs/canvas@0.1.56':
+  '@napi-rs/canvas@0.1.59':
     optionalDependencies:
-      '@napi-rs/canvas-android-arm64': 0.1.56
-      '@napi-rs/canvas-darwin-arm64': 0.1.56
-      '@napi-rs/canvas-darwin-x64': 0.1.56
-      '@napi-rs/canvas-linux-arm-gnueabihf': 0.1.56
-      '@napi-rs/canvas-linux-arm64-gnu': 0.1.56
-      '@napi-rs/canvas-linux-arm64-musl': 0.1.56
-      '@napi-rs/canvas-linux-x64-gnu': 0.1.56
-      '@napi-rs/canvas-linux-x64-musl': 0.1.56
-      '@napi-rs/canvas-win32-x64-msvc': 0.1.56
+      '@napi-rs/canvas-android-arm64': 0.1.59
+      '@napi-rs/canvas-darwin-arm64': 0.1.59
+      '@napi-rs/canvas-darwin-x64': 0.1.59
+      '@napi-rs/canvas-linux-arm-gnueabihf': 0.1.59
+      '@napi-rs/canvas-linux-arm64-gnu': 0.1.59
+      '@napi-rs/canvas-linux-arm64-musl': 0.1.59
+      '@napi-rs/canvas-linux-x64-gnu': 0.1.59
+      '@napi-rs/canvas-linux-x64-musl': 0.1.59
+      '@napi-rs/canvas-win32-x64-msvc': 0.1.59
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -1653,6 +1668,8 @@ snapshots:
   barse@0.4.3:
     dependencies:
       readable-stream: 1.0.34
+
+  bgutils-js@3.1.0: {}
 
   boolbase@1.0.0: {}
 
@@ -1777,7 +1794,7 @@ snapshots:
 
   discord-api-types@0.37.100: {}
 
-  discord-api-types@0.37.101: {}
+  discord-api-types@0.37.103: {}
 
   discord-api-types@0.37.83: {}
 
@@ -1789,10 +1806,13 @@ snapshots:
       discord.js: 14.16.3
       serialize-javascript: 6.0.2
 
-  discord-player-youtubei@1.3.2:
+  discord-player-youtubei@1.3.4:
     dependencies:
+      bgutils-js: 3.1.0
+      happy-dom: 15.8.3
       tiny-typed-emitter: 2.1.0
-      youtubei.js: 10.5.0
+      undici: 6.20.1
+      youtubei.js: 11.0.1
 
   discord-player@6.7.1(@discord-player/extractor@4.5.1)(@discordjs/opus@0.9.0):
     dependencies:
@@ -1816,7 +1836,7 @@ snapshots:
       '@discord-player/ffmpeg': 0.1.0
       '@discord-player/opus': 0.1.2
       '@types/ws': 8.5.12
-      discord-api-types: 0.37.101
+      discord-api-types: 0.37.103
       prism-media: 1.3.5(@discordjs/opus@0.9.0)
       tslib: 2.7.0
       ws: 8.18.0
@@ -2094,6 +2114,12 @@ snapshots:
 
   graphemer@1.4.0: {}
 
+  happy-dom@15.8.3:
+    dependencies:
+      entities: 4.5.0
+      webidl-conversions: 7.0.0
+      whatwg-mimetype: 3.0.0
+
   has-flag@4.0.0: {}
 
   has-unicode@2.0.1: {}
@@ -2179,7 +2205,7 @@ snapshots:
       node-fetch: 3.3.2
       unfetch: 5.0.0
 
-  jintr@2.1.1:
+  jintr@3.0.2:
     dependencies:
       acorn: 8.12.1
 
@@ -2610,6 +2636,8 @@ snapshots:
 
   undici@6.19.8: {}
 
+  undici@6.20.1: {}
+
   unfetch@5.0.0: {}
 
   uri-js@4.4.1:
@@ -2625,6 +2653,8 @@ snapshots:
   webidl-conversions@3.0.1: {}
 
   webidl-conversions@7.0.0: {}
+
+  whatwg-mimetype@3.0.0: {}
 
   whatwg-url@11.0.0:
     dependencies:
@@ -2663,9 +2693,9 @@ snapshots:
 
   youtube-sr@4.3.11: {}
 
-  youtubei.js@10.5.0:
+  youtubei.js@11.0.1:
     dependencies:
       '@bufbuild/protobuf': 2.1.0
-      jintr: 2.1.1
+      jintr: 3.0.2
       tslib: 2.7.0
       undici: 5.28.4

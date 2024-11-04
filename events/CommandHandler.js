@@ -18,7 +18,7 @@ class CommandHandler extends BaseEvent {
 		if (interaction.isButton() && interaction.customId === "quote_delete" && interaction.message.deletable) return interaction.message.delete();
 
 		const command = client.commands.get(interaction.commandName);
-		if (!command) return interaction.reply({ content: "Command not found!", ephemeral: true });
+		if (!command) return;
 
 		const data = { user: await client.getUserData(interaction.user.id) };
 

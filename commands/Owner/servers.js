@@ -31,7 +31,7 @@ class Servers extends BaseCommand {
 		await interaction.deferReply({ ephemeral: true });
 
 		let currentPage = 0;
-		const embeds = generateServersEmbeds(interaction, client.guilds.cache);
+		const embeds = generateGuildsEmbeds(interaction, client.guilds.cache);
 
 		const row = new ActionRowBuilder().addComponents(
 			new ButtonBuilder().setCustomId("servers_prev_page").setStyle(ButtonStyle.Primary).setEmoji("⬅️"),
@@ -94,15 +94,15 @@ class Servers extends BaseCommand {
 /**
  *
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
- * @param {Array} servers
+ * @param {Array[import("discord.js").Guild]} guilds
  * @returns
  */
-function generateServersEmbeds(interaction, servers) {
+function generateGuildsEmbeds(interaction, guilds) {
 	const embeds = [];
 	let k = 10;
 
-	for (let i = 0; i < servers.size; i += 10) {
-		const current = servers
+	for (let i = 0; i < guilds.size; i += 10) {
+		const current = guilds
 			.sort((a, b) => b.memberCount - a.memberCount)
 			.map(g => g)
 			.slice(i, k);
@@ -111,9 +111,9 @@ function generateServersEmbeds(interaction, servers) {
 
 		const info = current
 			.map(
-				server =>
-					`${++j}. ${server.name} | ${server.memberCount} ${interaction.client.functions.getNoun(
-						server.memberCount,
+				guild =>
+					`${++j}. ${guild.name} (${guild.id}) | ${guild.memberCount} ${interaction.client.functions.getNoun(
+						guild.memberCount,
 						interaction.translate("misc:NOUNS:MEMBERS:1"),
 						interaction.translate("misc:NOUNS:MEMBERS:2"),
 						interaction.translate("misc:NOUNS:MEMBERS:5"),
