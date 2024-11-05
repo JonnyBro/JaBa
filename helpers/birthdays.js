@@ -27,7 +27,7 @@ module.exports.init = async client => {
 							// Check if the user is in the guild
 							if (!guild.members.cache.has(user.id)) continue;
 
-							const userDate = new Date(user.birthdate * 1000);
+							const userDate = user.birthdate > 9999999999 ? new Date(user.birthdate * 1000) : new Date(user.birthdate);
 							const day = userDate.getDate();
 							const month = userDate.getMonth() + 1;
 							const year = userDate.getFullYear();
