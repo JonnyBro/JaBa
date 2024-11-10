@@ -37,15 +37,6 @@ class Remindme extends BaseCommand {
 							ru: client.translate("common:MESSAGE", null, "ru-RU"),
 						})
 						.setRequired(true),
-				)
-				.addBooleanOption(option =>
-					option
-						.setName("ephemeral")
-						.setDescription(client.translate("misc:EPHEMERAL_RESPONSE"))
-						.setDescriptionLocalizations({
-							uk: client.translate("misc:EPHEMERAL_RESPONSE", null, "uk-UA"),
-							ru: client.translate("misc:EPHEMERAL_RESPONSE", null, "ru-RU"),
-						}),
 				),
 			dirname: __dirname,
 			ownerOnly: false,
@@ -58,7 +49,7 @@ class Remindme extends BaseCommand {
 	 * @param {import("discord.js").ChatInputCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
-		await interaction.deferReply({ ephemeral: interaction.options.getBoolean("ephemeral") || false });
+		await interaction.deferReply({ ephemeral: true });
 
 		const conditions = ["s", "m", "h", "d", "w", "y"],
 			time = interaction.options.getString("time"),
