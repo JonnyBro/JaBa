@@ -11,10 +11,10 @@ class Courses extends BaseCommand {
 		super({
 			command: new SlashCommandBuilder()
 				.setName("courses")
-				.setDescription(client.translate("beatrun_courses/courses:DESCRIPTION"))
+				.setDescription(client.translate("beatrun/courses:DESCRIPTION"))
 				.setDescriptionLocalizations({
-					uk: client.translate("beatrun_courses/courses:DESCRIPTION", null, "uk-UA"),
-					ru: client.translate("beatrun_courses/courses:DESCRIPTION", null, "ru-RU"),
+					uk: client.translate("beatrun/courses:DESCRIPTION", null, "uk-UA"),
+					ru: client.translate("beatrun/courses:DESCRIPTION", null, "ru-RU"),
 				})
 				.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 				.setContexts([InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel])
@@ -55,21 +55,21 @@ class Courses extends BaseCommand {
 		const response = await fetch(`https://courses.jonnybro.ru/api/info/${code}`).then(res => res.json()),
 			{ data } = response;
 
-		if (response.res === 401) return interaction.error("beatrun_courses/courses:NOT_FOUND", null, { ephemeral: true, edit: true });
+		if (response.res === 401) return interaction.error("beatrun/courses:NOT_FOUND", null, { ephemeral: true, edit: true });
 
 		const embed = client.embed({
 			title: data.name,
-			description: `[${interaction.translate("beatrun_courses/courses:DOWNLOAD")}](https://courses.jonnybro.ru/${data.path})`,
+			description: `[${interaction.translate("beatrun/courses:DOWNLOAD")}](https://courses.jonnybro.ru/${data.path})`,
 			thumbnail: data.mapimg,
 			url: `https://courses.jonnybro.ru/?search=${code}`,
 			fields: [
 				{
-					name: interaction.translate("beatrun_courses/courses:MAP"),
+					name: interaction.translate("beatrun/courses:MAP"),
 					value: `[${data.map}](https://steamcommunity.com/sharedfiles/filedetails/?id=${data.mapid})`,
 					inline: true,
 				},
 				{
-					name: interaction.translate("beatrun_courses/courses:UPLOADER"),
+					name: interaction.translate("beatrun/courses:UPLOADER"),
 					value: `[${data.uploader.name || data.uploader.userid}](https://steamcommunity.com/profiles/${data.uploader.userid})`,
 					inline: true,
 				},
@@ -79,12 +79,12 @@ class Courses extends BaseCommand {
 					inline: true,
 				},
 				{
-					name: interaction.translate("beatrun_courses/courses:DATE"),
+					name: interaction.translate("beatrun/courses:DATE"),
 					value: `<t:${Math.floor(data.time / 1000)}:D>`,
 					inline: true,
 				},
 				{
-					name: interaction.translate("beatrun_courses/courses:PLAYS"),
+					name: interaction.translate("beatrun/courses:PLAYS"),
 					value: `${data.plays || 0}`,
 					inline: true,
 				},

@@ -29,7 +29,6 @@ async function walkDirectory(dir, namespaces = [], folderName = "") {
 
 module.exports = async () => {
 	const options = {
-		jsonIndent: 2,
 		loadPath: path.resolve(__dirname, "../languages/{{lng}}/{{ns}}.json"),
 	};
 

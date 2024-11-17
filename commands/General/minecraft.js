@@ -65,7 +65,7 @@ class Minecraft extends BaseCommand {
 		let res = await gamedig.query(options).catch(() => {});
 
 		if (!res) {
-			options.type = "minecraftpe";
+			options.type = "mbe";
 			res = await gamedig.query(options).catch(() => {});
 		}
 
