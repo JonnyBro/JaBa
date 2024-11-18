@@ -41,8 +41,6 @@ class TicTacToe extends BaseCommand {
 	async execute(client, interaction) {
 		const winner = await tictactoe(interaction, {
 			resultBtn: true,
-			embedColor: client.config.embed.color,
-			embedFoot: client.config.embed.footer,
 		});
 
 		const memberData = await client.getMemberData(winner.id, interaction.guildId);

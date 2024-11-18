@@ -27,38 +27,26 @@ function format(tDate) {
 
 module.exports = class Logger {
 	static log(content) {
-		const date = `[${format(new Date(Date.now()))}]:`;
-
-		return console.log(`${date} ${bgBlue("LOG")} ${content}`);
+		return console.log(`[${format(new Date(Date.now()))}]: ${bgBlue("LOG")} ${content}`);
 	}
 
 	static warn(content) {
-		const date = `[${format(new Date(Date.now()))}]:`;
-
-		return console.log(`${date} ${black.bgYellow("WARN")} ${content}`);
+		return console.log(`[${format(new Date(Date.now()))}]: ${black.bgYellow("WARN")} ${content}`);
 	}
 
 	static error(content) {
-		const date = `[${format(new Date(Date.now()))}]:`;
-
-		return console.log(`${date} ${black.bgRed("ERROR")} ${content}`);
+		return console.log(`[${format(new Date(Date.now()))}]: ${black.bgRed("ERROR")} ${content}`);
 	}
 
 	static debug(content) {
-		const date = `[${format(new Date(Date.now()))}]:`;
-
-		return console.log(`${date} ${green("DEBUG")} ${content}`);
+		return console.log(`[${format(new Date(Date.now()))}]: ${green("DEBUG")} ${content}`);
 	}
 
 	static cmd(content) {
-		const date = `[${format(new Date(Date.now()))}]:`;
-
-		return console.log(`${date} ${black.bgWhite("CMD")} ${content}`);
+		return console.log(`[${format(new Date(Date.now()))}]: ${black.bgWhite("CMD")} ${content}`);
 	}
 
 	static ready(content) {
-		const date = `[${format(new Date(Date.now()))}]:`;
-
-		return console.log(`${date} ${black.bgGreen("READY")} ${content}`);
+		return console.log(`[${format(new Date(Date.now()))}]: ${black.bgGreen("READY")} ${content}`);
 	}
 };

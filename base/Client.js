@@ -105,8 +105,8 @@ class JaBaClient extends Client {
 			.then(() => {
 				this.logger.log("Connected to the MongoDB database.");
 			})
-			.catch(err => {
-				this.logger.error(`Unable to connect to the MongoDB database.\nError: ${err}`);
+			.catch(e => {
+				this.logger.error(`Unable to connect to the MongoDB database.\nError: ${e.message}\n${e.stack}`);
 			});
 
 		this.login(this.config.token);

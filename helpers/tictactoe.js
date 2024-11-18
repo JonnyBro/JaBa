@@ -1,32 +1,22 @@
 // Thanks to simply-djs for this =)
+// TODO: Refactor this please...
 
 const { ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
 
 /**
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
- * @param {Array} options
- * slash => Boolean
- *
- * userSlash => String
- *
- * resultBtn => Boolean
- *
- * embedFoot => String
- *
- * embedColor => HexColor
- *
- * timeoutEmbedColor => HexColor
- *
- * xEmoji => (Emoji ID) String
- *
- * oEmoji => (Emoji ID) String
- *
- * idleEmoji => (Emoji ID) String
+ * @param {any[]}	options Array with options (everything is optional)
+ * @param {string}	options.userSlash Name of the user option in the interaction
+ * @param {string}	options.embedFooter Game's embed footer
+ * @param {string}	options.embedColor Game's embed color
+ * @param {string}	options.timeoutEmbedColor Game's embed timeout color
+ * @param {string}	options.xEmoji Emoji for X
+ * @param {string}	options.oEmoji Emoji for O
+ * @param {string}	options.idleEmoji Emoji for "nothing"
  * @returns {Promise<import("discord.js").User>}
  */
 async function tictactoe(interaction, options = {}) {
-	// eslint-disable-next-line no-async-promise-executor
-	return new Promise(async resolve => {
+	return new Promise(resolve => {
 		try {
 			const { client } = interaction;
 			let opponent;
@@ -71,8 +61,8 @@ async function tictactoe(interaction, options = {}) {
 					});
 			}
 
-			const footer = options.embedFoot ? options.embedFoot : { text: "GLHF" },
-				color = options.embedColor || "#075FFF",
+			const footer = options.embedFooter || client.config.embed.footer,
+				color = options.embedColor || client.config.embed.color,
 				user = interaction.user ? interaction.user : interaction.author;
 
 			const acceptEmbed = client.embed({
@@ -93,7 +83,7 @@ async function tictactoe(interaction, options = {}) {
 
 			let m;
 			if (interaction.commandId)
-				m = await interaction.reply({
+				m = interaction.reply({
 					content: interaction.translate("fun/tictactoe:INVITE_USER", {
 						opponent: opponent.id,
 					}),
@@ -101,7 +91,7 @@ async function tictactoe(interaction, options = {}) {
 					components: [accep],
 				});
 			else if (!interaction.commandId)
-				m = await interaction.reply({
+				m = interaction.reply({
 					content: interaction.translate("fun/tictactoe:INVITE_USER", {
 						opponent: opponent.id,
 					}),
@@ -637,8 +627,8 @@ async function tictactoe(interaction, options = {}) {
 					});
 				}
 			});
-		} catch (err) {
-			console.log(`tictactoe | ERROR: ${err.stack}`);
+		} catch (e) {
+			console.log("TicTacToe errored:", e);
 		}
 	});
 }
