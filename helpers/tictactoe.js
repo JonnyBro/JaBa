@@ -16,7 +16,8 @@ const { ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require(
  * @returns {Promise<import("discord.js").User>}
  */
 async function tictactoe(interaction, options = {}) {
-	return new Promise(resolve => {
+	// eslint-disable-next-line no-async-promise-executor
+	return new Promise(async resolve => {
 		try {
 			const { client } = interaction;
 			let opponent;
@@ -81,19 +82,20 @@ async function tictactoe(interaction, options = {}) {
 			const decline = new ButtonBuilder().setLabel(interaction.translate("common:DECLINE")).setStyle(ButtonStyle.Danger).setCustomId("declinettt");
 			const accep = new ActionRowBuilder().addComponents([accept, decline]);
 
-			const m = interaction.reply({
+			const m = await interaction.reply({
 				content: interaction.translate("fun/tictactoe:INVITE_USER", {
 					opponent: opponent.id,
 				}),
 				embeds: [acceptEmbed],
 				components: [accep],
 				fetchReply: true,
-			}).then(m => m);
+			});
 
 			const collector = m.createMessageComponentCollector({
 				componentType: ComponentType.Button,
 				time: 30 * 1000,
 			});
+
 			collector.on("collect", async button => {
 				if (button.user.id !== opponent.id)
 					return button.reply({
