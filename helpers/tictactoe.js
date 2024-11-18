@@ -81,23 +81,14 @@ async function tictactoe(interaction, options = {}) {
 			const decline = new ButtonBuilder().setLabel(interaction.translate("common:DECLINE")).setStyle(ButtonStyle.Danger).setCustomId("declinettt");
 			const accep = new ActionRowBuilder().addComponents([accept, decline]);
 
-			let m;
-			if (interaction.commandId)
-				m = interaction.reply({
-					content: interaction.translate("fun/tictactoe:INVITE_USER", {
-						opponent: opponent.id,
-					}),
-					embeds: [acceptEmbed],
-					components: [accep],
-				});
-			else if (!interaction.commandId)
-				m = interaction.reply({
-					content: interaction.translate("fun/tictactoe:INVITE_USER", {
-						opponent: opponent.id,
-					}),
-					embeds: [acceptEmbed],
-					components: [accep],
-				});
+			const m = interaction.reply({
+				content: interaction.translate("fun/tictactoe:INVITE_USER", {
+					opponent: opponent.id,
+				}),
+				embeds: [acceptEmbed],
+				components: [accep],
+				fetchReply: true,
+			}).then(m => m);
 
 			const collector = m.createMessageComponentCollector({
 				componentType: ComponentType.Button,
