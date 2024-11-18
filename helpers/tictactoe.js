@@ -260,9 +260,6 @@ async function tictactoe(interaction, options = {}) {
 													}),
 												),
 											],
-										})
-										.then(m => {
-											m.react("⭕");
 										});
 								else if (!options.resultBtn || options.resultBtn === false)
 									return m
@@ -287,9 +284,6 @@ async function tictactoe(interaction, options = {}) {
 												),
 											],
 											components: [],
-										})
-										.then(m => {
-											m.react("⭕");
 										});
 							} else if (Args.user == 1) {
 								const won = await client.users.fetch(fighters[0]).catch(console.error);
@@ -311,9 +305,6 @@ async function tictactoe(interaction, options = {}) {
 													}),
 												),
 											],
-										})
-										.then(m => {
-											m.react("⭕");
 										});
 								else if (!options.resultBtn || options.resultBtn === false)
 									return m
@@ -338,9 +329,6 @@ async function tictactoe(interaction, options = {}) {
 												),
 											],
 											components: [],
-										})
-										.then(m => {
-											m.react("⭕");
 										});
 							}
 
@@ -373,9 +361,6 @@ async function tictactoe(interaction, options = {}) {
 													}),
 												),
 											],
-										})
-										.then(m => {
-											m.react("❌");
 										});
 								else if (!options.resultBtn || options.resultBtn === false)
 									return m
@@ -399,9 +384,6 @@ async function tictactoe(interaction, options = {}) {
 												),
 											],
 											components: [],
-										})
-										.then(m => {
-											m.react("❌");
 										});
 							} else if (Args.user == 1) {
 								const won = await client.users.fetch(fighters[0]).catch(console.error);
@@ -423,9 +405,6 @@ async function tictactoe(interaction, options = {}) {
 													}),
 												),
 											],
-										})
-										.then(m => {
-											m.react("❌");
 										});
 								else
 									return m
@@ -449,9 +428,6 @@ async function tictactoe(interaction, options = {}) {
 												),
 											],
 											components: [],
-										})
-										.then(m => {
-											m.react("❌");
 										});
 							}
 
@@ -535,9 +511,6 @@ async function tictactoe(interaction, options = {}) {
 												.edit({
 													content: interaction.translate("fun/tictactoe:TIE"),
 													embeds: [epm.setDescription(interaction.translate("fun/tictactoe:TIE_DESC"))],
-												})
-												.then(m => {
-													m.react(dashmoji);
 												});
 										else
 											return m
@@ -555,9 +528,6 @@ async function tictactoe(interaction, options = {}) {
 														),
 													],
 													components: [],
-												})
-												.then(m => {
-													m.react(dashmoji);
 												})
 												.catch(() => {});
 									}
