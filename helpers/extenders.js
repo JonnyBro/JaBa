@@ -1,10 +1,9 @@
 const { Message, BaseInteraction, User, GuildMember } = require("discord.js");
 
-
 /**
  *
  * @param {Message|BaseInteraction} context
- * @returns {string} Locale
+ * @returns {string} Guild's language
  */
 function getLocale(context) {
 	return context.data?.guild?.language;
@@ -30,7 +29,7 @@ function translate(client, key, args, locale) {
  * @param {import("../base/Client")} client
  * @param {string} prefixEmoji
  * @param {string} message
- * @returns {string} Localized message
+ * @returns {string} Formatted message
  */
 function formatReply(client, prefixEmoji, message) {
 	return prefixEmoji ? `${client.customEmojis[prefixEmoji]} | ${message}` : message;

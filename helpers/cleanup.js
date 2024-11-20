@@ -1,4 +1,5 @@
 // Thanks Stackoverflow <3
+
 function setDaysTimeout(callback, days) {
 	// 86400 seconds in a day
 	const msInDay = 86400 * 1000;
