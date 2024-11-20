@@ -21,7 +21,7 @@ async function checkBirthdays(client) {
 				for (const user of users) {
 					if (!guild.members.cache.has(user.id)) continue;
 
-					const userDate = user.birthdate > 9999999999 ? new Date(user.birthdate * 1000) : new Date(user.birthdate);
+					const userDate = new Date(user.birthdate).getFullYear() <= 1970 ? new Date(user.birthdate * 1000) : new Date(user.birthdate);
 					const day = userDate.getDate();
 					const month = userDate.getMonth() + 1;
 					const year = userDate.getFullYear();
