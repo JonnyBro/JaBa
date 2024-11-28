@@ -24,7 +24,7 @@ class AvatarContext extends BaseCommand {
 	 * @param {import("discord.js").UserContextMenuCommandInteraction} interaction
 	 */
 	async execute(client, interaction) {
-		const avatarURL = interaction.targetUser.displayAvatarURL({ size: 2048 });
+		const avatarURL = interaction.guild ? interaction.targetMember.displayAvatarURL({ dynamic: true, extension: "png", size: 2048 }) : interaction.targetUser.avatarURL({ dynamic: true, extension: "png", size: 2048 });
 		const embed = client.embed({ image: avatarURL });
 
 		interaction.reply({

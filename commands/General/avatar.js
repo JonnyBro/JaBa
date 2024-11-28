@@ -57,8 +57,8 @@ class Avatar extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: interaction.options.getBoolean("ephemeral") || false });
 
-		const user = interaction.options.getUser("user") || interaction.user;
-		const avatarURL = interaction.options.getBoolean("server") ? user.displayAvatarURL({ size: 2048 }) : user.avatarURL({ size: 2048 });
+		const user = interaction.guild ? interaction.options.getMember("user") || interaction.member : interaction.options.getUser("user") || interaction.user;
+		const avatarURL = interaction.options.getBoolean("server") && interaction.guild ? user.displayAvatarURL({ dynamic: true, extension: "png", size: 2048 }) : user.user.avatarURL({ dynamic: true, extension: "png", size: 2048 });
 		const embed = client.embed({ image: avatarURL });
 
 		interaction.editReply({
