@@ -48,7 +48,8 @@ class JaBaClient extends Client {
 		await this.player.extractors.register(YoutubeiExtractor, {
 			authentication: this.config.youtubeCookie,
 			streamOptions: {
-				useClient: "YTMUSIC_ANDROID",
+				useClient: "IOS",
+				highWaterMark: 2 * 1024 * 1024, // 2MB, default is 512 KB (512 * 1024)
 			},
 		});
 
@@ -62,7 +63,10 @@ class JaBaClient extends Client {
 		this.player.events.on("playerStart", async (queue, track) => {
 			const m = (
 				await queue.metadata.channel.send({
-					content: this.translate("music/play:NOW_PLAYING", { songName: `${track.title} - ${track.author}` }, queue.metadata.data.guild.language),
+					content: this.translate("music/play:NOW_PLAYING", {
+						songName: `${track.title} - ${track.author}`,
+						songURL: track.url,
+					}, queue.metadata.data.guild.language),
 				})
 			).id;
 

@@ -7,10 +7,10 @@
 	"NO_VOICE_CHANNEL": "You must be in a voice channel",
 	"VOICE_CHANNEL_CONNECT": "I cannot connect to your voice channel",
 	"NO_RESULT": "No results found for `{{query}}`",
-	"NOW_PLAYING": "Now playing **{{songName}}**",
+	"NOW_PLAYING": "Now playing [{{songName}}](<{{songURL}}>)",
 	"NOT_PLAYING": "Nothing is currently playing on the server",
 	"QUEUE_ENDED": "The queue has ended",
-	"ADDED_QUEUE": "**{{songName}}** has been added to the queue",
+	"ADDED_QUEUE": "[{{songName}}](<{{songURL}}>) has been added to the queue",
 	"STOP_DISCONNECTED": "Playback stopped because I left the voice channel",
 	"STOP_EMPTY": "Playback stopped because everyone has left the voice channel",
 	"ERR_OCCURRED": "An error occurred, skipping track..."

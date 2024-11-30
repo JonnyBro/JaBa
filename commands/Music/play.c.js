@@ -58,6 +58,7 @@ class PlayContext extends BaseCommand {
 			interaction.editReply({
 				content: interaction.translate("music/play:ADDED_QUEUE", {
 					songName: searchResult.hasPlaylist() ? searchResult.playlist.title : searchResult.tracks[0].title,
+					songURL: searchResult.hasPlaylist() ? searchResult.playlist.url : searchResult.tracks[0].url,
 				}),
 			});
 		}
