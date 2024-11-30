@@ -39,8 +39,8 @@ importers:
         specifier: ^6.7.1
         version: 6.7.1(@discord-player/extractor@4.5.1)(@discordjs/opus@0.9.0)
       discord-player-youtubei:
-        specifier: 1.3.5
-        version: 1.3.5
+        specifier: 1.3.6-beta.2
+        version: 1.3.6-beta.2
       discord.js:
         specifier: ^14.16.3
         version: 14.16.3
@@ -485,8 +485,8 @@ packages:
     peerDependencies:
       discord.js: '>=14.0.0'
 
-  discord-player-youtubei@1.3.5:
-    resolution: {integrity: sha512-yx7tExZUwR0MgtjZxFXmv5wVq8bYUALfzub0JiRCPcYkmo4aT6WHf2ZK1g/RGQ4nYuy6nud/zNIT0yoe1XuihQ==}
+  discord-player-youtubei@1.3.6-beta.2:
+    resolution: {integrity: sha512-KaFJ9+QxC84RJpHCCCYIh07AyF4mILa230l6u/zw9ENEEaC6pxDaRizZCVxVBU/HJ2bqTvm4FgS2AviyO6Fhbg==}
     hasBin: true
 
   discord-player@6.7.1:
@@ -1229,9 +1229,9 @@ packages:
     resolution: {integrity: sha512-U8uCCl2x9TK3WANvmBavymRzxbfFYG+tAu+fgx3zxQy3qdagQqBLwJVrdyO1TBfUXvfKveMKJZhpvUYoOjM+4g==}
     engines: {node: '>=18.17'}
 
-  undici@6.20.1:
-    resolution: {integrity: sha512-AjQF1QsmqfJys+LXfGTNum+qw4S88CojRInG/6t31W/1fk6G59s92bnAvGz5Cmur+kQv2SURXEvvudLmbrE8QA==}
-    engines: {node: '>=18.17'}
+  undici@7.0.0:
+    resolution: {integrity: sha512-c4xi3kWnQJrb7h2q8aJYKvUzmz7boCgz1cUCC6OwdeM5Tr2P0hDuthr2iut4ggqsz+Cnh20U/LoTzbKIdDS/Nw==}
+    engines: {node: '>=20.18.1'}
 
   unfetch@5.0.0:
     resolution: {integrity: sha512-3xM2c89siXg0nHvlmYsQ2zkLASvVMBisZm5lF3gFDqfF2xonNStDJyMpvaOBe0a1Edxmqrf2E0HBdmy9QyZaeg==}
@@ -1732,10 +1732,10 @@ snapshots:
       discord.js: 14.16.3
       serialize-javascript: 6.0.2
 
-  discord-player-youtubei@1.3.5:
+  discord-player-youtubei@1.3.6-beta.2:
     dependencies:
       tiny-typed-emitter: 2.1.0
-      undici: 6.20.1
+      undici: 7.0.0
       youtubei.js: 11.0.1
 
   discord-player@6.7.1(@discord-player/extractor@4.5.1)(@discordjs/opus@0.9.0):
@@ -2518,7 +2518,7 @@ snapshots:
 
   undici@6.19.8: {}
 
-  undici@6.20.1: {}
+  undici@7.0.0: {}
 
   unfetch@5.0.0: {}
 

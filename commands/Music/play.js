@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, PermissionsBitField, InteractionContextType, ApplicationIntegrationType } = require("discord.js"),
-	{ QueryType } = require("discord-player");
+	{ QueryType } = require("discord-player"),
+	{ YoutubeiExtractor } = require("discord-player-youtubei");
 const BaseCommand = require("../../base/BaseCommand");
 
 class Play extends BaseCommand {
@@ -86,7 +87,7 @@ class Play extends BaseCommand {
 		if (query === "" || query === null) return interaction.respond([ { name: "No Query Provided", value: "" } ]);
 		if (query.startsWith("http")) return interaction.respond([ { name: "Current Link", value: query } ]);
 
-		const youtubeResults = await client.player.search(query, { searchEngine: QueryType.YOUTUBE });
+		const youtubeResults = await client.player.search(query, { searchEngine: `ext:${YoutubeiExtractor.identifier}` });
 		const spotifyResults = await client.player.search(query, { searchEngine: QueryType.SPOTIFY_SEARCH });
 		const tracks = [];
 
