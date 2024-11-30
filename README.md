@@ -28,7 +28,6 @@ JaBa does many thing, here is **8 main categories**:
 * **Economy**: `profile`, `work`, `achievements`, `slots`, `tictactoe`, `leaderboard` and **9** more!
 * **Fun**: `8ball`, `crab`, `lmgtfy`, `lovecalc`, `memes` and **2** more!
 * **General**: `afk`, `avatar`, `boosters`, `minecraft`, `remindme`, `shorturl`, `serverinfo`, `userinfo`, `whois` and **7** more!
-* **NSFW**: `nsfw` =)
 * **Bot's owner commands**: `eval`, `servers`, `reload` and **2** more!
 
 ## *Kinda* Cool Dashboard
