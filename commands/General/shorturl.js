@@ -51,19 +51,17 @@ class Shorturl extends BaseCommand {
 		await interaction.deferReply({ ephemeral: interaction.options.getBoolean("ephemeral") || false });
 
 		const url = interaction.options.getString("url");
-		const res = await fetch("https://i.jonnybro.ru/api/shorten", {
+		const res = fetch("https://s.jonnybro.ru/api/link/create", {
 			method: "POST",
 			headers: {
+				"Authorization": `Bearer ${client.config.apiKeys.sink}`,
 				"Content-Type": "application/json",
-				Authorization: client.config.apiKeys.zipline,
 			},
 			body: JSON.stringify({ url: url }),
 		}).then(res => res.json());
 
-		console.log(res);
-
 		interaction.editReply({
-			content: `<${res.url}>`,
+			content: `<https://s.jonnybro.ru/${res.slug}>`,
 		});
 	}
 }
