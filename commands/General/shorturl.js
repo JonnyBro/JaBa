@@ -51,7 +51,9 @@ class Shorturl extends BaseCommand {
 		await interaction.deferReply({ ephemeral: interaction.options.getBoolean("ephemeral") || false });
 
 		const url = interaction.options.getString("url");
-		const res = fetch("https://s.jonnybro.ru/api/link/create", {
+		if (!url.startsWith("http")) return interaction.error("general/shorturl:NOT_A_LINK", null, { edit: true });
+
+		const res = await fetch("https://s.jonnybro.ru/api/link/create", {
 			method: "POST",
 			headers: {
 				"Authorization": `Bearer ${client.config.apiKeys.sink}`,
@@ -61,7 +63,7 @@ class Shorturl extends BaseCommand {
 		}).then(res => res.json());
 
 		interaction.editReply({
-			content: `<https://s.jonnybro.ru/${res.slug}>`,
+			content: `<https://s.jonnybro.ru/${res.link.slug}>`,
 		});
 	}
 }
