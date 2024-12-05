@@ -15,7 +15,6 @@ JaBa offers:
 * Slash and Context commands.
 * Supports commands in DMs.
 * Localization support (any language; English, Russian and Ukrainian for now).
-* Dashboard for changing various settings.
 * Basic messages monitoring (updating and deletion).
 
 ## Commands
@@ -29,10 +28,6 @@ JaBa does many thing, here is **8 main categories**:
 * **Fun**: `8ball`, `crab`, `lmgtfy`, `lovecalc`, `memes` and **2** more!
 * **General**: `afk`, `avatar`, `boosters`, `minecraft`, `remindme`, `shorturl`, `serverinfo`, `userinfo`, `whois` and **7** more!
 * **Bot's owner commands**: `eval`, `servers`, `reload` and **2** more!
-
-## *Kinda* Cool Dashboard
-
-JaBa has it's own dashboard to change server's settings!
 
 ## Get The Bot
 
@@ -54,7 +49,6 @@ Use [this instruction](https://github.com/JonnyBro/JaBa/wiki/Self-Hosting) to le
 * [Full commands list](https://dash.jababot.ru/commands)
 * [Discord](https://discord.gg/Ptkj2n9nzZ)
 * [Github](https://github.com/JonnyBro/JaBa/)
-* [Dashboard](https://dash.jababot.ru)
 
 ## Support
 
@@ -64,7 +58,7 @@ If you want to contribute, feel free to fork this repo and making a pull request
 ## TODO
 
 * [ ] Refactor [tictactoe](./helpers/tictactoe.js).
-* [ ] Finish and release *dashboard-core* submodule.
+* [ ] Rewrite dashboard.
 
 ## License
 

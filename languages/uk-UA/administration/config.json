@@ -23,8 +23,6 @@
 	"AUTO_SANCTIONS": "Автоматичні покарання",
 	"BAN_CONTENT": "Бан: Після **{{count}}** попереджень",
 	"BAN_NOT_DEFINED": "Бан: Не призначено",
-	"DASHBOARD_TITLE": "Змінити налаштування",
-	"DASHBOARD_CONTENT": "Натисніть сюди, щоб перейти до панелі керування",
 	"GOODBYE_TITLE": "Прощання",
 	"GOODBYE_CONTENT": "Канал: {{channel}}\nКартка: {{withImage}}",
 	"KICK_CONTENT": "Кік: Після **{{count}}** попереджень",

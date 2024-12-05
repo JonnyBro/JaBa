@@ -1,4 +1,4 @@
-const { Message, BaseInteraction, User, GuildMember } = require("discord.js");
+import { Message, BaseInteraction, User, GuildMember } from "discord.js";
 
 /**
  *

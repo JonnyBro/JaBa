@@ -56,5 +56,11 @@ async function checkReminds(client) {
 	});
 }
 
-module.exports.init = async client => setInterval(async () => await checkReminds(client), 1000);
-module.exports.run = async client => await checkReminds(client);
+export async function init(client) {
+	setInterval(async () => {
+		await checkReminds(client);
+	}, 1000);
+}
+export async function run(client) {
+	await checkReminds(client);
+}

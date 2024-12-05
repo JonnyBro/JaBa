@@ -1,4 +1,4 @@
-const BaseEvent = require("../../base/BaseEvent");
+import BaseEvent from "../../base/BaseEvent";
 
 class messageDelete extends BaseEvent {
 	constructor() {
@@ -40,4 +40,4 @@ class messageDelete extends BaseEvent {
 	}
 }
 
-module.exports = messageDelete;
+export default messageDelete;

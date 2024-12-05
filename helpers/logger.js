@@ -1,4 +1,4 @@
-const { bgBlue, black, green } = require("chalk");
+import { bgBlue, black, green } from "chalk";
 
 function dateTimePad(value, digits) {
 	let number = value;
@@ -25,28 +25,28 @@ function format(tDate) {
 	);
 }
 
-module.exports = class Logger {
-	static log(content) {
+export default {
+	log(content) {
 		return console.log(`[${format(new Date(Date.now()))}]: ${bgBlue("LOG")} ${content}`);
-	}
+	},
 
-	static warn(content) {
+	warn(content) {
 		return console.log(`[${format(new Date(Date.now()))}]: ${black.bgYellow("WARN")} ${content}`);
-	}
+	},
 
-	static error(content) {
+	error(content) {
 		return console.log(`[${format(new Date(Date.now()))}]: ${black.bgRed("ERROR")} ${content}`);
-	}
+	},
 
-	static debug(content) {
+	debug(content) {
 		return console.log(`[${format(new Date(Date.now()))}]: ${green("DEBUG")} ${content}`);
-	}
+	},
 
-	static cmd(content) {
+	cmd(content) {
 		return console.log(`[${format(new Date(Date.now()))}]: ${black.bgWhite("CMD")} ${content}`);
-	}
+	},
 
-	static ready(content) {
+	ready(content) {
 		return console.log(`[${format(new Date(Date.now()))}]: ${black.bgGreen("READY")} ${content}`);
-	}
+	},
 };

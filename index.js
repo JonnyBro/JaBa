@@ -1,9 +1,10 @@
 import "./helpers/extenders.js";
 
 import { GatewayIntentBits } from "discord.js";
-import Client from "./base/Client.js";
+import JaBaClient from "./base/Client.js";
+import languages from "./helpers/languages.js";
 
-const client = new Client({
+const client = new JaBaClient({
 	intents: [
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMembers,
@@ -27,7 +28,7 @@ const client = new Client({
 (async () => {
 	console.time("botReady");
 
-	client.translations = await require("./helpers/languages")();
+	client.translations = await languages();
 
 	await client.loadEvents("../events");
 	await client.loadCommands("../commands");

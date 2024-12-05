@@ -1,5 +1,4 @@
 // Thanks Stackoverflow <3
-
 function setDaysTimeout(callback, days) {
 	// 86400 seconds in a day
 	const msInDay = 86400 * 1000;
@@ -19,7 +18,7 @@ function setDaysTimeout(callback, days) {
  *
  * @param {import("../base/Client")} client
  */
-module.exports.init = async function (client) {
+export async function init(client) {
 	setDaysTimeout(async () => {
 		const timestamp = Date.now() + 29 * 24 * 60 * 60 * 1000; // 29 days
 		const members = client.membersData.find({ transactions: { $gt: [] } });
@@ -66,4 +65,4 @@ module.exports.init = async function (client) {
 			}
 		});
 	}, 30);
-};
+}

@@ -1,5 +1,5 @@
-const mongoose = require("mongoose"),
-	Canvas = require("@napi-rs/canvas");
+import { Schema, model } from "mongoose";
+import { createCanvas, loadImage } from "@napi-rs/canvas";
 
 const genToken = () => {
 	let token = "";
@@ -9,7 +9,7 @@ const genToken = () => {
 	return token;
 };
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
 	id: { type: String },
 
 	rep: { type: Number, default: 0 },
@@ -88,17 +88,17 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.method("getAchievements", async function () {
-	const canvas = Canvas.createCanvas(1800, 250),
+	const canvas = createCanvas(1800, 250),
 		ctx = canvas.getContext("2d");
 
 	const images = [
-		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.work.achieved ? "_colored" : ""}1.png`),
-		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.firstCommand.achieved ? "_colored" : ""}2.png`),
-		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.married.achieved ? "_colored" : ""}3.png`),
-		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.slots.achieved ? "_colored" : ""}4.png`),
-		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.tip.achieved ? "_colored" : ""}5.png`),
-		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.rep.achieved ? "_colored" : ""}6.png`),
-		await Canvas.loadImage(`./assets/img/achievements/achievement${this.achievements.invite.achieved ? "_colored" : ""}7.png`),
+		await loadImage(`./assets/img/achievements/achievement${this.achievements.work.achieved ? "_colored" : ""}1.png`),
+		await loadImage(`./assets/img/achievements/achievement${this.achievements.firstCommand.achieved ? "_colored" : ""}2.png`),
+		await loadImage(`./assets/img/achievements/achievement${this.achievements.married.achieved ? "_colored" : ""}3.png`),
+		await loadImage(`./assets/img/achievements/achievement${this.achievements.slots.achieved ? "_colored" : ""}4.png`),
+		await loadImage(`./assets/img/achievements/achievement${this.achievements.tip.achieved ? "_colored" : ""}5.png`),
+		await loadImage(`./assets/img/achievements/achievement${this.achievements.rep.achieved ? "_colored" : ""}6.png`),
+		await loadImage(`./assets/img/achievements/achievement${this.achievements.invite.achieved ? "_colored" : ""}7.png`),
 	];
 	let dim = 0;
 
@@ -107,7 +107,7 @@ userSchema.method("getAchievements", async function () {
 		dim += 200;
 	}
 
-	return (await canvas.encode("png"));
+	return await canvas.encode("png");
 });
 
-module.exports = mongoose.model("User", userSchema);
+export default model("User", userSchema);

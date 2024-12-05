@@ -18,7 +18,7 @@ export default [
 		rules: {
 			"arrow-body-style": ["error", "as-needed"],
 			camelcase: "error",
-			curly: "error",
+			curly: ["error", "multi-line"],
 			eqeqeq: ["error", "always"],
 			"no-console": "off",
 			"no-var": "error",

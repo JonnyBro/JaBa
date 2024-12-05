@@ -1,5 +1,5 @@
-const { PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
-const BaseEvent = require("../base/BaseEvent");
+import { PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import BaseEvent from "../base/BaseEvent";
 
 const xpCooldown = {};
 
@@ -23,7 +23,7 @@ class MessageCreate extends BaseEvent {
 
 		if (message.guild) {
 			if (!message.member) await message.guild.members.fetch(message.author.id);
-			
+
 			data.guild = await client.getGuildData(message.guildId);
 			data.member = await client.getMemberData(message.author.id, message.guildId);
 		}
@@ -69,8 +69,7 @@ class MessageCreate extends BaseEvent {
 
 			if (msg.content) embed.addFields([{ name: message.translate("misc:QUOTE_CONTENT"), value: msg.content }]);
 			if (msg.attachments.size > 0) {
-				if (msg.attachments.find(a => a.contentType.includes("image/")))
-					embed.setImage(msg.attachments.find(a => a.contentType.includes("image/")).url);
+				if (msg.attachments.find(a => a.contentType.includes("image/"))) embed.setImage(msg.attachments.find(a => a.contentType.includes("image/")).url);
 
 				embed.addFields([
 					{
@@ -160,4 +159,4 @@ class MessageCreate extends BaseEvent {
 	}
 }
 
-module.exports = MessageCreate;
+export default MessageCreate;

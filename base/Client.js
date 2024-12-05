@@ -1,32 +1,41 @@
-const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder, EmbedBuilder, PermissionsBitField, ChannelType } = require("discord.js"),
-	{ GiveawaysManager } = require("discord-giveaways"),
-	{ REST } = require("@discordjs/rest"),
-	{ Player: DiscordPlayer } = require("discord-player"),
-	{ SpotifyExtractor } = require("@discord-player/extractor"),
-	{ YoutubeiExtractor } = require("discord-player-youtubei"),
-	{ Routes } = require("discord-api-types/v10");
+import { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder, EmbedBuilder, PermissionsBitField, ChannelType } from "discord.js";
+import { GiveawaysManager } from "discord-giveaways";
+import { REST } from "@discordjs/rest";
+import { Player } from "discord-player";
+import { SpotifyExtractor } from "@discord-player/extractor";
+import { YoutubeiExtractor } from "discord-player-youtubei";
+import { Routes } from "discord-api-types/v10";
+import { join, sep } from "path";
+import { promises as fs } from "fs";
+import { setTimeout } from "timers/promises";
+import mongoose from "mongoose";
 
-const BaseEvent = require("./BaseEvent.js"),
-	BaseCommand = require("./BaseCommand.js").default,
-	path = require("path"),
-	fs = require("fs").promises,
-	mongoose = require("mongoose");
+import config from "../config.js";
+import * as emojis from "../emojis.json";
+import langs from "../languages/language-meta.js";
+import logger from "../helpers/logger.js";
+import * as funcs from "../helpers/functions.js";
+
+import BaseEvent from "./BaseEvent.js";
+import BaseCommand from "./BaseCommand.js";
+import guild from "./Guild.js";
+import user from "./User.js";
+import member from "./Member.js";
 
 class JaBaClient extends Client {
 	constructor(options) {
 		super(options);
 
-		this.config = require("../config");
-		this.customEmojis = require("../emojis");
-		this.languages = require("../languages/language-meta");
+		this.config = config;
+		this.customEmojis = emojis;
+		this.languages = langs;
 		this.commands = new Collection();
-		this.logger = require("../helpers/logger");
-		this.wait = require("node:timers/promises").setTimeout;
-		this.functions = require("../helpers/functions");
-		this.guildsData = require("../base/Guild");
-		this.usersData = require("../base/User");
-		this.membersData = require("../base/Member");
-		this.dashboard = require("../dashboard/dashboard");
+		this.logger = logger;
+		this.wait = setTimeout;
+		this.functions = funcs;
+		this.guildsData = guild.default;
+		this.usersData = user.default;
+		this.membersData = member.default;
 
 		this.databaseCache = {};
 		this.databaseCache.users = new Collection();
@@ -43,7 +52,7 @@ class JaBaClient extends Client {
 	 * @returns {Promise<void>} A Promise that resolves when the client is fully initialized.
 	 */
 	async init() {
-		this.player = new DiscordPlayer(this);
+		this.player = new Player(this);
 
 		await this.player.extractors.register(YoutubeiExtractor, {
 			authentication: this.config.youtubeCookie,
@@ -74,13 +83,13 @@ class JaBaClient extends Client {
 				})
 			).id;
 
-			if (track.durationMS > 1)
+			if (track.durationMS > 1) {
 				setTimeout(() => {
 					const message = queue.metadata.channel.messages.cache.get(m);
 
 					if (message && message.deletable) message.delete();
 				}, track.durationMS);
-			else
+			} else {
 				setTimeout(
 					() => {
 						const message = queue.metadata.channel.messages.cache.get(m);
@@ -89,6 +98,7 @@ class JaBaClient extends Client {
 					},
 					5 * 60 * 1000,
 				);
+			}
 		});
 		this.player.events.on("emptyQueue", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.data.guild.language)));
 		this.player.events.on("emptyChannel", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.data.guild.language)));
@@ -113,9 +123,7 @@ class JaBaClient extends Client {
 
 		mongoose
 			.connect(this.config.mongoDB)
-			.then(() => {
-				this.logger.log("Connected to the MongoDB database.");
-			})
+			.then(this.logger.log("Connected to the MongoDB database."))
 			.catch(e => {
 				this.logger.error(`Unable to connect to the MongoDB database.\nError: ${e.message}\n${e.stack}`);
 			});
@@ -134,8 +142,8 @@ class JaBaClient extends Client {
 	 */
 	async loadCommands(dir) {
 		const rest = new REST().setToken(this.config.token),
-			filePath = path.join(__dirname, dir),
-			folders = (await fs.readdir(filePath)).map(file => path.join(filePath, file));
+			filePath = join(__dirname, dir),
+			folders = (await fs.readdir(filePath)).map(file => join(filePath, file));
 
 		const commands = [];
 		for (const folder of folders) {
@@ -144,7 +152,7 @@ class JaBaClient extends Client {
 			for (const file of files) {
 				if (!file.endsWith(".js")) continue;
 
-				const Command = require(path.join(folder, file));
+				const Command = require(join(folder, file));
 
 				if (!(Command.prototype instanceof BaseCommand)) continue;
 
@@ -165,8 +173,8 @@ class JaBaClient extends Client {
 			await rest.put(route, { body: commands });
 
 			this.logger.log("Successfully registered application commands.");
-		} catch (err) {
-			this.logger.error("Error registering application commands:", err);
+		} catch (e) {
+			this.logger.error("Error registering application commands:", e);
 		}
 	}
 
@@ -178,7 +186,7 @@ class JaBaClient extends Client {
 	 */
 	async loadCommand(dir, file) {
 		try {
-			const Command = require(path.join(dir, `${file}.js`));
+			const Command = require(join(dir, `${file}.js`));
 
 			if (!(Command.prototype instanceof BaseCommand)) {
 				return this.logger.error(`Tried to load a non-command file: "${file}.js"`);
@@ -190,8 +198,8 @@ class JaBaClient extends Client {
 			if (typeof command.onLoad === "function") await command.onLoad(this);
 
 			this.logger.log(`Successfully loaded "${file}" command file. (Command: ${command.command.name})`);
-		} catch (error) {
-			this.logger.error(`Error loading command "${file}":`, error);
+		} catch (e) {
+			this.logger.error(`Error loading command "${file}":`, e);
 		}
 	}
 
@@ -202,7 +210,7 @@ class JaBaClient extends Client {
 	 * @returns {void} This method does not return a value.
 	 */
 	unloadCommand(dir, name) {
-		delete require.cache[require.resolve(`${dir}${path.sep}${name}.js`)];
+		delete require.cache[require.resolve(`${dir}${sep}${name}.js`)];
 
 		return;
 	}
@@ -213,15 +221,15 @@ class JaBaClient extends Client {
 	 * @returns {Promise<void>} This method does not return a value.
 	 */
 	async loadEvents(dir) {
-		const filePath = path.join(__dirname, dir);
+		const filePath = join(__dirname, dir);
 		const files = await fs.readdir(filePath);
 
 		for (const file of files) {
-			const fullPath = path.join(filePath, file);
+			const fullPath = join(filePath, file);
 			const stat = await fs.lstat(fullPath);
 
 			if (stat.isDirectory()) {
-				await this.loadEvents(path.join(dir, file));
+				await this.loadEvents(join(dir, file));
 				continue;
 			}
 
@@ -244,8 +252,8 @@ class JaBaClient extends Client {
 					event.once ? this.once(event.name, event.execute.bind(event, this)) : this.on(event.name, event.execute.bind(event, this));
 
 					this.logger.log(`Successfully loaded "${file}" event. (Event: ${event.name})`);
-				} catch (error) {
-					this.logger.error(`Error loading event "${file}":`, error);
+				} catch (e) {
+					this.logger.error(`Error loading event "${file}":`, e);
 				}
 			}
 		}
@@ -348,6 +356,7 @@ class JaBaClient extends Client {
 			await memberData.save();
 
 			const guildData = await this.getGuildData(guildId);
+
 			if (guildData) {
 				guildData.members.push(memberData._id);
 				await guildData.save();
@@ -377,4 +386,4 @@ class JaBaClient extends Client {
 	}
 }
 
-module.exports = JaBaClient;
+export default JaBaClient;

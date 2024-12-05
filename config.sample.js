@@ -1,4 +1,4 @@
-export const config = {
+export default {
 	/* The token of your Discord Bot */
 	token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 	/* UserID of your Discord Bot */
@@ -22,14 +22,14 @@ export const config = {
 		invite: "https://discord.gg/discord", // Invite link to the support server
 	},
 	/* Dashboard configuration */
-	dashboard: {
+	/* dashboard: {
 		enabled: false, // Whether the dashboard is enabled or not
 		maintanceKey: "letmein", // Maintance key
 		port: 80, // Dashboard port
 		domain: "http://localhost", // The base URL of the dashboard without / at the end
 		secret: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX", // Your Bot's Client Secret
 		logs: "123456789098765432", // The channel ID for logs
-	},
+	}, */
 	/* Embeds defaults */
 	embed: {
 		color: "#00FF00", // Color
