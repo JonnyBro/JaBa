@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const path = require("path");
+import { sep } from "path";
 
 class BaseCommand {
 	constructor(options, client) {
@@ -15,8 +15,8 @@ class BaseCommand {
 		/**
 		 * @type {String}
 		 */
-		this.category = this.dirname ? this.dirname.split(path.sep)[parseInt(this.dirname.split(path.sep).length - 1, 10)] : "Other";
+		this.category = this.dirname ? this.dirname.split(sep)[parseInt(this.dirname.split(sep).length - 1, 10)] : "Other";
 	}
 }
 
-module.exports = BaseCommand;
+export default BaseCommand;

@@ -1,4 +1,4 @@
-module.exports = {
+export const config = {
 	/* The token of your Discord Bot */
 	token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 	/* UserID of your Discord Bot */
@@ -42,7 +42,5 @@ module.exports = {
 		id: "123456789098765432", // The ID of the bot's owner
 	},
 	/* Add your own API keys here */
-	apiKeys: {
-		shlink: "12345678-1234-1234-1234-123456789098" /* Shlink.io REST API key */,
-	},
+	apiKeys: {},
 };

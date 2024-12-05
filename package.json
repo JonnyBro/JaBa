@@ -3,6 +3,7 @@
     "version": "4.6.7",
     "description": "My Discord Bot",
     "main": "index.js",
+    "type": "module",
     "scripts": {
         "start": "node ."
     },
@@ -30,93 +31,11 @@
         "node-fetch": "^2.7.0"
     },
     "devDependencies": {
-        "eslint": "^8.57.1"
-    },
-    "eslintConfig": {
-        "extends": "eslint:recommended",
-        "env": {
-            "commonjs": true,
-            "es6": true,
-            "es2020": true,
-            "node": true
-        },
-        "globals": {
-            "Atomics": "readonly",
-            "SharedArrayBuffer": "readonly"
-        },
-        "parserOptions": {
-            "ecmaVersion": 2020
-        },
-        "rules": {
-            "arrow-spacing": [
-                "warn",
-                {
-                    "before": true,
-                    "after": true
-                }
-            ],
-            "comma-dangle": [
-                "error",
-                "always-multiline"
-            ],
-            "comma-spacing": "error",
-            "comma-style": "error",
-            "dot-location": [
-                "error",
-                "property"
-            ],
-            "handle-callback-err": "off",
-            "indent": [
-                "error",
-                "tab",
-                {
-                    "SwitchCase": 1
-                }
-            ],
-            "keyword-spacing": "error",
-            "max-nested-callbacks": [
-                "error",
-                {
-                    "max": 4
-                }
-            ],
-            "max-statements-per-line": [
-                "error",
-                {
-                    "max": 2
-                }
-            ],
-            "no-console": "off",
-            "no-multi-spaces": "error",
-            "no-multiple-empty-lines": [
-                "error",
-                {
-                    "max": 2,
-                    "maxEOF": 1,
-                    "maxBOF": 0
-                }
-            ],
-            "no-trailing-spaces": [
-                "error"
-            ],
-            "no-var": "error",
-            "object-curly-spacing": [
-                "error",
-                "always"
-            ],
-            "prefer-const": "error",
-            "quotes": [
-                "error",
-                "double"
-            ],
-            "semi": [
-                "error",
-                "always"
-            ],
-            "space-in-parens": "error",
-            "space-infix-ops": "error",
-            "space-unary-ops": "error",
-            "yoda": "error"
-        }
+        "@eslint/js": "^9.16.0",
+        "@stylistic/eslint-plugin-js": "^2.11.0",
+        "eslint": "^9.16.0",
+        "globals": "^15.13.0",
+        "prettier": "^3.4.2",
+        "prettier-eslint": "^16.3.0"
     }
 }

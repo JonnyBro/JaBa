@@ -7,7 +7,7 @@ const { Client, Collection, SlashCommandBuilder, ContextMenuCommandBuilder, Embe
 	{ Routes } = require("discord-api-types/v10");
 
 const BaseEvent = require("./BaseEvent.js"),
-	BaseCommand = require("./BaseCommand.js"),
+	BaseCommand = require("./BaseCommand.js").default,
 	path = require("path"),
 	fs = require("fs").promises,
 	mongoose = require("mongoose");
@@ -63,10 +63,14 @@ class JaBaClient extends Client {
 		this.player.events.on("playerStart", async (queue, track) => {
 			const m = (
 				await queue.metadata.channel.send({
-					content: this.translate("music/play:NOW_PLAYING", {
-						songName: `${track.title} - ${track.author}`,
-						songURL: track.url,
-					}, queue.metadata.data.guild.language),
+					content: this.translate(
+						"music/play:NOW_PLAYING",
+						{
+							songName: `${track.title} - ${track.author}`,
+							songURL: track.url,
+						},
+						queue.metadata.data.guild.language,
+					),
 				})
 			).id;
 
@@ -77,11 +81,14 @@ class JaBaClient extends Client {
 					if (message && message.deletable) message.delete();
 				}, track.durationMS);
 			else
-				setTimeout(() => {
-					const message = queue.metadata.channel.messages.cache.get(m);
+				setTimeout(
+					() => {
+						const message = queue.metadata.channel.messages.cache.get(m);
 
-					if (message && message.deletable) message.delete();
-				}, 5 * 60 * 1000);
+						if (message && message.deletable) message.delete();
+					},
+					5 * 60 * 1000,
+				);
 		});
 		this.player.events.on("emptyQueue", queue => queue.metadata.channel.send(this.translate("music/play:QUEUE_ENDED", null, queue.metadata.data.guild.language)));
 		this.player.events.on("emptyChannel", queue => queue.metadata.channel.send(this.translate("music/play:STOP_EMPTY", null, queue.metadata.data.guild.language)));
@@ -291,7 +298,7 @@ class JaBaClient extends Client {
 			.setColor(data.color ?? this.config.embed.color)
 			.setFooter(typeof data.footer === "object" ? data.footer : data.footer ? { text: data.footer } : this.config.embed.footer)
 			.setTimestamp(data.timestamp ?? null)
-			.setAuthor(typeof data.author === "string" ? { name: data.author, iconURL: this.user.avatarURL() } : data.author ?? null);
+			.setAuthor(typeof data.author === "string" ? { name: data.author, iconURL: this.user.avatarURL() } : (data.author ?? null));
 
 		return embed;
 	}

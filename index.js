@@ -1,10 +1,26 @@
-require("./helpers/extenders");
+import "./helpers/extenders.js";
 
-const { GatewayIntentBits } = require("discord.js"),
-	Client = require("./base/Client");
+import { GatewayIntentBits } from "discord.js";
+import Client from "./base/Client.js";
 
 const client = new Client({
-	intents: [ GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildModeration, GatewayIntentBits.GuildEmojisAndStickers, GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildInvites, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildMessageTyping, GatewayIntentBits.MessageContent, GatewayIntentBits.DirectMessageTyping, GatewayIntentBits.DirectMessages, GatewayIntentBits.DirectMessageReactions ],
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMembers,
+		GatewayIntentBits.GuildModeration,
+		GatewayIntentBits.GuildEmojisAndStickers,
+		GatewayIntentBits.GuildIntegrations,
+		GatewayIntentBits.GuildInvites,
+		GatewayIntentBits.GuildVoiceStates,
+		GatewayIntentBits.GuildPresences,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.GuildMessageReactions,
+		GatewayIntentBits.GuildMessageTyping,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.DirectMessageTyping,
+		GatewayIntentBits.DirectMessages,
+		GatewayIntentBits.DirectMessageReactions,
+	],
 	allowedMentions: { parse: ["everyone", "roles", "users"] },
 });
 
@@ -24,6 +40,4 @@ client
 	.on("warn", console.log)
 	.on("error", console.log);
 
-process
-	.on("unhandledRejection", e => console.log(e))
-	.on("uncaughtException", e => console.log(e));
+process.on("unhandledRejection", e => console.log(e)).on("uncaughtException", e => console.log(e));
