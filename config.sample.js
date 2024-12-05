@@ -34,7 +34,11 @@ export default {
 	embed: {
 		color: "#00FF00", // Color
 		footer: {
-			text: "My Discord Bot | v" + require("./package.json").version, // Footer text
+			text:
+				"My Discord Bot | v" +
+				import("./package.json", {
+					with: { type: "json" },
+				}).version, // Footer text
 		},
 	},
 	/* Bot's owner informations */
