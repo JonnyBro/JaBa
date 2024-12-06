@@ -24,7 +24,7 @@ export class ExtendedClient extends Client {
 	}
 
 	async registerModules() {
-		await this.registerCommands(this.__dirname);
+		await Promise.all([this.registerCommands(this.__dirname), this.registerEvents(this.__dirname)]);
 	}
 
 	async registerCommands(baseDir) {
@@ -52,6 +52,20 @@ export class ExtendedClient extends Client {
 			console.log(`Successfully registered ${data.length} application commands.`);
 		} catch (error) {
 			console.log(error);
+		}
+	}
+
+	async registerEvents(baseDir) {
+		const eventFiles = await glob(`${baseDir}/../newEvents/**/*.js`);
+
+		for (const file of eventFiles) {
+			const event = await this.importFile(file);
+
+			if (event.data.once) {
+				this.once(event.data.name, event.run);
+			} else {
+				this.on(event.data.name, event.run);
+			}
 		}
 	}
 }
