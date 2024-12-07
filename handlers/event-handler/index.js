@@ -11,22 +11,26 @@ export const init = async () => {
 };
 
 const buildEvents = async () => {
-	const eventFilePaths = (await getFilePaths("./newEvents", true)).filter(path => path.endsWith(".js"));
+	try {
+		const eventFilePaths = (await getFilePaths("./newEvents", true)).filter(path => path.endsWith(".js"));
 
-	for (const eventFilePath of eventFilePaths) {
-		const { data, run } = await import(toFileURL(eventFilePath));
+		for (const eventFilePath of eventFilePaths) {
+			const { data, run } = await import(toFileURL(eventFilePath));
 
-		if (!data || !data.name) {
-			console.warn(`Event ${eventFilePath} does not have a data object or name`);
-			continue;
+			if (!data || !data.name) {
+				console.warn(`Event ${eventFilePath} does not have a data object or name`);
+				continue;
+			}
+
+			if (typeof run !== "function") {
+				console.warn(`Event ${eventFilePath} does not have a run function or it is not a function`);
+				continue;
+			}
+
+			events.push({ data, run });
 		}
-
-		if (typeof run !== "function") {
-			console.warn(`Event ${eventFilePath} does not have a run function or it is not a function`);
-			continue;
-		}
-
-		events.push({ data, run });
+	} catch (error) {
+		console.error("Error build events: ", error);
 	}
 };
 

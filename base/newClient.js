@@ -12,6 +12,8 @@ export class ExtendedClient extends Client {
 	}
 
 	async init() {
-		this.login(config.token).then(async () => await Promise.all([initCommands(), initEvents()]).catch(console.error));
+		return this.login(config.token)
+			.then(async () => await Promise.all([initCommands(), initEvents()]))
+			.catch(console.error);
 	}
 }
