@@ -32,10 +32,7 @@ const buildEvents = async () => {
 
 const registerEvents = () => {
 	for (const { data, run } of events) {
-		if (data.once) {
-			client.once(data.name, run);
-		} else {
-			client.on(data.name, run);
-		}
+		if (data.once) client.once(data.name, run);
+		else client.on(data.name, run);
 	}
 };

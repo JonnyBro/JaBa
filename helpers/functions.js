@@ -117,21 +117,3 @@ export function getNoun(number, one, two, five) {
 	if (n >= 2 && n <= 4) return two;
 	return five;
 }
-
-/**
- * Function to apply text on a canvas with dynamic font size based on the width constraint.
- *
- * @param {import("@napi-rs/canvas").Canvas} canvas - The canvas object where the text will be applied.
- * @param {string} text - The string of text that needs to be applied on the canvas.
- * @param {number} defaultFontSize - The initial font size for the text. It is expected to decrease with each iteration.
- * @param {number} width - The maximum width that the text can occupy before it has to shrink down.
- * @param {string} font - The name of the font used for drawing the text on the canvas.
- *
- * @return {string} - The final calculated font size in a format '<size>px <family>'.
- */
-export function applyText(canvas, text, defaultFontSize, width, font) {
-	const ctx = canvas.getContext("2d");
-	do ctx.font = `${(defaultFontSize -= 1)}px ${font}`;
-	while (ctx.measureText(text).width > width);
-	return ctx.font;
-}
