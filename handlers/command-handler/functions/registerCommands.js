@@ -2,7 +2,7 @@ import differentCommands from "../utils/differentcommands.js";
 
 export default async function registerCommands(props) {
 	const globalCommands = props.commands.filter(cmd => !cmd.options?.devOnly);
-	await registerGlobalCommands(props.client, globalCommands);
+	props.client.once("ready", () => registerGlobalCommands(props.client, globalCommands));
 }
 
 const registerGlobalCommands = async (client, commands) => {
