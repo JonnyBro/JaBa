@@ -1,3 +1,4 @@
+import logger from "../../helpers/logger.js";
 import { client } from "../../index.js";
 import { getFilePaths } from "../../utils/get-path.js";
 import { toFileURL } from "../../utils/resolve-file.js";
@@ -21,12 +22,12 @@ const buildCommands = async () => {
 		const { data, run } = await import(toFileURL(cmdFilePath));
 
 		if (!data || !data.name) {
-			console.warn(`Command ${cmdFilePath} does not have a data object or name`);
+			logger.warn(`Command ${cmdFilePath} does not have a data object or name`);
 			continue;
 		}
 
 		if (typeof run !== "function") {
-			console.warn(`Command ${cmdFilePath} does not have a run function or it is not a function`);
+			logger.warn(`Command ${cmdFilePath} does not have a run function or it is not a function`);
 			continue;
 		}
 

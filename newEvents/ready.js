@@ -1,3 +1,5 @@
+import logger from "../helpers/logger.js";
+
 export const data = {
 	name: "ready",
 	once: true,
@@ -8,5 +10,5 @@ export const data = {
  * @param {import("../base/Client.JaBaClient")} client
  */
 export async function run(client) {
-	console.log(client.user.tag + " is online!");
+	logger.log(client.user.tag + " is online!");
 }

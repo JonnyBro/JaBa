@@ -1,3 +1,4 @@
+import logger from "../../../helpers/logger.js";
 import differentCommands from "../utils/differentcommands.js";
 
 export default async function registerCommands(props) {
@@ -14,12 +15,14 @@ const registerGlobalCommands = async (client, commands) => {
 			const targetCommand = appCommandsManager.cache.find(cmd => cmd.name === data.name);
 
 			if (targetCommand && differentCommands(targetCommand, data)) {
-				await targetCommand.edit(data).catch(() => console.log(`Failed to update command: ${data.name} globally`));
+				await targetCommand.edit(data).catch(() => logger.error(`Failed to update command: ${data.name} globally`));
 
-				console.log(`Edited command globally: ${data.name}`);
+				logger.log(`Edited command globally: ${data.name}`);
 			} else if (!targetCommand) {
-				await appCommandsManager.create(data).catch(() => console.log(`Failed to register command: ${data.name}`));
+				await appCommandsManager.create(data).catch(() => logger.error(`Failed to register command: ${data.name}`));
 			}
 		}),
 	);
+
+	logger.log("Registered global commands");
 };
