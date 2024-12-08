@@ -1,7 +1,7 @@
 // Thanks to simply-djs for this =)
 // TODO: Refactor this please...
 
-const { ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
+import { ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } from "discord.js";
 
 /**
  * @param {import("discord.js").ChatInputCommandInteraction} interaction
@@ -15,7 +15,7 @@ const { ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require(
  * @param {string}	options.idleEmoji Emoji for "nothing"
  * @returns {Promise<import("discord.js").User>}
  */
-async function tictactoe(interaction, options = {}) {
+export async function tictactoe(interaction, options = {}) {
 	// eslint-disable-next-line no-async-promise-executor
 	return new Promise(async resolve => {
 		try {
@@ -25,41 +25,47 @@ async function tictactoe(interaction, options = {}) {
 			if (interaction.commandId) {
 				opponent = interaction.options.getUser(options.userSlash || "user");
 
-				if (!opponent)
+				if (!opponent) {
 					return interaction.reply({
 						content: interaction.translate("fun/tictactoe:NO_USER"),
 						ephemeral: true,
 					});
+				}
 
-				if (opponent.bot)
+				if (opponent.bot) {
 					return interaction.reply({
 						content: interaction.translate("fun/tictactoe:BOT_USER"),
 						ephemeral: true,
 					});
+				}
 
-				if (opponent.id == (interaction.user ? interaction.user : interaction.author).id)
+				if (opponent.id === (interaction.user ? interaction.user : interaction.author).id) {
 					return interaction.reply({
 						content: interaction.translate("misc:CANT_YOURSELF"),
 						ephemeral: true,
 					});
+				}
 			} else if (!interaction.commandId) {
 				opponent = interaction.mentions.members.first()?.user;
 
-				if (!opponent)
+				if (!opponent) {
 					return interaction.reply({
 						content: interaction.translate("fun/tictactoe:NO_USER"),
 					});
+				}
 
-				if (opponent.bot)
+				if (opponent.bot) {
 					return interaction.reply({
 						content: interaction.translate("fun/tictactoe:BOT_USER"),
 						ephemeral: true,
 					});
+				}
 
-				if (opponent.id === interaction.member.id)
+				if (opponent.id === interaction.member.id) {
 					return interaction.reply({
 						content: interaction.translate("misc:CANT_YOURSELF"),
 					});
+				}
 			}
 
 			const footer = options.embedFooter || client.config.embed.footer,
@@ -97,25 +103,26 @@ async function tictactoe(interaction, options = {}) {
 			});
 
 			collector.on("collect", async button => {
-				if (button.user.id !== opponent.id)
+				if (button.user.id !== opponent.id) {
 					return button.reply({
 						content: interaction.translate("fun/tictactoe:REQUEST_SEND", {
 							opponent: opponent.id,
 						}),
 						ephemeral: true,
 					});
+				}
 
-				if (button.customId == "declinettt") {
+				if (button.customId === "declinettt") {
 					button.deferUpdate();
 					return collector.stop("decline");
-				} else if (button.customId == "acceptttt") {
+				} else if (button.customId === "acceptttt") {
 					button.deferUpdate();
 					collector.stop();
 
 					const fighters = [(interaction.user ? interaction.user : interaction.author).id, opponent.id].sort(() => (Math.random() > 0.5 ? 1 : -1));
 
-					const x_emoji = options.xEmoji || "❌";
-					const o_emoji = options.oEmoji || "⭕";
+					const xEmoji = options.xEmoji || "❌";
+					const oEmoji = options.oEmoji || "⭕";
 
 					const dashmoji = options.idleEmoji || "➖";
 
@@ -175,32 +182,32 @@ async function tictactoe(interaction, options = {}) {
 					});
 
 					let msg;
-					if (interaction.commandId)
+					if (interaction.commandId) {
 						msg = await interaction.editReply({
 							embeds: [
 								epm.setDescription(
 									interaction.translate("fun/tictactoe:WAITING", {
 										user: Args.userid,
-										emoji: client.emojis.cache.get(o_emoji) || "⭕",
+										emoji: client.emojis.cache.get(oEmoji) || "⭕",
 									}),
 								),
 							],
 						});
-					else if (!interaction.commandId)
+					} else if (!interaction.commandId) {
 						msg = await button.message.edit({
 							embeds: [
 								epm.setDescription(
 									interaction.translate("fun/tictactoe:WAITING", {
 										user: Args.userid,
-										emoji: client.emojis.cache.get(o_emoji) || "⭕",
+										emoji: client.emojis.cache.get(oEmoji) || "⭕",
 									}),
 								),
 							],
 						});
+					}
 
 					await ttt(msg);
 
-					// eslint-disable-next-line no-inner-declarations
 					async function ttt(m) {
 						Args.userid = fighters[Args.user];
 						const won = {
@@ -222,214 +229,212 @@ async function tictactoe(interaction, options = {}) {
 						const c = new ActionRowBuilder().addComponents([c1, c2, c3]);
 						const buttons = [a, b, c];
 
-						if (Args.a1.emoji == o_emoji && Args.b1.emoji == o_emoji && Args.c1.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
+						if (Args.a1.emoji === oEmoji && Args.b1.emoji === oEmoji && Args.c1.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
 
-						if (Args.a2.emoji == o_emoji && Args.b2.emoji == o_emoji && Args.c2.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
+						if (Args.a2.emoji === oEmoji && Args.b2.emoji === oEmoji && Args.c2.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
 
-						if (Args.a3.emoji == o_emoji && Args.b3.emoji == o_emoji && Args.c3.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
+						if (Args.a3.emoji === oEmoji && Args.b3.emoji === oEmoji && Args.c3.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
 
-						if (Args.a1.emoji == o_emoji && Args.b2.emoji == o_emoji && Args.c3.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
+						if (Args.a1.emoji === oEmoji && Args.b2.emoji === oEmoji && Args.c3.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
 
-						if (Args.a3.emoji == o_emoji && Args.b2.emoji == o_emoji && Args.c1.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
+						if (Args.a3.emoji === oEmoji && Args.b2.emoji === oEmoji && Args.c1.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
 
-						if (Args.a1.emoji == o_emoji && Args.a2.emoji == o_emoji && Args.a3.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
+						if (Args.a1.emoji === oEmoji && Args.a2.emoji === oEmoji && Args.a3.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
 
-						if (Args.b1.emoji == o_emoji && Args.b2.emoji == o_emoji && Args.b3.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
+						if (Args.b1.emoji === oEmoji && Args.b2.emoji === oEmoji && Args.b3.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
 
-						if (Args.c1.emoji == o_emoji && Args.c2.emoji == o_emoji && Args.c3.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
+						if (Args.c1.emoji === oEmoji && Args.c2.emoji === oEmoji && Args.c3.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
 
-						if (won["<:O_:863314110560993340>"] != false)
-							if (Args.user == 0) {
+						if (won["<:O_:863314110560993340>"] !== false) {
+							if (Args.user === 0) {
 								const won = await client.users.fetch(fighters[1]).catch(console.error);
 								resolve(won);
 
-								if (options.resultBtn === true)
-									return m
-										.edit({
-											content: interaction.translate("fun/tictactoe:WON", {
-												winner: fighters[1],
-												emoji: client.emojis.cache.get(o_emoji) || "⭕",
-											}),
-											components: buttons,
+								if (options.resultBtn === true) {
+									return m.edit({
+										content: interaction.translate("fun/tictactoe:WON", {
+											winner: fighters[1],
+											emoji: client.emojis.cache.get(oEmoji) || "⭕",
+										}),
+										components: buttons,
 
-											embeds: [
-												epm.setDescription(
-													interaction.translate("fun/tictactoe:WON", {
-														winner: fighters[1],
-														emoji: client.emojis.cache.get(o_emoji) || "⭕",
-													}),
-												),
-											],
-										});
-								else if (!options.resultBtn || options.resultBtn === false)
-									return m
-										.edit({
-											content: interaction.translate("fun/tictactoe:WON", {
-												winner: fighters[1],
-												emoji: client.emojis.cache.get(o_emoji) || "⭕",
-											}),
+										embeds: [
+											epm.setDescription(
+												interaction.translate("fun/tictactoe:WON", {
+													winner: fighters[1],
+													emoji: client.emojis.cache.get(oEmoji) || "⭕",
+												}),
+											),
+										],
+									});
+								} else if (!options.resultBtn || options.resultBtn === false) {
+									return m.edit({
+										content: interaction.translate("fun/tictactoe:WON", {
+											winner: fighters[1],
+											emoji: client.emojis.cache.get(oEmoji) || "⭕",
+										}),
 
-											embeds: [
-												epm.setDescription(
-													`${interaction.translate("fun/tictactoe:WON", {
-														winner: fighters[1],
-														emoji: client.emojis.cache.get(o_emoji) || "⭕",
-													})}\n\`\`\`\n${Args.a1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.a2.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.a3.emoji
-														.replace(o_emoji, "⭕")
-														.replace(x_emoji, "❌")}\n${Args.b1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.b2.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.b3.emoji
-														.replace(o_emoji, "⭕")
-														.replace(x_emoji, "❌")}\n${Args.c1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.c2.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.c3.emoji
-														.replace(o_emoji, "⭕")
-														.replace(x_emoji, "❌")}\n\`\`\``.replaceAll(dashmoji, "➖"),
-												),
-											],
-											components: [],
-										});
-							} else if (Args.user == 1) {
+										embeds: [
+											epm.setDescription(
+												`${interaction.translate("fun/tictactoe:WON", {
+													winner: fighters[1],
+													emoji: client.emojis.cache.get(oEmoji) || "⭕",
+												})}\n\`\`\`\n${Args.a1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.a2.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.a3.emoji
+													.replace(oEmoji, "⭕")
+													.replace(xEmoji, "❌")}\n${Args.b1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.b2.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.b3.emoji
+													.replace(oEmoji, "⭕")
+													.replace(xEmoji, "❌")}\n${Args.c1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.c2.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.c3.emoji
+													.replace(oEmoji, "⭕")
+													.replace(xEmoji, "❌")}\n\`\`\``.replaceAll(dashmoji, "➖"),
+											),
+										],
+										components: [],
+									});
+								}
+							} else if (Args.user === 1) {
 								const won = await client.users.fetch(fighters[0]).catch(console.error);
 								resolve(won);
 
-								if (options.resultBtn === true)
-									return m
-										.edit({
-											content: interaction.translate("fun/tictactoe:WON", {
-												winner: fighters[0],
-												emoji: client.emojis.cache.get(o_emoji) || "⭕",
-											}),
-											components: buttons,
-											embeds: [
-												epm.setDescription(
-													interaction.translate("fun/tictactoe:WON", {
-														winner: fighters[0],
-														emoji: client.emojis.cache.get(o_emoji) || "⭕",
-													}),
-												),
-											],
-										});
-								else if (!options.resultBtn || options.resultBtn === false)
-									return m
-										.edit({
-											content: interaction.translate("fun/tictactoe:WON", {
-												winner: fighters[0],
-												emoji: client.emojis.cache.get(o_emoji) || "⭕",
-											}),
+								if (options.resultBtn === true) {
+									return m.edit({
+										content: interaction.translate("fun/tictactoe:WON", {
+											winner: fighters[0],
+											emoji: client.emojis.cache.get(oEmoji) || "⭕",
+										}),
+										components: buttons,
+										embeds: [
+											epm.setDescription(
+												interaction.translate("fun/tictactoe:WON", {
+													winner: fighters[0],
+													emoji: client.emojis.cache.get(oEmoji) || "⭕",
+												}),
+											),
+										],
+									});
+								} else if (!options.resultBtn || options.resultBtn === false) {
+									return m.edit({
+										content: interaction.translate("fun/tictactoe:WON", {
+											winner: fighters[0],
+											emoji: client.emojis.cache.get(oEmoji) || "⭕",
+										}),
 
-											embeds: [
-												epm.setDescription(
-													`${interaction.translate("fun/tictactoe:WON", {
-														winner: fighters[0],
-														emoji: client.emojis.cache.get(o_emoji) || "⭕",
-													})}\n\`\`\`\n${Args.a1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.a2.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.a3.emoji
-														.replace(o_emoji, "⭕")
-														.replace(x_emoji, "❌")}\n${Args.b1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.b2.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.b3.emoji
-														.replace(o_emoji, "⭕")
-														.replace(x_emoji, "❌")}\n${Args.c1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.c2.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.c3.emoji
-														.replace(o_emoji, "⭕")
-														.replace(x_emoji, "❌")}\n\`\`\``.replaceAll(dashmoji, "➖"),
-												),
-											],
-											components: [],
-										});
+										embeds: [
+											epm.setDescription(
+												`${interaction.translate("fun/tictactoe:WON", {
+													winner: fighters[0],
+													emoji: client.emojis.cache.get(oEmoji) || "⭕",
+												})}\n\`\`\`\n${Args.a1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.a2.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.a3.emoji
+													.replace(oEmoji, "⭕")
+													.replace(xEmoji, "❌")}\n${Args.b1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.b2.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.b3.emoji
+													.replace(oEmoji, "⭕")
+													.replace(xEmoji, "❌")}\n${Args.c1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.c2.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.c3.emoji
+													.replace(oEmoji, "⭕")
+													.replace(xEmoji, "❌")}\n\`\`\``.replaceAll(dashmoji, "➖"),
+											),
+										],
+										components: [],
+									});
+								}
 							}
+						}
 
-						if (Args.a1.emoji == x_emoji && Args.b1.emoji == x_emoji && Args.c1.emoji == x_emoji) won["<:X_:863314044781723668>"] = true;
-						if (Args.a2.emoji == x_emoji && Args.b2.emoji == x_emoji && Args.c2.emoji == x_emoji) won["<:X_:863314044781723668>"] = true;
-						if (Args.a3.emoji == x_emoji && Args.b3.emoji == x_emoji && Args.c3.emoji == x_emoji) won["<:X_:863314044781723668>"] = true;
-						if (Args.a1.emoji == x_emoji && Args.b2.emoji == x_emoji && Args.c3.emoji == x_emoji) won["<:X_:863314044781723668>"] = true;
-						if (Args.a3.emoji == x_emoji && Args.b2.emoji == x_emoji && Args.c1.emoji == x_emoji) won["<:X_:863314044781723668>"] = true;
-						if (Args.a1.emoji == x_emoji && Args.a2.emoji == x_emoji && Args.a3.emoji == x_emoji) won["<:X_:863314044781723668>"] = true;
-						if (Args.b1.emoji == x_emoji && Args.b2.emoji == x_emoji && Args.b3.emoji == x_emoji) won["<:X_:863314044781723668>"] = true;
-						if (Args.c1.emoji == x_emoji && Args.c2.emoji == x_emoji && Args.c3.emoji == x_emoji) won["<:X_:863314044781723668>"] = true;
-						if (won["<:X_:863314044781723668>"] != false)
-							if (Args.user == 0) {
+						if (Args.a1.emoji === xEmoji && Args.b1.emoji === xEmoji && Args.c1.emoji === xEmoji) won["<:X_:863314044781723668>"] = true;
+						if (Args.a2.emoji === xEmoji && Args.b2.emoji === xEmoji && Args.c2.emoji === xEmoji) won["<:X_:863314044781723668>"] = true;
+						if (Args.a3.emoji === xEmoji && Args.b3.emoji === xEmoji && Args.c3.emoji === xEmoji) won["<:X_:863314044781723668>"] = true;
+						if (Args.a1.emoji === xEmoji && Args.b2.emoji === xEmoji && Args.c3.emoji === xEmoji) won["<:X_:863314044781723668>"] = true;
+						if (Args.a3.emoji === xEmoji && Args.b2.emoji === xEmoji && Args.c1.emoji === xEmoji) won["<:X_:863314044781723668>"] = true;
+						if (Args.a1.emoji === xEmoji && Args.a2.emoji === xEmoji && Args.a3.emoji === xEmoji) won["<:X_:863314044781723668>"] = true;
+						if (Args.b1.emoji === xEmoji && Args.b2.emoji === xEmoji && Args.b3.emoji === xEmoji) won["<:X_:863314044781723668>"] = true;
+						if (Args.c1.emoji === xEmoji && Args.c2.emoji === xEmoji && Args.c3.emoji === xEmoji) won["<:X_:863314044781723668>"] = true;
+						if (won["<:X_:863314044781723668>"] !== false) {
+							if (Args.user === 0) {
 								const won = await client.users.fetch(fighters[1]).catch(console.error);
 								resolve(won);
 
-								if (options.resultBtn === true)
-									return m
-										.edit({
-											content: interaction.translate("fun/tictactoe:WON", {
-												winner: fighters[1],
-												emoji: client.emojis.cache.get(o_emoji) || "⭕",
-											}),
-											components: buttons,
-											embeds: [
-												epm.setDescription(
-													interaction.translate("fun/tictactoe:WON", {
-														winner: fighters[1],
-														emoji: client.emojis.cache.get(o_emoji) || "⭕",
-													}),
-												),
-											],
-										});
-								else if (!options.resultBtn || options.resultBtn === false)
-									return m
-										.edit({
-											content: interaction.translate("fun/tictactoe:WON", {
-												winner: fighters[1],
-												emoji: client.emojis.cache.get(o_emoji) || "⭕",
-											}),
-											embeds: [
-												epm.setDescription(
-													`${interaction.translate("fun/tictactoe:WON", {
-														winner: fighters[1],
-														emoji: client.emojis.cache.get(o_emoji) || "⭕",
-													})}\n\`\`\`\n${Args.a1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.a2.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.a3.emoji
-														.replace(o_emoji, "⭕")
-														.replace(x_emoji, "❌")}\n${Args.b1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.b2.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.b3.emoji
-														.replace(o_emoji, "⭕")
-														.replace(x_emoji, "❌")}\n${Args.c1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.c2.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.c3.emoji
-														.replace(o_emoji, "⭕")
-														.replace(x_emoji, "❌")}\n\`\`\``.replaceAll(dashmoji, "➖"),
-												),
-											],
-											components: [],
-										});
-							} else if (Args.user == 1) {
+								if (options.resultBtn === true) {
+									return m.edit({
+										content: interaction.translate("fun/tictactoe:WON", {
+											winner: fighters[1],
+											emoji: client.emojis.cache.get(oEmoji) || "⭕",
+										}),
+										components: buttons,
+										embeds: [
+											epm.setDescription(
+												interaction.translate("fun/tictactoe:WON", {
+													winner: fighters[1],
+													emoji: client.emojis.cache.get(oEmoji) || "⭕",
+												}),
+											),
+										],
+									});
+								} else if (!options.resultBtn || options.resultBtn === false) {
+									return m.edit({
+										content: interaction.translate("fun/tictactoe:WON", {
+											winner: fighters[1],
+											emoji: client.emojis.cache.get(oEmoji) || "⭕",
+										}),
+										embeds: [
+											epm.setDescription(
+												`${interaction.translate("fun/tictactoe:WON", {
+													winner: fighters[1],
+													emoji: client.emojis.cache.get(oEmoji) || "⭕",
+												})}\n\`\`\`\n${Args.a1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.a2.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.a3.emoji
+													.replace(oEmoji, "⭕")
+													.replace(xEmoji, "❌")}\n${Args.b1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.b2.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.b3.emoji
+													.replace(oEmoji, "⭕")
+													.replace(xEmoji, "❌")}\n${Args.c1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.c2.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.c3.emoji
+													.replace(oEmoji, "⭕")
+													.replace(xEmoji, "❌")}\n\`\`\``.replaceAll(dashmoji, "➖"),
+											),
+										],
+										components: [],
+									});
+								}
+							} else if (Args.user === 1) {
 								const won = await client.users.fetch(fighters[0]).catch(console.error);
 								resolve(won);
 
-								if (options.resultBtn === true)
-									return m
-										.edit({
-											content: interaction.translate("fun/tictactoe:WON", {
-												winner: fighters[0],
-												emoji: client.emojis.cache.get(o_emoji) || "⭕",
-											}),
-											components: buttons,
-											embeds: [
-												epm.setDescription(
-													interaction.translate("fun/tictactoe:WON", {
-														winner: fighters[0],
-														emoji: client.emojis.cache.get(o_emoji) || "⭕",
-													}),
-												),
-											],
-										});
-								else
-									return m
-										.edit({
-											content: interaction.translate("fun/tictactoe:WON", {
-												winner: fighters[0],
-												emoji: client.emojis.cache.get(o_emoji) || "⭕",
-											}),
-											embeds: [
-												epm.setDescription(
-													`${interaction.translate("fun/tictactoe:WON", {
-														winner: fighters[0],
-														emoji: client.emojis.cache.get(o_emoji) || "⭕",
-													})}\n\`\`\`\n${Args.a1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.a2.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.a3.emoji
-														.replace(o_emoji, "⭕")
-														.replace(x_emoji, "❌")}\n${Args.b1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.b2.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.b3.emoji
-														.replace(o_emoji, "⭕")
-														.replace(x_emoji, "❌")}\n${Args.c1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.c2.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.c3.emoji
-														.replace(o_emoji, "⭕")
-														.replace(x_emoji, "❌")}\n\`\`\``.replaceAll(dashmoji, "➖"),
-												),
-											],
-											components: [],
-										});
+								if (options.resultBtn === true) {
+									return m.edit({
+										content: interaction.translate("fun/tictactoe:WON", {
+											winner: fighters[0],
+											emoji: client.emojis.cache.get(oEmoji) || "⭕",
+										}),
+										components: buttons,
+										embeds: [
+											epm.setDescription(
+												interaction.translate("fun/tictactoe:WON", {
+													winner: fighters[0],
+													emoji: client.emojis.cache.get(oEmoji) || "⭕",
+												}),
+											),
+										],
+									});
+								} else {
+									return m.edit({
+										content: interaction.translate("fun/tictactoe:WON", {
+											winner: fighters[0],
+											emoji: client.emojis.cache.get(oEmoji) || "⭕",
+										}),
+										embeds: [
+											epm.setDescription(
+												`${interaction.translate("fun/tictactoe:WON", {
+													winner: fighters[0],
+													emoji: client.emojis.cache.get(oEmoji) || "⭕",
+												})}\n\`\`\`\n${Args.a1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.a2.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.a3.emoji
+													.replace(oEmoji, "⭕")
+													.replace(xEmoji, "❌")}\n${Args.b1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.b2.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.b3.emoji
+													.replace(oEmoji, "⭕")
+													.replace(xEmoji, "❌")}\n${Args.c1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.c2.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.c3.emoji
+													.replace(oEmoji, "⭕")
+													.replace(xEmoji, "❌")}\n\`\`\``.replaceAll(dashmoji, "➖"),
+											),
+										],
+										components: [],
+									});
+								}
 							}
+						}
 
 						m.edit({
 							content: `<@${Args.userid}>`,
@@ -437,7 +442,7 @@ async function tictactoe(interaction, options = {}) {
 								epm.setDescription(
 									interaction.translate("fun/tictactoe:WAITING", {
 										user: Args.userid,
-										emoji: Args.user == 0 ? `${client.emojis.cache.get(o_emoji) || "⭕"}` : `${client.emojis.cache.get(x_emoji) || "❌"}`,
+										emoji: Args.user === 0 ? `${client.emojis.cache.get(oEmoji) || "⭕"}` : `${client.emojis.cache.get(xEmoji) || "❌"}`,
 									}),
 								),
 							],
@@ -458,18 +463,18 @@ async function tictactoe(interaction, options = {}) {
 
 								ttt(m);
 							} else {
-								if (Args.user == 0) {
+								if (Args.user === 0) {
 									Args.user = 1;
 									Args[b.customId] = {
 										style: ButtonStyle.Success,
-										emoji: o_emoji,
+										emoji: oEmoji,
 										disabled: true,
 									};
 								} else {
 									Args.user = 0;
 									Args[b.customId] = {
 										style: ButtonStyle.Danger,
-										emoji: x_emoji,
+										emoji: xEmoji,
 										disabled: true,
 									};
 								}
@@ -487,49 +492,49 @@ async function tictactoe(interaction, options = {}) {
 										.filter(key => predicate(obj[key]))
 										.reduce((res, key) => ((res[key] = obj[key]), res), {});
 								const Brgs = objectFilter(
-									map(Args, (_, fruit) => fruit.emoji == dashmoji),
-									num => num == true,
+									map(Args, (_, fruit) => fruit.emoji === dashmoji),
+									num => num === true,
 								);
 
-								if (Object.keys(Brgs).length == 0) {
-									if (Args.a1.emoji == o_emoji && Args.b1.emoji == o_emoji && Args.c1.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
-									if (Args.a2.emoji == o_emoji && Args.b2.emoji == o_emoji && Args.c2.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
-									if (Args.a3.emoji == o_emoji && Args.b3.emoji == o_emoji && Args.c3.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
-									if (Args.a1.emoji == o_emoji && Args.b2.emoji == o_emoji && Args.c3.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
-									if (Args.a3.emoji == o_emoji && Args.b2.emoji == o_emoji && Args.c1.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
-									if (Args.a1.emoji == o_emoji && Args.a2.emoji == o_emoji && Args.a3.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
-									if (Args.b1.emoji == o_emoji && Args.b2.emoji == o_emoji && Args.b3.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
-									if (Args.c1.emoji == o_emoji && Args.c2.emoji == o_emoji && Args.c3.emoji == o_emoji) won["<:O_:863314110560993340>"] = true;
+								if (Object.keys(Brgs).length === 0) {
+									if (Args.a1.emoji === oEmoji && Args.b1.emoji === oEmoji && Args.c1.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
+									if (Args.a2.emoji === oEmoji && Args.b2.emoji === oEmoji && Args.c2.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
+									if (Args.a3.emoji === oEmoji && Args.b3.emoji === oEmoji && Args.c3.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
+									if (Args.a1.emoji === oEmoji && Args.b2.emoji === oEmoji && Args.c3.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
+									if (Args.a3.emoji === oEmoji && Args.b2.emoji === oEmoji && Args.c1.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
+									if (Args.a1.emoji === oEmoji && Args.a2.emoji === oEmoji && Args.a3.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
+									if (Args.b1.emoji === oEmoji && Args.b2.emoji === oEmoji && Args.b3.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
+									if (Args.c1.emoji === oEmoji && Args.c2.emoji === oEmoji && Args.c3.emoji === oEmoji) won["<:O_:863314110560993340>"] = true;
 
-									if (won["<:O_:863314110560993340>"] == true) return ttt(m);
-									else if (won["<:X_:863314044781723668>"] == true) return;
+									if (won["<:O_:863314110560993340>"] === true) return ttt(m);
+									else if (won["<:X_:863314044781723668>"] === true) return;
 									else {
 										ttt(m);
 
-										if (options.resultBtn === true)
-											return m
-												.edit({
-													content: interaction.translate("fun/tictactoe:TIE"),
-													embeds: [epm.setDescription(interaction.translate("fun/tictactoe:TIE_DESC"))],
-												});
-										else
+										if (options.resultBtn === true) {
+											return m.edit({
+												content: interaction.translate("fun/tictactoe:TIE"),
+												embeds: [epm.setDescription(interaction.translate("fun/tictactoe:TIE_DESC"))],
+											});
+										} else {
 											return m
 												.edit({
 													content: interaction.translate("fun/tictactoe:TIE"),
 													embeds: [
 														epm.setDescription(
-															`${interaction.translate("fun/tictactoe:TIE_DESC")}!\n\`\`\`\n${Args.a1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.a2.emoji
-																.replace(o_emoji, "⭕")
-																.replace(x_emoji, "❌")} | ${Args.a3.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")}\n${Args.b1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.b2.emoji
-																.replace(o_emoji, "⭕")
-																.replace(x_emoji, "❌")} | ${Args.b3.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")}\n${Args.c1.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")} | ${Args.c2.emoji
-																.replace(o_emoji, "⭕")
-																.replace(x_emoji, "❌")} | ${Args.c3.emoji.replace(o_emoji, "⭕").replace(x_emoji, "❌")}\n\`\`\``.replaceAll(dashmoji, "➖"),
+															`${interaction.translate("fun/tictactoe:TIE_DESC")}!\n\`\`\`\n${Args.a1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.a2.emoji
+																.replace(oEmoji, "⭕")
+																.replace(xEmoji, "❌")} | ${Args.a3.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")}\n${Args.b1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.b2.emoji
+																.replace(oEmoji, "⭕")
+																.replace(xEmoji, "❌")} | ${Args.b3.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")}\n${Args.c1.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")} | ${Args.c2.emoji
+																.replace(oEmoji, "⭕")
+																.replace(xEmoji, "❌")} | ${Args.c3.emoji.replace(oEmoji, "⭕").replace(xEmoji, "❌")}\n\`\`\``.replaceAll(dashmoji, "➖"),
 														),
 													],
 													components: [],
 												})
 												.catch(() => {});
+										}
 									}
 								}
 
@@ -537,20 +542,21 @@ async function tictactoe(interaction, options = {}) {
 							}
 						});
 						collector.on("end", (collected, reason) => {
-							if (collected.size === 0 && reason == "time")
+							if (collected.size === 0 && reason === "time") {
 								m.edit({
 									content: interaction.translate("fun/tictactoe:NO_ANSWER", {
 										user: Args.userid,
 									}),
 									components: [],
 								});
+							}
 						});
 					}
 				}
 			});
 
 			collector.on("end", (_, reason) => {
-				if (reason == "time") {
+				if (reason === "time") {
 					const embed = client.embed({
 						author: {
 							name: user.getUsername(),
@@ -570,7 +576,7 @@ async function tictactoe(interaction, options = {}) {
 						components: [],
 					});
 				}
-				if (reason == "decline") {
+				if (reason === "decline") {
 					const embed = client.embed({
 						author: {
 							name: user.getUsername(),
@@ -594,6 +600,4 @@ async function tictactoe(interaction, options = {}) {
 			console.log("TicTacToe errored:", e);
 		}
 	});
-}
-
-module.exports = tictactoe;
+};

@@ -1,4 +1,4 @@
-const { CronJob } = require("cron");
+import { CronJob } from "cron";
 
 /**
  *
@@ -61,5 +61,9 @@ async function checkBirthdays(client) {
 	}
 }
 
-module.exports.init = async client => new CronJob("0 5 * * *", checkBirthdays(client), null, true, "Europe/Moscow");
-module.exports.run = async client => await checkBirthdays(client);
+export async function init(client) {
+	new CronJob("0 5 * * *", checkBirthdays(client), null, true, "Europe/Moscow");
+}
+export async function run(client) {
+	await checkBirthdays(client);
+}

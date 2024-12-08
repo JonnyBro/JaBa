@@ -1,5 +1,5 @@
-const { ActivityType } = require("discord.js");
-const BaseEvent = require("../base/BaseEvent");
+import { ActivityType } from "discord.js";
+import BaseEvent from "../base/BaseEvent";
 
 class Ready extends BaseEvent {
 	constructor() {
@@ -27,8 +27,6 @@ class Ready extends BaseEvent {
 
 		const checkReminds = require("../helpers/checkReminds");
 		checkReminds.init(client);
-
-		if (client.config.dashboard.enabled) await client.dashboard.load(client);
 
 		client.logger.ready(`Loaded a total of ${commands.length} command(s).`);
 		client.logger.ready(`${client.user.getUsername()}, ready to serve ${users} members in ${servers} servers.`);
@@ -63,4 +61,4 @@ class Ready extends BaseEvent {
 	}
 }
 
-module.exports = Ready;
+export default Ready;

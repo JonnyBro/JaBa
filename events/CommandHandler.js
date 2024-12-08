@@ -1,5 +1,5 @@
-const { InteractionType } = require("discord.js");
-const BaseEvent = require("../base/BaseEvent");
+import { InteractionType } from "discord.js";
+import BaseEvent from "../base/BaseEvent";
 
 class CommandHandler extends BaseEvent {
 	constructor() {
@@ -33,12 +33,10 @@ class CommandHandler extends BaseEvent {
 		if (interaction.type !== InteractionType.ApplicationCommand || !interaction.isCommand()) return;
 
 		// IAT Guild Command Check
-		if (command?.dirname.includes("IAT") && interaction.guildId !== "1039187019957555252")
-			return interaction.reply({ content: "IAT only", ephemeral: true });
+		if (command?.dirname.includes("IAT") && interaction.guildId !== "1039187019957555252") return interaction.reply({ content: "IAT only", ephemeral: true });
 
 		// Owner-only command check
-		if (command.ownerOnly && interaction.user.id !== client.config.owner.id)
-			return interaction.error("misc:OWNER_ONLY", null, { ephemeral: true });
+		if (command.ownerOnly && interaction.user.id !== client.config.owner.id) return interaction.error("misc:OWNER_ONLY", null, { ephemeral: true });
 
 		// First command achievement check
 		const { firstCommand } = interaction.data.user.achievements;
@@ -68,4 +66,4 @@ class CommandHandler extends BaseEvent {
 	}
 }
 
-module.exports = CommandHandler;
+export default CommandHandler;

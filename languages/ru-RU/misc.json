@@ -15,7 +15,7 @@
 	"OPTION_NAN_ALL": "Укажите целое число больше 0 или `all`",
 	"OWNER_ONLY": "Данную команду может использовать только владелец бота",
 	"SELECT_CANCELED": "Выбор отменён",
-	"STATS_FOOTER": "● [Панель управления]({{dashboardLink}})\n● [Сервер поддержки]({{supportLink}})\n● [Пригласить JaBa на свой сервер]({{inviteLink}})",
+	"STATS_FOOTER": "● [Сервер поддержки]({{supportLink}})\n● [Пригласить JaBa на свой сервер]({{inviteLink}})",
 	"TIMED_OUT": "Время вышло",
 	"JUMP_TO_PAGE": "Укажите страницу к которой хотите перейти (максимум **{{length}}**):",
 	"QUOTE_TITLE": "Сообщение от {{user}}",

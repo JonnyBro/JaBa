@@ -23,8 +23,6 @@
 	"AUTO_SANCTIONS": "Automatic Sanctions",
 	"BAN_CONTENT": "Ban: After **{{count}}** warnings",
 	"BAN_NOT_DEFINED": "Ban: Not set",
-	"DASHBOARD_TITLE": "Modify Settings",
-	"DASHBOARD_CONTENT": "Click here to go to the dashboard",
 	"GOODBYE_TITLE": "Farewell",
 	"GOODBYE_CONTENT": "Channel: {{channel}}\nCard: {{withImage}}",
 	"KICK_CONTENT": "Kick: After **{{count}}** warnings",

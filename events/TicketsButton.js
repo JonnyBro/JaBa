@@ -1,5 +1,5 @@
-const { ButtonBuilder, ActionRowBuilder, ButtonStyle, ChannelType, PermissionsBitField } = require("discord.js");
-const BaseEvent = require("../base/BaseEvent");
+import { ButtonBuilder, ActionRowBuilder, ButtonStyle, ChannelType, PermissionsBitField } from "discord.js";
+import BaseEvent from "../base/BaseEvent";
 
 class CommandHandler extends BaseEvent {
 	constructor() {
@@ -60,9 +60,13 @@ class CommandHandler extends BaseEvent {
 			});
 
 			await logChannel.send({ embeds: [logEmbed] });
-			await interaction.success("tickets/createticketembed:TICKET_CREATED", {
-				channel: channel.toString(),
-			}, { ephemeral: true });
+			await interaction.success(
+				"tickets/createticketembed:TICKET_CREATED",
+				{
+					channel: channel.toString(),
+				},
+				{ ephemeral: true },
+			);
 
 			await channel.send(`<@${interaction.user.id}>`);
 
@@ -75,14 +79,8 @@ class CommandHandler extends BaseEvent {
 				description: interaction.translate("tickets/createticketembed:TICKET_CREATED_DESC"),
 			});
 
-			const closeButton = new ButtonBuilder()
-				.setCustomId("close_ticket")
-				.setLabel(interaction.translate("tickets/closeticket:CLOSE_TICKET"))
-				.setStyle(ButtonStyle.Danger);
-			const transcriptButton = new ButtonBuilder()
-				.setCustomId("transcript_ticket")
-				.setLabel(interaction.translate("tickets/closeticket:TRANSCRIPT_TICKET"))
-				.setStyle(ButtonStyle.Secondary);
+			const closeButton = new ButtonBuilder().setCustomId("close_ticket").setLabel(interaction.translate("tickets/closeticket:CLOSE_TICKET")).setStyle(ButtonStyle.Danger);
+			const transcriptButton = new ButtonBuilder().setCustomId("transcript_ticket").setLabel(interaction.translate("tickets/closeticket:TRANSCRIPT_TICKET")).setStyle(ButtonStyle.Secondary);
 			const row = new ActionRowBuilder().addComponents(closeButton, transcriptButton);
 
 			guildData.plugins.tickets.count++;
@@ -135,14 +133,18 @@ class CommandHandler extends BaseEvent {
 						});
 						transcript += "---- TICKET CLOSED ----\n";
 
-						if (transcriptionLogs !== null) interaction.guild.channels.cache.get(transcriptionLogs).send({ content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: `<#${interaction.channelId}>` }), files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }] });
+						if (transcriptionLogs !== null) {
+							interaction.guild.channels.cache
+								.get(transcriptionLogs)
+								.send({ content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: `<#${interaction.channelId}>` }), files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }] });
+						}
 
 						try {
 							await interaction.user.send({
 								content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: interaction.channel.name }),
 								files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }],
 							});
-						} catch (e) {
+						} catch {
 							interaction.followUp({ content: interaction.translate("misc:CANT_DM"), ephemeral: true });
 						}
 					}
@@ -181,7 +183,7 @@ class CommandHandler extends BaseEvent {
 						content: interaction.translate("tickets/closeticket:TRANSCRIPT", { channel: `<#${interaction.channelId}>` }),
 						files: [{ attachment: Buffer.from(transcript), name: `${interaction.channel.name}.txt` }],
 					});
-				} catch (error) {
+				} catch {
 					interaction.followUp({ content: interaction.translate("misc:CANT_DM"), ephemeral: true });
 				}
 			} else return;
@@ -189,4 +191,4 @@ class CommandHandler extends BaseEvent {
 	}
 }
 
-module.exports = CommandHandler;
+export default CommandHandler;
