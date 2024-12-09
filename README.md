@@ -5,7 +5,6 @@ JaBa is an open source Discord Bot written by [Jonny_Bro](https://github.com/Jon
 
 [![image](https://img.shields.io/discord/892727526911258654?logo=discord&&colorB=00BFFF&label=Discord&style=flat-square)](https://discord.gg/Ptkj2n9nzZ)
 [![image](https://img.shields.io/badge/discord.js-v14.14.1-blue.svg?logo=npm)](https://github.com/discordjs/discord.js)
-[![image](https://www.codefactor.io/repository/github/JonnyBro/JaBa/badge)](https://www.codefactor.io/repository/github/JonnyBro/JaBa)
 [![image](https://img.shields.io/github/license/JonnyBro/JaBa?label=License&style=flat-square)](https://github.com/JonnyBro/JaBa/blob/main/LICENSE)
 
 ## Functionality
