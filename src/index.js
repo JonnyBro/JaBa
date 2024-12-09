@@ -5,7 +5,7 @@
 // import languages from "./helpers/languages.js";
 
 import { GatewayIntentBits } from "discord.js";
-import { ExtendedClient } from "./base/newClient.js";
+import { ExtendedClient } from "./structures/client.js";
 
 export const client = new ExtendedClient({
 	intents: [

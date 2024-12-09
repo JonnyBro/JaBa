@@ -2,10 +2,10 @@
     "name": "jaba",
     "version": "4.6.7",
     "description": "My Discord Bot",
-    "main": "index.js",
+    "main": "src/index.js",
     "type": "module",
     "scripts": {
-        "start": "node ."
+        "start": "node src/index.js"
     },
     "author": "https://github.com/JonnyBro",
     "dependencies": {

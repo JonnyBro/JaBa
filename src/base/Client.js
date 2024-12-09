@@ -10,8 +10,8 @@ import { promises as fs } from "fs";
 import { setTimeout } from "timers/promises";
 import mongoose from "mongoose";
 
-import config from "../config.js";
-import * as emojis from "../emojis.json";
+import config from "../../config.js";
+import * as emojis from "../../emojis.json";
 import langs from "../languages/language-meta.js";
 import logger from "../helpers/logger.js";
 import * as funcs from "../helpers/functions.js";
@@ -327,7 +327,7 @@ class JaBaClient extends Client {
 	/**
 	 * Returns a User data from the database.
 	 * @param {string} userID - The ID of the user to find or create.
-	 * @returns {Promise<import("./User")>} The user data object, either retrieved from the database or newly created.
+	 * @returns {Promise<import("./User.js")>} The user data object, either retrieved from the database or newly created.
 	 */
 	async getUserData(userID) {
 		let userData = await this.usersData.findOne({ id: userID });
@@ -346,7 +346,7 @@ class JaBaClient extends Client {
 	 * Returns a Member data from the database.
 	 * @param {string} memberId - The ID of the member to find or create.
 	 * @param {string} guildId - The ID of the guild the member belongs to.
-	 * @returns {Promise<import("./Member")>} The member data object, either retrieved from the database or newly created.
+	 * @returns {Promise<import("./Member.js")>} The member data object, either retrieved from the database or newly created.
 	 */
 	async getMemberData(memberId, guildId) {
 		let memberData = await this.membersData.findOne({ guildID: guildId, id: memberId });
@@ -370,7 +370,7 @@ class JaBaClient extends Client {
 	/**
 	 * Returns a Guild data from the database.
 	 * @param {string} guildId - The ID of the guild to find or create.
-	 * @returns {Promise<import("./Guild")>} The guild data object, either retrieved from the database or newly created.
+	 * @returns {Promise<import("./Guild.js")>} The guild data object, either retrieved from the database or newly created.
 	 */
 	async getGuildData(guildId) {
 		let guildData = await this.guildsData.findOne({ id: guildId }).populate("members");
