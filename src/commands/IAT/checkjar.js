@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand"),
-	fetch = require("node-fetch"),
-	moment = require("moment");
+	fetch = require("node-fetch");
 
 class Checkjar extends BaseCommand {
 	/**
@@ -56,7 +55,7 @@ class Checkjar extends BaseCommand {
 		jarTransactions.length = 10;
 
 		jarTransactions.forEach(t => {
-			const time = moment.unix(t.time);
+			const time = new Intl.DateTimeFormat("ru-RU").format(t.time);
 
 			embed.data.fields.push([
 				{

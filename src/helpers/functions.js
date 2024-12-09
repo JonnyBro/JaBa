@@ -1,5 +1,3 @@
-import moment from "moment";
-
 /**
  * Asynchronously iterates over a collection and executes a callback function for each item.
  *
@@ -69,6 +67,7 @@ export function randomNum(min = 0, max = 100) {
 
 	return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
 /**
  * Formats a date for the specified client and locale.
  *
@@ -79,24 +78,9 @@ export function randomNum(min = 0, max = 100) {
  * @returns {string} The formatted date.
  */
 export function printDate(client, date, format = null, locale = client.defaultLanguage.name) {
-	const languageData = client.languages.find(language => language.name === locale);
-	if (format === "" || format === null) format = languageData.defaultMomentFormat;
-	return moment(new Date(date)).locale(languageData.moment).format(format);
-}
-/**
- * Formats a time value relative to the current time.
- *
- * @param {Object} client - The client object containing language data.
- * @param {string|number|Date} time - The time value to format.
- * @param {boolean} [type=false] - If true, formats the time as "X time ago", otherwise formats it as "in X time".
- * @param {boolean} [prefix=true] - If true, includes a prefix like "in" or "ago" in the formatted time.
- * @param {string} [locale=client.defaultLanguage.name] - The locale to use for formatting the time.
- * @returns {string} The formatted time value.
- */
-export function convertTime(client, time, type = false, prefix = true, locale = client.defaultLanguage.name) {
-	const languageData = client.languages.find(language => language.name === locale);
-	const m = moment(time).locale(languageData.moment);
-	return type ? m.toNow(!prefix) : m.fromNow(!prefix);
+	const { format: languageFormat, locale: localeFormat } = client.languages.find(language => language.name === locale);
+	if (format === "" || format === null) format = languageFormat;
+	return new Intl.DateTimeFormat(localeFormat).format(date);
 }
 
 /**
