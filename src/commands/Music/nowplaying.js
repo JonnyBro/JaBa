@@ -270,7 +270,7 @@ async function updateEmbed(interaction, queue) {
 			{ name: "\u200B", value: "\u200B", inline: true },
 			{
 				name: interaction.translate("common:VIEWS"),
-				value: track.raw.live ? "Live" : new Intl.NumberFormat(interaction.client.defaultLanguage.moment, { notation: "standard" }).format(track.raw.views),
+				value: track.raw.live ? "Live" : new Intl.NumberFormat(interaction.client.defaultLanguage.locale, { notation: "standard" }).format(track.raw.views),
 				inline: true,
 			},
 			{

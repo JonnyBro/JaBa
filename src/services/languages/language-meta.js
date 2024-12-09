@@ -2,22 +2,22 @@ export default [
 	{
 		name: "en-US",
 		nativeName: "English",
-		moment: "en",
-		defaultMomentFormat: "HH:mm:ss, MMMM Do YYYY",
+		locale: "en-US",
+		format: "HH:mm:ss, MMMM Do YYYY",
 		default: true,
 	},
 	{
 		name: "ru-RU",
 		nativeName: "Русский",
-		moment: "ru",
-		defaultMomentFormat: "HH:mm:ss, Do MMMM YYYY",
+		locale: "ru-RU",
+		format: "HH:mm:ss, Do MMMM YYYY",
 		default: false,
 	},
 	{
 		name: "uk-UA",
 		nativeName: "Українська",
-		moment: "uk",
-		defaultMomentFormat: "HH:mm:ss, Do MMMM YYYY",
+		locale: "uk-UA",
+		format: "HH:mm:ss, Do MMMM YYYY",
 		default: false,
 	},
 ];
