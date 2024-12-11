@@ -1,0 +1,26 @@
+{
+	"token": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+	"userId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+	"mongoDB": "mongodb://127.0.0.1:27017/discordbot",
+	"production": true,
+	"spotify": {
+		"clientId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+		"clientSecret": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+	},
+	"youtubeCookie": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+	"support": {
+		"id": "123456789098765432",
+		"logs": "123456789098765432",
+		"invite": "https://discord.gg/discord"
+	},
+	"embed": {
+		"color": "#00FF00",
+		"footer": {
+			"text": "My Discord Bot | v1.0.0"
+		}
+	},
+	"owner": {
+		"id": "123456789098765432"
+	},
+	"apiKeys": {}
+}
