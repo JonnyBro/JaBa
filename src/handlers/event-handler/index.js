@@ -1,6 +1,6 @@
 import logger from "../../helpers/logger.js";
 import { client } from "../../index.js";
-import { getFilePaths } from "../../utils/get-path.js";
+import { getFilePaths } from "../../utils/index.js";
 import { toFileURL } from "../../utils/resolve-file.js";
 
 export const events = [];
