@@ -10,7 +10,6 @@ import { promises as fs } from "fs";
 import { setTimeout } from "timers/promises";
 import mongoose from "mongoose";
 
-import config from "../../config.js";
 import * as emojis from "../../emojis.json";
 import langs from "../languages/language-meta.js";
 import logger from "../helpers/logger.js";
