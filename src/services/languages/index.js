@@ -51,7 +51,7 @@ export default class InternationalizationService {
 			backend: {
 				loadPath: resolve(this.options.localesPath, "./{{lng}}/{{ns}}.json"),
 			},
-			debug: this.client.configService.get("production") ? true : false,
+			debug: this.client.configService.get("production") ? false : true,
 			fallbackLng: this.options.defaultLanguage,
 			preload: languages,
 			ns: namespaces,
