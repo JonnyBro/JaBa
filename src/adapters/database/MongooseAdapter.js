@@ -27,6 +27,6 @@ export default class MongooseAdapter extends IDatabaseAdapter {
 
 	async disconnect() {
 		await mongoose.disconnect();
-		console.warn("Database disconnected.");
+		logger.warn("Database disconnected.");
 	}
 }
