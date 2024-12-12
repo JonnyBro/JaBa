@@ -1,3 +1,4 @@
+import { resolve } from "node:path";
 import logger from "../../helpers/logger.js";
 import { client } from "../../index.js";
 import { getFilePaths } from "../../utils/index.js";
@@ -12,7 +13,8 @@ export const init = async () => {
 
 const buildEvents = async () => {
 	try {
-		const eventFilePaths = (await getFilePaths("./newEvents", true)).filter(path => path.endsWith(".js"));
+		const eventPath = resolve(client.configService.get("paths.events"));
+		const eventFilePaths = (await getFilePaths(eventPath, true)).filter(path => path.endsWith(".js"));
 
 		for (const eventFilePath of eventFilePaths) {
 			const { data, run } = await import(toFileURL(eventFilePath));

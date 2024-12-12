@@ -1,3 +1,4 @@
+import { resolve } from "node:path";
 import logger from "../../helpers/logger.js";
 import { client } from "../../index.js";
 import { getFilePaths } from "../../utils/index.js";
@@ -16,7 +17,8 @@ export const init = async () => {
 };
 
 const buildCommands = async () => {
-	const commandFilePaths = (await getFilePaths("./newCommands", true)).filter(path => path.endsWith(".js"));
+	const cmdPath = resolve(client.configService.get("paths.commands"));
+	const commandFilePaths = (await getFilePaths(cmdPath, true)).filter(path => path.endsWith(".js"));
 
 	for (const cmdFilePath of commandFilePaths) {
 		const { data, run } = await import(toFileURL(cmdFilePath));

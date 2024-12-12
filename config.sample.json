@@ -22,5 +22,11 @@
 	"owner": {
 		"id": "123456789098765432"
 	},
-	"apiKeys": {}
+	"apiKeys": {},
+	"paths": {
+		"commands": "./src/commands",
+		"events": "./src/events",
+		"locales": "./src/services/languages/locales"
+	},
+	"defaultLang": "en-US"
 }
