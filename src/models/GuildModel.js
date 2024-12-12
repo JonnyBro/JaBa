@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { langs } from "../languages/language-meta.js";
+import { client } from "../index.js";
 
 export default model(
 	"Guild",
@@ -9,7 +9,7 @@ export default model(
 		membersData: { type: Object, default: {} },
 		members: [{ type: Schema.Types.ObjectId, ref: "Member" }],
 
-		language: { type: String, default: langs.find(l => l.default).name },
+		language: { type: String, default: client.configService.get("defaultLang") },
 		plugins: {
 			type: Object,
 			default: {

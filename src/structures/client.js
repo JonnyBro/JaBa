@@ -3,7 +3,8 @@ import MongooseAdapter from "../adapters/database/MongooseAdapter.js";
 import { init as initCommands } from "../handlers/command-handler/index.js";
 import { init as initEvents } from "../handlers/event-handler/index.js";
 import logger from "../helpers/logger.js";
-import configService from "../services/config/index.js";
+import ConfigService from "../services/config/index.js";
+import InternationalizationService from "../services/languages/index.js";
 
 export class ExtendedClient extends Client {
 	/**
@@ -12,8 +13,9 @@ export class ExtendedClient extends Client {
 	constructor(options) {
 		super(options);
 
-		this.configService = new configService();
+		this.configService = new ConfigService();
 		this.adapter = new MongooseAdapter(this.configService.get("mongoDB"));
+		this.i18n = new InternationalizationService(this);
 	}
 
 	async init() {
