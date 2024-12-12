@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import IDatabaseAdapter from "./IDatabaseAdapter.js";
+import logger from "../../helpers/logger.js";
 
 export default class MongooseAdapter extends IDatabaseAdapter {
 	/**
@@ -21,11 +22,11 @@ export default class MongooseAdapter extends IDatabaseAdapter {
 
 	async connect() {
 		await mongoose.connect(this.uri, this.options);
-		console.log("Database connected.");
+		logger.log("Database connected.");
 	}
 
 	async disconnect() {
 		await mongoose.disconnect();
-		console.log("Database disconnected.");
+		console.warn("Database disconnected.");
 	}
 }
