@@ -21,27 +21,27 @@ const logLevels = {
 };
 
 export default {
-	log(content) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.LOG} ${content}`);
+	log(...content) {
+		return console.log(`[${format(Date.now())}]: ${logLevels.LOG} ${content.join(" ")}`);
 	},
 
-	warn(content) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.WARN} ${content}`);
+	warn(...content) {
+		return console.log(`[${format(Date.now())}]: ${logLevels.WARN} ${content.join(" ")}`);
 	},
 
-	error(content) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.ERROR} ${content}`);
+	error(...content) {
+		return console.log(`[${format(Date.now())}]: ${logLevels.ERROR} ${content.join(" ")}`);
 	},
 
-	debug(content) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.DEBUG} ${content}`);
+	debug(...content) {
+		return console.log(`[${format(Date.now())}]: ${logLevels.DEBUG} ${content.join(" ")}`);
 	},
 
-	cmd(content) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.CMD} ${content}`);
+	cmd(...content) {
+		return console.log(`[${format(Date.now())}]: ${logLevels.CMD} ${content.join(" ")}`);
 	},
 
-	ready(content) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.READY} ${content}`);
+	ready(...content) {
+		return console.log(`[${format(Date.now())}]: ${logLevels.READY} ${content.join(" ")}`);
 	},
 };
