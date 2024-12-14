@@ -1,4 +1,5 @@
 import { Client } from "discord.js";
+import { Player } from "discord-player";
 import MongooseAdapter from "../adapters/database/MongooseAdapter.js";
 import { init as initCommands } from "../handlers/command-handler/index.js";
 import { init as initEvents } from "../handlers/event-handler/index.js";
@@ -20,6 +21,7 @@ export class ExtendedClient extends Client {
 		this.configService = new ConfigService();
 		this.adapter = new MongooseAdapter(this.configService.get("mongoDB"));
 		this.i18n = new InternationalizationService(this);
+		new Player(this);
 
 		SUPER_CONTEXT.enterWith(this);
 	}

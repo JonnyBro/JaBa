@@ -3,6 +3,7 @@ import logger from "../../helpers/logger.js";
 import useClient from "../../utils/use-client.js";
 import { getFilePaths } from "../../utils/index.js";
 import { toFileURL } from "../../utils/resolve-file.js";
+import { useMainPlayer } from "discord-player";
 
 export const events = [];
 
@@ -39,7 +40,9 @@ const buildEvents = async () => {
 
 const registerEvents = async () => {
 	const client = useClient();
+	const player = useMainPlayer();
 	for (const { data, run } of events) {
+		if (data.player) player.events.on(data.name, run);
 		if (data.once) client.once(data.name, run);
 		else client.on(data.name, run);
 	}
