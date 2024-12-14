@@ -15,7 +15,7 @@
 	"OPTION_NAN_ALL": "Please specify an integer greater than 0 or `all`.",
 	"OWNER_ONLY": "Only the bot owner can use this command.",
 	"SELECT_CANCELED": "Selection canceled.",
-	"STATS_FOOTER": "● [Dashboard]({{dashboardLink}})\n● [Support Server]({{supportLink}})\n● [Invite JaBa to Your Server]({{inviteLink}})",
+	"STATS_FOOTER": "● [Support Server]({{supportLink}})\n● [Invite JaBa to Your Server]({{inviteLink}})",
 	"TIMED_OUT": "Time out.",
 	"JUMP_TO_PAGE": "Specify the page you want to jump to (maximum **{{length}}**):",
 	"QUOTE_TITLE": "Message from {{user}}",

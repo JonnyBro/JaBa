@@ -156,10 +156,6 @@ class Config extends BaseCommand {
 							`${interaction.translate("administration/config:TICKETLOGS")}: ${guildData.plugins?.tickets?.ticketLogs ? `<#${guildData.plugins?.tickets?.ticketLogs}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n` +
 							`${interaction.translate("administration/config:TRANSCRIPTIONLOGS")}: ${guildData.plugins?.tickets?.transcriptionLogs ? `<#${guildData.plugins?.tickets?.transcriptionLogs}>` : `*${interaction.translate("common:NOT_DEFINED")}*`}\n`,
 					},
-					{
-						name: interaction.translate("administration/config:DASHBOARD_TITLE"),
-						value: `[${interaction.translate("administration/config:DASHBOARD_CONTENT")}](${client.config.dashboard.domain})`,
-					},
 				],
 			});
 
