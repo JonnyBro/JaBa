@@ -1,26 +1,10 @@
-import { GatewayIntentBits } from "discord.js";
 import { ExtendedClient } from "./structures/client.js";
 import logger from "./helpers/logger.js";
+import { CLIENT_INTENTS, CLIENT_ALLOWED_MENTIONS } from "./constants/index.js";
 
-export const client = new ExtendedClient({
-	intents: [
-		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildMembers,
-		GatewayIntentBits.GuildModeration,
-		GatewayIntentBits.GuildEmojisAndStickers,
-		GatewayIntentBits.GuildIntegrations,
-		GatewayIntentBits.GuildInvites,
-		GatewayIntentBits.GuildVoiceStates,
-		GatewayIntentBits.GuildPresences,
-		GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.GuildMessageReactions,
-		GatewayIntentBits.GuildMessageTyping,
-		GatewayIntentBits.MessageContent,
-		GatewayIntentBits.DirectMessageTyping,
-		GatewayIntentBits.DirectMessages,
-		GatewayIntentBits.DirectMessageReactions,
-	],
-	allowedMentions: { parse: ["everyone", "roles", "users"] },
+const client = new ExtendedClient({
+	intents: CLIENT_INTENTS,
+	allowedMentions: CLIENT_ALLOWED_MENTIONS,
 });
 
 client.init();

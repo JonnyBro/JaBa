@@ -1,5 +1,7 @@
 import { model, Schema } from "mongoose";
-import { client } from "../index.js";
+import useClient from "../utils/use-client.js";
+
+const client = useClient();
 
 export default model(
 	"Guild",
