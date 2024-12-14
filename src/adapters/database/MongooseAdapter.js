@@ -29,4 +29,20 @@ export default class MongooseAdapter extends IDatabaseAdapter {
 		await mongoose.disconnect();
 		logger.warn("Database disconnected.");
 	}
+
+	async find(model, query = {}, options = {}) {
+		return model.find(query, null, options).exec();
+	}
+
+	async findOne(model, query = {}, options = {}) {
+		return model.findOne(query, null, options).exec();
+	}
+
+	async updateOne(model, filter, update, options = {}) {
+		return model.updateOne(filter, update, options).exec();
+	}
+
+	async deleteOne(model, filter) {
+		return model.deleteOne(filter).exec();
+	}
 }
