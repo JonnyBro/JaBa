@@ -28,7 +28,7 @@ client.init();
 client
 	.on("disconnect", () => logger.warn("Bot disconnected."))
 	.on("reconnecting", () => logger.warn("Bot reconnecting..."))
-	.on("warn", console.log)
-	.on("error", console.log);
+	.on("warn", logger.log)
+	.on("error", logger.log);
 
-process.on("unhandledRejection", console.log).on("uncaughtException", console.log);
+process.on("unhandledRejection", logger.log).on("uncaughtException", logger.log);
