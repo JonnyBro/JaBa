@@ -1,4 +1,4 @@
-import ICacheAdapter from "./ICacheAdapter";
+import ICacheAdapter from "./ICacheAdapter.js";
 
 export default class MapCache extends ICacheAdapter {
 	constructor() {
