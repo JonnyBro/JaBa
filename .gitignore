@@ -3,7 +3,7 @@
 Thumbs.db
 
 # Bot Configuration
-/config.js
+/config.json
 
 # DB
 /giveaways.json
