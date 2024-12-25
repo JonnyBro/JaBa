@@ -7,6 +7,9 @@ import logger from "../helpers/logger.js";
 import ConfigService from "../services/config/index.js";
 import InternationalizationService from "../services/languages/index.js";
 import { SUPER_CONTEXT } from "../constants/index.js";
+import GuildModel from "../models/GuildModel.js";
+import UserModel from "../models/UserModel.js";
+import MemberModel from "../models/MemberModel.js";
 
 export class ExtendedClient extends Client {
 	/**
@@ -21,6 +24,7 @@ export class ExtendedClient extends Client {
 		this.configService = new ConfigService();
 		this.adapter = new MongooseAdapter(this.configService.get("mongoDB"));
 		this.i18n = new InternationalizationService(this);
+		this.cacheReminds = new Map();
 		new Player(this);
 
 		SUPER_CONTEXT.enterWith(this);
@@ -36,5 +40,61 @@ export class ExtendedClient extends Client {
 		} catch (error) {
 			logger.error(error);
 		}
+	}
+
+	/**
+	 * Retrieves a guild data object from the database.
+	 * @param {string} guildId - The ID of the guild to find or create.
+	 * @returns {Promise<GuildModel>} The guild data object, either retrieved from the database or newly created.
+	 */
+	async getGuildData(guildId) {
+		let guildData = await this.adapter.findOne(GuildModel, { id: guildId });
+
+		if (!guildData) {
+			guildData = new GuildModel({ id: guildId });
+			await guildData.save();
+		}
+
+		return guildData;
+	}
+
+	/**
+	 * Returns a User data from the database.
+	 * @param {string} userID - The ID of the user to find or create.
+	 * @returns {Promise<UserModel>} The user data object, either retrieved from the database or newly created.
+	 */
+	async getUserData(userID) {
+		let userData = await this.adapter.findOne(UserModel, { id: userID });
+
+		if (!userData) {
+			userData = new UserModel({ id: userID });
+			await userData.save();
+		}
+
+		return userData;
+	}
+
+	/**
+	 * Returns a Member data from the database.
+	 * @param {string} memberId - The ID of the member to find or create.
+	 * @param {string} guildId - The ID of the guild the member belongs to.
+	 * @returns {Promise<MemberModel>} The member data object, either retrieved from the database or newly created.
+	 */
+	async getMemberData(memberId, guildId) {
+		let memberData = await this.adapter.findOne(MemberModel, { guildID: guildId, id: memberId });
+
+		if (!memberData) {
+			memberData = new MemberModel({ id: memberId, guildID: guildId });
+			await memberData.save();
+
+			const guildData = await this.getGuildData(guildId);
+
+			if (guildData) {
+				guildData.members.push(memberData._id);
+				await guildData.save();
+			}
+		}
+
+		return memberData;
 	}
 }
