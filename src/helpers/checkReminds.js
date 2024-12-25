@@ -1,66 +1,59 @@
-/**
- *
- * @param {import("../base/Client")} client
- */
-async function checkReminds(client) {
-	client.usersData.find({ reminds: { $gt: [] } }).then(users => {
+import UserModel from "../models/UserModel";
+import useClient from "../utils/use-client";
+
+const checkReminds = async () => {
+	const client = useClient();
+
+	client.adapter.find(UserModel, { reminds: { $gt: [] } }).then(users => {
 		for (const user of users) {
 			if (!client.users.cache.has(user.id)) client.users.fetch(user.id);
 
-			client.databaseCache.usersReminds.set(user.id, user);
+			client.cacheReminds.set(user.id, user);
 		}
 	});
 
-	client.databaseCache.usersReminds.forEach(async user => {
+	client.cacheReminds.forEach(async user => {
 		const cachedUser = client.users.cache.get(user.id);
 
-		if (cachedUser) {
-			const dateNow = Math.floor(Date.now() / 1000),
-				reminds = user.reminds,
-				mustSent = reminds.filter(r => r.sendAt < dateNow);
+		if (!cachedUser) return;
 
-			if (mustSent.length > 0) {
-				mustSent.forEach(r => {
-					const embed = client.embed({
-						author: client.translate("general/remindme:EMBED_TITLE"),
-						fields: [
-							{
-								name: client.translate("general/remindme:EMBED_CREATED"),
-								value: `<t:${r.createdAt}:f>`,
-								inline: true,
-							},
-							{
-								name: client.translate("general/remindme:EMBED_TIME"),
-								value: `<t:${r.sendAt}:f>`,
-								inline: true,
-							},
-							{
-								name: client.translate("common:MESSAGE"),
-								value: r.message,
-							},
-						],
-					});
+		const reminds = user.reminds,
+			mustSent = reminds.filter(r => r.sendAt < Math.floor(Date.now() / 1000));
 
-					cachedUser.send({
-						embeds: [embed],
-					});
-				});
+		if (!mustSent.length) return;
 
-				user.reminds = user.reminds.filter(r => r.sendAt >= dateNow);
+		mustSent.forEach(r => {
+			const embed = client.embed({
+				author: client.translate("general/remindme:EMBED_TITLE"),
+				fields: [
+					{
+						name: client.translate("general/remindme:EMBED_CREATED"),
+						value: `<t:${r.createdAt}:f>`,
+						inline: true,
+					},
+					{
+						name: client.translate("general/remindme:EMBED_TIME"),
+						value: `<t:${r.sendAt}:f>`,
+						inline: true,
+					},
+					{
+						name: client.translate("common:MESSAGE"),
+						value: r.message,
+					},
+				],
+			});
 
-				await user.save();
+			cachedUser.send({ embeds: [embed] }).then(() => {
+				client.adapter.updateOne(UserModel, { id: user.id }, { $pull: { reminds: { _id: r._id } } });
+			});
+		});
 
-				if (user.reminds.length === 0) client.databaseCache.usersReminds.delete(user.id);
-			}
-		}
+		if (!user.reminds.length) client.cacheReminds.delete(user.id);
 	});
-}
+};
 
-export async function init(client) {
+export const init = async () => {
 	setInterval(async () => {
-		await checkReminds(client);
+		await checkReminds();
 	}, 1000);
-}
-export async function run(client) {
-	await checkReminds(client);
-}
+};

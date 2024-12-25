@@ -1,69 +1,71 @@
 import { CronJob } from "cron";
+import useClient from "../utils/use-client.js";
+import UserModel from "../models/UserModel.js";
+import { createEmbed } from "../utils/create-embed.js";
+import logger from "./logger.js";
+import { getNoun } from "./functions.js";
 
-/**
- *
- * @param {import("../base/Client")} client
- */
-async function checkBirthdays(client) {
-	for (const guild of client.guilds.cache.values()) {
+const checkBirthdays = async () => {
+	const client = useClient();
+
+	const guilds = client.guilds.cache.values();
+	const users = await client.adapter.find(UserModel, { birthdate: { $gt: 1 } });
+
+	const currentData = new Date();
+	const currentYear = currentData.getFullYear();
+	const currentMonth = currentData.getMonth();
+	const currentDate = currentData.getDate();
+
+	for (const guild of guilds) {
 		try {
-			const guildData = await client.getGuildData(guild.id);
-			const channel = guildData.plugins.birthdays ? await client.channels.fetch(guildData.plugins.birthdays) : null;
+			const data = await client.getGuildData(guild.id);
+			const channel = data.plugins.birthdays ? await client.channels.fetch(data.plugins.birthdays) : null;
 
-			if (channel) {
-				const date = new Date();
-				const currentDay = date.getDate();
-				const currentMonth = date.getMonth() + 1;
-				const currentYear = date.getFullYear();
+			if (!channel) return;
 
-				const users = await client.usersData.find({ birthdate: { $gt: 1 } });
+			const userIDs = users.filter(u => guild.members.cache.has(u.id)).map(u => u.id);
 
-				for (const user of users) {
-					if (!guild.members.cache.has(user.id)) continue;
+			await Promise.all(
+				userIDs.map(async userID => {
+					const user = users.find(u => u.id === userID);
+					const userData = new Date(user.birthdate).getFullYear() <= 1970 ? new Date(user.birthdate * 1000) : new Date(user.birthdate);
+					const userYear = userData.getFullYear();
+					const userMonth = userData.getMonth();
+					const userDate = userData.getDate();
 
-					const userDate = new Date(user.birthdate).getFullYear() <= 1970 ? new Date(user.birthdate * 1000) : new Date(user.birthdate);
-					const day = userDate.getDate();
-					const month = userDate.getMonth() + 1;
-					const year = userDate.getFullYear();
-					const age = currentYear - year;
+					const age = currentYear - userYear;
 
-					if (currentMonth === month && currentDay === day) {
-						const embed = client.embed({
-							author: client.user.getUsername(),
+					if (userDate === currentDate && userMonth === currentMonth) {
+						const embed = createEmbed({
+							author: client.user.username,
 							fields: [
 								{
-									name: client.translate("economy/birthdate:HAPPY_BIRTHDAY", null, guildData.language),
-									value: client.translate(
-										"economy/birthdate:HAPPY_BIRTHDAY_MESSAGE",
-										{
-											user: user.id,
-											age: `**${age}** ${client.functions.getNoun(
-												age,
-												client.translate("misc:NOUNS:AGE:1", null, guildData.language),
-												client.translate("misc:NOUNS:AGE:2", null, guildData.language),
-												client.translate("misc:NOUNS:AGE:5", null, guildData.language),
-											)}`,
-										},
-										guildData.language,
-									),
+									name: client.translate("economy/birthdate:HAPPY_BIRTHDAY", {
+										lng: data.language,
+									}),
+									value: client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
+										lng: data.language,
+										user: user.id,
+										age: `**${age}** ${getNoun(age, [
+											client.translate("misc:NOUNS:AGE:1", null, data.language),
+											client.translate("misc:NOUNS:AGE:2", null, data.language),
+											client.translate("misc:NOUNS:AGE:5", null, data.language),
+										])}`,
+									}),
 								},
 							],
 						});
 
-						await channel.send({ embeds: [embed] }).then(m => m.react("🎉"));
+						await channel.send({ embeds: [embed] }).then(m => m.react(" "));
 					}
-				}
-			}
-		} catch (e) {
-			if (e.code === 10003) console.log(`No channel found for ${guild.name}`);
-			else console.error(`Error processing birthdays for guild "${guild.name}":`, e);
+				}),
+			);
+		} catch (error) {
+			logger.error(error);
 		}
 	}
-}
+};
 
-export async function init(client) {
-	new CronJob("0 5 * * *", checkBirthdays(client), null, true, "Europe/Moscow");
-}
-export async function run(client) {
-	await checkBirthdays(client);
+export async function init() {
+	new CronJob("0 5 * * *", checkBirthdays(), null, true, "Europe/Moscow");
 }
