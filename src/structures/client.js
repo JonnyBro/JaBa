@@ -7,9 +7,6 @@ import logger from "../helpers/logger.js";
 import ConfigService from "../services/config/index.js";
 import InternationalizationService from "../services/languages/index.js";
 import { SUPER_CONTEXT } from "../constants/index.js";
-import GuildModel from "../models/GuildModel.js";
-import UserModel from "../models/UserModel.js";
-import MemberModel from "../models/MemberModel.js";
 
 export class ExtendedClient extends Client {
 	/**
@@ -48,6 +45,7 @@ export class ExtendedClient extends Client {
 	 * @returns {Promise<GuildModel>} The guild data object, either retrieved from the database or newly created.
 	 */
 	async getGuildData(guildId) {
+		const { default: GuildModel } = await import("../models/GuildModel.js");
 		let guildData = await this.adapter.findOne(GuildModel, { id: guildId });
 
 		if (!guildData) {
@@ -64,6 +62,7 @@ export class ExtendedClient extends Client {
 	 * @returns {Promise<UserModel>} The user data object, either retrieved from the database or newly created.
 	 */
 	async getUserData(userID) {
+		const { default: UserModel } = await import("../models/GuildModel.js");
 		let userData = await this.adapter.findOne(UserModel, { id: userID });
 
 		if (!userData) {
@@ -81,6 +80,7 @@ export class ExtendedClient extends Client {
 	 * @returns {Promise<MemberModel>} The member data object, either retrieved from the database or newly created.
 	 */
 	async getMemberData(memberId, guildId) {
+		const { default: MemberModel } = await import("../models/GuildModel.js");
 		let memberData = await this.adapter.findOne(MemberModel, { guildID: guildId, id: memberId });
 
 		if (!memberData) {
