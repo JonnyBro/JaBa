@@ -80,12 +80,15 @@ export function printDate(date, locale = "en-US") {
  * Generates the appropriate noun form based on the given number and noun forms.
  *
  * @param {number} number - The number to use for determining the noun form.
- * @param {string} one - The noun form for the singular case.
- * @param {string} two - The noun form for the dual case.
- * @param {string} five - The noun form for the plural case.
+ * @param {Array} wordForms - An array of three elements: [one, two, five].
  * @returns {string} The appropriate noun form based on the given number.
  */
-export function getNoun(number, one, two, five) {
+export function getNoun(number, wordForms) {
+	if (!Array.isArray(wordForms) || wordForms.length !== 3) {
+		throw new Error("wordForms should be an array with three elements: [one, two, five]");
+	}
+
+	const [one, two, five] = wordForms;
 	let n = Math.abs(number);
 	n %= 100;
 	if (n >= 5 && n <= 20) return five;
