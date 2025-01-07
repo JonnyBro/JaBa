@@ -9,7 +9,7 @@ export default class InternationalizationService {
 	/**
 	 * Constructs an instance of the InternationalizationService.
 	 *
-	 * @param {import("../../index.js").client} client - The client instance.
+	 * @param {import("../../structures/client").ExtendedClient} client - The client instance.
 	 * @param {Object} [options={}] - Optional configuration options.
 	 */
 	constructor(client, options = {}) {
