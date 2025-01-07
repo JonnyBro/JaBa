@@ -68,16 +68,12 @@ export function randomNum(min = 0, max = 100) {
 /**
  * Formats a date for the specified client and locale.
  *
- * @param {Object} client - The client object containing language data.
  * @param {string} date - The date to format.
- * @param {string} [format=null] - The date format to use. If not provided, the default format for the client's language will be used.
- * @param {string} [locale=client.defaultLanguage.name] - The locale to use for formatting the date.
+ * @param {Intl.LocalesArgument} [locale] - The locale to use for formatting the date.
  * @returns {string} The formatted date.
  */
-export function printDate(client, date, format = null, locale = client.defaultLanguage.name) {
-	const { format: languageFormat, locale: localeFormat } = client.languages.find(language => language.name === locale);
-	if (format === "" || format === null) format = languageFormat;
-	return new Intl.DateTimeFormat(localeFormat).format(date);
+export function printDate(date, locale = "en-US") {
+	return new Intl.DateTimeFormat(locale).format(date);
 }
 
 /**
