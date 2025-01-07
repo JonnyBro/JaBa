@@ -62,10 +62,7 @@ export function shuffle(pArray) {
  * @returns {number} A random integer between min and max.
  */
 export function randomNum(min = 0, max = 100) {
-	min = Math.floor(min);
-	max = Math.floor(max);
-
-	return Math.floor(Math.random() * (max - min + 1) + min);
+	return (Math.random() * (max - min + 1)) << 0;
 }
 
 /**
