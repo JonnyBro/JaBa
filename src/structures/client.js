@@ -1,9 +1,8 @@
 import { Client } from "discord.js";
 import { Player } from "discord-player";
 import MongooseAdapter from "../adapters/database/MongooseAdapter.js";
-import { init as initCommands } from "../handlers/command-handler/index.js";
-import { init as initEvents } from "../handlers/event-handler/index.js";
 import logger from "../helpers/logger.js";
+import { Handlers } from "../handlers/index.js";
 import ConfigService from "../services/config/index.js";
 import InternationalizationService from "../services/languages/index.js";
 import { SUPER_CONTEXT } from "../constants/index.js";
@@ -23,6 +22,7 @@ export class ExtendedClient extends Client {
 		this.i18n = new InternationalizationService(this);
 		this.cacheReminds = new Map();
 		new Player(this);
+		new Handlers(this);
 
 		SUPER_CONTEXT.enterWith(this);
 	}
@@ -31,9 +31,7 @@ export class ExtendedClient extends Client {
 		try {
 			await this.adapter.connect();
 
-			return this.login(this.configService.get("token"))
-				.then(async () => await Promise.all([initCommands(), initEvents()]))
-				.catch(console.error);
+			await this.login(this.configService.get("token"));
 		} catch (error) {
 			logger.error(error);
 		}
