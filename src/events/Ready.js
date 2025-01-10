@@ -1,4 +1,7 @@
 import logger from "../helpers/logger.js";
+import { resolve } from "node:path";
+import loadCronTasks from "../utils/loadCronTasks.js";
+import { CronManager } from "../services/cron/index.js";
 
 export const data = {
 	name: "ready",
@@ -11,4 +14,11 @@ export const data = {
  */
 export async function run(client) {
 	logger.ready(client.user.tag + " is online!");
+
+	const taskPath = resolve(client.configService.get("paths.tasks"));
+
+	const cronTasks = await loadCronTasks(taskPath);
+
+	const cronManager = new CronManager(cronTasks);
+	await cronManager.init();
 }
