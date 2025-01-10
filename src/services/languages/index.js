@@ -53,6 +53,8 @@ export default class InternationalizationService {
 			},
 			debug: this.client.configService.get("production") ? false : true,
 			fallbackLng: this.options.defaultLanguage,
+			interpolation: { escapeValue: false },
+			load: "currentOnly",
 			preload: languages,
 			ns: namespaces,
 			defaultNS: namespaces[0],
