@@ -60,7 +60,7 @@ export class ExtendedClient extends Client {
 	 * @returns {Promise<UserModel>} The user data object, either retrieved from the database or newly created.
 	 */
 	async getUserData(userID) {
-		const { default: UserModel } = await import("../models/GuildModel.js");
+		const { default: UserModel } = await import("../models/UserModel.js");
 		let userData = await this.adapter.findOne(UserModel, { id: userID });
 
 		if (!userData) {
@@ -78,7 +78,7 @@ export class ExtendedClient extends Client {
 	 * @returns {Promise<MemberModel>} The member data object, either retrieved from the database or newly created.
 	 */
 	async getMemberData(memberId, guildId) {
-		const { default: MemberModel } = await import("../models/GuildModel.js");
+		const { default: MemberModel } = await import("../models/MemberModel.js");
 		let memberData = await this.adapter.findOne(MemberModel, { guildID: guildId, id: memberId });
 
 		if (!memberData) {
