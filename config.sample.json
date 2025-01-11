@@ -26,7 +26,8 @@
 	"paths": {
 		"commands": "./src/commands",
 		"events": "./src/events",
-		"locales": "./src/services/languages/locales"
+		"locales": "./src/services/languages/locales",
+		"tasks": "./src/helpers/tasks"
 	},
 	"defaultLang": "en-US"
 }
