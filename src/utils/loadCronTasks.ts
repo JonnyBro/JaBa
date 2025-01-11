@@ -1,15 +1,16 @@
+import { CronTaskData } from "@/types.js";
 import logger from "../helpers/logger.js";
 import { getFilePaths } from "./get-path.js";
 import { toFileURL } from "./resolve-file.js";
 
-const loadCronTasks = async taskPath => {
+const loadCronTasks = async (taskPath: string): Promise<CronTaskData[]> => {
 	try {
-		const filePaths = (await getFilePaths(taskPath, true)).filter(file => file.endsWith(".js"));
+		const filePaths = (await getFilePaths(taskPath, true)).filter(file => file.endsWith(".js") || file.endsWith(".ts"));
 
 		const tasks = [];
 
 		for (const filePath of filePaths) {
-			const { data } = await import(toFileURL(filePath));
+			const { data } = (await import(toFileURL(filePath))) as { data: CronTaskData };
 
 			if (!data) continue;
 

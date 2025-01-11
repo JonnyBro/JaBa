@@ -1,21 +1,34 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
+import tsParser from "@typescript-eslint/parser";
 import stylisticJs from "@stylistic/eslint-plugin-js";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
 
 /** @type {import("eslint").Linter.Config[]} */
 export default [
 	pluginJs.configs.recommended,
 	{
+		files: ["**/*.ts"],
+		ignores: ["**/*.d.ts", "dist"],
 		languageOptions: {
 			globals: globals.node,
 			ecmaVersion: "latest",
 			sourceType: "module",
+			parser: tsParser,
 		},
-		ignores: ["node_modules", "dashboard"],
 		plugins: {
+			"@typescript-eslint": tsPlugin,
 			"@stylistic/js": stylisticJs,
 		},
 		rules: {
+			"no-unused-vars": [
+				"error",
+				{
+					argsIgnorePattern: "^_", // Игнорировать переменные, начинающиеся с _
+					varsIgnorePattern: "^_", // Игнорировать переменные, начинающиеся с _
+					ignoreRestSiblings: true, // Игнорировать неиспользуемые параметры в деструктуризации
+				},
+			],
 			"arrow-body-style": ["error", "as-needed"],
 			camelcase: "error",
 			curly: ["error", "multi-line"],

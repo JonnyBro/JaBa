@@ -1,6 +1,6 @@
 import chalk from "chalk";
 
-function format(tDate) {
+function format(tDate: Date | number) {
 	return new Intl.DateTimeFormat("ru-RU", {
 		year: "numeric",
 		month: "2-digit",
@@ -21,27 +21,27 @@ const logLevels = {
 };
 
 export default {
-	log(...content) {
+	log(...content: unknown[]) {
 		return console.log(`[${format(Date.now())}]: ${logLevels.LOG} ${content.join(" ")}`);
 	},
 
-	warn(...content) {
+	warn(...content: unknown[]) {
 		return console.log(`[${format(Date.now())}]: ${logLevels.WARN} ${content.join(" ")}`);
 	},
 
-	error(...content) {
+	error(...content: unknown[]) {
 		return console.log(`[${format(Date.now())}]: ${logLevels.ERROR} ${content.join(" ")}`);
 	},
 
-	debug(...content) {
+	debug(...content: unknown[]) {
 		return console.log(`[${format(Date.now())}]: ${logLevels.DEBUG} ${content.join(" ")}`);
 	},
 
-	cmd(...content) {
+	cmd(...content: unknown[]) {
 		return console.log(`[${format(Date.now())}]: ${logLevels.CMD} ${content.join(" ")}`);
 	},
 
-	ready(...content) {
+	ready(...content: unknown[]) {
 		return console.log(`[${format(Date.now())}]: ${logLevels.READY} ${content.join(" ")}`);
 	},
 };

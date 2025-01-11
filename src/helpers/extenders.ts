@@ -1,43 +1,26 @@
-import { BaseInteraction } from "discord.js";
-import useClient from "../utils/use-client.js";
+import { BaseInteraction, User } from "discord.js";
+import useClient from "@/utils/use-client.js";
 
-export const getLocale = guildId => {
+export const getLocale = async (guildId: string) => {
 	const client = useClient();
-	const guild = client.getGuildData(guildId);
+	const guild = await client.getGuildData(guildId);
 	return guild.language;
 };
 
 const getAppEmojis = () => {
 	const client = useClient();
 
-	return client.application.emojis.cache;
+	return client.application?.emojis.cache;
 };
 
-/**
- *
- * @param {import('../structures/client.js').ExtendedClient} client
- * @param {string} prefixEmoji
- * @param {string} message
- */
-const formatReply = (prefixEmoji, message) => {
-	const emojis = getAppEmojis();
+const formatReply = (prefixEmoji: string, message: string) => {
+	const emojis = getAppEmojis()!;
 	return prefixEmoji ? `${emojis.find(e => e.name === prefixEmoji).toString()} ${message}` : `${message}`;
 };
 
-/**
- *
- * @param {import("discord.js").User} user
- * @returns
- */
-export const getUsername = user => (user.discriminator === "0" ? user.username : user.tag);
 
-/**
- *
- * @param {import("discord.js").Message | import("discord.js").BaseInteraction} context
- * @param {string} key
- * @param {unknown[]} args
- * @param {*} options
- */
+export const getUsername = (user: User) => (user.discriminator === "0" ? user.username : user.tag);
+
 export const replyTranslated = async (context, key, args, options = {}) => {
 	const client = useClient();
 	const locale = options.locale || client.configService.get("defaultLang");

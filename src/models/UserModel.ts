@@ -1,5 +1,36 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 import { createCanvas, loadImage } from "@napi-rs/canvas";
+
+export type UserReminds = {
+	message: string;
+	createdAt: number;
+	sendAt: number;
+};
+
+interface IUserSchema extends Document {
+	id: string;
+	rep: number;
+	bio: string;
+	birthdate: number;
+	lover: string;
+	registeredAt: number;
+	achievements: {
+		[key: string]: {
+			achieved: boolean;
+			progress: {
+				now: number;
+				total: number;
+			};
+		};
+	};
+	cooldowns: {
+		rep: number;
+	};
+	afk: string;
+	reminds: UserReminds[];
+	logged: boolean;
+	apiToken: string;
+}
 
 const genToken = () => {
 	let token = "";
@@ -9,7 +40,7 @@ const genToken = () => {
 	return token;
 };
 
-const userSchema = new Schema({
+const userSchema = new Schema<IUserSchema>({
 	id: { type: String },
 
 	rep: { type: Number, default: 0 },
@@ -82,7 +113,16 @@ const userSchema = new Schema({
 	},
 
 	afk: { type: String, default: null },
-	reminds: { type: Array, default: [] },
+	reminds: [
+		{
+			type: Object,
+			default: {
+				message: null,
+				createdAt: null,
+				sendAt: null,
+			},
+		},
+	],
 	logged: { type: Boolean, default: false },
 	apiToken: { type: String, default: genToken() },
 });
@@ -110,4 +150,4 @@ userSchema.method("getAchievements", async function () {
 	return await canvas.encode("png");
 });
 
-export default model("User", userSchema);
+export default model<IUserSchema>("User", userSchema);

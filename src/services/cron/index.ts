@@ -1,10 +1,12 @@
 import { CronJob } from "cron";
 import logger from "../../helpers/logger.js";
+import { CronTaskData } from "@/types.js";
 
 export class CronManager {
-	constructor(tasks) {
+	jobs = new Map<string, { job: CronJob; isRunning: boolean; isError: boolean }>();
+	tasks: CronTaskData[];
+	constructor(tasks: CronTaskData[]) {
 		this.tasks = tasks;
-		this.jobs = new Map();
 	}
 
 	async init() {
@@ -31,7 +33,7 @@ export class CronManager {
 						await task.task();
 					} catch (error) {
 						logger.error(`Error executing cron task "${task.name}":`, error);
-						this.jobs.get(task.name).isError = true;
+						this.jobs.get(task.name)!.isError = true;
 					}
 				},
 				null,
@@ -50,9 +52,8 @@ export class CronManager {
 	}
 
 	stopAll() {
-		if (!this.jobs.length) return;
+		if (!this.jobs.size) return;
 
-		// eslint-disable-next-line no-unused-vars
 		for (const [_, jobInfo] of this.jobs.entries()) {
 			jobInfo.job.stop();
 		}

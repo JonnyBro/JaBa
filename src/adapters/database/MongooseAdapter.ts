@@ -1,24 +1,21 @@
-import mongoose from "mongoose";
+import mongoose, { ConnectOptions, Document, Model, FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
 import IDatabaseAdapter from "./IDatabaseAdapter.js";
-import logger from "../../helpers/logger.js";
+import logger from "@/helpers/logger.js";
 import Cache from "../cache/MapCache.js";
 
-export default class MongooseAdapter extends IDatabaseAdapter {
-	/**
-	 *
-	 * @param {string} uri - database url connect
-	 * @param {mongoose.ConnectOptions} options - database connect options
-	 */
-	constructor(uri, options = {}) {
+export default class MongooseAdapter extends IDatabaseAdapter<Model<any>, FilterQuery<any>, UpdateQuery<any>, QueryOptions> {
+	cache = new Cache();
+	options: ConnectOptions;
+	uri: string;
+
+	constructor(uri: string, options: ConnectOptions = {}) {
 		super();
 
 		if (!uri) {
 			throw new Error("MongooseAdapter: URI is required.");
 		}
-
-		this.uri = uri;
 		this.options = options;
-		this.cache = new Cache();
+		this.uri = uri;
 	}
 
 	async connect() {
@@ -32,11 +29,11 @@ export default class MongooseAdapter extends IDatabaseAdapter {
 		this.cache.clear();
 	}
 
-	#generateCacheKey(modelName, query, options) {
+	#generateCacheKey(modelName: string, query: {}, options: {}) {
 		return `${modelName}:${JSON.stringify(query)}:${JSON.stringify(options)}`;
 	}
 
-	async find(model, query = {}, options = {}) {
+	async find<T extends Document>(model: Model<T>, query: FilterQuery<T>, options = {}): Promise<T[]> {
 		const cacheKey = this.#generateCacheKey(model.modelName, query, options);
 		if (this.cache.get(cacheKey)) {
 			return this.cache.get(cacheKey);
@@ -47,7 +44,7 @@ export default class MongooseAdapter extends IDatabaseAdapter {
 		return result;
 	}
 
-	async findOne(model, query = {}, options = {}) {
+	async findOne<T extends Document>(model: Model<T>, query: FilterQuery<T>, options = {}): Promise<T | null> {
 		const cacheKey = this.#generateCacheKey(model.modelName, query, options);
 		if (this.cache.get(cacheKey)) {
 			return this.cache.get(cacheKey);
@@ -58,15 +55,26 @@ export default class MongooseAdapter extends IDatabaseAdapter {
 		return result;
 	}
 
-	async updateOne(model, filter, update, options = {}) {
+	async updateOne<T extends Document>(model: Model<T>, filter: FilterQuery<T>, update: UpdateQuery<T>, options = {}) {
 		const result = await model.updateOne(filter, update, options).exec();
 		this.cache.clear();
 		return result;
 	}
 
-	async deleteOne(model, filter) {
+	async deleteOne<T extends Document>(model: Model<T>, filter: FilterQuery<T>) {
 		const result = await model.deleteOne(filter).exec();
 		this.cache.clear();
+		return result;
+	}
+
+	async findOneOrCreate<T extends Document>(model: Model<T>, filter: FilterQuery<T>) {
+		this.cache.clear();
+		const result = await model.findOne(filter).then(result => {
+			if (result) return result;
+
+			return model.create(filter);
+		});
+
 		return result;
 	}
 }

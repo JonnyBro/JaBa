@@ -1,18 +1,15 @@
 import logger from "../helpers/logger.js";
 import { resolve } from "node:path";
-import loadCronTasks from "../utils/loadCronTasks.js";
-import { CronManager } from "../services/cron/index.js";
+import loadCronTasks from "@/utils/loadCronTasks.js";
+import { CronManager } from "@/services/cron/index.js";
+import { ExtendedClient } from "@/structures/client.js";
 
 export const data = {
 	name: "ready",
 	once: true,
 };
 
-/**
- *
- * @param {import("../structures/client.js").ExtendedClient} client
- */
-export async function run(client) {
+export async function run(client: ExtendedClient) {
 	logger.ready(client.user.tag + " is online!");
 
 	// Fetching all app emojis, because we need to use them

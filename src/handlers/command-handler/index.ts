@@ -1,16 +1,16 @@
 import { resolve } from "node:path";
-import logger from "../../helpers/logger.js";
-import { getFilePaths } from "../../utils/index.js";
-import { toFileURL } from "../../utils/resolve-file.js";
+import logger from "@/helpers/logger.js";
+import { getFilePaths } from "@/utils/get-path.js";
+import { toFileURL } from "@/utils/resolve-file.js";
 import registerCommands from "./functions/registerCommands.js";
+import { ExtendedClient } from "@/structures/client.js";
+import { CommandFileObject } from "@//types.js";
 
 export class CommandHandler {
-	constructor(client) {
-		/**
-		 * @type {import("../../structures/client.js").ExtendedClient} client
-		 */
+	client: ExtendedClient;
+	commands: CommandFileObject[] = [];
+	constructor(client: ExtendedClient) {
 		this.client = client;
-		this.commands = [];
 	}
 
 	async init() {
@@ -26,7 +26,7 @@ export class CommandHandler {
 
 	async #buildCommands() {
 		const cmdPath = resolve(this.client.configService.get("paths.commands"));
-		const commandFilePaths = (await getFilePaths(cmdPath, true)).filter(path => path.endsWith(".js"));
+		const commandFilePaths = (await getFilePaths(cmdPath, true)).filter(path => path.endsWith(".js") || path.endsWith(".ts"));
 
 		for (const cmdFilePath of commandFilePaths) {
 			const { data, run } = await import(toFileURL(cmdFilePath));
@@ -58,7 +58,7 @@ export class CommandHandler {
 			// Skip if autocomplete handler is not defined
 			if (isAutocomplete && !targetCommand.autocompleteRun) return;
 
-			const command = targetCommand[isAutocomplete ? "autocompleteRun" : "run"];
+			const command = targetCommand[isAutocomplete ? "autocompleteRun" : "run"]!;
 
 			try {
 				await command({

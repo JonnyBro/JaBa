@@ -1,28 +1,16 @@
 import fs from "fs";
-import { CONFIG_PATH } from "../../constants/index.js";
-import logger from "../../helpers/logger.js";
+import { CONFIG_PATH } from "@/constants/index.js";
+import logger from "@/helpers/logger.js";
 
 class ConfigService {
-	constructor() {
-		this.config = this.#loadConfig();
-	}
+	config = this.loadConfig();
 
-	/**
-	 *
-	 * @param {string} key - key of the config
-	 * @returns {*} - value of the config
-	 */
-	get(key) {
+	get<T>(key: string): T {
 		const keys = key.split(".");
 		return keys.reduce((config, k) => (config && config[k] !== undefined ? config[k] : undefined), this.config);
 	}
 
-	/**
-	 * Set a config value.
-	 * @param {string} key - key of the config to set
-	 * @param {*} value - value to set
-	 */
-	set(key, value) {
+	set(key: string, value: unknown) {
 		const keys = key.split(".");
 		keys.reduce((config, k, i) => {
 			if (i === keys.length - 1) {
@@ -32,14 +20,10 @@ class ConfigService {
 			}
 			return config[k];
 		}, this.config);
-		this.#saveConfig();
+		this.saveConfig();
 	}
 
-	/**
-	 * Load the config from the file.
-	 * @returns {Config} - loaded config
-	 */
-	#loadConfig() {
+	private loadConfig() {
 		if (fs.existsSync(CONFIG_PATH)) {
 			return JSON.parse(fs.readFileSync(CONFIG_PATH, "utf-8"));
 		} else {
@@ -48,10 +32,7 @@ class ConfigService {
 		}
 	}
 
-	/**
-	 * Save the config to the file.
-	 */
-	#saveConfig() {
+	private saveConfig() {
 		try {
 			fs.writeFileSync(CONFIG_PATH, JSON.stringify(this.config, null, 4), "utf-8");
 		} catch (e) {

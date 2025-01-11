@@ -1,0 +1,24 @@
+{
+	"compilerOptions": {
+		"target": "ES2022", // Версия ECMAScript
+		"module": "NodeNext", // Использование ES-модулей
+		"moduleResolution": "nodenext", // Разрешение модулей
+		"outDir": "./dist", // Директория для скомпилированных файлов
+		"rootDir": "./src", // Директория с исходным кодом
+		"strict": true, // Включение строгой проверки типов
+		"esModuleInterop": true, // Для совместимости с CommonJS
+		"skipLibCheck": true, // Пропуск проверки типов в библиотеках
+		"forceConsistentCasingInFileNames": true, // Единообразие в именах файлов
+		"resolveJsonModule": true, // Разрешение импорта JSON-файлов
+		"isolatedModules": true, // Изолированные модули
+		"incremental": true, // Инкрементальная сборка (ускоряет повторную компиляцию, сохраняя результаты предыдущих компиляции)
+		"noEmitOnError": true, // Чтобы не билдил без ошибок
+		"noUnusedLocals": true, // Не использовать неиспользуемые локальные переменные
+		"noUnusedParameters": true, 
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+	},
+	"include": ["src/**/*"], // Включаемые файлы
+	"exclude": ["node_modules"] // Исключаемые файлы
+}

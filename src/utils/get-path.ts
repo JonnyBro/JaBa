@@ -1,11 +1,9 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { PROJECT_ROOT } from "../constants/index.js";
+import { PROJECT_ROOT } from "@/constants/index.js";
 
-export const getFilePaths = async (directory, nesting) => {
-	let filePaths = [];
-
-	if (!directory) return;
+export const getFilePaths = async (directory: string, nesting: boolean) => {
+	let filePaths: string[] = [];
 
 	const absoluteDirectory = path.isAbsolute(directory) ? directory : path.join(PROJECT_ROOT, directory);
 
@@ -19,7 +17,8 @@ export const getFilePaths = async (directory, nesting) => {
 		}
 
 		if (nesting && file.isDirectory()) {
-			filePaths = [...filePaths, ...(await getFilePaths(filePath, true))];
+			const nestedFiles = await getFilePaths(filePath, true);
+			filePaths = [...filePaths, ...nestedFiles];
 		}
 	}
 

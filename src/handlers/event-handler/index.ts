@@ -1,12 +1,24 @@
 import { resolve } from "node:path";
-import logger from "../../helpers/logger.js";
-import { getFilePaths } from "../../utils/index.js";
-import { toFileURL } from "../../utils/resolve-file.js";
-import { useMainPlayer } from "discord-player";
+import logger from "@/helpers/logger.js";
+import { getFilePaths } from "@/utils/get-path.js";
+import { toFileURL } from "@/utils/resolve-file.js";
+import { GuildQueueEvents, useMainPlayer } from "discord-player";
+import { ExtendedClient } from "@/structures/client.js";
+import { ClientEvents } from "discord.js";
+
+interface EventHandlerEvents {
+	data: {
+		name: keyof ClientEvents;
+		once?: boolean;
+		player?: boolean;
+	};
+	run: Function;
+}
 
 export class EventHandler {
-	constructor(client) {
-		this.events = [];
+	events: EventHandlerEvents[] = [];
+	client: ExtendedClient;
+	constructor(client: ExtendedClient) {
 		this.client = client;
 	}
 
@@ -18,7 +30,7 @@ export class EventHandler {
 	async #buildEvents() {
 		try {
 			const eventPath = resolve(this.client.configService.get("paths.events"));
-			const eventFilePaths = (await getFilePaths(eventPath, true)).filter(path => path.endsWith(".js"));
+			const eventFilePaths = (await getFilePaths(eventPath, true)).filter(path => path.endsWith(".js") || path.endsWith(".ts"));
 
 			for (const eventFilePath of eventFilePaths) {
 				const { data, run } = await import(toFileURL(eventFilePath));
@@ -42,11 +54,9 @@ export class EventHandler {
 	}
 
 	$registerEvents() {
-		const player = useMainPlayer();
 		for (const { data, run } of this.events) {
-			if (data.player) player.events.on(data.name, run);
-			if (data.once) this.client.once(data.name, run);
-			else this.client.on(data.name, run);
+			if (data.once) this.client.once(data.name, (...args) => run(...args));
+			else this.client.on(data.name, (...args) => run(...args));
 		}
 	}
 }

@@ -6,6 +6,5 @@
 	"semi": true,
 	"tabWidth": 4,
 	"trailingComma": "all",
-	"useTabs": true,
-	"parser": "babel"
+	"useTabs": true
 }

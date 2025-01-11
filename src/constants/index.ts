@@ -1,6 +1,7 @@
 import path from "node:path";
-import { GatewayIntentBits } from "discord.js";
+import { GatewayIntentBits, MessageMentionOptions } from "discord.js";
 import { AsyncLocalStorage } from "node:async_hooks";
+import { ExtendedClient } from "@/structures/client.js";
 
 export const PROJECT_ROOT = path.join(import.meta.dirname, "..");
 export const CONFIG_PATH = path.join(PROJECT_ROOT, "..", "config.json");
@@ -21,6 +22,6 @@ export const CLIENT_INTENTS = [
 	GatewayIntentBits.DirectMessages,
 	GatewayIntentBits.DirectMessageReactions,
 ];
-export const CLIENT_ALLOWED_MENTIONS = { parse: ["everyone", "roles", "users"] };
+export const CLIENT_ALLOWED_MENTIONS: MessageMentionOptions = { parse: ["everyone", "roles", "users"] };
 
-export const SUPER_CONTEXT = new AsyncLocalStorage();
+export const SUPER_CONTEXT = new AsyncLocalStorage<ExtendedClient>();

@@ -5,7 +5,9 @@
     "main": "src/index.js",
     "type": "module",
     "scripts": {
-        "start": "node src/index.js"
+        "start": "node dist/index.js",
+        "dev": "tsx watch src/index.ts",
+        "build": "tsc"
     },
     "author": "https://github.com/JonnyBro",
     "dependencies": {
@@ -31,9 +33,16 @@
     "devDependencies": {
         "@eslint/js": "^9.16.0",
         "@stylistic/eslint-plugin-js": "^2.11.0",
+        "@types/md5": "^2.3.5",
+        "@types/ms": "^0.7.34",
+        "@types/node": "^22.10.5",
+        "@typescript-eslint/eslint-plugin": "^8.19.1",
+        "@typescript-eslint/parser": "^8.19.1",
         "eslint": "^9.16.0",
         "globals": "^15.13.0",
         "prettier": "^3.4.2",
-        "prettier-eslint": "^16.3.0"
+        "prettier-eslint": "^16.3.0",
+        "tsx": "^4.19.2",
+        "typescript": "^5.7.3"
     }
 }

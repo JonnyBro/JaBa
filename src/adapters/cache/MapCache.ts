@@ -1,16 +1,16 @@
 import ICacheAdapter from "./ICacheAdapter.js";
 
 export default class MapCache extends ICacheAdapter {
+	store = new Map();
 	constructor() {
 		super();
-		this.store = new Map();
 	}
 
-	get(key) {
+	get(key: string) {
 		return this.store.get(key);
 	}
 
-	set(key, value) {
+	set<T>(key: string, value: T) {
 		this.store.set(key, value);
 	}
 
@@ -18,7 +18,7 @@ export default class MapCache extends ICacheAdapter {
 		this.store.clear();
 	}
 
-	delete(key) {
+	delete(key: string) {
 		this.store.delete(key);
 	}
 }

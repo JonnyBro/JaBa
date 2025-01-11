@@ -1,8 +1,9 @@
+import { createEmbed } from "@/utils/create-embed.js";
 import UserModel from "../../models/UserModel.js";
 import useClient from "../../utils/use-client.js";
-import { createEmbed } from "../../utils/index.js";
+import { CronTaskData } from "@/types.js";
 
-export const data = {
+export const data: CronTaskData = {
 	name: "checkReminds",
 	task: async () => {
 		const client = useClient();
@@ -11,17 +12,19 @@ export const data = {
 			for (const user of users) {
 				if (!client.users.cache.has(user.id)) client.users.fetch(user.id);
 
-				client.cacheReminds.set(user.id, user);
+				client.cacheReminds.set(user.id, {
+					id: user.id,
+					reminds: user.reminds,
+				});
 			}
 		});
 
-		client.cacheReminds.forEach(async user => {
-			const cachedUser = client.users.cache.get(user.id);
+		client.cacheReminds.forEach(async ({ id, reminds }) => {
+			const cachedUser = client.users.cache.get(id);
 
 			if (!cachedUser) return;
 
-			const reminds = user.reminds,
-				mustSent = reminds.filter(r => r.sendAt < Math.floor(Date.now() / 1000));
+			const mustSent = reminds.filter(r => r.sendAt < Math.floor(Date.now() / 1000));
 
 			if (!mustSent.length) return;
 
@@ -53,15 +56,23 @@ export const data = {
 						embeds: [embed],
 					})
 					.then(() => {
-						client.adapter.updateOne(UserModel, { id: user.id }, { $pull: { reminds: { _id: r._id } } });
+						client.adapter.updateOne(
+							UserModel,
+							{ id },
+							{
+								$pull: {
+									reminds: {
+										sendAt: r.sendAt,
+									},
+								},
+							},
+						);
 					});
 			});
 
-			user.reminds = user.reminds.filter(r => r.sendAt >= Math.floor(Date.now() / 1000));
+			reminds = reminds.filter(r => r.sendAt >= Math.floor(Date.now() / 1000));
 
-			await user.save();
-
-			if (!user.reminds.length) client.cacheReminds.delete(user.id);
+			if (!reminds.length) client.cacheReminds.delete(id);
 		});
 	},
 	schedule: "* * * * * *",
