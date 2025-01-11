@@ -7,11 +7,7 @@
 		"clientSecret": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 	},
 	"youtubeCookie": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-	"support": {
-		"id": "123456789098765432",
-		"logs": "123456789098765432",
-		"invite": "https://discord.gg/discord"
-	},
+	"devGuildsIds": [],
 	"embed": {
 		"color": "#00FF00",
 		"footer": {

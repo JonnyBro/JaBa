@@ -3,7 +3,6 @@ import logger from "../../helpers/logger.js";
 import { getFilePaths } from "../../utils/index.js";
 import { toFileURL } from "../../utils/resolve-file.js";
 import registerCommands from "./functions/registerCommands.js";
-import { replyError } from "../../helpers/extenders.js";
 
 export class CommandHandler {
 	constructor(client) {
@@ -55,12 +54,6 @@ export class CommandHandler {
 			const targetCommand = this.commands.find(cmd => cmd.data.name === interaction.commandName);
 
 			if (!targetCommand) return;
-
-			const ownerId = this.client.configService.get("owner.id");
-
-			if (targetCommand.data.ownerOnly && interaction.user.id !== ownerId) {
-				return replyError(interaction, "misc:OWNER_ONLY", null, { ephemeral: true });
-			}
 
 			// Skip if autocomplete handler is not defined
 			if (isAutocomplete && !targetCommand.autocompleteRun) return;
