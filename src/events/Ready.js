@@ -15,6 +15,9 @@ export const data = {
 export async function run(client) {
 	logger.ready(client.user.tag + " is online!");
 
+	// Fetching all app emojis, because we need to use them
+	await client.application.emojis.fetch();
+
 	const taskPath = resolve(client.configService.get("paths.tasks"));
 
 	const cronTasks = await loadCronTasks(taskPath);
