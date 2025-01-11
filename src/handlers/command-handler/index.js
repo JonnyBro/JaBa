@@ -6,6 +6,9 @@ import registerCommands from "./functions/registerCommands.js";
 
 export class CommandHandler {
 	constructor(client) {
+		/**
+		 * @type {import("../../structures/client.js").ExtendedClient} client
+		 */
 		this.client = client;
 		this.commands = [];
 	}
@@ -17,6 +20,8 @@ export class CommandHandler {
 			client: this.client,
 			commands: this.commands,
 		});
+
+		this.handleCommands();
 	}
 
 	async #buildCommands() {
@@ -38,5 +43,30 @@ export class CommandHandler {
 
 			this.commands.push({ data, run });
 		}
+	}
+
+	handleCommands() {
+		this.client.on("interactionCreate", async interaction => {
+			if (!interaction.isChatInputCommand() && !interaction.isAutocomplete()) return;
+
+			const isAutocomplete = interaction.isAutocomplete();
+
+			const targetCommand = this.commands.find(cmd => cmd.data.name === interaction.commandName);
+
+			if (!targetCommand) return;
+			// Skip if autocomplete handler is not defined
+			if (isAutocomplete && !targetCommand.autocompleteRun) return;
+
+			const command = targetCommand[isAutocomplete ? "autocompleteRun" : "run"];
+
+			try {
+				await command({
+					client: this.client,
+					interaction,
+				});
+			} catch (error) {
+				logger.error(error);
+			}
+		});
 	}
 }
