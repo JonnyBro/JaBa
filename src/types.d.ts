@@ -41,8 +41,6 @@ export interface CommandContext<_T extends Interaction, _Cached extends CacheTyp
 
 export interface CommandOptions {
 	devOnly?: boolean;
-	userPermissions?: PermissionsString | PermissionsString[];
-	botPermissions?: PermissionsString | PermissionsString[];
 }
 
 export interface CommandFileObject {
