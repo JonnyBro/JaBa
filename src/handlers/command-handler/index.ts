@@ -34,7 +34,7 @@ export class CommandHandler {
 		const commandFilePaths = (await getFilePaths(cmdPath, true)).filter(path => path.endsWith(".js") || path.endsWith(".ts"));
 
 		for (const cmdFilePath of commandFilePaths) {
-			const { data, run } = await import(toFileURL(cmdFilePath));
+			const { data, run, options } = await import(toFileURL(cmdFilePath));
 
 			if (!data || !data.name) {
 				logger.warn(`Command ${cmdFilePath} does not have a data object or name`);
@@ -46,7 +46,7 @@ export class CommandHandler {
 				continue;
 			}
 
-			this.commands.push({ data, run });
+			this.commands.push({ data, run, options });
 		}
 	}
 

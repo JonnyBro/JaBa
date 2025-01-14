@@ -1,9 +1,11 @@
 import { ExtendedClient } from "./structures/client.js";
 import logger from "./helpers/logger.js";
 import { CLIENT_INTENTS, CLIENT_ALLOWED_MENTIONS } from "./constants/index.js";
+import { Partials } from "discord.js";
 
 const client = new ExtendedClient({
 	intents: CLIENT_INTENTS,
+	partials: [Partials.Channel],
 	allowedMentions: CLIENT_ALLOWED_MENTIONS,
 });
 
