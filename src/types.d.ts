@@ -49,6 +49,7 @@ export interface CommandContext<_T extends Interaction, _Cached extends CacheTyp
 
 export interface CommandOptions {
 	devOnly?: boolean;
+	cooldown?: number;
 }
 
 export interface CommandFileObject {
