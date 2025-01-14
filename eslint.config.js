@@ -21,14 +21,8 @@ export default [
 			"@stylistic/js": stylisticJs,
 		},
 		rules: {
-			"no-unused-vars": [
-				"error",
-				{
-					argsIgnorePattern: "^_", // Игнорировать переменные, начинающиеся с _
-					varsIgnorePattern: "^_", // Игнорировать переменные, начинающиеся с _
-					ignoreRestSiblings: true, // Игнорировать неиспользуемые параметры в деструктуризации
-				},
-			],
+			"no-unused-vars": "off",
+			"@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_", caughtErrorsIgnorePattern: "^_" }],
 			"arrow-body-style": ["error", "as-needed"],
 			camelcase: "error",
 			curly: ["error", "multi-line"],
