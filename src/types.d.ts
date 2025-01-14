@@ -19,6 +19,14 @@ export type cacheRemindsData = {
 	reminds: UserReminds[];
 };
 
+export type BuiltInValidationParams = {
+	targetCommand: CommandFileObject;
+	interaction: Interaction<CacheType>;
+	client: ExtendedClient;
+};
+
+export type BuiltInValidation = ({}: BuiltInValidationParams) => boolean | void;
+
 export type CronTaskData = {
 	name: string;
 	schedule: string;

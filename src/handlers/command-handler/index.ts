@@ -4,17 +4,22 @@ import { getFilePaths } from "@/utils/get-path.js";
 import { toFileURL } from "@/utils/resolve-file.js";
 import registerCommands from "./functions/registerCommands.js";
 import { ExtendedClient } from "@/structures/client.js";
-import { CommandFileObject } from "@//types.js";
+import { BuiltInValidation, CommandFileObject } from "@/types.js";
+import builtInValidationsFunctions from "./validations/index.js";
 
 export class CommandHandler {
 	client: ExtendedClient;
 	commands: CommandFileObject[] = [];
+	builtInValidations: BuiltInValidation[] = [];
+
 	constructor(client: ExtendedClient) {
 		this.client = client;
 	}
 
 	async init() {
 		await this.#buildCommands();
+
+		this.buildBuiltInValidations();
 
 		await registerCommands({
 			client: this.client,
@@ -45,6 +50,12 @@ export class CommandHandler {
 		}
 	}
 
+	buildBuiltInValidations() {
+		for (const builtInValidationFunction of builtInValidationsFunctions) {
+			this.builtInValidations.push(builtInValidationFunction);
+		}
+	}
+
 	handleCommands() {
 		this.client.on("interactionCreate", async interaction => {
 			if (!interaction.isChatInputCommand() && !interaction.isAutocomplete()) return;
@@ -57,6 +68,23 @@ export class CommandHandler {
 
 			// Skip if autocomplete handler is not defined
 			if (isAutocomplete && !targetCommand.autocompleteRun) return;
+
+			let canRun = true;
+
+			for (const validation of this.builtInValidations) {
+				const stopValidationLoop = validation({
+					targetCommand,
+					interaction,
+					client: this.client,
+				});
+
+				if (stopValidationLoop) {
+					canRun = false;
+					break;
+				}
+			}
+
+			if (!canRun) return;
 
 			const command = targetCommand[isAutocomplete ? "autocompleteRun" : "run"]!;
 
