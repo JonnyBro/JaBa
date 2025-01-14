@@ -37,6 +37,7 @@ const registerGlobalCommands = async (client: ExtendedClient, commands: CommandF
 				logger.log(`Edited command globally: ${data.name}`);
 			} else if (!targetCommand) {
 				await appCommandsManager.create(data).catch(() => logger.error(`Failed to register command: ${data.name}`));
+				logger.debug(`Command ${data.name} loaded globally`);
 			}
 		}),
 	);
@@ -77,6 +78,7 @@ const registerDevCommands = async (client: ExtendedClient, commands: CommandFile
 					logger.log(`Edited command globally: ${data.name}`);
 				} else if (!targetCommand) {
 					await guildCommands.create(data).catch(() => logger.error(`Failed to register command: ${data.name} in ${guildCommands.guild.name} server`));
+					logger.debug(`Command ${data.name} loaded in dev`);
 				}
 			});
 		}),

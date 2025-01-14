@@ -53,6 +53,8 @@ export class EventHandler {
 				}
 
 				this.events.push({ data, run });
+
+				logger.debug(`Event ${eventFilePath} loaded`);
 			}
 		} catch (error) {
 			logger.error("Error build events: ", error);

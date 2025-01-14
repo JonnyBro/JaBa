@@ -94,7 +94,7 @@ export class CommandHandler {
 					interaction,
 				});
 			} catch (error) {
-				logger.error(error);
+				logger.error(error, "Command cannot be executed");
 			}
 		});
 	}
