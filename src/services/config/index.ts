@@ -3,7 +3,7 @@ import { CONFIG_PATH } from "@/constants/index.js";
 import logger from "@/helpers/logger.js";
 
 class ConfigService {
-	config = this.loadConfig();
+	private config = this.loadConfig();
 
 	get<T>(key: string): T {
 		const keys = key.split(".");
