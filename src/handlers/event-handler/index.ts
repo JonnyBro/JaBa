@@ -33,9 +33,16 @@ export class EventHandler {
 			const eventFilePaths = (await getFilePaths(eventPath, true)).filter(path => path.endsWith(".js") || path.endsWith(".ts"));
 
 			for (const eventFilePath of eventFilePaths) {
-				const { data, run } = await import(toFileURL(eventFilePath));
+				const eventModule = await import(toFileURL(eventFilePath));
 
-				if (!data || !data.name) {
+				if (!("data" in eventModule) || !("run" in eventModule)) {
+					logger.warn(`Event ${eventFilePath} does not have a data object or name`);
+					continue;
+				}
+
+				const { data, run } = eventModule;
+
+				if (!data.name) {
 					logger.warn(`Event ${eventFilePath} does not have a data object or name`);
 					continue;
 				}
