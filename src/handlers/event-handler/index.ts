@@ -6,14 +6,14 @@ import { GuildQueueEvents, useMainPlayer } from "discord-player";
 import { ExtendedClient } from "@/structures/client.js";
 import { ClientEvents } from "discord.js";
 
-interface EventHandlerEvents {
+type EventHandlerEvents = {
 	data: {
 		name: keyof ClientEvents;
 		once?: boolean;
 		player?: boolean;
 	};
-	run: Function;
-}
+	run: (...args: unknown[]) => void;
+};
 
 export class EventHandler {
 	events: EventHandlerEvents[] = [];
