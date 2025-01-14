@@ -6,14 +6,6 @@ export async function asyncForEach<T>(collection: T[], callback: (_item: T) => P
 	return await Promise.all(allPromises);
 }
 
-export function sortByKey<T>(array: T[], key: string) {
-	return array.sort(function (a, b) {
-		const x = a[key];
-		const y = b[key];
-		return x < y ? 1 : x > y ? -1 : 0;
-	});
-}
-
 export function shuffle<T>(pArray: T[]) {
 	const array: T[] = [];
 
