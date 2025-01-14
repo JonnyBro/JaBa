@@ -26,9 +26,6 @@ importers:
       cron:
         specifier: ^3.2.1
         version: 3.2.1
-      discord-api-types:
-        specifier: ^0.37.107
-        version: 0.37.107
       discord-giveaways:
         specifier: ^6.0.1
         version: 6.0.1(discord.js@14.16.3)
