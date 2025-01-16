@@ -11,7 +11,7 @@ interface IUserSchema extends Document {
 	id: string;
 	rep: number;
 	bio: string;
-	birthdate: number;
+	birthdate: number | null;
 	lover: string;
 	registeredAt: number;
 	achievements: {

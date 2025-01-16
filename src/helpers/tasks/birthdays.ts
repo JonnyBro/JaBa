@@ -35,7 +35,7 @@ export const data = {
 						const user = users.find(u => u.id === userID);
 						if (!user) return;
 
-						const userData = new Date(user.birthdate).getFullYear() <= 1970 ? new Date(user.birthdate * 1000) : new Date(user.birthdate);
+						const userData = new Date(user.birthdate!).getFullYear() <= 1970 ? new Date(user.birthdate! * 1000) : new Date(user.birthdate!);
 						const userYear = userData.getFullYear();
 						const userMonth = userData.getMonth();
 						const userDate = userData.getDate();
