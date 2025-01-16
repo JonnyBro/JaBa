@@ -98,7 +98,7 @@ export const run = async ({ interaction, client }: SlashCommandProps) => {
 		return replySuccess(
 			interaction,
 			"economy/birthdate:SUCCESS",
-			{ data: "none" },
+			{ date: "none" },
 			{
 				edit: true,
 			},
