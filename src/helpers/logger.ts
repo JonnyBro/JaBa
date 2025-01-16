@@ -37,7 +37,6 @@ export default {
 	debug(...content: unknown[]) {
 		const client = useClient();
 		const isProd = client.configService.get("production");
-		console.log(isProd);
 		if (isProd) return;
 		return console.log(`[${format(Date.now())}]: ${logLevels.DEBUG} ${content.join(" ")}`);
 	},
