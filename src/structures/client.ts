@@ -1,4 +1,5 @@
 import { Client, ClientOptions } from "discord.js";
+import { GiveawaysManager } from "discord-giveaways";
 import { TOptionsBase } from "i18next";
 import { Handlers } from "@/handlers/index.js";
 import MongooseAdapter from "@/adapters/database/MongooseAdapter.js";
@@ -22,6 +23,17 @@ export class ExtendedClient extends Client<true> {
 					[key: string]: string;
 			  },
 	) => string;
+
+	// @ts-ignore - because ExtendedClient != Client<boolean> from discord.js
+	giveaways = new GiveawaysManager(this, {
+		storage: "../../giveaways.json",
+		default: {
+			botsCanWin: false,
+			embedColor: this.configService.get("embed.color"),
+			embedColorEnd: "#FF0000",
+			reaction: "🎉",
+		},
+	});
 
 	constructor(options: ClientOptions) {
 		if (SUPER_CONTEXT.getStore()) {
