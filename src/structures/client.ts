@@ -7,6 +7,7 @@ import ConfigService from "@/services/config/index.js";
 import InternationalizationService from "@/services/languages/index.js";
 import { SUPER_CONTEXT } from "@/constants/index.js";
 import { cacheRemindsData } from "@/types.js";
+import { Player } from "discord-player";
 
 export class ExtendedClient extends Client<true> {
 	configService = new ConfigService();
@@ -29,6 +30,9 @@ export class ExtendedClient extends Client<true> {
 		super(options);
 
 		new Handlers(this);
+
+		// @ts-ignore - because ExtendedClient != Client<boolean> from discord.js
+		new Player(this);
 		SUPER_CONTEXT.enterWith(this);
 	}
 

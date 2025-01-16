@@ -63,9 +63,15 @@ export class EventHandler {
 	}
 
 	$registerEvents() {
-		for (const { data, run } of this.events) {
-			if (data.once) this.client.once(data.name, (...args) => run(...args));
-			else this.client.on(data.name, (...args) => run(...args));
-		}
+		const player = useMainPlayer();
+		this.events.forEach(event => {
+			if (event.data.player) {
+				player.events.on(event.data.name as keyof GuildQueueEvents, event.run);
+			} else if (event.data.once) {
+				this.client.once(event.data.name, event.run);
+			} else {
+				this.client.on(event.data.name, event.run);
+			}
+		});
 	}
 }
