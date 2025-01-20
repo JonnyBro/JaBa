@@ -3,7 +3,7 @@
 Thumbs.db
 
 # Bot Configuration
-/config.js
+/config.json
 
 # DB
 /giveaways.json
@@ -13,3 +13,6 @@ Thumbs.db
 
 # Node
 node_modules
+dist
+
+tsconfig.tsbuildinfo
