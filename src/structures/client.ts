@@ -26,7 +26,7 @@ export class ExtendedClient extends Client<true> {
 
 	// @ts-ignore - because ExtendedClient != Client<boolean> from discord.js
 	giveaways = new GiveawaysManager(this, {
-		storage: "../../giveaways.json",
+		storage: "./giveaways.json",
 		default: {
 			botsCanWin: false,
 			embedColor: this.configService.get("embed.color"),
