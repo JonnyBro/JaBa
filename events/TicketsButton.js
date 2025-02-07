@@ -76,11 +76,11 @@ class CommandHandler extends BaseEvent {
 			});
 
 			const closeButton = new ButtonBuilder()
-				.setCustomId("close_ticket")
+				.setCustomId("ticket_close")
 				.setLabel(interaction.translate("tickets/closeticket:CLOSE_TICKET"))
 				.setStyle(ButtonStyle.Danger);
 			const transcriptButton = new ButtonBuilder()
-				.setCustomId("transcript_ticket")
+				.setCustomId("ticket_transcript")
 				.setLabel(interaction.translate("tickets/closeticket:TRANSCRIPT_TICKET"))
 				.setStyle(ButtonStyle.Secondary);
 			const row = new ActionRowBuilder().addComponents(closeButton, transcriptButton);
@@ -160,7 +160,7 @@ class CommandHandler extends BaseEvent {
 					const member = interaction.guild.members.cache.find(u => u.user.id === interaction.channel.topic);
 
 					await interaction.channel.permissionOverwrites.edit(member, { ViewChannel: false, SendMessages: null });
-					await interaction.channel.setName(`${interaction.channel.name}-closed`);
+					await interaction.channel.setName(`closed-${interaction.channel.name}`);
 				}
 			});
 		} else if (button.customId === "ticket_transcript") {
