@@ -15,6 +15,7 @@ export class ExtendedClient extends Client<true> {
 	adapter = new MongooseAdapter(this.configService.get("mongoDB"));
 	cacheReminds = new Map<string, cacheRemindsData>();
 	i18n = new InternationalizationService(this);
+
 	translate!: (
 		_key: string,
 		_options?:

@@ -1,4 +1,4 @@
-import BaseEvent from "../../base/BaseEvent";
+const BaseEvent = require("../../base/BaseEvent");
 
 class GuildDelete extends BaseEvent {
 	constructor() {
@@ -25,13 +25,13 @@ class GuildDelete extends BaseEvent {
 
 			const logChannel = client.channels.cache.get(client.config.support.logs);
 
-			if (logChannel) {
+			if (logChannel)
 				await logChannel.send({
 					embeds: [embed],
 				});
-			} else client.logger.warn(`Log channel not found for guild deletion: ${guild.name}`);
+			else client.logger.warn(`Log channel not found for guild deletion: ${guild.name}`);
 		}
 	}
 }
 
-export default GuildDelete;
+module.exports = GuildDelete;

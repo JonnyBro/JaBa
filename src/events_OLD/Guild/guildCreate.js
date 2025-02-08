@@ -1,4 +1,4 @@
-import BaseEvent from "../../base/BaseEvent";
+const BaseEvent = require("../../base/BaseEvent");
 
 class GuildCreate extends BaseEvent {
 	constructor() {
@@ -62,13 +62,12 @@ class GuildCreate extends BaseEvent {
 
 			const logChannel = client.channels.cache.get(client.config.support.logs);
 
-			if (logChannel) {
+			if (logChannel)
 				await logChannel.send({
 					embeds: [embed],
 				});
-			}
 		}
 	}
 }
 
-export default GuildCreate;
+module.exports = GuildCreate;

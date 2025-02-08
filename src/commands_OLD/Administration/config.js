@@ -103,8 +103,7 @@ class Config extends BaseCommand {
 							? interaction.translate("administration/config:WELCOME_CONTENT", {
 								channel: `<#${guildData.plugins.welcome.channel}>`,
 								withImage: guildData.plugins.welcome.withImage ? interaction.translate("common:YES") : interaction.translate("common:NO"),
-							})
-							: interaction.translate("common:DISABLED"),
+							}) : interaction.translate("common:DISABLED"),
 						inline: true,
 					},
 					{
@@ -113,8 +112,7 @@ class Config extends BaseCommand {
 							? interaction.translate("administration/config:GOODBYE_CONTENT", {
 								channel: `<#${guildData.plugins.goodbye.channel}>`,
 								withImage: guildData.plugins.goodbye.withImage ? interaction.translate("common:YES") : interaction.translate("common:NO"),
-							})
-							: interaction.translate("common:DISABLED"),
+							}) : interaction.translate("common:DISABLED"),
 						inline: true,
 					},
 					{
@@ -127,22 +125,19 @@ class Config extends BaseCommand {
 							(guildData.plugins.warnsSanctions.kick
 								? interaction.translate("administration/config:KICK_CONTENT", {
 									count: guildData.plugins.warnsSanctions.kick,
-								})
-								: interaction.translate("administration/config:KICK_NOT_DEFINED")) +
+								}) : interaction.translate("administration/config:KICK_NOT_DEFINED")) +
 							"\n" +
 							(guildData.plugins.warnsSanctions.ban
 								? interaction.translate("administration/config:BAN_CONTENT", {
 									count: guildData.plugins.warnsSanctions.ban,
-								})
-								: interaction.translate("administration/config:BAN_NOT_DEFINED")),
+								}) : interaction.translate("administration/config:BAN_NOT_DEFINED")),
 					},
 					{
 						name: interaction.translate("administration/config:AUTOMOD_TITLE"),
 						value: guildData.plugins.automod.enabled
 							? interaction.translate("administration/config:AUTOMOD_CONTENT", {
 								channels: guildData.plugins.automod.ignored.map(ch => ` ${ch}`),
-							})
-							: interaction.translate("common:DISABLED"),
+							}) : interaction.translate("common:DISABLED"),
 					},
 					{
 						name: interaction.translate("administration/config:MONITORING_CHANNELS"),
@@ -216,14 +211,13 @@ async function changeSetting(interaction, setting, state, channel) {
 					content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`)}: **${interaction.translate("common:ENABLED")}** (${channel.toString()})`,
 					ephemeral: true,
 				});
-			} else {
+			} else
 				return interaction.reply({
 					content: `${interaction.translate(`administration/config:${settingSplitted.length === 2 ? settingSplitted[1].toUpperCase() : setting.toUpperCase()}`)}: ${
 						data.plugins[setting] ? `**${interaction.translate("common:ENABLED")}** (<#${data.plugins[setting]}>)` : `**${interaction.translate("common:DISABLED")}**`
 					}`,
 					ephemeral: true,
 				});
-			}
 		}
 	} else {
 		if (!state) {
@@ -247,14 +241,13 @@ async function changeSetting(interaction, setting, state, channel) {
 					content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: **${interaction.translate("common:ENABLED")}** (${channel.toString()})`,
 					ephemeral: true,
 				});
-			} else {
+			} else
 				return interaction.reply({
 					content: `${interaction.translate(`administration/config:${setting.toUpperCase()}`)}: ${
 						data.plugins[setting] ? `**${interaction.translate("common:ENABLED")}** (<#${data.plugins[setting]}>)` : `**${interaction.translate("common:DISABLED")}**`
 					}`,
 					ephemeral: true,
 				});
-			}
 		}
 	}
 }

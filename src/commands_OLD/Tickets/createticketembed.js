@@ -40,7 +40,7 @@ class CreateTicketEmbed extends BaseCommand {
 			description: interaction.translate("tickets/createticketembed:TICKET_DESC"),
 		});
 
-		const supportButton = new ButtonBuilder().setCustomId("support_ticket").setLabel(interaction.translate("tickets/createticketembed:TICKET_SUPPORT")).setStyle(ButtonStyle.Primary);
+		const supportButton = new ButtonBuilder().setCustomId("ticket_create").setLabel(interaction.translate("tickets/createticketembed:TICKET_SUPPORT")).setStyle(ButtonStyle.Primary);
 		const row = new ActionRowBuilder().addComponents(supportButton);
 
 		await interaction.channel.send({ embeds: [embed], components: [row] });

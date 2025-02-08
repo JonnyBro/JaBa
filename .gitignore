@@ -2,14 +2,11 @@
 .DS_Store
 Thumbs.db
 
-# Bot Configuration
+# Configuration
 /config.json
 
 # DB
 /giveaways.json
-
-# Clips
-/clips/*
 
 # Node
 node_modules

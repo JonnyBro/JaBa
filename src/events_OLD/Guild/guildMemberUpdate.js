@@ -1,4 +1,4 @@
-import BaseEvent from "../../base/BaseEvent";
+const BaseEvent = require("../../base/BaseEvent");
 
 class GuildMemberUpdate extends BaseEvent {
 	constructor() {
@@ -44,4 +44,4 @@ class GuildMemberUpdate extends BaseEvent {
 	}
 }
 
-export default GuildMemberUpdate;
+module.exports = GuildMemberUpdate;

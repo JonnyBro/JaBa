@@ -3,5 +3,5 @@
 	"USAGE": "[emoji]",
 	"EXAMPLES": "stealemoji emoji::coolstorybob:",
 	"SUCCESS": "{{emoji}} has been added",
-	"ERROR": "An error occurred while adding {{emoji}}.\n```{{e}}```"
+	"ERROR": "An error occurred while adding {{name}}.\n```{{e}}```"
 }

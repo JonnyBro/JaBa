@@ -1,8 +1,11 @@
-import logger from "../helpers/logger.js";
-import { resolve } from "node:path";
-import loadCronTasks from "@/utils/loadCronTasks.js";
+import { getUsername } from "@/helpers/extenders.js";
+import { getNoun } from "@/helpers/functions.js";
+import logger from "@/helpers/logger.js";
 import { CronManager } from "@/services/cron/index.js";
 import { ExtendedClient } from "@/structures/client.js";
+import loadCronTasks from "@/utils/loadCronTasks.js";
+import { ActivityType } from "discord.js";
+import { resolve } from "node:path";
 
 export const data = {
 	name: "ready",
@@ -10,7 +13,10 @@ export const data = {
 };
 
 export async function run(client: ExtendedClient) {
-	logger.ready(client.user.tag + " is online!");
+	let guildsCount = client.guilds.cache.size;
+	const status = ["Use /help for commands list!", `I'm in ${guildsCount} ${getNoun(guildsCount, [client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5")])}!`];
+
+	logger.ready(`${getUsername(client.user)} is online! Serving ${guildsCount}`);
 
 	// Fetching all app emojis, because we need to use them
 	await client.application.emojis.fetch();
@@ -18,7 +24,20 @@ export async function run(client: ExtendedClient) {
 	const taskPath = resolve(client.configService.get("paths.tasks"));
 
 	const cronTasks = await loadCronTasks(taskPath);
-
 	const cronManager = new CronManager(cronTasks);
 	await cronManager.init();
+
+	// Update guilds count
+	let i = 0;
+	setInterval(async () => {
+		guildsCount = (await client.guilds.fetch()).size;
+
+		client.user.setActivity({
+			type: ActivityType.Custom,
+			name: "custom",
+			state: status[i],
+		});
+
+		i = (i + 1) % status.length; // Wrap around to the start when reaching the end
+	}, 30 * 1000); // Every 30 seconds
 }

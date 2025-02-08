@@ -37,12 +37,12 @@ export class CommandHandler {
 			const { data, run, options } = await import(toFileURL(cmdFilePath));
 
 			if (!data || !data.name) {
-				logger.warn(`Command ${cmdFilePath} does not have a data object or name`);
+				logger.warn(`Command ${cmdFilePath} does not have a 'data' object or name`);
 				continue;
 			}
 
 			if (typeof run !== "function") {
-				logger.warn(`Command ${cmdFilePath} does not have a run function or it is not a function`);
+				logger.warn(`Command ${cmdFilePath} does not have a 'run' function or it is not a function`);
 				continue;
 			}
 

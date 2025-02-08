@@ -1,4 +1,4 @@
-import BaseEvent from "../../base/BaseEvent";
+const BaseEvent = require("../../base/BaseEvent");
 
 class guildBanAdd extends BaseEvent {
 	constructor() {
@@ -26,10 +26,8 @@ class guildBanAdd extends BaseEvent {
 			await ban.user.send({
 				embeds: [embed],
 			});
-		} catch {
-			/**/
-		}
+		} catch (e) { /**/ }
 	}
 }
 
-export default guildBanAdd;
+module.exports = guildBanAdd;

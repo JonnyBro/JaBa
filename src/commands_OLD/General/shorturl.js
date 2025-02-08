@@ -63,7 +63,7 @@ class Shorturl extends BaseCommand {
 		}).then(res => res.json());
 
 		interaction.editReply({
-			content: `<${res.shortLink}>`,
+			content: `<https://s.jonnybro.ru/${res.link.slug}>`,
 		});
 	}
 }
