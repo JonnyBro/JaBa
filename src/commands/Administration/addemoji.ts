@@ -48,20 +48,17 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const link = interaction.options.getString("link") || "",
 		name = interaction.options.getString("name") || "";
 
-	interaction.guild?.emojis
-		.create({
-			name: name,
+	try {
+		const emoji = await interaction.guild?.emojis.create({
+			name,
 			attachment: link,
-		})
-		.then(emoji =>
-			replySuccess(interaction, "administration/stealemoji:SUCCESS", {
-				emoji: emoji.toString(),
-			}, { edit: true }),
-		)
-		.catch(e => {
-			replyError(interaction, "administration/stealemoji:ERROR", {
-				name,
-				e,
-			}, { edit: true });
 		});
+
+		if (!emoji) return replyError(interaction, "administration/addemoji:ERROR", { name }, { edit: true });
+
+		return replySuccess(interaction, "administration/addemoji:SUCCESS", { emoji: emoji.toString() }, { edit: true });
+	} catch (error) {
+		console.error(error, "ADDING EMOJI");
+		replyError(interaction, "administration/addemoji:ERROR", { name, error }, { edit: true });
+	}
 };
