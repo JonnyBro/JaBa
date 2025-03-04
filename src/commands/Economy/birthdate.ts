@@ -114,17 +114,9 @@ export const run = async ({ interaction, client }: SlashCommandProps) => {
 
 	const d = Math.floor(date.getTime() / 1000);
 
-	if (!(day === date.getDate() && month - 1 === date.getMonth() && year === date.getFullYear())) {
-		return replyError(interaction, "economy/birthdate:INVALID_DATE", null, { edit: true });
-	}
-
-	if (date.getTime() > Date.now()) {
-		return replyError(interaction, "economy/birthdate:DATE_TOO_HIGH", null, { edit: true });
-	}
-
-	if (date.getTime() < Date.now() - 2.523e12) {
-		replyError(interaction, "economy/birthdate:DATE_TOO_LOW", null, { edit: true });
-	}
+	if (!(day === date.getDate() && month - 1 === date.getMonth() && year === date.getFullYear())) return replyError(interaction, "economy/birthdate:INVALID_DATE", null, { edit: true });
+	if (date.getTime() > Date.now()) return replyError(interaction, "economy/birthdate:DATE_TOO_HIGH", null, { edit: true });
+	if (date.getTime() < Date.now() - 2.523e12) return replyError(interaction, "economy/birthdate:DATE_TOO_LOW", null, { edit: true });
 
 	userData.birthdate = d;
 

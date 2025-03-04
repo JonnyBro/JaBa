@@ -40,8 +40,8 @@ class Cat extends BaseCommand {
 	async execute(client, interaction) {
 		await interaction.deferReply({ ephemeral: interaction.options.getBoolean("ephemeral") || false });
 
-		const res = await fetch("https://api.thecatapi.com/v1/images/search").then(r => r.json());
-		const cat = res[0].url;
+		const res = await fetch("https://api.pur.cat/random-cat").then(r => r.json());
+		const cat = res.url;
 
 		const embed = client.embed({
 			image: cat,

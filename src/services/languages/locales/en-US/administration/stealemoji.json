@@ -1,7 +1,5 @@
 {
 	"DESCRIPTION": "Copy an emoji to the current server",
 	"USAGE": "[emoji]",
-	"EXAMPLES": "stealemoji emoji::coolstorybob:",
-	"SUCCESS": "{{emoji}} has been added",
-	"ERROR": "An error occurred while adding {{name}}.\n```{{e}}```"
+	"EXAMPLES": "stealemoji emoji::coolstorybob:"
 }

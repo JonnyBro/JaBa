@@ -41,24 +41,18 @@ export const replyTranslated = async <T extends CacheType = CacheType>(context: 
 	if (context instanceof BaseInteraction) {
 		if (!context.isRepliable()) return;
 
-		if (options.edit) {
-			await context.editReply({ content });
-			return;
-		}
+		if (options.edit) return await context.editReply({ content });
+
 		await context.reply({
 			content,
 			ephemeral: options.ephemeral || false,
 		});
+
 		return;
 	}
 
-	if (options.edit) {
-		await context.edit({
-			content,
-			allowedMentions: { repliedUser: options.mention || false },
-		});
-		return;
-	}
+	if (options.edit) return await context.edit({ content, allowedMentions: { repliedUser: options.mention || false } });
+
 	await context.reply({
 		content,
 		allowedMentions: { repliedUser: options.mention || false },

@@ -35,9 +35,7 @@ export function printDate(date: Date | number, locale: Intl.LocalesArgument = "e
 }
 
 export function getNoun(number: number, wordForms: string[]) {
-	if (!Array.isArray(wordForms) || wordForms.length !== 3) {
-		throw new Error("wordForms should be an array with three elements: [one, two, five]");
-	}
+	if (!Array.isArray(wordForms) || wordForms.length !== 3) throw new Error("wordForms should be an array with three elements: [one, two, five]");
 
 	const [one, two, five] = wordForms;
 	let n = Math.abs(number);

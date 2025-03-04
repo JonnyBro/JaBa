@@ -63,7 +63,6 @@ export class CommandHandler {
 			const isAutocomplete = interaction.isAutocomplete();
 
 			const targetCommand = this.commands.find(cmd => cmd.data.name === interaction.commandName);
-
 			if (!targetCommand) return;
 
 			// Skip if autocomplete handler is not defined
