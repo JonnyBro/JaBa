@@ -54,8 +54,15 @@ export default class InternationalizationService {
 		return { namespaces: [...new Set(namespaces)], languages };
 	}
 
-	public translate(key: string, options: TOptionsBase = {}) {
-		const lng = options.lng || this.options.defaultLanguage;
+	public translate(
+		key: string,
+		options?:
+			| TOptionsBase
+			| {
+					[key: string]: string;
+			  },
+	) {
+		const lng = options?.lng || this.options.defaultLanguage;
 		return i18next.t(key, { lng, ...options });
 	}
 
