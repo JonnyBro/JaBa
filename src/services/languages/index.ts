@@ -26,7 +26,7 @@ export default class InternationalizationService {
 		this.client = client;
 		this.options = {
 			localesPath: resolve(this.client.configService.get("paths.locales")),
-			defaultLanguage: options.defaultLanguage || "en-US",
+			defaultLanguage: options.defaultLanguage || this.client.configService.get("defaultLang"),
 		};
 		this.init();
 	}
@@ -54,6 +54,11 @@ export default class InternationalizationService {
 		return { namespaces: [...new Set(namespaces)], languages };
 	}
 
+	public translate(key: string, options: TOptionsBase = {}) {
+		const lng = options.lng || this.options.defaultLanguage;
+		return i18next.t(key, { lng, ...options });
+	}
+
 	private async init() {
 		const { namespaces, languages } = await this.walkDirectory(this.options.localesPath);
 
@@ -70,12 +75,6 @@ export default class InternationalizationService {
 			defaultNS: namespaces[0],
 			initImmediate: false,
 		});
-
-		// Типизированная функция translate
-		this.client.translate = (key: string, options: TOptionsBase = {}): string => {
-			const lng = options.lng || this.options.defaultLanguage;
-			return i18next.t(key, { lng, ...options });
-		};
 
 		logger.log("Internationalization initialized");
 
