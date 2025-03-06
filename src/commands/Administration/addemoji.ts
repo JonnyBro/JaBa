@@ -1,17 +1,17 @@
 import { replyError, replySuccess } from "@/helpers/extenders.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType, MessageFlags } from "discord.js";
 
 const client = useClient();
 
 export const data: CommandData = {
 	name: "addemoji",
-	description: client.translate("administration/addemoji:DESCRIPTION"),
+	description: client.i18n.translate("administration/addemoji:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
 	description_localizations: {
-		uk: client.translate("administration/addemoji:DESCRIPTION", { lng: "uk-UA" }),
-		ru: client.translate("administration/addemoji:DESCRIPTION", { lng: "ru-RU" }),
+		ru: client.i18n.translate("administration/addemoji:DESCRIPTION", { lng: "ru-RU" }),
+		uk: client.i18n.translate("administration/addemoji:DESCRIPTION", { lng: "uk-UA" }),
 	},
 	// eslint-disable-next-line camelcase
 	integration_types: [ApplicationIntegrationType.GuildInstall],
@@ -19,34 +19,34 @@ export const data: CommandData = {
 	options: [
 		{
 			name: "link",
-			description: client.translate("common:LINK"),
+			description: client.i18n.translate("common:LINK"),
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			// eslint-disable-next-line camelcase
 			description_localizations: {
-				uk: client.translate("common:LINK", { lng: "uk-UA" }),
-				ru: client.translate("common:LINK", { lng: "ru-RU" }),
+				ru: client.i18n.translate("common:LINK", { lng: "ru-RU" }),
+				uk: client.i18n.translate("common:LINK", { lng: "uk-UA" }),
 			},
 		},
 		{
 			name: "name",
-			description: client.translate("common:NAME"),
+			description: client.i18n.translate("common:NAME"),
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			// eslint-disable-next-line camelcase
 			description_localizations: {
-				uk: client.translate("common:NAME", { lng: "uk-UA" }),
-				ru: client.translate("common:NAME", { lng: "ru-RU" }),
+				ru: client.i18n.translate("common:NAME", { lng: "ru-RU" }),
+				uk: client.i18n.translate("common:NAME", { lng: "uk-UA" }),
 			},
 		},
 	],
 };
 
 export const run = async ({ interaction }: SlashCommandProps) => {
-	await interaction.deferReply({ ephemeral: true });
+	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-	const attachment = interaction.options.getString("link") || "",
-		name = interaction.options.getString("name") || "";
+	const attachment = interaction.options.getString("link") || "";
+	const name = interaction.options.getString("name") || "";
 
 	try {
 		const emoji = await interaction.guild?.emojis.create({ name, attachment });

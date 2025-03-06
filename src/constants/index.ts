@@ -9,7 +9,7 @@ export const CLIENT_INTENTS = [
 	GatewayIntentBits.Guilds,
 	GatewayIntentBits.GuildMembers,
 	GatewayIntentBits.GuildModeration,
-	GatewayIntentBits.GuildEmojisAndStickers,
+	GatewayIntentBits.GuildExpressions,
 	GatewayIntentBits.GuildIntegrations,
 	GatewayIntentBits.GuildInvites,
 	GatewayIntentBits.GuildVoiceStates,

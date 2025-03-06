@@ -1,7 +1,7 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
 import tsParser from "@typescript-eslint/parser";
-import stylisticJs from "@stylistic/eslint-plugin-js";
+import stylistic from "@stylistic/eslint-plugin";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 
 /** @type {import("eslint").Linter.Config[]} */
@@ -18,7 +18,7 @@ export default [
 		},
 		plugins: {
 			"@typescript-eslint": tsPlugin,
-			"@stylistic/js": stylisticJs,
+			"@stylistic": stylistic,
 		},
 		rules: {
 			"no-unused-vars": "off",
@@ -31,14 +31,14 @@ export default [
 			"no-var": "error",
 			"prefer-const": "error",
 			yoda: "error",
-			"@stylistic/js/arrow-spacing": ["error", { before: true, after: true }],
-			"@stylistic/js/comma-dangle": ["error", "always-multiline"],
-			"@stylistic/js/comma-spacing": ["error", { before: false, after: true }],
-			"@stylistic/js/comma-style": ["error", "last"],
-			"@stylistic/js/dot-location": ["error", "property"],
-			"@stylistic/js/keyword-spacing": ["error", { before: true, after: true }],
-			"@stylistic/js/no-multi-spaces": "error",
-			"@stylistic/js/no-multiple-empty-lines": [
+			"@stylistic/arrow-spacing": ["error", { before: true, after: true }],
+			"@stylistic/comma-dangle": ["error", "always-multiline"],
+			"@stylistic/comma-spacing": ["error", { before: false, after: true }],
+			"@stylistic/comma-style": ["error", "last"],
+			"@stylistic/dot-location": ["error", "property"],
+			"@stylistic/keyword-spacing": ["error", { before: true, after: true }],
+			"@stylistic/no-multi-spaces": "error",
+			"@stylistic/no-multiple-empty-lines": [
 				"error",
 				{
 					max: 2,
@@ -46,12 +46,12 @@ export default [
 					maxBOF: 0,
 				},
 			],
-			"@stylistic/js/no-trailing-spaces": ["error"],
-			"@stylistic/js/object-curly-spacing": ["error", "always"],
-			"@stylistic/js/quotes": ["error", "double"],
-			"@stylistic/js/indent": ["error", "tab"],
-			"@stylistic/js/semi": ["error", "always"],
-			"@stylistic/js/space-infix-ops": "error",
+			"@stylistic/no-trailing-spaces": ["error"],
+			"@stylistic/object-curly-spacing": ["error", "always"],
+			"@stylistic/quotes": ["error", "double"],
+			"@stylistic/indent": ["error", "tab"],
+			"@stylistic/semi": ["error", "always"],
+			"@stylistic/space-infix-ops": "error",
 		},
 	},
 ];

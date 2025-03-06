@@ -49,13 +49,13 @@ export const data = {
 								},
 								fields: [
 									{
-										name: client.translate("economy/birthdate:HAPPY_BIRTHDAY", {
+										name: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY", {
 											lng: data.language,
 										}),
-										value: client.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
+										value: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
 											lng: data.language,
 											user: user.id,
-											age: `**${age}** ${getNoun(age, [client.translate("misc:NOUNS:AGE:1", data.language), client.translate("misc:NOUNS:AGE:2", data.language), client.translate("misc:NOUNS:AGE:5", data.language)])}`,
+											age: `**${age}** ${getNoun(age, [client.i18n.translate("misc:NOUNS:AGE:1", data.language), client.i18n.translate("misc:NOUNS:AGE:2", data.language), client.i18n.translate("misc:NOUNS:AGE:5", data.language)])}`,
 										}),
 									},
 								],

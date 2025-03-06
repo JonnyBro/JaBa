@@ -1,10 +1,11 @@
-import { BaseInteraction, CacheType, Interaction, InteractionReplyOptions, Message, User } from "discord.js";
+import { BaseInteraction, CacheType, Interaction, InteractionReplyOptions, Message, MessageFlags, User } from "discord.js";
 import useClient from "@/utils/use-client.js";
 
 interface Options extends InteractionReplyOptions {
 	prefixEmoji?: string;
 	locale?: string;
 	edit?: boolean;
+	ephemeral?: boolean;
 	mention?: boolean;
 }
 
@@ -22,47 +23,54 @@ const getAppEmojis = () => {
 
 const formatReply = (message: string, prefixEmoji?: string) => {
 	const emojis = getAppEmojis();
-	const emoji = emojis.find(emoji => emoji.name === prefixEmoji);
-	return prefixEmoji ? `${emoji?.toString()} ${message}` : `${message}`;
+	const emoji = emojis.find(emoji => emoji.name === prefixEmoji) || ":white_small_square:";
+	return prefixEmoji ? `${emoji.toString()} ${message}` : `${message}`;
 };
 
 export const getUsername = (user: User) => (user.discriminator === "0" ? user.username : user.tag);
 
-export const replyTranslated = async <T extends CacheType = CacheType>(context: Interaction<T> | Message, key: string, args: Record<string, unknown> | null, options: Options) => {
+export const translateContext = async <T extends CacheType = CacheType>(context: Interaction<T> | Message, key: string, args?: Record<string, unknown> | null, options?: Options) => {
 	const client = useClient();
-	const locale = options.locale || client.configService.get("defaultLang");
-	const translated = client.translate(key, {
+	const inGuild = context.guild ? await getLocale(context.guild.id) : "";
+
+	const locale = options?.locale || inGuild || client.configService.get("defaultLang");
+	const translated = client.i18n.translate(key, {
 		lng: locale,
 		...args,
 	});
 
-	const content = formatReply(translated, options.prefixEmoji);
+	return translated;
+};
+
+export const replyTranslated = async <T extends CacheType = CacheType>(context: Interaction<T> | Message, key: string, args?: Record<string, unknown> | null, options?: Options) => {
+	const translated = await translateContext(context, key, args, options);
+	const content = formatReply(translated, options?.prefixEmoji);
 
 	if (context instanceof BaseInteraction) {
 		if (!context.isRepliable()) return;
 
-		if (options.edit) return await context.editReply({ content });
+		if (options?.edit) return await context.editReply({ content });
 
 		await context.reply({
 			content,
-			ephemeral: options.ephemeral || false,
+			flags: options?.ephemeral ? MessageFlags.Ephemeral : undefined,
 		});
 
 		return;
 	}
 
-	if (options.edit) return await context.edit({ content, allowedMentions: { repliedUser: options.mention || false } });
+	if (options?.edit) return await context.edit({ content, allowedMentions: { repliedUser: options.mention || false } });
 
 	await context.reply({
 		content,
-		allowedMentions: { repliedUser: options.mention || false },
+		allowedMentions: { repliedUser: options?.mention || false },
 	});
 };
 
 export const replySuccess = async <T extends CacheType = CacheType>
 (context: Interaction<T> | Message, key: string, args: Record<string, unknown> | null,
-	options: Options = { prefixEmoji: "success" }) => await replyTranslated(context, key, args, options);
+	options: Options = { prefixEmoji: "success" }) => await replyTranslated(context, key, args, { prefixEmoji: "success", ...options });
 
 export const replyError = async <T extends CacheType = CacheType>
 (context: Interaction<T> | Message, key: string, args: Record<string, unknown> | null,
-	options: Options = { prefixEmoji: "error" }) => await replyTranslated(context, key, args, options);
+	options: Options = { prefixEmoji: "error" }) => await replyTranslated(context, key, args, { prefixEmoji: "error", ...options });

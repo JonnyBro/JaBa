@@ -29,7 +29,7 @@
 	"KICK_NOT_DEFINED": "Кік: Не призначено",
 	"LIST": "Показати налаштування серверу",
 	"SET": "Змінити налаштування серверу ",
-	"SETTING": "Параметр",
+	"PARAMETER": "Параметр",
 	"WELCOME_TITLE": "Привітання",
 	"WELCOME_CONTENT": "Канал: {{channel}}\nКартка: {{withImage}}"
 }

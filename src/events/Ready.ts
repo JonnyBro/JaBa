@@ -15,7 +15,7 @@ export const data = {
 export async function run(client: ExtendedClient) {
 	let guildsCount = client.guilds.cache.size;
 
-	const status = ["Use /help to see all the commands!", `I'm in ${guildsCount} ${getNoun(guildsCount, [client.translate("misc:NOUNS:SERVER:1"), client.translate("misc:NOUNS:SERVER:2"), client.translate("misc:NOUNS:SERVER:5")])}!`];
+	const status = ["Use /help to see all the commands!", `I'm in ${guildsCount} ${getNoun(guildsCount, [client.i18n.translate("misc:NOUNS:SERVER:1"), client.i18n.translate("misc:NOUNS:SERVER:2"), client.i18n.translate("misc:NOUNS:SERVER:5")])}!`];
 
 	logger.ready(`${getUsername(client.user)} is online! Serving ${guildsCount}`);
 

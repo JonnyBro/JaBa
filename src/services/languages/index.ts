@@ -59,8 +59,8 @@ export default class InternationalizationService {
 		options?:
 			| TOptionsBase
 			| {
-					[key: string]: string;
-			  },
+				[key: string]: string;
+			},
 	) {
 		const lng = options?.lng || this.options.defaultLanguage;
 		return i18next.t(key, { lng, ...options });

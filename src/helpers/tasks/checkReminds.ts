@@ -33,21 +33,21 @@ export const data: CronTaskData = {
 			mustSent.forEach(async r => {
 				const embed = createEmbed({
 					author: {
-						name: client.translate("general/remindme:EMBED_TITLE"),
+						name: client.i18n.translate("general/remindme:EMBED_TITLE"),
 					},
 					fields: [
 						{
-							name: client.translate("general/remindme:EMBED_CREATED"),
+							name: client.i18n.translate("general/remindme:EMBED_CREATED"),
 							value: `<t:${r.createdAt}:f>`,
 							inline: true,
 						},
 						{
-							name: client.translate("general/remindme:EMBED_TIME"),
+							name: client.i18n.translate("general/remindme:EMBED_TIME"),
 							value: `<t:${r.sendAt}:f>`,
 							inline: true,
 						},
 						{
-							name: client.translate("common:MESSAGE"),
+							name: client.i18n.translate("common:MESSAGE"),
 							value: r.message,
 						},
 					],

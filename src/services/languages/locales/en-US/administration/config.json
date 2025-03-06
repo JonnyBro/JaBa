@@ -29,7 +29,7 @@
 	"KICK_NOT_DEFINED": "Kick: Not set",
 	"LIST": "Display server settings",
 	"SET": "Modify server settings",
-	"SETTING": "Settings",
+	"PARAMETER": "Parameter",
 	"WELCOME_TITLE": "Welcome",
 	"WELCOME_CONTENT": "Channel: {{channel}}\nCard: {{withImage}}"
 }
