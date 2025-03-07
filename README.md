@@ -56,8 +56,7 @@ If you want to contribute, feel free to fork this repo and making a pull request
 
 ## TODO
 
-* [ ] Refactor [tictactoe](./helpers/tictactoe.js).
-* [ ] Finish and release *dashboard-core* submodule.
+* [ ] Some sort of dashboard.
 
 ## License
 
