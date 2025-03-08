@@ -1,4 +1,4 @@
-import { replyError, replySuccess } from "@/helpers/extenders.js";
+import { getLocalizedDesc, replyError, replySuccess } from "@/helpers/extenders.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType, MessageFlags } from "discord.js";
@@ -7,35 +7,20 @@ const client = useClient();
 
 export const data: CommandData = {
 	name: "birthdate",
-	description: client.i18n.translate("economy/birthdate:DESCRIPTION"),
-	// eslint-disable-next-line camelcase
-	description_localizations: {
-		uk: client.i18n.translate("economy/birthdate:DESCRIPTION", { lng: "uk-UA" }),
-		ru: client.i18n.translate("economy/birthdate:DESCRIPTION", { lng: "ru-RU" }),
-	},
+	...getLocalizedDesc("economy/birthdate:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
 	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
 	contexts: [InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel],
 	options: [
 		{
 			name: "day",
-			description: client.i18n.translate("economy/birthdate:DAY"),
+			...getLocalizedDesc("economy/birthdate:DAY"),
 			type: ApplicationCommandOptionType.Integer,
-			// eslint-disable-next-line camelcase
-			description_localizations: {
-				uk: client.i18n.translate("economy/birthdate:DAY", { lng: "uk-UA" }),
-				ru: client.i18n.translate("economy/birthdate:DAY", { lng: "ru-RU" }),
-			},
 		},
 		{
 			name: "month",
-			description: client.i18n.translate("economy/birthdate:MONTH"),
+			...getLocalizedDesc("economy/birthdate:MONTH"),
 			type: ApplicationCommandOptionType.Integer,
-			// eslint-disable-next-line camelcase
-			description_localizations: {
-				uk: client.i18n.translate("economy/birthdate:MONTH", { lng: "uk-UA" }),
-				ru: client.i18n.translate("economy/birthdate:MONTH", { lng: "ru-RU" }),
-			},
 			choices: [
 				{ name: client.i18n.translate("misc:MONTHS:JANUARY"), value: 1 },
 				{ name: client.i18n.translate("misc:MONTHS:FEBRUARY"), value: 2 },
@@ -53,33 +38,18 @@ export const data: CommandData = {
 		},
 		{
 			name: "year",
-			description: client.i18n.translate("economy/birthdate:YEAR"),
+			...getLocalizedDesc("economy/birthdate:YEAR"),
 			type: ApplicationCommandOptionType.Integer,
-			// eslint-disable-next-line camelcase
-			description_localizations: {
-				uk: client.i18n.translate("economy/birthdate:YEAR", { lng: "uk-UA" }),
-				ru: client.i18n.translate("economy/birthdate:YEAR", { lng: "ru-RU" }),
-			},
 		},
 		{
 			name: "clear",
 			type: ApplicationCommandOptionType.Boolean,
-			description: client.i18n.translate("economy/birthdate:CLEAR"),
-			// eslint-disable-next-line camelcase
-			description_localizations: {
-				uk: client.i18n.translate("economy/birthdate:CLEAR", { lng: "uk-UA" }),
-				ru: client.i18n.translate("economy/birthdate:CLEAR", { lng: "ru-RU" }),
-			},
+			...getLocalizedDesc("economy/birthdate:CLEAR"),
 		},
 		{
 			name: "ephemeral",
 			type: ApplicationCommandOptionType.Boolean,
-			description: client.i18n.translate("misc:EPHEMERAL_RESPONSE"),
-			// eslint-disable-next-line camelcase
-			description_localizations: {
-				uk: client.i18n.translate("misc:EPHEMERAL_RESPONSE", { lng: "uk-UA" }),
-				ru: client.i18n.translate("misc:EPHEMERAL_RESPONSE", { lng: "ru-RU" }),
-			},
+			...getLocalizedDesc("misc:EPHEMERAL_RESPONSE"),
 		},
 	],
 };

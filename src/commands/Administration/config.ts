@@ -1,4 +1,4 @@
-import { replyError, translateContext } from "@/helpers/extenders.js";
+import { getLocalizedDesc, replyError, translateContext } from "@/helpers/extenders.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
@@ -8,12 +8,7 @@ const client = useClient();
 
 export const data: CommandData = {
 	name: "config",
-	description: client.i18n.translate("administration/config:DESCRIPTION"),
-	// eslint-disable-next-line camelcase
-	description_localizations: {
-		ru: client.i18n.translate("administration/config:DESCRIPTION", { lng: "ru-RU" }),
-		uk: client.i18n.translate("administration/config:DESCRIPTION", { lng: "uk-UA" }),
-	},
+	...getLocalizedDesc("administration/config:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
 	integration_types: [ApplicationIntegrationType.GuildInstall],
 	contexts: [InteractionContextType.Guild],
@@ -22,32 +17,17 @@ export const data: CommandData = {
 	options: [
 		{
 			name: "list",
-			description: client.i18n.translate("administration/config:LIST"),
-			// eslint-disable-next-line camelcase
-			description_localizations: {
-				ru: client.i18n.translate("administration/config:LIST", { lng: "ru-RU" }),
-				uk: client.i18n.translate("administration/config:LIST", { lng: "uk-UA" }),
-			},
+			...getLocalizedDesc("administration/config:LIST"),
 			type: ApplicationCommandOptionType.Subcommand,
 		},
 		{
 			name: "set",
-			description: client.i18n.translate("administration/config:SET"),
-			// eslint-disable-next-line camelcase
-			description_localizations: {
-				ru: client.i18n.translate("administration/config:SET", { lng: "ru-RU" }),
-				uk: client.i18n.translate("administration/config:SET", { lng: "uk-UA" }),
-			},
+			...getLocalizedDesc("administration/config:SET"),
 			type: ApplicationCommandOptionType.Subcommand,
 			options: [
 				{
 					name: "parameter",
-					description: client.i18n.translate("administration/config:PARAMETER"),
-					// eslint-disable-next-line camelcase
-					description_localizations: {
-						ru: client.i18n.translate("administration/config:PARAMETER", { lng: "ru-RU" }),
-						uk: client.i18n.translate("administration/config:PARAMETER", { lng: "uk-UA" }),
-					},
+					...getLocalizedDesc("administration/config:PARAMETER"),
 					type: ApplicationCommandOptionType.String,
 					required: true,
 					choices: [
@@ -63,24 +43,14 @@ export const data: CommandData = {
 					],
 				},
 				{
-					name: "boolean",
-					description: client.i18n.translate("common:STATE"),
-					// eslint-disable-next-line camelcase
-					description_localizations: {
-						ru: client.i18n.translate("common:STATE", { lng: "ru-RU" }),
-						uk: client.i18n.translate("common:STATE", { lng: "uk-UA" }),
-					},
+					name: "state",
+					...getLocalizedDesc("common:STATE"),
 					type: ApplicationCommandOptionType.Boolean,
 					required: true,
 				},
 				{
 					name: "channel",
-					description: client.i18n.translate("common:CHANNEL"),
-					// eslint-disable-next-line camelcase
-					description_localizations: {
-						ru: client.i18n.translate("common:CHANNEL", { lng: "ru-RU" }),
-						uk: client.i18n.translate("common:CHANNEL", { lng: "uk-UA" }),
-					},
+					...getLocalizedDesc("common:CHANNEL"),
 					type: ApplicationCommandOptionType.Channel,
 					required: false,
 				},
@@ -98,132 +68,137 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const command = interaction.options.getSubcommand();
 
 	if (command === "list") {
+		const fields = await generateFields(interaction, guildData);
 		const embed = createEmbed({
 			author: {
 				name: interaction.guild.name,
 				iconURL: interaction.guild.iconURL() || "",
 			},
-			fields: [
-				{
-					name: await translateContext(interaction, "administration/config:WELCOME_TITLE"),
-					value: guildData.plugins.welcome.enabled
-						? await translateContext(interaction, "administration/config:WELCOME_CONTENT", {
-							channel: `<#${guildData.plugins.welcome.channel}>`,
-							withImage: guildData.plugins.welcome.withImage ? await translateContext(interaction, "common:YES") : await translateContext(interaction, "common:NO"),
-						})
-						: await translateContext(interaction, "common:DISABLED"),
-					inline: true,
-				},
-				{
-					name: await translateContext(interaction, "administration/config:GOODBYE_TITLE"),
-					value: guildData.plugins.goodbye.enabled
-						? await translateContext(interaction, "administration/config:GOODBYE_CONTENT", {
-							channel: `<#${guildData.plugins.goodbye.channel}>`,
-							withImage: guildData.plugins.goodbye.withImage ? await translateContext(interaction, "common:YES") : await translateContext(interaction, "common:NO"),
-						})
-						: await translateContext(interaction, "common:DISABLED"),
-					inline: true,
-				},
-				{
-					name: await translateContext(interaction, "administration/config:MONITORING_CHANNELS"),
-					value:
-						`${await translateContext(interaction, "administration/config:MESSAGEUPDATE")}: ${guildData.plugins?.monitoring?.messageUpdate ? `<#${guildData.plugins?.monitoring?.messageUpdate}>` : `*${await translateContext(interaction, "common:NOT_DEFINED")}*`}\n` +
-						`${await translateContext(interaction, "administration/config:MESSAGEDELETE")}: ${guildData.plugins?.monitoring?.messageDelete ? `<#${guildData.plugins?.monitoring?.messageDelete}>` : `*${await translateContext(interaction, "common:NOT_DEFINED")}*`}\n`,
-				},
-				{
-					name: await translateContext(interaction, "administration/config:SPECIAL_CHANNELS"),
-					value:
-						`${await translateContext(interaction, "administration/config:BIRTHDAYS")}: ${guildData.plugins?.birthdays ? `<#${guildData.plugins.birthdays}>` : `*${await translateContext(interaction, "common:NOT_DEFINED")}*`}\n` +
-						`${await translateContext(interaction, "administration/config:MODLOGS")}: ${guildData.plugins?.modlogs ? `<#${guildData.plugins.modlogs}>` : `*${await translateContext(interaction, "common:NOT_DEFINED")}*`}\n` +
-						`${await translateContext(interaction, "administration/config:REPORTS")}: ${guildData.plugins?.reports ? `<#${guildData.plugins.reports}>` : `*${await translateContext(interaction, "common:NOT_DEFINED")}*`}\n` +
-						`${await translateContext(interaction, "administration/config:SUGGESTIONS")}: ${guildData.plugins?.suggestions ? `<#${guildData.plugins.suggestions}>` : `*${await translateContext(interaction, "common:NOT_DEFINED")}*`}\n` +
-						`${await translateContext(interaction, "administration/config:TICKETSCATEGORY")}: ${guildData.plugins?.tickets?.ticketsCategory ? `<#${guildData.plugins?.tickets?.ticketsCategory}>` : `*${await translateContext(interaction, "common:NOT_DEFINED")}*`}\n` +
-						`${await translateContext(interaction, "administration/config:TICKETLOGS")}: ${guildData.plugins?.tickets?.ticketLogs ? `<#${guildData.plugins?.tickets?.ticketLogs}>` : `*${await translateContext(interaction, "common:NOT_DEFINED")}*`}\n` +
-						`${await translateContext(interaction, "administration/config:TRANSCRIPTIONLOGS")}: ${guildData.plugins?.tickets?.transcriptionLogs ? `<#${guildData.plugins?.tickets?.transcriptionLogs}>` : `*${await translateContext(interaction, "common:NOT_DEFINED")}*`}\n`,
-				},
-			],
+			// TODO: тс даёт ошибку но работает ( я ещё учу тс ;( )
+			// Тип "({ name: string; value: string; inline: boolean; } | undefined)[]" не может быть назначен для типа "readonly APIEmbedField[]".
+			// @ts-ignore Type not assignable (for now)
+			fields,
 		});
 
-		return interaction.editReply({
-			embeds: [embed],
-		});
-	} else {
-		const parameter = interaction.options.getString("parameter", true),
-			state = interaction.options.getBoolean("state", true),
-			channel = interaction.options.getChannel("channel");
-
-		await changeSetting(interaction, guildData, parameter, state, channel);
+		return interaction.editReply({ embeds: [embed] });
 	}
+
+	const parameter = interaction.options.getString("parameter", true);
+	const state = interaction.options.getBoolean("state", true);
+	const channel = interaction.options.getChannel("channel");
+
+	await changeSetting(interaction, guildData, parameter, state, channel);
 };
 
-async function changeSetting(interaction: ChatInputCommandInteraction, data: any, parameter: string, state: boolean, channel: any) { // TODO: Proper type for channel
+async function generateFields(interaction: ChatInputCommandInteraction, guildData: any) {
+	const fieldsConfig = [
+		{
+			nameKey: "administration/config:WELCOME_TITLE",
+			valueKey: "administration/config:WELCOME_CONTENT",
+			plugin: guildData.plugins.welcome,
+		},
+		{
+			nameKey: "administration/config:GOODBYE_TITLE",
+			valueKey: "administration/config:GOODBYE_CONTENT",
+			plugin: guildData.plugins.goodbye,
+		},
+		{
+			nameKey: "administration/config:MONITORING_CHANNELS",
+			values: [
+				{ key: "administration/config:MESSAGEUPDATE", value: guildData.plugins?.monitoring?.messageUpdate },
+				{ key: "administration/config:MESSAGEDELETE", value: guildData.plugins?.monitoring?.messageDelete },
+			],
+		},
+		{
+			nameKey: "administration/config:SPECIAL_CHANNELS",
+			values: [
+				{ key: "administration/config:BIRTHDAYS", value: guildData.plugins?.birthdays },
+				{ key: "administration/config:MODLOGS", value: guildData.plugins?.modlogs },
+				{ key: "administration/config:REPORTS", value: guildData.plugins?.reports },
+				{ key: "administration/config:SUGGESTIONS", value: guildData.plugins?.suggestions },
+				{ key: "administration/config:TICKETSCATEGORY", value: guildData.plugins?.tickets?.ticketsCategory },
+				{ key: "administration/config:TICKETLOGS", value: guildData.plugins?.tickets?.ticketLogs },
+				{ key: "administration/config:TRANSCRIPTIONLOGS", value: guildData.plugins?.tickets?.transcriptionLogs },
+			],
+		},
+	];
+
+	const fields = await Promise.all(
+		fieldsConfig.map(async field => {
+			const name = await translateContext(interaction, field.nameKey);
+
+			if (field.plugin) {
+				const value = field.plugin.enabled
+					? await translateContext(interaction, field.valueKey!, {
+						channel: `<#${field.plugin.channel}>`,
+					})
+					: await translateContext(interaction, "common:DISABLED");
+
+				return { name, value, inline: true };
+			}
+
+			if (field.values) {
+				const value = await Promise.all(
+					field.values.map(async ({ key, value }) => {
+						const translatedKey = await translateContext(interaction, key);
+						const translatedValue = value ? `<#${value}>` : `*${await translateContext(interaction, "common:NOT_DEFINED")}*`;
+
+						return `${translatedKey}: ${translatedValue}`;
+					}),
+				);
+
+				return { name, value: value.join("\n"), inline: false };
+			}
+		}),
+	);
+
+	return fields;
+}
+
+async function saveSettings(guildData: any, parameter: string, value: any) { // TODO: Proper type for `any`
+	guildData.plugins[parameter] = value;
+	guildData.markModified(`plugins.${parameter}`);
+
+	await guildData.save();
+}
+
+async function generateReply(interaction: ChatInputCommandInteraction, guildData: any, parameter: string, state: boolean, channel?: any) {
+	const translatedParam = await translateContext(interaction, `administration/config:${parameter.toUpperCase()}`);
+	const enabledText = await translateContext(interaction, "common:ENABLED");
+	const disabledText = await translateContext(interaction, "common:DISABLED");
+
+	if (channel) return `${translatedParam}: **${enabledText}** (${channel.toString()})`;
+
+	return `${translatedParam}: ${state ? `**${enabledText}** (<#${guildData.plugins[parameter]}>)` : `**${disabledText}**`}`;
+}
+
+async function changeSetting(interaction: ChatInputCommandInteraction, guildData: any, parameter: string, state: boolean, channel?: any) {
 	const parameterSplitted = parameter.split(".");
+	const isNested = parameterSplitted.length === 2;
 
-	if (parameterSplitted.length === 2) {
-		if (data.plugins[parameterSplitted[0]] === undefined) data.plugins[parameterSplitted[0]] = {};
-
-		if (!state) {
-			data.plugins[parameterSplitted[0]][parameterSplitted[1]] = null;
-
-			data.markModified(`plugins.${parameter}`);
-			await data.save();
-
-			return interaction.reply({
-				content: `${await translateContext(interaction, `administration/config:${parameterSplitted.length === 2 ? parameterSplitted[1].toUpperCase() : parameter.toUpperCase()}`)}: **${await translateContext(interaction, "common:DISABLED")}**`,
-				ephemeral: true,
-			});
-		} else {
-			if (parameterSplitted[1] === "ticketsCategory" && channel?.type !== ChannelType.GuildCategory) return interaction.reply({ content: await translateContext(interaction, "administration/config:TICKETS_NOT_CATEGORY"), ephemeral: true });
-
-			if (channel) {
-				data.plugins[parameterSplitted[0]][parameterSplitted[1]] = channel.id;
-
-				data.markModified(`plugins.${parameter}`);
-				await data.save();
-
-				return interaction.reply({
-					content: `${await translateContext(interaction, `administration/config:${parameterSplitted.length === 2 ? parameterSplitted[1].toUpperCase() : parameter.toUpperCase()}`)}: **${await translateContext(interaction, "common:ENABLED")}** (${channel.toString()})`,
-					ephemeral: true,
-				});
-			} else {
-				return interaction.reply({
-					content: `${await translateContext(interaction, `administration/config:${parameterSplitted.length === 2 ? parameterSplitted[1].toUpperCase() : parameter.toUpperCase()}`)}: ${
-						data.plugins[parameter] ? `**${await translateContext(interaction, "common:ENABLED")}** (<#${data.plugins[parameter]}>)` : `**${await translateContext(interaction, "common:DISABLED")}**`
-					}`,
-					ephemeral: true,
-				});
-			}
-		};
-	} else {
-		if (!state) {
-			data.plugins[parameter] = null;
-
-			data.markModified(`plugins.${parameter}`);
-			await data.save();
-
-			return interaction.reply({
-				content: `${client.i18n.translate(`administration/config:${parameter.toUpperCase()}`)}: **${client.i18n.translate("common:DISABLED")}**`,
-				ephemeral: true,
-			});
-		} else {
-			if (channel) {
-				data.plugins[parameter] = channel.id;
-
-				data.markModified(`plugins.${parameter}`);
-				await data.save();
-
-				return interaction.reply({
-					content: `${client.i18n.translate(`administration/config:${parameter.toUpperCase()}`)}: **${client.i18n.translate("common:ENABLED")}** (${channel.toString()})`,
-					ephemeral: true,
-				});
-			} else {
-				return interaction.reply({
-					content: `${client.i18n.translate(`administration/config:${parameter.toUpperCase()}`)}: ${
-						data.plugins[parameter] ? `**${client.i18n.translate("common:ENABLED")}** (<#${data.plugins[parameter]}>)` : `**${client.i18n.translate("common:DISABLED")}**`
-					}`,
-					ephemeral: true,
-				});
-			}
-		}
+	if (isNested && guildData.plugins[parameterSplitted[0]] === undefined) {
+		guildData.plugins[parameterSplitted[0]] = {};
 	}
+
+	if (!state) {
+		await saveSettings(guildData, parameter, null);
+
+		return interaction.editReply({
+			content: await generateReply(interaction, guildData, parameterSplitted[isNested ? 1 : 0], state),
+		});
+	}
+
+	if (isNested && parameterSplitted[1] === "ticketsCategory" && channel?.type !== ChannelType.GuildCategory) {
+		return interaction.editReply({
+			content: await translateContext(interaction, "administration/config:TICKETS_NOT_CATEGORY"),
+		});
+	}
+
+	if (channel) {
+		await saveSettings(guildData, parameter, channel.id);
+	}
+
+	return interaction.editReply({
+		content: await generateReply(interaction, guildData, parameterSplitted[isNested ? 1 : 0], state, channel),
+	});
 }

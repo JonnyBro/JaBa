@@ -1,5 +1,5 @@
-import { BaseInteraction, CacheType, Interaction, InteractionReplyOptions, Message, MessageFlags, User } from "discord.js";
 import useClient from "@/utils/use-client.js";
+import { BaseInteraction, CacheType, Interaction, InteractionReplyOptions, Message, MessageFlags, User } from "discord.js";
 
 interface Options extends InteractionReplyOptions {
 	prefixEmoji?: string;
@@ -13,6 +13,19 @@ export const getLocale = async (guildId: string) => {
 	const client = useClient();
 	const guild = await client.getGuildData(guildId);
 	return guild.language;
+};
+
+export const getLocalizedDesc = (key: string) => {
+	const client = useClient();
+
+	return {
+		description: client.i18n.translate(key),
+		// eslint-disable-next-line camelcase
+		description_localizations: {
+			ru: client.i18n.translate(key, { lng: "ru-RU" }),
+			uk: client.i18n.translate(key, { lng: "uk-UA" }),
+		},
+	};
 };
 
 const getAppEmojis = () => {

@@ -31,7 +31,7 @@ const registerGlobalCommands = async (client: ExtendedClient, commands: CommandF
 		commands.map(async ({ data }) => {
 			const targetCommand = appCommandsManager.cache.find(cmd => cmd.name === data.name);
 
-			if (targetCommand && differentCommands(targetCommand, data)) {
+			if (targetCommand /*&& differentCommands(targetCommand, data) */) { // FIXME: differentCommands is always false
 				await targetCommand.edit(data as Partial<ApplicationCommandData>).catch(() => logger.error(`Failed to update command: ${data.name} globally`));
 
 				logger.log(`Edited command globally: ${data.name}`);

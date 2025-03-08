@@ -24,12 +24,12 @@
 	"BAN_CONTENT": "Бан: После **{{count}}** предупреждений",
 	"BAN_NOT_DEFINED": "Бан: Не назначено",
 	"GOODBYE_TITLE": "Прощание",
-	"GOODBYE_CONTENT": "Канал: {{channel}}\nКарточка: {{withImage}}",
+	"GOODBYE_CONTENT": "Канал: {{channel}}",
 	"KICK_CONTENT": "Кик: После **{{count}}** предупреждений",
 	"KICK_NOT_DEFINED": "Кик: Не назначено",
 	"LIST": "Показать настройки сервера",
 	"SET": "Изменить настройки сервера",
 	"PARAMETER": "Параметр",
 	"WELCOME_TITLE": "Приветствие",
-	"WELCOME_CONTENT": "Канал: {{channel}}\nКарточка: {{withImage}}"
+	"WELCOME_CONTENT": "Канал: {{channel}}"
 }
