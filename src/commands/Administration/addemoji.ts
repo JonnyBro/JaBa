@@ -27,12 +27,11 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-	const attachment = interaction.options.getString("link") || "";
-	const name = interaction.options.getString("name") || "";
+	const attachment = interaction.options.getString("link", true);
+	const name = interaction.options.getString("name", true);
 
 	try {
 		const emoji = await interaction.guild?.emojis.create({ name, attachment });
-
 		if (!emoji) return replyError(interaction, "administration/addemoji:ERROR", { name }, { edit: true });
 
 		return replySuccess(interaction, "administration/addemoji:SUCCESS", { emoji: emoji.toString() }, { edit: true });

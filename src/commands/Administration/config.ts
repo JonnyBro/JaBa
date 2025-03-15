@@ -1,10 +1,10 @@
 import { getLocalizedDesc, replyError, translateContext } from "@/helpers/extenders.js";
+import GuildModel from "@/models/GuildModel.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
+import { generateFields } from "@/utils/config-fields.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
 import { ApplicationCommandOptionType, ApplicationIntegrationType, Channel, ChannelType, ChatInputCommandInteraction, InteractionContextType, MessageFlags, PermissionsBitField } from "discord.js";
-import GuildModel from "@/models/GuildModel.js";
-import { generateFields } from "@/utils/config-fields.js";
 
 const client = useClient();
 
