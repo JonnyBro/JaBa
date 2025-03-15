@@ -1,4 +1,4 @@
-import { getLocalizedDesc, replyError, translateContext } from "@/helpers/extenders.js";
+import { getLocalizedDesc, translateContext } from "@/helpers/extenders.js";
 import GuildModel from "@/models/GuildModel.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { generateFields } from "@/utils/config-fields.js";
@@ -64,17 +64,15 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-	if (!interaction.guild) return replyError(interaction, "misc:GUILD_ONLY", null, { edit: true });
-
-	const guildData = await client.getGuildData(interaction.guild.id);
+	const guildData = await client.getGuildData(interaction.guild!.id);
 	const command = interaction.options.getSubcommand();
 
 	if (command === "list") {
 		const fields = await generateFields(interaction, guildData);
 		const embed = createEmbed({
 			author: {
-				name: interaction.guild.name,
-				iconURL: interaction.guild.iconURL() || "",
+				name: interaction.guild!.name,
+				iconURL: interaction.guild!.iconURL() || "",
 			},
 			fields,
 		});
