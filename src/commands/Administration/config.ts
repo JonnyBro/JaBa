@@ -64,7 +64,7 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-	const guildData = await client.getGuildData(interaction.guild!.id);
+	const guildData = await client.getGuildData(interaction.guildId!);
 	const command = interaction.options.getSubcommand();
 
 	if (command === "list") {

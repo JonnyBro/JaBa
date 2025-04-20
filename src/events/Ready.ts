@@ -17,7 +17,7 @@ export async function run(client: ExtendedClient) {
 
 	const status = ["Use /help to see all the commands!", `I'm in ${guildsCount} ${getNoun(guildsCount, [client.i18n.translate("misc:NOUNS:SERVER:1"), client.i18n.translate("misc:NOUNS:SERVER:2"), client.i18n.translate("misc:NOUNS:SERVER:5")])}!`];
 
-	logger.ready(`${getUsername(client.user)} is online! Serving ${guildsCount}`);
+	logger.ready(`${getUsername(client.user)} is online! Serving ${guildsCount} ${getNoun(guildsCount, [client.i18n.translate("misc:NOUNS:SERVER:1"), client.i18n.translate("misc:NOUNS:SERVER:2"), client.i18n.translate("misc:NOUNS:SERVER:5")])}`);
 
 	// Fetching all app emojis, because we need to use them
 	await client.application.emojis.fetch();
