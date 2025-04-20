@@ -3,6 +3,12 @@
 	"USAGE": "list\nset [setting] (state) (#channel)",
 	"EXAMPLES": "config list\nconfig set setting:reports state:True channel:#reports",
 
+	"LIST": "Display server settings",
+	"SET": "Modify server settings",
+	"LANG": "Change bot's language for this server",
+
+	"LANG_SUCCESS": "{{flag}} Server language has been changed to **{{lang}}**",
+
 	"SPECIAL_CHANNELS": "Special Channels",
 	"BIRTHDAYS": "Birthdays Announcements",
 	"MODLOGS": "Moderation Logs",
@@ -27,8 +33,6 @@
 	"GOODBYE_CONTENT": "Channel: {{channel}}",
 	"KICK_CONTENT": "Kick: After **{{count}}** warnings",
 	"KICK_NOT_DEFINED": "Kick: Not set",
-	"LIST": "Display server settings",
-	"SET": "Modify server settings",
 	"PARAMETER": "Parameter",
 	"WELCOME_TITLE": "Welcome",
 	"WELCOME_CONTENT": "Channel: {{channel}}"

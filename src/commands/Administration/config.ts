@@ -23,6 +23,24 @@ export const data: CommandData = {
 			type: ApplicationCommandOptionType.Subcommand,
 		},
 		{
+			name: "language",
+			...getLocalizedDesc("administration/config:LANG"),
+			type: ApplicationCommandOptionType.Subcommand,
+			options: [
+				{
+					name: "language",
+					...getLocalizedDesc("common:LANGUAGE"),
+					type: ApplicationCommandOptionType.String,
+					required: true,
+					choices: [
+						{ name: "English", value: "en-US" },
+						{ name: "Русский", value: "ru-RU" },
+						{ name: "Українська", value: "uk-UA" },
+					],
+				},
+			],
+		},
+		{
 			name: "set",
 			...getLocalizedDesc("administration/config:SET"),
 			type: ApplicationCommandOptionType.Subcommand,
@@ -75,6 +93,28 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				iconURL: interaction.guild!.iconURL() || "",
 			},
 			fields,
+		});
+
+		return interaction.editReply({ embeds: [embed] });
+	}
+
+	if (command === "language") {
+		const selectedLang = interaction.options.getString("language", true);
+		const lang = client.i18n.getSupportedLanguages.find(l => l === selectedLang)!;
+
+		guildData.language = lang;
+
+		await guildData.save();
+
+		const embed = createEmbed({
+			author: {
+				name: client.user.username,
+				iconURL: client.user.avatarURL({ size: 1024 })!,
+			},
+			description: await translateContext(interaction, "administration/config:LANG_SUCCESS", {
+				flag: `:flag_${lang.split("-")[1].toLowerCase()}:`,
+				lang,
+			}),
 		});
 
 		return interaction.editReply({ embeds: [embed] });
