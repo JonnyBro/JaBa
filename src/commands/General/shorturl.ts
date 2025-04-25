@@ -1,4 +1,4 @@
-import { getLocalizedDesc, replyError } from "@/helpers/extenders.js";
+import { editReplyError, getLocalizedDesc } from "@/helpers/extenders.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType, MessageFlags } from "discord.js";
@@ -34,7 +34,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply({ flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined });
 
 	const url = interaction.options.getString("url", true);
-	if (!url.startsWith("http")) return replyError(interaction, "general/shorturl:NOT_A_LINK", null, { edit: true });
+	if (!url.startsWith("http")) return editReplyError(interaction, "general/shorturl:NOT_A_LINK", null);
 
 	const res = await fetch("https://i.jonnybro.ru/api/shorten", { // old v3 API, waiting for v4 API
 		method: "POST",

@@ -22,7 +22,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply({ flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined });
 
 	const res = await fetch("https://api.pur.cat/random-cat").then(r => r.json());
-	const embed = createEmbed({}).setImage(res.url);
+	const embed = createEmbed().setImage(res.url);
 
 	await interaction.editReply({ embeds: [embed] });
 };

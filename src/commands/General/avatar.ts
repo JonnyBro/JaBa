@@ -33,7 +33,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	const user = interaction.guild ? interaction.options.getMember("user") as GuildMember || interaction.member! : interaction.options.getUser("user") || interaction.user!;
 	const avatarURL = interaction.options.getBoolean("server") && interaction.guild ? user.displayAvatarURL({ forceStatic: false, extension: "png", size: 2048 }) : user.avatarURL({ forceStatic: false, extension: "png", size: 2048 });
-	const embed = createEmbed({}).setImage(avatarURL);
+	const embed = createEmbed().setImage(avatarURL);
 
 	interaction.editReply({
 		embeds: [embed],

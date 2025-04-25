@@ -80,10 +80,14 @@ export const replyTranslated = async <T extends CacheType = CacheType>(context: 
 	});
 };
 
-export const replySuccess = async <T extends CacheType = CacheType>
-(context: Interaction<T> | Message, key: string, args: Record<string, unknown> | null,
-	options: Options = { prefixEmoji: "success" }) => await replyTranslated(context, key, args, { prefixEmoji: "success", ...options });
+export const replySuccess = async <T extends CacheType = CacheType>(context: Interaction<T> | Message, key: string, args?: Record<string, unknown> | null, options: Options = { prefixEmoji: "success" }) =>
+	await replyTranslated(context, key, args, { prefixEmoji: "success", ...options });
 
-export const replyError = async <T extends CacheType = CacheType>
-(context: Interaction<T> | Message, key: string, args: Record<string, unknown> | null,
-	options: Options = { prefixEmoji: "error" }) => await replyTranslated(context, key, args, { prefixEmoji: "error", ...options });
+export const editReplySuccess = async <T extends CacheType = CacheType>(context: Interaction<T> | Message, key: string, args?: Record<string, unknown> | null, options: Options = { prefixEmoji: "success", edit: true }) =>
+	await replyTranslated(context, key, args, { prefixEmoji: "success", ...options });
+
+export const replyError = async <T extends CacheType = CacheType>(context: Interaction<T> | Message, key: string, args?: Record<string, unknown> | null, options: Options = { prefixEmoji: "error" }) =>
+	await replyTranslated(context, key, args, { prefixEmoji: "error", ...options });
+
+export const editReplyError = async <T extends CacheType = CacheType>(context: Interaction<T> | Message, key: string, args?: Record<string, unknown> | null, options: Options = { prefixEmoji: "error", edit: true }) =>
+	await replyTranslated(context, key, args, { prefixEmoji: "error", ...options });

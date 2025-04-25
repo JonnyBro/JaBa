@@ -10,6 +10,7 @@
 	"INVALID_NUMBER_RANGE": "Please specify a number between **{{min}}** and **{{max}}**.",
 	"MAX_150_CHARS": "No more than 150 characters!",
 	"MORE_THAN_ZERO": "Please specify an integer greater than 0.",
+	"USER_NOT_FOUND": "Member/user not found!",
 	"NO_ARGS": "No arguments required.",
 	"NSFW_COMMAND": "This command can only be used in an NSFW channel.",
 	"OPTION_NAN_ALL": "Please specify an integer greater than 0 or `all`.",

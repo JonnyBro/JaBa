@@ -1,4 +1,4 @@
-import { getLocalizedDesc, replyError, replySuccess } from "@/helpers/extenders.js";
+import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/extenders.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType, MessageFlags } from "discord.js";
@@ -63,7 +63,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		userData.birthdate = null;
 		await userData.save();
 
-		return replySuccess(interaction, "economy/birthdate:SUCCESS", { date: "none" }, { edit: true });
+		return editReplySuccess(interaction, "economy/birthdate:SUCCESS", { date: "none" });
 	}
 
 	const day = interaction.options.getInteger("day", true),
@@ -76,22 +76,13 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	const d = date.getTime();
 
-	if (!(day === date.getDate() && month - 1 === date.getMonth() && year === date.getFullYear())) return replyError(interaction, "economy/birthdate:INVALID_DATE", null, { edit: true });
-	if (date.getTime() > Date.now()) return replyError(interaction, "economy/birthdate:DATE_TOO_HIGH", null, { edit: true });
-	if (date.getTime() < Date.now() - 2.523e12) return replyError(interaction, "economy/birthdate:DATE_TOO_LOW", null, { edit: true });
+	if (!(day === date.getDate() && month - 1 === date.getMonth() && year === date.getFullYear())) return editReplyError(interaction, "economy/birthdate:INVALID_DATE");
+	if (date.getTime() > Date.now()) return editReplyError(interaction, "economy/birthdate:DATE_TOO_HIGH");
+	if (date.getTime() < Date.now() - 2.523e12) return editReplyError(interaction, "economy/birthdate:DATE_TOO_LOW");
 
 	userData.birthdate = d;
 
 	await userData.save();
 
-	return replySuccess(
-		interaction,
-		"economy/birthdate:SUCCESS",
-		{
-			date: `<t:${Math.floor(d / 1000)}:D>`,
-		},
-		{
-			edit: true,
-		},
-	);
+	return editReplySuccess(interaction, "economy/birthdate:SUCCESS", { date: `<t:${Math.floor(d / 1000)}:D>` });
 };
