@@ -42,6 +42,10 @@ export interface SlashCommandProps extends CommandProps {
 	interaction: ChatInputCommandInteraction;
 }
 
+export interface ContextCommandProps extends CommandProps {
+	interaction: UserContextMenuCommandInteraction | MessageContextMenuCommandInteraction
+}
+
 export interface CommandContext<_T extends Interaction, _Cached extends CacheType> {
 	interaction: Interaction<CacheType>;
 	client: ExtendedClient;
