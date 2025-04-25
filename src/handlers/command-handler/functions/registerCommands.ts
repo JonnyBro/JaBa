@@ -31,7 +31,7 @@ const registerGlobalCommands = async (client: ExtendedClient, commands: CommandF
 		commands.map(async ({ data }) => {
 			const targetCommand = appCommandsManager.cache.find(cmd => cmd.name === data.name);
 
-			if (targetCommand /*&& differentCommands(targetCommand, data) */) { // FIXME: differentCommands is always false
+			if (targetCommand && differentCommands(targetCommand, data)) {
 				await targetCommand.edit(data as Partial<ApplicationCommandData>).catch(() => logger.error(`Failed to update command: ${data.name} globally`));
 
 				logger.log(`Edited command globally: ${data.name}`);
@@ -75,7 +75,7 @@ const registerDevCommands = async (client: ExtendedClient, commands: CommandFile
 				if (targetCommand && differentCommands(targetCommand, data)) {
 					await targetCommand.edit(data as Partial<ApplicationCommandData>).catch(() => logger.error(`Failed to update command: ${data.name} in ${guildCommands.guild.name} server`));
 
-					logger.log(`Edited command globally: ${data.name}`);
+					logger.log(`Edited command in dev: ${data.name}`);
 				} else if (!targetCommand) {
 					await guildCommands.create(data).catch(() => logger.error(`Failed to register command: ${data.name} in ${guildCommands.guild.name} server`));
 					logger.debug(`Command ${data.name} loaded in dev`);
