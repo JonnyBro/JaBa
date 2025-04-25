@@ -1,3 +1,4 @@
+import { replyError } from "@/helpers/extenders.js";
 import { ContextCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import { ApplicationCommandType, ApplicationIntegrationType, ContextMenuCommandBuilder, InteractionContextType } from "discord.js";
@@ -9,8 +10,11 @@ export const data = new ContextMenuCommandBuilder()
 	.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild]);
 
 export const run = async ({ interaction }: ContextCommandProps) => {
-	const avatarURL = interaction.guild ? interaction.user.displayAvatarURL({ forceStatic: false, extension: "png", size: 2048 }) : interaction.user.avatarURL({ forceStatic: false, extension: "png", size: 2048 });
-	const embed = createEmbed({}).setImage(avatarURL);
+	const member = await interaction.guild?.members.fetch(interaction.targetId);
+	if (!member) return replyError(interaction, "misc:USER_NOT_FOUND");
+
+	const avatarURL = interaction.guild ? member.displayAvatarURL({ forceStatic: false, extension: "png", size: 2048 }) : member.avatarURL({ forceStatic: false, extension: "png", size: 2048 });
+	const embed = createEmbed().setImage(avatarURL);
 
 	interaction.reply({
 		embeds: [embed],
