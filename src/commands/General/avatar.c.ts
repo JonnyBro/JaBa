@@ -9,7 +9,7 @@ export const data = new ContextMenuCommandBuilder()
 	.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild]);
 
 export const run = async ({ interaction }: ContextCommandProps) => {
-	const avatarURL = interaction.guild ? interaction.targetMember.displayAvatarURL({ forceStatic: false, extension: "png", size: 2048 }) : interaction.targetUser.avatarURL({ forceStatic: false, extension: "png", size: 2048 });
+	const avatarURL = interaction.guild ? interaction.user.displayAvatarURL({ forceStatic: false, extension: "png", size: 2048 }) : interaction.user.avatarURL({ forceStatic: false, extension: "png", size: 2048 });
 	const embed = createEmbed({}).setImage(avatarURL);
 
 	interaction.reply({
