@@ -23,29 +23,30 @@ const logLevels = {
 
 export default {
 	log(...content: unknown[]) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.LOG} ${content.join(" ")}`);
+		return console.log(`[${format(Date.now())}]: ${logLevels.LOG}`, ...content);
 	},
 
 	warn(...content: unknown[]) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.WARN} ${content.join(" ")}`);
+		return console.log(`[${format(Date.now())}]: ${logLevels.WARN}`, ...content);
 	},
 
 	error(...content: unknown[]) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.ERROR} ${content.join(" ")}`);
+		const formattedContent = content.map(item => (item instanceof Error ? item.stack || item.toString() : item));
+		return console.error(`[${format(Date.now())}]: ${logLevels.ERROR}`, ...formattedContent);
 	},
 
 	debug(...content: unknown[]) {
 		const client = useClient();
 		const isProd = client.configService.get("production");
 		if (isProd) return;
-		return console.log(`[${format(Date.now())}]: ${logLevels.DEBUG} ${content.join(" ")}`);
+		return console.log(`[${format(Date.now())}]: ${logLevels.DEBUG}`, ...content);
 	},
 
 	cmd(...content: unknown[]) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.CMD} ${content.join(" ")}`);
+		return console.log(`[${format(Date.now())}]: ${logLevels.CMD}`, ...content);
 	},
 
 	ready(...content: unknown[]) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.READY} ${content.join(" ")}`);
+		return console.log(`[${format(Date.now())}]: ${logLevels.READY}`, ...content);
 	},
 };
