@@ -58,7 +58,7 @@ export class CommandHandler {
 
 	handleCommands() {
 		this.client.on("interactionCreate", async interaction => {
-			if (!interaction.isChatInputCommand() && !interaction.isAutocomplete()) return;
+			if (!interaction.isChatInputCommand() && !interaction.isAutocomplete() && !interaction.isContextMenuCommand()) return;
 
 			const isAutocomplete = interaction.isAutocomplete();
 
