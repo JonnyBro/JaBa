@@ -1,5 +1,6 @@
-import { editReplyError, getLocalizedDesc } from "@/helpers/extenders.js";
+import { editReplyError, getLocalizedDesc, translateContext } from "@/helpers/extenders.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
+import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
 import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType, MessageFlags } from "discord.js";
 
@@ -22,30 +23,39 @@ export const data: CommandData = {
 			name: "ephemeral",
 			...getLocalizedDesc("misc:EPHEMERAL_RESPONSE"),
 			type: ApplicationCommandOptionType.Boolean,
-			required: false,
 		},
 	],
 };
 
 export const run = async ({ interaction }: SlashCommandProps) => {
-	return interaction.reply("Doesn't work right now, waiting for API to update.");
-
-	// eslint-disable-next-line no-unreachable
 	await interaction.deferReply({ flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined });
 
 	const url = interaction.options.getString("url", true);
 	if (!url.startsWith("http")) return editReplyError(interaction, "general/shorturl:NOT_A_LINK", null);
 
-	const res = await fetch("https://i.jonnybro.ru/api/shorten", { // old v3 API, waiting for v4 API
+	const res = await fetch(client.configService.get("apiKeys.urlShortener.url"), {
 		method: "POST",
 		headers: {
-			"Authorization": client.configService.get("apiKeys.zipline"),
-			"Max-Views": "0",
+			"Authorization": client.configService.get("apiKeys.urlShortener.key"),
+			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({ url: url }),
+		body: JSON.stringify({ destination: url }),
 	}).then(res => res.json());
 
+	const embed = createEmbed({
+		fields: [
+			{
+				name: await translateContext(interaction, "common:DESTINATION"),
+				value: res.destination,
+			},
+			{
+				name: await translateContext(interaction, "common:URL"),
+				value: res.url,
+			},
+		],
+	});
+
 	interaction.editReply({
-		content: `<${res.url}>`,
+		embeds: [embed],
 	});
 };

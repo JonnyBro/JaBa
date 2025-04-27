@@ -72,7 +72,6 @@ export const data: CommandData = {
 					name: "channel",
 					...getLocalizedDesc("common:CHANNEL"),
 					type: ApplicationCommandOptionType.Channel,
-					required: false,
 				},
 			],
 		},
