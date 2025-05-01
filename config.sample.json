@@ -24,5 +24,10 @@
 		"tasks": "./src/helpers/tasks"
 	},
 	"defaultLang": "en-US",
-	"apiKeys": {}
+	"apiKeys": {
+		"urlShortener": {
+			"url": "",
+			"key": ""
+		}
+	}
 }

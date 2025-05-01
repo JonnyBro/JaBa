@@ -40,7 +40,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			if (output.includes(client.token)) output = output.replace(client.token, "there_be_tokens");
 
 			const embed = createEmbed({
-				description: `Code:\n\`\`\`${code}\`\`\`\nOutput:\n\`\`\`ts\n${output}\n\`\`\``.slice(0, 4090) + "```",
+				description: `Code:\n\`\`\`${code}\`\`\`\nOutput:\n\`\`\`ts\n${output}`.slice(0, 4090) + "\n```",
 			});
 
 			interaction.editReply({

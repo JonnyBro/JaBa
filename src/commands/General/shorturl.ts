@@ -1,4 +1,4 @@
-import { editReplyError, getLocalizedDesc, translateContext } from "@/helpers/extenders.js";
+import { editReplyError, getLocalizedDesc, replyError, translateContext } from "@/helpers/extenders.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
@@ -28,6 +28,8 @@ export const data: CommandData = {
 };
 
 export const run = async ({ interaction }: SlashCommandProps) => {
+	if (!client.configService.get("apiKeys.urlShortener.url") || !client.configService.get("apiKeys.urlShortener.key")) return replyError(interaction, "API URL or key not set!");
+
 	await interaction.deferReply({ flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined });
 
 	const url = interaction.options.getString("url", true);
