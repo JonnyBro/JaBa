@@ -53,25 +53,16 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const choice = interaction.options.getString("option", true);
 	const creditsChoice = interaction.options.getString("credits");
 
-	if (!creditsChoice) {
-		return editReplyError(interaction, "misc:OPTION_NAN_ALL");
-	}
-
-	const credits = creditsChoice.toLowerCase() === "all" ? memberData.money : Number(creditsChoice);
-
-	if (isNaN(credits) || credits < 1) {
-		return editReplyError(interaction, "misc:OPTION_NAN_ALL");
-	}
+	if (!creditsChoice && choice !== "balance") return editReplyError(interaction, "misc:OPTION_NAN_ALL");
 
 	const embed = createEmbed();
 
 	switch (choice) {
 		case "deposit": {
-			if (memberData.money < credits) {
-				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT", {
-					money: await formatCredits(interaction, credits),
-				});
-			}
+			const credits = creditsChoice!.toLowerCase() === "all" ? memberData.money : Number(creditsChoice);
+			if (isNaN(credits) || credits < 1) return editReplyError(interaction, "misc:OPTION_NAN_ALL");
+			if (memberData.money < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
+
 			memberData.money -= credits;
 			memberData.bankSold += credits;
 			memberData.transactions.push({
@@ -87,15 +78,15 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 					money: await formatCredits(interaction, credits),
 				}),
 			);
+
 			break;
 		}
 
 		case "withdraw": {
-			if (memberData.bankSold < credits) {
-				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT", {
-					money: await formatCredits(interaction, credits),
-				});
-			}
+			const credits = creditsChoice!.toLowerCase() === "all" ? memberData.bankSold : Number(creditsChoice);
+			if (isNaN(credits) || credits < 1) return editReplyError(interaction, "misc:OPTION_NAN_ALL");
+			if (memberData.bankSold < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
+
 			memberData.money += credits;
 			memberData.bankSold -= credits;
 			memberData.transactions.push({
@@ -111,19 +102,20 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 					money: await formatCredits(interaction, credits),
 				}),
 			);
+
 			break;
 		}
+
 		case "balance": {
 			const targetUser = interaction.options.getUser("user") || interaction.user;
-			if (targetUser.bot) {
-				return editReplyError(interaction, "economy/money:BOT_USER");
-			}
+			if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
 
 			const targetData = targetUser.id === interaction.user.id ? memberData : await client.getMemberData(targetUser.id, guildId);
 
 			let globalMoney = 0;
 			const guilds = client.guilds.cache.filter(g => g.members.cache.has(targetUser.id));
 			const guldsArray = Array.from(guilds.values());
+
 			await asyncForEach(guldsArray, async guild => {
 				const data = await client.getMemberData(targetUser.id, guild.id);
 				globalMoney += data.money + data.bankSold;
@@ -146,6 +138,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 					inline: true,
 				},
 			]);
+
 			break;
 		}
 
