@@ -8,7 +8,7 @@
 	"WITHDRAW": "Withdraw",
 	"BALANCE": "Balance",
 
-	"NOT_ENOUGH_CREDIT": "You don't have {{money}}",
+	"NOT_ENOUGH_CREDIT": "You don't have credits",
 	"NOT_ENOUGH_BANK": "Insufficient credits in your bank account, {{money}} required",
 	"SUCCESS_DEP": "{{money}} deposited into your bank account",
 	"SUCCESS_WD": "You have withdrawn {{money}} from your bank account"
