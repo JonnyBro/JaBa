@@ -1,25 +1,24 @@
-import { model, Schema, Types, Document } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 import useClient from "@/utils/use-client.js";
 
 const client = useClient();
 
-interface IGuildSchema extends Document {
+export interface IGuildSchema {
 	id: string;
-	membersData: {
-		[key: string]: any;
-	};
+	membersData: Record<string, any>;
 	members: Types.ObjectId[];
 	language: string;
 	plugins: any;
 }
 
 const GuildSchema = new Schema<IGuildSchema>({
-	id: { type: String },
-
+	id: { type: String, required: true },
 	membersData: { type: Object, default: {} },
 	members: [{ type: Schema.Types.ObjectId, ref: "Member" }],
-
-	language: { type: String, default: client.configService.get<string>("defaultLang") },
+	language: {
+		type: String,
+		default: client.configService.get<string>("defaultLang"),
+	},
 	plugins: {
 		type: Object,
 		default: {

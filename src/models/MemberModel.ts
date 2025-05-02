@@ -1,7 +1,6 @@
-import { Schema, Document, model, Types } from "mongoose";
+import { Schema, model } from "mongoose";
 
-interface IMemberSchema extends Document {
-	_id: Types.ObjectId;
+export interface IMemberSchema {
 	id: string;
 	guildID: string;
 	money: number;
@@ -9,12 +8,12 @@ interface IMemberSchema extends Document {
 	bankSold: number;
 	exp: number;
 	level: number;
-	transactions: [{
-		user: string,
-		amount: number,
-		date: number,
-		type: string,
-	}];
+	transactions: Array<{
+		user: string;
+		amount: number;
+		date: number;
+		type: string;
+	}>;
 	registeredAt: number;
 	cooldowns: {
 		work: number;
@@ -29,18 +28,22 @@ interface IMemberSchema extends Document {
 }
 
 const memberSchema = new Schema<IMemberSchema>({
-	id: { type: String },
-	guildID: { type: String, ref: "Guild" },
-
+	id: { type: String, required: true },
+	guildID: { type: String, required: true, ref: "Guild" },
 	money: { type: Number, default: 0 },
 	workStreak: { type: Number, default: 0 },
 	bankSold: { type: Number, default: 0 },
 	exp: { type: Number, default: 0 },
 	level: { type: Number, default: 0 },
-	transactions: [String],
-
-	registeredAt: { type: Number, default: Date.now() },
-
+	transactions: [
+		{
+			user: String,
+			amount: Number,
+			date: Number,
+			type: String,
+		},
+	],
+	registeredAt: { type: Number, default: () => Date.now() },
 	cooldowns: {
 		type: Object,
 		default: {
@@ -48,8 +51,7 @@ const memberSchema = new Schema<IMemberSchema>({
 			rob: 0,
 		},
 	},
-
-	sanctions: [String],
+	sanctions: [[String]],
 	mute: {
 		type: Object,
 		default: {
