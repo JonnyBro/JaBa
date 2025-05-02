@@ -1,17 +1,17 @@
 import { Client, ClientOptions } from "discord.js";
 import { GiveawaysManager } from "discord-giveaways";
 import { Handlers } from "@/handlers/index.js";
-import MongooseAdapter from "@/adapters/database/MongooseAdapter.js";
 import logger from "@/helpers/logger.js";
 import ConfigService from "@/services/config/index.js";
 import InternationalizationService from "@/services/languages/index.js";
 import { SUPER_CONTEXT } from "@/constants/index.js";
 import { cacheRemindsData } from "@/types.js";
+import MikroOrmAdapter from "@/adapters/database/MikroOrmAdapter.js";
 // import { Player } from "discord-player";
 
 export class ExtendedClient extends Client<true> {
 	configService = new ConfigService();
-	adapter = new MongooseAdapter(this.configService.get("mongoDB"));
+	adapter = new MikroOrmAdapter(this.configService.get("mongoDB"));
 	cacheReminds = new Map<string, cacheRemindsData>();
 	i18n = new InternationalizationService(this);
 
@@ -49,21 +49,21 @@ export class ExtendedClient extends Client<true> {
 	}
 
 	async getGuildData(guildId: string) {
-		const { default: GuildModel } = await import("@/models/GuildModel.js");
+		const { Guild: GuildModel } = await import("@/models/GuildModel.js");
 		const guildData = await this.adapter.findOneOrCreate(GuildModel, { id: guildId });
 
 		return guildData;
 	}
 
 	async getUserData(userID: string) {
-		const { default: UserModel } = await import("@/models/UserModel.js");
+		const { User: UserModel } = await import("@/models/UserModel.js");
 		const userData = await this.adapter.findOneOrCreate(UserModel, { id: userID });
 
 		return userData;
 	}
 
 	async getMemberData(memberId: string, guildID: string) {
-		const { default: MemberModel } = await import("@/models/MemberModel.js");
+		const { Member: MemberModel } = await import("@/models/MemberModel.js");
 		const memberData = await this.adapter.findOneOrCreate(MemberModel, {
 			id: memberId,
 			guildID,
@@ -71,9 +71,9 @@ export class ExtendedClient extends Client<true> {
 
 		const guildData = await this.getGuildData(guildID);
 
-		if (!guildData.members.includes(memberData._id)) {
-			guildData.members.push(memberData._id);
-			await guildData.save();
+		if (!guildData.hasMember(memberData.id)) {
+			guildData.members.push(memberData);
+			await this.adapter.em.flush();
 		}
 
 		return memberData;

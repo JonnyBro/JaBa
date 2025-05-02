@@ -1,5 +1,5 @@
 import useClient from "@/utils/use-client.js";
-import UserModel from "@/models/UserModel.js";
+import { User } from "@/models/UserModel.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import logger from "../logger.js";
 import { getNoun } from "../functions.js";
@@ -10,7 +10,7 @@ export const data = {
 		const client = useClient();
 
 		const guilds = client.guilds.cache.values();
-		const users = await client.adapter.find(UserModel, {
+		const users = await client.adapter.find(User, {
 			birthdate: { $ne: null },
 		});
 
@@ -22,7 +22,9 @@ export const data = {
 		for (const guild of guilds) {
 			try {
 				const data = await client.getGuildData(guild.id);
-				const channel = data.plugins.birthdays ? await client.channels.fetch(data.plugins.birthdays) : null;
+				const channel = data.plugins.birthdays
+					? await client.channels.fetch(data.plugins.birthdays)
+					: null;
 
 				if (!channel) return;
 
@@ -35,7 +37,10 @@ export const data = {
 						const user = users.find(u => u.id === userID);
 						if (!user) return;
 
-						const userData = new Date(user.birthdate!).getFullYear() <= 1970 ? new Date(user.birthdate! * 1000) : new Date(user.birthdate!);
+						const userData =
+							new Date(user.birthdate!).getFullYear() <= 1970
+								? new Date(user.birthdate! * 1000)
+								: new Date(user.birthdate!);
 						const userYear = userData.getFullYear();
 						const userMonth = userData.getMonth();
 						const userDate = userData.getDate();
@@ -49,14 +54,21 @@ export const data = {
 								},
 								fields: [
 									{
-										name: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY", {
-											lng: data.language,
-										}),
-										value: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
-											lng: data.language,
-											user: user.id,
-											age: `**${age}** ${getNoun(age, [client.i18n.translate("misc:NOUNS:AGE:1", data.language), client.i18n.translate("misc:NOUNS:AGE:2", data.language), client.i18n.translate("misc:NOUNS:AGE:5", data.language)])}`,
-										}),
+										name: client.i18n.translate(
+											"economy/birthdate:HAPPY_BIRTHDAY",
+											{
+												lng: data.language,
+											},
+										),
+										value: client.i18n.translate(
+											"economy/birthdate:HAPPY_BIRTHDAY_MESSAGE",
+											{
+												lng: data.language,
+												user: user.id,
+												// eslint-disable-next-line max-len
+												age: `**${age}** ${getNoun(age, [client.i18n.translate("misc:NOUNS:AGE:1", data.language), client.i18n.translate("misc:NOUNS:AGE:2", data.language), client.i18n.translate("misc:NOUNS:AGE:5", data.language)])}`,
+											},
+										),
 									},
 								],
 							});

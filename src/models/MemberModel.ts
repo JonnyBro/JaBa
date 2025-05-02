@@ -1,65 +1,65 @@
-import { Schema, model } from "mongoose";
+import type { ObjectId } from "mongodb";
+import { Entity, ManyToOne, Property } from "@mikro-orm/core";
+import { Guild } from "./GuildModel.js";
+import { BaseEntity } from "./BaseModel.js";
 
-export interface IMemberSchema {
-	id: string;
-	guildID: string;
-	money: number;
-	workStreak: number;
-	bankSold: number;
-	exp: number;
-	level: number;
-	transactions: Array<{
-		user: string;
-		amount: number;
-		date: number;
-		type: string;
-	}>;
-	registeredAt: number;
-	cooldowns: {
-		work: number;
-		rob: number;
-	};
-	sanctions: any[][];
-	mute: {
-		muted: boolean;
-		case: string | null;
-		endDate: number | null;
-	};
+// Вложенные интерфейсы для типизации
+interface Transaction {
+	user: string;
+	amount: number;
+	date: number;
+	type: string;
 }
 
-const memberSchema = new Schema<IMemberSchema>({
-	id: { type: String, required: true },
-	guildID: { type: String, required: true, ref: "Guild" },
-	money: { type: Number, default: 0 },
-	workStreak: { type: Number, default: 0 },
-	bankSold: { type: Number, default: 0 },
-	exp: { type: Number, default: 0 },
-	level: { type: Number, default: 0 },
-	transactions: [
-		{
-			user: String,
-			amount: Number,
-			date: Number,
-			type: String,
-		},
-	],
-	registeredAt: { type: Number, default: () => Date.now() },
-	cooldowns: {
-		type: Object,
-		default: {
-			work: 0,
-			rob: 0,
-		},
-	},
-	sanctions: [[String]],
-	mute: {
-		type: Object,
-		default: {
-			muted: false,
-			case: null,
-			endDate: null,
-		},
-	},
-});
+interface Cooldowns {
+	work: number;
+	rob: number;
+}
 
-export default model<IMemberSchema>("Member", memberSchema);
+interface Mute {
+	muted: boolean;
+	case: string | null;
+	endDate: number | null;
+}
+
+@Entity({ collection: "members" })
+export class Member extends BaseEntity {
+	@Property({ type: "ObjectId", primary: true })
+	_id!: ObjectId;
+
+	@Property({ type: "string", unique: true })
+	id!: string;
+
+	@ManyToOne(() => Guild)
+	guildID!: string;
+
+	@Property({ type: "int", default: 0 })
+	money = 0;
+
+	@Property({ type: "int", default: 0 })
+	workStreak = 0;
+
+	@Property({ type: "int", default: 0 })
+	bankSold = 0;
+
+	@Property({ type: "int", default: 0 })
+	exp = 0;
+
+	@Property({ type: "int", default: 0 })
+	level = 0;
+
+	@Property({ type: "json" }) // Храним как JSON-массив
+	transactions: Transaction[] = [];
+
+	@Property({ type: "int", onCreate: () => Date.now() }) // Дефолтное значение
+	registeredAt!: number;
+
+	@Property({ type: "json" }) // Объект как JSON
+	cooldowns: Cooldowns = { work: 0, rob: 0 };
+
+	@Property({ type: "json", default: [] }) // Массив массивов
+	sanctions: any[][] = [];
+
+	@Property({ type: "json" }) // Объект
+	mute: Mute = { muted: false, case: null, endDate: null };
+}

@@ -14,11 +14,13 @@
 		"incremental": true, // Инкрементальная сборка (ускоряет повторную компиляцию, сохраняя результаты предыдущих компиляции)
 		"noEmitOnError": true, // Чтобы не билдил без ошибок
 		"noUnusedLocals": true, // Не использовать неиспользуемые локальные переменные
-		"noUnusedParameters": true, 
+		"noUnusedParameters": true,
+		"declaration": true, // Генерация файлов деклараций (.d.ts)
+		"experimentalDecorators": true, // Включение экспериментальных декораторов
 		"paths": {
 			"@/*": ["./src/*"]
 		}
 	},
-	"include": ["src/**/*"], // Включаемые файлы
-	"exclude": ["node_modules"] // Исключаемые файлы
+	"include": ["src/**/*.ts"], // Включаемые файлы
+	"exclude": ["node_modules"], // Исключаемые файлы
 }

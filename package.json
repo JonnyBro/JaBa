@@ -12,6 +12,8 @@
     "dependencies": {
         "@discordjs/opus": "^0.10.0",
         "@discordjs/voice": "^0.18.0",
+        "@mikro-orm/core": "^6.4.13",
+        "@mikro-orm/mongodb": "^6.4.13",
         "@napi-rs/canvas": "^0.1.68",
         "chalk": "^5.4.1",
         "cron": "^4.1.0",
@@ -21,6 +23,7 @@
         "i18next": "^24.2.2",
         "i18next-fs-backend": "^2.6.0",
         "md5": "^2.3.0",
+        "mongodb": "^6.16.0",
         "mongoose": "^8.12.1",
         "ms": "^2.1.3",
         "node-fetch": "^3.3.2"

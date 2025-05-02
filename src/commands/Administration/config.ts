@@ -1,10 +1,19 @@
 import { getLocalizedDesc, translateContext } from "@/helpers/extenders.js";
-import GuildModel from "@/models/GuildModel.js";
+import { Guild, Plugins } from "@/models/GuildModel.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { generateFields } from "@/utils/config-fields.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, Channel, ChannelType, ChatInputCommandInteraction, InteractionContextType, MessageFlags, PermissionsBitField } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	ApplicationIntegrationType,
+	Channel,
+	ChannelType,
+	ChatInputCommandInteraction,
+	InteractionContextType,
+	MessageFlags,
+	PermissionsBitField,
+} from "discord.js";
 
 const client = useClient();
 
@@ -51,15 +60,42 @@ export const data: CommandData = {
 					type: ApplicationCommandOptionType.String,
 					required: true,
 					choices: [
-						{ name: client.i18n.translate("administration/config:BIRTHDAYS"), value: "birthdays" },
-						{ name: client.i18n.translate("administration/config:MODLOGS"), value: "modlogs" },
-						{ name: client.i18n.translate("administration/config:REPORTS"), value: "reports" },
-						{ name: client.i18n.translate("administration/config:SUGGESTIONS"), value: "suggestions" },
-						{ name: client.i18n.translate("administration/config:TICKETSCATEGORY"), value: "tickets.ticketsCategory" },
-						{ name: client.i18n.translate("administration/config:TICKETLOGS"), value: "tickets.ticketLogs" },
-						{ name: client.i18n.translate("administration/config:TRANSCRIPTIONLOGS"), value: "tickets.transcriptionLogs" },
-						{ name: client.i18n.translate("administration/config:MESSAGEUPDATE"), value: "monitoring.messageUpdate" },
-						{ name: client.i18n.translate("administration/config:MESSAGEDELETE"), value: "monitoring.messageDelete" },
+						{
+							name: client.i18n.translate("administration/config:BIRTHDAYS"),
+							value: "birthdays",
+						},
+						{
+							name: client.i18n.translate("administration/config:MODLOGS"),
+							value: "modlogs",
+						},
+						{
+							name: client.i18n.translate("administration/config:REPORTS"),
+							value: "reports",
+						},
+						{
+							name: client.i18n.translate("administration/config:SUGGESTIONS"),
+							value: "suggestions",
+						},
+						{
+							name: client.i18n.translate("administration/config:TICKETSCATEGORY"),
+							value: "tickets.ticketsCategory",
+						},
+						{
+							name: client.i18n.translate("administration/config:TICKETLOGS"),
+							value: "tickets.ticketLogs",
+						},
+						{
+							name: client.i18n.translate("administration/config:TRANSCRIPTIONLOGS"),
+							value: "tickets.transcriptionLogs",
+						},
+						{
+							name: client.i18n.translate("administration/config:MESSAGEUPDATE"),
+							value: "monitoring.messageUpdate",
+						},
+						{
+							name: client.i18n.translate("administration/config:MESSAGEDELETE"),
+							value: "monitoring.messageDelete",
+						},
 					],
 				},
 				{
@@ -119,31 +155,53 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		return interaction.editReply({ embeds: [embed] });
 	}
 
-	const parameter = interaction.options.getString("parameter", true);
+	const parameter = interaction.options.getString("parameter", true) as keyof Plugins;
 	const state = interaction.options.getBoolean("state", true);
 	const channel = interaction.options.getChannel("channel") as Channel;
 
 	await changeSetting(interaction, guildData, parameter, state, channel);
 };
 
-async function saveSettings(guildData: InstanceType<typeof GuildModel>, parameter: string, value: unknown) {
-	guildData.plugins[parameter] = value;
-	guildData.markModified(`plugins.${parameter}`);
+async function saveSettings(
+	guildData: InstanceType<typeof Guild>,
+	parameter: keyof Plugins,
+	value: unknown,
+) {
+	guildData.plugins[parameter] = value as any;
 
 	await guildData.save();
 }
 
-async function generateReply(interaction: ChatInputCommandInteraction, guildData: InstanceType<typeof GuildModel>, parameter: string, state: boolean, channel?: Channel | null) {
-	const translatedParam = await translateContext(interaction, `administration/config:${parameter.toUpperCase()}`);
+async function generateReply(
+	interaction: ChatInputCommandInteraction,
+	guildData: InstanceType<typeof Guild>,
+	parameter: string,
+	state: boolean,
+	channel?: Channel | null,
+) {
+	const translatedParam = await translateContext(
+		interaction,
+		`administration/config:${parameter.toUpperCase()}`,
+	);
 	const enabledText = await translateContext(interaction, "common:ENABLED");
 	const disabledText = await translateContext(interaction, "common:DISABLED");
 
 	if (channel) return `${translatedParam}: **${enabledText}** (${channel.toString()})`;
 
-	return `${translatedParam}: ${state ? `**${enabledText}** (<#${guildData.plugins[parameter]}>)` : `**${disabledText}**`}`;
+	return `${translatedParam}: ${
+		state
+			? `**${enabledText}** (<#${guildData.plugins[parameter as keyof Plugins]}>)`
+			: `**${disabledText}**`
+	}`;
 }
 
-async function changeSetting(interaction: ChatInputCommandInteraction, guildData: any, parameter: string, state: boolean, channel?: Channel | null) {
+async function changeSetting(
+	interaction: ChatInputCommandInteraction,
+	guildData: any,
+	parameter: string,
+	state: boolean,
+	channel?: Channel | null,
+) {
 	const parameterSplitted = parameter.split(".");
 	const isNested = parameterSplitted.length === 2;
 
@@ -152,24 +210,42 @@ async function changeSetting(interaction: ChatInputCommandInteraction, guildData
 	}
 
 	if (!state) {
-		await saveSettings(guildData, parameter, null);
+		await saveSettings(guildData, parameter as keyof Plugins, null);
 
 		return interaction.editReply({
-			content: await generateReply(interaction, guildData, parameterSplitted[isNested ? 1 : 0], state),
+			content: await generateReply(
+				interaction,
+				guildData,
+				parameterSplitted[isNested ? 1 : 0],
+				state,
+			),
 		});
 	}
 
-	if (isNested && parameterSplitted[1] === "ticketsCategory" && channel?.type !== ChannelType.GuildCategory) {
+	if (
+		isNested &&
+		parameterSplitted[1] === "ticketsCategory" &&
+		channel?.type !== ChannelType.GuildCategory
+	) {
 		return interaction.editReply({
-			content: await translateContext(interaction, "administration/config:TICKETS_NOT_CATEGORY"),
+			content: await translateContext(
+				interaction,
+				"administration/config:TICKETS_NOT_CATEGORY",
+			),
 		});
 	}
 
 	if (channel) {
-		await saveSettings(guildData, parameter, channel.id);
+		await saveSettings(guildData, parameter as keyof Plugins, channel.id);
 	}
 
 	return interaction.editReply({
-		content: await generateReply(interaction, guildData, parameterSplitted[isNested ? 1 : 0], state, channel),
+		content: await generateReply(
+			interaction,
+			guildData,
+			parameterSplitted[isNested ? 1 : 0],
+			state,
+			channel,
+		),
 	});
 }
