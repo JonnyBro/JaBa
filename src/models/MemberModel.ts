@@ -8,13 +8,18 @@ interface IMemberSchema extends Document {
 	bankSold: number;
 	exp: number;
 	level: number;
-	transactions: string[];
+	transactions: [{
+		user: string,
+		amount: number,
+		date: number,
+		type: string,
+	}];
 	registeredAt: number;
 	cooldowns: {
 		work: number;
 		rob: number;
 	};
-	sanctions: string[];
+	sanctions: any[][];
 	mute: {
 		muted: boolean;
 		case: string | null;

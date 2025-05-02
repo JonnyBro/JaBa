@@ -3,8 +3,11 @@
 	"USAGE": "[option] [credits/all]",
 	"EXAMPLES": "bank option:deposit credits:1000\nbank option:withdraw credits:all",
 	"OPTION": "Action",
+
 	"DEPOSIT": "Deposit",
 	"WITHDRAW": "Withdraw",
+	"BALANCE": "Balance",
+
 	"NOT_ENOUGH_CREDIT": "You don't have {{money}}",
 	"NOT_ENOUGH_BANK": "Insufficient credits in your bank account, {{money}} required",
 	"SUCCESS_DEP": "{{money}} deposited into your bank account",
