@@ -1,6 +1,7 @@
-import { Schema, Document, model } from "mongoose";
+import { Schema, Document, model, Types } from "mongoose";
 
 interface IMemberSchema extends Document {
+	_id: Types.ObjectId;
 	id: string;
 	guildID: string;
 	money: number;

@@ -68,8 +68,10 @@ export class ExtendedClient extends Client<true> {
 
 		const guildData = await this.getGuildData(guildID);
 
-		guildData.members.push(memberData.id);
-		await guildData.save();
+		if (!guildData.members.includes(memberData._id)) {
+			guildData.members.push(memberData._id);
+			await guildData.save();
+		}
 
 		return memberData;
 	}
