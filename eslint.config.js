@@ -9,7 +9,7 @@ export default [
 	pluginJs.configs.recommended,
 	{
 		files: ["**/*.ts"],
-		ignores: ["**/*.d.ts", "dist"],
+		ignores: ["**/*.d.ts", "dist", "node_modules"],
 		languageOptions: {
 			globals: globals.node,
 			ecmaVersion: "latest",
