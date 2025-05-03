@@ -3,13 +3,16 @@
 	"USAGE": "[option] [credits/all]",
 	"EXAMPLES": "bank option:deposit credits:1000\nbank option:withdraw credits:all",
 	"OPTION": "Action",
+	"OPTION_NAN_ALL": "An integer greater than 0 or `all`.",
 
 	"DEPOSIT": "Deposit",
 	"WITHDRAW": "Withdraw",
 	"BALANCE": "Balance",
+	"TRANSFER": "Transfer",
 
 	"NOT_ENOUGH_CREDIT": "You don't have enough credits",
-	"NOT_ENOUGH_BANK": "Insufficient credits in your bank account, {{money}} required",
-	"SUCCESS_DEP": "{{money}} deposited into your bank account",
-	"SUCCESS_WD": "You have withdrawn {{money}} from your bank account"
+	"NOT_ENOUGH_BANK": "Insufficient credits in your bank account",
+	"SUCCESS_DEP": "{{credits}} deposited into your bank account",
+	"SUCCESS_WD": "You have withdrawn {{credits}} from your bank account",
+	"SUCCESS_TRANSFER": "You have transfered {{credits}} to {{reciever}}"
 }

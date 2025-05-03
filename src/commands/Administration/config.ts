@@ -1,4 +1,4 @@
-import { getLocalizedDesc, translateContext } from "@/helpers/extenders.js";
+import { getLocalizedDesc, translateContext } from "@/helpers/functions.js";
 import GuildModel from "@/models/GuildModel.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { generateFields } from "@/utils/config-fields.js";

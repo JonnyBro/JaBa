@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Shows or clears your transaction history",
+	"DESCRIPTION": "Shows or clears your transactions history",
 	"USAGE": "(clear)",
 	"EXAMPLES": "transactions\n transactions clear:True",
 	"CLEAR": "Clear the transaction list?",
@@ -8,7 +8,8 @@
 	"EMBED_TRANSACTIONS": "Your Transactions",
 	"BANK": "Bank",
 	"NUMBERS": "Guess the Number",
-	"TTT": "Tic Tac Toe",
+	"TRANSFER_TO": "Transfer to {{user}}",
+	"TRANSFER_FROM": "Transfer from {{user}}",
 	"T_GOT": "Deposit",
 	"T_SEND": "Withdrawal",
 	"T_USER_GOT": "Source",

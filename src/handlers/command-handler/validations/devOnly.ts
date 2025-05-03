@@ -1,4 +1,4 @@
-import { replyError } from "@/helpers/extenders.js";
+import { replyError } from "@/helpers/functions.js";
 import { BuiltInValidationParams } from "@/types.js";
 import { ChannelType } from "discord.js";
 

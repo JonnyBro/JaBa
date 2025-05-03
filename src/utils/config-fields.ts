@@ -1,4 +1,4 @@
-import { translateContext } from "@/helpers/extenders.js";
+import { translateContext } from "@/helpers/functions.js";
 import GuildModel from "@/models/GuildModel.js";
 import { APIEmbedField, ChatInputCommandInteraction } from "discord.js";
 
