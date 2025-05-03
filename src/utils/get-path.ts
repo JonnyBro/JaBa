@@ -5,7 +5,9 @@ import { PROJECT_ROOT } from "@/constants/index.js";
 export const getFilePaths = async (directory: string, nesting: boolean) => {
 	let filePaths: string[] = [];
 
-	const absoluteDirectory = path.isAbsolute(directory) ? directory : path.join(PROJECT_ROOT, directory);
+	const absoluteDirectory = path.isAbsolute(directory)
+		? directory
+		: path.join(PROJECT_ROOT, directory);
 	const files = await fs.readdir(absoluteDirectory, { withFileTypes: true });
 
 	for (const file of files) {

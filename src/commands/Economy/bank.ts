@@ -3,7 +3,13 @@ import { asyncForEach, getNoun } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, CacheType, ChatInputCommandInteraction, InteractionContextType } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	ApplicationIntegrationType,
+	CacheType,
+	ChatInputCommandInteraction,
+	InteractionContextType,
+} from "discord.js";
 
 const client = useClient();
 
@@ -39,7 +45,11 @@ export const data: CommandData = {
 };
 
 async function formatCredits(interaction: ChatInputCommandInteraction<CacheType>, amount: number) {
-	const forms = [await translateContext(interaction, "misc:NOUNS:CREDIT:1"), await translateContext(interaction, "misc:NOUNS:CREDIT:2"), await translateContext(interaction, "misc:NOUNS:CREDIT:5")];
+	const forms = [
+		await translateContext(interaction, "misc:NOUNS:CREDIT:1"),
+		await translateContext(interaction, "misc:NOUNS:CREDIT:2"),
+		await translateContext(interaction, "misc:NOUNS:CREDIT:5"),
+	];
 	const noun = getNoun(amount, forms);
 	return `**${amount}** ${noun}`;
 }
@@ -53,15 +63,22 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const choice = interaction.options.getString("option", true);
 	const creditsChoice = interaction.options.getString("credits");
 
-	if (!creditsChoice && choice !== "balance") return editReplyError(interaction, "misc:OPTION_NAN_ALL");
+	if (!creditsChoice && choice !== "balance") {
+		return editReplyError(interaction, "misc:OPTION_NAN_ALL");
+	}
 
 	const embed = createEmbed();
 
 	switch (choice) {
 		case "deposit": {
-			const credits = creditsChoice!.toLowerCase() === "all" ? memberData.money : Number(creditsChoice);
-			if (isNaN(credits) || credits < 1) return editReplyError(interaction, "misc:OPTION_NAN_ALL");
-			if (memberData.money < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
+			const credits =
+				creditsChoice!.toLowerCase() === "all" ? memberData.money : Number(creditsChoice);
+			if (isNaN(credits) || credits < 1) {
+				return editReplyError(interaction, "misc:OPTION_NAN_ALL");
+			}
+			if (memberData.money < credits) {
+				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
+			}
 
 			memberData.money -= credits;
 			memberData.bankSold += credits;
@@ -83,9 +100,16 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		}
 
 		case "withdraw": {
-			const credits = creditsChoice!.toLowerCase() === "all" ? memberData.bankSold : Number(creditsChoice);
-			if (isNaN(credits) || credits < 1) return editReplyError(interaction, "misc:OPTION_NAN_ALL");
-			if (memberData.bankSold < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
+			const credits =
+				creditsChoice!.toLowerCase() === "all"
+					? memberData.bankSold
+					: Number(creditsChoice);
+			if (isNaN(credits) || credits < 1) {
+				return editReplyError(interaction, "misc:OPTION_NAN_ALL");
+			}
+			if (memberData.bankSold < credits) {
+				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
+			}
 
 			memberData.money += credits;
 			memberData.bankSold -= credits;
@@ -110,7 +134,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			const targetUser = interaction.options.getUser("user") || interaction.user;
 			if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
 
-			const targetData = targetUser.id === interaction.user.id ? memberData : await client.getMemberData(targetUser.id, guildId);
+			const targetData =
+				targetUser.id === interaction.user.id
+					? memberData
+					: await client.getMemberData(targetUser.id, guildId);
 
 			let globalMoney = 0;
 			const guilds = client.guilds.cache.filter(g => g.members.cache.has(targetUser.id));

@@ -4,7 +4,16 @@ import { CommandData, SlashCommandProps } from "@/types.js";
 import { generateFields } from "@/utils/config-fields.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, Channel, ChannelType, ChatInputCommandInteraction, InteractionContextType, MessageFlags, PermissionsBitField } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	ApplicationIntegrationType,
+	Channel,
+	ChannelType,
+	ChatInputCommandInteraction,
+	InteractionContextType,
+	MessageFlags,
+	PermissionsBitField,
+} from "discord.js";
 
 const client = useClient();
 
@@ -51,15 +60,42 @@ export const data: CommandData = {
 					type: ApplicationCommandOptionType.String,
 					required: true,
 					choices: [
-						{ name: client.i18n.translate("administration/config:BIRTHDAYS"), value: "birthdays" },
-						{ name: client.i18n.translate("administration/config:MODLOGS"), value: "modlogs" },
-						{ name: client.i18n.translate("administration/config:REPORTS"), value: "reports" },
-						{ name: client.i18n.translate("administration/config:SUGGESTIONS"), value: "suggestions" },
-						{ name: client.i18n.translate("administration/config:TICKETSCATEGORY"), value: "tickets.ticketsCategory" },
-						{ name: client.i18n.translate("administration/config:TICKETLOGS"), value: "tickets.ticketLogs" },
-						{ name: client.i18n.translate("administration/config:TRANSCRIPTIONLOGS"), value: "tickets.transcriptionLogs" },
-						{ name: client.i18n.translate("administration/config:MESSAGEUPDATE"), value: "monitoring.messageUpdate" },
-						{ name: client.i18n.translate("administration/config:MESSAGEDELETE"), value: "monitoring.messageDelete" },
+						{
+							name: client.i18n.translate("administration/config:BIRTHDAYS"),
+							value: "birthdays",
+						},
+						{
+							name: client.i18n.translate("administration/config:MODLOGS"),
+							value: "modlogs",
+						},
+						{
+							name: client.i18n.translate("administration/config:REPORTS"),
+							value: "reports",
+						},
+						{
+							name: client.i18n.translate("administration/config:SUGGESTIONS"),
+							value: "suggestions",
+						},
+						{
+							name: client.i18n.translate("administration/config:TICKETSCATEGORY"),
+							value: "tickets.ticketsCategory",
+						},
+						{
+							name: client.i18n.translate("administration/config:TICKETLOGS"),
+							value: "tickets.ticketLogs",
+						},
+						{
+							name: client.i18n.translate("administration/config:TRANSCRIPTIONLOGS"),
+							value: "tickets.transcriptionLogs",
+						},
+						{
+							name: client.i18n.translate("administration/config:MESSAGEUPDATE"),
+							value: "monitoring.messageUpdate",
+						},
+						{
+							name: client.i18n.translate("administration/config:MESSAGEDELETE"),
+							value: "monitoring.messageDelete",
+						},
 					],
 				},
 				{
@@ -126,24 +162,45 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	await changeSetting(interaction, guildData, parameter, state, channel);
 };
 
-async function saveSettings(guildData: InstanceType<typeof GuildModel>, parameter: string, value: unknown) {
+async function saveSettings(
+	guildData: InstanceType<typeof GuildModel>,
+	parameter: string,
+	value: unknown,
+) {
 	guildData.plugins[parameter] = value;
 	guildData.markModified(`plugins.${parameter}`);
 
 	await guildData.save();
 }
 
-async function generateReply(interaction: ChatInputCommandInteraction, guildData: InstanceType<typeof GuildModel>, parameter: string, state: boolean, channel?: Channel | null) {
-	const translatedParam = await translateContext(interaction, `administration/config:${parameter.toUpperCase()}`);
+async function generateReply(
+	interaction: ChatInputCommandInteraction,
+	guildData: InstanceType<typeof GuildModel>,
+	parameter: string,
+	state: boolean,
+	channel?: Channel | null,
+) {
+	const translatedParam = await translateContext(
+		interaction,
+		`administration/config:${parameter.toUpperCase()}`,
+	);
 	const enabledText = await translateContext(interaction, "common:ENABLED");
 	const disabledText = await translateContext(interaction, "common:DISABLED");
 
 	if (channel) return `${translatedParam}: **${enabledText}** (${channel.toString()})`;
 
-	return `${translatedParam}: ${state ? `**${enabledText}** (<#${guildData.plugins[parameter]}>)` : `**${disabledText}**`}`;
+	return `${translatedParam}: ${
+		state ? `**${enabledText}** (<#${guildData.plugins[parameter]}>)` : `**${disabledText}**`
+	}`;
 }
 
-async function changeSetting(interaction: ChatInputCommandInteraction, guildData: any, parameter: string, state: boolean, channel?: Channel | null) {
+async function changeSetting(
+	interaction: ChatInputCommandInteraction,
+	guildData: any,
+	parameter: string,
+	state: boolean,
+	channel?: Channel | null,
+) {
 	const parameterSplitted = parameter.split(".");
 	const isNested = parameterSplitted.length === 2;
 
@@ -155,21 +212,37 @@ async function changeSetting(interaction: ChatInputCommandInteraction, guildData
 		await saveSettings(guildData, parameter, null);
 
 		return interaction.editReply({
-			content: await generateReply(interaction, guildData, parameterSplitted[isNested ? 1 : 0], state),
+			content: await generateReply(
+				interaction,
+				guildData,
+				parameterSplitted[isNested ? 1 : 0],
+				state,
+			),
 		});
 	}
 
-	if (isNested && parameterSplitted[1] === "ticketsCategory" && channel?.type !== ChannelType.GuildCategory) {
+	if (
+		isNested &&
+		parameterSplitted[1] === "ticketsCategory" &&
+		channel?.type !== ChannelType.GuildCategory
+	) {
 		return interaction.editReply({
-			content: await translateContext(interaction, "administration/config:TICKETS_NOT_CATEGORY"),
+			content: await translateContext(
+				interaction,
+				"administration/config:TICKETS_NOT_CATEGORY",
+			),
 		});
 	}
 
-	if (channel) {
-		await saveSettings(guildData, parameter, channel.id);
-	}
+	if (channel) await saveSettings(guildData, parameter, channel.id);
 
 	return interaction.editReply({
-		content: await generateReply(interaction, guildData, parameterSplitted[isNested ? 1 : 0], state, channel),
+		content: await generateReply(
+			interaction,
+			guildData,
+			parameterSplitted[isNested ? 1 : 0],
+			state,
+			channel,
+		),
 	});
 }

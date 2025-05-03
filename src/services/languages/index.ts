@@ -26,7 +26,8 @@ export default class InternationalizationService {
 		this.client = client;
 		this.options = {
 			localesPath: resolve(this.client.configService.get("paths.locales")),
-			defaultLanguage: options.defaultLanguage || this.client.configService.get("defaultLang"),
+			defaultLanguage:
+				options.defaultLanguage || this.client.configService.get("defaultLang"),
 		};
 		this.init();
 	}
@@ -35,7 +36,11 @@ export default class InternationalizationService {
 		return supportedLanguages.map(lang => lang.locale);
 	}
 
-	private async walkDirectory(dir: string, namespaces: string[] = [], folderName: string = ""): Promise<WalkDirectoryResult> {
+	private async walkDirectory(
+		dir: string,
+		namespaces: string[] = [],
+		folderName: string = "",
+	): Promise<WalkDirectoryResult> {
 		const files = await fs.readdir(dir, { withFileTypes: true });
 
 		const languages: string[] = [];
@@ -44,7 +49,11 @@ export default class InternationalizationService {
 				const isLanguage = file.name.includes("-");
 				if (isLanguage) languages.push(file.name);
 
-				const folder = await this.walkDirectory(join(dir, file.name), namespaces, isLanguage ? "" : `${file.name}/`);
+				const folder = await this.walkDirectory(
+					join(dir, file.name),
+					namespaces,
+					isLanguage ? "" : `${file.name}/`,
+				);
 
 				namespaces = folder.namespaces;
 			} else {

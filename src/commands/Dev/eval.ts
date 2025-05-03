@@ -3,7 +3,12 @@ import logger from "@/helpers/logger.js";
 import { CommandData, CommandOptions, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType, MessageFlags } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	ApplicationIntegrationType,
+	InteractionContextType,
+	MessageFlags,
+} from "discord.js";
 import { inspect } from "util";
 
 const client = useClient();
@@ -12,8 +17,15 @@ export const data: CommandData = {
 	name: "eval",
 	...getLocalizedDesc("owner/eval:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
-	contexts: [InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel],
+	integration_types: [
+		ApplicationIntegrationType.GuildInstall,
+		ApplicationIntegrationType.UserInstall,
+	],
+	contexts: [
+		InteractionContextType.BotDM,
+		InteractionContextType.Guild,
+		InteractionContextType.PrivateChannel,
+	],
 	options: [
 		{
 			name: "code",
@@ -37,10 +49,14 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	return result
 		.then((output: any) => {
 			if (typeof output !== "string") output = inspect(output);
-			if (output.includes(client.token)) output = output.replace(client.token, "there_be_tokens");
+			if (output.includes(client.token)) {
+				output = output.replace(client.token, "there_be_tokens");
+			}
 
 			const embed = createEmbed({
-				description: `Code:\n\`\`\`${code}\`\`\`\nOutput:\n\`\`\`ts\n${output}`.slice(0, 4090) + "\n```",
+				description:
+					`Code:\n\`\`\`${code}\`\`\`\nOutput:\n\`\`\`ts\n${output}`.slice(0, 4090) +
+					"\n```",
 			});
 
 			interaction.editReply({

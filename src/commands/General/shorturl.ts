@@ -1,8 +1,18 @@
-import { editReplyError, getLocalizedDesc, replyError, translateContext } from "@/helpers/extenders.js";
+import {
+	editReplyError,
+	getLocalizedDesc,
+	replyError,
+	translateContext,
+} from "@/helpers/extenders.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType, MessageFlags } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	ApplicationIntegrationType,
+	InteractionContextType,
+	MessageFlags,
+} from "discord.js";
 
 const client = useClient();
 
@@ -28,17 +38,26 @@ export const data: CommandData = {
 };
 
 export const run = async ({ interaction }: SlashCommandProps) => {
-	if (!client.configService.get("apiKeys.urlShortener.url") || !client.configService.get("apiKeys.urlShortener.key")) return replyError(interaction, "API URL or key not set!");
+	if (
+		!client.configService.get("apiKeys.urlShortener.url") ||
+		!client.configService.get("apiKeys.urlShortener.key")
+	) {
+		return replyError(interaction, "API URL or key not set!");
+	}
 
-	await interaction.deferReply({ flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined });
+	await interaction.deferReply({
+		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
+	});
 
 	const url = interaction.options.getString("url", true);
-	if (!url.startsWith("http")) return editReplyError(interaction, "general/shorturl:NOT_A_LINK", null);
+	if (!url.startsWith("http")) {
+		return editReplyError(interaction, "general/shorturl:NOT_A_LINK", null);
+	}
 
 	const res = await fetch(client.configService.get("apiKeys.urlShortener.url"), {
 		method: "POST",
 		headers: {
-			"Authorization": client.configService.get("apiKeys.urlShortener.key"),
+			Authorization: client.configService.get("apiKeys.urlShortener.key"),
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({ destination: url }),

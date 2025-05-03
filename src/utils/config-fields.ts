@@ -29,7 +29,10 @@ type ConfigGroupField = {
 
 type ConfigField = ConfigPluginField | ConfigGroupField;
 
-const processPluginField = async (interaction: ChatInputCommandInteraction, field: ConfigPluginField) => {
+const processPluginField = async (
+	interaction: ChatInputCommandInteraction,
+	field: ConfigPluginField,
+) => {
 	const name = await translateContext(interaction, field.nameKey);
 
 	const value = field.enabled
@@ -41,7 +44,10 @@ const processPluginField = async (interaction: ChatInputCommandInteraction, fiel
 	return { name, value, inline: true };
 };
 
-const processGroupField = async (interaction: ChatInputCommandInteraction, field: ConfigGroupField) => {
+const processGroupField = async (
+	interaction: ChatInputCommandInteraction,
+	field: ConfigGroupField,
+) => {
 	const name = await translateContext(interaction, field.nameKey);
 	const lines = await Promise.all(
 		field.items.map(async item => {
@@ -51,7 +57,9 @@ const processGroupField = async (interaction: ChatInputCommandInteraction, field
 			let formattedValue;
 			switch (item.format) {
 				case "channel":
-					formattedValue = rawValue ? `<#${rawValue}>` : `*${await translateContext(interaction, "common:NOT_DEFINED")}*`;
+					formattedValue = rawValue
+						? `<#${rawValue}>`
+						: `*${await translateContext(interaction, "common:NOT_DEFINED")}*`;
 					break;
 				default:
 					formattedValue = rawValue?.toString() || "N/A";
@@ -64,7 +72,10 @@ const processGroupField = async (interaction: ChatInputCommandInteraction, field
 	return { name, value: lines.join("\n"), inline: false };
 };
 
-export const generateFields = async (interaction: ChatInputCommandInteraction, guildData: InstanceType<typeof GuildModel>) => {
+export const generateFields = async (
+	interaction: ChatInputCommandInteraction,
+	guildData: InstanceType<typeof GuildModel>,
+) => {
 	const fieldsConfig: ConfigField[] = [
 		{
 			type: ConfigFieldsType.plugin,
@@ -100,13 +111,41 @@ export const generateFields = async (interaction: ChatInputCommandInteraction, g
 			type: ConfigFieldsType.group,
 			nameKey: "administration/config:SPECIAL_CHANNELS",
 			items: [
-				{ key: "administration/config:BIRTHDAYS", path: guildData.plugins.birthdays, format: "channel" },
-				{ key: "administration/config:MODLOGS", path: guildData.plugins.modlogs, format: "channel" },
-				{ key: "administration/config:REPORTS", path: guildData.plugins.reports, format: "channel" },
-				{ key: "administration/config:SUGGESTIONS", path: guildData.plugins.suggestions, format: "channel" },
-				{ key: "administration/config:TICKETSCATEGORY", path: guildData.plugins.tickets.ticketsCategory, format: "channel" },
-				{ key: "administration/config:TICKETLOGS", path: guildData.plugins.tickets.ticketLogs, format: "channel" },
-				{ key: "administration/config:TRANSCRIPTIONLOGS", path: guildData.plugins.tickets.transcriptionLogs, format: "channel" },
+				{
+					key: "administration/config:BIRTHDAYS",
+					path: guildData.plugins.birthdays,
+					format: "channel",
+				},
+				{
+					key: "administration/config:MODLOGS",
+					path: guildData.plugins.modlogs,
+					format: "channel",
+				},
+				{
+					key: "administration/config:REPORTS",
+					path: guildData.plugins.reports,
+					format: "channel",
+				},
+				{
+					key: "administration/config:SUGGESTIONS",
+					path: guildData.plugins.suggestions,
+					format: "channel",
+				},
+				{
+					key: "administration/config:TICKETSCATEGORY",
+					path: guildData.plugins.tickets.ticketsCategory,
+					format: "channel",
+				},
+				{
+					key: "administration/config:TICKETLOGS",
+					path: guildData.plugins.tickets.ticketLogs,
+					format: "channel",
+				},
+				{
+					key: "administration/config:TRANSCRIPTIONLOGS",
+					path: guildData.plugins.tickets.transcriptionLogs,
+					format: "channel",
+				},
 			],
 		},
 	];

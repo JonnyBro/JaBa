@@ -32,11 +32,15 @@ const registerGlobalCommands = async (client: ExtendedClient, commands: CommandF
 			const targetCommand = appCommandsManager.cache.find(cmd => cmd.name === data.name);
 
 			if (targetCommand && differentCommands(targetCommand, data)) {
-				await targetCommand.edit(data as Partial<ApplicationCommandData>).catch(() => logger.error(`Failed to update command: ${data.name} globally`));
+				await targetCommand
+					.edit(data as Partial<ApplicationCommandData>)
+					.catch(() => logger.error(`Failed to update command: ${data.name} globally`));
 
 				logger.log(`Edited command globally: ${data.name}`);
 			} else if (!targetCommand) {
-				await appCommandsManager.create(data).catch(() => logger.error(`Failed to register command: ${data.name}`));
+				await appCommandsManager
+					.create(data)
+					.catch(() => logger.error(`Failed to register command: ${data.name}`));
 				logger.debug(`Command ${data.name} loaded globally`);
 			}
 		}),
@@ -45,7 +49,11 @@ const registerGlobalCommands = async (client: ExtendedClient, commands: CommandF
 	logger.log(`Registered ${commands.length} global command(s)`);
 };
 
-const registerDevCommands = async (client: ExtendedClient, commands: CommandFileObject[], guildsIds: string[]) => {
+const registerDevCommands = async (
+	client: ExtendedClient,
+	commands: CommandFileObject[],
+	guildsIds: string[],
+) => {
 	const devGuilds = [];
 
 	for (const guildId of guildsIds) {
@@ -73,11 +81,27 @@ const registerDevCommands = async (client: ExtendedClient, commands: CommandFile
 			guildCommandsManagers.map(async guildCommands => {
 				const targetCommand = guildCommands.cache.find(cmd => cmd.name === data.name);
 				if (targetCommand && differentCommands(targetCommand, data)) {
-					await targetCommand.edit(data as Partial<ApplicationCommandData>).catch(() => logger.error(`Failed to update command: ${data.name} in ${guildCommands.guild.name} server`));
+					await targetCommand
+						.edit(data as Partial<ApplicationCommandData>)
+						.catch(() =>
+							logger.error(
+								`Failed to update command: ${data.name} in ${
+									guildCommands.guild.name
+								} server`,
+							),
+						);
 
 					logger.log(`Edited command in dev: ${data.name}`);
 				} else if (!targetCommand) {
-					await guildCommands.create(data).catch(() => logger.error(`Failed to register command: ${data.name} in ${guildCommands.guild.name} server`));
+					await guildCommands
+						.create(data)
+						.catch(() =>
+							logger.error(
+								`Failed to register command: ${data.name} in ${
+									guildCommands.guild.name
+								} server`,
+							),
+						);
 					logger.debug(`Command ${data.name} loaded in dev`);
 				}
 			});

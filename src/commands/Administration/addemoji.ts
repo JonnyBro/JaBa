@@ -1,7 +1,12 @@
 import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/extenders.js";
 import logger from "@/helpers/logger.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType, MessageFlags } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	ApplicationIntegrationType,
+	InteractionContextType,
+	MessageFlags,
+} from "discord.js";
 
 export const data: CommandData = {
 	name: "addemoji",
@@ -35,7 +40,9 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		const emoji = await interaction.guild?.emojis.create({ name, attachment });
 		if (!emoji) return editReplyError(interaction, "administration/addemoji:ERROR", { name });
 
-		return editReplySuccess(interaction, "administration/addemoji:SUCCESS", { emoji: emoji.toString() });
+		return editReplySuccess(interaction, "administration/addemoji:SUCCESS", {
+			emoji: emoji.toString(),
+		});
 	} catch (error) {
 		logger.error("[addemoji]", error);
 		editReplyError(interaction, "administration/addemoji:ERROR", { name, error });
