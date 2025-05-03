@@ -154,7 +154,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 			}
 			if (memberData.bankSold < credits) {
-				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
+				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
 			}
 
 			memberData.money += credits;
@@ -185,7 +185,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 			}
 			if (memberData.bankSold < credits) {
-				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
+				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
 			}
 			if (interaction.user.id === targetUser.id) {
 				return editReplyError(interaction, "misc:CANT_YOURSELF");
