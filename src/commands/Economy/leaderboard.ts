@@ -1,5 +1,9 @@
-import { getLocalizedDesc, translateContext } from "@/helpers/extenders.js";
-import { getNoun } from "@/helpers/functions.js";
+import {
+	getLocalizedDesc,
+	getNoun,
+	getXpForNextLevel,
+	translateContext,
+} from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import {
@@ -31,11 +35,6 @@ enum LeaderboardType {
 }
 
 const LEADERBOARD_SELECTOR_ID = "leaderboard_selector";
-
-// Calculate XP for next level based on the formula: 5 * level^2 + 80 * level + 100
-function getXpForNextLevel(level: number): number {
-	return 5 * level * level + 80 * level + 100;
-}
 
 async function fetchAndBuildEntries<T>(
 	fetcher: () => Promise<T[]>,
@@ -93,22 +92,13 @@ async function renderLeaderboard(
 		.addSeparatorComponents(s => s.setSpacing(SeparatorSpacingSize.Small))
 		.addTextDisplayComponents(new TextDisplayBuilder().setContent(tableContent));
 
-	await interaction.message.edit({
-		components: [container],
-		allowedMentions: {
-			parse: [],
-		},
-	});
+	return container;
 }
 
+// Handle leaderboard selector
 client.on("interactionCreate", async interaction => {
-	if (!interaction.isStringSelectMenu()) {
-		return;
-	}
-
-	if (interaction.customId !== LEADERBOARD_SELECTOR_ID) {
-		return;
-	}
+	if (!interaction.isStringSelectMenu()) return;
+	if (interaction.customId !== LEADERBOARD_SELECTOR_ID) return;
 
 	const selected = interaction.values[0];
 	const membersData = client.getMembersData(interaction.guildId!);
@@ -128,12 +118,20 @@ client.on("interactionCreate", async interaction => {
 
 			const tableText = buildTableText(entries, nouns);
 
-			await renderLeaderboard(
+			const container = await renderLeaderboard(
 				interaction,
 				"economy/leaderboard:TITLE",
 				"common:CREDITS",
 				tableText,
 			);
+
+			await interaction.message.edit({
+				components: [container],
+				allowedMentions: {
+					parse: [],
+				},
+			});
+
 			break;
 		}
 
@@ -161,12 +159,20 @@ client.on("interactionCreate", async interaction => {
 				return `(${entry.extra} / ${nextXp} ${getNoun(entry.extra!, xpNouns)})`;
 			});
 
-			await renderLeaderboard(
+			const container = await renderLeaderboard(
 				interaction,
 				"economy/leaderboard:TITLE",
 				"common:LEVEL",
 				tableText,
 			);
+
+			await interaction.message.edit({
+				components: [container],
+				allowedMentions: {
+					parse: [],
+				},
+			});
+
 			break;
 		}
 
@@ -184,12 +190,19 @@ client.on("interactionCreate", async interaction => {
 
 			const tableText = buildTableText(entries, nouns);
 
-			await renderLeaderboard(
+			const container = await renderLeaderboard(
 				interaction,
 				"economy/leaderboard:TITLE",
 				"common:REP",
 				tableText,
 			);
+
+			await interaction.message.edit({
+				components: [container],
+				allowedMentions: {
+					parse: [],
+				},
+			});
 
 			break;
 		}
@@ -226,20 +239,20 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	const selector = new StringSelectMenuBuilder()
 		.setCustomId(LEADERBOARD_SELECTOR_ID)
-		.setPlaceholder("Select a leaderboard")
+		.setPlaceholder(await translateContext(interaction, "misc:SELECT_PLACEHOLDER"))
 		.addOptions(
 			{
-				label: "Credits",
+				label: await translateContext(interaction, "common:CREDITS"),
 				emoji: "💰",
 				value: LeaderboardType.Credits,
 			},
 			{
-				label: "Level",
+				label: await translateContext(interaction, "common:LEVEL"),
 				emoji: "🆙",
 				value: LeaderboardType.Level,
 			},
 			{
-				label: "Reputation",
+				label: await translateContext(interaction, "common:REP"),
 				emoji: "😎",
 				value: LeaderboardType.Reputation,
 			},
