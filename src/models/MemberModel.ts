@@ -1,7 +1,7 @@
 import type { ObjectId } from "mongodb";
 import { Entity, ManyToOne, Property } from "@mikro-orm/core";
 import { Guild } from "./GuildModel.js";
-import { BaseEntity } from "./BaseModel.js";
+import { BaseEntity } from "../structures/BaseEntity.js";
 
 // Вложенные интерфейсы для типизации
 interface Transaction {

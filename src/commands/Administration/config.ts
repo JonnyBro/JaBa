@@ -1,5 +1,5 @@
-import { getLocalizedDesc, translateContext } from "@/helpers/extenders.js";
-import { Guild, Plugins } from "@/models/GuildModel.js";
+import { getLocalizedDesc, translateContext } from "@/helpers/functions.js";
+import { Guild } from "@/models/GuildModel.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { generateFields } from "@/utils/config-fields.js";
 import { createEmbed } from "@/utils/create-embed.js";
@@ -155,7 +155,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		return interaction.editReply({ embeds: [embed] });
 	}
 
-	const parameter = interaction.options.getString("parameter", true) as keyof Plugins;
+	const parameter = interaction.options.getString("parameter", true) as keyof Guild["plugins"];
 	const state = interaction.options.getBoolean("state", true);
 	const channel = interaction.options.getChannel("channel") as Channel;
 
@@ -164,7 +164,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 async function saveSettings(
 	guildData: InstanceType<typeof Guild>,
-	parameter: keyof Plugins,
+	parameter: keyof Guild["plugins"],
 	value: unknown,
 ) {
 	guildData.plugins[parameter] = value as any;
@@ -174,7 +174,7 @@ async function saveSettings(
 
 async function generateReply(
 	interaction: ChatInputCommandInteraction,
-	guildData: InstanceType<typeof GuildModel>,
+	guildData: InstanceType<typeof Guild>,
 	parameter: string,
 	state: boolean,
 	channel?: Channel | null,
@@ -190,7 +190,7 @@ async function generateReply(
 
 	return `${translatedParam}: ${
 		state
-			? `**${enabledText}** (<#${guildData.plugins[parameter as keyof Plugins]}>)`
+			? `**${enabledText}** (<#${guildData.plugins[parameter as keyof Guild["plugins"]]}>)`
 			: `**${disabledText}**`
 	}`;
 }
@@ -198,7 +198,7 @@ async function generateReply(
 async function changeSetting(
 	interaction: ChatInputCommandInteraction,
 	guildData: any,
-	parameter: string,
+	parameter: keyof Guild["plugins"],
 	state: boolean,
 	channel?: Channel | null,
 ) {
@@ -210,15 +210,9 @@ async function changeSetting(
 	}
 
 	if (!state) {
-		await saveSettings(guildData, parameter as keyof Plugins, null);
+		await saveSettings(guildData, parameter, null);
 
 		return interaction.editReply({
-			content: await generateReply(
-				interaction,
-				guildData,
-				parameterSplitted[isNested ? 1 : 0],
-				state,
-			),
 			content: await generateReply(
 				interaction,
 				guildData,
@@ -233,16 +227,7 @@ async function changeSetting(
 		parameterSplitted[1] === "ticketsCategory" &&
 		channel?.type !== ChannelType.GuildCategory
 	) {
-	if (
-		isNested &&
-		parameterSplitted[1] === "ticketsCategory" &&
-		channel?.type !== ChannelType.GuildCategory
-	) {
 		return interaction.editReply({
-			content: await translateContext(
-				interaction,
-				"administration/config:TICKETS_NOT_CATEGORY",
-			),
 			content: await translateContext(
 				interaction,
 				"administration/config:TICKETS_NOT_CATEGORY",
@@ -250,18 +235,9 @@ async function changeSetting(
 		});
 	}
 
-	if (channel) {
-		await saveSettings(guildData, parameter as keyof Plugins, channel.id);
-	}
+	if (channel) await saveSettings(guildData, parameter, channel.id);
 
 	return interaction.editReply({
-		content: await generateReply(
-			interaction,
-			guildData,
-			parameterSplitted[isNested ? 1 : 0],
-			state,
-			channel,
-		),
 		content: await generateReply(
 			interaction,
 			guildData,

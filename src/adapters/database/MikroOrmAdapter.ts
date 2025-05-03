@@ -10,7 +10,7 @@ import Cache from "../cache/MapCache.js";
 import { MongoDriver } from "@mikro-orm/mongodb";
 import mirkoOrmConfig from "./mirko-orm.config.js";
 import logger from "@/helpers/logger.js";
-import { BaseEntity } from "@/models/BaseModel.js";
+import { BaseEntity } from "@/structures/BaseEntity.js";
 
 export default class MikroOrmAdapter extends IDatabaseAdapter<
 	EntityName<any>,

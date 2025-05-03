@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
-import { Entity, Property } from "@mikro-orm/core";
+import { Entity, Property } from "@mikro-orm/mongodb";
 import { createCanvas, loadImage } from "@napi-rs/canvas";
 import { ObjectId } from "mongodb";
-import { BaseEntity } from "./BaseModel.js";
+import { BaseEntity } from "../structures/BaseEntity.js";
 
 export type UserReminds = {
 	message: string;
@@ -160,7 +160,7 @@ export class User extends BaseEntity {
 	@Property({ type: "string", default: null })
 	afk!: string | null;
 
-	@Property({ type: "array", default: [] })
+	@Property({ type: "array" })
 	reminds: UserReminds[] = [];
 
 	@Property({ type: "boolean" })

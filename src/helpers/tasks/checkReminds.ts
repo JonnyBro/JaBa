@@ -8,7 +8,11 @@ export const data: CronTaskData = {
 	task: async () => {
 		const client = useClient();
 
-		const users = await client.adapter.find(User, { reminds: { $exists: true, $ne: null } });
+		const users = await client.adapter.find(User, {
+			reminds: {
+				$gt: [] as any,
+			},
+		});
 
 		for (const user of users) {
 			if (!client.users.cache.has(user.id)) {

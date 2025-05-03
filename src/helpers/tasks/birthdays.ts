@@ -25,9 +25,6 @@ export const data = {
 				const channel = data.plugins.birthdays
 					? await client.channels.fetch(data.plugins.birthdays)
 					: null;
-				const channel = data.plugins.birthdays
-					? await client.channels.fetch(data.plugins.birthdays)
-					: null;
 
 				if (!channel) return;
 
@@ -40,10 +37,6 @@ export const data = {
 						const user = users.find(u => u.id === userID);
 						if (!user) return;
 
-						const userData =
-							new Date(user.birthdate!).getFullYear() <= 1970
-								? new Date(user.birthdate! * 1000)
-								: new Date(user.birthdate!);
 						const userData =
 							new Date(user.birthdate!).getFullYear() <= 1970
 								? new Date(user.birthdate! * 1000)

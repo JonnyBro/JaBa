@@ -1,7 +1,7 @@
 import { Entity, OneToMany, Property } from "@mikro-orm/core";
 import { Member } from "./MemberModel.js";
 import useClient from "@/utils/use-client.js";
-import { BaseEntity } from "./BaseModel.js";
+import { BaseEntity } from "../structures/BaseEntity.js";
 
 const client = useClient();
 
