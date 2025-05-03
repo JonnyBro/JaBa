@@ -1,4 +1,4 @@
-import { replyError } from "@/helpers/extenders.js";
+import { replyError } from "@/helpers/functions.js";
 import { ContextCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import {

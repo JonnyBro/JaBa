@@ -1,4 +1,4 @@
-import { getLocalizedDesc } from "@/helpers/extenders.js";
+import { getLocalizedDesc } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";

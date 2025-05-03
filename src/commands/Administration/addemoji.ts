@@ -1,4 +1,4 @@
-import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/extenders.js";
+import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import {

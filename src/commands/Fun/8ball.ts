@@ -1,5 +1,4 @@
-import { getLocalizedDesc, translateContext } from "@/helpers/extenders.js";
-import { randomNum } from "@/helpers/functions.js";
+import { getLocalizedDesc, randomNum, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import {

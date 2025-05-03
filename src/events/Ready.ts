@@ -1,5 +1,4 @@
-import { getUsername } from "@/helpers/extenders.js";
-import { getNoun } from "@/helpers/functions.js";
+import { getNoun, getUsername } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { CronManager } from "@/services/cron/index.js";
 import { ExtendedClient } from "@/structures/client.js";

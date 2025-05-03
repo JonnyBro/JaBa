@@ -2,6 +2,6 @@
 	"DESCRIPTION": "Shows the leaderboard for credits, level, or reputation points",
 	"USAGE": "[type]",
 	"EXAMPLES": "leaderboard type:Level",
-	"MOBILE": ":confused: I noticed that you're online from a mobile device... The leaderboard may not display correctly on small screens. Please try again later from a different device.",
-	"TABLE": "{{name}} Leaderboard"
+	"TITLE": "{{name}} Leaderboard",
+	"SELECT": "Select what you want to see"
 }

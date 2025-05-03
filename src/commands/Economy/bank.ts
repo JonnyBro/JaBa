@@ -1,5 +1,11 @@
-import { editReplyError, getLocalizedDesc, translateContext } from "@/helpers/extenders.js";
-import { asyncForEach, getNoun } from "@/helpers/functions.js";
+import {
+	asyncForEach,
+	editReplyError,
+	getLocalizedDesc,
+	getNoun,
+	getUsername,
+	translateContext,
+} from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
@@ -26,20 +32,21 @@ export const data: CommandData = {
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			choices: [
+				{ name: client.i18n.translate("economy/bank:BALANCE"), value: "balance" },
 				{ name: client.i18n.translate("economy/bank:DEPOSIT"), value: "deposit" },
 				{ name: client.i18n.translate("economy/bank:WITHDRAW"), value: "withdraw" },
-				{ name: client.i18n.translate("economy/bank:BALANCE"), value: "balance" },
+				{ name: client.i18n.translate("economy/bank:TRANSFER"), value: "transfer" },
 			],
-		},
-		{
-			name: "credits",
-			...getLocalizedDesc("misc:OPTION_NAN_ALL"),
-			type: ApplicationCommandOptionType.String,
 		},
 		{
 			name: "user",
 			...getLocalizedDesc("common:USER"),
 			type: ApplicationCommandOptionType.User,
+		},
+		{
+			name: "credits",
+			...getLocalizedDesc("economy/bank:OPTION_NAN_ALL"),
+			type: ApplicationCommandOptionType.String,
 		},
 	],
 };
@@ -61,77 +68,17 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const guildId = interaction.guildId!;
 	const memberData = await client.getMemberData(memberId, guildId);
 	const choice = interaction.options.getString("option", true);
+	const targetUser = interaction.options.getUser("user") || interaction.user;
 	const creditsChoice = interaction.options.getString("credits");
 
 	if (!creditsChoice && choice !== "balance") {
-		return editReplyError(interaction, "misc:OPTION_NAN_ALL");
+		return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 	}
 
 	const embed = createEmbed();
 
 	switch (choice) {
-		case "deposit": {
-			const credits =
-				creditsChoice!.toLowerCase() === "all" ? memberData.money : Number(creditsChoice);
-			if (isNaN(credits) || credits < 1) {
-				return editReplyError(interaction, "misc:OPTION_NAN_ALL");
-			}
-			if (memberData.money < credits) {
-				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
-			}
-
-			memberData.money -= credits;
-			memberData.bankSold += credits;
-			memberData.transactions.push({
-				user: await translateContext(interaction, "economy/transactions:BANK"),
-				amount: credits,
-				date: Date.now(),
-				type: "send",
-			});
-			await memberData.save();
-
-			embed.setDescription(
-				await translateContext(interaction, "economy/bank:SUCCESS_DEP", {
-					money: await formatCredits(interaction, credits),
-				}),
-			);
-
-			break;
-		}
-
-		case "withdraw": {
-			const credits =
-				creditsChoice!.toLowerCase() === "all"
-					? memberData.bankSold
-					: Number(creditsChoice);
-			if (isNaN(credits) || credits < 1) {
-				return editReplyError(interaction, "misc:OPTION_NAN_ALL");
-			}
-			if (memberData.bankSold < credits) {
-				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
-			}
-
-			memberData.money += credits;
-			memberData.bankSold -= credits;
-			memberData.transactions.push({
-				user: await translateContext(interaction, "economy/transactions:BANK"),
-				amount: credits,
-				date: Date.now(),
-				type: "got",
-			});
-			await memberData.save();
-
-			embed.setDescription(
-				await translateContext(interaction, "economy/bank:SUCCESS_WD", {
-					money: await formatCredits(interaction, credits),
-				}),
-			);
-
-			break;
-		}
-
 		case "balance": {
-			const targetUser = interaction.options.getUser("user") || interaction.user;
 			if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
 
 			const targetData =
@@ -169,8 +116,119 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			break;
 		}
 
+		case "deposit": {
+			const credits =
+				creditsChoice!.toLowerCase() === "all" ? memberData.money : Number(creditsChoice);
+			if (isNaN(credits) || credits < 1) {
+				return editReplyError(interaction, "misc:MORE_THAN_ZERO");
+			}
+			if (memberData.money < credits) {
+				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
+			}
+
+			memberData.money -= credits;
+			memberData.bankSold += credits;
+			memberData.transactions.push({
+				user: await translateContext(interaction, "economy/transactions:BANK"),
+				amount: credits,
+				date: Date.now(),
+				type: "send",
+			});
+			await memberData.save();
+
+			embed.setDescription(
+				await translateContext(interaction, "economy/bank:SUCCESS_DEP", {
+					credits: await formatCredits(interaction, credits),
+				}),
+			);
+
+			break;
+		}
+
+		case "withdraw": {
+			const credits =
+				creditsChoice!.toLowerCase() === "all"
+					? memberData.bankSold
+					: Number(creditsChoice);
+			if (isNaN(credits) || credits < 1) {
+				return editReplyError(interaction, "misc:MORE_THAN_ZERO");
+			}
+			if (memberData.bankSold < credits) {
+				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
+			}
+
+			memberData.money += credits;
+			memberData.bankSold -= credits;
+			memberData.transactions.push({
+				user: await translateContext(interaction, "economy/transactions:BANK"),
+				amount: credits,
+				date: Date.now(),
+				type: "got",
+			});
+			await memberData.save();
+
+			embed.setDescription(
+				await translateContext(interaction, "economy/bank:SUCCESS_WD", {
+					credits: await formatCredits(interaction, credits),
+				}),
+			);
+
+			break;
+		}
+
+		case "transfer": {
+			const credits =
+				creditsChoice!.toLowerCase() === "all"
+					? memberData.bankSold
+					: Number(creditsChoice);
+			if (isNaN(credits) || credits < 1) {
+				return editReplyError(interaction, "misc:MORE_THAN_ZERO");
+			}
+			if (memberData.bankSold < credits) {
+				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
+			}
+			if (interaction.user.id === targetUser.id) {
+				return editReplyError(interaction, "misc:CANT_YOURSELF");
+			}
+
+			const recieverData = await client.getMemberData(targetUser.id, guildId);
+
+			memberData.bankSold -= credits;
+			recieverData.bankSold += credits;
+
+			memberData.transactions.push({
+				user: await translateContext(interaction, "economy/transactions:TRANSFER_TO", {
+					user: getUsername(targetUser),
+				}),
+				amount: credits,
+				date: Date.now(),
+				type: "send",
+			});
+
+			recieverData.transactions.push({
+				user: await translateContext(interaction, "economy/transactions:TRANSFER_FROM", {
+					user: getUsername(interaction.user),
+				}),
+				amount: credits,
+				date: Date.now(),
+				type: "got",
+			});
+
+			await memberData.save();
+			await recieverData.save();
+
+			embed.setDescription(
+				await translateContext(interaction, "economy/bank:SUCCESS_TRANSFER", {
+					credits: await formatCredits(interaction, credits),
+					reciever: targetUser.toString(),
+				}),
+			);
+
+			break;
+		}
+
 		default:
-			return editReplyError(interaction, "misc:OPTION_NAN_ALL");
+			return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 	}
 
 	await interaction.editReply({ embeds: [embed] });
