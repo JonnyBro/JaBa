@@ -10,197 +10,192 @@ import {
 	MessageFlags,
 	SeparatorSpacingSize,
 	StringSelectMenuBuilder,
-	StringSelectMenuOptionBuilder,
+	StringSelectMenuInteraction,
 	TextDisplayBuilder,
 } from "discord.js";
 
 const client = useClient();
 
-interface LeaderboardItem {
+interface LeaderboardEntry {
 	id: string;
-	level?: number;
-	money?: number;
-	rep?: number;
-	xp?: number;
+	value: number;
+	extra?: number;
 }
 
-// NOTE: Refactor please :3
-client.on("interactionCreate", async interaction => {
-	if (!interaction.isStringSelectMenu()) return;
+type NounKeys = [string, string, string];
 
-	const selected = interaction.values[0];
+enum LeaderboardType {
+	Credits = "credits",
+	Level = "level",
+	Reputation = "rep",
+}
+
+const LEADERBOARD_SELECTOR_ID = "leaderboard_selector";
+
+// Calculate XP for next level based on the formula: 5 * level^2 + 80 * level + 100
+function getXpForNextLevel(level: number): number {
+	return 5 * level * level + 80 * level + 100;
+}
+
+async function fetchAndBuildEntries<T>(
+	fetcher: () => Promise<T[]>,
+	valueExtractor: (item: T) => number,
+	extraExtractor?: (item: T) => number,
+	limit = 20,
+): Promise<LeaderboardEntry[]> {
+	const items = await fetcher();
+	const entries: LeaderboardEntry[] = items.map(i => ({
+		id: (i as any).id,
+		value: valueExtractor(i),
+		extra: extraExtractor?.(i),
+	}));
+
+	return entries.sort((a, b) => b.value - a.value).slice(0, limit);
+}
+
+function buildTableText(
+	entries: LeaderboardEntry[],
+	nouns: NounKeys,
+	extraNouns?: string[],
+	formatExtra?: (entry: LeaderboardEntry) => string,
+): string {
+	return entries
+		.map((e, i) => {
+			const rank = `**${i + 1}**`;
+			const main = `<@${e.id}>: **${e.value}** ${getNoun(e.value, nouns)}`;
+			const extra =
+				formatExtra?.(e) ??
+				(e.extra && extraNouns ? ` (${e.extra} ${getNoun(e.extra, extraNouns)})` : "");
+			return `${rank}. ${main} ${extra}`;
+		})
+		.join("\n");
+}
+
+async function renderLeaderboard(
+	interaction: StringSelectMenuInteraction,
+	titleKey: string,
+	subTitleKey: string,
+	tableContent: string,
+) {
 	const container = new ContainerBuilder();
-	const titleText = new TextDisplayBuilder().setContent(
-		`# ${await translateContext(interaction, "economy/leaderboard:TITLE", {
+	const title = new TextDisplayBuilder().setContent(
+		`# ${await translateContext(interaction, titleKey, {
 			name: interaction.guild?.name,
 		})}`,
 	);
+	const subtitle = new TextDisplayBuilder().setContent(
+		`## ${await translateContext(interaction, subTitleKey)}`,
+	);
 
-	if (interaction.customId === "leaderboard_selector") {
-		switch (selected) {
-			case "credits": {
-				const leaderboard: Array<LeaderboardItem> = [];
-				const membersData = await client.getMembersData(interaction.guildId!);
-				const membersDataArray = Array.from(membersData.values());
-				membersDataArray.forEach(member => {
-					leaderboard.push({
-						id: member.id,
-						money: member.money + member.bankSold,
-					});
-				});
+	container
+		.addTextDisplayComponents(title)
+		.addTextDisplayComponents(subtitle)
+		.addSeparatorComponents(s => s.setSpacing(SeparatorSpacingSize.Small))
+		.addTextDisplayComponents(new TextDisplayBuilder().setContent(tableContent));
 
-				leaderboard.sort((a, b) => b.money! - a.money!);
-				if (leaderboard.length > 20) leaderboard.length = 20;
+	await interaction.message.edit({
+		components: [container],
+		allowedMentions: {
+			parse: [],
+		},
+	});
+}
 
-				let tableText = "";
+client.on("interactionCreate", async interaction => {
+	if (!interaction.isStringSelectMenu()) {
+		return;
+	}
 
-				for (let i = 0; i < leaderboard.length; i++) {
-					const data = leaderboard[i];
+	if (interaction.customId !== LEADERBOARD_SELECTOR_ID) {
+		return;
+	}
 
-					tableText += `**${i + 1}**. <@${data.id}>: **${data.money}** ${getNoun(
-						data.money!,
-						[
-							await translateContext(interaction, "misc:NOUNS:CREDIT:1"),
-							await translateContext(interaction, "misc:NOUNS:CREDIT:2"),
-							await translateContext(interaction, "misc:NOUNS:CREDIT:5"),
-						],
-					)}\n`;
-				}
+	const selected = interaction.values[0];
+	const membersData = client.getMembersData(interaction.guildId!);
 
-				const table = new TextDisplayBuilder().setContent(tableText);
+	switch (selected) {
+		case LeaderboardType.Credits: {
+			const entries = await fetchAndBuildEntries(
+				() => membersData.then(members => Array.from(members.values())),
+				member => member.money + member.bankSold,
+			);
 
-				const subTitleText = new TextDisplayBuilder().setContent(
-					`## ${await translateContext(interaction, "common:CREDITS")}`,
-				);
+			const nouns = await Promise.all([
+				translateContext(interaction, "misc:NOUNS:CREDIT:1"),
+				translateContext(interaction, "misc:NOUNS:CREDIT:2"),
+				translateContext(interaction, "misc:NOUNS:CREDIT:5"),
+			]);
 
-				container
-					.addTextDisplayComponents(titleText)
-					.addTextDisplayComponents(subTitleText)
-					.addSeparatorComponents(s => s.setSpacing(SeparatorSpacingSize.Small))
-					.addTextDisplayComponents(table);
+			const tableText = buildTableText(entries, nouns);
 
-				interaction.message.edit({
-					components: [container],
-					allowedMentions: {
-						parse: [],
-					},
-				});
-
-				break;
-			}
-
-			case "level": {
-				const leaderboard: Array<LeaderboardItem> = [];
-				const membersData = await client.getMembersData(interaction.guildId!);
-				const membersDataArray = Array.from(membersData.values());
-				membersDataArray.forEach(member => {
-					leaderboard.push({
-						id: member.id,
-						level: member.level,
-						xp: member.exp,
-					});
-				});
-
-				leaderboard.sort((a, b) => b.level! - a.level!);
-				if (leaderboard.length > 20) leaderboard.length = 20;
-
-				let tableText = "";
-
-				for (let i = 0; i < leaderboard.length; i++) {
-					const data = leaderboard[i];
-
-					tableText += `**${i + 1}**. <@${data.id}>: **${data.level}** ${getNoun(
-						data.level!,
-						[
-							await translateContext(interaction, "misc:NOUNS:LEVEL:1"),
-							await translateContext(interaction, "misc:NOUNS:LEVEL:2"),
-							await translateContext(interaction, "misc:NOUNS:LEVEL:5"),
-						],
-					)} (${data.xp} / ${
-						5 * (data.level! * data.level!) + 80 * data.level! + 100
-					} ${getNoun(data.xp!, [
-						await translateContext(interaction, "misc:NOUNS:XP:1"),
-						await translateContext(interaction, "misc:NOUNS:XP:2"),
-						await translateContext(interaction, "misc:NOUNS:XP:5"),
-					])})\n`;
-				}
-
-				const table = new TextDisplayBuilder().setContent(tableText);
-
-				const subTitleText = new TextDisplayBuilder().setContent(
-					`## ${await translateContext(interaction, "common:LEVEL")}`,
-				);
-
-				container
-					.addTextDisplayComponents(titleText)
-					.addTextDisplayComponents(subTitleText)
-					.addSeparatorComponents(s => s.setSpacing(SeparatorSpacingSize.Small))
-					.addTextDisplayComponents(table);
-
-				interaction.message.edit({
-					components: [container],
-					allowedMentions: {
-						parse: [],
-					},
-				});
-
-				break;
-			}
-
-			case "rep": {
-				const leaderboard: Array<LeaderboardItem> = [];
-				const usersData = await client.getUsersData();
-				const usersDataArray = Array.from(usersData.values());
-				usersDataArray.forEach(user => {
-					leaderboard.push({
-						id: user.id,
-						rep: user.rep,
-					});
-				});
-
-				leaderboard.sort((a, b) => b.level! - a.level!);
-				if (leaderboard.length > 20) leaderboard.length = 20;
-
-				let tableText = "";
-
-				for (let i = 0; i < leaderboard.length; i++) {
-					const data = leaderboard[i];
-
-					tableText += `**${i + 1}**. <@${data.id}>: **${data.rep}** ${getNoun(
-						data.rep!,
-						[
-							await translateContext(interaction, "misc:NOUNS:POINTS:1"),
-							await translateContext(interaction, "misc:NOUNS:POINTS:2"),
-							await translateContext(interaction, "misc:NOUNS:POINTS:5"),
-						],
-					)}\n`;
-				}
-
-				const table = new TextDisplayBuilder().setContent(tableText);
-
-				const subTitleText = new TextDisplayBuilder().setContent(
-					`## ${await translateContext(interaction, "common:REP")}`,
-				);
-
-				container
-					.addTextDisplayComponents(titleText)
-					.addTextDisplayComponents(subTitleText)
-					.addSeparatorComponents(s => s.setSpacing(SeparatorSpacingSize.Small))
-					.addTextDisplayComponents(table);
-
-				interaction.message.edit({
-					components: [container],
-					allowedMentions: {
-						parse: [],
-					},
-				});
-
-				break;
-			}
-
-			default:
-				return interaction.message.edit("balls");
+			await renderLeaderboard(
+				interaction,
+				"economy/leaderboard:TITLE",
+				"common:CREDITS",
+				tableText,
+			);
+			break;
 		}
+
+		case LeaderboardType.Level: {
+			const entries = await fetchAndBuildEntries(
+				() => membersData.then(members => Array.from(members.values())),
+				member => member.level,
+				member => member.exp,
+			);
+
+			const levelNouns = await Promise.all([
+				translateContext(interaction, "misc:NOUNS:LEVEL:1"),
+				translateContext(interaction, "misc:NOUNS:LEVEL:2"),
+				translateContext(interaction, "misc:NOUNS:LEVEL:5"),
+			]);
+
+			const xpNouns = await Promise.all([
+				translateContext(interaction, "misc:NOUNS:XP:1"),
+				translateContext(interaction, "misc:NOUNS:XP:2"),
+				translateContext(interaction, "misc:NOUNS:XP:5"),
+			]);
+
+			const tableText = buildTableText(entries, levelNouns, xpNouns, entry => {
+				const nextXp = getXpForNextLevel(entry.value);
+				return `(${entry.extra} / ${nextXp} ${getNoun(entry.extra!, xpNouns)})`;
+			});
+
+			await renderLeaderboard(
+				interaction,
+				"economy/leaderboard:TITLE",
+				"common:LEVEL",
+				tableText,
+			);
+			break;
+		}
+
+		case LeaderboardType.Reputation: {
+			const entries = await fetchAndBuildEntries(
+				() => client.getUsersData().then(users => Array.from(users.values())),
+				user => user.rep,
+			);
+
+			const nouns = await Promise.all([
+				translateContext(interaction, "misc:NOUNS:POINTS:1"),
+				translateContext(interaction, "misc:NOUNS:POINTS:2"),
+				translateContext(interaction, "misc:NOUNS:POINTS:5"),
+			]);
+
+			const tableText = buildTableText(entries, nouns);
+
+			await renderLeaderboard(
+				interaction,
+				"economy/leaderboard:TITLE",
+				"common:REP",
+				tableText,
+			);
+
+			break;
+		}
+
+		default:
+			await interaction.message.edit({ content: "Invalid selection." });
 	}
 });
 
@@ -230,31 +225,34 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	);
 
 	const selector = new StringSelectMenuBuilder()
-		.setCustomId("leaderboard_selector")
-		.setOptions(
-			new StringSelectMenuOptionBuilder()
-				.setLabel("Credits")
-				.setEmoji("💰")
-				.setValue("credits"),
-			new StringSelectMenuOptionBuilder()
-				.setLabel("Level")
-				.setEmoji("🆙")
-				.setValue("level"),
-			new StringSelectMenuOptionBuilder()
-				.setLabel("Reputation")
-				.setEmoji("😎")
-				.setValue("rep"),
+		.setCustomId(LEADERBOARD_SELECTOR_ID)
+		.setPlaceholder("Select a leaderboard")
+		.addOptions(
+			{
+				label: "Credits",
+				emoji: "💰",
+				value: LeaderboardType.Credits,
+			},
+			{
+				label: "Level",
+				emoji: "🆙",
+				value: LeaderboardType.Level,
+			},
+			{
+				label: "Reputation",
+				emoji: "😎",
+				value: LeaderboardType.Reputation,
+			},
 		);
-
-	const row = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(selector);
-
 	container
 		.addTextDisplayComponents(titleText)
 		.addSeparatorComponents(s => s.setSpacing(SeparatorSpacingSize.Small))
 		.addTextDisplayComponents(selectText)
-		.addActionRowComponents(row);
+		.addActionRowComponents(
+			new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(selector),
+		);
 
-	interaction.editReply({
+	await interaction.editReply({
 		components: [container],
 		flags: MessageFlags.IsComponentsV2,
 	});
