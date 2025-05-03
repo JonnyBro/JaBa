@@ -1,3 +1,4 @@
+// TODO: Use new components v2
 const { SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require("discord.js");
 const BaseCommand = require("../../base/BaseCommand");
 

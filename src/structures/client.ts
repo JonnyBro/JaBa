@@ -62,6 +62,13 @@ export class ExtendedClient extends Client<true> {
 		return userData;
 	}
 
+	async getUsersData() {
+		const { default: UserModel } = await import("@/models/UserModel.js");
+		const usersData = await this.adapter.find(UserModel);
+
+		return usersData;
+	}
+
 	async getMemberData(memberId: string, guildID: string) {
 		const { default: MemberModel } = await import("@/models/MemberModel.js");
 		const memberData = await this.adapter.findOneOrCreate(MemberModel, {
@@ -77,5 +84,14 @@ export class ExtendedClient extends Client<true> {
 		}
 
 		return memberData;
+	}
+
+	async getMembersData(guildID: string) {
+		const { default: MemberModel } = await import("@/models/MemberModel.js");
+		const membersData = await this.adapter.find(MemberModel, {
+			guildID,
+		});
+
+		return membersData;
 	}
 }
