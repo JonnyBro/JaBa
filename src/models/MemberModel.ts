@@ -35,14 +35,7 @@ const memberSchema = new Schema<IMemberSchema>({
 	bankSold: { type: Number, default: 0 },
 	exp: { type: Number, default: 0 },
 	level: { type: Number, default: 0 },
-	transactions: [
-		{
-			user: String,
-			amount: Number,
-			date: Number,
-			type: String,
-		},
-	],
+	transactions: [],
 	registeredAt: { type: Number, default: () => Date.now() },
 	cooldowns: {
 		type: Object,
@@ -51,7 +44,7 @@ const memberSchema = new Schema<IMemberSchema>({
 			rob: 0,
 		},
 	},
-	sanctions: [[String]],
+	sanctions: [],
 	mute: {
 		type: Object,
 		default: {
