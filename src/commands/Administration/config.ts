@@ -174,7 +174,7 @@ async function saveSettings(
 
 async function generateReply(
 	interaction: ChatInputCommandInteraction,
-	guildData: InstanceType<typeof Guild>,
+	guildData: InstanceType<typeof GuildModel>,
 	parameter: string,
 	state: boolean,
 	channel?: Channel | null,
@@ -219,6 +219,12 @@ async function changeSetting(
 				parameterSplitted[isNested ? 1 : 0],
 				state,
 			),
+			content: await generateReply(
+				interaction,
+				guildData,
+				parameterSplitted[isNested ? 1 : 0],
+				state,
+			),
 		});
 	}
 
@@ -227,7 +233,16 @@ async function changeSetting(
 		parameterSplitted[1] === "ticketsCategory" &&
 		channel?.type !== ChannelType.GuildCategory
 	) {
+	if (
+		isNested &&
+		parameterSplitted[1] === "ticketsCategory" &&
+		channel?.type !== ChannelType.GuildCategory
+	) {
 		return interaction.editReply({
+			content: await translateContext(
+				interaction,
+				"administration/config:TICKETS_NOT_CATEGORY",
+			),
 			content: await translateContext(
 				interaction,
 				"administration/config:TICKETS_NOT_CATEGORY",
@@ -240,6 +255,13 @@ async function changeSetting(
 	}
 
 	return interaction.editReply({
+		content: await generateReply(
+			interaction,
+			guildData,
+			parameterSplitted[isNested ? 1 : 0],
+			state,
+			channel,
+		),
 		content: await generateReply(
 			interaction,
 			guildData,

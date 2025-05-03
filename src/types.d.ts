@@ -34,7 +34,12 @@ export type CronTaskData = {
 };
 
 export interface CommandProps {
-	interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction | UserContextMenuCommandInteraction | MessageContextMenuCommandInteraction | AutocompleteInteraction;
+	interaction:
+		| ChatInputCommandInteraction
+		| ContextMenuCommandInteraction
+		| UserContextMenuCommandInteraction
+		| MessageContextMenuCommandInteraction
+		| AutocompleteInteraction;
 	client: ExtendedClient;
 }
 
@@ -43,7 +48,7 @@ export interface SlashCommandProps extends CommandProps {
 }
 
 export interface ContextCommandProps extends CommandProps {
-	interaction: UserContextMenuCommandInteraction | MessageContextMenuCommandInteraction
+	interaction: UserContextMenuCommandInteraction | MessageContextMenuCommandInteraction;
 }
 
 export interface CommandContext<_T extends Interaction, _Cached extends CacheType> {
@@ -59,6 +64,10 @@ export interface CommandOptions {
 export interface CommandFileObject {
 	data: CommandData;
 	options?: CommandOptions;
-	run: <Cached extends CacheType = CacheType>(_ctx: CommandContext<Interaction, Cached>) => Awaited<void>;
-	autocompleteRun?: <Cached extends CacheType = CacheType>(_ctx: CommandContext<Interaction, Cached>) => Awaited<void>;
+	run: <Cached extends CacheType = CacheType>(
+		_ctx: CommandContext<Interaction, Cached>,
+	) => Awaited<void>;
+	autocompleteRun?: <Cached extends CacheType = CacheType>(
+		_ctx: CommandContext<Interaction, Cached>,
+	) => Awaited<void>;
 }

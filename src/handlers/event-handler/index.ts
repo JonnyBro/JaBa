@@ -30,7 +30,9 @@ export class EventHandler {
 	async #buildEvents() {
 		try {
 			const eventPath = resolve(this.client.configService.get("paths.events"));
-			const eventFilePaths = (await getFilePaths(eventPath, true)).filter(path => path.endsWith(".js") || path.endsWith(".ts"));
+			const eventFilePaths = (await getFilePaths(eventPath, true)).filter(
+				path => path.endsWith(".js") || path.endsWith(".ts"),
+			);
 
 			for (const eventFilePath of eventFilePaths) {
 				const eventModule = await import(toFileURL(eventFilePath));
@@ -48,7 +50,9 @@ export class EventHandler {
 				}
 
 				if (typeof run !== "function") {
-					logger.warn(`Event ${eventFilePath} does not have a run function or it is not a function`);
+					logger.warn(
+						`Event ${eventFilePath} does not have a 'run' function`,
+					);
 					continue;
 				}
 
@@ -66,8 +70,9 @@ export class EventHandler {
 		// const player = useMainPlayer();
 
 		this.events.forEach(event => {
-			/* if (event.data.player) player.events.on(event.data.name as keyof GuildQueueEvents, event.run);
-			else */
+			/* if (event.data.player) {
+				player.events.on(event.data.name as keyof GuildQueueEvents, event.run);
+			} else */
 
 			if (event.data.once) this.client.once(event.data.name, event.run);
 			else this.client.on(event.data.name, event.run);

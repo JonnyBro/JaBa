@@ -7,7 +7,10 @@ class ConfigService {
 
 	get<T>(key: string): T {
 		const keys = key.split(".");
-		return keys.reduce((config, k) => (config && config[k] !== undefined ? config[k] : undefined), this.config);
+		return keys.reduce(
+			(config, k) => (config && config[k] !== undefined ? config[k] : undefined),
+			this.config,
+		);
 	}
 
 	set(key: string, value: unknown) {

@@ -2,7 +2,11 @@ import { getLocalizedDesc, replyError, translateContext } from "@/helpers/extend
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	ApplicationIntegrationType,
+	InteractionContextType,
+} from "discord.js";
 
 const client = useClient();
 
@@ -10,8 +14,15 @@ export const data: CommandData = {
 	name: "achievements",
 	...getLocalizedDesc("economy/achievements:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
-	contexts: [InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel],
+	integration_types: [
+		ApplicationIntegrationType.GuildInstall,
+		ApplicationIntegrationType.UserInstall,
+	],
+	contexts: [
+		InteractionContextType.BotDM,
+		InteractionContextType.Guild,
+		InteractionContextType.PrivateChannel,
+	],
 	options: [
 		{
 			name: "user",
@@ -40,7 +51,11 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				value: await translateContext(interaction, "economy/achievements:PROGRESS", {
 					now: userData.achievements.firstCommand.progress.now,
 					total: userData.achievements.firstCommand.progress.total,
-					percent: Math.round(100 * (userData.achievements.firstCommand.progress.now / userData.achievements.firstCommand.progress.total)),
+					percent: Math.round(
+						100 *
+							(userData.achievements.firstCommand.progress.now /
+								userData.achievements.firstCommand.progress.total),
+					),
 				}),
 			},
 			{
@@ -48,7 +63,11 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				value: await translateContext(interaction, "economy/achievements:PROGRESS", {
 					now: userData.achievements.work.progress.now,
 					total: userData.achievements.work.progress.total,
-					percent: Math.round(100 * (userData.achievements.work.progress.now / userData.achievements.work.progress.total)),
+					percent: Math.round(
+						100 *
+							(userData.achievements.work.progress.now /
+								userData.achievements.work.progress.total),
+					),
 				}),
 			},
 			{
@@ -56,7 +75,11 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				value: await translateContext(interaction, "economy/achievements:PROGRESS", {
 					now: userData.achievements.married.progress.now,
 					total: userData.achievements.married.progress.total,
-					percent: Math.round(100 * (userData.achievements.married.progress.now / userData.achievements.married.progress.total)),
+					percent: Math.round(
+						100 *
+							(userData.achievements.married.progress.now /
+								userData.achievements.married.progress.total),
+					),
 				}),
 			},
 			{
@@ -64,7 +87,11 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				value: await translateContext(interaction, "economy/achievements:PROGRESS", {
 					now: userData.achievements.slots.progress.now,
 					total: userData.achievements.slots.progress.total,
-					percent: Math.round(100 * (userData.achievements.slots.progress.now / userData.achievements.slots.progress.total)),
+					percent: Math.round(
+						100 *
+							(userData.achievements.slots.progress.now /
+								userData.achievements.slots.progress.total),
+					),
 				}),
 			},
 			{
@@ -72,7 +99,11 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				value: await translateContext(interaction, "economy/achievements:PROGRESS", {
 					now: userData.achievements.tip.progress.now,
 					total: userData.achievements.tip.progress.total,
-					percent: Math.round(100 * (userData.achievements.tip.progress.now / userData.achievements.tip.progress.total)),
+					percent: Math.round(
+						100 *
+							(userData.achievements.tip.progress.now /
+								userData.achievements.tip.progress.total),
+					),
 				}),
 			},
 			{
@@ -80,7 +111,11 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				value: await translateContext(interaction, "economy/achievements:PROGRESS", {
 					now: userData.achievements.rep.progress.now,
 					total: userData.achievements.rep.progress.total,
-					percent: Math.round(100 * (userData.achievements.rep.progress.now / userData.achievements.rep.progress.total)),
+					percent: Math.round(
+						100 *
+							(userData.achievements.rep.progress.now /
+								userData.achievements.rep.progress.total),
+					),
 				}),
 			},
 			{
@@ -88,7 +123,11 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				value: await translateContext(interaction, "economy/achievements:PROGRESS", {
 					now: userData.achievements.invite.progress.now,
 					total: userData.achievements.invite.progress.total,
-					percent: Math.round(100 * (userData.achievements.invite.progress.now / userData.achievements.invite.progress.total)),
+					percent: Math.round(
+						100 *
+							(userData.achievements.invite.progress.now /
+								userData.achievements.invite.progress.total),
+					),
 				}),
 			},
 		],

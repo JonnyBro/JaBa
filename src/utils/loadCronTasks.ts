@@ -5,7 +5,9 @@ import { toFileURL } from "./resolve-file.js";
 
 const loadCronTasks = async (taskPath: string): Promise<CronTaskData[]> => {
 	try {
-		const filePaths = (await getFilePaths(taskPath, true)).filter(file => file.endsWith(".js") || file.endsWith(".ts"));
+		const filePaths = (await getFilePaths(taskPath, true)).filter(
+			file => file.endsWith(".js") || file.endsWith(".ts"),
+		);
 		const tasks = [];
 
 		for (const filePath of filePaths) {

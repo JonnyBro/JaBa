@@ -1,17 +1,29 @@
 import { getLocalizedDesc } from "@/helpers/extenders.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
-// import useClient from "@/utils/use-client.js";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType, MessageFlags } from "discord.js";
+import useClient from "@/utils/use-client.js";
+import {
+	ApplicationCommandOptionType,
+	ApplicationIntegrationType,
+	InteractionContextType,
+	MessageFlags,
+} from "discord.js";
 
-// const client = useClient();
+const client = useClient();
 
 export const data: CommandData = {
 	name: "lmgtfy",
 	...getLocalizedDesc("fun/lmgtfy:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
-	contexts: [InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel],
+	integration_types: [
+		ApplicationIntegrationType.GuildInstall,
+		ApplicationIntegrationType.UserInstall,
+	],
+	contexts: [
+		InteractionContextType.BotDM,
+		InteractionContextType.Guild,
+		InteractionContextType.PrivateChannel,
+	],
 	options: [
 		{
 			name: "query",
@@ -33,9 +45,11 @@ export const data: CommandData = {
 };
 
 export const run = async ({ interaction }: SlashCommandProps) => {
-	await interaction.deferReply({ flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined });
+	await interaction.deferReply({
+		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
+	});
 
-	const query = interaction.options.getString("query", true).replace(/[' '_]/g, "+");
+	const query = interaction.options.getString("query", true).replace(/\s+/g, "+");
 	const short = interaction.options.getBoolean("short");
 	const url = `https://letmegooglethat.com/?q=${encodeURIComponent(query)}`;
 	const embed = createEmbed({
@@ -43,18 +57,16 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	});
 
 	if (short) {
-		// const res = await fetch("https://i.jonnybro.ru/api/shorten", {
-		// 	method: "POST",
-		// 	headers: {
-		// 		"Content-Type": "application/json",
-		// 		Authorization: client.configService.get("apiKeys.zipline"),
-		// 	},
-		// 	body: JSON.stringify({ url: url }),
-		// }).then(res => res.json());
+		const res = await fetch(client.configService.get("apiKeys.urlShortener.url"), {
+			method: "POST",
+			headers: {
+				Authorization: client.configService.get("apiKeys.urlShortener.key"),
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ destination: url }),
+		}).then(res => res.json());
 
-		// interaction.editReply({
-		// 	content: `<${res.url}>`,
-		// });
+		embed.setDescription(res.url);
 
 		interaction.editReply({
 			embeds: [embed],

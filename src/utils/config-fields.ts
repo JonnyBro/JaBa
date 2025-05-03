@@ -33,6 +33,10 @@ const processPluginField = async (
 	interaction: ChatInputCommandInteraction,
 	field: ConfigPluginField,
 ) => {
+const processPluginField = async (
+	interaction: ChatInputCommandInteraction,
+	field: ConfigPluginField,
+) => {
 	const name = await translateContext(interaction, field.nameKey);
 
 	const value = field.enabled
@@ -48,6 +52,10 @@ const processGroupField = async (
 	interaction: ChatInputCommandInteraction,
 	field: ConfigGroupField,
 ) => {
+const processGroupField = async (
+	interaction: ChatInputCommandInteraction,
+	field: ConfigGroupField,
+) => {
 	const name = await translateContext(interaction, field.nameKey);
 	const lines = await Promise.all(
 		field.items.map(async item => {
@@ -57,6 +65,9 @@ const processGroupField = async (
 			let formattedValue;
 			switch (item.format) {
 				case "channel":
+					formattedValue = rawValue
+						? `<#${rawValue}>`
+						: `*${await translateContext(interaction, "common:NOT_DEFINED")}*`;
 					formattedValue = rawValue
 						? `<#${rawValue}>`
 						: `*${await translateContext(interaction, "common:NOT_DEFINED")}*`;

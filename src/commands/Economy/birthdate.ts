@@ -1,7 +1,12 @@
 import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/extenders.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType, MessageFlags } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	ApplicationIntegrationType,
+	InteractionContextType,
+	MessageFlags,
+} from "discord.js";
 
 const client = useClient();
 
@@ -9,8 +14,15 @@ export const data: CommandData = {
 	name: "birthdate",
 	...getLocalizedDesc("economy/birthdate:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
-	contexts: [InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel],
+	integration_types: [
+		ApplicationIntegrationType.GuildInstall,
+		ApplicationIntegrationType.UserInstall,
+	],
+	contexts: [
+		InteractionContextType.BotDM,
+		InteractionContextType.Guild,
+		InteractionContextType.PrivateChannel,
+	],
 	options: [
 		{
 			name: "day",
@@ -55,7 +67,9 @@ export const data: CommandData = {
 };
 
 export const run = async ({ interaction }: SlashCommandProps) => {
-	await interaction.deferReply({ flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined });
+	await interaction.deferReply({
+		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
+	});
 
 	const userData = await client.getUserData(interaction.user.id);
 
@@ -76,13 +90,21 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	const d = date.getTime();
 
-	if (!(day === date.getDate() && month - 1 === date.getMonth() && year === date.getFullYear())) return editReplyError(interaction, "economy/birthdate:INVALID_DATE");
-	if (date.getTime() > Date.now()) return editReplyError(interaction, "economy/birthdate:DATE_TOO_HIGH");
-	if (date.getTime() < Date.now() - 2.523e12) return editReplyError(interaction, "economy/birthdate:DATE_TOO_LOW");
+	if (!(day === date.getDate() && month - 1 === date.getMonth() && year === date.getFullYear())) {
+		return editReplyError(interaction, "economy/birthdate:INVALID_DATE");
+	}
+	if (date.getTime() > Date.now()) {
+		return editReplyError(interaction, "economy/birthdate:DATE_TOO_HIGH");
+	}
+	if (date.getTime() < Date.now() - 2.523e12) {
+		return editReplyError(interaction, "economy/birthdate:DATE_TOO_LOW");
+	}
 
 	userData.birthdate = d;
 
 	await userData.save();
 
-	return editReplySuccess(interaction, "economy/birthdate:SUCCESS", { date: `<t:${Math.floor(d / 1000)}:D>` });
+	return editReplySuccess(interaction, "economy/birthdate:SUCCESS", {
+		date: `<t:${Math.floor(d / 1000)}:D>`,
+	});
 };

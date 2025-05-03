@@ -23,5 +23,7 @@ export const CLIENT_INTENTS = [
 	GatewayIntentBits.DirectMessageReactions,
 ];
 export const CLIENT_PARTIALS: Array<Partials> = [Partials.Channel];
-export const CLIENT_ALLOWED_MENTIONS: MessageMentionOptions = { parse: ["everyone", "roles", "users"] };
+export const CLIENT_ALLOWED_MENTIONS: MessageMentionOptions = {
+	parse: ["everyone", "roles", "users"],
+};
 export const SUPER_CONTEXT = new AsyncLocalStorage<ExtendedClient>();

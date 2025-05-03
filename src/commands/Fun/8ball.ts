@@ -2,14 +2,26 @@ import { getLocalizedDesc, translateContext } from "@/helpers/extenders.js";
 import { randomNum } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType, MessageFlags } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	ApplicationIntegrationType,
+	InteractionContextType,
+	MessageFlags,
+} from "discord.js";
 
 export const data: CommandData = {
 	name: "8ball",
 	...getLocalizedDesc("fun/8ball:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
-	contexts: [InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel],
+	integration_types: [
+		ApplicationIntegrationType.GuildInstall,
+		ApplicationIntegrationType.UserInstall,
+	],
+	contexts: [
+		InteractionContextType.BotDM,
+		InteractionContextType.Guild,
+		InteractionContextType.PrivateChannel,
+	],
 	options: [
 		{
 			name: "question",
@@ -26,7 +38,9 @@ export const data: CommandData = {
 };
 
 export const run = async ({ interaction }: SlashCommandProps) => {
-	await interaction.deferReply({ flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined });
+	await interaction.deferReply({
+		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
+	});
 
 	const question = interaction.options.getString("question", true);
 	const embed = createEmbed({
@@ -37,7 +51,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			},
 			{
 				name: await translateContext(interaction, "fun/8ball:ANSWER"),
-				value: await translateContext(interaction, `fun/8ball:RESPONSE_${randomNum(1, 20)}`),
+				value: await translateContext(
+					interaction,
+					`fun/8ball:RESPONSE_${randomNum(1, 20)}`,
+				),
 			},
 		],
 	});

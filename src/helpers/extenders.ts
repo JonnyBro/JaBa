@@ -1,5 +1,13 @@
 import useClient from "@/utils/use-client.js";
-import { BaseInteraction, CacheType, Interaction, InteractionReplyOptions, Message, MessageFlags, User } from "discord.js";
+import {
+	BaseInteraction,
+	CacheType,
+	Interaction,
+	InteractionReplyOptions,
+	Message,
+	MessageFlags,
+	User,
+} from "discord.js";
 
 interface Options extends InteractionReplyOptions {
 	prefixEmoji?: string;
@@ -42,7 +50,12 @@ const formatReply = (message: string, prefixEmoji?: string) => {
 
 export const getUsername = (user: User) => (user.discriminator === "0" ? user.username : user.tag);
 
-export const translateContext = async <T extends CacheType = CacheType>(context: Interaction<T> | Message, key: string, args?: Record<string, unknown> | null, options?: Options) => {
+export const translateContext = async <T extends CacheType = CacheType>(
+	context: Interaction<T> | Message,
+	key: string,
+	args?: Record<string, unknown> | null,
+	options?: Options,
+) => {
 	const client = useClient();
 	const inGuild = context.guild ? await getLocale(context.guild.id) : "";
 
@@ -55,7 +68,12 @@ export const translateContext = async <T extends CacheType = CacheType>(context:
 	return translated;
 };
 
-export const replyTranslated = async <T extends CacheType = CacheType>(context: Interaction<T> | Message, key: string, args?: Record<string, unknown> | null, options?: Options) => {
+export const replyTranslated = async <T extends CacheType = CacheType>(
+	context: Interaction<T> | Message,
+	key: string,
+	args?: Record<string, unknown> | null,
+	options?: Options,
+) => {
 	const translated = await translateContext(context, key, args, options);
 	const content = formatReply(translated, options?.prefixEmoji);
 
@@ -72,7 +90,12 @@ export const replyTranslated = async <T extends CacheType = CacheType>(context: 
 		return;
 	}
 
-	if (options?.edit) return await context.edit({ content, allowedMentions: { repliedUser: options.mention || false } });
+	if (options?.edit) {
+		return await context.edit({
+			content,
+			allowedMentions: { repliedUser: options.mention || false },
+		});
+	}
 
 	await context.reply({
 		content,
@@ -80,14 +103,30 @@ export const replyTranslated = async <T extends CacheType = CacheType>(context: 
 	});
 };
 
-export const replySuccess = async <T extends CacheType = CacheType>(context: Interaction<T> | Message, key: string, args?: Record<string, unknown> | null, options: Options = { prefixEmoji: "success" }) =>
-	await replyTranslated(context, key, args, { prefixEmoji: "success", ...options });
+export const replySuccess = async <T extends CacheType = CacheType>(
+	context: Interaction<T> | Message,
+	key: string,
+	args?: Record<string, unknown> | null,
+	options: Options = { prefixEmoji: "success" },
+) => await replyTranslated(context, key, args, { prefixEmoji: "success", ...options });
 
-export const editReplySuccess = async <T extends CacheType = CacheType>(context: Interaction<T> | Message, key: string, args?: Record<string, unknown> | null, options: Options = { prefixEmoji: "success", edit: true }) =>
-	await replyTranslated(context, key, args, { prefixEmoji: "success", edit: true, ...options });
+export const editReplySuccess = async <T extends CacheType = CacheType>(
+	context: Interaction<T> | Message,
+	key: string,
+	args?: Record<string, unknown> | null,
+	options: Options = { prefixEmoji: "success", edit: true },
+) => await replyTranslated(context, key, args, { prefixEmoji: "success", edit: true, ...options });
 
-export const replyError = async <T extends CacheType = CacheType>(context: Interaction<T> | Message, key: string, args?: Record<string, unknown> | null, options: Options = { prefixEmoji: "error" }) =>
-	await replyTranslated(context, key, args, { prefixEmoji: "error", ...options });
+export const replyError = async <T extends CacheType = CacheType>(
+	context: Interaction<T> | Message,
+	key: string,
+	args?: Record<string, unknown> | null,
+	options: Options = { prefixEmoji: "error" },
+) => await replyTranslated(context, key, args, { prefixEmoji: "error", ...options });
 
-export const editReplyError = async <T extends CacheType = CacheType>(context: Interaction<T> | Message, key: string, args?: Record<string, unknown> | null, options: Options = { prefixEmoji: "error", edit: true }) =>
-	await replyTranslated(context, key, args, { prefixEmoji: "error", edit: true, ...options });
+export const editReplyError = async <T extends CacheType = CacheType>(
+	context: Interaction<T> | Message,
+	key: string,
+	args?: Record<string, unknown> | null,
+	options: Options = { prefixEmoji: "error", edit: true },
+) => await replyTranslated(context, key, args, { prefixEmoji: "error", edit: true, ...options });

@@ -31,7 +31,9 @@ export class CommandHandler {
 
 	async #buildCommands() {
 		const cmdPath = resolve(this.client.configService.get("paths.commands"));
-		const commandFilePaths = (await getFilePaths(cmdPath, true)).filter(path => path.endsWith(".js") || path.endsWith(".ts"));
+		const commandFilePaths = (await getFilePaths(cmdPath, true)).filter(
+			path => path.endsWith(".js") || path.endsWith(".ts"),
+		);
 
 		for (const cmdFilePath of commandFilePaths) {
 			const { data, run, options } = await import(toFileURL(cmdFilePath));
@@ -42,7 +44,9 @@ export class CommandHandler {
 			}
 
 			if (typeof run !== "function") {
-				logger.warn(`Command ${cmdFilePath} does not have a 'run' function or it is not a function`);
+				logger.warn(
+					`Command ${cmdFilePath} does not have a 'run' function or it is not a function`,
+				);
 				continue;
 			}
 
@@ -58,11 +62,17 @@ export class CommandHandler {
 
 	handleCommands() {
 		this.client.on("interactionCreate", async interaction => {
-			if (!interaction.isChatInputCommand() && !interaction.isAutocomplete() && !interaction.isContextMenuCommand()) return;
+			if (
+				!interaction.isChatInputCommand() &&
+				!interaction.isAutocomplete() &&
+				!interaction.isContextMenuCommand()
+			) return;
 
 			const isAutocomplete = interaction.isAutocomplete();
 
-			const targetCommand = this.commands.find(cmd => cmd.data.name === interaction.commandName);
+			const targetCommand = this.commands.find(
+				cmd => cmd.data.name === interaction.commandName,
+			);
 			if (!targetCommand) return;
 
 			// Skip if autocomplete handler is not defined
