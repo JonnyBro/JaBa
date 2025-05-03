@@ -49,29 +49,29 @@ export class ExtendedClient extends Client<true> {
 	}
 
 	async getGuildData(guildId: string) {
-		const { Guild: GuildModel } = await import("@/models/GuildModel.js");
-		const guildData = await this.adapter.findOneOrCreate(GuildModel, { id: guildId });
+		const { Guild } = await import("@/models/GuildModel.js");
+		const guildData = await this.adapter.findOneOrCreate(Guild, { id: guildId });
 
 		return guildData;
 	}
 
 	async getUserData(userID: string) {
-		const { User: UserModel } = await import("@/models/UserModel.js");
-		const userData = await this.adapter.findOneOrCreate(UserModel, { id: userID });
+		const { User } = await import("@/models/UserModel.js");
+		const userData = await this.adapter.findOneOrCreate(User, { id: userID });
 
 		return userData;
 	}
 
 	async getUsersData() {
-		const { default: UserModel } = await import("@/models/UserModel.js");
-		const usersData = await this.adapter.find(UserModel);
+		const { User } = await import("@/models/UserModel.js");
+		const usersData = await this.adapter.find(User);
 
 		return usersData;
 	}
 
 	async getMemberData(memberId: string, guildID: string) {
-		const { Member: MemberModel } = await import("@/models/MemberModel.js");
-		const memberData = await this.adapter.findOneOrCreate(MemberModel, {
+		const { Member } = await import("@/models/MemberModel.js");
+		const memberData = await this.adapter.findOneOrCreate(Member, {
 			id: memberId,
 			guildID,
 		});
@@ -87,8 +87,8 @@ export class ExtendedClient extends Client<true> {
 	}
 
 	async getMembersData(guildID: string) {
-		const { default: MemberModel } = await import("@/models/MemberModel.js");
-		const membersData = await this.adapter.find(MemberModel, {
+		const { Member } = await import("@/models/MemberModel.js");
+		const membersData = await this.adapter.find(Member, {
 			guildID,
 		});
 
