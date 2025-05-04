@@ -8,7 +8,6 @@ export const data = {
 	name: "birthdays",
 	task: async () => {
 		const client = useClient();
-
 		const guilds = client.guilds.cache.values();
 		const users = await client.adapter.find(UserModel, {
 			birthdate: { $ne: null },

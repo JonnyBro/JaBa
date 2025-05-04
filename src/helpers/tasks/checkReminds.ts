@@ -79,5 +79,5 @@ export const data: CronTaskData = {
 			}
 		});
 	},
-	schedule: "* * * * * *",
+	schedule: "* * * * *",
 };
