@@ -17,7 +17,6 @@
         "@napi-rs/canvas": "^0.1.68",
         "chalk": "^5.4.1",
         "cron": "^4.1.0",
-        "discord-giveaways": "^6.0.1",
         "discord.js": "^14.19.3",
         "gamedig": "^5.2.0",
         "i18next": "^24.2.2",

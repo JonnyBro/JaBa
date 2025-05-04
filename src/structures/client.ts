@@ -1,5 +1,4 @@
 import { Client, ClientOptions } from "discord.js";
-import { GiveawaysManager } from "discord-giveaways";
 import { Handlers } from "@/handlers/index.js";
 import logger from "@/helpers/logger.js";
 import ConfigService from "@/services/config/index.js";
@@ -14,17 +13,6 @@ export class ExtendedClient extends Client<true> {
 	adapter = new MikroOrmAdapter(this.configService.get("mongoDB"));
 	cacheReminds = new Map<string, cacheRemindsData>();
 	i18n = new InternationalizationService(this);
-
-	// @ts-ignore - because ExtendedClient != Client<boolean> from discord.js
-	giveaways = new GiveawaysManager(this, {
-		storage: "./giveaways.json",
-		default: {
-			botsCanWin: false,
-			embedColor: this.configService.get("embed.color"),
-			embedColorEnd: "#FF0000",
-			reaction: "🎉",
-		},
-	});
 
 	constructor(options: ClientOptions) {
 		if (SUPER_CONTEXT.getStore()) return SUPER_CONTEXT.getStore() as ExtendedClient;

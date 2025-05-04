@@ -36,6 +36,7 @@ export const data: CommandData = {
 				{ name: client.i18n.translate("economy/bank:DEPOSIT"), value: "deposit" },
 				{ name: client.i18n.translate("economy/bank:WITHDRAW"), value: "withdraw" },
 				{ name: client.i18n.translate("economy/bank:TRANSFER"), value: "transfer" },
+				{ name: client.i18n.translate("economy/bank:TRANSACTIONS"), value: "transactions" },
 			],
 		},
 		{
@@ -71,7 +72,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const targetUser = interaction.options.getUser("user") || interaction.user;
 	const creditsChoice = interaction.options.getString("credits");
 
-	if (!creditsChoice && choice !== "balance") {
+	if (!creditsChoice && choice !== "balance" && choice !== "transactions") {
 		return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 	}
 
@@ -197,7 +198,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			recieverData.bankSold += credits;
 
 			memberData.transactions.push({
-				user: await translateContext(interaction, "economy/transactions:TRANSFER_TO", {
+				user: await translateContext(interaction, "economy/bank:TRANSFER_TO", {
 					user: getUsername(targetUser),
 				}),
 				amount: credits,
@@ -206,7 +207,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			});
 
 			recieverData.transactions.push({
-				user: await translateContext(interaction, "economy/transactions:TRANSFER_FROM", {
+				user: await translateContext(interaction, "economy/bank:TRANSFER_FROM", {
 					user: getUsername(interaction.user),
 				}),
 				amount: credits,
@@ -223,6 +224,69 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 					reciever: targetUser.toString(),
 				}),
 			);
+
+			break;
+		}
+
+		case "transactions": {
+			const transactions = memberData.transactions;
+			const sortedTransactions: string[][] = [[], []];
+
+			const sortedTransactionArray = transactions
+				.sort((a, b) => b.date - a.date)
+				.slice(0, 20);
+
+			await Promise.all(
+				sortedTransactionArray.map(async t => {
+					const array = t.type === "got" ? sortedTransactions[0] : sortedTransactions[1];
+
+					const [translated, amountText, dateText] = await Promise.all([
+						translateContext(
+							interaction,
+							"economy/bank:T_USER_" + t.type.toUpperCase(),
+						),
+						translateContext(interaction, "economy/bank:T_AMOUNT"),
+						translateContext(interaction, "economy/bank:T_DATE"),
+					]);
+
+					array.push(
+						`${translated}: ${t.user}\n${amountText}: ${t.amount}\n${dateText}:
+						<t:${Math.floor(t.date / 1000)}:f>\n`,
+					);
+				}),
+			);
+
+			if (transactions.length <= 0) {
+				embed.setDescription(
+					await translateContext(interaction, "economy/bank:NO_TRANSACTIONS"),
+				);
+			} else {
+				if (sortedTransactions[0].length > 0) {
+					embed.addFields([
+						{
+							name: await translateContext(
+								interaction,
+								"economy/bank:T_GOT",
+							),
+							value: sortedTransactions[0].join("\n"),
+							inline: true,
+						},
+					]);
+				}
+
+				if (sortedTransactions[1].length > 0) {
+					embed.addFields([
+						{
+							name: await translateContext(
+								interaction,
+								"economy/bank:T_SEND",
+							),
+							value: sortedTransactions[1].join("\n"),
+							inline: true,
+						},
+					]);
+				}
+			}
 
 			break;
 		}
