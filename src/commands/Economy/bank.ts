@@ -232,25 +232,33 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			const transactions = memberData.transactions;
 			const sortedTransactions: string[][] = [[], []];
 
-			transactions.slice(-20).forEach(async t => {
-				const array = t.type === "got" ? sortedTransactions[0] : sortedTransactions[1];
-				array.push(
-					`${await translateContext(
-						interaction,
-						"economy/transactions:T_USER_" + t.type.toUpperCase(),
-					)}: ${t.user}\n${await translateContext(
-						interaction,
-						"economy/transactions:T_AMOUNT",
-					)}: ${t.amount}\n${await translateContext(
-						interaction,
-						"economy/transactions:T_DATE",
-					)}: <t:${Math.floor(t.date / 1000)}:f>\n`,
-				);
-			});
+			const sortedTransactionArray = transactions
+				.sort((a, b) => b.date - a.date)
+				.slice(0, 20);
+
+			await Promise.all(
+				sortedTransactionArray.map(async t => {
+					const array = t.type === "got" ? sortedTransactions[0] : sortedTransactions[1];
+
+					const [translated, amountText, dateText] = await Promise.all([
+						translateContext(
+							interaction,
+							"economy/bank:T_USER_" + t.type.toUpperCase(),
+						),
+						translateContext(interaction, "economy/bank:T_AMOUNT"),
+						translateContext(interaction, "economy/bank:T_DATE"),
+					]);
+
+					array.push(
+						`${translated}: ${t.user}\n${amountText}: ${t.amount}\n${dateText}:
+						<t:${Math.floor(t.date / 1000)}:f>\n`,
+					);
+				}),
+			);
 
 			if (transactions.length <= 0) {
 				embed.setDescription(
-					await translateContext(interaction, "economy/transactions:NO_TRANSACTIONS"),
+					await translateContext(interaction, "economy/bank:NO_TRANSACTIONS"),
 				);
 			} else {
 				if (sortedTransactions[0].length > 0) {
@@ -258,7 +266,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 						{
 							name: await translateContext(
 								interaction,
-								"economy/transactions:T_GOT",
+								"economy/bank:T_GOT",
 							),
 							value: sortedTransactions[0].join("\n"),
 							inline: true,
@@ -271,7 +279,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 						{
 							name: await translateContext(
 								interaction,
-								"economy/transactions:T_SEND",
+								"economy/bank:T_SEND",
 							),
 							value: sortedTransactions[1].join("\n"),
 							inline: true,
