@@ -232,7 +232,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			const transactions = memberData.transactions;
 			const sortedTransactions: string[][] = [[], []];
 
-			transactions.forEach(async t => {
+			transactions.slice(-20).forEach(async t => {
 				const array = t.type === "got" ? sortedTransactions[0] : sortedTransactions[1];
 				array.push(
 					`${await translateContext(
