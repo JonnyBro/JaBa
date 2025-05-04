@@ -33,31 +33,31 @@ export class Member extends BaseEntity {
 	@ManyToOne(() => Guild)
 	guildID!: string;
 
-	@Property({ type: "int", default: 0 })
+	@Property({ type: "int" })
 	money = 0;
 
-	@Property({ type: "int", default: 0 })
+	@Property({ type: "int" })
 	workStreak = 0;
 
-	@Property({ type: "int", default: 0 })
+	@Property({ type: "int" })
 	bankSold = 0;
 
-	@Property({ type: "int", default: 0 })
+	@Property({ type: "int" })
 	exp = 0;
 
-	@Property({ type: "int", default: 0 })
+	@Property({ type: "int" })
 	level = 0;
 
-	@Property({ type: "json" }) // Храним как JSON-массив
+	@Property({ type: "array" })
 	transactions: Transaction[] = [];
 
-	@Property({ type: "int", onCreate: () => Date.now() }) // Дефолтное значение
+	@Property({ type: "int", onCreate: () => Date.now() })
 	registeredAt!: number;
 
-	@Property({ type: "json" }) // Объект как JSON
+	@Property({ type: "json" })
 	cooldowns: Cooldowns = { work: 0, rob: 0 };
 
-	@Property({ type: "json", default: [] }) // Массив массивов
+	@Property({ type: "array" })
 	sanctions: any[][] = [];
 
 	@Property({ type: "json" }) // Объект

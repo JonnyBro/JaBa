@@ -68,7 +68,7 @@ export class ExtendedClient extends Client<true> {
 
 		if (!guildData.hasMember(memberData.id)) {
 			guildData.members.push(memberData);
-			await this.adapter.em.flush();
+			await guildData.save();
 		}
 
 		return memberData;

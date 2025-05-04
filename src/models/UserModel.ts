@@ -84,14 +84,14 @@ export class User extends BaseEntity {
 	@Property({ type: "string", unique: true })
 	id!: string;
 
-	@Property({ type: "number", default: 0 })
+	@Property({ type: "number" })
 	rep: number = 0;
 
 	@Property({ type: "string" })
 	bio: string = "";
 
-	@Property({ type: "number", default: null })
-	birthdate!: number | null;
+	@Property({ type: "number" })
+	birthdate: number | null = null;
 
 	@Property({ type: "string" })
 	lover: string = "";
@@ -157,8 +157,8 @@ export class User extends BaseEntity {
 		rep: 0,
 	};
 
-	@Property({ type: "string", default: null })
-	afk!: string | null;
+	@Property({ type: "string" })
+	afk: string | null = null;
 
 	@Property({ type: "array" })
 	reminds: UserReminds[] = [];
