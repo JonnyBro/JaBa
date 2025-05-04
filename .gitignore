@@ -5,9 +5,6 @@ Thumbs.db
 # Configuration
 /config.json
 
-# DBs
-/giveaways.json
-
 # Node
 node_modules
 dist
