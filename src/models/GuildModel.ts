@@ -1,4 +1,4 @@
-import { Entity, OneToMany, Property } from "@mikro-orm/core";
+import { Entity, EntityManager, OneToMany, Property } from "@mikro-orm/core";
 import { Member } from "./MemberModel.js";
 import useClient from "@/utils/use-client.js";
 import { BaseEntity } from "../structures/BaseEntity.js";
@@ -51,7 +51,7 @@ export class Guild extends BaseEntity {
 	@Property({ type: "ObjectId", primary: true })
 	_id!: string;
 
-	@Property({ type: "string", unique: true })
+	@Property({ type: "string", unique: true, index: true })
 	id!: string;
 
 	@Property({ type: "json" })
@@ -105,7 +105,7 @@ export class Guild extends BaseEntity {
 		modlogs: null,
 	};
 
-	hasMember(memberId: string): boolean {
-		return this.members.some(member => member.id === memberId);
+	async hasMember(memberId: string, em: EntityManager): Promise<boolean> {
+		return (await em.count(Member, { id: memberId, guildID: this.id })) > 0;
 	}
 }

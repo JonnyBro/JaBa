@@ -81,17 +81,17 @@ export class User extends BaseEntity {
 	@Property({ type: "ObjectId", primary: true })
 	_id!: ObjectId;
 
-	@Property({ type: "string", unique: true })
+	@Property({ type: "string", unique: true, index: true })
 	id!: string;
 
 	@Property({ type: "number" })
 	rep: number = 0;
 
-	@Property({ type: "string" })
-	bio: string = "";
+	@Property({ type: "string", nullable: true })
+	bio?: string;
 
-	@Property({ type: "number" })
-	birthdate: number | null = null;
+	@Property({ type: "number", nullable: true })
+	birthdate!: number | null;
 
 	@Property({ type: "string" })
 	lover: string = "";
@@ -99,58 +99,61 @@ export class User extends BaseEntity {
 	@Property({ type: "number", onCreate: () => Date.now() })
 	registeredAt!: number;
 
-	@Property({ type: "json" })
-	achievements: UserAchievements = {
-		married: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 1,
+	@Property({
+		type: "json",
+		onCreate: () => ({
+			married: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 1,
+				},
 			},
-		},
-		work: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 10,
+			work: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 10,
+				},
 			},
-		},
-		firstCommand: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 1,
+			firstCommand: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 1,
+				},
 			},
-		},
-		slots: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 3,
+			slots: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 3,
+				},
 			},
-		},
-		tip: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 1,
+			tip: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 1,
+				},
 			},
-		},
-		rep: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 20,
+			rep: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 20,
+				},
 			},
-		},
-		invite: {
-			achieved: false,
-			progress: {
-				now: 0,
-				total: 1,
+			invite: {
+				achieved: false,
+				progress: {
+					now: 0,
+					total: 1,
+				},
 			},
-		},
-	};
+		}),
+	})
+	achievements!: UserAchievements;
 
 	@Property({ type: "json" })
 	cooldowns: UserCooldowns = {
@@ -173,7 +176,7 @@ export class User extends BaseEntity {
 		const canvas = createCanvas(1800, 250),
 			ctx = canvas.getContext("2d");
 
-		const images = [
+		const images = await Promise.all([
 			await loadImage(
 				`./assets/img/achievements/achievement${this.achievements.work.achieved ? "_colored" : ""}1.png`,
 			),
@@ -195,7 +198,7 @@ export class User extends BaseEntity {
 			await loadImage(
 				`./assets/img/achievements/achievement${this.achievements.invite.achieved ? "_colored" : ""}7.png`,
 			),
-		];
+		]);
 		let dim = 0;
 
 		for (let i = 0; i < images.length; i++) {

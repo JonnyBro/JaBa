@@ -30,7 +30,7 @@ export class Member extends BaseEntity {
 	@Property({ type: "string", unique: true })
 	id!: string;
 
-	@ManyToOne(() => Guild)
+	@ManyToOne(() => Guild, { index: true })
 	guildID!: string;
 
 	@Property({ type: "int" })

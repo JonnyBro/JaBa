@@ -65,8 +65,9 @@ export class ExtendedClient extends Client<true> {
 		});
 
 		const guildData = await this.getGuildData(guildID);
+		const isMemberInGuild = await guildData.hasMember(memberData.id, this.adapter.em);
 
-		if (!guildData.hasMember(memberData.id)) {
+		if (!isMemberInGuild) {
 			guildData.members.push(memberData);
 			await guildData.save();
 		}
