@@ -149,8 +149,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		);
 
 	await interaction.editReply({
-		components: [container],
 		flags: MessageFlags.IsComponentsV2,
+		components: [container],
 	});
 };
 

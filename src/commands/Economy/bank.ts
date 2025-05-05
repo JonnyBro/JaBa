@@ -52,6 +52,7 @@ export const data: CommandData = {
 	],
 };
 
+// TODO: Move from embeds to new components
 async function formatCredits(interaction: ChatInputCommandInteraction<CacheType>, amount: number) {
 	const forms = [
 		await translateContext(interaction, "misc:NOUNS:CREDIT:1"),
