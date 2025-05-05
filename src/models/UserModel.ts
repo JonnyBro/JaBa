@@ -130,7 +130,7 @@ const userSchema = new Schema<IUserSchema>({
 	apiToken: { type: String, default: genToken() },
 });
 
-userSchema.method("getAchievements", async function () {
+userSchema.method("getAchievementsImage", async function () {
 	const canvas = createCanvas(1800, 250),
 		ctx = canvas.getContext("2d");
 

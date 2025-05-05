@@ -1,4 +1,4 @@
-import { getLocalizedDesc, replyError, translateContext } from "@/helpers/functions.js";
+import { editReplyError, getLocalizedDesc, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
@@ -36,7 +36,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
 	const user = interaction.options.getUser("user") || interaction.user;
-	if (user.bot) return replyError(interaction, "economy/profile:BOT_USER");
+	if (user.bot) return editReplyError(interaction, "economy/profile:BOT_USER");
 
 	const userData = await client.getUserData(user.id);
 

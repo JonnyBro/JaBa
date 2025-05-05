@@ -2,6 +2,5 @@
 	"DESCRIPTION": "Shows the amount of credits for a user",
 	"USAGE": "(@user)",
 	"EXAMPLES": "money\nmoney user:@jonny_bro",
-	"BOT_USER": "He has too much money, I can't output that number",
 	"TITLE": "{{user}}'s Credits"
 }
