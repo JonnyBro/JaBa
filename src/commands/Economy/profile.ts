@@ -71,6 +71,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	const lover = client.users.cache.get(userData.lover);
 	const notDefined = await translateContext(interaction, "common:NOT_DEFINED");
+
 	const content = `
 ${await translateContext(interaction, "economy/profile:CREDITS", {
 	credits: memberData.money,
@@ -93,8 +94,7 @@ ${await translateContext(interaction, "economy/profile:LOVER", {
 })}
 ${await translateContext(interaction, "economy/profile:REGISTERED", {
 	date: `<t:${Math.floor(memberData.registeredAt / 1000)}:f>`,
-})}
-`;
+})}`;
 
 	const container = new ContainerBuilder()
 		.addSectionComponents(
