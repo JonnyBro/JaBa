@@ -32,12 +32,9 @@ export const data: CommandData = {
 	// eslint-disable-next-line camelcase
 	integration_types: [
 		ApplicationIntegrationType.GuildInstall,
-		ApplicationIntegrationType.UserInstall,
 	],
 	contexts: [
-		InteractionContextType.BotDM,
 		InteractionContextType.Guild,
-		InteractionContextType.PrivateChannel,
 	],
 	options: [
 		{
@@ -99,7 +96,12 @@ ${await translateContext(interaction, "economy/profile:REGISTERED", {
 	const container = new ContainerBuilder()
 		.addSectionComponents(
 			new SectionBuilder()
-				.setThumbnailAccessory(t => t.setURL(user.avatarURL({ size: 2048 }) || ""))
+				.setThumbnailAccessory(t =>
+					t.setURL( // NOTE: need a better solution for a fallback image
+						user.avatarURL({ size: 2048 }) ||
+							"https://discord.com/assets/18e336a74a159cfd.png",
+					),
+				)
 				.addTextDisplayComponents(
 					new TextDisplayBuilder().setContent(
 						`# ${user.toString()}${userData.bio ? `\n## ${userData.bio}` : ""}\n`,
