@@ -26,12 +26,6 @@ export const data: CommandData = {
 	],
 	options: [
 		{
-			name: "url",
-			...getLocalizedDesc("common:URL"),
-			type: ApplicationCommandOptionType.String,
-			required: true,
-		},
-		{
 			name: "ephemeral",
 			...getLocalizedDesc("misc:EPHEMERAL_RESPONSE"),
 			type: ApplicationCommandOptionType.Boolean,

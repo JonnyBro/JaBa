@@ -6,13 +6,17 @@ import ConfigService from "@/services/config/index.js";
 import InternationalizationService from "@/services/languages/index.js";
 import { SUPER_CONTEXT } from "@/constants/index.js";
 import { cacheRemindsData } from "@/types.js";
-// import { Player } from "discord-player";
+import { Rainlink, Library } from "rainlink";
 
 export class ExtendedClient extends Client<true> {
 	configService = new ConfigService();
 	adapter = new MongooseAdapter(this.configService.get("mongoDB"));
 	cacheReminds = new Map<string, cacheRemindsData>();
 	i18n = new InternationalizationService(this);
+	rainlink = new Rainlink({
+		library: new Library.DiscordJS(this),
+		nodes: this.configService.get("nodes"),
+	});
 
 	constructor(options: ClientOptions) {
 		if (SUPER_CONTEXT.getStore()) return SUPER_CONTEXT.getStore() as ExtendedClient;
@@ -21,10 +25,22 @@ export class ExtendedClient extends Client<true> {
 
 		new Handlers(this);
 
-		// @ts-ignore - because ExtendedClient != Client<boolean> from discord.js
-		// new Player(this);
-
 		SUPER_CONTEXT.enterWith(this);
+
+		this.rainlink.on("nodeConnect", node =>
+			console.log(`Lavalink ${node.options.name}: Ready!`),
+		);
+		this.rainlink.on("nodeError", (node, error) =>
+			console.error(`Lavalink ${node.options.name}: Error Caught,`, error),
+		);
+		this.rainlink.on("nodeClosed", node =>
+			console.warn(`Lavalink ${node.options.name}: Closed`),
+		);
+		this.rainlink.on("nodeDisconnect", (node, code, reason) => {
+			console.warn(`Lavalink ${
+				node.options.name
+			}: Disconnected, Code ${code}, Reason ${reason || "No reason"}`);
+		});
 	}
 
 	async init() {
