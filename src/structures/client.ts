@@ -15,7 +15,7 @@ export class ExtendedClient extends Client<true> {
 	i18n = new InternationalizationService(this);
 	rainlink = new Rainlink({
 		library: new Library.DiscordJS(this),
-		nodes: this.configService.get("nodes"),
+		nodes: this.configService.get("music.nodes"),
 	});
 
 	constructor(options: ClientOptions) {
@@ -25,22 +25,22 @@ export class ExtendedClient extends Client<true> {
 
 		new Handlers(this);
 
-		SUPER_CONTEXT.enterWith(this);
-
 		this.rainlink.on("nodeConnect", node =>
-			console.log(`Lavalink ${node.options.name}: Ready!`),
-		);
-		this.rainlink.on("nodeError", (node, error) =>
-			console.error(`Lavalink ${node.options.name}: Error Caught,`, error),
-		);
-		this.rainlink.on("nodeClosed", node =>
-			console.warn(`Lavalink ${node.options.name}: Closed`),
+			logger.ready(`Lavalink node ${node.options.name}: Ready!`),
 		);
 		this.rainlink.on("nodeDisconnect", (node, code, reason) => {
-			console.warn(`Lavalink ${
+			logger.warn(`Lavalink node ${
 				node.options.name
 			}: Disconnected, Code ${code}, Reason ${reason || "No reason"}`);
 		});
+		this.rainlink.on("nodeClosed", node =>
+			logger.warn(`Lavalink node ${node.options.name}: Closed`),
+		);
+		this.rainlink.on("nodeError", (node, error) =>
+			logger.error(`Lavalink node ${node.options.name}: Error Caught `, error),
+		);
+
+		SUPER_CONTEXT.enterWith(this);
 	}
 
 	async init() {

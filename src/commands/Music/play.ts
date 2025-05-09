@@ -1,4 +1,4 @@
-import { getLocalizedDesc } from "@/helpers/functions.js";
+import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import {
@@ -16,12 +16,9 @@ export const data: CommandData = {
 	// eslint-disable-next-line camelcase
 	integration_types: [
 		ApplicationIntegrationType.GuildInstall,
-		ApplicationIntegrationType.UserInstall,
 	],
 	contexts: [
-		InteractionContextType.BotDM,
 		InteractionContextType.Guild,
-		InteractionContextType.PrivateChannel,
 	],
 	options: [
 		{
@@ -36,29 +33,43 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
-	const query = interaction.options.getString("query", true);
+	const member = (interaction.member as GuildMember);
 
-	if (!(interaction.member as GuildMember).voice.channel) return interaction.editReply("no vc");
+	if (!member.voice.channel) return editReplyError(interaction, "music/play:NO_VOICE_CHANNEL");
 
 	const player = await client.rainlink.create({
 		guildId: interaction.guildId!,
 		textId: interaction.channelId,
-		voiceId: (interaction.member as GuildMember).voice.channel!.id,
+		voiceId: member.voice.channel!.id,
 		volume: 100,
 		shardId: 0,
+		deaf: true,
 	});
 
-	const res = await client.rainlink.search("yt:" + query, { requester: interaction.user });
-	if (!res.tracks.length) return interaction.editReply("No results found!");
+	const query = interaction.options.getString("query", true);
+
+	const res = await client.rainlink.search(query, {
+		requester: interaction.user,
+	});
+
+	if (res.tracks.length <= 0) {
+		return editReplyError(interaction, "music/play:NO_RESULT", {
+			query,
+		});
+	}
 
 	if (res.type === "PLAYLIST") for (const track of res.tracks) player.queue.add(track);
 	else player.queue.add(res.tracks[0]);
 
-	if (!player.playing || !player.paused) await player.play();
+	if (!player.playing) await player.play();
 
-	interaction.editReply(
-		res.type === "PLAYLIST"
-			? `Queued ${res.tracks.length} from ${res.playlistName}`
-			: `Queued ${res.tracks[0].title}`,
+	editReplySuccess(
+		interaction,
+		`music/play:ADDED_${res.type === "PLAYLIST" ? "PLAYLIST" : "TRACK"}`,
+		{
+			count: res.tracks.length || 0,
+			name: res.playlistName || res.tracks[0].title,
+			url: res.tracks[0].uri,
+		},
 	);
 };
