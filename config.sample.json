@@ -11,13 +11,8 @@
 				"auth": "youshallnotpass",
 				"secure": false
 			}
-		],
-		"spotify": {
-			"clientId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-			"secret": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-		}
+		]
 	},
-	"youtubeCookie": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 	"devGuildsIds": [],
 	"embed": {
 		"color": "#00FF00",
