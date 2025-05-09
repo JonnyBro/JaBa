@@ -1,10 +1,7 @@
 import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
-import {
-	ApplicationIntegrationType,
-	InteractionContextType,
-} from "discord.js";
+import { ApplicationIntegrationType, InteractionContextType } from "discord.js";
 
 const client = useClient();
 
@@ -12,12 +9,8 @@ export const data: CommandData = {
 	name: "skip",
 	...getLocalizedDesc("music/skip:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-	],
-	contexts: [
-		InteractionContextType.Guild,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall],
+	contexts: [InteractionContextType.Guild],
 	options: [],
 };
 

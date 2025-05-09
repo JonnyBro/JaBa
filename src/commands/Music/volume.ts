@@ -13,12 +13,8 @@ export const data: CommandData = {
 	name: "volume",
 	...getLocalizedDesc("music/volume:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-	],
-	contexts: [
-		InteractionContextType.Guild,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall],
+	contexts: [InteractionContextType.Guild],
 	options: [
 		{
 			name: "volume",

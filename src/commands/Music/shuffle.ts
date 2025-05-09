@@ -6,8 +6,8 @@ import { ApplicationIntegrationType, InteractionContextType } from "discord.js";
 const client = useClient();
 
 export const data: CommandData = {
-	name: "stop",
-	...getLocalizedDesc("music/stop:DESCRIPTION"),
+	name: "shuffle",
+	...getLocalizedDesc("music/shuffle:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
 	integration_types: [ApplicationIntegrationType.GuildInstall],
 	contexts: [InteractionContextType.Guild],
@@ -20,7 +20,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const player = client.rainlink.players.get(interaction.guildId!);
 	if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
 
-	await player.stop(true);
+	player.queue.shuffle();
 
-	editReplySuccess(interaction, "music/stop:SUCCESS");
+	editReplySuccess(interaction, "music/shuffle:SUCCESS");
 };

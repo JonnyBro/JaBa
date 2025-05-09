@@ -14,12 +14,8 @@ export const data: CommandData = {
 	name: "play",
 	...getLocalizedDesc("music/play:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-	],
-	contexts: [
-		InteractionContextType.Guild,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall],
+	contexts: [InteractionContextType.Guild],
 	options: [
 		{
 			name: "query",
@@ -33,7 +29,7 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
-	const member = (interaction.member as GuildMember);
+	const member = interaction.member as GuildMember;
 
 	if (!member.voice.channel) return editReplyError(interaction, "music/play:NO_VOICE_CHANNEL");
 

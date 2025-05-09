@@ -177,3 +177,17 @@ export const shuffle = <T>(array: readonly T[]): T[] => {
 
 	return shuffled;
 };
+
+export const convertTime = (duration: number) => {
+	const hours = Math.floor(duration / 3_600_000);
+	const minutes = Math.floor((duration % 3_600_000) / 60_000);
+	const seconds = Math.floor((duration % 60_000) / 1_000);
+	const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
+	const formattedHours = formatTime(hours);
+	const formattedMinutes = formatTime(minutes);
+	const formattedSeconds = formatTime(seconds);
+
+	return duration < 3_600_000
+		? `${formattedMinutes}:${formattedSeconds}`
+		: `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+};

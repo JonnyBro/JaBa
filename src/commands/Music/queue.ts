@@ -1,10 +1,16 @@
-import { editReplyError, getLocalizedDesc, translateContext } from "@/helpers/functions.js";
+import {
+	convertTime,
+	editReplyError,
+	getLocalizedDesc,
+	translateContext,
+} from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
 import {
 	ActionRowBuilder,
-	ApplicationIntegrationType, ButtonBuilder,
+	ApplicationIntegrationType,
+	ButtonBuilder,
 	ButtonStyle,
 	Interaction,
 	InteractionContextType,
@@ -19,12 +25,8 @@ export const data: CommandData = {
 	name: "queue",
 	...getLocalizedDesc("music/queue:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-	],
-	contexts: [
-		InteractionContextType.Guild,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall],
+	contexts: [InteractionContextType.Guild],
 	options: [],
 };
 
@@ -68,9 +70,8 @@ client.on("interactionCreate", async interaction => {
 		const player = client.rainlink.players.get(interaction.guildId!);
 		if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
 
-		let currentPage = Number(
-			interaction.message.content.match(/\*\*[0-9]+\*\*\/\*\*[0-9]+\*\*/g)![0].split("/")[0],
-		);
+		const content = interaction.message.content.replace(/\*/g, "");
+		let currentPage = Number(content.match(/[0-9]+\/[0-9]+/g)![0].split("/")[0]);
 
 		const { embeds, size } = await generateQueueEmbeds(interaction, player);
 
@@ -101,9 +102,10 @@ client.on("interactionCreate", async interaction => {
 					--currentPage;
 
 					interaction.editReply({
-						content: `${
-							await translateContext(interaction, "common:PAGE")
-						}: **${currentPage + 1}**/**${size}**`,
+						content: `${await translateContext(
+							interaction,
+							"common:PAGE",
+						)}: **${currentPage + 1}**/**${size}**`,
 						embeds: [embeds[currentPage]],
 						components: [row],
 					});
@@ -119,9 +121,10 @@ client.on("interactionCreate", async interaction => {
 					currentPage++;
 
 					interaction.editReply({
-						content: `${
-							await translateContext(interaction, "common:PAGE")
-						}: **${currentPage + 1}**/**${size}**`,
+						content: `${await translateContext(
+							interaction,
+							"common:PAGE",
+						)}: **${currentPage + 1}**/**${size}**`,
 						embeds: [embeds[currentPage]],
 						components: [row],
 					});
@@ -143,8 +146,9 @@ client.on("interactionCreate", async interaction => {
 					);
 				}
 
-				const selectRow = new ActionRowBuilder<StringSelectMenuBuilder>()
-					.addComponents(selectMenu);
+				const selectRow = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+					selectMenu,
+				);
 
 				let page = 0;
 
@@ -164,9 +168,10 @@ client.on("interactionCreate", async interaction => {
 					}
 
 					m.edit({
-						content: `${
-							await translateContext(interaction, "common:PAGE")
-						}: **${page + 1}**/**${size}**`,
+						content: `${await translateContext(
+							interaction,
+							"common:PAGE",
+						)}: **${page + 1}**/**${size}**`,
 						embeds: [embeds[page]],
 						components: [row],
 					});
@@ -178,12 +183,8 @@ client.on("interactionCreate", async interaction => {
 			case "queue_stop": {
 				await interaction.deferUpdate();
 
-				row.components.forEach(component => {
-					component.setDisabled(true);
-				});
-
 				interaction.editReply({
-					components: [row],
+					components: [],
 				});
 
 				break;
@@ -192,10 +193,7 @@ client.on("interactionCreate", async interaction => {
 	}
 });
 
-async function generateQueueEmbeds(
-	interaction: Interaction,
-	player: RainlinkPlayer,
-) {
+async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPlayer) {
 	const embeds = [];
 	const currentTrack = player.queue.current!;
 	const queue = player.queue;
@@ -206,7 +204,7 @@ async function generateQueueEmbeds(
 	};
 	const embed = createEmbed({
 		title: await translateContext(interaction, "music/nowplaying:CURRENTLY_PLAYING"),
-	}).setThumbnail(currentTrack?.artworkUrl || null);
+	}).setThumbnail(currentTrack?.artworkUrl || client.user.avatarURL());
 
 	let k = 10;
 
@@ -214,7 +212,9 @@ async function generateQueueEmbeds(
 		embed.setDescription(
 			`${await translateContext(interaction, "music/nowplaying:REPEAT")}: \`${
 				translated[player.loop]
-			}\`\n[${currentTrack.title}](${currentTrack.uri})\n> ${await translateContext(
+			}\`\n[${currentTrack.title}](${currentTrack.uri}) - ${convertTime(
+				currentTrack.duration,
+			)}\n> ${await translateContext(
 				interaction,
 				"music/queue:ADDED",
 			)} ${currentTrack.requester}\n\n**${await translateContext(
@@ -236,16 +236,18 @@ async function generateQueueEmbeds(
 		const addedText = await translateContext(interaction, "music/queue:ADDED");
 
 		const info = current.map(
-			track => `${++j}. [${track.title}](${track.uri})\n> ${addedText} ${track.requester}`,
+			track =>
+				`${++j}. [${track.title}](${track.uri}) - ${convertTime(
+					track.duration,
+				)}\n> ${addedText} ${track.requester}`,
 		);
 
 		embed.setDescription(
 			`${await translateContext(interaction, "music/nowplaying:REPEAT")}: \`${
 				translated[player.loop]
-			}\`\n[${currentTrack.title}](${currentTrack.uri})\n * ${await translateContext(
-				interaction,
-				"music/queue:ADDED",
-			)} ${
+			}\`\n[${currentTrack.title}](${currentTrack.uri}) - ${convertTime(
+				currentTrack.duration,
+			)}\n * ${await translateContext(interaction, "music/queue:ADDED")} ${
 				currentTrack.requester
 			}\n\n**${await translateContext(interaction, "music/queue:NEXT")}**\n${info}`,
 		);

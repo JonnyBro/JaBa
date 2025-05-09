@@ -14,12 +14,8 @@ export const data: CommandData = {
 	name: "loop",
 	...getLocalizedDesc("music/loop:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-	],
-	contexts: [
-		InteractionContextType.Guild,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall],
+	contexts: [InteractionContextType.Guild],
 	options: [
 		{
 			name: "mode",
