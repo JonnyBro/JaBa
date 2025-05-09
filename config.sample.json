@@ -2,9 +2,20 @@
 	"token": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 	"mongoDB": "mongodb://127.0.0.1:27017/discordbot",
 	"production": true,
-	"spotify": {
-		"clientId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-		"clientSecret": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+	"music": {
+		"nodes": [
+			{
+				"name": "Localhost",
+				"host": "localhost",
+				"port": 2333,
+				"auth": "youshallnotpass",
+				"secure": false
+			}
+		],
+		"spotify": {
+			"clientId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"secret": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+		}
 	},
 	"youtubeCookie": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 	"devGuildsIds": [],

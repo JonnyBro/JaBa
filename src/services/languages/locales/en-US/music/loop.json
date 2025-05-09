@@ -2,13 +2,13 @@
 	"DESCRIPTION": "Sets the repeat mode",
 	"USAGE": "[option]",
 	"EXAMPLES": "loop option:1",
-	"OPTION": "Playback mode",
-	"AUTOPLAY": "Autoplay",
-	"QUEUE": "Queue",
-	"TRACK": "Current track",
+	"MODE": "Loop mode",
+
 	"DISABLE": "Disable",
-	"AUTOPLAY_ENABLED": "Autoplay **enabled**",
-	"QUEUE_ENABLED": "Queue repeat **enabled**",
-	"TRACK_ENABLED": "Current track repeat **enabled**",
-	"LOOP_DISABLED": "Repeat **disabled**"
+	"TRACK": "Current track",
+	"QUEUE": "Queue",
+
+	"SUCCESS_NONE": "Repeat **disabled**",
+	"SUCCESS_SONG": "Current track repeat **enabled**",
+	"SUCCESS_QUEUE": "Queue repeat **enabled**"
 }
