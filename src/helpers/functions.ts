@@ -191,3 +191,6 @@ export const convertTime = (duration: number) => {
 		? `${formattedMinutes}:${formattedSeconds}`
 		: `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 };
+
+export const formatString = (str: string, maxLength: number) =>
+	str.length > maxLength ? str.slice(0, maxLength - 3) + "..." : str;
