@@ -1,7 +1,6 @@
 import { ExtendedClient } from "@/structures/client.js";
 import { CommandHandler } from "./command-handler/index.js";
 import { EventHandler } from "./event-handler/index.js";
-import { MessageHandler } from "./message-handler/index.js";
 
 export class Handlers {
 	client: ExtendedClient;
@@ -17,8 +16,5 @@ export class Handlers {
 
 		const commandHandler = new CommandHandler(this.client);
 		await commandHandler.init();
-
-		const messageHandler = new MessageHandler(this.client);
-		await messageHandler.init();
 	}
 }
