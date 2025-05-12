@@ -164,7 +164,7 @@ export const printDate = (date: Date | number, locale: Intl.LocalesArgument = "e
 	new Intl.DateTimeFormat(locale).format(date);
 
 export const randomNum = (min: number = 0, max: number = 100) =>
-	(Math.random() * (max - min + 1)) << 0;
+	Math.floor(Math.random() * (max - min + 1)) + min;
 
 export const shuffle = <T>(array: readonly T[]): T[] => {
 	const shuffled = [...array];
