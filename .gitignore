@@ -4,6 +4,7 @@ Thumbs.db
 
 # Configuration
 /config.json
+/config.bak.json
 
 # Node
 node_modules
