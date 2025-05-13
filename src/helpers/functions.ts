@@ -24,7 +24,7 @@ const getAppEmojis = () => {
 	return client.application.emojis.cache;
 };
 
-const formatReply = (message: string, prefixEmoji?: string) => {
+export const formatReply = (message: string, prefixEmoji?: string) => {
 	const emojis = getAppEmojis();
 	const emoji = emojis.find(emoji => emoji.name === prefixEmoji) || ":white_small_square:";
 	return prefixEmoji ? `${emoji.toString()} ${message}` : `${message}`;
