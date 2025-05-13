@@ -17,7 +17,7 @@ import {
 } from "discord.js";
 
 const client = useClient();
-const xpCooldown: { [key: string]: number } = {};
+const xpCooldown: Record<string, number> = {};
 const QUOTE_REGEXP = /discord.com\/channels\/([0-9].*)\/([0-9].*)\/([0-9].*[^/])\/{0,}/g;
 const DELETE_BUTTON_ID = "quote_delete";
 
