@@ -22,5 +22,5 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	await player.skip();
 
-	editReplySuccess(interaction, "music/stop:SUCCESS");
+	editReplySuccess(interaction, "music/skip:SUCCESS");
 };

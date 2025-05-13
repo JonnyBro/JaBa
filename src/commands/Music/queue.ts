@@ -71,7 +71,7 @@ client.on("interactionCreate", async interaction => {
 		if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
 
 		const content = interaction.message.content.replace(/\*/g, "");
-		let currentPage = Number(content.match(/[0-9]+\/[0-9]+/g)![0].split("/")[0]);
+		let currentPage = Number(content.match(/[0-9]+\/[0-9]+/g)![0].split("/")[0]) - 1;
 
 		const { embeds, size } = await generateQueueEmbeds(interaction, player);
 
