@@ -30,7 +30,7 @@ export default class MongooseAdapter extends IDatabaseAdapter<
 
 	async connect() {
 		await mongoose.connect(this.uri, this.options);
-		logger.log("Database connected.");
+		logger.log("Database connected");
 	}
 
 	async disconnect() {

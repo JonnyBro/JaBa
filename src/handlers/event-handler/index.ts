@@ -27,11 +27,12 @@ export class EventHandler {
 	}
 
 	async #buildEvents() {
+		const eventPath = resolve(this.client.configService.get("paths.events"));
+		const eventFilePaths = (await getFilePaths(eventPath, true)).filter(
+			path => path.endsWith(".js") || path.endsWith(".ts"),
+		);
+
 		try {
-			const eventPath = resolve(this.client.configService.get("paths.events"));
-			const eventFilePaths = (await getFilePaths(eventPath, true)).filter(
-				path => path.endsWith(".js") || path.endsWith(".ts"),
-			);
 
 			for (const eventFilePath of eventFilePaths) {
 				const eventModule = await import(toFileURL(eventFilePath));
@@ -62,7 +63,8 @@ export class EventHandler {
 		} catch (error) {
 			logger.error("Error build events: ", error);
 		}
-		logger.log("Events loaded");
+
+		logger.log(`Loaded ${eventFilePaths.length} event(s)`);
 	}
 
 	$registerEvents() {
