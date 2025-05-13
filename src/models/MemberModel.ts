@@ -1,5 +1,12 @@
 import { Schema, model } from "mongoose";
 
+interface Transaction {
+	user: string;
+	amount: number;
+	date: number;
+	type: string;
+}
+
 export interface IMemberSchema {
 	id: string;
 	guildID: string;
@@ -8,12 +15,7 @@ export interface IMemberSchema {
 	bankSold: number;
 	exp: number;
 	level: number;
-	transactions: Array<{
-		user: string;
-		amount: number;
-		date: number;
-		type: string;
-	}>;
+	transactions: Array<Transaction>;
 	registeredAt: number;
 	cooldowns: {
 		work: number;
