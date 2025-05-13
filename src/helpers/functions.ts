@@ -2,6 +2,7 @@ import useClient from "@/utils/use-client.js";
 import {
 	BaseInteraction,
 	CacheType,
+	Guild,
 	GuildMember,
 	Interaction,
 	InteractionReplyOptions,
@@ -37,15 +38,20 @@ export const asyncForEach = async <T>(collection: T[], callback: (_item: T) => P
 };
 
 export const translateContext = async <T extends CacheType = CacheType>(
-	context: Interaction<T> | Message,
+	context: Interaction<T> | Message | Guild,
 	key: string,
 	args?: Record<string, unknown> | null,
 	options?: Options,
 ) => {
 	const client = useClient();
-	const inGuild = context.guild ? await getLocale(context.guild.id) : "";
+	const guildLocale =
+		context instanceof Guild
+			? await getLocale(context.id)
+			: context.guild
+				? await getLocale(context.guild.id)
+				: "";
 
-	const locale = options?.locale || inGuild || client.configService.get("defaultLang");
+	const locale = options?.locale || guildLocale;
 	const translated = client.i18n.translate(key, {
 		lng: locale,
 		...args,
