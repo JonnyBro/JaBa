@@ -34,22 +34,6 @@ const GuildSchema = new Schema<IGuildSchema>({
 				channel: null,
 				withImage: null,
 			},
-			autorole: {
-				enabled: false,
-				role: null,
-			},
-			automod: {
-				enabled: false,
-				ignored: [],
-			},
-			warnsSanctions: {
-				kick: null,
-				ban: null,
-			},
-			monitoring: {
-				messageUpdate: null,
-				messageDelete: null,
-			},
 			tickets: {
 				count: 0,
 				ticketLogs: null,
