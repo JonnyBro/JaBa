@@ -54,18 +54,20 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		});
 	}
 
-	if (res.type === "PLAYLIST") for (const track of res.tracks) player.queue.add(track);
+	const isPlaylist = res.type === "PLAYLIST";
+
+	if (isPlaylist) for (const track of res.tracks) player.queue.add(track);
 	else player.queue.add(res.tracks[0]);
 
 	if (!player.playing) await player.play();
 
 	editReplySuccess(
 		interaction,
-		`music/play:ADDED_${res.type === "PLAYLIST" ? "PLAYLIST" : "TRACK"}`,
+		`music/play:ADDED_${isPlaylist ? "PLAYLIST" : "TRACK"}`,
 		{
-			count: res.tracks.length || 0,
+			count: res.tracks.length,
 			name: res.playlistName || res.tracks[0].title,
-			url: res.tracks[0].uri,
+			url: `<${isPlaylist ? query : res.tracks[0].uri}>`,
 		},
 	);
 };

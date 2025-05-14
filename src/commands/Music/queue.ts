@@ -37,15 +37,18 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
 
 	const { embeds, size } = await generateQueueEmbeds(interaction, player);
+
 	const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
 		new ButtonBuilder()
 			.setCustomId("queue_prev_page")
 			.setStyle(ButtonStyle.Primary)
-			.setEmoji("⬅️"),
+			.setEmoji("⬅️")
+			.setDisabled(true),
 		new ButtonBuilder()
 			.setCustomId("queue_next_page")
 			.setStyle(ButtonStyle.Primary)
-			.setEmoji("➡️"),
+			.setEmoji("➡️")
+			.setDisabled(size <= 1),
 		new ButtonBuilder()
 			.setCustomId("queue_jump_page")
 			.setStyle(ButtonStyle.Secondary)
@@ -70,29 +73,10 @@ client.on("interactionCreate", async interaction => {
 		const player = client.rainlink.players.get(interaction.guildId!);
 		if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
 
-		const content = interaction.message.content.replace(/\*/g, "");
-		let currentPage = Number(content.match(/[0-9]+\/[0-9]+/g)![0].split("/")[0]) - 1;
+		const pageText = interaction.message.content.match(/\*\*(\d+)\*\*\/\*\*(\d+)\*\*/);
+		let currentPage = pageText ? parseInt(pageText[1], 10) - 1 : 0;
 
 		const { embeds, size } = await generateQueueEmbeds(interaction, player);
-
-		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-			new ButtonBuilder()
-				.setCustomId("queue_prev_page")
-				.setStyle(ButtonStyle.Primary)
-				.setEmoji("⬅️"),
-			new ButtonBuilder()
-				.setCustomId("queue_next_page")
-				.setStyle(ButtonStyle.Primary)
-				.setEmoji("➡️"),
-			new ButtonBuilder()
-				.setCustomId("queue_jump_page")
-				.setStyle(ButtonStyle.Secondary)
-				.setEmoji("↗️"),
-			new ButtonBuilder()
-				.setCustomId("queue_stop")
-				.setStyle(ButtonStyle.Danger)
-				.setEmoji("❌"),
-		);
 
 		switch (interaction.customId) {
 			case "queue_prev_page": {
@@ -100,6 +84,27 @@ client.on("interactionCreate", async interaction => {
 
 				if (currentPage !== 0) {
 					--currentPage;
+
+					const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+						new ButtonBuilder()
+							.setCustomId("queue_prev_page")
+							.setStyle(ButtonStyle.Primary)
+							.setEmoji("⬅️")
+							.setDisabled(currentPage === 0),
+						new ButtonBuilder()
+							.setCustomId("queue_next_page")
+							.setStyle(ButtonStyle.Primary)
+							.setEmoji("➡️")
+							.setDisabled(currentPage >= size - 1),
+						new ButtonBuilder()
+							.setCustomId("queue_jump_page")
+							.setStyle(ButtonStyle.Secondary)
+							.setEmoji("↗️"),
+						new ButtonBuilder()
+							.setCustomId("queue_stop")
+							.setStyle(ButtonStyle.Danger)
+							.setEmoji("❌"),
+					);
 
 					interaction.editReply({
 						content: `${await translateContext(
@@ -119,6 +124,27 @@ client.on("interactionCreate", async interaction => {
 
 				if (currentPage < size - 1) {
 					currentPage++;
+
+					const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+						new ButtonBuilder()
+							.setCustomId("queue_prev_page")
+							.setStyle(ButtonStyle.Primary)
+							.setEmoji("⬅️")
+							.setDisabled(currentPage === 0),
+						new ButtonBuilder()
+							.setCustomId("queue_next_page")
+							.setStyle(ButtonStyle.Primary)
+							.setEmoji("➡️")
+							.setDisabled(currentPage >= size - 1),
+						new ButtonBuilder()
+							.setCustomId("queue_jump_page")
+							.setStyle(ButtonStyle.Secondary)
+							.setEmoji("↗️"),
+						new ButtonBuilder()
+							.setCustomId("queue_stop")
+							.setStyle(ButtonStyle.Danger)
+							.setEmoji("❌"),
+					);
 
 					interaction.editReply({
 						content: `${await translateContext(
@@ -164,17 +190,38 @@ client.on("interactionCreate", async interaction => {
 					if (interaction.customId === "queue_select") {
 						page = Number(interaction.values[0]);
 
-						if (interaction.message.deletable) interaction.message.delete();
-					}
+						const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+							new ButtonBuilder()
+								.setCustomId("queue_prev_page")
+								.setStyle(ButtonStyle.Primary)
+								.setEmoji("⬅️")
+								.setDisabled(page === 0),
+							new ButtonBuilder()
+								.setCustomId("queue_next_page")
+								.setStyle(ButtonStyle.Primary)
+								.setEmoji("➡️")
+								.setDisabled(page >= size - 1),
+							new ButtonBuilder()
+								.setCustomId("queue_jump_page")
+								.setStyle(ButtonStyle.Secondary)
+								.setEmoji("↗️"),
+							new ButtonBuilder()
+								.setCustomId("queue_stop")
+								.setStyle(ButtonStyle.Danger)
+								.setEmoji("❌"),
+						);
 
-					m.edit({
-						content: `${await translateContext(
-							interaction,
-							"common:PAGE",
-						)}: **${page + 1}**/**${size}**`,
-						embeds: [embeds[page]],
-						components: [row],
-					});
+						if (interaction.message.deletable) interaction.message.delete();
+
+						m.edit({
+							content: `${await translateContext(
+								interaction,
+								"common:PAGE",
+							)}: **${page + 1}**/**${size}**`,
+							embeds: [embeds[page]],
+							components: [row],
+						});
+					}
 				});
 
 				break;
@@ -202,13 +249,12 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 		song: await translateContext(interaction, "music/loop:TRACK"),
 		queue: await translateContext(interaction, "music/loop:QUEUE"),
 	};
-	const embed = createEmbed({
-		title: await translateContext(interaction, "music/nowplaying:CURRENTLY_PLAYING"),
-	}).setThumbnail(currentTrack?.artworkUrl || client.user.avatarURL());
-
-	let k = 10;
 
 	if (!queue.length) {
+		const embed = createEmbed({
+			title: await translateContext(interaction, "music/nowplaying:CURRENTLY_PLAYING"),
+		}).setThumbnail(currentTrack?.artworkUrl || client.user.avatarURL());
+
 		embed.setDescription(
 			`${await translateContext(interaction, "music/nowplaying:REPEAT")}: \`${
 				translated[player.loop]
@@ -225,25 +271,43 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 
 		embeds.push(embed);
 
-		return { embeds: embeds, size: embeds.length };
+		return { embeds, size: embeds.length };
 	}
 
+	const totalDuration = queue.reduce((acc, track) => acc + track.duration, currentTrack.duration);
+	const formattedTotalDuration = convertTime(totalDuration);
+
+	let k = 10;
 	for (let i = 0; i < queue.length; i += 10) {
 		const current = queue.slice(i, k);
 		let j = i;
 		k += 10;
 
 		const addedText = await translateContext(interaction, "music/queue:ADDED");
+		const playsIn = async (index: number) =>
+			await translateContext(interaction, "music/queue:PLAYS_IN", {
+				time: getTimeUntilTrack(player, index),
+			});
 
-		const info = current.map(
-			track =>
-				`${++j}. [${track.title}](${track.uri}) - ${convertTime(
-					track.duration,
-				)}\n> ${addedText} ${track.requester}`,
-		);
+		const info = (
+			await Promise.all(
+				current.map(async (track, index) => {
+					const queueIndex = i + index;
+					return `${++j}. [${track.title}](${track.uri}) - ${convertTime(
+						track.duration,
+					)}\n> ${addedText} ${track.requester}\n> ${await playsIn(queueIndex)}`;
+				}),
+			)
+		).join("\n");
+
+		const embed = createEmbed({
+			title: await translateContext(interaction, "music/nowplaying:CURRENTLY_PLAYING"),
+		}).setThumbnail(currentTrack?.artworkUrl || client.user.avatarURL());
 
 		embed.setDescription(
-			`${await translateContext(interaction, "music/nowplaying:REPEAT")}: \`${
+			`${await translateContext(interaction, "music/queue:DURATION", {
+				time: formattedTotalDuration,
+			})}\n${await translateContext(interaction, "music/nowplaying:REPEAT")}: \`${
 				translated[player.loop]
 			}\`\n[${currentTrack.title}](${currentTrack.uri}) - ${convertTime(
 				currentTrack.duration,
@@ -255,5 +319,20 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 		embeds.push(embed);
 	}
 
-	return { embeds: embeds, size: embeds.length };
+	return { embeds, size: embeds.length };
+}
+
+function getTimeUntilTrack(player: RainlinkPlayer, queueIndex: number) {
+	const currentPosition = player.position || 0;
+	const currentTrackDuration = player.queue.current?.duration || 0;
+	const remainingCurrentTrack = Math.max(0, currentTrackDuration - currentPosition);
+
+	let sumQueueDurations = 0;
+	for (let i = 0; i < queueIndex; i++) {
+		sumQueueDurations += player.queue[i]?.duration || 0;
+	}
+
+	const totalTime = remainingCurrentTrack + sumQueueDurations;
+
+	return convertTime(totalTime);
 }
