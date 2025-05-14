@@ -168,7 +168,9 @@ client.on("interactionCreate", async interaction => {
 
 				for (let i = 0; i < size; i++) {
 					selectMenu.addOptions(
-						new StringSelectMenuOptionBuilder().setLabel(`${i + 1}`).setValue(`${i}`),
+						new StringSelectMenuOptionBuilder()
+							.setLabel((i + 1).toString())
+							.setValue(i.toString()),
 					);
 				}
 
