@@ -1,7 +1,6 @@
 {
-	"DESCRIPTION": "Jumps to a specified track",
-	"USAGE": "[position]",
-	"EXAMPLES": "skipto position:3",
-	"POSITION": "Track number in the queue",
+	"DESCRIPTION": "Skips the currently playing track",
+	"USAGE": "",
+	"EXAMPLES": "skip",
 	"SUCCESS": "Skipped currently playing track"
 }

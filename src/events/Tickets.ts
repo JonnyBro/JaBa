@@ -204,7 +204,6 @@ export async function run(interaction: BaseInteraction) {
 				switch (button.customId) {
 					case "tickets_close_yes": {
 						await channel.setLocked(true);
-
 						await replySuccess(button, "tickets/ticketsembed:CLOSE_DONE");
 
 						break;
@@ -212,7 +211,6 @@ export async function run(interaction: BaseInteraction) {
 
 					case "tickets_close_no": {
 						await button.deferUpdate();
-
 						if (msg.deletable) await msg.delete();
 
 						break;

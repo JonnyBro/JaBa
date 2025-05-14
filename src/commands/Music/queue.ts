@@ -14,6 +14,7 @@ import {
 	ButtonStyle,
 	Interaction,
 	InteractionContextType,
+	MessageFlags,
 	StringSelectMenuBuilder,
 	StringSelectMenuOptionBuilder,
 } from "discord.js";
@@ -182,48 +183,46 @@ client.on("interactionCreate", async interaction => {
 
 				await interaction.followUp({
 					components: [selectRow],
+					flags: MessageFlags.Ephemeral,
 				});
 
 				client.once("interactionCreate", async interaction => {
 					if (!interaction.isStringSelectMenu()) return;
+					if (interaction.customId !== "queue_select") return;
 
 					await interaction.deferUpdate();
 
-					if (interaction.customId === "queue_select") {
-						page = Number(interaction.values[0]);
+					page = Number(interaction.values[0]);
 
-						const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-							new ButtonBuilder()
-								.setCustomId("queue_prev_page")
-								.setStyle(ButtonStyle.Primary)
-								.setEmoji("⬅️")
-								.setDisabled(page === 0),
-							new ButtonBuilder()
-								.setCustomId("queue_next_page")
-								.setStyle(ButtonStyle.Primary)
-								.setEmoji("➡️")
-								.setDisabled(page >= size - 1),
-							new ButtonBuilder()
-								.setCustomId("queue_jump_page")
-								.setStyle(ButtonStyle.Secondary)
-								.setEmoji("↗️"),
-							new ButtonBuilder()
-								.setCustomId("queue_stop")
-								.setStyle(ButtonStyle.Danger)
-								.setEmoji("❌"),
-						);
+					const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+						new ButtonBuilder()
+							.setCustomId("queue_prev_page")
+							.setStyle(ButtonStyle.Primary)
+							.setEmoji("⬅️")
+							.setDisabled(page === 0),
+						new ButtonBuilder()
+							.setCustomId("queue_next_page")
+							.setStyle(ButtonStyle.Primary)
+							.setEmoji("➡️")
+							.setDisabled(page >= size - 1),
+						new ButtonBuilder()
+							.setCustomId("queue_jump_page")
+							.setStyle(ButtonStyle.Secondary)
+							.setEmoji("↗️"),
+						new ButtonBuilder()
+							.setCustomId("queue_stop")
+							.setStyle(ButtonStyle.Danger)
+							.setEmoji("❌"),
+					);
 
-						if (interaction.message.deletable) interaction.message.delete();
-
-						m.edit({
-							content: `${await translateContext(
-								interaction,
-								"common:PAGE",
-							)}: **${page + 1}**/**${size}**`,
-							embeds: [embeds[page]],
-							components: [row],
-						});
-					}
+					await m.edit({
+						content: `${await translateContext(
+							interaction,
+							"common:PAGE",
+						)}: **${page + 1}**/**${size}**`,
+						embeds: [embeds[page]],
+						components: [row],
+					});
 				});
 
 				break;
