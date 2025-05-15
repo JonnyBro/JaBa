@@ -12,3 +12,6 @@ node_modules
 # TypeScript build
 dist
 tsconfig.tsbuildinfo
+
+# Recommended extensions
+!.vscode/extensions.json
