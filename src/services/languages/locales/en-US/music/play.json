@@ -12,7 +12,7 @@
 	"NOT_PLAYING": "Nothing is currently playing on the server",
 	"QUEUE_ENDED": "The queue has ended",
 	"ADDED_TRACK": "[{{name}}](<{{url}}>) has been added to the queue",
-	"ADDED_PLAYLIST": "Added {{count}} tracks from [{{name}}]({{url}}) to the queue",
+	"ADDED_PLAYLIST": "Added {{count}} tracks from [{{name}}](<{{url}}>) to the queue",
 	"STOP_DISCONNECTED": "Playback stopped because I left the voice channel",
 	"STOP_EMPTY": "Playback stopped because everyone has left the voice channel",
 	"ERR_OCCURRED": "An error occurred, skipping track..."

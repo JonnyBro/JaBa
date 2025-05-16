@@ -67,7 +67,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		{
 			count: res.tracks.length,
 			name: res.playlistName || res.tracks[0].title,
-			url: `<${isPlaylist ? query : res.tracks[0].uri}>`,
+			url: isPlaylist ? query : res.tracks[0].uri,
 		},
 	);
 };
