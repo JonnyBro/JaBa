@@ -1,6 +1,7 @@
 {
 	"token": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-	"mongoDB": "mongodb://127.0.0.1:27017/discordbot",
+	"_comment_mongoDB": "Replace 'localhost' with 'mongo' in Docker",
+	"mongoDB": "mongodb://localhost:27017/discordbot",
 	"production": true,
 	"music": {
 		"nodes": [
