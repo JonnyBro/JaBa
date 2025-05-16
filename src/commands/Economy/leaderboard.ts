@@ -95,6 +95,65 @@ async function renderLeaderboard(
 	return container;
 }
 
+export const data: CommandData = {
+	name: "leaderboard",
+	...getLocalizedDesc("economy/leaderboard:DESCRIPTION"),
+	// eslint-disable-next-line camelcase
+	integration_types: [ApplicationIntegrationType.GuildInstall],
+	contexts: [InteractionContextType.Guild],
+	options: [],
+};
+
+export const run = async ({ interaction }: SlashCommandProps) => {
+	await interaction.deferReply();
+
+	const container = new ContainerBuilder();
+	const titleText = new TextDisplayBuilder().setContent(
+		`# ${await translateContext(interaction, "economy/leaderboard:TITLE", {
+			name: interaction.guild?.name,
+		})}`,
+	);
+
+	const selectText = new TextDisplayBuilder().setContent(
+		await translateContext(interaction, "economy/leaderboard:SELECT", {
+			name: `**${interaction.guild?.name}**`,
+		}),
+	);
+
+	const selector = new StringSelectMenuBuilder()
+		.setCustomId(LEADERBOARD_SELECTOR_ID)
+		.setPlaceholder(await translateContext(interaction, "misc:SELECT_PLACEHOLDER"))
+		.addOptions(
+			{
+				label: await translateContext(interaction, "common:CREDITS"),
+				emoji: "💰",
+				value: LeaderboardType.Credits,
+			},
+			{
+				label: await translateContext(interaction, "common:LEVEL"),
+				emoji: "🆙",
+				value: LeaderboardType.Level,
+			},
+			{
+				label: await translateContext(interaction, "common:REP"),
+				emoji: "😎",
+				value: LeaderboardType.Reputation,
+			},
+		);
+	container
+		.addTextDisplayComponents(titleText)
+		.addSeparatorComponents(s => s.setSpacing(SeparatorSpacingSize.Small))
+		.addTextDisplayComponents(selectText)
+		.addActionRowComponents(
+			new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(selector),
+		);
+
+	await interaction.editReply({
+		flags: MessageFlags.IsComponentsV2,
+		components: [container],
+	});
+};
+
 // Handle leaderboard selector
 client.on("interactionCreate", async interaction => {
 	if (!interaction.isStringSelectMenu()) return;
@@ -211,62 +270,3 @@ client.on("interactionCreate", async interaction => {
 			await interaction.message.edit({ content: "Invalid selection." });
 	}
 });
-
-export const data: CommandData = {
-	name: "leaderboard",
-	...getLocalizedDesc("economy/leaderboard:DESCRIPTION"),
-	// eslint-disable-next-line camelcase
-	integration_types: [ApplicationIntegrationType.GuildInstall],
-	contexts: [InteractionContextType.Guild],
-	options: [],
-};
-
-export const run = async ({ interaction }: SlashCommandProps) => {
-	await interaction.deferReply();
-
-	const container = new ContainerBuilder();
-	const titleText = new TextDisplayBuilder().setContent(
-		`# ${await translateContext(interaction, "economy/leaderboard:TITLE", {
-			name: interaction.guild?.name,
-		})}`,
-	);
-
-	const selectText = new TextDisplayBuilder().setContent(
-		await translateContext(interaction, "economy/leaderboard:SELECT", {
-			name: `**${interaction.guild?.name}**`,
-		}),
-	);
-
-	const selector = new StringSelectMenuBuilder()
-		.setCustomId(LEADERBOARD_SELECTOR_ID)
-		.setPlaceholder(await translateContext(interaction, "misc:SELECT_PLACEHOLDER"))
-		.addOptions(
-			{
-				label: await translateContext(interaction, "common:CREDITS"),
-				emoji: "💰",
-				value: LeaderboardType.Credits,
-			},
-			{
-				label: await translateContext(interaction, "common:LEVEL"),
-				emoji: "🆙",
-				value: LeaderboardType.Level,
-			},
-			{
-				label: await translateContext(interaction, "common:REP"),
-				emoji: "😎",
-				value: LeaderboardType.Reputation,
-			},
-		);
-	container
-		.addTextDisplayComponents(titleText)
-		.addSeparatorComponents(s => s.setSpacing(SeparatorSpacingSize.Small))
-		.addTextDisplayComponents(selectText)
-		.addActionRowComponents(
-			new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(selector),
-		);
-
-	await interaction.editReply({
-		components: [container],
-		flags: MessageFlags.IsComponentsV2,
-	});
-};

@@ -52,6 +52,7 @@ export const data: CommandData = {
 	],
 };
 
+// TODO: Move from embeds to new components
 async function formatCredits(interaction: ChatInputCommandInteraction<CacheType>, amount: number) {
 	const forms = [
 		await translateContext(interaction, "misc:NOUNS:CREDIT:1"),
@@ -70,6 +71,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const memberData = await client.getMemberData(memberId, guildId);
 	const choice = interaction.options.getString("option", true);
 	const targetUser = interaction.options.getUser("user") || interaction.user;
+	if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
+
 	const creditsChoice = interaction.options.getString("credits");
 
 	if (!creditsChoice && choice !== "balance" && choice !== "transactions") {
@@ -80,8 +83,6 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	switch (choice) {
 		case "balance": {
-			if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
-
 			const targetData =
 				targetUser.id === interaction.user.id
 					? memberData

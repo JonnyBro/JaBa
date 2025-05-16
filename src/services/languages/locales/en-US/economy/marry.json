@@ -2,7 +2,6 @@
 	"DESCRIPTION": "Marry the one you love",
 	"USAGE": "[@user]",
 	"EXAMPLES": "marry user:@jonny_bro",
-	"BOT_USER": "Bots are forever alone ;(",
 	"ALREADY_MARRIED": "You are already married! You can divorce using the `divorce` command",
 	"ALREADY_MARRIED_USER": "You're too late! {{user}} is already married",
 	"REQUEST_AUTHOR_TO_AMEMBER": "You have already sent a proposal to {{user}}",

@@ -20,8 +20,15 @@ export const data: CommandData = {
 	name: "shorturl",
 	...getLocalizedDesc("general/shorturl:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [ApplicationIntegrationType.GuildInstall],
-	contexts: [InteractionContextType.Guild],
+	integration_types: [
+		ApplicationIntegrationType.GuildInstall,
+		ApplicationIntegrationType.UserInstall,
+	],
+	contexts: [
+		InteractionContextType.BotDM,
+		InteractionContextType.Guild,
+		InteractionContextType.PrivateChannel,
+	],
 	options: [
 		{
 			name: "url",

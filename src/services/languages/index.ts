@@ -5,6 +5,7 @@ import { resolve, join } from "path";
 import logger from "@/helpers/logger.js";
 import supportedLanguages from "./language-meta.js";
 import { ExtendedClient } from "@/structures/client.js";
+import { PROJECT_ROOT } from "@/constants/index.js";
 
 interface InternationalizationServiceOptions {
 	defaultLanguage?: string;
@@ -25,7 +26,7 @@ export default class InternationalizationService {
 	constructor(client: ExtendedClient, options: InternationalizationServiceOptions = {}) {
 		this.client = client;
 		this.options = {
-			localesPath: resolve(this.client.configService.get("paths.locales")),
+			localesPath: join(PROJECT_ROOT, "services", "languages", "locales"),
 			defaultLanguage:
 				options.defaultLanguage || this.client.configService.get("defaultLang"),
 		};
@@ -82,7 +83,7 @@ export default class InternationalizationService {
 			backend: {
 				loadPath: resolve(this.options.localesPath, "./{{lng}}/{{ns}}.json"),
 			},
-			debug: this.client.configService.get("production") ? false : true,
+			debug: !this.client.configService.get("production"),
 			fallbackLng: this.options.defaultLanguage,
 			interpolation: { escapeValue: false },
 			load: "currentOnly",

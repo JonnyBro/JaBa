@@ -4,9 +4,14 @@ Thumbs.db
 
 # Configuration
 /config.json
+/config.json.*
 
 # Node
 node_modules
-dist
 
+# TypeScript build
+dist
 tsconfig.tsbuildinfo
+
+# Recommended extensions
+!.vscode/extensions.json

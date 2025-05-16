@@ -2,6 +2,7 @@ import useClient from "@/utils/use-client.js";
 import {
 	BaseInteraction,
 	CacheType,
+	Guild,
 	GuildMember,
 	Interaction,
 	InteractionReplyOptions,
@@ -23,7 +24,7 @@ const getAppEmojis = () => {
 	return client.application.emojis.cache;
 };
 
-const formatReply = (message: string, prefixEmoji?: string) => {
+export const formatReply = (message: string, prefixEmoji?: string) => {
 	const emojis = getAppEmojis();
 	const emoji = emojis.find(emoji => emoji.name === prefixEmoji) || ":white_small_square:";
 	return prefixEmoji ? `${emoji.toString()} ${message}` : `${message}`;
@@ -37,15 +38,20 @@ export const asyncForEach = async <T>(collection: T[], callback: (_item: T) => P
 };
 
 export const translateContext = async <T extends CacheType = CacheType>(
-	context: Interaction<T> | Message,
+	context: Interaction<T> | Message | Guild,
 	key: string,
 	args?: Record<string, unknown> | null,
 	options?: Options,
 ) => {
 	const client = useClient();
-	const inGuild = context.guild ? await getLocale(context.guild.id) : "";
+	const guildLocale =
+		context instanceof Guild
+			? await getLocale(context.id)
+			: context.guild
+				? await getLocale(context.guild.id)
+				: "";
 
-	const locale = options?.locale || inGuild || client.configService.get("defaultLang");
+	const locale = options?.locale || guildLocale;
 	const translated = client.i18n.translate(key, {
 		lng: locale,
 		...args,
@@ -164,7 +170,7 @@ export const printDate = (date: Date | number, locale: Intl.LocalesArgument = "e
 	new Intl.DateTimeFormat(locale).format(date);
 
 export const randomNum = (min: number = 0, max: number = 100) =>
-	(Math.random() * (max - min + 1)) << 0;
+	Math.floor(Math.random() * (max - min + 1)) + min;
 
 export const shuffle = <T>(array: readonly T[]): T[] => {
 	const shuffled = [...array];
@@ -177,3 +183,20 @@ export const shuffle = <T>(array: readonly T[]): T[] => {
 
 	return shuffled;
 };
+
+export const convertTime = (duration: number) => {
+	const hours = Math.floor(duration / 3_600_000);
+	const minutes = Math.floor((duration % 3_600_000) / 60_000);
+	const seconds = Math.floor((duration % 60_000) / 1_000);
+	const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
+	const formattedHours = formatTime(hours);
+	const formattedMinutes = formatTime(minutes);
+	const formattedSeconds = formatTime(seconds);
+
+	return duration < 3_600_000
+		? `${formattedMinutes}:${formattedSeconds}`
+		: `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+};
+
+export const formatString = (str: string, maxLength: number) =>
+	str.length > maxLength ? str.slice(0, maxLength - 3) + "..." : str;

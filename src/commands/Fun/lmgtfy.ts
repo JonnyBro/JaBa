@@ -1,4 +1,4 @@
-import { getLocalizedDesc } from "@/helpers/functions.js";
+import { editReplyError, getLocalizedDesc } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
@@ -57,6 +57,13 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	});
 
 	if (short) {
+		if (
+			!client.configService.get("apiKeys.urlShortener.url") ||
+			!client.configService.get("apiKeys.urlShortener.key")
+		) {
+			return editReplyError(interaction, "API URL or key not set!");
+		}
+
 		const res = await fetch(client.configService.get("apiKeys.urlShortener.url"), {
 			method: "POST",
 			headers: {

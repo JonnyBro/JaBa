@@ -2,12 +2,21 @@
 	"token": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 	"mongoDB": "mongodb://127.0.0.1:27017/discordbot",
 	"production": true,
-	"spotify": {
-		"clientId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-		"clientSecret": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+	"music": {
+		"nodes": [
+			{
+				"name": "Localhost",
+				"host": "localhost",
+				"port": 2333,
+				"auth": "youshallnotpass",
+				"secure": false
+			}
+		]
 	},
-	"youtubeCookie": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 	"devGuildsIds": [],
+	"devLogs": {
+		"joins": ""
+	},
 	"embed": {
 		"color": "#00FF00",
 		"footer": {
@@ -16,12 +25,6 @@
 	},
 	"owner": {
 		"id": "123456789098765432"
-	},
-	"paths": {
-		"commands": "./src/commands",
-		"events": "./src/events",
-		"locales": "./src/services/languages/locales",
-		"tasks": "./src/helpers/tasks"
 	},
 	"defaultLang": "en-US",
 	"apiKeys": {

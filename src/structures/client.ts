@@ -6,13 +6,17 @@ import InternationalizationService from "@/services/languages/index.js";
 import { SUPER_CONTEXT } from "@/constants/index.js";
 import { cacheRemindsData } from "@/types.js";
 import MikroOrmAdapter from "@/adapters/database/MikroOrmAdapter.js";
-// import { Player } from "discord-player";
+import { Rainlink, Library } from "rainlink";
 
 export class ExtendedClient extends Client<true> {
 	configService = new ConfigService();
 	adapter = new MikroOrmAdapter(this.configService.get("mongoDB"));
 	cacheReminds = new Map<string, cacheRemindsData>();
 	i18n = new InternationalizationService(this);
+	rainlink = new Rainlink({
+		library: new Library.DiscordJS(this),
+		nodes: this.configService.get("music.nodes"),
+	});
 
 	constructor(options: ClientOptions) {
 		if (SUPER_CONTEXT.getStore()) return SUPER_CONTEXT.getStore() as ExtendedClient;
@@ -21,8 +25,20 @@ export class ExtendedClient extends Client<true> {
 
 		new Handlers(this);
 
-		// @ts-ignore - because ExtendedClient != Client<boolean> from discord.js
-		// new Player(this);
+		this.rainlink.on("nodeConnect", node =>
+			logger.ready(`Lavalink node ${node.options.name}: Ready!`),
+		);
+		this.rainlink.on("nodeDisconnect", (node, code, reason) => {
+			logger.warn(`Lavalink node ${
+				node.options.name
+			}: Disconnected, Code ${code}, Reason ${reason || "No reason"}`);
+		});
+		this.rainlink.on("nodeClosed", node =>
+			logger.warn(`Lavalink node ${node.options.name}: Closed`),
+		);
+		this.rainlink.on("nodeError", (node, error) =>
+			logger.error(`Lavalink node ${node.options.name}: Error Caught `, error),
+		);
 
 		SUPER_CONTEXT.enterWith(this);
 	}
