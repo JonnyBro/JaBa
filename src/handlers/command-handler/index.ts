@@ -1,4 +1,4 @@
-import { resolve } from "node:path";
+import { join } from "node:path";
 import logger from "@/helpers/logger.js";
 import { getFilePaths } from "@/utils/get-path.js";
 import { toFileURL } from "@/utils/resolve-file.js";
@@ -6,6 +6,7 @@ import registerCommands from "./functions/registerCommands.js";
 import { ExtendedClient } from "@/structures/client.js";
 import { BuiltInValidation, CommandFileObject } from "@/types.js";
 import builtInValidationsFunctions from "./validations/index.js";
+import { PROJECT_ROOT } from "@/constants/index.js";
 
 export class CommandHandler {
 	client: ExtendedClient;
@@ -30,7 +31,7 @@ export class CommandHandler {
 	}
 
 	async #buildCommands() {
-		const cmdPath = resolve(this.client.configService.get("paths.commands"));
+		const cmdPath = join(PROJECT_ROOT, "commands");
 		const commandFilePaths = (await getFilePaths(cmdPath, true)).filter(
 			path => path.endsWith(".js") || path.endsWith(".ts"),
 		);
@@ -66,7 +67,8 @@ export class CommandHandler {
 				!interaction.isChatInputCommand() &&
 				!interaction.isAutocomplete() &&
 				!interaction.isContextMenuCommand()
-			) return;
+			)
+			{return;}
 
 			const isAutocomplete = interaction.isAutocomplete();
 

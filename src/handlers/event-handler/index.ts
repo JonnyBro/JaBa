@@ -1,9 +1,10 @@
-import { resolve } from "node:path";
+import { join } from "node:path";
 import logger from "@/helpers/logger.js";
 import { getFilePaths } from "@/utils/get-path.js";
 import { toFileURL } from "@/utils/resolve-file.js";
 import { ExtendedClient } from "@/structures/client.js";
 import { ClientEvents } from "discord.js";
+import { PROJECT_ROOT } from "@/constants/index.js";
 
 type EventHandlerEvents = {
 	data: {
@@ -27,13 +28,12 @@ export class EventHandler {
 	}
 
 	async #buildEvents() {
-		const eventPath = resolve(this.client.configService.get("paths.events"));
+		const eventPath = join(PROJECT_ROOT, "events");
 		const eventFilePaths = (await getFilePaths(eventPath, true)).filter(
 			path => path.endsWith(".js") || path.endsWith(".ts"),
 		);
 
 		try {
-
 			for (const eventFilePath of eventFilePaths) {
 				const eventModule = await import(toFileURL(eventFilePath));
 
@@ -50,9 +50,7 @@ export class EventHandler {
 				}
 
 				if (typeof run !== "function") {
-					logger.warn(
-						`Event ${eventFilePath} does not have a 'run' function`,
-					);
+					logger.warn(`Event ${eventFilePath} does not have a 'run' function`);
 					continue;
 				}
 
