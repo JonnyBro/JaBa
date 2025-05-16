@@ -42,6 +42,41 @@ You can invite JaBa on your server, message me (@jonny_bro) on Discord, find @Ja
 You can host JaBa yourself.\
 Use [this instruction](https://github.com/JonnyBro/JaBa/wiki/Self-Hosting) to learn how!
 
+## Docker Setup
+
+You can run JaBa and its dependencies using Docker Compose. This project provides a `Dockerfile` and a `docker-compose.yml` for easy setup.
+
+### Requirements
+
+* Docker and Docker Compose installed
+* The bot uses Node.js **v22.14.0** and pnpm **v10.4.1** (handled by the Dockerfile)
+* MongoDB is required and provided as a service in the compose file
+
+### Configuration
+
+* Copy `config.sample.json` to `config.json` and edit it with your bot token and other settings before running.
+* If you use environment variables, you can add an `.env` file and uncomment the `env_file` line in `docker-compose.yml`.
+* No ports are exposed by default, as JaBa is a Discord bot and does not serve HTTP traffic.
+* MongoDB data is persisted in the `mongo-data` Docker volume.
+
+### Build and Run
+
+To start JaBa and MongoDB for development:
+
+```sh
+docker compose up --build
+```
+
+* The `typescript-app` service runs the bot in development mode and mounts your local `src` directory for live code updates.
+* The `mongo` service provides a MongoDB instance for the bot.
+
+If you want to run in production mode, you can build the production image by changing the build target in the compose file to `final` and removing the volume mount.
+
+### Notes
+
+* No ports are exposed by default. If you need to access MongoDB from your host, uncomment the `ports` section in the `mongo` service.
+* If you require MongoDB authentication, set the `MONGO_INITDB_ROOT_USERNAME` and `MONGO_INITDB_ROOT_PASSWORD` environment variables in the compose file.
+
 ## Links
 
 * [Changelog](https://blog.jababot.ru)
@@ -56,7 +91,7 @@ If you want to contribute, feel free to fork this repo and making a pull request
 
 ## TODO
 
-* [ ] Refactor [tictactoe](./helpers/tictactoe.js).
+* [ ] Some sort of dashboard.
 
 ## License
 

@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Скопировать эмодзи на текущий сервер",
-	"USAGE": "[emoji]",
-	"EXAMPLES": "stealemoji emoji::coolstorybob:",
-	"SUCCESS": "{{emoji}} добавлен",
-	"ERROR": "Произошла ошибка при добавлении {{emoji}}.\n```{{e}}```"
-}

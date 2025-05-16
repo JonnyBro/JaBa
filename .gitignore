@@ -2,14 +2,16 @@
 .DS_Store
 Thumbs.db
 
-# Bot Configuration
-/config.js
-
-# DB
-/giveaways.json
-
-# Clips
-/clips/*
+# Configuration
+/config.json
+/config.json.*
 
 # Node
 node_modules
+
+# TypeScript build
+dist
+tsconfig.tsbuildinfo
+
+# Recommended extensions
+!.vscode/extensions.json

@@ -1,0 +1,42 @@
+{
+	"token": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+	"mongoDB": "mongodb://127.0.0.1:27017/discordbot",
+	"production": true,
+	"music": {
+		"nodes": [
+			{
+				"name": "Localhost",
+				"host": "localhost",
+				"port": 2333,
+				"auth": "youshallnotpass",
+				"secure": false
+			}
+		]
+	},
+	"devGuildsIds": [],
+	"devLogs": {
+		"joins": ""
+	},
+	"embed": {
+		"color": "#00FF00",
+		"footer": {
+			"text": "My Discord Bot | v1.0.0"
+		}
+	},
+	"owner": {
+		"id": "123456789098765432"
+	},
+	"paths": {
+		"commands": "./src/commands",
+		"events": "./src/events",
+		"locales": "./src/services/languages/locales",
+		"tasks": "./src/helpers/tasks"
+	},
+	"defaultLang": "en-US",
+	"apiKeys": {
+		"urlShortener": {
+			"url": "",
+			"key": ""
+		}
+	}
+}

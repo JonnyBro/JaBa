@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Додає емодзі на сервер за посиланням",
+	"USAGE": "[link] [name]",
+	"EXAMPLES": "addemoji link:https://google.com name:google",
+	"SUCCESS": "{{emoji}} додано",
+	"ERROR": "Відбулася помилка при додаванні {{name}}.\n```{{error}}```"
+}

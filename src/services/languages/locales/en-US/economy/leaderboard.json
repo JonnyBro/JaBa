@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Shows the leaderboard for credits, level, or reputation points",
+	"USAGE": "[type]",
+	"EXAMPLES": "leaderboard type:Level",
+	"TITLE": "{{name}} Leaderboard",
+	"SELECT": "Select what you want to see"
+}

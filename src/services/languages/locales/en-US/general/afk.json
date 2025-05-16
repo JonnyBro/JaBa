@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Sets AFK status (users who mention you will receive a message)",
+	"USAGE": "[message]",
+	"EXAMPLES": "afk message:I'm busy =)",
+	"SUCCESS": "You are now AFK with the reason: **{{message}}**",
+	"DELETED": "Your AFK status has been removed",
+	"IS_AFK": "**{{user}}** is currently AFK, reason:\n```{{message}}```"
+}

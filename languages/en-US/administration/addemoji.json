@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Adds an emoji to the current server from given link",
-	"USAGE": "[link] [name]",
-	"EXAMPLES": "addemoji link:https://google.com name:google"
-}

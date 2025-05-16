@@ -1,0 +1,14 @@
+{
+	"DESCRIPTION": "Shows the playback queue",
+	"USAGE": "",
+	"EXAMPLES": "queue",
+	"QUEUE": "Playback Queue",
+	"NO_QUEUE": "Empty",
+	"DURATION": "Queue duration: {{time}}",
+	"ADDED": "Added by",
+	"PLAYS_IN": "Plays in: {{time}}",
+	"NEXT_PAGE": "Next page",
+	"PREV_PAGE": "Previous page",
+	"JUMP_PAGE": "Jump to page",
+	"NEXT": "Next"
+}

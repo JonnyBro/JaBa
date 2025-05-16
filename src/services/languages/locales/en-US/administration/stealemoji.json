@@ -1,0 +1,5 @@
+{
+	"DESCRIPTION": "Copy an emoji to the current server",
+	"USAGE": "[emoji]",
+	"EXAMPLES": "stealemoji emoji::coolstorybob:"
+}

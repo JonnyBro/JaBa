@@ -1,0 +1,6 @@
+{
+	"DESCRIPTION": "Skips the currently playing track",
+	"USAGE": "",
+	"EXAMPLES": "skip",
+	"SUCCESS": "Skipped currently playing track"
+}

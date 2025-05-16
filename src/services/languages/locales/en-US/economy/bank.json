@@ -1,0 +1,32 @@
+{
+	"DESCRIPTION": "Manages your bank account",
+	"USAGE": "[option] [credits/all]",
+	"EXAMPLES": "bank option:deposit credits:1000\nbank option:withdraw credits:all",
+	"OPTION": "Action",
+	"OPTION_NAN_ALL": "An integer greater than 0 or `all`.",
+
+	"DEPOSIT": "Deposit",
+	"WITHDRAW": "Withdraw",
+	"BALANCE": "Balance",
+	"TRANSFER": "Transfer",
+	"TRANSACTIONS": "Transactions",
+
+	"NOT_ENOUGH_CREDIT": "You don't have enough credits",
+	"NOT_ENOUGH_BANK": "Insufficient credits in your bank account",
+	"SUCCESS_DEP": "{{credits}} deposited into your bank account",
+	"SUCCESS_WD": "You have withdrawn {{credits}} from your bank account",
+	"SUCCESS_TRANSFER": "You have transfered {{credits}} to {{reciever}}",
+
+	"NO_TRANSACTIONS": "You have no transactions",
+	"EMBED_TRANSACTIONS": "Your Transactions",
+	"BANK": "Bank",
+	"NUMBERS": "Guess the Number",
+	"TRANSFER_TO": "Transfer to {{user}}",
+	"TRANSFER_FROM": "Transfer from {{user}}",
+	"T_GOT": "Deposit",
+	"T_SEND": "Withdrawal",
+	"T_USER_GOT": "Source",
+	"T_USER_SEND": "Recipient",
+	"T_AMOUNT": "Amount",
+	"T_DATE": "Date"
+}

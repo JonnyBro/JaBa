@@ -1,0 +1,6 @@
+{
+	"DESCRIPTION": "Shows the amount of credits for a user",
+	"USAGE": "(@user)",
+	"EXAMPLES": "money\nmoney user:@jonny_bro",
+	"TITLE": "{{user}}'s Credits"
+}
