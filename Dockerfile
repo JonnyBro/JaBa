@@ -1,24 +1,32 @@
-# Use a Node.js image with pnpm pre-installed
-FROM node:22
+FROM node:22-slim AS builder
 
-# Install pnpm
 RUN npm install -g pnpm
 
-# Create app directory
 WORKDIR /app
 
-# Copy dependency manifests
-COPY package.json ./
-# COPY pnpm-lock.yaml ./
+# Копируем зависимостей и lock-файл для кэширования
+COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies
-RUN pnpm install
+# Установить все зависимости (смотрит на lock файл)
+RUN pnpm install --frozen-lockfile
 
-# Copy rest of the application
 COPY . .
 
-# Build TypeScript
 RUN pnpm build
 
-# Set the command to run the app
+FROM node:22-slim AS runner
+
+RUN npm install -g pnpm
+
+WORKDIR /root/app
+
+# копируем сбилженный код
+COPY --from=builder /app/dist ./dist
+COPY package.json pnpm-lock.yaml ./
+
+# Ставим только production-зависимости
+RUN pnpm install --frozen-lockfile --prod
+
+# Запустить приложение
 CMD ["node", "dist/index.js"]
+

@@ -1,6 +1,5 @@
 node_modules
 dist
-pnpm-lock.yaml
 Dockerfile
 docker-compose.yml
 .git
