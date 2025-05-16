@@ -4,10 +4,10 @@ RUN npm install -g pnpm
 
 WORKDIR /app
 
-# Копируем зависимостей и lock-файл для кэширования
+# Copy dependency files and lock file for caching
 COPY package.json pnpm-lock.yaml ./
 
-# Установить все зависимости (смотрит на lock файл)
+# Install all dependencies using lock file
 RUN pnpm install --frozen-lockfile
 
 COPY . .
@@ -20,13 +20,12 @@ RUN npm install -g pnpm
 
 WORKDIR /root/app
 
-# копируем сбилженный код
+# Copy built code
 COPY --from=builder /app/dist ./dist
 COPY package.json pnpm-lock.yaml ./
 
-# Ставим только production-зависимости
+# Install only production dependencies
 RUN pnpm install --frozen-lockfile --prod
 
-# Запустить приложение
+# Run the application
 CMD ["node", "dist/index.js"]
-
