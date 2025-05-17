@@ -27,6 +27,8 @@ export class CommandHandler {
 			commands: this.commands,
 		});
 
+		this.client.commands = this.commands;
+
 		this.handleCommands();
 	}
 
@@ -37,7 +39,7 @@ export class CommandHandler {
 		);
 
 		for (const cmdFilePath of commandFilePaths) {
-			const { data, run, options } = await import(toFileURL(cmdFilePath));
+			const { data, run, options, autocompleteRun } = await import(toFileURL(cmdFilePath));
 
 			if (!data || !data.name) {
 				logger.warn(`Command ${cmdFilePath} does not have a 'data' object or name`);
@@ -51,7 +53,7 @@ export class CommandHandler {
 				continue;
 			}
 
-			this.commands.push({ data, run, options });
+			this.commands.push({ data, run, options, autocompleteRun, filePath: cmdFilePath });
 		}
 	}
 
@@ -67,8 +69,7 @@ export class CommandHandler {
 				!interaction.isChatInputCommand() &&
 				!interaction.isAutocomplete() &&
 				!interaction.isContextMenuCommand()
-			)
-			{return;}
+			) return;
 
 			const isAutocomplete = interaction.isAutocomplete();
 
@@ -98,6 +99,7 @@ export class CommandHandler {
 			if (!canRun) return;
 
 			const command = targetCommand[isAutocomplete ? "autocompleteRun" : "run"]!;
+
 
 			try {
 				await command({

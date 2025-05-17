@@ -5,7 +5,7 @@ import logger from "@/helpers/logger.js";
 import ConfigService from "@/services/config/index.js";
 import InternationalizationService from "@/services/languages/index.js";
 import { SUPER_CONTEXT } from "@/constants/index.js";
-import { cacheRemindsData } from "@/types.js";
+import { cacheRemindsData, CommandFileObject } from "@/types.js";
 import { Rainlink, Library } from "rainlink";
 
 export class ExtendedClient extends Client<true> {
@@ -17,6 +17,7 @@ export class ExtendedClient extends Client<true> {
 		library: new Library.DiscordJS(this),
 		nodes: this.configService.get("music.nodes"),
 	});
+	commands: CommandFileObject[] = [];
 
 	constructor(options: ClientOptions) {
 		if (SUPER_CONTEXT.getStore()) return SUPER_CONTEXT.getStore() as ExtendedClient;

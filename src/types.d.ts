@@ -51,6 +51,10 @@ export interface ContextCommandProps extends CommandProps {
 	interaction: UserContextMenuCommandInteraction | MessageContextMenuCommandInteraction;
 }
 
+export interface AutocompleteProps extends CommandProps {
+	interaction: AutocompleteInteraction;
+}
+
 export interface CommandContext<_T extends Interaction, _Cached extends CacheType> {
 	interaction: Interaction<CacheType>;
 	client: ExtendedClient;
@@ -70,4 +74,5 @@ export interface CommandFileObject {
 	autocompleteRun?: <Cached extends CacheType = CacheType>(
 		_ctx: CommandContext<Interaction, Cached>,
 	) => Awaited<void>;
+	filePath: string;
 }
