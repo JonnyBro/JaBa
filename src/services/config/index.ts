@@ -6,6 +6,8 @@ class ConfigService {
 	private config = this.loadConfig();
 
 	get<T>(key: string): T {
+		if (key.startsWith("_comment")) throw new Error("Can't use comments as an argument");
+
 		const keys = key.split(".");
 		return keys.reduce(
 			(config, k) => (config && config[k] !== undefined ? config[k] : undefined),
@@ -14,6 +16,8 @@ class ConfigService {
 	}
 
 	set(key: string, value: unknown) {
+		if (key.startsWith("_comment")) throw new Error("Can't use comments as an argument");
+
 		const keys = key.split(".");
 		keys.reduce((config, k, i) => {
 			if (i === keys.length - 1) {
