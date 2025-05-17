@@ -8,6 +8,7 @@
         "dev": "tsx watch src/index.ts",
         "build": "tsc && tsc-alias",
         "delete-commands": "tsx delete-commands.ts",
+        "postbuild": "tsx scripts/postbuild.ts",
         "pm2": "NODE_ENV=production pm2 start --name jaba dist/index.js"
     },
     "author": "https://github.com/JonnyBro",
