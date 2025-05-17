@@ -1,5 +1,5 @@
 import { createEmbed } from "@/utils/create-embed.js";
-import UserModel from "../../models/UserModel.js";
+import { User } from "../../models/UserModel.js";
 import useClient from "../../utils/use-client.js";
 import { CronTaskData } from "@/types.js";
 
@@ -8,7 +8,11 @@ export const data: CronTaskData = {
 	task: async () => {
 		const client = useClient();
 
-		const users = await client.adapter.find(UserModel, { reminds: { $gt: [] } });
+		const users = await client.adapter.find(User, {
+			reminds: {
+				$gt: [] as any,
+			},
+		});
 
 		for (const user of users) {
 			if (!client.users.cache.has(user.id)) {
@@ -58,7 +62,7 @@ export const data: CronTaskData = {
 				});
 
 				await client.adapter.updateOne(
-					UserModel,
+					User,
 					{ id },
 					{
 						$pull: {

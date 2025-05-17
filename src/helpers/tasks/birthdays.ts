@@ -1,5 +1,5 @@
 import useClient from "@/utils/use-client.js";
-import UserModel from "@/models/UserModel.js";
+import { User } from "@/models/UserModel.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import logger from "../logger.js";
 import { getNoun } from "../functions.js";
@@ -9,7 +9,7 @@ export const data = {
 	task: async () => {
 		const client = useClient();
 		const guilds = client.guilds.cache.values();
-		const users = await client.adapter.find(UserModel, {
+		const users = await client.adapter.find(User, {
 			birthdate: { $ne: null },
 		});
 

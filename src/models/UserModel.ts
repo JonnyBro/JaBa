@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
-import { Schema, model } from "mongoose";
+import { Entity, Property } from "@mikro-orm/mongodb";
 import { createCanvas, loadImage } from "@napi-rs/canvas";
+import { ObjectId } from "mongodb";
+import { BaseEntity } from "../structures/BaseEntity.js";
 
 export type UserReminds = {
 	message: string;
@@ -8,30 +10,61 @@ export type UserReminds = {
 	sendAt: number;
 };
 
-interface IUserSchema {
-	id: string;
-	rep: number;
-	bio: string;
-	birthdate: number | null;
-	lover: string;
-	registeredAt: number;
-	achievements: {
-		[key: string]: {
-			achieved: boolean;
-			progress: {
-				now: number;
-				total: number;
-			};
+type UserAchievements = {
+	married: {
+		achieved: boolean;
+		progress: {
+			now: number;
+			total: number;
 		};
 	};
-	cooldowns: {
-		rep: number;
+	work: {
+		achieved: boolean;
+		progress: {
+			now: number;
+			total: number;
+		};
 	};
-	afk: string;
-	reminds: UserReminds[];
-	logged: boolean;
-	apiToken: string;
-}
+	firstCommand: {
+		achieved: boolean;
+		progress: {
+			now: number;
+			total: number;
+		};
+	};
+	slots: {
+		achieved: boolean;
+		progress: {
+			now: number;
+			total: number;
+		};
+	};
+	tip: {
+		achieved: boolean;
+		progress: {
+			now: number;
+			total: number;
+		};
+	};
+	rep: {
+		achieved: boolean;
+		progress: {
+			now: number;
+			total: number;
+		};
+	};
+	invite: {
+		achieved: boolean;
+		progress: {
+			now: number;
+			total: number;
+		};
+	};
+};
+
+type UserCooldowns = {
+	rep: number;
+};
 
 const genToken = () => {
 	let token = "";
@@ -43,19 +76,32 @@ const genToken = () => {
 	return token;
 };
 
-const userSchema = new Schema<IUserSchema>({
-	id: { type: String, required: true },
+@Entity({ collection: "users" })
+export class User extends BaseEntity {
+	@Property({ type: "ObjectId", primary: true })
+	_id!: ObjectId;
 
-	rep: { type: Number, default: 0 },
-	bio: { type: String },
-	birthdate: { type: Number },
-	lover: { type: String },
+	@Property({ type: "string", unique: true, index: true })
+	id!: string;
 
-	registeredAt: { type: Number, default: Date.now() },
+	@Property({ type: "number" })
+	rep: number = 0;
 
-	achievements: {
-		type: Object,
-		default: {
+	@Property({ type: "string", nullable: true })
+	bio?: string;
+
+	@Property({ type: "number", nullable: true })
+	birthdate!: number | null;
+
+	@Property({ type: "string" })
+	lover: string = "";
+
+	@Property({ type: "number", onCreate: () => Date.now() })
+	registeredAt!: number;
+
+	@Property({
+		type: "json",
+		onCreate: () => ({
 			married: {
 				achieved: false,
 				progress: {
@@ -105,66 +151,63 @@ const userSchema = new Schema<IUserSchema>({
 					total: 1,
 				},
 			},
-		},
-	},
+		}),
+	})
+	achievements!: UserAchievements;
 
-	cooldowns: {
-		type: Object,
-		default: {
-			rep: 0,
-		},
-	},
+	@Property({ type: "json" })
+	cooldowns: UserCooldowns = {
+		rep: 0,
+	};
 
-	afk: { type: String, default: null },
-	reminds: [
-		{
-			type: Object,
-			default: {
-				message: null,
-				createdAt: null,
-				sendAt: null,
-			},
-		},
-	],
-	logged: { type: Boolean, default: false },
-	apiToken: { type: String, default: genToken() },
-});
+	@Property({ type: "string" })
+	afk: string | null = null;
 
-userSchema.method("getAchievementsImage", async function () {
-	const canvas = createCanvas(1800, 250),
-		ctx = canvas.getContext("2d");
+	@Property({ type: "array" })
+	reminds: UserReminds[] = [];
 
-	const images = [
-		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.work.achieved ? "_colored" : ""}1.png`,
-		),
-		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.firstCommand.achieved ? "_colored" : ""}2.png`,
-		),
-		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.married.achieved ? "_colored" : ""}3.png`,
-		),
-		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.slots.achieved ? "_colored" : ""}4.png`,
-		),
-		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.tip.achieved ? "_colored" : ""}5.png`,
-		),
-		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.rep.achieved ? "_colored" : ""}6.png`,
-		),
-		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.invite.achieved ? "_colored" : ""}7.png`,
-		),
-	];
-	let dim = 0;
+	@Property({ type: "boolean" })
+	logged: boolean = false;
 
-	for (let i = 0; i < images.length; i++) {
-		ctx.drawImage(images[i], dim, 10, 350, 200);
-		dim += 200;
+	@Property({ type: "string", onCreate: () => genToken() })
+	token!: string;
+
+	async getAchievements() {
+		const canvas = createCanvas(1800, 250),
+			ctx = canvas.getContext("2d");
+
+		const images = await Promise.all([
+			await loadImage(
+				`./assets/img/achievements/achievement${this.achievements.work.achieved ? "_colored" : ""}1.png`,
+			),
+			await loadImage(
+				`./assets/img/achievements/achievement${this.achievements.firstCommand.achieved ? "_colored" : ""}2.png`,
+			),
+			await loadImage(
+				`./assets/img/achievements/achievement${this.achievements.married.achieved ? "_colored" : ""}3.png`,
+			),
+			await loadImage(
+				`./assets/img/achievements/achievement${this.achievements.slots.achieved ? "_colored" : ""}4.png`,
+			),
+			await loadImage(
+				`./assets/img/achievements/achievement${this.achievements.tip.achieved ? "_colored" : ""}5.png`,
+			),
+			await loadImage(
+				`./assets/img/achievements/achievement${this.achievements.rep.achieved ? "_colored" : ""}6.png`,
+			),
+			await loadImage(
+				`./assets/img/achievements/achievement${this.achievements.invite.achieved ? "_colored" : ""}7.png`,
+			),
+		]);
+		let dim = 0;
+
+		for (let i = 0; i < images.length; i++) {
+			ctx.drawImage(images[i], dim, 10, 350, 200);
+			dim += 200;
+		}
+
+		const encodedPhoto = await canvas.encode("png");
+
+		return encodedPhoto;
 	}
-
-	return await canvas.encode("png");
-});
-
-export default model<IUserSchema>("User", userSchema);
+}

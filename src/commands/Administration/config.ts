@@ -1,5 +1,5 @@
 import { getLocalizedDesc, translateContext } from "@/helpers/functions.js";
-import GuildModel from "@/models/GuildModel.js";
+import { Guild } from "@/models/GuildModel.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { generateFields } from "@/utils/config-fields.js";
 import { createEmbed } from "@/utils/create-embed.js";
@@ -155,7 +155,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		return interaction.editReply({ embeds: [embed] });
 	}
 
-	const parameter = interaction.options.getString("parameter", true);
+	const parameter = interaction.options.getString("parameter", true) as keyof Guild["plugins"];
 	const state = interaction.options.getBoolean("state", true);
 	const channel = interaction.options.getChannel("channel") as Channel;
 
@@ -163,19 +163,18 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 };
 
 async function saveSettings(
-	guildData: InstanceType<typeof GuildModel>,
-	parameter: string,
+	guildData: InstanceType<typeof Guild>,
+	parameter: keyof Guild["plugins"],
 	value: unknown,
 ) {
-	guildData.plugins[parameter] = value;
-	guildData.markModified(`plugins.${parameter}`);
+	guildData.plugins[parameter] = value as any;
 
 	await guildData.save();
 }
 
 async function generateReply(
 	interaction: ChatInputCommandInteraction,
-	guildData: InstanceType<typeof GuildModel>,
+	guildData: InstanceType<typeof Guild>,
 	parameter: string,
 	state: boolean,
 	channel?: Channel | null,
@@ -190,14 +189,16 @@ async function generateReply(
 	if (channel) return `${translatedParam}: **${enabledText}** (${channel.toString()})`;
 
 	return `${translatedParam}: ${
-		state ? `**${enabledText}** (<#${guildData.plugins[parameter]}>)` : `**${disabledText}**`
+		state
+			? `**${enabledText}** (<#${guildData.plugins[parameter as keyof Guild["plugins"]]}>)`
+			: `**${disabledText}**`
 	}`;
 }
 
 async function changeSetting(
 	interaction: ChatInputCommandInteraction,
 	guildData: any,
-	parameter: string,
+	parameter: keyof Guild["plugins"],
 	state: boolean,
 	channel?: Channel | null,
 ) {

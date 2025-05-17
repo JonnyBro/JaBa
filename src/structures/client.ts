@@ -1,16 +1,16 @@
 import { Client, ClientOptions } from "discord.js";
 import { Handlers } from "@/handlers/index.js";
-import MongooseAdapter from "@/adapters/database/MongooseAdapter.js";
 import logger from "@/helpers/logger.js";
 import ConfigService from "@/services/config/index.js";
 import InternationalizationService from "@/services/languages/index.js";
 import { SUPER_CONTEXT } from "@/constants/index.js";
 import { cacheRemindsData } from "@/types.js";
+import MikroOrmAdapter from "@/adapters/database/MikroOrmAdapter.js";
 import { Rainlink, Library } from "rainlink";
 
 export class ExtendedClient extends Client<true> {
 	configService = new ConfigService();
-	adapter = new MongooseAdapter(this.configService.get("mongoDB"));
+	adapter = new MikroOrmAdapter(this.configService.get("mongoDB"));
 	cacheReminds = new Map<string, cacheRemindsData>();
 	i18n = new InternationalizationService(this);
 	rainlink = new Rainlink({
@@ -53,37 +53,38 @@ export class ExtendedClient extends Client<true> {
 	}
 
 	async getGuildData(guildId: string) {
-		const { default: GuildModel } = await import("@/models/GuildModel.js");
-		const guildData = await this.adapter.findOneOrCreate(GuildModel, { id: guildId });
+		const { Guild } = await import("@/models/GuildModel.js");
+		const guildData = await this.adapter.findOneOrCreate(Guild, { id: guildId });
 
 		return guildData;
 	}
 
 	async getUserData(userID: string) {
-		const { default: UserModel } = await import("@/models/UserModel.js");
-		const userData = await this.adapter.findOneOrCreate(UserModel, { id: userID });
+		const { User } = await import("@/models/UserModel.js");
+		const userData = await this.adapter.findOneOrCreate(User, { id: userID });
 
 		return userData;
 	}
 
 	async getUsersData() {
-		const { default: UserModel } = await import("@/models/UserModel.js");
-		const usersData = await this.adapter.find(UserModel);
+		const { User } = await import("@/models/UserModel.js");
+		const usersData = await this.adapter.find(User);
 
 		return usersData;
 	}
 
 	async getMemberData(memberId: string, guildID: string) {
-		const { default: MemberModel } = await import("@/models/MemberModel.js");
-		const memberData = await this.adapter.findOneOrCreate(MemberModel, {
+		const { Member } = await import("@/models/MemberModel.js");
+		const memberData = await this.adapter.findOneOrCreate(Member, {
 			id: memberId,
 			guildID,
 		});
 
 		const guildData = await this.getGuildData(guildID);
+		const isMemberInGuild = await guildData.hasMember(memberData.id, this.adapter.em);
 
-		if (!guildData.members.includes(memberData._id)) {
-			guildData.members.push(memberData._id);
+		if (!isMemberInGuild) {
+			guildData.members.push(memberData);
 			await guildData.save();
 		}
 
@@ -91,8 +92,8 @@ export class ExtendedClient extends Client<true> {
 	}
 
 	async getMembersData(guildID: string) {
-		const { default: MemberModel } = await import("@/models/MemberModel.js");
-		const membersData = await this.adapter.find(MemberModel, {
+		const { Member } = await import("@/models/MemberModel.js");
+		const membersData = await this.adapter.find(Member, {
 			guildID,
 		});
 

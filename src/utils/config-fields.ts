@@ -1,5 +1,5 @@
 import { translateContext } from "@/helpers/functions.js";
-import GuildModel from "@/models/GuildModel.js";
+import { Guild } from "@/models/GuildModel.js";
 import { APIEmbedField, ChatInputCommandInteraction } from "discord.js";
 
 enum ConfigFieldsType {
@@ -74,7 +74,7 @@ const processGroupField = async (
 
 export const generateFields = async (
 	interaction: ChatInputCommandInteraction,
-	guildData: InstanceType<typeof GuildModel>,
+	guildData: InstanceType<typeof Guild>,
 ) => {
 	const fieldsConfig: ConfigField[] = [
 		{
@@ -82,14 +82,14 @@ export const generateFields = async (
 			nameKey: "administration/config:WELCOME_TITLE",
 			valueKey: "administration/config:WELCOME_CONTENT",
 			enabled: guildData.plugins.welcome.enabled,
-			data: { channel: guildData.plugins.welcome.channel },
+			data: { channel: guildData.plugins.welcome.channel! },
 		},
 		{
 			type: ConfigFieldsType.plugin,
 			nameKey: "administration/config:GOODBYE_TITLE",
 			valueKey: "administration/config:GOODBYE_CONTENT",
 			enabled: guildData.plugins.goodbye.enabled,
-			data: { channel: guildData.plugins.goodbye.channel },
+			data: { channel: guildData.plugins.goodbye.channel! },
 		},
 		{
 			type: ConfigFieldsType.group,
@@ -97,12 +97,12 @@ export const generateFields = async (
 			items: [
 				{
 					key: "administration/config:MESSAGEUPDATE",
-					path: guildData.plugins.monitoring.messageUpdate,
+					path: guildData.plugins.monitoring.messageUpdate!,
 					format: "channel",
 				},
 				{
 					key: "administration/config:MESSAGEDELETE",
-					path: guildData.plugins.monitoring.messageDelete,
+					path: guildData.plugins.monitoring.messageDelete!,
 					format: "channel",
 				},
 			],
@@ -113,37 +113,37 @@ export const generateFields = async (
 			items: [
 				{
 					key: "administration/config:BIRTHDAYS",
-					path: guildData.plugins.birthdays,
+					path: guildData.plugins.birthdays!,
 					format: "channel",
 				},
 				{
 					key: "administration/config:MODLOGS",
-					path: guildData.plugins.modlogs,
+					path: guildData.plugins.modlogs!,
 					format: "channel",
 				},
 				{
 					key: "administration/config:REPORTS",
-					path: guildData.plugins.reports,
+					path: guildData.plugins.reports!,
 					format: "channel",
 				},
 				{
 					key: "administration/config:SUGGESTIONS",
-					path: guildData.plugins.suggestions,
+					path: guildData.plugins.suggestions!,
 					format: "channel",
 				},
 				{
 					key: "administration/config:TICKETSCATEGORY",
-					path: guildData.plugins.tickets.ticketsCategory,
+					path: guildData.plugins.tickets.ticketsCategory!,
 					format: "channel",
 				},
 				{
 					key: "administration/config:TICKETLOGS",
-					path: guildData.plugins.tickets.ticketLogs,
+					path: guildData.plugins.tickets.ticketLogs!,
 					format: "channel",
 				},
 				{
 					key: "administration/config:TRANSCRIPTIONLOGS",
-					path: guildData.plugins.tickets.transcriptionLogs,
+					path: guildData.plugins.tickets.transcriptionLogs!,
 					format: "channel",
 				},
 			],
