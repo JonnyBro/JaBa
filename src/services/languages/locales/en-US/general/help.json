@@ -2,13 +2,16 @@
 	"DESCRIPTION": "Shows a list of commands or help for a specific command",
 	"USAGE": "(command)",
 	"EXAMPLES": "help\nhelp command:ping",
+
 	"NOT_FOUND": "Command {{command}} not found",
 	"COMMANDS_IN": "Available commands in category \"{{category}}\":",
+
 	"FIELD_USAGE": "Usage",
 	"FIELD_DESCRIPTION": "Description",
 	"FIELD_EXAMPLES": "Examples",
+
 	"CMD_TITLE": "Help for {{cmd}}",
-	"INFO": "● To get help for a specific command, use `/help [command:command_name]`",
+	"INFO": "● To get help for a specific command, use `/help [command]`",
 	"FIELD_PERMISSIONS": "Required Permissions",
 	"NO_REQUIRED_PERMISSION": "No special permissions required",
 	"TITLE": "{{name}} | Commands",
