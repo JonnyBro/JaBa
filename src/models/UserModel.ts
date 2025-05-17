@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { Schema, model } from "mongoose";
 import { createCanvas, loadImage } from "@napi-rs/canvas";
 
@@ -8,6 +7,14 @@ export type UserReminds = {
 	sendAt: number;
 };
 
+export type Achievement = {
+	achieved: boolean;
+	progress: {
+		now: number;
+		total: number;
+	};
+};
+
 interface IUserSchema {
 	id: string;
 	rep: number;
@@ -15,33 +22,12 @@ interface IUserSchema {
 	birthdate: number | null;
 	lover: string;
 	registeredAt: number;
-	achievements: {
-		[key: string]: {
-			achieved: boolean;
-			progress: {
-				now: number;
-				total: number;
-			};
-		};
-	};
+	achievements: Record<string, Achievement>;
 	cooldowns: {
 		rep: number;
 	};
-	afk: string;
 	reminds: UserReminds[];
-	logged: boolean;
-	apiToken: string;
 }
-
-const genToken = () => {
-	let token = "";
-	const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzy0123456789.-_";
-	for (let i = 0; i < 32; i++) {
-		token += characters.charAt(Math.floor(Math.random() * characters.length));
-	}
-
-	return token;
-};
 
 const userSchema = new Schema<IUserSchema>({
 	id: { type: String, required: true },
@@ -115,7 +101,6 @@ const userSchema = new Schema<IUserSchema>({
 		},
 	},
 
-	afk: { type: String, default: null },
 	reminds: [
 		{
 			type: Object,
@@ -126,8 +111,6 @@ const userSchema = new Schema<IUserSchema>({
 			},
 		},
 	],
-	logged: { type: Boolean, default: false },
-	apiToken: { type: String, default: genToken() },
 });
 
 userSchema.method("getAchievementsImage", async function () {
@@ -136,25 +119,39 @@ userSchema.method("getAchievementsImage", async function () {
 
 	const images = [
 		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.work.achieved ? "_colored" : ""}1.png`,
+			`./assets/img/achievements/achievement${
+				this.achievements.work.achieved ? "_colored" : ""
+			}1.png`,
 		),
 		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.firstCommand.achieved ? "_colored" : ""}2.png`,
+			`./assets/img/achievements/achievement${
+				this.achievements.firstCommand.achieved ? "_colored" : ""
+			}2.png`,
 		),
 		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.married.achieved ? "_colored" : ""}3.png`,
+			`./assets/img/achievements/achievement${
+				this.achievements.married.achieved ? "_colored" : ""
+			}3.png`,
 		),
 		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.slots.achieved ? "_colored" : ""}4.png`,
+			`./assets/img/achievements/achievement${
+				this.achievements.slots.achieved ? "_colored" : ""
+			}4.png`,
 		),
 		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.tip.achieved ? "_colored" : ""}5.png`,
+			`./assets/img/achievements/achievement${
+				this.achievements.tip.achieved ? "_colored" : ""
+			}5.png`,
 		),
 		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.rep.achieved ? "_colored" : ""}6.png`,
+			`./assets/img/achievements/achievement${
+				this.achievements.rep.achieved ? "_colored" : ""
+			}6.png`,
 		),
 		await loadImage(
-			`./assets/img/achievements/achievement${this.achievements.invite.achieved ? "_colored" : ""}7.png`,
+			`./assets/img/achievements/achievement${
+				this.achievements.invite.achieved ? "_colored" : ""
+			}7.png`,
 		),
 	];
 	let dim = 0;

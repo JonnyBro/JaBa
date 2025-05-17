@@ -39,8 +39,6 @@ export async function run(message: Message) {
 	}
 
 	await updateXp(message);
-	await checkAfkStatus(message);
-	await checkMentionedUsersAfk(message);
 
 	return;
 }
@@ -116,30 +114,6 @@ async function handleLinkQuote(message: Message, regexp: RegExp) {
 		await message.reply({ embeds: [embed], components: [row] });
 	} catch (e) {
 		logger.error(e);
-	}
-}
-
-async function checkAfkStatus(message: Message) {
-	const data = await client.getUserData(message.author.id);
-
-	if (data.afk) {
-		data.afk = "";
-		await data.save();
-
-		await replyTranslated(message, "general/afk:DELETED", null, { mention: true });
-	}
-}
-
-async function checkMentionedUsersAfk(message: Message) {
-	for (const user of message.mentions.users.values()) {
-		const userData = await client.getUserData(user.id);
-
-		if (userData.afk) {
-			await replyTranslated(message, "general/afk:IS_AFK", {
-				user: user.toString(),
-				message: userData.afk,
-			}, { mention: true });
-		}
 	}
 }
 
