@@ -126,7 +126,7 @@ async function checkAfkStatus(message: Message) {
 		data.afk = "";
 		await data.save();
 
-		await replyTranslated(message, "general/afk:DELETED");
+		await replyTranslated(message, "general/afk:DELETED", null, { mention: true });
 	}
 }
 
@@ -135,10 +135,10 @@ async function checkMentionedUsersAfk(message: Message) {
 		const userData = await client.getUserData(user.id);
 
 		if (userData.afk) {
-			replyTranslated(message, "general/afk:IS_AFK", {
+			await replyTranslated(message, "general/afk:IS_AFK", {
 				user: user.toString(),
 				message: userData.afk,
-			});
+			}, { mention: true });
 		}
 	}
 }
