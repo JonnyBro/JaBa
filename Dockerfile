@@ -27,9 +27,5 @@ COPY package.json pnpm-lock.yaml ./
 # Install only production dependencies
 RUN pnpm install --frozen-lockfile --prod
 
-# Copy additional files
-COPY --from=builder /app/src/services/languages/locales ./dist/services/languages/locales
-COPY --from=builder /app/src/assets ./dist/assets
-
 # Run the application
 CMD ["node", "dist/index.js"]
