@@ -1,10 +1,12 @@
 import { REST, Routes } from "discord.js";
-import { token } from "./config.json";
+import { clientId, token } from "./config.json";
 
-const clientId = "bots_client_id"; // You'r bot's client id
+if (!clientId) throw new Error("clientId is not defined in the config");
+if (!token) throw new Error("token is not defined in the config");
+
 const rest = new REST().setToken(token);
 
 // Delete all commands
 rest.put(Routes.applicationCommands(clientId), { body: [] })
-	.then(() => console.log("Successfully deleted all application commands."))
+	.then(() => console.log("Successfully deleted all application commands"))
 	.catch(console.error);
