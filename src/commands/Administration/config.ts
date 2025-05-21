@@ -1,5 +1,6 @@
 import { getLocalizedDesc, translateContext } from "@/helpers/functions.js";
 import GuildModel from "@/models/GuildModel.js";
+import languageMeta from "@/services/languages/language-meta.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { generateFields } from "@/utils/config-fields.js";
 import { createEmbed } from "@/utils/create-embed.js";
@@ -16,6 +17,12 @@ import {
 } from "discord.js";
 
 const client = useClient();
+
+const localeChoises = client.i18n.SupportedLanguages.map(lng => {
+	const name = languageMeta.find(l => l.locale === lng)!.name;
+
+	return { name, value: lng };
+});
 
 export const data: CommandData = {
 	name: "config",
@@ -41,11 +48,7 @@ export const data: CommandData = {
 					...getLocalizedDesc("common:LANGUAGE"),
 					type: ApplicationCommandOptionType.String,
 					required: true,
-					choices: [
-						{ name: "English", value: "en-US" },
-						{ name: "Русский", value: "ru-RU" },
-						{ name: "Українська", value: "uk-UA" },
-					],
+					choices: localeChoises,
 				},
 			],
 		},
@@ -135,7 +138,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	if (command === "language") {
 		const selectedLang = interaction.options.getString("language", true);
-		const lang = client.i18n.getSupportedLanguages.find(l => l === selectedLang)!;
+		const lang = client.i18n.SupportedLanguages.find(l => l === selectedLang)!;
+		const langName = languageMeta.find(l => l.locale === lang)!.nativeName;
 
 		guildData.language = lang;
 
@@ -148,7 +152,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			},
 			description: await translateContext(interaction, "administration/config:LANG_SUCCESS", {
 				flag: `:flag_${lang.split("-")[1].toLowerCase()}:`,
-				lang,
+				lang: langName,
 			}),
 		});
 
