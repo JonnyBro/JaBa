@@ -60,5 +60,5 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	setTimeout(() => {
 		interaction.editReply({ embeds: [embed] });
-	}, 5000);
+	}, 2500);
 };

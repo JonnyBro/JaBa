@@ -137,7 +137,7 @@ export const getLocale = async (guildId: string) => {
 export const getLocalizedDesc = (key: string) => {
 	const client = useClient();
 
-	const locals = client.i18n.getSupportedLanguages.reduce(
+	const locals = client.i18n.SupportedLanguages.reduce(
 		(acc, lng) => {
 			const splitted = lng.split("-")[0];
 			const short = localeExcludes.includes(splitted) ? lng : splitted;

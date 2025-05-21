@@ -47,8 +47,12 @@ export interface SlashCommandProps extends CommandProps {
 	interaction: ChatInputCommandInteraction;
 }
 
-export interface ContextCommandProps extends CommandProps {
-	interaction: UserContextMenuCommandInteraction | MessageContextMenuCommandInteraction;
+export interface UserContextCommandProps extends CommandProps {
+	interaction: UserContextMenuCommandInteraction;
+}
+
+export interface MessageContextCommandProps extends CommandProps {
+	interaction: MessageContextMenuCommandInteraction;
 }
 
 export interface AutocompleteProps extends CommandProps {

@@ -4,8 +4,10 @@ import useClient from "@/utils/use-client.js";
 import {
 	ApplicationCommandOptionType,
 	ApplicationIntegrationType,
+	ChatInputCommandInteraction,
 	GuildMember,
 	InteractionContextType,
+	MessageContextMenuCommandInteraction,
 } from "discord.js";
 
 const client = useClient();
@@ -30,9 +32,18 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
 	const member = interaction.member as GuildMember;
-
 	if (!member.voice.channel) return editReplyError(interaction, "music/play:NO_VOICE_CHANNEL");
 
+	const query = interaction.options.getString("query", true);
+
+	await playQuery(interaction, member, query);
+};
+
+export const playQuery = async (
+	interaction: ChatInputCommandInteraction | MessageContextMenuCommandInteraction,
+	member: GuildMember,
+	query: string,
+) => {
 	const player = await client.rainlink.create({
 		guildId: interaction.guildId!,
 		textId: interaction.channelId,
@@ -41,8 +52,6 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		shardId: 0,
 		deaf: true,
 	});
-
-	const query = interaction.options.getString("query", true);
 
 	const res = await client.rainlink.search(query, {
 		requester: interaction.user,
@@ -61,13 +70,9 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	if (!player.playing) await player.play();
 
-	editReplySuccess(
-		interaction,
-		`music/play:ADDED_${isPlaylist ? "PLAYLIST" : "TRACK"}`,
-		{
-			count: res.tracks.length,
-			name: res.playlistName || res.tracks[0].title,
-			url: isPlaylist ? query : res.tracks[0].uri,
-		},
-	);
+	editReplySuccess(interaction, `music/play:ADDED_${isPlaylist ? "PLAYLIST" : "TRACK"}`, {
+		count: res.tracks.length,
+		name: res.playlistName || res.tracks[0].title,
+		url: isPlaylist ? query : res.tracks[0].uri,
+	});
 };
