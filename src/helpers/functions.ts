@@ -6,6 +6,8 @@ import {
 	GuildMember,
 	Interaction,
 	InteractionReplyOptions,
+	Locale,
+	LocalizationMap,
 	Message,
 	MessageFlags,
 	User,
@@ -18,6 +20,9 @@ interface Options extends InteractionReplyOptions {
 	ephemeral?: boolean;
 	mention?: boolean;
 }
+
+// According to https://discord.com/developers/docs/reference#locales
+const localeExcludes = ["en", "es", "pt", "sv", "zh"];
 
 const getAppEmojis = () => {
 	const client = useClient();
@@ -131,13 +136,21 @@ export const getLocale = async (guildId: string) => {
 
 export const getLocalizedDesc = (key: string) => {
 	const client = useClient();
+
+	const locals = client.i18n.getSupportedLanguages.reduce(
+		(acc, lng) => {
+			const splitted = lng.split("-")[0];
+			const short = localeExcludes.includes(splitted) ? lng : splitted;
+			acc[short as Locale] = client.i18n.translate(key, { lng });
+			return acc;
+		},
+		{} as LocalizationMap,
+	);
+
 	return {
 		description: client.i18n.translate(key),
 		// eslint-disable-next-line camelcase
-		description_localizations: {
-			ru: client.i18n.translate(key, { lng: "ru-RU" }),
-			uk: client.i18n.translate(key, { lng: "uk-UA" }),
-		},
+		description_localizations: locals,
 	};
 };
 
