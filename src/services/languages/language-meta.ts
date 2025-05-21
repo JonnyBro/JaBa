@@ -1,18 +1,18 @@
 export default [
 	{
-		name: "en-US",
+		name: "English",
 		nativeName: "English",
 		locale: "en-US",
 		format: "HH:mm:ss, MMMM Do YYYY",
 	},
 	{
-		name: "ru-RU",
+		name: "Russian",
 		nativeName: "Русский",
 		locale: "ru-RU",
 		format: "HH:mm:ss, Do MMMM YYYY",
 	},
 	{
-		name: "uk-UA",
+		name: "Ukrainian",
 		nativeName: "Українська",
 		locale: "uk-UA",
 		format: "HH:mm:ss, Do MMMM YYYY",

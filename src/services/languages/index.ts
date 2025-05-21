@@ -33,7 +33,7 @@ export default class InternationalizationService {
 		this.init();
 	}
 
-	get getSupportedLanguages(): string[] {
+	get SupportedLanguages(): string[] {
 		return supportedLanguages.map(lang => lang.locale);
 	}
 
