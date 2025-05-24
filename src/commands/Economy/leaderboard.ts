@@ -88,8 +88,8 @@ async function renderLeaderboard(
 
 	container
 		.addTextDisplayComponents(title)
-		.addTextDisplayComponents(subtitle)
 		.addSeparatorComponents(s => s.setSpacing(SeparatorSpacingSize.Small))
+		.addTextDisplayComponents(subtitle)
 		.addTextDisplayComponents(new TextDisplayBuilder().setContent(tableContent));
 
 	return container;

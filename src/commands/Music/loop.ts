@@ -51,5 +51,5 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			break;
 	}
 
-	editReplySuccess(interaction, `music/loop:SUCCESS_${mode.toUpperCase()}`);
+	await editReplySuccess(interaction, `music/loop:SUCCESS_${mode.toUpperCase()}`);
 };
