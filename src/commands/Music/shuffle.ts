@@ -22,5 +22,5 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	player.queue.shuffle();
 
-	editReplySuccess(interaction, "music/shuffle:SUCCESS");
+	await editReplySuccess(interaction, "music/shuffle:SUCCESS");
 };

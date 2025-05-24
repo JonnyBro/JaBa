@@ -23,5 +23,5 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	await player.previous();
 
-	editReplySuccess(interaction, "music/back:SUCCESS");
+	await editReplySuccess(interaction, "music/back:SUCCESS");
 };

@@ -255,7 +255,7 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 		const embed = createEmbed({
 			title: await translateContext(interaction, "music/nowplaying:CURRENTLY_PLAYING"),
 		})
-			.setThumbnail(currentTrack.artworkUrl || null)
+			.setThumbnail(currentTrack?.artworkUrl || null)
 			.setDescription(
 				`${await translateContext(interaction, "music/nowplaying:REPEAT")}: \`${
 					translated[player.loop]
@@ -304,7 +304,7 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 		const embed = createEmbed({
 			title: await translateContext(interaction, "music/nowplaying:CURRENTLY_PLAYING"),
 		})
-			.setThumbnail(currentTrack.artworkUrl || null)
+			.setThumbnail(currentTrack?.artworkUrl || null)
 			.setDescription(
 				`${await translateContext(interaction, "music/queue:DURATION", {
 					time: formattedTotalDuration,

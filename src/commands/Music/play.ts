@@ -70,7 +70,7 @@ export const playQuery = async (
 
 	if (!player.playing) await player.play();
 
-	editReplySuccess(interaction, `music/play:ADDED_${isPlaylist ? "PLAYLIST" : "TRACK"}`, {
+	await editReplySuccess(interaction, `music/play:ADDED_${isPlaylist ? "PLAYLIST" : "TRACK"}`, {
 		count: res.tracks.length,
 		name: res.playlistName || res.tracks[0].title,
 		url: isPlaylist ? query : res.tracks[0].uri,
