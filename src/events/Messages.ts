@@ -38,7 +38,7 @@ export async function run(message: Message) {
 		return await handleLinkQuote(message, QUOTE_REGEXP);
 	}
 
-	await updateXp(message);
+	if (message.content.length > 3) await updateXp(message);
 
 	return;
 }
