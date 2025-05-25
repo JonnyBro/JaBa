@@ -15,7 +15,6 @@
     "dependencies": {
         "@discordjs/opus": "^0.10.0",
         "@discordjs/voice": "^0.18.0",
-        "@napi-rs/canvas": "^0.1.68",
         "chalk": "^5.4.1",
         "cpx": "^1.5.0",
         "cron": "^4.1.0",

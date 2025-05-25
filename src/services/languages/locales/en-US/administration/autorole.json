@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Toggles automatic role assignment upon joining the server",
-	"USAGE": "[state] (@role)",
-	"EXAMPLES": "autorole state:True role:@newbie\nautorole state:False",
-	"TOGGLE": "Toggle autorole",
-	"ROLE": "Select role",
-	"ENABLED": "Role assignment is enabled!\nNew users will automatically receive the {{role}} upon joining the server",
-	"DISABLED": "Role assignment is disabled"
-}
