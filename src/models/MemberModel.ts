@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-interface Transaction {
+export interface Transaction {
 	user: string;
 	amount: number;
 	date: number;
@@ -21,12 +21,6 @@ export interface IMemberSchema {
 		work: number;
 		rob: number;
 	};
-	sanctions: any[][];
-	mute: {
-		muted: boolean;
-		case: string | null;
-		endDate: number | null;
-	};
 }
 
 const memberSchema = new Schema<IMemberSchema>({
@@ -44,15 +38,6 @@ const memberSchema = new Schema<IMemberSchema>({
 		default: {
 			work: 0,
 			rob: 0,
-		},
-	},
-	sanctions: [],
-	mute: {
-		type: Object,
-		default: {
-			muted: false,
-			case: null,
-			endDate: null,
 		},
 	},
 });

@@ -67,8 +67,12 @@ export class EventHandler {
 
 	$registerEvents() {
 		this.events.forEach(event => {
-			if (event.data.once) this.client.once(event.data.name, event.run);
-			else this.client.on(event.data.name, event.run);
+			if (event.data.player) {
+				this.client.rainlink.addListener(event.data.name, event.run);
+			} else {
+				if (event.data.once) this.client.once(event.data.name, event.run);
+				else this.client.on(event.data.name, event.run);
+			}
 		});
 	}
 }

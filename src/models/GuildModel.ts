@@ -3,12 +3,19 @@ import useClient from "@/utils/use-client.js";
 
 const client = useClient();
 
+export interface GuildReconnectInfo {
+	status: boolean;
+	text: string | null;
+	voice: string | null;
+}
+
 export interface IGuildSchema {
 	id: string;
 	membersData: Record<string, any>;
 	members: Types.ObjectId[];
 	language: string;
 	plugins: any;
+	reconnects: GuildReconnectInfo;
 }
 
 const GuildSchema = new Schema<IGuildSchema>({
@@ -40,10 +47,14 @@ const GuildSchema = new Schema<IGuildSchema>({
 				transcriptionLogs: null,
 				ticketsCategory: null,
 			},
-			suggestions: null,
-			reports: null,
-			birthdays: null,
-			modlogs: null,
+		},
+	},
+	reconnects: {
+		type: Object,
+		default: {
+			status: false,
+			text: null,
+			voice: null,
 		},
 	},
 });

@@ -54,16 +54,16 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		.setLabel(label)
 		.setStyle(ButtonStyle.Success);
 
-	if (emoji) button.setEmoji(emoji.replace(/\s+/g, ""));
+	if (emoji) button.setEmoji(emoji.trim());
 
 	const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
 
 	if (interaction.channel?.isSendable()) {
-		interaction.channel.send({
+		await interaction.channel.send({
 			embeds: [embed],
 			components: [row],
 		});
 	}
 
-	editReplySuccess(interaction, "tickets/ticketsembed:SUCCESS");
+	await editReplySuccess(interaction, "tickets/ticketsembed:SUCCESS");
 };

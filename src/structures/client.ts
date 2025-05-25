@@ -26,21 +26,6 @@ export class ExtendedClient extends Client<true> {
 
 		new Handlers(this);
 
-		this.rainlink.on("nodeConnect", node =>
-			logger.ready(`Lavalink node ${node.options.name}: Ready!`),
-		);
-		this.rainlink.on("nodeDisconnect", (node, code, reason) => {
-			logger.warn(`Lavalink node ${
-				node.options.name
-			}: Disconnected, Code ${code}, Reason ${reason || "No reason"}`);
-		});
-		this.rainlink.on("nodeClosed", node =>
-			logger.warn(`Lavalink node ${node.options.name}: Closed`),
-		);
-		this.rainlink.on("nodeError", (node, error) =>
-			logger.error(`Lavalink node ${node.options.name}: Error Caught `, error),
-		);
-
 		SUPER_CONTEXT.enterWith(this);
 	}
 
