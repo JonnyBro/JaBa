@@ -6,7 +6,6 @@ if (!token) throw new Error("token is not defined in the config");
 
 const rest = new REST().setToken(token);
 
-// Delete all commands
 rest.put(Routes.applicationCommands(clientId), { body: [] })
 	.then(() => console.log("Successfully deleted all application commands"))
 	.catch(console.error);
