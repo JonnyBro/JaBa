@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Removes timeout from a user",
-	"USAGE": "[@user]",
-	"EXAMPLES": "untimeout user:@jonny_bro",
-	"NOT_TIMEDOUT": "This user is not currently timed out",
-	"SUCCESS": "Timeout for {{user}} has been removed"
-}

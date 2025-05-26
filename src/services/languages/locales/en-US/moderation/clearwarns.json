@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Removes all warnings from a user",
-	"USAGE": "[@user]",
-	"EXAMPLES": "clearwarns user:@jonny_bro",
-	"SUCCESS": "Warnings of user {{user}} have been cleared"
-}

@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Shows a list of user's violations",
-	"USAGE": "[@user]",
-	"EXAMPLES": "warns user:@jonny_bro",
-	"SANCTIONS_OF": "Violations of {{member}}",
-	"NO_SANCTIONS": "**{{member}}** has no violations"
-}

@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Показати список порушень користувача",
-	"USAGE": "[@user]",
-	"EXAMPLES": "warns user:@jonny_bro",
-	"SANCTIONS_OF": "Порушення {{member}}",
-	"NO_SANCTIONS": "**{{member}}** не має порушень"
-}

@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Unban a user on the server",
-	"USAGE": "[user_id]",
-	"EXAMPLES": "unban user_id:281361531411890186",
-	"NOT_BANNED": "User with ID **{{id}}** not found",
-	"UNBANNED": "**{{id}}** has been unbanned"
-}

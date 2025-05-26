@@ -15,5 +15,6 @@
 	"ADDED_PLAYLIST": "Added {{count}} tracks from [{{name}}](<{{url}}>) to the queue",
 	"STOP_DISCONNECTED": "Playback stopped because I left the voice channel",
 	"STOP_EMPTY": "Playback stopped because everyone has left the voice channel",
-	"ERR_OCCURRED": "An error occurred, skipping track..."
+	"ERR_OCCURRED_QUEUE": "An error occurred, skipping track...",
+	"ERR_OCCURRED_EMPTY": "An error occurred, stopping queue..."
 }
