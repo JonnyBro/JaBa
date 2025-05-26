@@ -12,9 +12,7 @@ type ConfigPluginField = {
 	nameKey: string;
 	valueKey: string;
 	enabled: boolean;
-	data: {
-		channel: string;
-	};
+	data: any;
 };
 
 type ConfigGroupField = {
@@ -72,7 +70,6 @@ const processGroupField = async (
 	return { name, value: lines.join("\n"), inline: false };
 };
 
-// TODO: Rewrite to new config
 export const generateFields = async (
 	interaction: ChatInputCommandInteraction,
 	guildData: InstanceType<typeof GuildModel>,
@@ -81,9 +78,9 @@ export const generateFields = async (
 		{
 			type: ConfigFieldsType.plugin,
 			nameKey: "administration/config:AUTOPLAY",
-			valueKey: "something",
+			valueKey: "common:ENABLED",
 			enabled: guildData.plugins.music.autoPlay,
-			data: { channel: "123123817356133456" },
+			data: { channel: "" },
 		},
 		{
 			type: ConfigFieldsType.group,

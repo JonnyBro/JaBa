@@ -97,8 +97,8 @@ ${await translateContext(interaction, "economy/profile:REGISTERED", {
 		.addSectionComponents(
 			new SectionBuilder()
 				.setThumbnailAccessory(t =>
-					t.setURL( // NOTE: need a better solution for a fallback image
-						user.avatarURL() || "https://discord.com/assets/18e336a74a159cfd.png",
+					t.setURL(
+						user.avatarURL() || client.user.avatarURL()!,
 					),
 				)
 				.addTextDisplayComponents(
