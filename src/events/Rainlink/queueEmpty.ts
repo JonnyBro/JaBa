@@ -26,10 +26,13 @@ export async function run(player: RainlinkPlayerCustom, queue: RainlinkQueue) {
 		const track = player.queue.previous[0];
 		if (!track) return;
 
-		const trackRadioLink = `https://music.youtube.com/watch?v=${
+		const trackRadioLink = track.source === "youtube" ? `https://music.youtube.com/watch?v=${
 			track.identifier
-		}&list=RD${track.identifier}`;
-		const res = await client.rainlink.search(trackRadioLink, { requester: track.requester });
+		}&list=RD${track.identifier}` : track.title;
+		const res = await client.rainlink.search(trackRadioLink, {
+			requester: track.requester,
+			engine: "youtube",
+		});
 
 		if (!res || !res.tracks) {
 			if (debug) {
