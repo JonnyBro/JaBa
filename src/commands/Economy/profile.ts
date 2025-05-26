@@ -66,7 +66,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		globalMoney += data.money + data.bankSold;
 	});
 
-	const lover = client.users.cache.get(userData.lover);
+	const lover = userData.lover ? client.users.cache.get(userData.lover) : undefined;
 	const notDefined = await translateContext(interaction, "common:NOT_DEFINED");
 
 	const content = `

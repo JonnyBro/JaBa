@@ -20,7 +20,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const player = client.rainlink.players.get(interaction.guildId!);
 	if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
 
-	await player.stop(true);
+	await player.stop(false);
 
 	await editReplySuccess(interaction, "music/stop:SUCCESS");
 };

@@ -51,12 +51,18 @@ export default class MongooseAdapter extends IDatabaseAdapter<
 		query: FilterQuery<TSchema> = {},
 		options: QueryOptions = {},
 	): Promise<TDoc[]> {
-		const cacheKey = this.#generateCacheKey(model.modelName, query, options);
+		const cacheKey = this.#generateCacheKey(model.modelName, query, {
+			new: true,
+			runValidators: true,
+			...options,
+		});
 		if (this.cache.get(cacheKey)) {
 			return this.cache.get(cacheKey);
 		}
 
-		const result = await model.find(query, null, options).exec();
+		const result = await model
+			.find(query, null, { new: true, runValidators: true, ...options })
+			.exec();
 		this.cache.set(cacheKey, result);
 		return result as TDoc[];
 	}
@@ -69,12 +75,18 @@ export default class MongooseAdapter extends IDatabaseAdapter<
 		query: FilterQuery<TSchema> = {},
 		options: QueryOptions = {},
 	): Promise<TDoc | null> {
-		const cacheKey = this.#generateCacheKey(model.modelName, query, options);
+		const cacheKey = this.#generateCacheKey(model.modelName, query, {
+			new: true,
+			runValidators: true,
+			...options,
+		});
 		if (this.cache.get(cacheKey)) {
 			return this.cache.get(cacheKey);
 		}
 
-		const result = await model.findOne(query, null, options).exec();
+		const result = await model
+			.findOne(query, null, { new: true, runValidators: true, ...options })
+			.exec();
 		this.cache.set(cacheKey, result);
 		return result as TDoc;
 	}
@@ -85,7 +97,9 @@ export default class MongooseAdapter extends IDatabaseAdapter<
 		update: UpdateQuery<TSchema>,
 		options = {},
 	) {
-		const result = await model.updateOne(filter, update, options).exec();
+		const result = await model
+			.updateOne(filter, update, { new: true, runValidators: true, ...options })
+			.exec();
 		this.cache.clear();
 		return result;
 	}

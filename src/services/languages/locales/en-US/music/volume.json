@@ -2,5 +2,7 @@
 	"DESCRIPTION": "Sets the volume of the bot",
 	"USAGE": "[int]",
 	"EXAMPLES": "volume 50",
-	"SUCCESS": "Volume set to **{{volume}}**"
+	"SUCCESS": "Volume set to **{{volume}}**",
+	"TOO_MUCH": "Volume can't go above 100",
+	"TOO_LOW": "Volume can't go below 0"
 }

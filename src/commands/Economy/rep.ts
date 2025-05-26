@@ -47,11 +47,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const toWait = Math.floor((Date.now() + 12 * 60 * 60 * 1000) / 1000); // 12 hours
 	if (!userData.cooldowns) userData.cooldowns = { rep: 0 };
 
-	userData.cooldowns.rep = toWait;
-
 	const otherUserData = await client.getUserData(user.id);
 
-	otherUserData.rep++;
+	otherUserData.set("rep", otherUserData.rep + 1);
+	userData.set("cooldowns.rep", toWait);
 
 	if (!otherUserData.achievements.rep.achieved) {
 		otherUserData.achievements.rep.progress.now =
@@ -65,12 +64,6 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			otherUserData.achievements.rep.achieved = true;
 			interaction.followUp({
 				content: user.toString(),
-				files: [
-					{
-						name: "achievement_unlocked6.png",
-						attachment: "./assets/img/achievements/achievement_unlocked6.png",
-					},
-				],
 			});
 		}
 	}

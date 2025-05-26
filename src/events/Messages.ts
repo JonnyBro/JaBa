@@ -123,7 +123,7 @@ async function updateXp(message: Message) {
 
 	if (isInCooldown && isInCooldown > Date.now()) return;
 
-	const toWait = Date.now() + 30_000; // 30 sec
+	const toWait = Date.now() + 15_000; // 15 sec
 	xpCooldown[message.author.id] = toWait;
 
 	const won = randomNum(1, 3);
@@ -131,12 +131,14 @@ async function updateXp(message: Message) {
 	const neededXp = getXpForNextLevel(memberData.level);
 
 	if (newXp > neededXp) {
-		memberData.level += 1;
-		memberData.exp = 0;
+		memberData.set({
+			level: memberData.level + 1,
+			exp: 0,
+		});
 
 		await replyTranslated(message, "misc:LEVEL_UP", { level: memberData.level });
 	} else {
-		memberData.exp = newXp;
+		memberData.set("exp", newXp);
 	}
 
 	await memberData.save();

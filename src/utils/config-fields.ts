@@ -72,6 +72,7 @@ const processGroupField = async (
 	return { name, value: lines.join("\n"), inline: false };
 };
 
+// TODO: Rewrite to new config
 export const generateFields = async (
 	interaction: ChatInputCommandInteraction,
 	guildData: InstanceType<typeof GuildModel>,
@@ -79,33 +80,10 @@ export const generateFields = async (
 	const fieldsConfig: ConfigField[] = [
 		{
 			type: ConfigFieldsType.plugin,
-			nameKey: "administration/config:WELCOME_TITLE",
-			valueKey: "administration/config:WELCOME_CONTENT",
-			enabled: guildData.plugins.welcome.enabled,
-			data: { channel: guildData.plugins.welcome.channel },
-		},
-		{
-			type: ConfigFieldsType.plugin,
-			nameKey: "administration/config:GOODBYE_TITLE",
-			valueKey: "administration/config:GOODBYE_CONTENT",
-			enabled: guildData.plugins.goodbye.enabled,
-			data: { channel: guildData.plugins.goodbye.channel },
-		},
-		{
-			type: ConfigFieldsType.group,
-			nameKey: "administration/config:MONITORING_CHANNELS",
-			items: [
-				{
-					key: "administration/config:MESSAGEUPDATE",
-					path: guildData.plugins.monitoring.messageUpdate,
-					format: "channel",
-				},
-				{
-					key: "administration/config:MESSAGEDELETE",
-					path: guildData.plugins.monitoring.messageDelete,
-					format: "channel",
-				},
-			],
+			nameKey: "administration/config:AUTOPLAY",
+			valueKey: "something",
+			enabled: guildData.plugins.music.autoPlay,
+			data: { channel: "123123817356133456" },
 		},
 		{
 			type: ConfigFieldsType.group,
@@ -113,37 +91,7 @@ export const generateFields = async (
 			items: [
 				{
 					key: "administration/config:BIRTHDAYS",
-					path: guildData.plugins.birthdays,
-					format: "channel",
-				},
-				{
-					key: "administration/config:MODLOGS",
-					path: guildData.plugins.modlogs,
-					format: "channel",
-				},
-				{
-					key: "administration/config:REPORTS",
-					path: guildData.plugins.reports,
-					format: "channel",
-				},
-				{
-					key: "administration/config:SUGGESTIONS",
-					path: guildData.plugins.suggestions,
-					format: "channel",
-				},
-				{
-					key: "administration/config:TICKETSCATEGORY",
-					path: guildData.plugins.tickets.ticketsCategory,
-					format: "channel",
-				},
-				{
-					key: "administration/config:TICKETLOGS",
-					path: guildData.plugins.tickets.ticketLogs,
-					format: "channel",
-				},
-				{
-					key: "administration/config:TRANSCRIPTIONLOGS",
-					path: guildData.plugins.tickets.transcriptionLogs,
+					path: guildData.plugins.birthdays!,
 					format: "channel",
 				},
 			],

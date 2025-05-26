@@ -10,7 +10,7 @@ export const data: CronTaskData = {
 
 		for (const member of members) {
 			if (member.transactions.length > 20) {
-				member.transactions.length = 20;
+				member.set("transactions", member.transactions.slice(0, 19));
 				await member.save();
 			}
 		}

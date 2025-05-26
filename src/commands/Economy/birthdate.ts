@@ -74,7 +74,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const userData = await client.getUserData(interaction.user.id);
 
 	if (interaction.options.getBoolean("clear")) {
-		userData.birthdate = null;
+		userData.set("birthdate", null);
 		await userData.save();
 
 		return editReplySuccess(interaction, "economy/birthdate:SUCCESS", { date: "none" });
@@ -100,7 +100,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		return editReplyError(interaction, "economy/birthdate:DATE_TOO_LOW");
 	}
 
-	userData.birthdate = d;
+	userData.set("birthdate", d);
 
 	await userData.save();
 

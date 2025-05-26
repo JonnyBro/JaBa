@@ -3,18 +3,17 @@ import { RainlinkNode } from "rainlink";
 
 export const data = {
 	name: "nodeDisconnect",
-	once: true,
 	player: true,
 };
 
 export async function run(
 	node: RainlinkNode,
 	code: number,
-	reason: string | Buffer<ArrayBufferLike>,
+	reason: Buffer | string,
 ) {
 	logger.error(
 		`Lavalink node ${
 			node.options.name
-		}: Disconnected!\nCode: ${code}\nReason: ${reason}`,
+		}: Disconnected!\nCode: ${code}\nReason:\n`, reason,
 	);
 }

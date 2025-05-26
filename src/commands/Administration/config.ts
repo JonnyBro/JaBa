@@ -1,5 +1,4 @@
 import { getLocalizedDesc, translateContext } from "@/helpers/functions.js";
-import GuildModel from "@/models/GuildModel.js";
 import languageMeta from "@/services/languages/language-meta.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { generateFields } from "@/utils/config-fields.js";
@@ -9,7 +8,6 @@ import {
 	ApplicationCommandOptionType,
 	ApplicationIntegrationType,
 	Channel,
-	ChannelType,
 	ChatInputCommandInteraction,
 	InteractionContextType,
 	MessageFlags,
@@ -53,54 +51,10 @@ export const data: CommandData = {
 			],
 		},
 		{
-			name: "set",
-			...getLocalizedDesc("administration/config:SET"),
+			name: "birthdays",
+			...getLocalizedDesc("administration/config:BIRTHDAYS"),
 			type: ApplicationCommandOptionType.Subcommand,
 			options: [
-				{
-					name: "parameter",
-					...getLocalizedDesc("administration/config:PARAMETER"),
-					type: ApplicationCommandOptionType.String,
-					required: true,
-					choices: [
-						{
-							name: client.i18n.translate("administration/config:BIRTHDAYS"),
-							value: "birthdays",
-						},
-						{
-							name: client.i18n.translate("administration/config:MODLOGS"),
-							value: "modlogs",
-						},
-						{
-							name: client.i18n.translate("administration/config:REPORTS"),
-							value: "reports",
-						},
-						{
-							name: client.i18n.translate("administration/config:SUGGESTIONS"),
-							value: "suggestions",
-						},
-						{
-							name: client.i18n.translate("administration/config:TICKETSCATEGORY"),
-							value: "tickets.ticketsCategory",
-						},
-						{
-							name: client.i18n.translate("administration/config:TICKETLOGS"),
-							value: "tickets.ticketLogs",
-						},
-						{
-							name: client.i18n.translate("administration/config:TRANSCRIPTIONLOGS"),
-							value: "tickets.transcriptionLogs",
-						},
-						{
-							name: client.i18n.translate("administration/config:MESSAGEUPDATE"),
-							value: "monitoring.messageUpdate",
-						},
-						{
-							name: client.i18n.translate("administration/config:MESSAGEDELETE"),
-							value: "monitoring.messageDelete",
-						},
-					],
-				},
 				{
 					name: "state",
 					...getLocalizedDesc("common:STATE"),
@@ -114,6 +68,19 @@ export const data: CommandData = {
 				},
 			],
 		},
+		{
+			name: "autoplay",
+			...getLocalizedDesc("administration/config:AUTOPLAY"),
+			type: ApplicationCommandOptionType.Subcommand,
+			options: [
+				{
+					name: "state",
+					...getLocalizedDesc("common:STATE"),
+					type: ApplicationCommandOptionType.Boolean,
+					required: true,
+				},
+			],
+		},
 	],
 };
 
@@ -121,9 +88,9 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
 	const guildData = await client.getGuildData(interaction.guildId!);
-	const command = interaction.options.getSubcommand();
+	const subcommand = interaction.options.getSubcommand();
 
-	if (command === "list") {
+	if (subcommand === "list") {
 		const fields = await generateFields(interaction, guildData);
 		const embed = createEmbed({
 			author: {
@@ -136,13 +103,12 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		return interaction.editReply({ embeds: [embed] });
 	}
 
-	if (command === "language") {
+	if (subcommand === "language") {
 		const selectedLang = interaction.options.getString("language", true);
 		const lang = client.i18n.SupportedLanguages.find(l => l === selectedLang)!;
 		const langName = languageMeta.find(l => l.locale === lang)!.nativeName;
 
-		guildData.language = lang;
-
+		guildData.set("language", lang);
 		await guildData.save();
 
 		const embed = createEmbed({
@@ -159,94 +125,68 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		return interaction.editReply({ embeds: [embed] });
 	}
 
-	const parameter = interaction.options.getString("parameter", true);
 	const state = interaction.options.getBoolean("state", true);
-	const channel = interaction.options.getChannel("channel") as Channel;
+	const channel = interaction.options.getChannel("channel") as Channel || null;
 
-	await changeSetting(interaction, guildData, parameter, state, channel);
+	if (channel) {
+		const reply = await changeSetting(interaction, subcommand, state, channel);
+
+		await interaction.editReply({
+			content: reply,
+		});
+	}
+
+	const reply = await changeSetting(interaction, subcommand, state);
+
+	await interaction.editReply({
+		content: reply,
+	});
 };
-
-async function saveSettings(
-	guildData: InstanceType<typeof GuildModel>,
-	parameter: string,
-	value: unknown,
-) {
-	guildData.plugins[parameter] = value;
-	guildData.markModified(`plugins.${parameter}`);
-
-	await guildData.save();
-}
 
 async function generateReply(
 	interaction: ChatInputCommandInteraction,
-	guildData: InstanceType<typeof GuildModel>,
-	parameter: string,
+	subcommand: string,
 	state: boolean,
-	channel?: Channel | null,
+	channel?: Channel,
 ) {
 	const translatedParam = await translateContext(
 		interaction,
-		`administration/config:${parameter.toUpperCase()}`,
+		`administration/config:${subcommand.toUpperCase()}`,
 	);
 	const enabledText = await translateContext(interaction, "common:ENABLED");
 	const disabledText = await translateContext(interaction, "common:DISABLED");
 
 	if (channel) return `${translatedParam}: **${enabledText}** (${channel.toString()})`;
 
-	return `${translatedParam}: ${
-		state ? `**${enabledText}** (<#${guildData.plugins[parameter]}>)` : `**${disabledText}**`
-	}`;
+	return `${translatedParam}: ${state ? `**${enabledText}**` : `**${disabledText}**`}`;
 }
 
 async function changeSetting(
 	interaction: ChatInputCommandInteraction,
-	guildData: any,
-	parameter: string,
+	subcommand: string,
 	state: boolean,
-	channel?: Channel | null,
+	channel?: Channel,
 ) {
-	const parameterSplitted = parameter.split(".");
-	const isNested = parameterSplitted.length === 2;
+	const guildData = await client.getGuildData(interaction.guildId!);
 
-	if (isNested && guildData.plugins[parameterSplitted[0]] === undefined) {
-		guildData.plugins[parameterSplitted[0]] = {};
+	if (subcommand === "birthdays") {
+		if (!channel) {
+			guildData.set("plugins.birthdays", null);
+			await guildData.save();
+
+			return await generateReply(interaction, subcommand, state);
+		}
+
+		guildData.set("plugins.birthdays", channel.id);
+		await guildData.save();
+
+		return await generateReply(interaction, subcommand, state, channel);
+	} else if (subcommand === "autoplay") {
+		if (!guildData.plugins.music) guildData.plugins.music = { autoPlay: false };
+
+		guildData.set("plugins.music.autoPlay", state);
+		await guildData.save();
+
+		return await generateReply(interaction, subcommand, state);
 	}
-
-	if (!state) {
-		await saveSettings(guildData, parameter, null);
-
-		return interaction.editReply({
-			content: await generateReply(
-				interaction,
-				guildData,
-				parameterSplitted[isNested ? 1 : 0],
-				state,
-			),
-		});
-	}
-
-	if (
-		isNested &&
-		parameterSplitted[1] === "ticketsCategory" &&
-		channel?.type !== ChannelType.GuildCategory
-	) {
-		return interaction.editReply({
-			content: await translateContext(
-				interaction,
-				"administration/config:TICKETS_NOT_CATEGORY",
-			),
-		});
-	}
-
-	if (channel) await saveSettings(guildData, parameter, channel.id);
-
-	return interaction.editReply({
-		content: await generateReply(
-			interaction,
-			guildData,
-			parameterSplitted[isNested ? 1 : 0],
-			state,
-			channel,
-		),
-	});
 }

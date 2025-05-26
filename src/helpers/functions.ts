@@ -43,26 +43,30 @@ export const asyncForEach = async <T>(collection: T[], callback: (_item: T) => P
 };
 
 export const translateContext = async <T extends CacheType = CacheType>(
-	context: Interaction<T> | Message | Guild,
+	context: string | Interaction<T> | Message | Guild,
 	key: string,
 	args?: Record<string, unknown> | null,
 	options?: Options,
 ) => {
 	const client = useClient();
-	const guildLocale =
-		context instanceof Guild
-			? await getLocale(context.id)
-			: context.guild
-				? await getLocale(context.guild.id)
-				: "";
 
-	const locale = options?.locale || guildLocale;
-	const translated = client.i18n.translate(key, {
-		lng: locale,
-		...args,
-	});
+	const localeResolvers = {
+		string: (ctx: string) => getLocale(ctx),
+		Guild: (ctx: Guild) => getLocale(ctx.id),
+		default: () => client.configService.get<string>("defaultLang"),
+	};
 
-	return translated;
+	const getLocaleFromContext = async (): Promise<string> => {
+		if (typeof context === "string") return localeResolvers.string(context);
+		if (context instanceof Guild) return localeResolvers.Guild(context);
+		if ("guild" in context && context.guild) return localeResolvers.string(context.guild.id);
+
+		return localeResolvers.default();
+	};
+
+	const locale = options?.locale || (await getLocaleFromContext());
+
+	return client.i18n.translate(key, { lng: locale, ...args });
 };
 
 export const replyTranslated = async <T extends CacheType = CacheType>(
@@ -137,15 +141,12 @@ export const getLocale = async (guildId: string) => {
 export const getLocalizedDesc = (key: string) => {
 	const client = useClient();
 
-	const locals = client.i18n.SupportedLanguages.reduce(
-		(acc, lng) => {
-			const splitted = lng.split("-")[0];
-			const short = localeExcludes.includes(splitted) ? lng : splitted;
-			acc[short as Locale] = client.i18n.translate(key, { lng });
-			return acc;
-		},
-		{} as LocalizationMap,
-	);
+	const locals = client.i18n.SupportedLanguages.reduce((acc, lng) => {
+		const splitted = lng.split("-")[0];
+		const short = localeExcludes.includes(splitted) ? lng : splitted;
+		acc[short as Locale] = client.i18n.translate(key, { lng });
+		return acc;
+	}, {} as LocalizationMap);
 
 	return {
 		description: client.i18n.translate(key),
@@ -170,7 +171,7 @@ export const getNoun = (number: number, wordForms: string[]) => {
 };
 
 export const getUsername = (arg: User | GuildMember): string => {
-	// Bots still have discriminators
+	// NOTE: Bots still have discriminators
 	if (arg instanceof GuildMember) {
 		return arg.user.discriminator !== "0" ? arg.user.tag : arg.user.username;
 	}
@@ -197,11 +198,12 @@ export const shuffle = <T>(array: readonly T[]): T[] => {
 	return shuffled;
 };
 
+export const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
+
 export const convertTime = (duration: number) => {
 	const hours = Math.floor(duration / 3_600_000);
 	const minutes = Math.floor((duration % 3_600_000) / 60_000);
 	const seconds = Math.floor((duration % 60_000) / 1_000);
-	const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
 	const formattedHours = formatTime(hours);
 	const formattedMinutes = formatTime(minutes);
 	const formattedSeconds = formatTime(seconds);

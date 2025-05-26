@@ -91,7 +91,7 @@ If you want to contribute, feel free to fork this repo and making a pull request
 
 ## TODO
 
-* [ ] Some sort of dashboard.
+* [ ] Dashboard maybe.
 
 ## License
 

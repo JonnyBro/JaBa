@@ -1,21 +1,21 @@
-import { Client, ClientOptions } from "discord.js";
-import { Handlers } from "@/handlers/index.js";
 import MongooseAdapter from "@/adapters/database/MongooseAdapter.js";
+import { SUPER_CONTEXT } from "@/constants/index.js";
+import { Handlers } from "@/handlers/index.js";
 import logger from "@/helpers/logger.js";
 import ConfigService from "@/services/config/index.js";
 import InternationalizationService from "@/services/languages/index.js";
-import { SUPER_CONTEXT } from "@/constants/index.js";
 import { cacheRemindsData, CommandFileObject } from "@/types.js";
-import { Rainlink, Library } from "rainlink";
+import { Client, ClientOptions } from "discord.js";
+import { Library, Rainlink, RainlinkNodeOptions } from "rainlink";
 
 export class ExtendedClient extends Client<true> {
 	configService = new ConfigService();
-	adapter = new MongooseAdapter(this.configService.get("mongoDB"));
+	adapter = new MongooseAdapter(this.configService.get<string>("mongoDB"));
 	cacheReminds = new Map<string, cacheRemindsData>();
 	i18n = new InternationalizationService(this);
 	rainlink = new Rainlink({
 		library: new Library.DiscordJS(this),
-		nodes: this.configService.get("music.nodes"),
+		nodes: this.configService.get<RainlinkNodeOptions[]>("music.nodes"),
 	});
 	commands: CommandFileObject[] = [];
 
@@ -45,6 +45,13 @@ export class ExtendedClient extends Client<true> {
 		return guildData;
 	}
 
+	async getGuildsData() {
+		const { default: GuildModel } = await import("@/models/GuildModel.js");
+		const guildsData = await this.adapter.find(GuildModel);
+
+		return guildsData;
+	}
+
 	async getUserData(userID: string) {
 		const { default: UserModel } = await import("@/models/UserModel.js");
 		const userData = await this.adapter.findOneOrCreate(UserModel, { id: userID });
@@ -65,13 +72,6 @@ export class ExtendedClient extends Client<true> {
 			id: memberId,
 			guildID,
 		});
-
-		const guildData = await this.getGuildData(guildID);
-
-		if (!guildData.members.includes(memberData._id)) {
-			guildData.members.push(memberData._id);
-			await guildData.save();
-		}
 
 		return memberData;
 	}

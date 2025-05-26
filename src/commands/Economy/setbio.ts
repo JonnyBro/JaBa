@@ -25,7 +25,6 @@ export const data: CommandData = {
 			name: "text",
 			...getLocalizedDesc("economy/profile:BIO"),
 			type: ApplicationCommandOptionType.String,
-			required: true,
 		},
 		{
 			name: "ephemeral",
@@ -41,11 +40,20 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	});
 
 	const userData = await client.getUserData(interaction.user.id);
-	const newBio = interaction.options.getString("text", true);
-	if (newBio.length > 150) return editReplyError(interaction, "misc:MAX_150_CHARS");
+	const newBio = interaction.options.getString("text");
+
+	if (!newBio) {
+		userData.set("bio", null);
+
+		await userData.save();
+
+		editReplySuccess(interaction, "economy/setbio:SUCCESS");
+	}
+
+	if (newBio!.length > 150) return editReplyError(interaction, "misc:MAX_150_CHARS");
 
 	// escape the 'escape' characters and add a zero width space to mentions so they don't work
-	userData.bio = escapeEscape(newBio).replace("@", "@\u200b");
+	userData.set("bio", escapeEscape(newBio!).replace("@", "@\u200b"));
 
 	await userData.save();
 

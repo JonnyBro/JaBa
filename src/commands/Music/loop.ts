@@ -24,7 +24,7 @@ export const data: CommandData = {
 			required: true,
 			choices: [
 				{ name: client.i18n.translate("music/loop:DISABLE"), value: "none" },
-				{ name: client.i18n.translate("music/loop:TRACK"), value: "track" },
+				{ name: client.i18n.translate("music/loop:TRACK"), value: "song" },
 				{ name: client.i18n.translate("music/loop:QUEUE"), value: "queue" },
 			],
 		},
@@ -39,17 +39,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	const mode = interaction.options.getString("mode", true);
 
-	switch (mode) {
-		case "none":
-			player.setLoop(RainlinkLoopMode.NONE);
-			break;
-		case "track":
-			player.setLoop(RainlinkLoopMode.SONG);
-			break;
-		case "queue":
-			player.setLoop(RainlinkLoopMode.QUEUE);
-			break;
-	}
+	player.setLoop(mode as RainlinkLoopMode);
 
 	await editReplySuccess(interaction, `music/loop:SUCCESS_${mode.toUpperCase()}`);
 };

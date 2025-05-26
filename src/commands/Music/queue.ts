@@ -255,7 +255,7 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 		const embed = createEmbed({
 			title: await translateContext(interaction, "music/nowplaying:CURRENTLY_PLAYING"),
 		})
-			.setThumbnail(currentTrack?.artworkUrl || null)
+			.setThumbnail(currentTrack.artworkUrl)
 			.setDescription(
 				`${await translateContext(interaction, "music/nowplaying:REPEAT")}: \`${
 					translated[player.loop]
@@ -304,7 +304,7 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 		const embed = createEmbed({
 			title: await translateContext(interaction, "music/nowplaying:CURRENTLY_PLAYING"),
 		})
-			.setThumbnail(currentTrack?.artworkUrl || null)
+			.setThumbnail(currentTrack.artworkUrl)
 			.setDescription(
 				`${await translateContext(interaction, "music/queue:DURATION", {
 					time: formattedTotalDuration,
@@ -325,7 +325,8 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 
 function getTimeUntilTrack(player: RainlinkPlayer, queueIndex: number) {
 	const currentPosition = player.position || 0;
-	const currentTrackDuration = player.queue.current?.duration || 0;
+	const currentTrack = player.queue.current!;
+	const currentTrackDuration = currentTrack.isStream ? 0 : currentTrack.duration;
 	const remainingCurrentTrack = Math.max(0, currentTrackDuration - currentPosition);
 
 	let sumQueueDurations = 0;

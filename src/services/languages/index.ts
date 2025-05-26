@@ -83,7 +83,7 @@ export default class InternationalizationService {
 			backend: {
 				loadPath: resolve(this.options.localesPath, "./{{lng}}/{{ns}}.json"),
 			},
-			debug: !this.client.configService.get("production"),
+			debug: false, // We are not interested in that for now
 			fallbackLng: this.options.defaultLanguage,
 			interpolation: { escapeValue: false },
 			load: "currentOnly",

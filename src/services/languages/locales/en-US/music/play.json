@@ -6,7 +6,7 @@
 
 	"NO_LINK": "This message doesn't contain any links",
 	"NO_VOICE_CHANNEL": "You must be in a voice channel",
-	"VOICE_CHANNEL_CONNECT": "I cannot connect to your voice channel",
+	"NOT_SAME_CHANNEL": "You must be in the same voice channel as me",
 	"NO_RESULT": "No results found for `{{query}}`",
 	"NOW_PLAYING": "Now playing [{{songName}}](<{{songURL}}>)",
 	"NOT_PLAYING": "Nothing is currently playing on the server",
@@ -15,6 +15,11 @@
 	"ADDED_PLAYLIST": "Added {{count}} tracks from [{{name}}](<{{url}}>) to the queue",
 	"STOP_DISCONNECTED": "Playback stopped because I left the voice channel",
 	"STOP_EMPTY": "Playback stopped because everyone has left the voice channel",
-	"ERR_OCCURRED_QUEUE": "An error occurred, skipping track...",
-	"ERR_OCCURRED_EMPTY": "An error occurred, stopping queue..."
+
+	"ERR_OCCURRED_QUEUE": "An error occurred, skipping the track...",
+	"ERR_OCCURRED_EMPTY": "An error occurred, stopping player...",
+	"ERR_RESOLVING_QUEUE": "Got an error while resolving {{track}}, skipping this track...",
+	"ERR_RESOLVING_EMPTY": "Got an error while resolving {{track}}, stopping player...",
+	"ERR_STUCK_QUEUE": "Track got stuck in the queue, skipping it...",
+	"ERR_STUCK_EMPTY": "Track got stuck in the queue, stopping player..."
 }

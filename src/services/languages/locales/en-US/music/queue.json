@@ -3,12 +3,11 @@
 	"USAGE": "",
 	"EXAMPLES": "queue",
 	"QUEUE": "Playback Queue",
-	"NO_QUEUE": "Empty",
+	"NO_QUEUE": "Queue is empty",
 	"DURATION": "Queue duration: {{time}}",
 	"ADDED": "Added by",
 	"PLAYS_IN": "Plays in: {{time}}",
-	"NEXT_PAGE": "Next page",
-	"PREV_PAGE": "Previous page",
-	"JUMP_PAGE": "Jump to page",
-	"NEXT": "Next"
+	"NEXT": "Next",
+	"PAUSED": "Playback paused",
+	"PLAYING": "Now playing"
 }

@@ -52,7 +52,7 @@ export const data: CommandData = {
 	],
 };
 
-// TODO: Move from embeds to new components
+// TODO: Move from embeds to components v2
 async function formatCredits(interaction: ChatInputCommandInteraction<CacheType>, amount: number) {
 	const forms = [
 		await translateContext(interaction, "misc:NOUNS:CREDIT:1"),
@@ -128,8 +128,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
 			}
 
-			memberData.money -= credits;
-			memberData.bankSold += credits;
+			memberData.set({
+				money: memberData.money - credits,
+				bankSold: memberData.bankSold + credits,
+			});
 			memberData.transactions.push({
 				user: await translateContext(interaction, "economy/transactions:BANK"),
 				amount: credits,
@@ -159,8 +161,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
 			}
 
-			memberData.money += credits;
-			memberData.bankSold -= credits;
+			memberData.set({
+				money: memberData.money + credits,
+				bankSold: memberData.bankSold - credits,
+			});
 			memberData.transactions.push({
 				user: await translateContext(interaction, "economy/transactions:BANK"),
 				amount: credits,
@@ -195,8 +199,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 			const recieverData = await client.getMemberData(targetUser.id, guildId);
 
-			memberData.bankSold -= credits;
-			recieverData.bankSold += credits;
+			memberData.set("bankSold", memberData.bankSold - credits);
+			recieverData.set("bankSold", recieverData.bankSold + credits);
 
 			memberData.transactions.push({
 				user: await translateContext(interaction, "economy/bank:TRANSFER_TO", {

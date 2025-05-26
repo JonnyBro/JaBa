@@ -9,15 +9,10 @@
 
 	"LANG_SUCCESS": "{{flag}} Server language has been changed to **{{lang}}**",
 
+	"AUTOPLAY": "Player Autoplay",
+
 	"SPECIAL_CHANNELS": "Special Channels",
 	"BIRTHDAYS": "Birthdays Announcements",
-	"MODLOGS": "Moderation Logs",
-	"REPORTS": "Reports",
-	"SUGGESTIONS": "Suggestions",
-	"TICKETSCATEGORY": "Category For Tickets (They have a 'folder' icon)",
-	"TICKETS_NOT_CATEGORY": "Please select a **category** channel",
-	"TICKETLOGS": "Tickets Logs",
-	"TRANSCRIPTIONLOGS": "Transcripts Logs",
 
 	"MONITORING_CHANNELS": "Monitoring Channels",
 	"MESSAGEUPDATE": "Message Update Logs",

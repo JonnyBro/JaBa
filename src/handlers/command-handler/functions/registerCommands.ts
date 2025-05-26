@@ -36,12 +36,12 @@ const registerGlobalCommands = async (client: ExtendedClient, commands: CommandF
 					.edit(data as Partial<ApplicationCommandData>)
 					.catch(() => logger.error(`Failed to update command: ${data.name} globally`));
 
-				logger.log(`Edited command globally: ${data.name}`);
+				logger.debug(`Edited command globally: ${data.name}`);
 			} else if (!targetCommand) {
 				await appCommandsManager
 					.create(data)
 					.catch(() => logger.error(`Failed to register command: ${data.name}`));
-				logger.debug(`Command ${data.name} loaded globally`);
+				logger.debug(`Command ${data.name} registered globally`);
 			}
 		}),
 	);

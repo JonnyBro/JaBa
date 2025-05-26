@@ -4,13 +4,18 @@ import {
 	ChatInputCommandInteraction,
 	ContextMenuCommandInteraction,
 	Interaction,
+	Message,
 	MessageContextMenuCommandInteraction,
-	PermissionsString,
 	RESTPostAPIApplicationCommandsJSONBody,
 	UserContextMenuCommandInteraction,
 } from "discord.js";
-import { ExtendedClient } from "./structures/client.ts";
 import { UserReminds } from "./models/UserModel.ts";
+import { ExtendedClient } from "./structures/client.ts";
+import { RainlinkPlayer } from "rainlink";
+
+export interface RainlinkPlayerCustom extends RainlinkPlayer {
+	message: Message;
+}
 
 export type CommandData = RESTPostAPIApplicationCommandsJSONBody;
 

@@ -3,7 +3,6 @@ import { RainlinkNode } from "rainlink";
 
 export const data = {
 	name: "nodeClosed",
-	once: true,
 	player: true,
 };
 
