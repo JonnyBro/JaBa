@@ -35,6 +35,7 @@ export const data = {
 
 export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 	if (!player) return;
+	if (!track) return;
 
 	const guild = client.guilds.cache.get(player.guildId);
 	if (!guild) return;
@@ -250,7 +251,7 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 			case ButtonId.STOP_BUTTON_ID:
 				await interaction.deferUpdate();
 
-				player.stop(false);
+				player.stop(true);
 
 				break;
 		}

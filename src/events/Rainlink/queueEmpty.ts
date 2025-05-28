@@ -22,7 +22,7 @@ export async function run(player: RainlinkPlayerCustom, queue: RainlinkQueue) {
 
 	const guildData = await client.getGuildData(player.guildId);
 
-	if (guildData.plugins.music.autoPlay) {
+	if (guildData.plugins?.music?.autoPlay) {
 		const track = player.queue.previous[0];
 		if (!track) return;
 
@@ -39,7 +39,7 @@ export async function run(player: RainlinkPlayerCustom, queue: RainlinkQueue) {
 				logger.debug(`Autoplay ended in ${guild.name} (${guild.id}), no tracks found`);
 			}
 
-			await player.stop(false);
+			await player.stop(true);
 		}
 
 		const randomTrack = res.tracks[randomNum(0, res.tracks.length)];

@@ -47,6 +47,6 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack, me
 			}),
 		});
 
-		return await player.stop(false);
+		return await player.stop(true);
 	}
 }

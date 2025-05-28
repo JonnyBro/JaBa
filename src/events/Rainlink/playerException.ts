@@ -36,6 +36,6 @@ export async function run(player: RainlinkPlayerCustom, data: Record<string, any
 			content: await translateContext(guild, "music/play:ERR_OCCURRED_EMPTY"),
 		});
 
-		return await player.stop(false);
+		return await player.stop(true);
 	}
 }
