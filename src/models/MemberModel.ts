@@ -7,6 +7,16 @@ export interface Transaction {
 	type: string;
 }
 
+const transactionSchema = new Schema<Transaction>(
+	{
+		user: { type: String, required: true },
+		amount: { type: Number, required: true },
+		date: { type: Number, required: true },
+		type: { type: String, required: true },
+	},
+	{ _id: false },
+);
+
 export interface IMemberSchema {
 	id: string;
 	guildID: string;
@@ -15,13 +25,21 @@ export interface IMemberSchema {
 	bankSold: number;
 	exp: number;
 	level: number;
-	transactions: Array<Transaction>;
+	transactions: Transaction[];
 	registeredAt: number;
 	cooldowns: {
 		work: number;
 		rob: number;
 	};
 }
+
+const cooldownSchema = new Schema(
+	{
+		work: { type: Number, default: 0 },
+		rob: { type: Number, default: 0 },
+	},
+	{ _id: false },
+);
 
 const memberSchema = new Schema<IMemberSchema>({
 	id: { type: String, required: true },
@@ -31,41 +49,22 @@ const memberSchema = new Schema<IMemberSchema>({
 	bankSold: { type: Number, default: 0 },
 	exp: { type: Number, default: 0 },
 	level: { type: Number, default: 0 },
-	transactions: [],
+	transactions: { type: [transactionSchema], default: [] },
 	registeredAt: { type: Number, default: () => Date.now() },
-	cooldowns: {
-		type: Object,
-		default: {
-			work: 0,
-			rob: 0,
-		},
-	},
+	cooldowns: { type: cooldownSchema, default: () => ({ work: 0, rob: 0 }) },
 });
 
-memberSchema.pre("save", function (next) {
+memberSchema.pre("validate", function (next) {
 	const now = Date.now();
-	const defaults = {
-		money: 0,
-		workStreak: 0,
-		bankSold: 0,
-		exp: 0,
-		level: 0,
-		transactions: [] as Transaction[],
-		registeredAt: now,
-		cooldowns: {
-			work: 0,
-			rob: 0,
-		},
-	};
 
 	(["money", "workStreak", "bankSold", "exp", "level"] as const).forEach(field => {
 		if (typeof this[field] !== "number" || isNaN(this[field]) || this[field] < 0) {
-			this[field] = defaults[field];
+			this[field] = 0;
 		}
 	});
 
 	if (!Array.isArray(this.transactions)) {
-		this.transactions = defaults.transactions;
+		this.transactions = [];
 	} else {
 		this.transactions = this.transactions.map(t => ({
 			user: typeof t.user === "string" ? t.user : "",
@@ -76,21 +75,15 @@ memberSchema.pre("save", function (next) {
 	}
 
 	if (typeof this.registeredAt !== "number" || this.registeredAt <= 0) {
-		this.registeredAt = defaults.registeredAt;
+		this.registeredAt = now;
 	}
 
 	if (!this.cooldowns || typeof this.cooldowns !== "object") {
-		this.cooldowns = { ...defaults.cooldowns };
+		this.cooldowns = { work: 0, rob: 0 };
 	} else {
 		this.cooldowns = {
-			work:
-				typeof this.cooldowns.work === "number"
-					? this.cooldowns.work
-					: defaults.cooldowns.work,
-			rob:
-				typeof this.cooldowns.rob === "number"
-					? this.cooldowns.rob
-					: defaults.cooldowns.rob,
+			work: typeof this.cooldowns.work === "number" ? this.cooldowns.work : 0,
+			rob: typeof this.cooldowns.rob === "number" ? this.cooldowns.rob : 0,
 		};
 	}
 
