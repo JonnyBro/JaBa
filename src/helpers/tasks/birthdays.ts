@@ -81,7 +81,7 @@ export const data = {
 								],
 							});
 
-							await channel.send({ embeds: [embed] }).then(m => m.react(" "));
+							await channel.send({ embeds: [embed] }).then(m => m.react("🎉"));
 						}
 					}),
 				);
