@@ -1,11 +1,12 @@
-import useClient from "../../utils/use-client.js";
-import { CronTaskData } from "@/types.js";
 import MemberModel from "@/models/MemberModel.js";
+import { CronTaskData } from "@/types.js";
+import useClient from "../../utils/use-client.js";
+
+const client = useClient();
 
 export const data: CronTaskData = {
 	name: "clearTransactions",
 	task: async () => {
-		const client = useClient();
 		const members = await client.adapter.find(MemberModel, { transactions: { $gt: [] } });
 
 		for (const member of members) {

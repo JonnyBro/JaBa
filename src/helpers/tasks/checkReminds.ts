@@ -1,13 +1,13 @@
+import { CronTaskData } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import UserModel from "../../models/UserModel.js";
 import useClient from "../../utils/use-client.js";
-import { CronTaskData } from "@/types.js";
+
+const client = useClient();
 
 export const data: CronTaskData = {
 	name: "checkReminds",
 	task: async () => {
-		const client = useClient();
-
 		const users = await client.adapter.find(UserModel, { reminds: { $gt: [] } });
 
 		for (const user of users) {

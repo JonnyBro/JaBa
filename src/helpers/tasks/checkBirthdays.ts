@@ -1,13 +1,14 @@
-import useClient from "@/utils/use-client.js";
 import UserModel from "@/models/UserModel.js";
 import { createEmbed } from "@/utils/create-embed.js";
-import logger from "../logger.js";
+import useClient from "@/utils/use-client.js";
 import { getNoun } from "../functions.js";
+import logger from "../logger.js";
+
+const client = useClient();
 
 export const data = {
-	name: "birthdays",
+	name: "checkBirthdays",
 	task: async () => {
-		const client = useClient();
 		const guilds = client.guilds.cache.values();
 		const users = await client.adapter.find(UserModel, {
 			birthdate: { $ne: null },
