@@ -44,7 +44,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
 	const code = interaction.options.getString("code", true);
-	const result = new Promise(resolve => resolve(eval(code)));
+	const result = new Promise(resolve => resolve(eval(`(async () => { ${code} })()`)));
 
 	return result
 		.then((output: any) => {
