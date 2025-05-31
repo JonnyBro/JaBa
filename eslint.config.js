@@ -23,7 +23,14 @@ export default [
 		rules: {
 			"max-len": ["error", { code: 100, ignoreRegExpLiterals: true }],
 			"no-unused-vars": "off",
-			"@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_", caughtErrorsIgnorePattern: "^_" }],
+			"@typescript-eslint/no-unused-vars": [
+				"error",
+				{
+					argsIgnorePattern: "^_",
+					varsIgnorePattern: "^_",
+					caughtErrorsIgnorePattern: "^_",
+				},
+			],
 			"arrow-body-style": ["error", "as-needed"],
 			camelcase: "error",
 			curly: ["error", "multi-line"],
