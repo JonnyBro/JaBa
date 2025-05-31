@@ -143,9 +143,7 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 
 					player.pause();
 
-					buttons1.components[0]
-						.setEmoji("▶️")
-						.setStyle(ButtonStyle.Primary);
+					buttons1.components[0].setEmoji("▶️").setStyle(ButtonStyle.Primary);
 
 					trackEmbed.setAuthor({
 						name: await translateContext(guild, "music/queue:PAUSED"),
@@ -156,9 +154,7 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 
 					player.resume();
 
-					buttons1.components[0]
-						.setEmoji("⏸️")
-						.setStyle(ButtonStyle.Secondary);
+					buttons1.components[0].setEmoji("⏸️").setStyle(ButtonStyle.Secondary);
 
 					trackEmbed.setAuthor({
 						name: await translateContext(guild, "music/queue:PLAYING"),
@@ -194,14 +190,24 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 
 				break;
 			case ButtonId.LOOP_BUTTON_ID:
+				switch (player.loop) {
+					case "none":
+						player.setLoop(RainlinkLoopMode.SONG);
+						break;
+					case "song":
+						player.setLoop(RainlinkLoopMode.QUEUE);
+						break;
+					case "queue":
+						player.setLoop(RainlinkLoopMode.NONE);
+						break;
+				}
+
 				embed.setDescription(
 					await translateContext(
 						guild,
 						`music/loop:SUCCESS_${player.loop.toUpperCase()}`,
 					),
 				);
-
-				player.setLoop(player.loop as RainlinkLoopMode);
 
 				return interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
 			case ButtonId.SHUFFLE_BUTTON_ID:

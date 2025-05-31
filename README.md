@@ -92,6 +92,7 @@ If you want to contribute, feel free to fork this repo and making a pull request
 ## TODO
 
 * [ ] Dashboard maybe.
+* [ ] My own lavalink node.
 
 ## License
 
