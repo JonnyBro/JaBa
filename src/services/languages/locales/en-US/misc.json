@@ -7,7 +7,6 @@
 	"FORCE_STOP": "The game has been forcibly ended, {{user}}, nobody won (the number was {{number}})",
 	"LEVEL_UP": "You have reached the next level! Your new level is: **{{level}}**",
 	"GUILD_ONLY": "This command can only be used on a server",
-	"HELLO_SERVER": "Hello! All my commands are available through **Slash Commands**. Enter the **/** symbol in chatbox and search for my avatar in the list",
 	"INVALID_NUMBER_RANGE": "Please specify a number between **{{min}}** and **{{max}}**",
 	"MAX_150_CHARS": "No more than 150 characters!",
 	"MORE_THAN_ZERO": "Please specify an integer greater than 0",

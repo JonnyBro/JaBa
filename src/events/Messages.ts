@@ -23,16 +23,12 @@ const DELETE_BUTTON_ID = "quote_delete";
 
 export const data = {
 	name: "messageCreate",
-	once: true,
+	once: false,
 };
 
 export async function run(message: Message) {
 	if (message.author.bot) return;
 	if (!message.guild) return;
-
-	if (message.content.match(new RegExp(`<(?:@[!&]?|#)${client.user.id}>`))) {
-		return await replyTranslated(message, "misc:HELLO_SERVER");
-	}
 
 	if (message.content.match(QUOTE_REGEXP)) {
 		return await handleLinkQuote(message, QUOTE_REGEXP);
