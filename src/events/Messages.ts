@@ -18,7 +18,8 @@ import {
 
 const client = useClient();
 const xpCooldown: Record<string, number> = {};
-const QUOTE_REGEXP = /discord.com\/channels\/([0-9].*)\/([0-9].*)\/([0-9].*[^/])\/{0,}/g;
+const QUOTE_REGEXP =
+	/discord\.com\/channels\/(?<guildId>\d+)\/(?<channelId>\d+)\/(?<messageId>\d+)/g;
 const DELETE_BUTTON_ID = "quote_delete";
 
 export const data = {
@@ -29,11 +30,7 @@ export const data = {
 export async function run(message: Message) {
 	if (message.author.bot) return;
 	if (!message.guild) return;
-
-	if (message.content.match(QUOTE_REGEXP)) {
-		return await handleLinkQuote(message, QUOTE_REGEXP);
-	}
-
+	if (message.content.match(QUOTE_REGEXP)) await handleLinkQuote(message);
 	if (message.content.length > 3) await updateXp(message);
 
 	return;
@@ -43,20 +40,31 @@ export async function run(message: Message) {
 client.on("interactionCreate", async interaction => {
 	if (!interaction.isButton()) return;
 	if (interaction.customId !== DELETE_BUTTON_ID) return;
-	if (interaction.message.deletable) return await interaction.message.delete();
+
+	await interaction.deferUpdate();
+
+	if (interaction.message.deletable) await interaction.message.delete();
 });
 
-async function handleLinkQuote(message: Message, regexp: RegExp) {
-	const matched = [...message.content.matchAll(regexp)][0];
-	const guildId = matched[1];
-	const channelId = matched[2];
-	const messageId = matched[3];
+async function handleLinkQuote(message: Message) {
+	const matches = [...message.content.matchAll(QUOTE_REGEXP)];
+	if (!matches.length) return;
+
+	const { guildId, channelId, messageId } = matches[0].groups || {};
+	if (!guildId || !channelId || !messageId) return;
 
 	try {
-		const msg = await (
-			client.guilds.cache.get(guildId)?.channels.cache.get(channelId) as GuildTextBasedChannel
-		).messages.fetch(messageId);
+		const guild =
+			client.guilds.cache.get(guildId) ||
+			(await client.guilds.fetch(guildId).catch(() => null));
+		if (!guild) return;
 
+		const channel =
+			(guild.channels.cache.get(channelId) as GuildTextBasedChannel) ||
+			((await guild.channels.fetch(channelId).catch(() => null)) as GuildTextBasedChannel);
+		if (!channel?.isTextBased()) return;
+
+		const msg = await channel.messages.fetch(messageId).catch(() => null);
 		if (!msg) return;
 
 		const embed = createEmbed({
@@ -109,7 +117,13 @@ async function handleLinkQuote(message: Message, regexp: RegExp) {
 
 		await message.reply({ embeds: [embed], components: [row] });
 	} catch (e) {
-		logger.error(e);
+		if (e instanceof Error) {
+			if (e.message.toLowerCase().includes("missing access")) {
+				logger.error("Bot lacks permissions to access the message/channel");
+			} else if (e.message.toLowerCase().includes("unknown message")) {
+				logger.error("Message was deleted or not found");
+			} else logger.error(`Unexpected error: ${e.message}`);
+		}
 	}
 }
 
