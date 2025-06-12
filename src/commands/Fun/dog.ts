@@ -36,7 +36,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	});
 
 	const res = await fetch("https://dog.ceo/api/breeds/image/random").then(r => r.json());
-	const embed = createEmbed().setImage(res.message);
+	const embed = createEmbed({ image: res.message });
 
 	await interaction.editReply({ embeds: [embed] });
 };

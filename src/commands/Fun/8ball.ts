@@ -1,4 +1,9 @@
-import { getLocalizedDesc, randomNum, translateContext } from "@/helpers/functions.js";
+import {
+	formatString,
+	getLocalizedDesc,
+	randomNum,
+	translateContext,
+} from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import {
@@ -41,7 +46,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
 	});
 
-	const question = interaction.options.getString("question", true);
+	const question = formatString(interaction.options.getString("question", true), 200);
+
 	const embed = createEmbed({
 		fields: [
 			{

@@ -68,7 +68,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 			await userData.save();
 
-			return editReplySuccess(interaction, "economy/setbio:SUCCESS_CLEAR");
+			break;
 
 		case "set": {
 			const bio = formatString(interaction.options.getString("text", true), 150);
@@ -78,7 +78,11 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 			await userData.save();
 
-			return editReplySuccess(interaction, "economy/setbio:SUCCESS");
+			break;
 		}
 	}
+
+	editReplySuccess(interaction, `economy/setbio:SUCCESS${userData.bio ? "" : "_CLEAR"}`, {
+		text: userData.bio,
+	});
 };

@@ -109,14 +109,14 @@ export const editReplyError = async <T extends CacheType = CacheType>(
 	key: string,
 	args?: Record<string, unknown> | null,
 	options: Options = { prefixEmoji: "error", edit: true },
-) => await replyTranslated(context, key, args, { prefixEmoji: "error", edit: true, ...options });
+) => await replyError(context, key, args, { edit: true, ...options });
 
 export const editReplySuccess = async <T extends CacheType = CacheType>(
 	context: Interaction<T> | Message,
 	key: string,
 	args?: Record<string, unknown> | null,
 	options: Options = { prefixEmoji: "success", edit: true },
-) => await replyTranslated(context, key, args, { prefixEmoji: "success", edit: true, ...options });
+) => await replySuccess(context, key, args, { edit: true, ...options });
 
 export const replyError = async <T extends CacheType = CacheType>(
 	context: Interaction<T> | Message,

@@ -25,18 +25,37 @@ export const data: CommandData = {
 	options: [
 		{
 			name: "user",
-			type: ApplicationCommandOptionType.User,
-			...getLocalizedDesc("common:USER"),
+			type: ApplicationCommandOptionType.Subcommand,
+			...getLocalizedDesc("general/avatar:USER"),
+			options: [
+				{
+					name: "user",
+					type: ApplicationCommandOptionType.User,
+					...getLocalizedDesc("common:USER"),
+				},
+				{
+					name: "ephemeral",
+					type: ApplicationCommandOptionType.Boolean,
+					...getLocalizedDesc("misc:EPHEMERAL_RESPONSE"),
+				},
+			],
 		},
 		{
 			name: "server",
-			type: ApplicationCommandOptionType.Boolean,
+			type: ApplicationCommandOptionType.Subcommand,
 			...getLocalizedDesc("general/avatar:SERVER"),
-		},
-		{
-			name: "ephemeral",
-			type: ApplicationCommandOptionType.Boolean,
-			...getLocalizedDesc("misc:EPHEMERAL_RESPONSE"),
+			options: [
+				{
+					name: "user",
+					type: ApplicationCommandOptionType.User,
+					...getLocalizedDesc("common:USER"),
+				},
+				{
+					name: "ephemeral",
+					type: ApplicationCommandOptionType.Boolean,
+					...getLocalizedDesc("misc:EPHEMERAL_RESPONSE"),
+				},
+			],
 		},
 	],
 };
@@ -46,14 +65,34 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
 	});
 
-	const user = interaction.guild
-		? (interaction.options.getMember("user") as GuildMember) || interaction.member!
-		: interaction.options.getUser("user") || interaction.user!;
-	const avatarURL =
-		interaction.options.getBoolean("server") && interaction.guild
-			? user.displayAvatarURL({ forceStatic: false, extension: "png", size: 2048 })
-			: user.avatarURL({ forceStatic: false, extension: "png", size: 2048 });
-	const embed = createEmbed().setImage(avatarURL);
+	const subcommand = interaction.options.getSubcommand();
+	const embed = createEmbed();
+
+	switch (subcommand) {
+		case "user": {
+			const user = interaction.options.getUser("user") || interaction.user;
+			const avatar = user.avatarURL({ forceStatic: false, extension: "png", size: 2048 });
+
+			embed.setImage(avatar);
+
+			break;
+		}
+
+		case "server": {
+			const member =
+				(interaction.options.getMember("user") as GuildMember) || interaction.member;
+			const avatar = member.displayAvatarURL({
+				forceStatic: false,
+				extension: "png",
+				size: 2048,
+			});
+
+			embed.setImage(avatar);
+
+			break;
+		}
+
+	}
 
 	interaction.editReply({
 		embeds: [embed],

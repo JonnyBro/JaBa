@@ -36,7 +36,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	});
 
 	const res = await fetch("https://api.pur.cat/random-cat").then(r => r.json());
-	const embed = createEmbed().setImage(res.url);
+	const embed = createEmbed({ image: res.url });
 
 	await interaction.editReply({ embeds: [embed] });
 };

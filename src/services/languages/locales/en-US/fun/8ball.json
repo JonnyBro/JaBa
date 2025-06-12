@@ -2,8 +2,10 @@
 	"DESCRIPTION": "I tell the truth",
 	"USAGE": "[question]",
 	"EXAMPLES": "8ball question:Is JaBa awesome?",
+
 	"QUESTION": "Question",
 	"ANSWER": "Answer",
+
 	"RESPONSE_1": "It is certain",
 	"RESPONSE_2": "It is decidedly so",
 	"RESPONSE_3": "Without a doubt",

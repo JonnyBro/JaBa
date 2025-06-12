@@ -1,6 +1,8 @@
 {
 	"DESCRIPTION": "Gets user's avatar",
-	"USAGE": "(@user)",
-	"EXAMPLES": "avatar\navatar user:@jonny_bro",
-	"SERVER": "Server avatar?"
+	"USAGE": "[user/server] (@user)",
+	"EXAMPLES": "avatar user\navatar server:@jonny_bro",
+
+	"USER": "Get user's main avatar",
+	"SERVER": "Get user's server avatar"
 }

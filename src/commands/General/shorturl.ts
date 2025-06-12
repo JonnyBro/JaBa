@@ -1,7 +1,6 @@
 import {
 	editReplyError,
 	getLocalizedDesc,
-	replyError,
 	translateContext,
 } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
@@ -45,26 +44,26 @@ export const data: CommandData = {
 };
 
 export const run = async ({ interaction }: SlashCommandProps) => {
-	if (
-		!client.configService.get("apiKeys.urlShortener.url") ||
-		!client.configService.get("apiKeys.urlShortener.key")
-	) {
-		return replyError(interaction, "API URL or key not set!");
-	}
-
 	await interaction.deferReply({
 		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
 	});
+
+	const shortenerUrl = client.configService.get<string>("apiKeys.urlShortener.url");
+	const shortenerKey = client.configService.get<string>("apiKeys.urlShortener.key");
+
+	if (!shortenerUrl || !shortenerKey) {
+		return editReplyError(interaction, "API URL or key not set!");
+	}
 
 	const url = interaction.options.getString("url", true);
 	if (!url.startsWith("http")) {
 		return editReplyError(interaction, "general/shorturl:NOT_A_LINK", null);
 	}
 
-	const res = await fetch(client.configService.get("apiKeys.urlShortener.url"), {
+	const res = await fetch(shortenerUrl, {
 		method: "POST",
 		headers: {
-			Authorization: client.configService.get("apiKeys.urlShortener.key"),
+			Authorization: shortenerKey,
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({ destination: url }),

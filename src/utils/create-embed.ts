@@ -1,9 +1,10 @@
 import { EmbedBuilder, EmbedData } from "discord.js";
 import useClient from "./use-client.js";
 
-export const createEmbed = (data?: EmbedData) => {
-	const client = useClient();
-	return new EmbedBuilder({
+const client = useClient();
+
+export const createEmbed = (data?: EmbedData) =>
+	new EmbedBuilder({
 		footer:
 			typeof data?.footer === "object"
 				? data.footer
@@ -12,4 +13,3 @@ export const createEmbed = (data?: EmbedData) => {
 					: client.configService.get("embed.footer"),
 		...data,
 	}).setColor(data?.color || client.configService.get("embed.color"));
-};
