@@ -44,9 +44,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	if (user.bot) return editReplyError(interaction, "misc:BOT_USER");
 	if (user.id === interaction.user.id) return editReplyError(interaction, "misc:CANT_YOURSELF");
 
-	const toWait = Math.floor((Date.now() + 12 * 60 * 60 * 1000) / 1000); // 12 hours
-	if (!userData.cooldowns) userData.cooldowns = { rep: 0 };
-
+	const toWait = Date.now() + 12 * 60 * 60 * 1000; // 12 hours
 	const otherUserData = await client.getUserData(user.id);
 
 	otherUserData.set("rep", otherUserData.rep + 1);

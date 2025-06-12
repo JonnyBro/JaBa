@@ -2,5 +2,12 @@
 	"DESCRIPTION": "Sets your bio",
 	"USAGE": "[text]",
 	"EXAMPLES": "setbio text:My name is Johnny :shock:",
-	"SUCCESS": "Your bio has been changed"
+
+	"CLEAR": "Clear your bio",
+	"SET": "Set your bio",
+
+	"TEXT": "Text of your bio",
+
+	"SUCCESS": "Your bio has been changed to: {{text}}",
+	"SUCCESS_CLEAR": "Your bio has been cleared"
 }

@@ -1,4 +1,4 @@
-import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/functions.js";
+import { editReplySuccess, formatString, getLocalizedDesc } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import {
@@ -22,14 +22,34 @@ export const data: CommandData = {
 	contexts: [InteractionContextType.Guild, InteractionContextType.PrivateChannel],
 	options: [
 		{
-			name: "text",
-			...getLocalizedDesc("economy/profile:BIO"),
-			type: ApplicationCommandOptionType.String,
+			name: "clear",
+			...getLocalizedDesc("economy/setbio:CLEAR"),
+			type: ApplicationCommandOptionType.Subcommand,
+			options: [
+				{
+					name: "ephemeral",
+					type: ApplicationCommandOptionType.Boolean,
+					...getLocalizedDesc("misc:EPHEMERAL_RESPONSE"),
+				},
+			],
 		},
 		{
-			name: "ephemeral",
-			type: ApplicationCommandOptionType.Boolean,
-			...getLocalizedDesc("misc:EPHEMERAL_RESPONSE"),
+			name: "set",
+			...getLocalizedDesc("economy/setbio:SET"),
+			type: ApplicationCommandOptionType.Subcommand,
+			options: [
+				{
+					name: "text",
+					type: ApplicationCommandOptionType.String,
+					...getLocalizedDesc("economy/setbio:TEXT"),
+					required: true,
+				},
+				{
+					name: "ephemeral",
+					type: ApplicationCommandOptionType.Boolean,
+					...getLocalizedDesc("misc:EPHEMERAL_RESPONSE"),
+				},
+			],
 		},
 	],
 };
@@ -39,23 +59,26 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
 	});
 
+	const subcommand = interaction.options.getSubcommand();
 	const userData = await client.getUserData(interaction.user.id);
-	const newBio = interaction.options.getString("text");
 
-	if (!newBio) {
-		userData.set("bio", null);
+	switch (subcommand) {
+		case "clear":
+			userData.set("bio", null);
 
-		await userData.save();
+			await userData.save();
 
-		editReplySuccess(interaction, "economy/setbio:SUCCESS");
+			return editReplySuccess(interaction, "economy/setbio:SUCCESS_CLEAR");
+
+		case "set": {
+			const bio = formatString(interaction.options.getString("text", true), 150);
+
+			// escape the 'escape' characters and add a zero width space to mentions to disable them
+			userData.set("bio", escapeEscape(bio).replace("@", "@\u200b"));
+
+			await userData.save();
+
+			return editReplySuccess(interaction, "economy/setbio:SUCCESS");
+		}
 	}
-
-	if (newBio!.length > 150) return editReplyError(interaction, "misc:MAX_150_CHARS");
-
-	// escape the 'escape' characters and add a zero width space to mentions so they don't work
-	userData.set("bio", escapeEscape(newBio!).replace("@", "@\u200b"));
-
-	await userData.save();
-
-	editReplySuccess(interaction, "economy/setbio:SUCCESS");
 };

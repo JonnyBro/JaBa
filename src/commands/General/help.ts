@@ -49,6 +49,7 @@ function getCategoryFromPath(filepath: string): string {
 	return segments[commandsIndex + 1] || "uncategorized";
 }
 
+// TODO: Rewrite to components v2
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply({
 		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,

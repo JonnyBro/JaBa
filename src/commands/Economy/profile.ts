@@ -39,7 +39,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
 	const user = interaction.options.getUser("user") || interaction.user;
-	if (user.bot) return editReplyError(interaction, "economy/profile:BOT_USER");
+	if (user.bot) return editReplyError(interaction, "misc:BOT_USER");
 
 	const memberData = await client.getMemberData(user.id, interaction.guildId!);
 	const userData = await client.getUserData(user.id);

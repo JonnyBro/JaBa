@@ -3,9 +3,6 @@
 	"USAGE": "(@user)",
 	"EXAMPLES": "profile\nprofile user:@jonny_bro",
 
-	"LINK": "Profile",
-	"LINK_TEXT": "Click here to open the server profile in the control panel",
-
 	"CREDITS": "💵 Credits on hand: {{credits}}",
 	"BANK": "💳 Bank balance: {{credits}}",
 	"GLOBAL": "🌍 Credits across all servers: {{credits}}",
@@ -13,5 +10,5 @@
 	"LEVEL": "📊 Level: {{level}}",
 	"XP": "🔮 XP: {{xp}}/{{totalXp}}",
 	"BIRTHDATE": "🎂 Birthdate: {{birthdate}}",
-	"REGISTERED": "📅 Bot Profile Created: {{date}}"
+	"REGISTERED": "📅 Registered in the bot: {{date}}"
 }

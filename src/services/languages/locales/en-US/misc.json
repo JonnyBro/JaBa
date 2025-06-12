@@ -5,7 +5,6 @@
 	"CANT_YOU": "You can't use that",
 	"EPHEMERAL_RESPONSE": "Make bot's response ephemeral?",
 	"LEVEL_UP": "You have reached the next level! Your new level is: **{{level}}**",
-	"MAX_150_CHARS": "No more than 150 characters!",
 	"MORE_THAN_ZERO": "Please specify an integer greater than 0",
 	"USER_NOT_FOUND": "Member/user not found!",
 	"NO_ARGS": "No arguments required",
