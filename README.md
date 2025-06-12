@@ -23,7 +23,7 @@ JaBa does many thing, here is **8 main categories**:
 * **Administration**: `config`, `goodbye`, `selectroles`, `stealemoji` and **3** more!
 * **Moderation**: `clear`, `giveaway`, `poll`, `warn` and **4** more!
 * **Music**: `play`, `skip`, `queue`, `nowplaying`, `shuffle` and **8** more!
-* **Economy**: `profile`, `work`, `achievements`, `slots`, `tictactoe`, `leaderboard` and **9** more!
+* **Economy**: `profile`, `work`, `slots`, `tictactoe`, `leaderboard` and **9** more!
 * **Fun**: `8ball`, `crab`, `lmgtfy`, `lovecalc`, `memes` and **2** more!
 * **General**: `afk`, `avatar`, `boosters`, `minecraft`, `remindme`, `shorturl`, `serverinfo`, `userinfo`, `whois` and **7** more!
 * **Bot's owner commands**: `eval`, `servers`, `reload` and **2** more!

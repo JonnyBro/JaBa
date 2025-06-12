@@ -8,11 +8,8 @@ import {
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import {
-	ActionRowBuilder,
 	ApplicationCommandOptionType,
 	ApplicationIntegrationType,
-	ButtonBuilder,
-	ButtonStyle,
 	ContainerBuilder,
 	InteractionContextType,
 	MessageFlags,
@@ -20,22 +17,15 @@ import {
 	SeparatorSpacingSize,
 	TextDisplayBuilder,
 } from "discord.js";
-import { createAchievementsContainer } from "./achievements.js";
 
 const client = useClient();
-
-const ACHIEVEMENTS_BUTTON_ID = "achievements_button";
 
 export const data: CommandData = {
 	name: "profile",
 	...getLocalizedDesc("economy/profile:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-	],
-	contexts: [
-		InteractionContextType.Guild,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall],
+	contexts: [InteractionContextType.Guild],
 	options: [
 		{
 			name: "user",
@@ -53,9 +43,6 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	const memberData = await client.getMemberData(user.id, interaction.guildId!);
 	const userData = await client.getUserData(user.id);
-	if (userData.lover && !client.users.cache.has(userData.lover)) {
-		await client.users.fetch(userData.lover);
-	}
 
 	let globalMoney = 0;
 	const guilds = client.guilds.cache.filter(g => g.members.cache.has(user.id));
@@ -63,10 +50,9 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	await asyncForEach(guldsArray, async guild => {
 		const data = await client.getMemberData(user.id, guild.id);
-		globalMoney += data.money + data.bankSold;
+		globalMoney += data.money + data.bank;
 	});
 
-	const lover = userData.lover ? client.users.cache.get(userData.lover) : undefined;
 	const notDefined = await translateContext(interaction, "common:NOT_DEFINED");
 
 	const content = `
@@ -74,7 +60,7 @@ ${await translateContext(interaction, "economy/profile:CREDITS", {
 	credits: memberData.money,
 })}
 ${await translateContext(interaction, "economy/profile:BANK", {
-	credits: memberData.bankSold,
+	credits: memberData.bank,
 })}
 ${await translateContext(interaction, "economy/profile:GLOBAL", { credits: globalMoney })}
 ${await translateContext(interaction, "economy/profile:REPUTATION", { rep: userData.rep })}
@@ -86,9 +72,6 @@ ${await translateContext(interaction, "economy/profile:XP", {
 ${await translateContext(interaction, "economy/profile:BIRTHDATE", {
 	birthdate: userData.birthdate ? `<t:${Math.floor(userData.birthdate / 1000)}:f>` : notDefined,
 })}
-${await translateContext(interaction, "economy/profile:LOVER", {
-	user: lover?.toString() || notDefined,
-})}
 ${await translateContext(interaction, "economy/profile:REGISTERED", {
 	date: `<t:${Math.floor(memberData.registeredAt / 1000)}:f>`,
 })}`;
@@ -96,11 +79,7 @@ ${await translateContext(interaction, "economy/profile:REGISTERED", {
 	const container = new ContainerBuilder()
 		.addSectionComponents(
 			new SectionBuilder()
-				.setThumbnailAccessory(t =>
-					t.setURL(
-						user.avatarURL() || client.user.avatarURL()!,
-					),
-				)
+				.setThumbnailAccessory(t => t.setURL(user.avatarURL() || client.user.avatarURL()!))
 				.addTextDisplayComponents(
 					new TextDisplayBuilder().setContent(
 						`# ${user.toString()}${userData.bio ? `\n## ${userData.bio}` : ""}\n`,
@@ -108,15 +87,7 @@ ${await translateContext(interaction, "economy/profile:REGISTERED", {
 				),
 		)
 		.addSeparatorComponents(s => s.setSpacing(SeparatorSpacingSize.Small).setDivider(true))
-		.addTextDisplayComponents(t => t.setContent(content))
-		.addActionRowComponents(
-			new ActionRowBuilder<ButtonBuilder>().addComponents(
-				new ButtonBuilder()
-					.setStyle(ButtonStyle.Primary)
-					.setLabel(await translateContext(interaction, "economy/profile:ACHIEVEMENTS"))
-					.setCustomId(`${ACHIEVEMENTS_BUTTON_ID}-${user.id}`),
-			),
-		);
+		.addTextDisplayComponents(t => t.setContent(content));
 
 	interaction.editReply({
 		flags: MessageFlags.IsComponentsV2,
@@ -126,24 +97,3 @@ ${await translateContext(interaction, "economy/profile:REGISTERED", {
 		},
 	});
 };
-
-client.on("interactionCreate", async interaction => {
-	if (!interaction.isButton()) return;
-	if (!interaction.customId.includes(ACHIEVEMENTS_BUTTON_ID)) return;
-
-	await interaction.deferUpdate();
-
-	const userId = interaction.customId.split("-")[1];
-	const user = client.users.cache.get(userId);
-	if (!user) return;
-
-	const container = await createAchievementsContainer(interaction, user);
-
-	interaction.message.reply({
-		flags: MessageFlags.IsComponentsV2,
-		components: [container],
-		allowedMentions: {
-			parse: [],
-		},
-	});
-});

@@ -52,22 +52,6 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	otherUserData.set("rep", otherUserData.rep + 1);
 	userData.set("cooldowns.rep", toWait);
 
-	if (!otherUserData.achievements.rep.achieved) {
-		otherUserData.achievements.rep.progress.now =
-			otherUserData.rep > otherUserData.achievements.rep.progress.total
-				? otherUserData.achievements.rep.progress.total
-				: otherUserData.rep;
-		if (
-			otherUserData.achievements.rep.progress.now >=
-			otherUserData.achievements.rep.progress.total
-		) {
-			otherUserData.achievements.rep.achieved = true;
-			interaction.followUp({
-				content: user.toString(),
-			});
-		}
-	}
-
 	await userData.save();
 	await otherUserData.save();
 

@@ -21,8 +21,7 @@ export interface IMemberSchema {
 	id: string;
 	guildID: string;
 	money: number;
-	workStreak: number;
-	bankSold: number;
+	bank: number;
 	exp: number;
 	level: number;
 	transactions: Transaction[];
@@ -45,8 +44,7 @@ const memberSchema = new Schema<IMemberSchema>({
 	id: { type: String, required: true },
 	guildID: { type: String, required: true, ref: "Guild" },
 	money: { type: Number, default: 0 },
-	workStreak: { type: Number, default: 0 },
-	bankSold: { type: Number, default: 0 },
+	bank: { type: Number, default: 0 },
 	exp: { type: Number, default: 0 },
 	level: { type: Number, default: 0 },
 	transactions: { type: [transactionSchema], default: [] },
@@ -57,7 +55,7 @@ const memberSchema = new Schema<IMemberSchema>({
 memberSchema.pre("validate", function (next) {
 	const now = Date.now();
 
-	(["money", "workStreak", "bankSold", "exp", "level"] as const).forEach(field => {
+	(["money", "bank", "exp", "level"] as const).forEach(field => {
 		if (typeof this[field] !== "number" || isNaN(this[field]) || this[field] < 0) {
 			this[field] = 0;
 		}

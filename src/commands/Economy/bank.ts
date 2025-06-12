@@ -94,7 +94,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 			await asyncForEach(guldsArray, async guild => {
 				const data = await client.getMemberData(targetUser.id, guild.id);
-				globalMoney += data.money + data.bankSold;
+				globalMoney += data.money + data.bank;
 			});
 
 			embed.setFields([
@@ -105,7 +105,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				},
 				{
 					name: await translateContext(interaction, "economy/profile:BANK"),
-					value: await formatCredits(interaction, targetData.bankSold),
+					value: await formatCredits(interaction, targetData.bank),
 					inline: true,
 				},
 				{
@@ -130,7 +130,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 			memberData.set({
 				money: memberData.money - credits,
-				bankSold: memberData.bankSold + credits,
+				bank: memberData.bank + credits,
 			});
 			memberData.transactions.push({
 				user: await translateContext(interaction, "economy/transactions:BANK"),
@@ -152,18 +152,18 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		case "withdraw": {
 			const credits =
 				creditsChoice!.toLowerCase() === "all"
-					? memberData.bankSold
+					? memberData.bank
 					: Number(creditsChoice);
 			if (isNaN(credits) || credits < 1) {
 				return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 			}
-			if (memberData.bankSold < credits) {
+			if (memberData.bank < credits) {
 				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
 			}
 
 			memberData.set({
 				money: memberData.money + credits,
-				bankSold: memberData.bankSold - credits,
+				bank: memberData.bank - credits,
 			});
 			memberData.transactions.push({
 				user: await translateContext(interaction, "economy/transactions:BANK"),
@@ -185,12 +185,12 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		case "transfer": {
 			const credits =
 				creditsChoice!.toLowerCase() === "all"
-					? memberData.bankSold
+					? memberData.bank
 					: Number(creditsChoice);
 			if (isNaN(credits) || credits < 1) {
 				return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 			}
-			if (memberData.bankSold < credits) {
+			if (memberData.bank < credits) {
 				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
 			}
 			if (interaction.user.id === targetUser.id) {
@@ -199,8 +199,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 			const recieverData = await client.getMemberData(targetUser.id, guildId);
 
-			memberData.set("bankSold", memberData.bankSold - credits);
-			recieverData.set("bankSold", recieverData.bankSold + credits);
+			memberData.set("bank", memberData.bank - credits);
+			recieverData.set("bank", recieverData.bank + credits);
 
 			memberData.transactions.push({
 				user: await translateContext(interaction, "economy/bank:TRANSFER_TO", {

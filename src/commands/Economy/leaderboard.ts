@@ -166,7 +166,7 @@ client.on("interactionCreate", async interaction => {
 		case LeaderboardType.Credits: {
 			const entries = await fetchAndBuildEntries(
 				() => membersData.then(members => Array.from(members.values())),
-				member => member.money + member.bankSold,
+				member => member.money + member.bank,
 			);
 
 			const nouns = await Promise.all([
