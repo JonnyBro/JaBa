@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Увімкнути або вимкнути видалення команд модерації",
-	"USAGE": "[state]",
-	"EXAMPLES": "deletemod state:True\ndeletemod state:False",
-	"ENABLED": "Автовидалення команд модерації включено",
-	"DISABLED": "Автовидалення команд модерації вимкнено"
-}

@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Reloads a command",
-	"USAGE": "[command]",
-	"EXAMPLES": "reload command:help",
-	"NOT_FOUND": "Command `{{command}}` not found",
-	"SUCCESS": "Command `{{command}}` successfully reloaded"
-}

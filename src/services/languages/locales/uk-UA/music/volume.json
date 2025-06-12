@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Встановити гучність бота",
-	"USAGE": "[int]",
-	"EXAMPLES": "volume 50",
-	"SUCCESS": "Гучність встановлена на **{{volume}}**"
-}

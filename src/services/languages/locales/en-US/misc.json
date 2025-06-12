@@ -1,24 +1,15 @@
 {
 	"BOT_USER": "You can't use this command on bots",
+	"NO_BOT_PERMS": "I don't have enough permissions to do that",
 	"CANT_YOURSELF": "You can't use this command on yourself",
-	"CANT_DM": "I cannot DM you. Please check your privacy settings",
 	"CANT_YOU": "You can't use that",
 	"EPHEMERAL_RESPONSE": "Make bot's response ephemeral?",
-	"FORCE_STOP": "The game has been forcibly ended, {{user}}, nobody won (the number was {{number}})",
 	"LEVEL_UP": "You have reached the next level! Your new level is: **{{level}}**",
-	"GUILD_ONLY": "This command can only be used on a server",
-	"INVALID_NUMBER_RANGE": "Please specify a number between **{{min}}** and **{{max}}**",
 	"MAX_150_CHARS": "No more than 150 characters!",
 	"MORE_THAN_ZERO": "Please specify an integer greater than 0",
 	"USER_NOT_FOUND": "Member/user not found!",
 	"NO_ARGS": "No arguments required",
-	"NSFW_COMMAND": "This command can only be used in an NSFW channel",
-	"OWNER_ONLY": "Only the bot owner can use this command",
-	"SELECT_CANCELED": "Selection canceled",
 	"SELECT_PLACEHOLDER": "Select something",
-	"STATS_FOOTER": "● [Support Server]({{supportLink}})\n● [Invite JaBa to Your Server]({{inviteLink}})",
-	"TIMED_OUT": "Time is out",
-	"JUMP_TO_PAGE": "Specify the page you want to jump to (maximum **{{length}}**):",
 
 	"QUOTE_TITLE": "Message from {{user}}",
 	"QUOTE_CONTENT": "Content",
@@ -39,17 +30,6 @@
 		"OCTOBER": "October",
 		"NOVEMBER": "November",
 		"DECEMBER": "December"
-	},
-
-	"MONITORING": {
-		"DELETE": {
-			"TITLE": "{{user}}'s message was deleted!",
-			"DESCRIPTION": "Message content was: ```{{content}}```\nChannel: {{channel}}\nTime created: {{time}}"
-		},
-		"UPDATE": {
-			"TITLE": "{{user}} updated a message!",
-			"DESCRIPTION": "Old Message: ```{{oldContent}}```\nNew Message: ```{{newContent}}```\nJump to message: {{url}}"
-		}
 	},
 
 	"PERMISSIONS": {

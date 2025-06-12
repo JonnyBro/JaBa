@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Возвращает аватар пользователя",
-	"USAGE": "(@user)",
-	"EXAMPLES": "avatar\navatar user:@jonny_bro",
-	"SERVER": "Аватар сервера?"
-}

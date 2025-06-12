@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Видалити користувача з тікета",
-	"USAGE": "[@user]",
-	"EXAMPLES": "removeuser user:@jonny_bro",
-	"SUCCESS": "{{user}} видалено з тікета"
-}

@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Gets a meme from a selected subreddit",
-	"USAGE": "",
-	"EXAMPLES": "memes",
-	"SUBREDDIT": "Subreddit",
-	"UPS": "Upvotes"
-}

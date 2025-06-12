@@ -1,34 +1,16 @@
 {
 	"DESCRIPTION": "Modify or display server settings",
-	"USAGE": "list\nset [setting] (state) (#channel)",
-	"EXAMPLES": "config list\nconfig set setting:reports state:True channel:#reports",
-
-	"LIST": "Display server settings",
-	"SET": "Modify server settings",
-	"LANG": "Change bot's language for this server",
-
-	"LANG_SUCCESS": "{{flag}} Server language has been changed to **{{lang}}**",
-
-	"AUTOPLAY": "Player Autoplay",
+	"USAGE": "list\nlanguage [lang]",
+	"EXAMPLES": "config list\nlanguage English",
 
 	"SPECIAL_CHANNELS": "Special Channels",
-	"BIRTHDAYS": "Birthdays Announcements",
 
-	"MONITORING_CHANNELS": "Monitoring Channels",
-	"MESSAGEUPDATE": "Message Update Logs",
-	"MESSAGEDELETE": "Message Deletion Logs",
+	"LIST": "Show server's settings",
+	"LANGUAGE": "Bot's language for this server",
+	"BIRTHDAYS": "A channel for the birthdays announcements",
+	"AUTOPLAY": "Music autoplay mode",
 
-	"AUTOMOD_TITLE": "Automoderation",
-	"AUTOMOD_CONTENT": "Automoderation is enabled.\nIgnored channels: {{channels}}",
-	"AUTOROLE_TITLE": "Automatic Role Assignment",
-	"AUTO_SANCTIONS": "Automatic Sanctions",
-	"BAN_CONTENT": "Ban: After **{{count}}** warnings",
-	"BAN_NOT_DEFINED": "Ban: Not set",
-	"GOODBYE_TITLE": "Farewell",
-	"GOODBYE_CONTENT": "Channel: {{channel}}",
-	"KICK_CONTENT": "Kick: After **{{count}}** warnings",
-	"KICK_NOT_DEFINED": "Kick: Not set",
-	"PARAMETER": "Parameter",
-	"WELCOME_TITLE": "Welcome",
-	"WELCOME_CONTENT": "Channel: {{channel}}"
+	"LANGUAGE_REPLY": "{{flag}} Server's language was set to: **{{lang}}**",
+	"BIRTHDAYS_REPLY": "Birthdays channel was set to: **{{channel}}**",
+	"AUTOPLAY_REPLY": "Autoplay mode was set to: **{{state}}**"
 }

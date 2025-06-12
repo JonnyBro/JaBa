@@ -1,5 +1,0 @@
-{
-	"DESCRIPTION": "Скопіювати емодзі на поточний сервер",
-	"USAGE": "[emoji]",
-	"EXAMPLES": "stealemoji emoji::coolstorybob:"
-}

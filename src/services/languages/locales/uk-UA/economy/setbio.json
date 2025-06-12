@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Встановити біографію",
-	"USAGE": "[text]",
-	"EXAMPLES": "setbio text:Мене звуть Жоня :shock:",
-	"SUCCESS": "Ваша біографія змінена"
-}

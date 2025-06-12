@@ -13,8 +13,5 @@
 	"LEVEL": "📊 Level: {{level}}",
 	"XP": "🔮 XP: {{xp}}/{{totalXp}}",
 	"BIRTHDATE": "🎂 Birthdate: {{birthdate}}",
-	"LOVER": "♥️ Lover: {{user}}",
-	"REGISTERED": "📅 Bot Profile Created: {{date}}",
-
-	"ACHIEVEMENTS": "🔥 Achievements"
+	"REGISTERED": "📅 Bot Profile Created: {{date}}"
 }

@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Добавить пользователя в тикет",
-	"USAGE": "[@user]",
-	"EXAMPLES": "adduser user:@jonny_bro",
-	"NOT_TICKET": "Данный канал не является тикетом",
-	"SUCCESS": "{{user}} добавлен в тикет"
-}

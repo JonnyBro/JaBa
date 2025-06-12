@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Toggles automatic deletion of moderation commands",
-	"USAGE": "[state]",
-	"EXAMPLES": "deletemod state:True\ndeletemod state:False",
-	"ENABLED": "Automatic deletion of moderation commands is enabled",
-	"DISABLED": "Automatic deletion of moderation commands is disabled"
-}

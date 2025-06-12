@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Написати повідомлення від імені бота",
-	"USAGE": "[message] (#channel)",
-	"EXAMPLES": "say message:Hello World!\nsay message:Hello World! channel:#новини",
-	"DONE": "Повідомлення `{{message}}` надіслано до {{channel}}"
-}

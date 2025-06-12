@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Показать информацию об эмодзи",
-	"USAGE": "[emoji]",
-	"EXAMPLES": "emoji emoji::tada:",
-	"TITLE": "Информация об {{emoji}}",
-	"ANIMATED": "Анимирован",
-	"LINK": "Ссылка",
-	"STANDART": "Стандартный эмодзи"
-}

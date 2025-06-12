@@ -1,8 +1,0 @@
-{
-	"DESCRIPTION": "Sends credits to a user",
-	"USAGE": "[@user] [amount]",
-	"EXAMPLES": "pay user:@jonny_bro amount:1000",
-	"INVALID_AMOUNT": "Please specify an amount",
-	"ENOUGH_MONEY": "You don't have {{amount}}",
-	"SUCCESS": "You have sent {{amount}} to {{user}}!"
-}

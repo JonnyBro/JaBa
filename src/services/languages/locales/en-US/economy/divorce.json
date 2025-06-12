@@ -1,8 +1,0 @@
-{
-	"DESCRIPTION": "Divorce a user",
-	"USAGE": "",
-	"EXAMPLES": "divorce",
-	"NOT_MARRIED": "You are not married",
-	"DIVORCED": "You have divorced {{user}}",
-	"DIVORCED_U": "{{user}} has divorced you"
-}

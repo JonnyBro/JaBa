@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Надіслати кредити користувачу",
-	"USAGE": "[@user] [amount]",
-	"EXAMPLES": "pay user:@jonny_bro amount:1000",
-	"BOT_USER": "Ботам не потрібні гроші B)",
-	"INVALID_AMOUNT": "Вкажіть суму",
-	"ENOUGH_MONEY": "У вас немає {{amount}}",
-	"SUCCESS": "Ви відправили {{user}} {{amount}}"
-}

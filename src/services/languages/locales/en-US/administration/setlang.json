@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Change the language of the bot on the server",
-	"USAGE": "[language]",
-	"EXAMPLES": "setlang language:English",
-	"SUCCESS": ":flag_us: Server language has been changed to **{{lang}}**"
-}

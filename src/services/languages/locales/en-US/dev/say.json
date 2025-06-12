@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Sends a message on behalf of the bot",
-	"USAGE": "[message] (#channel)",
-	"EXAMPLES": "say message:Hello World!\nsay message:Hello World! channel:#news",
-	"DONE": "Message `{{message}}` sent in {{channel}}"
-}

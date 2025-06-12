@@ -1,8 +1,0 @@
-{
-	"DESCRIPTION": "Lists members who boosting the server",
-	"USAGE": "",
-	"EXAMPLES": "boosters",
-	"BOOSTERS_LIST": "Boosters List",
-	"NO_BOOSTERS": "No boosters",
-	"BOOSTER_SINCE": "Boosting since"
-}

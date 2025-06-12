@@ -1,7 +1,0 @@
-{
-	"DESCRIPTION": "Добавляет эмодзи на сервер по ссылке",
-	"USAGE": "[link] [name]",
-	"EXAMPLES": "addemoji link:https://google.com name:google",
-	"SUCCESS": "{{emoji}} добавлен.",
-	"ERROR": "Произошла ошибка при добавлении {{name}}.\n```{{error}}```"
-}

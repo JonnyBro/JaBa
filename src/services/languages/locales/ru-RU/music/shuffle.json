@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Перемешать очередь",
-	"USAGE": "",
-	"EXAMPLES": "shuffle",
-	"SUCCESS": "Очередь успешно перемешана"
-}

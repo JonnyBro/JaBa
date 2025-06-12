@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Shows a list of servers where bot is",
-	"USAGE": "",
-	"EXAMPLES": "servers",
-	"SERVERS_LIST": "List of servers"
-}

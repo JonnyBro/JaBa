@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Sends a suggestion to a dedicated channel",
-	"USAGE": "[message]",
-	"EXAMPLES": "suggest message:New channel #nsfw :smiling_imp:",
-	"MISSING_CHANNEL": "The suggestion channel is not set up",
-	"MISSING_CONTENT": "Please enter your suggestion",
-	"TITLE": "Suggestion - {{user}}",
-	"SUCCESS": "Your suggestion has been submitted to {{channel}}"
-}

@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Укоротить ссылку",
-	"USAGE": "[url]",
-	"EXAMPLES": "shorturl url:https://google.com",
-	"NOT_A_LINK": "Укажите правильный URL!"
-}

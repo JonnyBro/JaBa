@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION": "Shows information about an emoji",
-	"USAGE": "[emoji]",
-	"EXAMPLES": "emoji emoji::tada:",
-	"TITLE": "Information about {{emoji}}",
-	"ANIMATED": "Animated",
-	"LINK": "Link",
-	"STANDARD": "Standard emoji"
-}
