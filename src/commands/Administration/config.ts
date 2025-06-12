@@ -14,13 +14,18 @@ import {
 	PermissionsBitField,
 } from "discord.js";
 
+type SettingOptions = {
+	language: string | null;
+	state: boolean | null;
+	channel: Channel | null;
+};
+
 const client = useClient();
 
-const localeChoises = client.i18n.SupportedLanguages.map(lng => {
-	const name = languageMeta.find(l => l.locale === lng)!.name;
-
-	return { name, value: lng };
-});
+const localeChoises = client.i18n.SupportedLanguages.map(lng => ({
+	name: languageMeta.find(l => l.locale === lng)!.name,
+	value: lng,
+}));
 
 export const data: CommandData = {
 	name: "config",
@@ -103,40 +108,13 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		return interaction.editReply({ embeds: [embed] });
 	}
 
-	if (subcommand === "language") {
-		const selectedLang = interaction.options.getString("language", true);
-		const lang = client.i18n.SupportedLanguages.find(l => l === selectedLang)!;
-		const langName = languageMeta.find(l => l.locale === lang)!.nativeName;
+	const options: SettingOptions = {
+		language: interaction.options.getString("language"),
+		state: interaction.options.getBoolean("state"),
+		channel: interaction.options.getChannel("channel") as Channel,
+	};
 
-		guildData.set("language", lang);
-		await guildData.save();
-
-		const embed = createEmbed({
-			author: {
-				name: client.user.username,
-				iconURL: client.user.avatarURL({ size: 1024 })!,
-			},
-			description: await translateContext(interaction, "administration/config:LANG_SUCCESS", {
-				flag: `:flag_${lang.split("-")[1].toLowerCase()}:`,
-				lang: langName,
-			}),
-		});
-
-		return interaction.editReply({ embeds: [embed] });
-	}
-
-	const state = interaction.options.getBoolean("state", true);
-	const channel = interaction.options.getChannel("channel") as Channel || null;
-
-	if (channel) {
-		const reply = await changeSetting(interaction, subcommand, state, channel);
-
-		await interaction.editReply({
-			content: reply,
-		});
-	}
-
-	const reply = await changeSetting(interaction, subcommand, state);
+	const reply = await changeSetting(interaction, subcommand, options);
 
 	await interaction.editReply({
 		content: reply,
@@ -146,47 +124,62 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 async function generateReply(
 	interaction: ChatInputCommandInteraction,
 	subcommand: string,
-	state: boolean,
-	channel?: Channel,
+	args: Record<string, unknown>,
 ) {
 	const translatedParam = await translateContext(
 		interaction,
-		`administration/config:${subcommand.toUpperCase()}`,
+		`administration/config:${subcommand.toUpperCase()}_REPLY`,
+		args,
 	);
-	const enabledText = await translateContext(interaction, "common:ENABLED");
-	const disabledText = await translateContext(interaction, "common:DISABLED");
 
-	if (channel) return `${translatedParam}: **${enabledText}** (${channel.toString()})`;
-
-	return `${translatedParam}: ${state ? `**${enabledText}**` : `**${disabledText}**`}`;
+	return translatedParam;
 }
 
 async function changeSetting(
 	interaction: ChatInputCommandInteraction,
 	subcommand: string,
-	state: boolean,
-	channel?: Channel,
+	options: SettingOptions,
 ) {
 	const guildData = await client.getGuildData(interaction.guildId!);
 
-	if (subcommand === "birthdays") {
-		if (!channel) {
-			guildData.set("plugins.birthdays", null);
+	switch (subcommand) {
+		case "language": {
+			const lang = client.i18n.SupportedLanguages.find(l => l === options.language)!;
+			const langName = languageMeta.find(l => l.locale === lang)!.nativeName;
+
+			guildData.set("language", lang);
 			await guildData.save();
 
-			return await generateReply(interaction, subcommand, state);
+			return await generateReply(interaction, subcommand, {
+				flag: `:flag_${lang.split("-")[1].toLowerCase()}:`,
+				lang: langName,
+			});
 		}
 
-		guildData.set("plugins.birthdays", channel.id);
-		await guildData.save();
+		case "birthdays":
+			if (!options.state || !options.channel) {
+				guildData.set("plugins.birthdays", null);
+				await guildData.save();
 
-		return await generateReply(interaction, subcommand, state, channel);
-	} else if (subcommand === "autoplay") {
-		if (!guildData.plugins.music) guildData.plugins.music = { autoPlay: false };
+				return await generateReply(interaction, subcommand, {
+					channel: await translateContext(interaction, "common:DISABLED"),
+				});
+			}
 
-		guildData.set("plugins.music.autoPlay", state);
-		await guildData.save();
+			guildData.set("plugins.birthdays", options.channel.id);
+			await guildData.save();
 
-		return await generateReply(interaction, subcommand, state);
+			return await generateReply(interaction, subcommand, {
+				channel: options.channel.toString(),
+			});
+		case "autoplay":
+			if (!guildData.plugins.music) guildData.plugins.music = { autoPlay: false };
+
+			guildData.set("plugins.music.autoPlay", options.state);
+			await guildData.save();
+
+			return await generateReply(interaction, subcommand, {
+				state: options.state,
+			});
 	}
 }

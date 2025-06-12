@@ -1,11 +1,16 @@
-import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/functions.js";
-import logger from "@/helpers/logger.js";
+import {
+	editReplyError,
+	editReplySuccess,
+	getLocalizedDesc,
+	translateContext,
+} from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import {
 	ApplicationCommandOptionType,
 	ApplicationIntegrationType,
 	InteractionContextType,
 	MessageFlags,
+	parseEmoji,
 } from "discord.js";
 
 export const data: CommandData = {
@@ -25,7 +30,6 @@ export const data: CommandData = {
 			name: "name",
 			...getLocalizedDesc("common:NAME"),
 			type: ApplicationCommandOptionType.String,
-			required: true,
 		},
 	],
 };
@@ -33,18 +37,40 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-	const attachment = interaction.options.getString("link", true);
-	const name = interaction.options.getString("name", true);
+	let name = interaction.options.getString("name");
+	const link = interaction.options.getString("link", true);
+	const isEmoji = link.startsWith("<:");
+	let attachment = link;
+
+	if (!name && isEmoji) {
+		const parsedEmoji = parseEmoji(link);
+
+		if (parsedEmoji) {
+			name = parsedEmoji.name;
+			attachment = `https://cdn.discordapp.com/emojis/${
+				parsedEmoji.id
+			}.${parsedEmoji.animated ? "gif" : "png"}`;
+		}
+	}
+
+	if (!name) {
+		return await editReplyError(interaction, "administration/addemoji:MISSING_NAME");
+	}
 
 	try {
 		const emoji = await interaction.guild?.emojis.create({ name, attachment });
-		if (!emoji) return editReplyError(interaction, "administration/addemoji:ERROR", { name });
 
-		return editReplySuccess(interaction, "administration/addemoji:SUCCESS", {
+		if (!emoji) {
+			return await editReplyError(interaction, "administration/addemoji:ERROR", {
+				name,
+				error: await translateContext(interaction, "misc:NO_BOT_PERMS"),
+			});
+		}
+
+		return await editReplySuccess(interaction, "administration/addemoji:SUCCESS", {
 			emoji: emoji.toString(),
 		});
 	} catch (error) {
-		logger.error("[addemoji]", error);
-		editReplyError(interaction, "administration/addemoji:ERROR", { name, error });
+		await editReplyError(interaction, "administration/addemoji:ERROR", { name, error });
 	}
 };
