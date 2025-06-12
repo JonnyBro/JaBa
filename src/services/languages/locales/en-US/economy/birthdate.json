@@ -2,14 +2,21 @@
 	"DESCRIPTION": "Sets your date of birth",
 	"USAGE": "[day] [month] [year]",
 	"EXAMPLES": "birthdate day:17 month:03 year:2000",
+
+	"CLEAR": "Clear your birthdate",
+	"SET": "Set your birthdate",
+
 	"DAY": "Day",
 	"MONTH": "Month",
 	"YEAR": "Year",
-	"CLEAR": "Clear date?",
+
 	"INVALID_DATE": "Invalid date provided",
-	"DATE_TOO_LOW": "Are you over 80 years old? :eyes:",
+	"DATE_TOO_LOW": "Are you sure? :eyes:",
 	"DATE_TOO_HIGH": "Hmm... You haven't been born yet",
+
+	"SUCCESS": "Your date of birth has been set to **{{date}}**",
+	"SUCCESS_CLEAR": "Your date of birth has been cleared",
+
 	"HAPPY_BIRTHDAY": "Happy Birthday",
-	"HAPPY_BIRTHDAY_MESSAGE": "Happy birthday to <@{{user}}>! Today, they have turned {{age}}!",
-	"SUCCESS": "Your date of birth has been set to **{{date}}**"
+	"HAPPY_BIRTHDAY_MESSAGE": "Happy birthday to <@{{user}}>! Today, they have turned {{age}}!"
 }
