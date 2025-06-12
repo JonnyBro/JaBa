@@ -92,10 +92,10 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-	const guildData = await client.getGuildData(interaction.guildId!);
 	const subcommand = interaction.options.getSubcommand();
 
 	if (subcommand === "list") {
+		const guildData = await client.getGuildData(interaction.guildId!);
 		const fields = await generateFields(interaction, guildData);
 		const embed = createEmbed({
 			author: {

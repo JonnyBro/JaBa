@@ -27,62 +27,86 @@ export const data: CommandData = {
 	contexts: [InteractionContextType.Guild],
 	options: [
 		{
-			name: "option",
-			...getLocalizedDesc("economy/bank:OPTION"),
-			type: ApplicationCommandOptionType.String,
-			required: true,
-			choices: [
-				{ name: client.i18n.translate("economy/bank:BALANCE"), value: "balance" },
-				{ name: client.i18n.translate("economy/bank:DEPOSIT"), value: "deposit" },
-				{ name: client.i18n.translate("economy/bank:WITHDRAW"), value: "withdraw" },
-				{ name: client.i18n.translate("economy/bank:TRANSFER"), value: "transfer" },
-				{ name: client.i18n.translate("economy/bank:TRANSACTIONS"), value: "transactions" },
+			name: "balance",
+			...getLocalizedDesc("economy/bank:BALANCE"),
+			type: ApplicationCommandOptionType.Subcommand,
+			options: [
+				{
+					name: "user",
+					...getLocalizedDesc("common:USER"),
+					type: ApplicationCommandOptionType.User,
+				},
 			],
 		},
 		{
-			name: "user",
-			...getLocalizedDesc("common:USER"),
-			type: ApplicationCommandOptionType.User,
+			name: "deposit",
+			...getLocalizedDesc("economy/bank:DEPOSIT"),
+			type: ApplicationCommandOptionType.Subcommand,
+			options: [
+				{
+					name: "credits",
+					...getLocalizedDesc("economy/bank:OPTION_NAN_ALL"),
+					type: ApplicationCommandOptionType.String,
+					required: true,
+				},
+			],
 		},
 		{
-			name: "credits",
-			...getLocalizedDesc("economy/bank:OPTION_NAN_ALL"),
-			type: ApplicationCommandOptionType.String,
+			name: "withdraw",
+			...getLocalizedDesc("economy/bank:WITHDRAW"),
+			type: ApplicationCommandOptionType.Subcommand,
+			options: [
+				{
+					name: "credits",
+					...getLocalizedDesc("economy/bank:OPTION_NAN_ALL"),
+					type: ApplicationCommandOptionType.String,
+					required: true,
+				},
+			],
+		},
+		{
+			name: "transfer",
+			...getLocalizedDesc("economy/bank:TRANSFER"),
+			type: ApplicationCommandOptionType.Subcommand,
+			options: [
+				{
+					name: "user",
+					...getLocalizedDesc("common:USER"),
+					type: ApplicationCommandOptionType.User,
+					required: true,
+				},
+				{
+					name: "credits",
+					...getLocalizedDesc("economy/bank:OPTION_NAN_ALL"),
+					type: ApplicationCommandOptionType.String,
+					required: true,
+				},
+			],
+		},
+		{
+			name: "transactions",
+			...getLocalizedDesc("economy/bank:TRANSACTIONS"),
+			type: ApplicationCommandOptionType.Subcommand,
 		},
 	],
 };
 
 // TODO: Move from embeds to components v2
-async function formatCredits(interaction: ChatInputCommandInteraction<CacheType>, amount: number) {
-	const forms = [
-		await translateContext(interaction, "misc:NOUNS:CREDIT:1"),
-		await translateContext(interaction, "misc:NOUNS:CREDIT:2"),
-		await translateContext(interaction, "misc:NOUNS:CREDIT:5"),
-	];
-	const noun = getNoun(amount, forms);
-	return `**${amount}** ${noun}`;
-}
-
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
-	const memberId = interaction.user.id;
+	const subcommand = interaction.options.getSubcommand();
+
 	const guildId = interaction.guildId!;
+	const memberId = interaction.user.id;
 	const memberData = await client.getMemberData(memberId, guildId);
-	const choice = interaction.options.getString("option", true);
-	const targetUser = interaction.options.getUser("user") || interaction.user;
-	if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
-
-	const creditsChoice = interaction.options.getString("credits");
-
-	if (!creditsChoice && choice !== "balance" && choice !== "transactions") {
-		return editReplyError(interaction, "misc:MORE_THAN_ZERO");
-	}
-
 	const embed = createEmbed();
 
-	switch (choice) {
+	switch (subcommand) {
 		case "balance": {
+			const targetUser = interaction.options.getUser("user") || interaction.user;
+			if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
+
 			const targetData =
 				targetUser.id === interaction.user.id
 					? memberData
@@ -99,17 +123,23 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 			embed.setFields([
 				{
-					name: await translateContext(interaction, "economy/profile:CASH"),
+					name: (await translateContext(interaction, "economy/profile:CREDITS")).split(
+						":",
+					)[0],
 					value: await formatCredits(interaction, targetData.money),
 					inline: true,
 				},
 				{
-					name: await translateContext(interaction, "economy/profile:BANK"),
+					name: (await translateContext(interaction, "economy/profile:BANK")).split(
+						":",
+					)[0],
 					value: await formatCredits(interaction, targetData.bank),
 					inline: true,
 				},
 				{
-					name: await translateContext(interaction, "economy/profile:GLOBAL"),
+					name: (await translateContext(interaction, "economy/profile:GLOBAL")).split(
+						":",
+					)[0],
 					value: await formatCredits(interaction, globalMoney),
 					inline: true,
 				},
@@ -119,13 +149,12 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		}
 
 		case "deposit": {
-			const credits =
-				creditsChoice!.toLowerCase() === "all" ? memberData.money : Number(creditsChoice);
-			if (isNaN(credits) || credits < 1) {
-				return editReplyError(interaction, "misc:MORE_THAN_ZERO");
-			}
+			const creditsOption = interaction.options.getString("credits")?.toLowerCase();
+			const credits = creditsOption === "all" ? memberData.money : Number(creditsOption);
+
+			if (credits <= 0) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 			if (memberData.money < credits) {
-				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDIT");
+				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDITS");
 			}
 
 			memberData.set({
@@ -150,13 +179,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		}
 
 		case "withdraw": {
-			const credits =
-				creditsChoice!.toLowerCase() === "all"
-					? memberData.bank
-					: Number(creditsChoice);
-			if (isNaN(credits) || credits < 1) {
-				return editReplyError(interaction, "misc:MORE_THAN_ZERO");
-			}
+			const creditsOption = interaction.options.getString("credits")?.toLowerCase();
+			const credits = creditsOption === "all" ? memberData.money : Number(creditsOption);
+
+			if (credits <= 0) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 			if (memberData.bank < credits) {
 				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
 			}
@@ -183,13 +209,13 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		}
 
 		case "transfer": {
-			const credits =
-				creditsChoice!.toLowerCase() === "all"
-					? memberData.bank
-					: Number(creditsChoice);
-			if (isNaN(credits) || credits < 1) {
-				return editReplyError(interaction, "misc:MORE_THAN_ZERO");
-			}
+			const creditsOption = interaction.options.getString("credits")?.toLowerCase();
+			const credits = creditsOption === "all" ? memberData.bank : Number(creditsOption);
+
+			const targetUser = interaction.options.getUser("user") || interaction.user;
+			if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
+
+			if (credits <= 0) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 			if (memberData.bank < credits) {
 				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
 			}
@@ -225,8 +251,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 			embed.setDescription(
 				await translateContext(interaction, "economy/bank:SUCCESS_TRANSFER", {
-					credits: await formatCredits(interaction, credits),
 					reciever: targetUser.toString(),
+					credits: await formatCredits(interaction, credits),
 				}),
 			);
 
@@ -269,10 +295,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				if (sortedTransactions[0].length > 0) {
 					embed.addFields([
 						{
-							name: await translateContext(
-								interaction,
-								"economy/bank:T_GOT",
-							),
+							name: await translateContext(interaction, "economy/bank:T_GOT"),
 							value: sortedTransactions[0].join("\n"),
 							inline: true,
 						},
@@ -282,10 +305,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				if (sortedTransactions[1].length > 0) {
 					embed.addFields([
 						{
-							name: await translateContext(
-								interaction,
-								"economy/bank:T_SEND",
-							),
+							name: await translateContext(interaction, "economy/bank:T_SEND"),
 							value: sortedTransactions[1].join("\n"),
 							inline: true,
 						},
@@ -295,10 +315,17 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 			break;
 		}
-
-		default:
-			return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 	}
 
 	await interaction.editReply({ embeds: [embed] });
 };
+
+async function formatCredits(interaction: ChatInputCommandInteraction<CacheType>, amount: number) {
+	const forms = [
+		await translateContext(interaction, "misc:NOUNS:CREDIT:1"),
+		await translateContext(interaction, "misc:NOUNS:CREDIT:2"),
+		await translateContext(interaction, "misc:NOUNS:CREDIT:5"),
+	];
+	const noun = getNoun(amount, forms);
+	return `**${amount}** ${noun}`;
+}
