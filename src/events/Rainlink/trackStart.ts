@@ -130,12 +130,6 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 			return interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
 		}
 
-		if (interaction.user.id !== trackRequester.id) {
-			embed.setDescription(await translateContext(guild, "misc:CANT_YOU"));
-
-			return interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
-		}
-
 		switch (interaction.customId) {
 			case ButtonId.PLAY_PAUSE_BUTTON_ID:
 				if (!player.paused) {
