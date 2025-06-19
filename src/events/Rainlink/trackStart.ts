@@ -15,7 +15,7 @@ import {
 import { RainlinkLoopMode, RainlinkTrack } from "rainlink";
 
 const client = useClient();
-const debug = !client.configService.get("production");
+const debug = !client.configService.get<boolean>("production");
 
 enum ButtonId {
 	PLAY_PAUSE_BUTTON_ID = "trackStart_play_pause",

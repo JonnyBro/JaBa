@@ -4,7 +4,7 @@ import { RainlinkPlayerCustom } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 
 const client = useClient();
-const debug = !client.configService.get("production");
+const debug = !client.configService.get<boolean>("production");
 
 export const data = {
 	name: "playerException",
