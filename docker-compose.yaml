@@ -1,3 +1,6 @@
+volumes:
+    mongo_data:
+
 services:
     app:
         build: .
@@ -10,11 +13,12 @@ services:
             - mongo
     mongo:
         image: mongo:8
-        container_name: jaba_mongo
-        ports:
-            - 27017:27017
+        container_name: mongo
+        # ports:
+        #     - 27017:27017
         volumes:
             - mongo_data:/data/db
-
-volumes:
-    mongo_data:
+        healthcheck:
+            test: echo 'db.runCommand("ping").ok' | mongosh mongodb://localhost --quiet
+            interval: 30s
+            timeout: 10s
