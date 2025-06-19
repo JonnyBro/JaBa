@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Adds a track to be played next",
+	"USAGE": "[query]",
+	"EXAMPLES": "next query:Never Gonna Give You Up",
+
+	"ADDED_TRACK": "[{{name}}](<{{url}}>) will be playing next",
+	"ADDED_PLAYLIST": "{{count}} tracks from [{{name}}](<{{url}}>) will be playing next"
+}

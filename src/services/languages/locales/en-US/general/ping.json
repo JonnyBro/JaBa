@@ -2,6 +2,7 @@
 	"DESCRIPTION": "Shows the bot's ping",
 	"USAGE": "",
 	"EXAMPLES": "ping",
+
 	"PONG": "Pong!",
 	"PING": "My ping is **{{ping}}**ms"
 }
