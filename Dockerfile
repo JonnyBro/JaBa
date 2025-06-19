@@ -14,7 +14,7 @@ COPY . .
 
 RUN pnpm build
 
-FROM node:22-slim AS runner
+FROM node:22-alpine AS runner
 
 RUN npm install -g pnpm
 
