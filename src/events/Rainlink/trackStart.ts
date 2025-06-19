@@ -15,7 +15,7 @@ import {
 import { RainlinkLoopMode, RainlinkTrack } from "rainlink";
 
 const client = useClient();
-const debug = !client.configService.get("production");
+const debug = !client.configService.get<boolean>("production");
 
 enum ButtonId {
 	PLAY_PAUSE_BUTTON_ID = "trackStart_play_pause",
@@ -46,6 +46,9 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 	const trackAuthor = formatString(track.author || "Unknown", 25).replace(/ - Topic$/, "");
 	const trackDuration = track.isStream ? ":red_circle:" : convertTime(track.duration);
 	const trackRequester = track.requester as User;
+	const nextTrackTitle = formatString(player.queue[0].title || "Unknown", 30).replace(/ - Topic$/, "");
+	const nextTrackAuthor = formatString(player.queue[0].author || "Unknown", 25).replace(/ - Topic$/, "");
+	const nextTrackLink = player.queue[0].uri;
 
 	if (debug) {
 		logger.debug(
@@ -62,12 +65,24 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 		},
 		description: `**[${trackTitle} - ${trackAuthor}](${track.uri})**`,
 		fields: [
-			{ name: "Source", value: `${capitalize(track.source)}`, inline: true },
-			{ name: "Duration", value: `\`${trackDuration}\``, inline: true },
+			{
+				name: await translateContext(guild, "music/queue:SOURCE"),
+				value: `${capitalize(track.source)}`,
+				inline: true,
+			},
+			{
+				name: await translateContext(guild, "music/queue:DURATION"),
+				value: `\`${trackDuration}\``,
+				inline: true,
+			},
 			{
 				name: await translateContext(guild, "music/queue:ADDED"),
 				value: trackRequester.toString(),
 				inline: true,
+			},
+			{
+				name: await translateContext(guild, "music/queue:NEXT"),
+				value: `**[${nextTrackTitle} - ${nextTrackAuthor}](${nextTrackLink})**`,
 			},
 		],
 	}).setThumbnail(track.artworkUrl);

@@ -5,7 +5,7 @@ import useClient from "@/utils/use-client.js";
 import { RainlinkQueue } from "rainlink";
 
 const client = useClient();
-const debug = !client.configService.get("production");
+const debug = !client.configService.get<boolean>("production");
 
 export const data = {
 	name: "queueEmpty",

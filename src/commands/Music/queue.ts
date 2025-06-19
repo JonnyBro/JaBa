@@ -306,7 +306,7 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 		})
 			.setThumbnail(currentTrack.artworkUrl)
 			.setDescription(
-				`${await translateContext(interaction, "music/queue:DURATION", {
+				`${await translateContext(interaction, "music/queue:DURATION_QUEUE", {
 					time: formattedTotalDuration,
 				})}\n${await translateContext(interaction, "music/nowplaying:REPEAT")}: \`${
 					translated[player.loop]
