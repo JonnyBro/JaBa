@@ -22,9 +22,10 @@ export const data = {
 		for (const guild of guilds) {
 			try {
 				const data = await client.getGuildData(guild.id);
-				const channel = data.plugins.birthdays
-					? await client.channels.fetch(data.plugins.birthdays)
-					: null;
+				const channel =
+					typeof data.plugins.birthdays === "string"
+						? await client.channels.fetch(data.plugins.birthdays)
+						: null;
 
 				if (!channel) return;
 

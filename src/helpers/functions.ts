@@ -7,7 +7,6 @@ import {
 	Interaction,
 	InteractionReplyOptions,
 	Locale,
-	LocalizationMap,
 	Message,
 	MessageFlags,
 	User,
@@ -141,12 +140,16 @@ export const getLocale = async (guildId: string) => {
 export const getLocalizedDesc = (key: string) => {
 	const client = useClient();
 
-	const locals = client.i18n.SupportedLanguages.reduce((acc, lng) => {
-		const splitted = lng.split("-")[0];
-		const short = localeExcludes.includes(splitted) ? lng : splitted;
-		acc[short as Locale] = client.i18n.translate(key, { lng });
-		return acc;
-	}, {} as LocalizationMap);
+	const locals = client.i18n.SupportedLanguages.reduce(
+		(acc, lng) => {
+			const splitted = lng.split("-")[0];
+			const short = localeExcludes.includes(splitted) ? lng : splitted;
+			acc[short as Locale] = client.i18n.translate(key, { lng });
+
+			return acc;
+		},
+		{} as Record<Locale, string | null>,
+	);
 
 	return {
 		description: client.i18n.translate(key),
