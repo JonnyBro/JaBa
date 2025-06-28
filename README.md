@@ -10,7 +10,7 @@ JaBa is an open-source Discord Bot written in [TypeScript](https://www.typescrip
 ![Workflow](https://img.shields.io/github/actions/workflow/status/JonnyBro/JaBa/docker-publish.yml?branch=main&style=for-the-badge)
 ![License](https://img.shields.io/github/license/JonnyBro/JaBa?label=License&style=for-the-badge)
 
-## What he can do
+## What it can do
 
 - Music playback
 - Utility commands
