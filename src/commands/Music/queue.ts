@@ -253,22 +253,19 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 
 	if (!queue.length) {
 		const embed = createEmbed({
-			title: await translateContext(interaction, "music/nowplaying:CURRENTLY_PLAYING"),
-		})
-			.setThumbnail(currentTrack.artworkUrl)
-			.setDescription(
-				`${await translateContext(interaction, "music/nowplaying:REPEAT")}: \`${
-					translated[player.loop]
-				}\`\n[${currentTrack.title}](${currentTrack.uri}) - ${convertTime(
-					currentTrack.duration,
-				)}\n> ${await translateContext(
-					interaction,
-					"music/queue:ADDED",
-				)} ${currentTrack.requester}\n\n**${await translateContext(
-					interaction,
-					"music/queue:NEXT",
-				)}**\n${await translateContext(interaction, "music/queue:NO_QUEUE")}`,
-			);
+			title: await translateContext(interaction, "music/queue:CURRENTLY_PLAYING"),
+			description: `${await translateContext(interaction, "music/queue:REPEAT", {
+				mode: `\`${translated[player.loop]}\``,
+			})}\n[${currentTrack.title}](${currentTrack.uri}) - ${convertTime(
+				currentTrack.duration,
+			)}\n> ${await translateContext(
+				interaction,
+				"music/queue:ADDED",
+			)} ${currentTrack.requester}\n\n**${await translateContext(
+				interaction,
+				"music/queue:NEXT",
+			)}**\n${await translateContext(interaction, "music/queue:NO_QUEUE")}`,
+		}).setThumbnail(currentTrack.artworkUrl);
 
 		embeds.push(embed);
 
@@ -302,20 +299,17 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 		).join("\n");
 
 		const embed = createEmbed({
-			title: await translateContext(interaction, "music/nowplaying:CURRENTLY_PLAYING"),
-		})
-			.setThumbnail(currentTrack.artworkUrl)
-			.setDescription(
-				`${await translateContext(interaction, "music/queue:DURATION_QUEUE", {
-					time: formattedTotalDuration,
-				})}\n${await translateContext(interaction, "music/nowplaying:REPEAT")}: \`${
-					translated[player.loop]
-				}\`\n[${currentTrack.title}](${currentTrack.uri}) - ${convertTime(
-					currentTrack.duration,
-				)}\n * ${await translateContext(interaction, "music/queue:ADDED")} ${
-					currentTrack.requester
-				}\n\n**${await translateContext(interaction, "music/queue:NEXT")}**\n${info}`,
-			);
+			title: await translateContext(interaction, "music/queue:CURRENTLY_PLAYING"),
+			description: `${await translateContext(interaction, "music/queue:DURATION_QUEUE", {
+				time: formattedTotalDuration,
+			})}\n${await translateContext(interaction, "music/queue:REPEAT", {
+				mode: `\`${translated[player.loop]}\``,
+			})}\n[${currentTrack.title}](${currentTrack.uri}) - ${convertTime(
+				currentTrack.duration,
+			)}\n * ${await translateContext(interaction, "music/queue:ADDED")} ${
+				currentTrack.requester
+			}\n\n**${await translateContext(interaction, "music/queue:NEXT")}**\n${info}`,
+		}).setThumbnail(currentTrack.artworkUrl);
 
 		embeds.push(embed);
 	}

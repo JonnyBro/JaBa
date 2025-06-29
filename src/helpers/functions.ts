@@ -34,11 +34,10 @@ export const formatReply = (message: string, prefixEmoji?: string) => {
 	return prefixEmoji ? `${emoji.toString()} ${message}` : `${message}`;
 };
 
-export const asyncForEach = async <T>(collection: T[], callback: (_item: T) => Promise<void>) => {
-	const allPromises = collection.map(async key => {
-		await callback(key);
-	});
-	return await Promise.all(allPromises);
+export const asyncForEach = async <T>(collection: T[], callback: (item: T) => Promise<void>) => {
+	for (const item of collection) {
+		await callback(item);
+	}
 };
 
 export const translateContext = async <T extends CacheType = CacheType>(
