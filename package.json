@@ -1,6 +1,6 @@
 {
     "name": "jaba",
-    "version": "5.2.0",
+    "version": "5.2.1",
     "main": "src/index.js",
     "type": "module",
     "scripts": {
