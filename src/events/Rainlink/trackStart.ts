@@ -42,12 +42,12 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 
 	const guildData = await client.getGuildData(player.guildId);
 
-	const trackTitle = formatString(track.title || "Unknown", 30).replace(/ - Topic$/, "");
-	const trackAuthor = formatString(track.author || "Unknown", 25).replace(/ - Topic$/, "");
+	const trackTitle = formatString(track?.title || "Unknown", 30).replace(/ - Topic$/, "");
+	const trackAuthor = formatString(track?.author || "Unknown", 25).replace(/ - Topic$/, "");
 	const trackDuration = track.isStream ? ":red_circle:" : convertTime(track.duration);
 	const trackRequester = track.requester as User;
-	const nextTrackTitle = formatString(player.queue[0].title || "Unknown", 30).replace(/ - Topic$/, "");
-	const nextTrackAuthor = formatString(player.queue[0].author || "Unknown", 25).replace(/ - Topic$/, "");
+	const nextTrackTitle = formatString(player?.queue[0]?.title || "Unknown", 30).replace(/ - Topic$/, "");
+	const nextTrackAuthor = formatString(player?.queue[0]?.author || "Unknown", 25).replace(/ - Topic$/, "");
 	const nextTrackLink = player.queue[0].uri;
 
 	if (debug) {

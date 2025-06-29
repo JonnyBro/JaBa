@@ -5,6 +5,10 @@
 	"QUEUE": "Playback Queue",
 	"NO_QUEUE": "Queue is empty",
 	"DURATION_QUEUE": "Queue duration: {{time}}",
+
+	"CURRENTLY_PLAYING": "Currently playing",
+	"REPEAT": "Repeat mode: {{mode}}",
+
 	"DURATION": "Duration",
 	"SOURCE": "Source",
 	"ADDED": "Added by",

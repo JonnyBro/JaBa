@@ -1,12 +1,12 @@
 {
     "name": "jaba",
-    "version": "5.2.0",
+    "version": "5.2.1",
     "main": "src/index.js",
     "type": "module",
     "scripts": {
         "start": "node dist/index.js",
         "dev": "tsx watch src/index.ts",
-        "build": "tsc && tsc-alias",
+        "build": "rimraf tsconfig.tsbuildinfo dist && tsc && tsc-alias",
         "postbuild": "cpx \"src/**/*.{json,png}\" dist",
         "delete-commands": "tsx delete-commands.ts",
         "pm2": "NODE_ENV=production pm2 start --name jaba dist/index.js"
@@ -39,6 +39,7 @@
         "globals": "^16.0.0",
         "prettier": "^3.5.3",
         "prettier-eslint": "^16.4.2",
+        "rimraf": "^6.0.1",
         "tsc-alias": "^1.8.16",
         "tsx": "^4.20.3",
         "typescript": "^5.8.2"
