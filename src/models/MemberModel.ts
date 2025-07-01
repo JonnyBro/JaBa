@@ -22,6 +22,7 @@ export interface IMemberSchema {
 	guildID: string;
 	money: number;
 	bank: number;
+	bankSold?: number;
 	exp: number;
 	level: number;
 	transactions: Transaction[];
@@ -60,6 +61,11 @@ memberSchema.pre("validate", function (next) {
 			this[field] = 0;
 		}
 	});
+
+	if (this.bankSold && this.bank !== 0) {
+		this.bank = this.bankSold;
+		this.bankSold = undefined;
+	}
 
 	if (!Array.isArray(this.transactions)) {
 		this.transactions = [];
