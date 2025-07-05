@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- (Add upcoming changes here as you work on them)
+- Music: No "Current track" embed if there is no more tracks in the queue
 
 ## [5.2.1] - 2025-06-29 (includes changes from 5.1.5 to 5.2.0)
 
