@@ -1,4 +1,5 @@
 import { editReplyError } from "@/helpers/functions.js";
+import { playQuery } from "@/helpers/musicFunctions.js";
 import { MessageContextCommandProps } from "@/types.js";
 import {
 	ApplicationCommandType,
@@ -7,7 +8,6 @@ import {
 	GuildMember,
 	InteractionContextType,
 } from "discord.js";
-import { playQuery } from "./play.js";
 
 export const data = new ContextMenuCommandBuilder()
 	.setName("Add to Queue")
