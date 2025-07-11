@@ -26,9 +26,10 @@ export async function run(player: RainlinkPlayerCustom, queue: RainlinkQueue) {
 		const track = player.queue.previous[0];
 		if (!track) return;
 
-		const trackRadioLink = track.source === "youtube" ? `https://music.youtube.com/watch?v=${
-			track.identifier
-		}&list=RD${track.identifier}` : track.title;
+		const trackRadioLink =
+			track.source === "youtube"
+				? `https://music.youtube.com/watch?v=${track.identifier}&list=RD${track.identifier}`
+				: track.title;
 		const res = await client.rainlink.search(trackRadioLink, {
 			requester: track.requester,
 			engine: "youtube",
@@ -39,7 +40,7 @@ export async function run(player: RainlinkPlayerCustom, queue: RainlinkQueue) {
 				logger.debug(`Autoplay ended in ${guild.name} (${guild.id}), no tracks found`);
 			}
 
-			await player.stop(true);
+			return await player.stop(true);
 		}
 
 		const randomTrack = res.tracks[randomNum(0, res.tracks.length)];
@@ -47,7 +48,5 @@ export async function run(player: RainlinkPlayerCustom, queue: RainlinkQueue) {
 		queue.add(randomTrack);
 
 		if (!player.playing) await player.play();
-	} else {
-		await player.destroy();
-	}
+	} else await player.stop(true);
 }

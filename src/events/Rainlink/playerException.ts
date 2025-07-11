@@ -12,8 +12,7 @@ export const data = {
 };
 
 export async function run(player: RainlinkPlayerCustom, data: Record<string, any>) {
-	if (!player) return;
-	if (!player.playing) return;
+	if (!player || !player.playing) return;
 
 	const guild = client.guilds.cache.get(player.guildId);
 	if (!guild) return;

@@ -1,8 +1,5 @@
 import logger from "@/helpers/logger.js";
-import useClient from "@/utils/use-client.js";
 import { RainlinkNode } from "rainlink";
-
-const client = useClient();
 
 export const data = {
 	name: "nodeConnect",
@@ -12,6 +9,7 @@ export const data = {
 export async function run(node: RainlinkNode) {
 	logger.ready(`Lavalink node ${node.options.name}: Ready!`);
 
+	/* TODO: Needs proper implementation
 	const guildsData = await client.getGuildsData();
 	const reconnects = guildsData.filter(d => d.reconnect.status);
 
@@ -47,5 +45,5 @@ export async function run(node: RainlinkNode) {
 
 			await guildData.save();
 		}, i * 2500);
-	});
+	}); */
 }
