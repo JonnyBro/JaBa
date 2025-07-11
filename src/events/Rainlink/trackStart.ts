@@ -1,4 +1,9 @@
-import { convertTime, formatString, translateContext } from "@/helpers/functions.js";
+import {
+	capitalizeString,
+	convertTime,
+	formatString,
+	translateContext,
+} from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { RainlinkPlayerCustom } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
@@ -46,9 +51,6 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 	const trackAuthor = formatString(track?.author || "Unknown", 25).replace(/ - Topic$/, "");
 	const trackDuration = track.isStream ? ":red_circle:" : convertTime(track.duration);
 	const trackRequester = track.requester as User;
-	const nextTrackTitle = formatString(player?.queue[0]?.title || "Unknown", 30).replace(/ - Topic$/, "");
-	const nextTrackAuthor = formatString(player?.queue[0]?.author || "Unknown", 25).replace(/ - Topic$/, "");
-	const nextTrackLink = player.queue[0].uri;
 
 	if (debug) {
 		logger.debug(
@@ -67,7 +69,7 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 		fields: [
 			{
 				name: await translateContext(guild, "music/queue:SOURCE"),
-				value: `${capitalize(track.source)}`,
+				value: `${capitalizeString(track.source)}`,
 				inline: true,
 			},
 			{
@@ -80,12 +82,25 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 				value: trackRequester.toString(),
 				inline: true,
 			},
-			{
-				name: await translateContext(guild, "music/queue:NEXT"),
-				value: `**[${nextTrackTitle} - ${nextTrackAuthor}](${nextTrackLink})**`,
-			},
 		],
-	}).setThumbnail(track.artworkUrl);
+	}).setThumbnail(track?.artworkUrl || null);
+
+	const nextTrackTitle = formatString(player?.queue[0]?.title || "Unknown", 30).replace(
+		/ - Topic$/,
+		"",
+	);
+	const nextTrackAuthor = formatString(player?.queue[0]?.author || "Unknown", 25).replace(
+		/ - Topic$/,
+		"",
+	);
+	const nextTrackLink = player?.queue[0]?.uri;
+
+	if (nextTrackLink) {
+		trackEmbed.addFields({
+			name: await translateContext(guild, "music/queue:NEXT"),
+			value: `**[${nextTrackTitle} - ${nextTrackAuthor}](${nextTrackLink})**`,
+		});
+	}
 
 	const buttons1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 		new ButtonBuilder()
@@ -128,11 +143,10 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 	const channel = client.channels.cache.get(player.textId);
 	if (!channel || !channel.isSendable()) return;
 
-	const nplaying = await channel.send({ embeds: [trackEmbed], components: [buttons1, buttons2] });
-	player.message = nplaying;
+	player.message = await channel.send({ embeds: [trackEmbed], components: [buttons1, buttons2] });
 
 	const embed = createEmbed();
-	const collector = nplaying.createMessageComponentCollector();
+	const collector = player.message.createMessageComponentCollector();
 
 	collector.on("collect", async (interaction: ButtonInteraction) => {
 		if (!player) return collector.stop();
@@ -171,7 +185,10 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 					});
 				}
 
-				await nplaying.edit({ embeds: [trackEmbed], components: [buttons1, buttons2] });
+				await player.message.edit({
+					embeds: [trackEmbed],
+					components: [buttons1, buttons2],
+				});
 
 				break;
 			case ButtonId.PREV_BUTTON_ID:
@@ -271,8 +288,4 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 				break;
 		}
 	});
-}
-
-function capitalize(str: string) {
-	return str.charAt(0).toUpperCase() + str.slice(1);
 }

@@ -217,3 +217,5 @@ export const convertTime = (duration: number) => {
 
 export const formatString = (str: string, maxLength: number) =>
 	str.length > maxLength ? str.slice(0, maxLength - 3) + "..." : str;
+
+export const capitalizeString = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);

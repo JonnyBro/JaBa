@@ -15,15 +15,16 @@ export async function run(player: RainlinkPlayer) {
 	const guild = client.guilds.cache.get(player.guildId);
 	if (!guild) return;
 
+	/* TODO: Needs proper implementation
 	const guildData = await client.getGuildData(player.guildId);
 
 	if (guildData.reconnect.status) {
-		logger.log(
+		return logger.log(
 			`Player reconnected to ${guild.name} (${guild.id}), ${
 				guildData.reconnect.queue.length
 			} track(s) in queue`,
 		);
-	} else {
-		logger.log(`Player created in ${guild.name} (${guild.id})`);
-	}
+	} */
+
+	logger.log(`Player created in ${guild.name} (${guild.id})`);
 }

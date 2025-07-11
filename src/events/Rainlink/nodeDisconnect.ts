@@ -6,14 +6,7 @@ export const data = {
 	player: true,
 };
 
-export async function run(
-	node: RainlinkNode,
-	code: number,
-	reason: Buffer | string,
-) {
-	logger.error(
-		`Lavalink node ${
-			node.options.name
-		}: Disconnected!\nCode: ${code}\nReason:\n`, reason,
-	);
+export async function run(node: RainlinkNode, code: number, reason: Buffer | string) {
+	const nodeName = node.options.name;
+	logger.warn(`Lavalink node ${nodeName}: Disconnected!\nCode: ${code}\nReason:\n`, reason);
 }

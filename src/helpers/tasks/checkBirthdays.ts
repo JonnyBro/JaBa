@@ -22,11 +22,9 @@ export const data = {
 		for (const guild of guilds) {
 			try {
 				const data = await client.getGuildData(guild.id);
-				const channel =
-					typeof data.plugins.birthdays === "string"
-						? await client.channels.fetch(data.plugins.birthdays)
-						: null;
+				if (!data.plugins.birthdays) return;
 
+				const channel = await client.channels.fetch(data.plugins.birthdays);
 				if (!channel) return;
 				if (!channel.isSendable()) return;
 

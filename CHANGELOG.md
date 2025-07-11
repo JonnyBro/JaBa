@@ -11,7 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- (Add upcoming changes here as you work on them)
+nothin'
+
+## [5.2.2] - 2025-07-11
+
+### Fixed
+
+- Music: No "Current track" embed if there is no more tracks in the queue
+- Birthdays: Fix birthdays announcements errors in console (i think it still double fires sometimes for some reason)
 
 ## [5.2.1] - 2025-06-29 (includes changes from 5.1.5 to 5.2.0)
 
