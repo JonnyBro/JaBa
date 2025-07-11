@@ -18,8 +18,7 @@ jobs:
         run: |
           git log --pretty=format:"- %s" $(git describe --tags --abbrev=0)..HEAD > RELEASE_NOTES.md
           echo "" >> RELEASE_NOTES.md
-          echo "Docker image: https://github.com/${{ github.repository }}/pkgs/container/jaba" >> RELEASE_NOTES.md
-          echo "Full changelog: https://github.com/${{ github.repository }}/compare/$(git describe --tags --abbrev=0)...${{ github.ref }}" >> RELEASE_NOTES.md
+          echo "**Docker image**: https://github.com/${{ github.repository }}/pkgs/container/jaba" >> RELEASE_NOTES.md
       - name: Create Release
         uses: actions/create-release@v1
         env:
