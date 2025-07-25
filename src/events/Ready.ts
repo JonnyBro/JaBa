@@ -37,8 +37,8 @@ export async function run(client: ExtendedClient) {
 
 	const tasksPath = join(PROJECT_ROOT, "helpers", "tasks");
 	const cronTasks = await loadCronTasks(tasksPath);
-	const cronManager = new CronManager(cronTasks);
-	await cronManager.init();
+	const cronManager = CronManager.getInstance();
+	await cronManager.init(cronTasks);
 
 	// Update guilds count
 	let i = 0;

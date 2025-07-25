@@ -1,4 +1,3 @@
-import { asyncForEach } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import UserModel from "@/models/UserModel.js";
 import { createEmbed } from "@/utils/create-embed.js";
@@ -9,9 +8,11 @@ const client = useClient();
 export const data = {
 	name: "checkBirthdays",
 	task: async () => {
+		if (!client.isReady()) return;
+
 		const guilds = client.guilds.cache.values();
 		const users = await client.adapter.find(UserModel, {
-			birthdate: { $ne: null },
+			birthdate: { $ne: false },
 		});
 
 		const currentData = new Date();
@@ -22,31 +23,29 @@ export const data = {
 		for (const guild of guilds) {
 			try {
 				const data = await client.getGuildData(guild.id);
-				if (!data.plugins.birthdays) return;
+				if (!data.plugins.birthdays) continue;
 
 				const channel = await client.channels.fetch(data.plugins.birthdays);
-				if (!channel) return;
-				if (!channel.isSendable()) return;
+				if (!channel || !channel.isSendable()) continue;
 
 				const userIDs: string[] = users
 					.filter(u => guild.members.cache.has(u.id))
 					.map(u => u.id);
 
-				await asyncForEach(userIDs, async userID => {
+				for (const userID of userIDs) {
 					const user = users.find(u => u.id === userID);
-					if (!user) return;
+					if (!user) continue;
 
 					const userData =
 						new Date(user.birthdate!).getFullYear() <= 1970
 							? new Date(user.birthdate! * 1000)
 							: new Date(user.birthdate!);
-					const userYear = userData.getFullYear();
-					const userMonth = userData.getMonth();
-					const userDate = userData.getDate();
 
-					const age = currentYear - userYear;
-
-					if (userDate === currentDate && userMonth === currentMonth) {
+					if (
+						userData.getDate() === currentDate &&
+						userData.getMonth() === currentMonth
+					) {
+						const age = currentYear - userData.getFullYear();
 						const embed = createEmbed({
 							author: {
 								name: client.user.username,
@@ -73,9 +72,9 @@ export const data = {
 
 						await channel.send({ embeds: [embed] }).then(m => m.react("🎉"));
 					}
-				});
-			} catch (error) {
-				logger.error(error);
+				}
+			} catch (e) {
+				logger.error(`Birthday error in guild ${guild.id}:`, e);
 			}
 		}
 	},

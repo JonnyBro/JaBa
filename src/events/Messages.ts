@@ -129,27 +129,31 @@ async function handleLinkQuote(message: Message) {
 
 async function updateXp(message: Message) {
 	const memberData = await client.getMemberData(message.author.id, message.guild!.id);
-	const isInCooldown = xpCooldown[message.author.id];
+	const now = Date.now();
 
-	if (isInCooldown && isInCooldown > Date.now()) return;
+	if (xpCooldown[message.author.id] && xpCooldown[message.author.id] > now) return;
 
-	const toWait = Date.now() + 15_000; // 15 sec
-	xpCooldown[message.author.id] = toWait;
+	xpCooldown[message.author.id] = now + 15_000; // 15 sec
 
 	const won = randomNum(1, 3);
 	const newXp = memberData.exp + won;
 	const neededXp = getXpForNextLevel(memberData.level);
 
-	if (newXp > neededXp) {
-		memberData.set({
-			level: memberData.level + 1,
-			exp: 0,
-		});
+	try {
+		if (newXp >= neededXp) {
+			memberData.set({
+				level: memberData.level + 1,
+				exp: 0,
+			});
 
-		await replyTranslated(message, "misc:LEVEL_UP", { level: memberData.level });
-	} else {
-		memberData.set("exp", newXp);
+			await replyTranslated(message, "misc:LEVEL_UP", { level: memberData.level });
+		} else {
+			memberData.set("exp", newXp);
+		}
+
+		await memberData.save();
+	} catch (error) {
+		logger.error(`Failed to update XP for ${message.author.id}: ${error}`);
+		delete xpCooldown[message.author.id];
 	}
-
-	await memberData.save();
 }
