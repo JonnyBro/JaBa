@@ -158,7 +158,7 @@ async function changeSetting(
 
 		case "birthdays":
 			if (!options.state || !options.channel) {
-				guildData.set("plugins.birthdays", null);
+				guildData.set("plugins.birthdays", false);
 				await guildData.save();
 
 				return await generateReply(interaction, subcommand, {
