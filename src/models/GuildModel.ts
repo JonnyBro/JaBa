@@ -12,7 +12,7 @@ export interface GuildReconnectInfo {
 }
 
 export interface GuildPlugins {
-	birthdays: string | null;
+	birthdays: string | false;
 	music: {
 		autoPlay: boolean;
 	};
@@ -34,7 +34,7 @@ const musicSchema = new Schema(
 
 const pluginsSchema = new Schema(
 	{
-		birthdays: { type: String, default: null },
+		birthdays: { type: String, default: false },
 		music: { type: musicSchema, default: () => ({}) },
 	},
 	{ _id: false },
@@ -75,7 +75,7 @@ guildSchema.pre("validate", function (next) {
 	};
 
 	this.plugins = {
-		birthdays: typeof this.plugins?.birthdays === "string" ? this.plugins.birthdays : null,
+		birthdays: typeof this.plugins?.birthdays === "string" ? this.plugins.birthdays : false,
 		music: {
 			autoPlay: !!this.plugins?.music?.autoPlay,
 		},
