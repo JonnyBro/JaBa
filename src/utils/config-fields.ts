@@ -88,7 +88,7 @@ export const generateFields = async (
 			items: [
 				{
 					key: "administration/config:BIRTHDAYS",
-					path: guildData.plugins.birthdays!,
+					path: guildData.plugins.birthdays ? guildData.plugins.birthdays : "",
 					format: "channel",
 				},
 			],
