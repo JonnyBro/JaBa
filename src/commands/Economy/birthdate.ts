@@ -94,44 +94,49 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	switch (subcommand) {
 		case "clear":
 			userData.set("birthdate", null);
+
 			await userData.save();
 
-			return editReplySuccess(interaction, "economy/birthdate:SUCCESS_CLEAR");
+			editReplySuccess(interaction, "economy/birthdate:SUCCESS_CLEAR");
 
+			break;
 		case "set": {
-			const day = interaction.options.getInteger("day", true);
-			const month = interaction.options.getInteger("month", true);
-			const year = interaction.options.getInteger("year", true);
-			const date = new Date(year, month - 1, day); // NOTE: Months are 0-based in JS
+			try {
+				const day = interaction.options.getInteger("day", true);
+				const month = interaction.options.getInteger("month", true);
+				const year = interaction.options.getInteger("year", true);
+				const date = new Date(year, month - 1, day);
 
-			// This should be the same day in all timezones
-			date.setHours(13);
+				date.setHours(13); // This should be the same day in all timezones
 
-			const time = date.getTime();
+				if (
+					!(
+						day === date.getDate() &&
+						month === date.getMonth() + 1 &&
+						year === date.getFullYear()
+					)
+				) {
+					return editReplyError(interaction, "economy/birthdate:INVALID_DATE");
+				}
+				if (date.getTime() > Date.now()) {
+					return editReplyError(interaction, "economy/birthdate:DATE_TOO_HIGH");
+				}
+				if (date.getTime() < Date.now() - 2.523e12) {
+					return editReplyError(interaction, "economy/birthdate:DATE_TOO_LOW");
+				}
 
-			if (
-				!(
-					day === date.getDate() &&
-					month === date.getMonth() + 1 &&
-					year === date.getFullYear()
-				)
-			) {
-				return editReplyError(interaction, "economy/birthdate:INVALID_DATE");
+				const time = date.getTime();
+
+				userData.set("birthdate", time);
+
+				await userData.save();
+
+				return editReplySuccess(interaction, "economy/birthdate:SUCCESS", {
+					date: `<t:${Math.floor(time / 1000)}:D>`,
+				});
+			} catch (e) {
+				return console.error("Failed to set birthdate:", e);
 			}
-			if (date.getTime() > Date.now()) {
-				return editReplyError(interaction, "economy/birthdate:DATE_TOO_HIGH");
-			}
-			if (date.getTime() < Date.now() - 2.523e12) {
-				return editReplyError(interaction, "economy/birthdate:DATE_TOO_LOW");
-			}
-
-			userData.set("birthdate", time);
-
-			await userData.save();
-
-			return editReplySuccess(interaction, "economy/birthdate:SUCCESS", {
-				date: `<t:${Math.floor(time / 1000)}:D>`,
-			});
 		}
 	}
 };
