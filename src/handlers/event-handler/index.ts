@@ -1,14 +1,15 @@
-import { join } from "node:path";
+import { PROJECT_ROOT } from "@/constants/index.js";
 import logger from "@/helpers/logger.js";
+import { ExtendedClient } from "@/structures/client.js";
 import { getFilePaths } from "@/utils/get-path.js";
 import { toFileURL } from "@/utils/resolve-file.js";
-import { ExtendedClient } from "@/structures/client.js";
 import { ClientEvents } from "discord.js";
-import { PROJECT_ROOT } from "@/constants/index.js";
+import { join } from "node:path";
+import { RainlinkEventsInterface } from "rainlink";
 
 type EventHandlerEvents = {
 	data: {
-		name: keyof ClientEvents;
+		name: string;
 		once?: boolean;
 		player?: boolean;
 	};
@@ -68,10 +69,15 @@ export class EventHandler {
 	$registerEvents() {
 		this.events.forEach(event => {
 			if (event.data.player) {
-				this.client.rainlink.addListener(event.data.name, event.run);
+				const eventName = event.data.name as keyof RainlinkEventsInterface;
+
+				if (event.data.once) this.client.rainlink.once(eventName, event.run);
+				else this.client.rainlink.on(eventName, event.run);
 			} else {
-				if (event.data.once) this.client.once(event.data.name, event.run);
-				else this.client.on(event.data.name, event.run);
+				const eventName = event.data.name as keyof ClientEvents;
+
+				if (event.data.once) this.client.once(eventName, event.run);
+				else this.client.on(eventName, event.run);
 			}
 		});
 	}
