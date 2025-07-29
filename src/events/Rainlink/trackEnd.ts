@@ -8,6 +8,7 @@ const debug = !client.configService.get<boolean>("production");
 export const data = {
 	name: "trackEnd",
 	player: true,
+	once: false,
 };
 
 export async function run(player: RainlinkPlayerCustom) {
@@ -16,6 +17,6 @@ export async function run(player: RainlinkPlayerCustom) {
 	const guild = client.guilds.cache.get(player.guildId);
 	if (!guild) return;
 
-	if (player.message) await player.message.delete().catch(() => {});
+	if (player.message?.deletable) await player.message.delete().catch(() => {});
 	if (debug) logger.debug(`Track ended in ${guild.name} (${guild.id})`);
 }

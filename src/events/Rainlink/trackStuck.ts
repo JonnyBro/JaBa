@@ -9,6 +9,7 @@ const debug = !client.configService.get<boolean>("production");
 export const data = {
 	name: "trackStuck",
 	player: true,
+	once: false,
 };
 
 export async function run(player: RainlinkPlayerCustom, data: Record<string, any>) {
@@ -17,14 +18,16 @@ export async function run(player: RainlinkPlayerCustom, data: Record<string, any
 	const guild = client.guilds.cache.get(player.guildId);
 	if (!guild) return;
 
-	if (player.message) await player.message.delete().catch(() => {});
+	if (player.message?.deletable) await player.message.delete().catch(() => {});
 
 	if (debug) logger.debug(`Track got stuck in ${guild.name} (${guild.id})\nData:`, data);
 
 	const channel = guild.channels.cache.get(player.textId);
 	if (!channel?.isSendable()) return;
 
-	if (!player.queue.isEmpty) {
+	const guildData = await client.getGuildData(guild.id);
+
+	if (!player.queue.isEmpty && !guildData.plugins.music.autoPlay) {
 		channel.send({
 			content: await translateContext(guild, "music/play:ERR_STUCK_QUEUE"),
 		});

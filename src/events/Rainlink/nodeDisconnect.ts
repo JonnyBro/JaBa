@@ -4,6 +4,7 @@ import { RainlinkNode } from "rainlink";
 export const data = {
 	name: "nodeDisconnect",
 	player: true,
+	once: false,
 };
 
 export async function run(node: RainlinkNode, code: number, reason: Buffer | string) {

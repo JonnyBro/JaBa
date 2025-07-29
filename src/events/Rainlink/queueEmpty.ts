@@ -10,6 +10,7 @@ const debug = !client.configService.get<boolean>("production");
 export const data = {
 	name: "queueEmpty",
 	player: true,
+	once: false,
 };
 
 export async function run(player: RainlinkPlayerCustom, queue: RainlinkQueue) {
@@ -18,7 +19,7 @@ export async function run(player: RainlinkPlayerCustom, queue: RainlinkQueue) {
 	const guild = client.guilds.cache.get(player.guildId);
 	if (!guild) return;
 
-	if (player.message) await player.message.delete().catch(() => {});
+	if (player.message?.deletable) await player.message.delete().catch(() => {});
 
 	const guildData = await client.getGuildData(player.guildId);
 
@@ -26,10 +27,20 @@ export async function run(player: RainlinkPlayerCustom, queue: RainlinkQueue) {
 		const track = player.queue.previous[0];
 		if (!track) return;
 
-		const trackRadioLink =
-			track.source === "youtube"
-				? `https://music.youtube.com/watch?v=${track.identifier}&list=RD${track.identifier}`
-				: track.title;
+		let trackRadioLink;
+		if (track.source === "youtube") {
+			const id = track.identifier;
+			trackRadioLink = `https://music.youtube.com/watch?v=${id}&list=RD${id}`;
+		} else {
+			const tracks = (
+				await client.rainlink.search(track.title, {
+					engine: "youtube",
+				})
+			).tracks;
+			const id = tracks[randomNum(0, tracks.length)].identifier;
+			trackRadioLink = `https://music.youtube.com/watch?v=${id}&list=RD${id}`;
+		}
+
 		const res = await client.rainlink.search(trackRadioLink, {
 			requester: track.requester,
 			engine: "youtube",
@@ -43,9 +54,10 @@ export async function run(player: RainlinkPlayerCustom, queue: RainlinkQueue) {
 			return await player.stop(true);
 		}
 
-		const randomTrack = res.tracks[randomNum(0, res.tracks.length)];
+		const isPlaylist = res.type === "PLAYLIST";
 
-		queue.add(randomTrack);
+		if (isPlaylist) for (const track of res.tracks) queue.add(track);
+		else queue.add(res.tracks[0]);
 
 		if (!player.playing) await player.play();
 	} else await player.stop(true);

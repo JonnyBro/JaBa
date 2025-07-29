@@ -46,7 +46,7 @@ client.on("interactionCreate", async interaction => {
 	if (interaction.message.deletable) await interaction.message.delete();
 });
 
-async function handleLinkQuote(message: Message) {
+const handleLinkQuote = async (message: Message) => {
 	const matches = [...message.content.matchAll(QUOTE_REGEXP)];
 	if (!matches.length) return;
 
@@ -125,9 +125,9 @@ async function handleLinkQuote(message: Message) {
 			} else logger.error(`Unexpected error: ${e.message}`);
 		}
 	}
-}
+};
 
-async function updateXp(message: Message) {
+const updateXp = async (message: Message) => {
 	const memberData = await client.getMemberData(message.author.id, message.guild!.id);
 	const now = Date.now();
 
@@ -156,4 +156,4 @@ async function updateXp(message: Message) {
 		logger.error(`Failed to update XP for ${message.author.id}: ${error}`);
 		delete xpCooldown[message.author.id];
 	}
-}
+};
