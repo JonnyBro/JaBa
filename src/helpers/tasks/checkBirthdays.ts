@@ -34,10 +34,11 @@ export const data = {
 
 				for (const userID of userIDs) {
 					const user = users.find(u => u.id === userID);
-					if (!user) continue;
+					if (!user || !user.birthdate) continue;
+					if (isNaN(user.birthdate)) continue;
 
 					const userData =
-						new Date(user.birthdate!).getFullYear() <= 1970
+						new Date(user.birthdate).getFullYear() <= 1970
 							? new Date(user.birthdate! * 1000)
 							: new Date(user.birthdate!);
 
