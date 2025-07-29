@@ -35,5 +35,5 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	await player.setVolume(volume);
 
-	await editReplySuccess(interaction, "music/stop:SUCCESS");
+	await editReplySuccess(interaction, "music/volume:SUCCESS", { volume });
 };
