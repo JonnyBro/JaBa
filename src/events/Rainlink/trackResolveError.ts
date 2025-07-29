@@ -10,6 +10,7 @@ const debug = !client.configService.get<boolean>("production");
 export const data = {
 	name: "trackResolveError",
 	player: true,
+	once: false,
 };
 
 export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack, message: string) {
@@ -18,7 +19,7 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack, me
 	const guild = client.guilds.cache.get(player.guildId);
 	if (!guild) return;
 
-	if (player.message) await player.message.delete().catch(() => {});
+	if (player.message?.deletable) await player.message.delete().catch(() => {});
 
 	if (debug) {
 		logger.debug(
@@ -32,7 +33,9 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack, me
 	const channel = guild.channels.cache.get(player.textId);
 	if (!channel?.isSendable()) return;
 
-	if (!player.queue.isEmpty) {
+	const guildData = await client.getGuildData(guild.id);
+
+	if (!player.queue.isEmpty && !guildData.plugins.music.autoPlay) {
 		channel.send({
 			content: await translateContext(guild, "music/play:ERR_RESOLVING_QUEUE", {
 				track: track.title,

@@ -14,7 +14,7 @@ import { ExtendedClient } from "./structures/client.ts";
 import { RainlinkPlayer } from "rainlink";
 
 export interface RainlinkPlayerCustom extends RainlinkPlayer {
-	message: Message;
+	message: Message | null;
 }
 
 export type CommandData = RESTPostAPIApplicationCommandsJSONBody;

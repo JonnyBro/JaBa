@@ -1,14 +1,12 @@
-/* TODO: Needs proper implementation
-import logger from "@/helpers/logger.js";
 import { RainlinkPlayerCustom } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 
 const client = useClient();
-const debug = !client.configService.get<boolean>("production");
 
 export const data = {
 	name: "playerDestroy",
 	player: true,
+	once: false,
 };
 
 export async function run(player: RainlinkPlayerCustom) {
@@ -17,8 +15,9 @@ export async function run(player: RainlinkPlayerCustom) {
 	const guild = client.guilds.cache.get(player.guildId);
 	if (!guild) return;
 
-	if (player.message) await player.message.delete().catch(() => {});
+	if (player.message?.deletable) await player.message.delete().catch(() => {});
 
+	/* TODO: Needs proper implementation
 	const guildData = await client.getGuildData(player.guildId);
 	const tracks = player.queue.map(t => t);
 
@@ -37,5 +36,5 @@ export async function run(player: RainlinkPlayerCustom) {
 		logger.debug(
 			`Player destroyed in ${guild.name} (${guild.id})! Queue has been saved for reconnect`,
 		);
-	}
-} */
+	} */
+}

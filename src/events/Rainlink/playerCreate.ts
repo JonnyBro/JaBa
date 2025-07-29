@@ -7,6 +7,7 @@ const client = useClient();
 export const data = {
 	name: "playerCreate",
 	player: true,
+	once: false,
 };
 
 export async function run(player: RainlinkPlayer) {
