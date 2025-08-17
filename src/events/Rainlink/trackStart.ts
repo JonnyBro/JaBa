@@ -296,12 +296,12 @@ const buildControlButtons = (
 			.setEmoji(player.paused ? "▶️" : "⏸️")
 			.setStyle(player.paused ? ButtonStyle.Primary : ButtonStyle.Secondary),
 		new ButtonBuilder()
-			.setCustomId(ButtonId.VOLUMEUP_BUTTON_ID)
-			.setEmoji("➕")
-			.setStyle(ButtonStyle.Secondary),
-		new ButtonBuilder()
 			.setCustomId(ButtonId.VOLUMEDOWN_BUTTON_ID)
 			.setEmoji("➖")
+			.setStyle(ButtonStyle.Secondary),
+		new ButtonBuilder()
+			.setCustomId(ButtonId.VOLUMEUP_BUTTON_ID)
+			.setEmoji("➕")
 			.setStyle(ButtonStyle.Secondary),
 		new ButtonBuilder()
 			.setCustomId(ButtonId.LOOP_BUTTON_ID)
