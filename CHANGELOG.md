@@ -13,6 +13,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 nothin'
 
+## [5.2.4] - 2025-08-18
+
+## Changed
+
+- Swapped volume buttons positions in player embed.
+
+## [5.2.3] - 2025-07-29
+
+## Fixed
+
+- Double birthdays announcements.
+- cronManager is now a singleton.
+- Small changes in updateXP function.
+- New way of getting tracks for autoplay.
+
 ## [5.2.2] - 2025-07-11
 
 ### Fixed
@@ -109,3 +124,4 @@ nothin'
 - Features: Removed AFK status functionality
 
 > Note: Previous versions involved a complete TypeScript rewrite of the codebase.
+
