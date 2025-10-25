@@ -18,5 +18,5 @@
 	"SUCCESS_CLEAR": "Your date of birth has been cleared",
 
 	"HAPPY_BIRTHDAY": "Happy Birthday",
-	"HAPPY_BIRTHDAY_MESSAGE": "Happy birthday to <@{{user}}>! Today, they have turned {{age}} years old!"
+	"HAPPY_BIRTHDAY_MESSAGE": "Happy birthday to {{user}}! Today, they have turned {{age}} years old!"
 }

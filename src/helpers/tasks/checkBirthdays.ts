@@ -37,6 +37,7 @@ export const data = {
 					if (!user || !user.birthdate) continue;
 					if (isNaN(user.birthdate)) continue;
 
+					const discordUser = await client.users.fetch(user.id);
 					const userData =
 						new Date(user.birthdate).getFullYear() <= 1970
 							? new Date(user.birthdate! * 1000)
@@ -62,9 +63,9 @@ export const data = {
 									value: client.i18n.translate(
 										"economy/birthdate:HAPPY_BIRTHDAY_MESSAGE",
 										{
-											lng: data.language,
-											user: user.id,
+											user: discordUser.toString(),
 											age: age.toString(),
+											lng: data.language,
 										},
 									),
 								},
