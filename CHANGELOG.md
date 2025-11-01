@@ -13,6 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 nothin'
 
+## [5.2.5] - 2025-11-01
+
+## Changed
+
+- Context command `Get Avatar` is now localized.
+
+## Fixed
+
+- User mentions in birthday announcements.
+- AFK channel title in `/info server` command.
+
 ## [5.2.4] - 2025-08-18
 
 ## Changed
