@@ -191,7 +191,10 @@ async function getServerInfo(interaction: ChatInputCommandInteraction) {
 				inline: true,
 			},
 			{
-				name: formatReply(await translateContext(interaction, "common:AFK_CHANNEL"), "afk"),
+				name: formatReply(
+					await translateContext(interaction, "general/info:AFK_CHANNEL"),
+					"afk",
+				),
 				value:
 					guild.afkChannel?.toString() ||
 					(await translateContext(interaction, "common:MISSING")),
@@ -221,32 +224,23 @@ async function getServerInfo(interaction: ChatInputCommandInteraction) {
 					"channels",
 				),
 				value:
-					`${textChannels.size} ${getNoun(
-						textChannels.size,
-						[
-							await translateContext(interaction, "misc:NOUNS:TEXT:1"),
-							await translateContext(interaction, "misc:NOUNS:TEXT:2"),
-							await translateContext(interaction, "misc:NOUNS:TEXT:5"),
-						],
-					)}` +
+					`${textChannels.size} ${getNoun(textChannels.size, [
+						await translateContext(interaction, "misc:NOUNS:TEXT:1"),
+						await translateContext(interaction, "misc:NOUNS:TEXT:2"),
+						await translateContext(interaction, "misc:NOUNS:TEXT:5"),
+					])}` +
 					"\n" +
-					`${voiceChannels.size} ${getNoun(
-						voiceChannels.size,
-						[
-							await translateContext(interaction, "misc:NOUNS:VOICE:1"),
-							await translateContext(interaction, "misc:NOUNS:VOICE:2"),
-							await translateContext(interaction, "misc:NOUNS:VOICE:5"),
-						],
-					)}` +
+					`${voiceChannels.size} ${getNoun(voiceChannels.size, [
+						await translateContext(interaction, "misc:NOUNS:VOICE:1"),
+						await translateContext(interaction, "misc:NOUNS:VOICE:2"),
+						await translateContext(interaction, "misc:NOUNS:VOICE:5"),
+					])}` +
 					"\n" +
-					`${categories.size} ${getNoun(
-						categories.size,
-						[
-							await translateContext(interaction, "misc:NOUNS:CATEGORY:1"),
-							await translateContext(interaction, "misc:NOUNS:CATEGORY:2"),
-							await translateContext(interaction, "misc:NOUNS:CATEGORY:5"),
-						],
-					)}`,
+					`${categories.size} ${getNoun(categories.size, [
+						await translateContext(interaction, "misc:NOUNS:CATEGORY:1"),
+						await translateContext(interaction, "misc:NOUNS:CATEGORY:2"),
+						await translateContext(interaction, "misc:NOUNS:CATEGORY:5"),
+					])}`,
 				inline: true,
 			},
 		],

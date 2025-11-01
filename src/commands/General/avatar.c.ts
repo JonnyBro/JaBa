@@ -1,6 +1,7 @@
 import { replyError } from "@/helpers/functions.js";
 import { UserContextCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
+import useClient from "@/utils/use-client.js";
 import {
 	ApplicationCommandType,
 	ApplicationIntegrationType,
@@ -9,8 +10,22 @@ import {
 	InteractionContextType,
 } from "discord.js";
 
+const client = useClient();
+
 export const data = new ContextMenuCommandBuilder()
-	.setName("Get Avatar")
+	.setName(
+		client.i18n.translate("genera/avatar.c:NAME", {
+			lng: "en-US",
+		}),
+	)
+	.setNameLocalizations({
+		"en-US": client.i18n.translate("genera/avatar.c:NAME", {
+			lng: "en-US",
+		}),
+		ru: client.i18n.translate("general/avatar.c:NAME", {
+			lng: "ru-RU",
+		}),
+	})
 	.setType(ApplicationCommandType.User)
 	.setIntegrationTypes([
 		ApplicationIntegrationType.GuildInstall,
