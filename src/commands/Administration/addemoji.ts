@@ -10,7 +10,6 @@ import {
 	ApplicationIntegrationType,
 	InteractionContextType,
 	MessageFlags,
-	parseEmoji,
 } from "discord.js";
 
 export const data: CommandData = {
@@ -21,8 +20,8 @@ export const data: CommandData = {
 	contexts: [InteractionContextType.Guild],
 	options: [
 		{
-			name: "link",
-			...getLocalizedDesc("common:LINK"),
+			name: "string",
+			...getLocalizedDesc("administration/addemoji:LINK_OR_EMOJI"),
 			type: ApplicationCommandOptionType.String,
 			required: true,
 		},
@@ -37,20 +36,16 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
+	const string = interaction.options.getString("string", true);
+	const isEmoji = string.match(/<a?:(\w+):(\d+)>/i);
 	let name = interaction.options.getString("name");
-	const link = interaction.options.getString("link", true);
-	const isEmoji = link.startsWith("<:");
-	let attachment = link;
+	let attachment = string;
 
 	if (!name && isEmoji) {
-		const parsedEmoji = parseEmoji(link);
-
-		if (parsedEmoji) {
-			name = parsedEmoji.name;
-			attachment = `https://cdn.discordapp.com/emojis/${
-				parsedEmoji.id
-			}.${parsedEmoji.animated ? "gif" : "png"}`;
-		}
+		name = isEmoji[1];
+		attachment = `https://cdn.discordapp.com/emojis/${isEmoji[2]}.${
+			isEmoji[0].startsWith("<:a") ? "gif" : "webp"
+		}?size=128`;
 	}
 
 	if (!name) {

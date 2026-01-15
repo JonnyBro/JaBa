@@ -1,7 +1,9 @@
 {
-	"DESCRIPTION": "Adds an emoji to the current server from given link",
-	"USAGE": "(name) [link]",
-	"EXAMPLES": "addemoji name:google link:https://google.com",
+	"DESCRIPTION": "Adds an emoji to the current server from a given link or any other server",
+	"USAGE": "(name) [string]",
+	"EXAMPLES": "addemoji name:google string:https://google.com",
+
+	"LINK_OR_EMOJI": "Image link or emoji from a server",
 
 	"MISSING_NAME": "Please provide a name for the emoji",
 
