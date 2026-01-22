@@ -70,7 +70,7 @@ ${await translateContext(interaction, "economy/profile:XP", {
 	totalXp: getXpForNextLevel(memberData.level),
 })}
 ${await translateContext(interaction, "economy/profile:BIRTHDATE", {
-	birthdate: userData.birthdate ? `<t:${Math.floor(userData.birthdate / 1000)}:f>` : notDefined,
+	birthdate: userData.birthdate ? `<t:${Math.floor(userData.birthdate / 1000)}:D>` : notDefined,
 })}
 ${await translateContext(interaction, "economy/profile:REGISTERED", {
 	date: `<t:${Math.floor(memberData.registeredAt / 1000)}:f>`,
@@ -82,7 +82,7 @@ ${await translateContext(interaction, "economy/profile:REGISTERED", {
 				.setThumbnailAccessory(t => t.setURL(user.avatarURL() || client.user.avatarURL()!))
 				.addTextDisplayComponents(
 					new TextDisplayBuilder().setContent(
-						`# ${user.toString()}${userData.bio ? `\n## ${userData.bio}` : ""}\n`,
+						`# ${user.toString()}${userData.bio ? `\n**${userData.bio}**` : ""}\n`,
 					),
 				),
 		)
