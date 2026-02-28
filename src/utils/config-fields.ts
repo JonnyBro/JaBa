@@ -27,10 +27,7 @@ type ConfigGroupField = {
 
 type ConfigField = ConfigPluginField | ConfigGroupField;
 
-const processPluginField = async (
-	interaction: ChatInputCommandInteraction,
-	field: ConfigPluginField,
-) => {
+const processPluginField = async (interaction: ChatInputCommandInteraction, field: ConfigPluginField) => {
 	const name = await translateContext(interaction, field.nameKey);
 
 	const value = field.enabled
@@ -42,10 +39,7 @@ const processPluginField = async (
 	return { name, value, inline: true };
 };
 
-const processGroupField = async (
-	interaction: ChatInputCommandInteraction,
-	field: ConfigGroupField,
-) => {
+const processGroupField = async (interaction: ChatInputCommandInteraction, field: ConfigGroupField) => {
 	const name = await translateContext(interaction, field.nameKey);
 	const lines = await Promise.all(
 		field.items.map(async item => {

@@ -11,11 +11,6 @@ const defaultColor = client.configService.get<ColorResolvable>("embed.color");
 
 export const createEmbed = (data?: EmbedData) =>
 	new EmbedBuilder({
-		footer:
-			typeof data?.footer === "object"
-				? data.footer
-				: data?.footer
-					? { text: data.footer }
-					: defaultFooter,
+		footer: typeof data?.footer === "object" ? data.footer : data?.footer ? { text: data.footer } : defaultFooter,
 		...data,
 	}).setColor(data?.color || defaultColor);

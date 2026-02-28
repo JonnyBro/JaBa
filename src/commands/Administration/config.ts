@@ -135,11 +135,7 @@ async function generateReply(
 	return translatedParam;
 }
 
-async function changeSetting(
-	interaction: ChatInputCommandInteraction,
-	subcommand: string,
-	options: SettingOptions,
-) {
+async function changeSetting(interaction: ChatInputCommandInteraction, subcommand: string, options: SettingOptions) {
 	const guildData = await client.getGuildData(interaction.guildId!);
 
 	switch (subcommand) {

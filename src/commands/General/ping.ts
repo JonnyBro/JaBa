@@ -15,15 +15,8 @@ export const data: CommandData = {
 	name: "ping",
 	...getLocalizedDesc("general/ping:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-		ApplicationIntegrationType.UserInstall,
-	],
-	contexts: [
-		InteractionContextType.BotDM,
-		InteractionContextType.Guild,
-		InteractionContextType.PrivateChannel,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
+	contexts: [InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel],
 	options: [
 		{
 			name: "ephemeral",

@@ -1,25 +1,12 @@
-import {
-	getUsername,
-	getXpForNextLevel,
-	randomNum,
-	replyTranslated,
-	translateContext,
-} from "@/helpers/functions.js";
+import { getUsername, getXpForNextLevel, randomNum, replyTranslated, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
-import {
-	ActionRowBuilder,
-	ButtonBuilder,
-	ButtonStyle,
-	GuildTextBasedChannel,
-	Message,
-} from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, GuildTextBasedChannel, Message } from "discord.js";
 
 const client = useClient();
 const xpCooldown: Record<string, number> = {};
-const QUOTE_REGEXP =
-	/discord\.com\/channels\/(?<guildId>\d+)\/(?<channelId>\d+)\/(?<messageId>\d+)/g;
+const QUOTE_REGEXP = /discord\.com\/channels\/(?<guildId>\d+)\/(?<channelId>\d+)\/(?<messageId>\d+)/g;
 const DELETE_BUTTON_ID = "quote_delete";
 
 export const data = {
@@ -54,9 +41,7 @@ const handleLinkQuote = async (message: Message) => {
 	if (!guildId || !channelId || !messageId) return;
 
 	try {
-		const guild =
-			client.guilds.cache.get(guildId) ||
-			(await client.guilds.fetch(guildId).catch(() => null));
+		const guild = client.guilds.cache.get(guildId) || (await client.guilds.fetch(guildId).catch(() => null));
 		if (!guild) return;
 
 		const channel =
@@ -80,14 +65,13 @@ const handleLinkQuote = async (message: Message) => {
 			timestamp: msg.createdTimestamp,
 		}).setThumbnail(msg.author.displayAvatarURL());
 
-		if (msg.content) {
+		if (msg.content)
 			embed.addFields([
 				{
 					name: await translateContext(message, "misc:QUOTE_CONTENT"),
 					value: msg.content,
 				},
 			]);
-		}
 
 		if (msg.attachments.size > 0) {
 			const firstAttachment = msg.attachments.find(a => a.contentType?.includes("image/"));
@@ -117,13 +101,12 @@ const handleLinkQuote = async (message: Message) => {
 
 		await message.reply({ embeds: [embed], components: [row] });
 	} catch (e) {
-		if (e instanceof Error) {
-			if (e.message.toLowerCase().includes("missing access")) {
+		if (e instanceof Error)
+			if (e.message.toLowerCase().includes("missing access"))
 				logger.error("Bot lacks permissions to access the message/channel");
-			} else if (e.message.toLowerCase().includes("unknown message")) {
+			else if (e.message.toLowerCase().includes("unknown message"))
 				logger.error("Message was deleted or not found");
-			} else logger.error(`Unexpected error: ${e.message}`);
-		}
+			else logger.error(`Unexpected error: ${e.message}`);
 	}
 };
 
@@ -147,9 +130,7 @@ const updateXp = async (message: Message) => {
 			});
 
 			await replyTranslated(message, "misc:LEVEL_UP", { level: memberData.level });
-		} else {
-			memberData.set("exp", newXp);
-		}
+		} else memberData.set("exp", newXp);
 
 		await memberData.save();
 	} catch (error) {

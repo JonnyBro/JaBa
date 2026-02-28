@@ -21,14 +21,11 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack, me
 
 	if (player.message?.deletable) await player.message.delete().catch(() => {});
 
-	if (debug) {
+	if (debug)
 		logger.debug(
-			`Track resolve error in ${guild.name} (${guild.id})\nTrack: ${
-				track.title
-			} (${track.uri})`,
+			`Track resolve error in ${guild.name} (${guild.id})\nTrack: ${track.title} (${track.uri})`,
 			message,
 		);
-	}
 
 	const channel = guild.channels.cache.get(player.textId);
 	if (!channel?.isSendable()) return;

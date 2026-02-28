@@ -1,9 +1,4 @@
-import {
-	capitalizeString,
-	convertTime,
-	formatString,
-	translateContext,
-} from "@/helpers/functions.js";
+import { capitalizeString, convertTime, formatString, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { RainlinkPlayerCustom } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
@@ -53,9 +48,7 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 		if (debug) {
 			const g = guild;
 			const trackTitle = formatString(track?.title || "Unknown", 30).replace(/ - Topic$/, "");
-			logger.debug(
-				`Track started in ${g.name} (${g.id})\nTrack: ${trackTitle}\nURL: ${track.uri}`,
-			);
+			logger.debug(`Track started in ${g.name} (${g.id})\nTrack: ${trackTitle}\nURL: ${track.uri}`);
 		}
 
 		const trackEmbed = await createTrackEmbed(player, track, player.guildId);
@@ -119,9 +112,7 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 						const embed = createEmbed();
 
 						if (player.queue.isEmpty) {
-							embed.setDescription(
-								await translateContext(guild, "music/queue:NO_QUEUE"),
-							);
+							embed.setDescription(await translateContext(guild, "music/queue:NO_QUEUE"));
 
 							await interaction.reply({
 								embeds: [embed],
@@ -133,9 +124,7 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 
 						player.queue.shuffle();
 
-						embed.setDescription(
-							await translateContext(guild, "music/shuffle:SUCCESS"),
-						);
+						embed.setDescription(await translateContext(guild, "music/shuffle:SUCCESS"));
 
 						await interaction.followUp({
 							embeds: [embed],
@@ -151,9 +140,7 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 						const embed = createEmbed();
 
 						if (!player.queue.previous.length) {
-							embed.setDescription(
-								await translateContext(guild, "music/back:NO_PREV_SONG"),
-							);
+							embed.setDescription(await translateContext(guild, "music/back:NO_PREV_SONG"));
 
 							await interaction.followUp({
 								embeds: [embed],
@@ -165,9 +152,7 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 
 						await player.previous();
 
-						embed.setDescription(
-							await translateContext(guild, "music/back:SUCCESS"),
-						);
+						embed.setDescription(await translateContext(guild, "music/back:SUCCESS"));
 
 						await interaction.followUp({
 							embeds: [embed],
@@ -269,14 +254,8 @@ const createTrackEmbed = async (
 
 	const nextTrack = player.queue[0];
 	if (nextTrack) {
-		const nextTrackTitle = formatString(nextTrack.title || "Unknown", 30).replace(
-			/ - Topic$/,
-			"",
-		);
-		const nextTrackAuthor = formatString(nextTrack.author || "Unknown", 25).replace(
-			/ - Topic$/,
-			"",
-		);
+		const nextTrackTitle = formatString(nextTrack.title || "Unknown", 30).replace(/ - Topic$/, "");
+		const nextTrackAuthor = formatString(nextTrack.author || "Unknown", 25).replace(/ - Topic$/, "");
 
 		embed.addFields({
 			name: await translateContext(guild, "music/queue:NEXT"),
@@ -295,14 +274,8 @@ const buildControlButtons = (
 			.setCustomId(ButtonId.PLAY_PAUSE_BUTTON_ID)
 			.setEmoji(player.paused ? "▶️" : "⏸️")
 			.setStyle(player.paused ? ButtonStyle.Primary : ButtonStyle.Secondary),
-		new ButtonBuilder()
-			.setCustomId(ButtonId.VOLUMEDOWN_BUTTON_ID)
-			.setEmoji("➖")
-			.setStyle(ButtonStyle.Secondary),
-		new ButtonBuilder()
-			.setCustomId(ButtonId.VOLUMEUP_BUTTON_ID)
-			.setEmoji("➕")
-			.setStyle(ButtonStyle.Secondary),
+		new ButtonBuilder().setCustomId(ButtonId.VOLUMEDOWN_BUTTON_ID).setEmoji("➖").setStyle(ButtonStyle.Secondary),
+		new ButtonBuilder().setCustomId(ButtonId.VOLUMEUP_BUTTON_ID).setEmoji("➕").setStyle(ButtonStyle.Secondary),
 		new ButtonBuilder()
 			.setCustomId(ButtonId.LOOP_BUTTON_ID)
 			.setEmoji(getLoopEmoji(player.loop))
@@ -310,22 +283,10 @@ const buildControlButtons = (
 	);
 
 	const buttons2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
-		new ButtonBuilder()
-			.setCustomId(ButtonId.SHUFFLE_BUTTON_ID)
-			.setEmoji("🔀")
-			.setStyle(ButtonStyle.Secondary),
-		new ButtonBuilder()
-			.setCustomId(ButtonId.PREV_BUTTON_ID)
-			.setEmoji("⏮️")
-			.setStyle(ButtonStyle.Secondary),
-		new ButtonBuilder()
-			.setCustomId(ButtonId.SKIP_BUTTON_ID)
-			.setEmoji("⏭️")
-			.setStyle(ButtonStyle.Secondary),
-		new ButtonBuilder()
-			.setCustomId(ButtonId.STOP_BUTTON_ID)
-			.setEmoji("❌")
-			.setStyle(ButtonStyle.Danger),
+		new ButtonBuilder().setCustomId(ButtonId.SHUFFLE_BUTTON_ID).setEmoji("🔀").setStyle(ButtonStyle.Secondary),
+		new ButtonBuilder().setCustomId(ButtonId.PREV_BUTTON_ID).setEmoji("⏮️").setStyle(ButtonStyle.Secondary),
+		new ButtonBuilder().setCustomId(ButtonId.SKIP_BUTTON_ID).setEmoji("⏭️").setStyle(ButtonStyle.Secondary),
+		new ButtonBuilder().setCustomId(ButtonId.STOP_BUTTON_ID).setEmoji("❌").setStyle(ButtonStyle.Danger),
 	);
 
 	return [buttons1, buttons2];
@@ -401,10 +362,7 @@ const handleVolumeChange = async (
 
 	if (newVolume <= MIN_VOLUME || newVolume >= MAX_VOLUME) {
 		embed.setDescription(
-			await translateContext(
-				interaction.guild!,
-				amount > 0 ? "music/volume:TOO_MUCH" : "music/volume:TOO_LOW",
-			),
+			await translateContext(interaction.guild!, amount > 0 ? "music/volume:TOO_MUCH" : "music/volume:TOO_LOW"),
 		);
 
 		await interaction.followUp({ embeds: [embed], flags: MessageFlags.Ephemeral });
@@ -423,10 +381,7 @@ const handleVolumeChange = async (
 	await interaction.followUp({ embeds: [embed], flags: MessageFlags.Ephemeral });
 };
 
-const handleLoop = async (
-	interaction: ButtonInteraction,
-	player: RainlinkPlayerCustom,
-): Promise<void> => {
+const handleLoop = async (interaction: ButtonInteraction, player: RainlinkPlayerCustom): Promise<void> => {
 	const embed = createEmbed();
 	let newLoopMode;
 
@@ -449,12 +404,7 @@ const handleLoop = async (
 
 	player.setLoop(newLoopMode);
 
-	embed.setDescription(
-		await translateContext(
-			interaction.guild!,
-			`music/loop:SUCCESS_${newLoopMode.toUpperCase()}`,
-		),
-	);
+	embed.setDescription(await translateContext(interaction.guild!, `music/loop:SUCCESS_${newLoopMode.toUpperCase()}`));
 
 	await interaction.followUp({ embeds: [embed], flags: MessageFlags.Ephemeral });
 };

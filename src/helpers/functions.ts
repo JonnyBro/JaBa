@@ -35,9 +35,7 @@ export const formatReply = (message: string, prefixEmoji?: string) => {
 };
 
 export const asyncForEach = async <T>(collection: T[], callback: (item: T) => Promise<void>) => {
-	for (const item of collection) {
-		await callback(item);
-	}
+	for (const item of collection) await callback(item);
 };
 
 export const translateContext = async <T extends CacheType = CacheType>(
@@ -89,12 +87,11 @@ export const replyTranslated = async <T extends CacheType = CacheType>(
 		return;
 	}
 
-	if (options?.edit) {
+	if (options?.edit)
 		return await context.edit({
 			content,
 			allowedMentions: { repliedUser: options.mention || false },
 		});
-	}
 
 	await context.reply({
 		content,
@@ -158,9 +155,8 @@ export const getLocalizedDesc = (key: string) => {
 };
 
 export const getNoun = (number: number, wordForms: string[]) => {
-	if (!Array.isArray(wordForms) || wordForms.length !== 3) {
+	if (!Array.isArray(wordForms) || wordForms.length !== 3)
 		throw new Error("wordForms should be an array with three elements: [one, two, five]");
-	}
 
 	const [one, two, five] = wordForms;
 	let n = Math.abs(number);
@@ -174,9 +170,8 @@ export const getNoun = (number: number, wordForms: string[]) => {
 
 export const getUsername = (arg: User | GuildMember): string => {
 	// NOTE: Bots still have discriminators
-	if (arg instanceof GuildMember) {
-		return arg.user.discriminator !== "0" ? arg.user.tag : arg.user.username;
-	}
+	if (arg instanceof GuildMember) return arg.user.discriminator !== "0" ? arg.user.tag : arg.user.username;
+
 	return arg.discriminator !== "0" ? arg.tag : arg.username;
 };
 
@@ -185,8 +180,7 @@ export const getXpForNextLevel = (level: number): number => 5 * level * level + 
 export const printDate = (date: Date | number, locale: Intl.LocalesArgument = "en-US") =>
 	new Intl.DateTimeFormat(locale).format(date);
 
-export const randomNum = (min: number = 0, max: number = 100) =>
-	Math.floor(Math.random() * (max - min + 1)) + min;
+export const randomNum = (min: number = 0, max: number = 100) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 export const shuffle = <T>(array: readonly T[]): T[] => {
 	const shuffled = [...array];

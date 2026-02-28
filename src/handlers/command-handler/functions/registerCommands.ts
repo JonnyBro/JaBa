@@ -49,11 +49,7 @@ const registerGlobalCommands = async (client: ExtendedClient, commands: CommandF
 	logger.log(`Registered ${commands.length} global command(s)`);
 };
 
-const registerDevCommands = async (
-	client: ExtendedClient,
-	commands: CommandFileObject[],
-	guildsIds: string[],
-) => {
+const registerDevCommands = async (client: ExtendedClient, commands: CommandFileObject[], guildsIds: string[]) => {
 	const devGuilds = [];
 
 	for (const guildId of guildsIds) {
@@ -85,9 +81,7 @@ const registerDevCommands = async (
 						.edit(data as Partial<ApplicationCommandData>)
 						.catch(() =>
 							logger.error(
-								`Failed to update command: ${data.name} in ${
-									guildCommands.guild.name
-								} server`,
+								`Failed to update command: ${data.name} in ${guildCommands.guild.name} server`,
 							),
 						);
 
@@ -97,9 +91,7 @@ const registerDevCommands = async (
 						.create(data)
 						.catch(() =>
 							logger.error(
-								`Failed to register command: ${data.name} in ${
-									guildCommands.guild.name
-								} server`,
+								`Failed to register command: ${data.name} in ${guildCommands.guild.name} server`,
 							),
 						);
 					logger.debug(`Command ${data.name} loaded in dev`);

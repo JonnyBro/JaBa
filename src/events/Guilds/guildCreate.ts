@@ -22,9 +22,7 @@ export async function run(guild: Guild) {
 				name: guild.name,
 				iconURL: guild.iconURL() || client.user.avatarURL() || undefined,
 			},
-			description: `Joined a new guild!\n${
-				guild.name
-			}\nIt has **${users}** users and **${bots}** bots.`,
+			description: `Joined a new guild!\n${guild.name}\nIt has **${users}** users and **${bots}** bots.`,
 		});
 
 		await logChannel.send({

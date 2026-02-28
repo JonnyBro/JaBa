@@ -1,9 +1,5 @@
 import useClient from "@/utils/use-client.js";
-import {
-	ChatInputCommandInteraction,
-	GuildMember,
-	MessageContextMenuCommandInteraction,
-} from "discord.js";
+import { ChatInputCommandInteraction, GuildMember, MessageContextMenuCommandInteraction } from "discord.js";
 import { editReplyError, editReplySuccess } from "./functions.js";
 
 const client = useClient();
@@ -17,11 +13,10 @@ export const playQuery = async (
 		requester: interaction.user,
 	});
 
-	if (res.tracks.length <= 0) {
+	if (res.tracks.length <= 0)
 		return editReplyError(interaction, "music/play:NO_RESULT", {
 			query,
 		});
-	}
 
 	const player = await client.rainlink.create({
 		guildId: interaction.guildId!,

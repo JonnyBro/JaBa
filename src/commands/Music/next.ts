@@ -1,11 +1,7 @@
 import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
-import {
-	ApplicationCommandOptionType,
-	ApplicationIntegrationType,
-	InteractionContextType,
-} from "discord.js";
+import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "discord.js";
 
 const client = useClient();
 
@@ -37,11 +33,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		requester: interaction.user,
 	});
 
-	if (res.tracks.length <= 0) {
+	if (res.tracks.length <= 0)
 		return editReplyError(interaction, "music/play:NO_RESULT", {
 			query,
 		});
-	}
 
 	const isPlaylist = res.type === "PLAYLIST";
 

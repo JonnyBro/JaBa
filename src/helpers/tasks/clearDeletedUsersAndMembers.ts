@@ -11,9 +11,7 @@ export const data: CronTaskData = {
 		for (const u of users) {
 			const user = client.users.cache.get(u.id);
 
-			if (user?.username.includes("deleted_user_")) {
-				await u.deleteOne();
-			}
+			if (user?.username.includes("deleted_user_")) await u.deleteOne();
 		}
 
 		client.guilds.cache.forEach(async guild => {
@@ -22,9 +20,7 @@ export const data: CronTaskData = {
 			for (const m of members) {
 				const user = client.users.cache.get(m.id);
 
-				if (user?.username.includes("deleted_user_")) {
-					await m.deleteOne();
-				}
+				if (user?.username.includes("deleted_user_")) await m.deleteOne();
 			}
 		});
 	},

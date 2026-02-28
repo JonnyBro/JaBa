@@ -11,9 +11,7 @@ export const data: CronTaskData = {
 		const users = await client.adapter.find(UserModel, { reminds: { $gt: [] } });
 
 		for (const user of users) {
-			if (!client.users.cache.has(user.id)) {
-				client.users.fetch(user.id);
-			}
+			if (!client.users.cache.has(user.id)) client.users.fetch(user.id);
 
 			client.cacheReminds.set(user.id, {
 				id: user.id,
@@ -72,11 +70,8 @@ export const data: CronTaskData = {
 
 			const updatedReminds = reminds.filter(r => r.sendAt >= Math.floor(Date.now() / 1000));
 
-			if (!updatedReminds.length) {
-				client.cacheReminds.delete(id);
-			} else {
-				client.cacheReminds.set(id, { id, reminds: updatedReminds });
-			}
+			if (!updatedReminds.length) client.cacheReminds.delete(id);
+			else client.cacheReminds.set(id, { id, reminds: updatedReminds });
 		});
 	},
 	schedule: "* * * * *",

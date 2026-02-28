@@ -1,11 +1,7 @@
 import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
-import {
-	ApplicationCommandOptionType,
-	ApplicationIntegrationType,
-	InteractionContextType,
-} from "discord.js";
+import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "discord.js";
 import { RainlinkLoopMode } from "rainlink";
 
 const client = useClient();

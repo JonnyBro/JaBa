@@ -57,9 +57,7 @@ memberSchema.pre("validate", function (next) {
 	const now = Date.now();
 
 	(["money", "bank", "exp", "level"] as const).forEach(field => {
-		if (typeof this[field] !== "number" || isNaN(this[field]) || this[field] < 0) {
-			this[field] = 0;
-		}
+		if (typeof this[field] !== "number" || isNaN(this[field]) || this[field] < 0) this[field] = 0;
 	});
 
 	if (this.bankSold && this.bank !== 0) {
@@ -67,29 +65,23 @@ memberSchema.pre("validate", function (next) {
 		this.bankSold = undefined;
 	}
 
-	if (!Array.isArray(this.transactions)) {
-		this.transactions = [];
-	} else {
+	if (!Array.isArray(this.transactions)) this.transactions = [];
+	else
 		this.transactions = this.transactions.map(t => ({
 			user: typeof t.user === "string" ? t.user : "",
 			amount: typeof t.amount === "number" ? t.amount : 0,
 			date: typeof t.date === "number" ? t.date : now,
 			type: typeof t.type === "string" ? t.type : "unknown",
 		}));
-	}
 
-	if (typeof this.registeredAt !== "number" || this.registeredAt <= 0) {
-		this.registeredAt = now;
-	}
+	if (typeof this.registeredAt !== "number" || this.registeredAt <= 0) this.registeredAt = now;
 
-	if (!this.cooldowns || typeof this.cooldowns !== "object") {
-		this.cooldowns = { work: 0, rob: 0 };
-	} else {
+	if (!this.cooldowns || typeof this.cooldowns !== "object") this.cooldowns = { work: 0, rob: 0 };
+	else
 		this.cooldowns = {
 			work: typeof this.cooldowns.work === "number" ? this.cooldowns.work : 0,
 			rob: typeof this.cooldowns.rob === "number" ? this.cooldowns.rob : 0,
 		};
-	}
 
 	next();
 });

@@ -19,15 +19,8 @@ export const data: CommandData = {
 	name: "help",
 	...getLocalizedDesc("general/help:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-		ApplicationIntegrationType.UserInstall,
-	],
-	contexts: [
-		InteractionContextType.BotDM,
-		InteractionContextType.Guild,
-		InteractionContextType.PrivateChannel,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
+	contexts: [InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel],
 	options: [
 		{
 			name: "command",
@@ -60,11 +53,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	if (inputCommand) {
 		const cmd = commandEntries.find(c => c.data.name === inputCommand);
-		if (!cmd) {
-			return editReplyError(interaction, "general/help:NOT_FOUND", {
-				command: inputCommand,
-			});
-		}
+		if (!cmd) return editReplyError(interaction, "general/help:NOT_FOUND", { command: inputCommand });
 
 		const category = getCategoryFromPath(cmd.filePath);
 
@@ -77,25 +66,17 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			fields: [
 				{
 					name: await translateContext(interaction, "general/help:FIELD_DESCRIPTION"),
-					value: await translateContext(
-						interaction,
-						`${category}/${cmd.data.name}:DESCRIPTION`,
-					),
+					value: await translateContext(interaction, `${category}/${cmd.data.name}:DESCRIPTION`),
 				},
 				{
 					name: await translateContext(interaction, "general/help:FIELD_USAGE"),
 					value:
-						(await translateContext(
-							interaction,
-							`${category}/${cmd.data.name}:USAGE`,
-						)) || (await translateContext(interaction, "misc:NO_ARGS")),
+						(await translateContext(interaction, `${category}/${cmd.data.name}:USAGE`)) ||
+						(await translateContext(interaction, "misc:NO_ARGS")),
 				},
 				{
 					name: await translateContext(interaction, "general/help:FIELD_EXAMPLES"),
-					value: await translateContext(
-						interaction,
-						`${category}/${cmd.data.name}:EXAMPLES`,
-					),
+					value: await translateContext(interaction, `${category}/${cmd.data.name}:EXAMPLES`),
 				},
 			],
 		});
@@ -103,7 +84,6 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		return interaction.editReply({ embeds: [embed] });
 	}
 
-	// Grouping commands
 	const grouped = new Map<string, typeof commandEntries>();
 	for (const cmd of commandEntries) {
 		const category = getCategoryFromPath(cmd.filePath);
@@ -144,7 +124,6 @@ export const autocompleteRun = async ({ interaction }: AutocompleteProps) => {
 	await interaction.respond(results);
 };
 
-// Handle help select menu
 client.on("interactionCreate", async interaction => {
 	if (!interaction.isStringSelectMenu()) return;
 	if (interaction.customId !== HELP_SELECT_ID) return;

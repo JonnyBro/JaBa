@@ -21,7 +21,7 @@ export default [
 			"@stylistic": stylistic,
 		},
 		rules: {
-			"max-len": ["error", { code: 100, ignoreRegExpLiterals: true }],
+			"max-len": ["error", { code: 120, ignoreRegExpLiterals: true }],
 			"no-unused-vars": "off",
 			"@typescript-eslint/no-unused-vars": [
 				"error",
@@ -33,7 +33,7 @@ export default [
 			],
 			"arrow-body-style": ["error", "as-needed"],
 			camelcase: "error",
-			curly: ["error", "multi-line"],
+			curly: ["error", "multi"],
 			eqeqeq: ["error", "always"],
 			"no-console": "off",
 			"no-var": "error",

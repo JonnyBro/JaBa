@@ -31,9 +31,7 @@ export default {
 	},
 
 	error(...content: unknown[]) {
-		const formattedContent = content.map(item =>
-			item instanceof Error ? item.stack || item.toString() : item,
-		);
+		const formattedContent = content.map(item => (item instanceof Error ? item.stack || item.toString() : item));
 		return console.error(`[${format(Date.now())}]: ${logLevels.ERROR}`, ...formattedContent);
 	},
 

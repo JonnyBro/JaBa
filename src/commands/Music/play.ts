@@ -1,5 +1,5 @@
 import { editReplyError, getLocalizedDesc } from "@/helpers/functions.js";
-import { playQuery } from "@/helpers/musicFunctions.js";
+import { playQuery } from "@/helpers/music.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import {
 	ApplicationCommandOptionType,

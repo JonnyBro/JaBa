@@ -11,9 +11,7 @@ export default function ({ targetCommand, interaction }: BuiltInValidationParams
 	const userId = interaction.user.id;
 	const commandName = targetCommand.data.name;
 
-	if (!cooldowns.has(commandName)) {
-		cooldowns.set(commandName, new Map());
-	}
+	if (!cooldowns.has(commandName)) cooldowns.set(commandName, new Map());
 
 	const userCooldowns = cooldowns.get(commandName)!;
 

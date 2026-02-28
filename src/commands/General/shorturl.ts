@@ -1,8 +1,4 @@
-import {
-	editReplyError,
-	getLocalizedDesc,
-	translateContext,
-} from "@/helpers/functions.js";
+import { editReplyError, getLocalizedDesc, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
@@ -19,15 +15,8 @@ export const data: CommandData = {
 	name: "shorturl",
 	...getLocalizedDesc("general/shorturl:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-		ApplicationIntegrationType.UserInstall,
-	],
-	contexts: [
-		InteractionContextType.BotDM,
-		InteractionContextType.Guild,
-		InteractionContextType.PrivateChannel,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
+	contexts: [InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel],
 	options: [
 		{
 			name: "url",
@@ -51,14 +40,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const shortenerUrl = client.configService.get<string>("apiKeys.urlShortener.url");
 	const shortenerKey = client.configService.get<string>("apiKeys.urlShortener.key");
 
-	if (!shortenerUrl || !shortenerKey) {
-		return editReplyError(interaction, "API URL or key not set!");
-	}
+	if (!shortenerUrl || !shortenerKey) return editReplyError(interaction, "general/shorturl:NO_API");
 
 	const url = interaction.options.getString("url", true);
-	if (!url.startsWith("http")) {
-		return editReplyError(interaction, "general/shorturl:NOT_A_LINK", null);
-	}
+	if (!url.startsWith("http")) return editReplyError(interaction, "general/shorturl:NOT_A_LINK");
 
 	const res = await fetch(shortenerUrl, {
 		method: "POST",

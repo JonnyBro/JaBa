@@ -1,10 +1,4 @@
-import {
-	formatReply,
-	getLocalizedDesc,
-	getNoun,
-	getUsername,
-	translateContext,
-} from "@/helpers/functions.js";
+import { formatReply, getLocalizedDesc, getNoun, getUsername, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import {
@@ -52,15 +46,11 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		const member = (interaction.options.getMember("user") || interaction.member) as GuildMember;
 		const embed = await getUserInfo(interaction, member);
 
-		return interaction.editReply({
-			embeds: [embed],
-		});
+		return interaction.editReply({ embeds: [embed] });
 	} else {
 		const embed = await getServerInfo(interaction);
 
-		return interaction.editReply({
-			embeds: [embed],
-		});
+		return interaction.editReply({ embeds: [embed] });
 	}
 };
 
@@ -98,9 +88,7 @@ async function getUserInfo(interaction: ChatInputCommandInteraction, member: Gui
 			},
 			{
 				name: formatReply(await translateContext(interaction, "common:NICKNAME"), "pencil"),
-				value:
-					member.nickname ||
-					(await translateContext(interaction, "general/info:NO_NICKNAME")),
+				value: member.nickname || (await translateContext(interaction, "general/info:NO_NICKNAME")),
 				inline: true,
 			},
 			{
@@ -111,21 +99,13 @@ async function getUserInfo(interaction: ChatInputCommandInteraction, member: Gui
 				inline: true,
 			},
 			{
-				name: formatReply(
-					await translateContext(interaction, "common:CREATED"),
-					"calendar",
-				),
+				name: formatReply(await translateContext(interaction, "common:CREATED"), "calendar"),
 				value: `<t:${Math.floor(member.user.createdTimestamp / 1000)}:D>`,
 				inline: true,
 			},
 			{
-				name: formatReply(
-					await translateContext(interaction, "common:JOINED"),
-					"calendar2",
-				),
-				value: member.joinedTimestamp
-					? `<t:${Math.floor(member.joinedTimestamp / 1000)}:D>`
-					: "ERROR",
+				name: formatReply(await translateContext(interaction, "common:JOINED"), "calendar2"),
+				value: member.joinedTimestamp ? `<t:${Math.floor(member.joinedTimestamp / 1000)}:D>` : "ERROR",
 				inline: true,
 			},
 			{
@@ -161,10 +141,7 @@ async function getServerInfo(interaction: ChatInputCommandInteraction) {
 				inline: true,
 			},
 			{
-				name: formatReply(
-					await translateContext(interaction, "common:CREATED"),
-					"calendar",
-				),
+				name: formatReply(await translateContext(interaction, "common:CREATED"), "calendar"),
 				value: `<t:${Math.floor(guild.createdTimestamp / 1000)}:D>`,
 				inline: true,
 			},
@@ -191,13 +168,8 @@ async function getServerInfo(interaction: ChatInputCommandInteraction) {
 				inline: true,
 			},
 			{
-				name: formatReply(
-					await translateContext(interaction, "general/info:AFK_CHANNEL"),
-					"afk",
-				),
-				value:
-					guild.afkChannel?.toString() ||
-					(await translateContext(interaction, "common:MISSING")),
+				name: formatReply(await translateContext(interaction, "general/info:AFK_CHANNEL"), "afk"),
+				value: guild.afkChannel?.toString() || (await translateContext(interaction, "common:MISSING")),
 				inline: true,
 			},
 			{
@@ -211,18 +183,12 @@ async function getServerInfo(interaction: ChatInputCommandInteraction) {
 				inline: true,
 			},
 			{
-				name: formatReply(
-					await translateContext(interaction, "general/info:BOOSTS"),
-					"boost",
-				),
+				name: formatReply(await translateContext(interaction, "general/info:BOOSTS"), "boost"),
 				value: guild.premiumSubscriptionCount?.toString() || "0",
 				inline: true,
 			},
 			{
-				name: formatReply(
-					await translateContext(interaction, "common:CHANNELS"),
-					"channels",
-				),
+				name: formatReply(await translateContext(interaction, "common:CHANNELS"), "channels"),
 				value:
 					`${textChannels.size} ${getNoun(textChannels.size, [
 						await translateContext(interaction, "misc:NOUNS:TEXT:1"),

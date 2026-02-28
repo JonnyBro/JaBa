@@ -1,10 +1,4 @@
-import {
-	asyncForEach,
-	formatString,
-	getUsername,
-	replySuccess,
-	translateContext,
-} from "@/helpers/functions.js";
+import { asyncForEach, formatString, getUsername, replySuccess, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import {
@@ -39,25 +33,20 @@ export async function run(interaction: BaseInteraction) {
 			if (
 				interaction.channel.type !== ChannelType.GuildText &&
 				interaction.channel.type !== ChannelType.GuildAnnouncement
-			) {
+			)
 				return;
-			}
 
 			// Modal stuff
 			const modalSubject = new TextInputBuilder()
 				.setCustomId("tickets_modal_subject")
-				.setLabel(
-					await translateContext(interaction, "tickets/ticketsembed:MODAL_SUBJECT_TITLE"),
-				)
+				.setLabel(await translateContext(interaction, "tickets/ticketsembed:MODAL_SUBJECT_TITLE"))
 				.setStyle(TextInputStyle.Short)
 				.setRequired(true)
 				.setMinLength(3)
 				.setMaxLength(100);
 			const modalInput = new TextInputBuilder()
 				.setCustomId("tickets_modal_input")
-				.setLabel(
-					await translateContext(interaction, "tickets/ticketsembed:MODAL_INPUT_TITLE"),
-				)
+				.setLabel(await translateContext(interaction, "tickets/ticketsembed:MODAL_INPUT_TITLE"))
 				.setStyle(TextInputStyle.Paragraph)
 				.setRequired(true)
 				.setMinLength(3)
@@ -77,18 +66,14 @@ export async function run(interaction: BaseInteraction) {
 			try {
 				const submitted = await interaction.awaitModalSubmit({
 					time: 60_000 * 2, // 2 mins
-					filter: i =>
-						i.user.id === interaction.user.id && i.customId === "tickets_modal",
+					filter: i => i.user.id === interaction.user.id && i.customId === "tickets_modal",
 				});
 
 				const subject = submitted.fields.getTextInputValue("tickets_modal_subject");
 				const desc = submitted.fields.getTextInputValue("tickets_modal_input");
 
 				submitted.reply({
-					content: await translateContext(
-						interaction,
-						"tickets/ticketsembed:SUCCESS_TICKET",
-					),
+					content: await translateContext(interaction, "tickets/ticketsembed:SUCCESS_TICKET"),
 					flags: MessageFlags.Ephemeral,
 				});
 
@@ -116,38 +101,25 @@ export async function run(interaction: BaseInteraction) {
 				});
 
 				const ticketsEmbed = createEmbed({
-					description: await translateContext(
-						interaction,
-						"tickets/ticketsembed:TICKET_DESC",
-						{
-							user: interaction.user.toString(),
-							time: Math.floor(Date.now() / 1_000),
-							text: desc,
-						},
-					),
+					description: await translateContext(interaction, "tickets/ticketsembed:TICKET_DESC", {
+						user: interaction.user.toString(),
+						time: Math.floor(Date.now() / 1_000),
+						text: desc,
+					}),
 				});
 
 				const ticketEmbedsButtons = [
 					new ButtonBuilder()
 						.setCustomId("tickets_adduser")
 						.setStyle(ButtonStyle.Primary)
-						.setLabel(
-							await translateContext(interaction, "tickets/ticketsembed:ADD_USER"),
-						),
+						.setLabel(await translateContext(interaction, "tickets/ticketsembed:ADD_USER")),
 					new ButtonBuilder()
 						.setCustomId("tickets_closeticket")
 						.setStyle(ButtonStyle.Danger)
-						.setLabel(
-							await translateContext(
-								interaction,
-								"tickets/ticketsembed:CLOSE_TICKET",
-							),
-						),
+						.setLabel(await translateContext(interaction, "tickets/ticketsembed:CLOSE_TICKET")),
 				];
 
-				const ticketsEmbedRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
-					ticketEmbedsButtons,
-				);
+				const ticketsEmbedRow = new ActionRowBuilder<ButtonBuilder>().addComponents(ticketEmbedsButtons);
 
 				await thread.send({
 					embeds: [ticketsEmbed],
@@ -186,18 +158,14 @@ export async function run(interaction: BaseInteraction) {
 			await interaction.deferUpdate();
 
 			const msg = await interaction.channel.send({
-				content: await translateContext(
-					interaction,
-					"tickets/ticketsembed:CLOSE_TICKET_CONFIRM",
-				),
+				content: await translateContext(interaction, "tickets/ticketsembed:CLOSE_TICKET_CONFIRM"),
 				components: [row],
 			});
 
 			try {
 				const button = await msg.awaitMessageComponent({
 					time: 60_000, // 1 min
-					filter: i =>
-						i.user.id === interaction.user.id && i.customId.includes("tickets_close_"),
+					filter: i => i.user.id === interaction.user.id && i.customId.includes("tickets_close_"),
 				});
 				const channel = button.channel as ThreadChannel;
 

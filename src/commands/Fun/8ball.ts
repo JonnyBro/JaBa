@@ -1,9 +1,4 @@
-import {
-	formatString,
-	getLocalizedDesc,
-	randomNum,
-	translateContext,
-} from "@/helpers/functions.js";
+import { formatString, getLocalizedDesc, randomNum, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import {
@@ -17,15 +12,8 @@ export const data: CommandData = {
 	name: "8ball",
 	...getLocalizedDesc("fun/8ball:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-		ApplicationIntegrationType.UserInstall,
-	],
-	contexts: [
-		InteractionContextType.BotDM,
-		InteractionContextType.Guild,
-		InteractionContextType.PrivateChannel,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
+	contexts: [InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel],
 	options: [
 		{
 			name: "question",
@@ -56,10 +44,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			},
 			{
 				name: await translateContext(interaction, "fun/8ball:ANSWER"),
-				value: await translateContext(
-					interaction,
-					`fun/8ball:RESPONSE_${randomNum(1, 20)}`,
-				),
+				value: await translateContext(interaction, `fun/8ball:RESPONSE_${randomNum(1, 20)}`),
 			},
 		],
 	});

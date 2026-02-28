@@ -1,9 +1,4 @@
-import {
-	convertTime,
-	editReplyError,
-	getLocalizedDesc,
-	translateContext,
-} from "@/helpers/functions.js";
+import { convertTime, editReplyError, getLocalizedDesc, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
@@ -50,14 +45,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			.setStyle(ButtonStyle.Primary)
 			.setEmoji("➡️")
 			.setDisabled(size <= 1),
-		new ButtonBuilder()
-			.setCustomId("queue_jump_page")
-			.setStyle(ButtonStyle.Secondary)
-			.setEmoji("↗️"),
-		new ButtonBuilder()
-			.setCustomId("queue_stop")
-			.setStyle(ButtonStyle.Danger)
-			.setEmoji("❌"),
+		new ButtonBuilder().setCustomId("queue_jump_page").setStyle(ButtonStyle.Secondary).setEmoji("↗️"),
+		new ButtonBuilder().setCustomId("queue_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
 	);
 
 	await interaction.editReply({
@@ -101,10 +90,7 @@ client.on("interactionCreate", async interaction => {
 							.setCustomId("queue_jump_page")
 							.setStyle(ButtonStyle.Secondary)
 							.setEmoji("↗️"),
-						new ButtonBuilder()
-							.setCustomId("queue_stop")
-							.setStyle(ButtonStyle.Danger)
-							.setEmoji("❌"),
+						new ButtonBuilder().setCustomId("queue_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
 					);
 
 					interaction.editReply({
@@ -141,10 +127,7 @@ client.on("interactionCreate", async interaction => {
 							.setCustomId("queue_jump_page")
 							.setStyle(ButtonStyle.Secondary)
 							.setEmoji("↗️"),
-						new ButtonBuilder()
-							.setCustomId("queue_stop")
-							.setStyle(ButtonStyle.Danger)
-							.setEmoji("❌"),
+						new ButtonBuilder().setCustomId("queue_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
 					);
 
 					interaction.editReply({
@@ -167,17 +150,12 @@ client.on("interactionCreate", async interaction => {
 					.setCustomId("queue_select")
 					.setPlaceholder(await translateContext(interaction, "common:NOTHING_SELECTED"));
 
-				for (let i = 0; i < size; i++) {
+				for (let i = 0; i < size; i++)
 					selectMenu.addOptions(
-						new StringSelectMenuOptionBuilder()
-							.setLabel((i + 1).toString())
-							.setValue(i.toString()),
+						new StringSelectMenuOptionBuilder().setLabel((i + 1).toString()).setValue(i.toString()),
 					);
-				}
 
-				const selectRow = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-					selectMenu,
-				);
+				const selectRow = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(selectMenu);
 
 				let page = 0;
 
@@ -209,17 +187,11 @@ client.on("interactionCreate", async interaction => {
 							.setCustomId("queue_jump_page")
 							.setStyle(ButtonStyle.Secondary)
 							.setEmoji("↗️"),
-						new ButtonBuilder()
-							.setCustomId("queue_stop")
-							.setStyle(ButtonStyle.Danger)
-							.setEmoji("❌"),
+						new ButtonBuilder().setCustomId("queue_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
 					);
 
 					await m.edit({
-						content: `${await translateContext(
-							interaction,
-							"common:PAGE",
-						)}: **${page + 1}**/**${size}**`,
+						content: `${await translateContext(interaction, "common:PAGE")}: **${page + 1}**/**${size}**`,
 						embeds: [embeds[page]],
 						components: [row],
 					});
@@ -324,9 +296,7 @@ function getTimeUntilTrack(player: RainlinkPlayer, queueIndex: number) {
 	const remainingCurrentTrack = Math.max(0, currentTrackDuration - currentPosition);
 
 	let sumQueueDurations = 0;
-	for (let i = 0; i < queueIndex; i++) {
-		sumQueueDurations += player.queue[i]?.duration || 0;
-	}
+	for (let i = 0; i < queueIndex; i++) sumQueueDurations += player.queue[i]?.duration || 0;
 
 	const totalTime = remainingCurrentTrack + sumQueueDurations;
 

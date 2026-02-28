@@ -63,9 +63,7 @@ const guildSchema = new Schema<IGuildSchema>({
 guildSchema.pre("validate", function (next) {
 	const defaultLang = client.configService.get<string>("defaultLang");
 
-	if (typeof this.language !== "string") {
-		this.language = defaultLang;
-	}
+	if (typeof this.language !== "string") this.language = defaultLang;
 
 	this.reconnect = {
 		status: typeof this.reconnect?.status === "boolean" ? this.reconnect.status : false,

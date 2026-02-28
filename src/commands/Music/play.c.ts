@@ -1,5 +1,5 @@
 import { editReplyError } from "@/helpers/functions.js";
-import { playQuery } from "@/helpers/musicFunctions.js";
+import { playQuery } from "@/helpers/music.js";
 import { MessageContextCommandProps } from "@/types.js";
 import {
 	ApplicationCommandType,
@@ -18,7 +18,8 @@ export const data = new ContextMenuCommandBuilder()
 export const run = async ({ interaction }: MessageContextCommandProps) => {
 	await interaction.deferReply();
 
-	const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g;
+	const regex =
+		/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g;
 	const links = interaction.targetMessage.content.match(regex);
 	if (!links) return editReplyError(interaction, "music/play:NO_LINK");
 

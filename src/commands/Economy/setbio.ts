@@ -15,10 +15,7 @@ export const data: CommandData = {
 	name: "setbio",
 	...getLocalizedDesc("economy/setbio:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-		ApplicationIntegrationType.UserInstall,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
 	contexts: [InteractionContextType.Guild, InteractionContextType.PrivateChannel],
 	options: [
 		{

@@ -108,9 +108,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
 
 			const targetData =
-				targetUser.id === interaction.user.id
-					? memberData
-					: await client.getMemberData(targetUser.id, guildId);
+				targetUser.id === interaction.user.id ? memberData : await client.getMemberData(targetUser.id, guildId);
 
 			let globalMoney = 0;
 			const guilds = client.guilds.cache.filter(g => g.members.cache.has(targetUser.id));
@@ -123,23 +121,17 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 			embed.setFields([
 				{
-					name: (await translateContext(interaction, "economy/profile:CREDITS")).split(
-						":",
-					)[0],
+					name: (await translateContext(interaction, "economy/profile:CREDITS")).split(":")[0],
 					value: await formatCredits(interaction, targetData.money),
 					inline: true,
 				},
 				{
-					name: (await translateContext(interaction, "economy/profile:BANK")).split(
-						":",
-					)[0],
+					name: (await translateContext(interaction, "economy/profile:BANK")).split(":")[0],
 					value: await formatCredits(interaction, targetData.bank),
 					inline: true,
 				},
 				{
-					name: (await translateContext(interaction, "economy/profile:GLOBAL")).split(
-						":",
-					)[0],
+					name: (await translateContext(interaction, "economy/profile:GLOBAL")).split(":")[0],
 					value: await formatCredits(interaction, globalMoney),
 					inline: true,
 				},
@@ -153,9 +145,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			const credits = creditsOption === "all" ? memberData.money : Number(creditsOption);
 
 			if (credits <= 0) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
-			if (memberData.money < credits) {
-				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDITS");
-			}
+			if (memberData.money < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDITS");
 
 			memberData.set({
 				money: memberData.money - credits,
@@ -183,9 +173,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			const credits = creditsOption === "all" ? memberData.money : Number(creditsOption);
 
 			if (credits <= 0) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
-			if (memberData.bank < credits) {
-				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
-			}
+			if (memberData.bank < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
 
 			memberData.set({
 				money: memberData.money + credits,
@@ -216,12 +204,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
 
 			if (credits <= 0) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
-			if (memberData.bank < credits) {
-				return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
-			}
-			if (interaction.user.id === targetUser.id) {
-				return editReplyError(interaction, "misc:CANT_YOURSELF");
-			}
+			if (memberData.bank < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
+			if (interaction.user.id === targetUser.id) return editReplyError(interaction, "misc:CANT_YOURSELF");
 
 			const recieverData = await client.getMemberData(targetUser.id, guildId);
 
@@ -263,19 +247,14 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			const transactions = memberData.transactions;
 			const sortedTransactions: string[][] = [[], []];
 
-			const sortedTransactionArray = transactions
-				.sort((a, b) => b.date - a.date)
-				.slice(0, 20);
+			const sortedTransactionArray = transactions.sort((a, b) => b.date - a.date).slice(0, 20);
 
 			await Promise.all(
 				sortedTransactionArray.map(async t => {
 					const array = t.type === "got" ? sortedTransactions[0] : sortedTransactions[1];
 
 					const [translated, amountText, dateText] = await Promise.all([
-						translateContext(
-							interaction,
-							"economy/bank:T_USER_" + t.type.toUpperCase(),
-						),
+						translateContext(interaction, "economy/bank:T_USER_" + t.type.toUpperCase()),
 						translateContext(interaction, "economy/bank:T_AMOUNT"),
 						translateContext(interaction, "economy/bank:T_DATE"),
 					]);
@@ -287,12 +266,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				}),
 			);
 
-			if (transactions.length <= 0) {
-				embed.setDescription(
-					await translateContext(interaction, "economy/bank:NO_TRANSACTIONS"),
-				);
-			} else {
-				if (sortedTransactions[0].length > 0) {
+			if (transactions.length <= 0)
+				embed.setDescription(await translateContext(interaction, "economy/bank:NO_TRANSACTIONS"));
+			else {
+				if (sortedTransactions[0].length > 0)
 					embed.addFields([
 						{
 							name: await translateContext(interaction, "economy/bank:T_GOT"),
@@ -300,9 +277,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 							inline: true,
 						},
 					]);
-				}
 
-				if (sortedTransactions[1].length > 0) {
+				if (sortedTransactions[1].length > 0)
 					embed.addFields([
 						{
 							name: await translateContext(interaction, "economy/bank:T_SEND"),
@@ -310,7 +286,6 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 							inline: true,
 						},
 					]);
-				}
 			}
 
 			break;

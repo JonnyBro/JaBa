@@ -14,15 +14,8 @@ export const data: CommandData = {
 	name: "birthdate",
 	...getLocalizedDesc("economy/birthdate:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-		ApplicationIntegrationType.UserInstall,
-	],
-	contexts: [
-		InteractionContextType.BotDM,
-		InteractionContextType.Guild,
-		InteractionContextType.PrivateChannel,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
+	contexts: [InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel],
 	options: [
 		{
 			name: "clear",
@@ -109,21 +102,13 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 				date.setHours(13); // This should be the same day in all timezones
 
-				if (
-					!(
-						day === date.getDate() &&
-						month === date.getMonth() + 1 &&
-						year === date.getFullYear()
-					)
-				) {
+				if (!(day === date.getDate() && month === date.getMonth() + 1 && year === date.getFullYear()))
 					return editReplyError(interaction, "economy/birthdate:INVALID_DATE");
-				}
-				if (date.getTime() > Date.now()) {
-					return editReplyError(interaction, "economy/birthdate:DATE_TOO_HIGH");
-				}
-				if (date.getTime() < Date.now() - 2.523e12) {
+
+				if (date.getTime() > Date.now()) return editReplyError(interaction, "economy/birthdate:DATE_TOO_HIGH");
+
+				if (date.getTime() < Date.now() - 2.523e12)
 					return editReplyError(interaction, "economy/birthdate:DATE_TOO_LOW");
-				}
 
 				const time = date.getTime();
 

@@ -20,7 +20,7 @@ export const data = {
 		const currentMonth = currentData.getMonth();
 		const currentDate = currentData.getDate();
 
-		for (const guild of guilds) {
+		for (const guild of guilds)
 			try {
 				const data = await client.getGuildData(guild.id);
 				if (!data.plugins.birthdays) continue;
@@ -28,9 +28,7 @@ export const data = {
 				const channel = await client.channels.fetch(data.plugins.birthdays);
 				if (!channel || !channel.isSendable()) continue;
 
-				const userIDs: string[] = users
-					.filter(u => guild.members.cache.has(u.id))
-					.map(u => u.id);
+				const userIDs: string[] = users.filter(u => guild.members.cache.has(u.id)).map(u => u.id);
 
 				for (const userID of userIDs) {
 					const user = users.find(u => u.id === userID);
@@ -43,10 +41,7 @@ export const data = {
 							? new Date(user.birthdate! * 1000)
 							: new Date(user.birthdate!);
 
-					if (
-						userData.getDate() === currentDate &&
-						userData.getMonth() === currentMonth
-					) {
+					if (userData.getDate() === currentDate && userData.getMonth() === currentMonth) {
 						const age = currentYear - userData.getFullYear();
 						const embed = createEmbed({
 							author: {
@@ -54,20 +49,14 @@ export const data = {
 							},
 							fields: [
 								{
-									name: client.i18n.translate(
-										"economy/birthdate:HAPPY_BIRTHDAY",
-										{
-											lng: data.language,
-										},
-									),
-									value: client.i18n.translate(
-										"economy/birthdate:HAPPY_BIRTHDAY_MESSAGE",
-										{
-											user: discordUser.toString(),
-											age: age.toString(),
-											lng: data.language,
-										},
-									),
+									name: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY", {
+										lng: data.language,
+									}),
+									value: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
+										user: discordUser.toString(),
+										age: age.toString(),
+										lng: data.language,
+									}),
 								},
 							],
 						});
@@ -78,7 +67,6 @@ export const data = {
 			} catch (e) {
 				logger.error(`Birthday error in guild ${guild.id}:`, e);
 			}
-		}
 	},
 	schedule: "0 5 * * *",
 };

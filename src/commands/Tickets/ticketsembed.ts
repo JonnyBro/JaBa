@@ -49,21 +49,17 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		description: text,
 	});
 
-	const button = new ButtonBuilder()
-		.setCustomId("tickets_create")
-		.setLabel(label)
-		.setStyle(ButtonStyle.Success);
+	const button = new ButtonBuilder().setCustomId("tickets_create").setLabel(label).setStyle(ButtonStyle.Success);
 
 	if (emoji) button.setEmoji(emoji.trim());
 
 	const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
 
-	if (interaction.channel?.isSendable()) {
+	if (interaction.channel?.isSendable())
 		await interaction.channel.send({
 			embeds: [embed],
 			components: [row],
 		});
-	}
 
 	await editReplySuccess(interaction, "tickets/ticketsembed:SUCCESS");
 };

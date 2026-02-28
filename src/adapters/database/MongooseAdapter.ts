@@ -1,11 +1,4 @@
-import mongoose, {
-	ConnectOptions,
-	Model,
-	FilterQuery,
-	QueryOptions,
-	UpdateQuery,
-	HydratedDocument,
-} from "mongoose";
+import mongoose, { ConnectOptions, Model, FilterQuery, QueryOptions, UpdateQuery, HydratedDocument } from "mongoose";
 import IDatabaseAdapter from "./IDatabaseAdapter.js";
 import logger from "@/helpers/logger.js";
 import Cache from "../cache/MapCache.js";
@@ -43,10 +36,7 @@ export default class MongooseAdapter extends IDatabaseAdapter<
 		return `${modelName}:${JSON.stringify(query)}:${JSON.stringify(options)}`;
 	}
 
-	async find<
-		TSchema extends {},
-		TDoc extends HydratedDocument<TSchema> = HydratedDocument<TSchema>,
-	>(
+	async find<TSchema extends {}, TDoc extends HydratedDocument<TSchema> = HydratedDocument<TSchema>>(
 		model: Model<TSchema>,
 		query: FilterQuery<TSchema> = {},
 		options: QueryOptions = {},
@@ -56,21 +46,14 @@ export default class MongooseAdapter extends IDatabaseAdapter<
 			runValidators: true,
 			...options,
 		});
-		if (this.cache.get(cacheKey)) {
-			return this.cache.get(cacheKey);
-		}
+		if (this.cache.get(cacheKey)) return this.cache.get(cacheKey);
 
-		const result = await model
-			.find(query, null, { new: true, runValidators: true, ...options })
-			.exec();
+		const result = await model.find(query, null, { new: true, runValidators: true, ...options }).exec();
 		this.cache.set(cacheKey, result);
 		return result as TDoc[];
 	}
 
-	async findOne<
-		TSchema extends {},
-		TDoc extends HydratedDocument<TSchema> = HydratedDocument<TSchema>,
-	>(
+	async findOne<TSchema extends {}, TDoc extends HydratedDocument<TSchema> = HydratedDocument<TSchema>>(
 		model: Model<TSchema>,
 		query: FilterQuery<TSchema> = {},
 		options: QueryOptions = {},
@@ -80,13 +63,9 @@ export default class MongooseAdapter extends IDatabaseAdapter<
 			runValidators: true,
 			...options,
 		});
-		if (this.cache.get(cacheKey)) {
-			return this.cache.get(cacheKey);
-		}
+		if (this.cache.get(cacheKey)) return this.cache.get(cacheKey);
 
-		const result = await model
-			.findOne(query, null, { new: true, runValidators: true, ...options })
-			.exec();
+		const result = await model.findOne(query, null, { new: true, runValidators: true, ...options }).exec();
 		this.cache.set(cacheKey, result);
 		return result as TDoc;
 	}
@@ -97,9 +76,7 @@ export default class MongooseAdapter extends IDatabaseAdapter<
 		update: UpdateQuery<TSchema>,
 		options = {},
 	) {
-		const result = await model
-			.updateOne(filter, update, { new: true, runValidators: true, ...options })
-			.exec();
+		const result = await model.updateOne(filter, update, { new: true, runValidators: true, ...options }).exec();
 		this.cache.clear();
 		return result;
 	}
@@ -110,10 +87,10 @@ export default class MongooseAdapter extends IDatabaseAdapter<
 		return result;
 	}
 
-	async findOneOrCreate<
-		TSchema extends {},
-		TDoc extends HydratedDocument<TSchema> = HydratedDocument<TSchema>,
-	>(model: Model<TSchema>, filter: FilterQuery<TSchema>): Promise<TDoc> {
+	async findOneOrCreate<TSchema extends {}, TDoc extends HydratedDocument<TSchema> = HydratedDocument<TSchema>>(
+		model: Model<TSchema>,
+		filter: FilterQuery<TSchema>,
+	): Promise<TDoc> {
 		this.cache.clear();
 		const result = await model.findOne(filter).then(result => {
 			if (result) return result as TDoc;

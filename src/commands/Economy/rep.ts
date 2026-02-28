@@ -1,11 +1,7 @@
 import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
-import {
-	ApplicationCommandOptionType,
-	ApplicationIntegrationType,
-	InteractionContextType,
-} from "discord.js";
+import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "discord.js";
 
 const client = useClient();
 
@@ -13,10 +9,7 @@ export const data: CommandData = {
 	name: "rep",
 	...getLocalizedDesc("economy/rep:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-		ApplicationIntegrationType.UserInstall,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
 	contexts: [InteractionContextType.Guild, InteractionContextType.PrivateChannel],
 	options: [
 		{
@@ -34,11 +27,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const userData = await client.getUserData(interaction.user.id);
 	const isOnCooldown = userData.cooldowns.rep;
 
-	if (isOnCooldown && isOnCooldown > Date.now()) {
+	if (isOnCooldown && isOnCooldown > Date.now())
 		return editReplyError(interaction, "economy/rep:COOLDOWN", {
 			time: `<t:${Math.floor(isOnCooldown / 1000)}:R>`,
 		});
-	}
 
 	const user = interaction.options.getUser("user", true);
 	if (user.bot) return editReplyError(interaction, "misc:BOT_USER");

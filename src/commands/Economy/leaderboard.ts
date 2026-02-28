@@ -1,9 +1,4 @@
-import {
-	getLocalizedDesc,
-	getNoun,
-	getXpForNextLevel,
-	translateContext,
-} from "@/helpers/functions.js";
+import { getLocalizedDesc, getNoun, getXpForNextLevel, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import {
@@ -63,8 +58,7 @@ function buildTableText(
 			const rank = `**${i + 1}**`;
 			const main = `<@${e.id}>: **${e.value}** ${getNoun(e.value, nouns)}`;
 			const extra =
-				formatExtra?.(e) ??
-				(e.extra && extraNouns ? ` (${e.extra} ${getNoun(e.extra, extraNouns)})` : "");
+				formatExtra?.(e) ?? (e.extra && extraNouns ? ` (${e.extra} ${getNoun(e.extra, extraNouns)})` : "");
 			return `${rank}. ${main} ${extra}`;
 		})
 		.join("\n");
@@ -82,9 +76,7 @@ async function renderLeaderboard(
 			name: interaction.guild?.name,
 		})}`,
 	);
-	const subtitle = new TextDisplayBuilder().setContent(
-		`## ${await translateContext(interaction, subTitleKey)}`,
-	);
+	const subtitle = new TextDisplayBuilder().setContent(`## ${await translateContext(interaction, subTitleKey)}`);
 
 	container
 		.addTextDisplayComponents(title)
@@ -144,9 +136,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		.addTextDisplayComponents(titleText)
 		.addSeparatorComponents(s => s.setSpacing(SeparatorSpacingSize.Small))
 		.addTextDisplayComponents(selectText)
-		.addActionRowComponents(
-			new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(selector),
-		);
+		.addActionRowComponents(new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(selector));
 
 	await interaction.editReply({
 		flags: MessageFlags.IsComponentsV2,

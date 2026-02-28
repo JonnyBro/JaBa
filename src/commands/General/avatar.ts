@@ -13,15 +13,8 @@ export const data: CommandData = {
 	name: "avatar",
 	...getLocalizedDesc("general/avatar:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-		ApplicationIntegrationType.UserInstall,
-	],
-	contexts: [
-		InteractionContextType.BotDM,
-		InteractionContextType.Guild,
-		InteractionContextType.PrivateChannel,
-	],
+	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
+	contexts: [InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel],
 	options: [
 		{
 			name: "user",
@@ -79,8 +72,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		}
 
 		case "server": {
-			const member =
-				(interaction.options.getMember("user") as GuildMember) || interaction.member;
+			const member = (interaction.options.getMember("user") as GuildMember) || interaction.member;
 			const avatar = member.displayAvatarURL({
 				forceStatic: false,
 				extension: "png",
@@ -91,7 +83,6 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 			break;
 		}
-
 	}
 
 	interaction.editReply({

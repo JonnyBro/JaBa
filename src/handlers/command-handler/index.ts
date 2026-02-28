@@ -47,9 +47,7 @@ export class CommandHandler {
 			}
 
 			if (typeof run !== "function") {
-				logger.warn(
-					`Command ${cmdFilePath} does not have a 'run' function or it is not a function`,
-				);
+				logger.warn(`Command ${cmdFilePath} does not have a 'run' function or it is not a function`);
 				continue;
 			}
 
@@ -58,9 +56,8 @@ export class CommandHandler {
 	}
 
 	buildBuiltInValidations() {
-		for (const builtInValidationFunction of builtInValidationsFunctions) {
+		for (const builtInValidationFunction of builtInValidationsFunctions)
 			this.builtInValidations.push(builtInValidationFunction);
-		}
 	}
 
 	handleCommands() {
@@ -69,13 +66,12 @@ export class CommandHandler {
 				!interaction.isChatInputCommand() &&
 				!interaction.isAutocomplete() &&
 				!interaction.isContextMenuCommand()
-			) return;
+			)
+				return;
 
 			const isAutocomplete = interaction.isAutocomplete();
 
-			const targetCommand = this.commands.find(
-				cmd => cmd.data.name === interaction.commandName,
-			);
+			const targetCommand = this.commands.find(cmd => cmd.data.name === interaction.commandName);
 			if (!targetCommand) return;
 
 			// Skip if autocomplete handler is not defined
@@ -99,7 +95,6 @@ export class CommandHandler {
 			if (!canRun) return;
 
 			const command = targetCommand[isAutocomplete ? "autocompleteRun" : "run"]!;
-
 
 			try {
 				await command({

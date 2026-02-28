@@ -1,9 +1,4 @@
-import {
-	editReplyError,
-	editReplySuccess,
-	getLocalizedDesc,
-	translateContext,
-} from "@/helpers/functions.js";
+import { editReplyError, editReplySuccess, getLocalizedDesc, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import {
 	ApplicationCommandOptionType,
@@ -48,19 +43,16 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		}?size=128`;
 	}
 
-	if (!name) {
-		return await editReplyError(interaction, "administration/addemoji:MISSING_NAME");
-	}
+	if (!name) return await editReplyError(interaction, "administration/addemoji:MISSING_NAME");
 
 	try {
 		const emoji = await interaction.guild?.emojis.create({ name, attachment });
 
-		if (!emoji) {
+		if (!emoji)
 			return await editReplyError(interaction, "administration/addemoji:ERROR", {
 				name,
 				error: await translateContext(interaction, "misc:NO_BOT_PERMS"),
 			});
-		}
 
 		return await editReplySuccess(interaction, "administration/addemoji:SUCCESS", {
 			emoji: emoji.toString(),

@@ -27,21 +27,12 @@ export const data = new ContextMenuCommandBuilder()
 		}),
 	})
 	.setType(ApplicationCommandType.User)
-	.setIntegrationTypes([
-		ApplicationIntegrationType.GuildInstall,
-		ApplicationIntegrationType.UserInstall,
-	])
-	.setContexts([
-		InteractionContextType.BotDM,
-		InteractionContextType.PrivateChannel,
-		InteractionContextType.Guild,
-	]);
+	.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
+	.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild]);
 
 export const run = async ({ interaction }: UserContextCommandProps) => {
 	const isGuild = interaction.guild;
-	const target = isGuild
-		? (interaction.targetMember as GuildMember)
-		: interaction.targetUser;
+	const target = isGuild ? (interaction.targetMember as GuildMember) : interaction.targetUser;
 	if (!target) return replyError(interaction, "misc:USER_NOT_FOUND");
 
 	const avatarURL = isGuild

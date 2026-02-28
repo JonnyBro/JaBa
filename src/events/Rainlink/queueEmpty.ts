@@ -47,9 +47,7 @@ export async function run(player: RainlinkPlayerCustom, queue: RainlinkQueue) {
 		});
 
 		if (!res || !res.tracks) {
-			if (debug) {
-				logger.debug(`Autoplay ended in ${guild.name} (${guild.id}), no tracks found`);
-			}
+			if (debug) logger.debug(`Autoplay ended in ${guild.name} (${guild.id}), no tracks found`);
 
 			return await player.stop(true);
 		}
