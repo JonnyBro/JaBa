@@ -6,16 +6,21 @@ import ConfigService from "@/services/config/index.js";
 import InternationalizationService from "@/services/languages/index.js";
 import { cacheRemindsData, CommandFileObject } from "@/types.js";
 import { Client, ClientOptions } from "discord.js";
-import { Library, Rainlink, RainlinkNodeOptions } from "rainlink";
+import { LavalinkManager, LavalinkNodeOptions } from "lavalink-client";
 
 export class ExtendedClient extends Client<true> {
 	configService = new ConfigService();
 	adapter = new MongooseAdapter(this.configService.get<string>("mongoDB"));
 	cacheReminds = new Map<string, cacheRemindsData>();
 	i18n = new InternationalizationService(this);
-	rainlink = new Rainlink({
-		library: new Library.DiscordJS(this),
-		nodes: this.configService.get<RainlinkNodeOptions[]>("music.nodes"),
+	lavalink = new LavalinkManager({
+		nodes: this.configService.get<LavalinkNodeOptions[]>("music.nodes"),
+		sendToShard: (guildId, payload) => this.guilds.cache.get(guildId)?.shard?.send(payload),
+		autoSkip: true,
+		client: {
+			id: this.configService.get<string>("clientId"),
+			username: "JaBa",
+		},
 	});
 	commands: CommandFileObject[] = [];
 
@@ -32,6 +37,12 @@ export class ExtendedClient extends Client<true> {
 	async init() {
 		try {
 			await this.adapter.connect();
+
+			await this.lavalink.init({
+				id: this.configService.get<string>("clientId"),
+				username: "JaBa",
+			});
+
 			await this.login(this.configService.get("token"));
 		} catch (error) {
 			logger.error(error);

@@ -1,19 +1,19 @@
 import { translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
-import { RainlinkPlayerCustom } from "@/types.js";
+import { PlayerCustom } from "@/types.js";
 import useClient from "@/utils/use-client.js";
-import { RainlinkTrack } from "rainlink";
+import { Track, TrackExceptionEvent, UnresolvedTrack } from "lavalink-client";
 
 const client = useClient();
 const debug = !client.configService.get<boolean>("production");
 
 export const data = {
-	name: "trackResolveError",
+	name: "trackError",
 	player: true,
 	once: false,
 };
 
-export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack, message: string) {
+export async function run(player: PlayerCustom, track: Track | UnresolvedTrack | null, payload: TrackExceptionEvent) {
 	if (!player) return;
 
 	const guild = client.guilds.cache.get(player.guildId);
@@ -23,19 +23,19 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack, me
 
 	if (debug)
 		logger.debug(
-			`Track resolve error in ${guild.name} (${guild.id})\nTrack: ${track.title} (${track.uri})`,
-			message,
+			`Track resolve error in ${guild.name} (${guild.id})\nTrack: ${track?.info.title} (${track?.info.uri})`,
+			payload.error,
 		);
 
-	const channel = guild.channels.cache.get(player.textId);
+	const channel = guild.channels.cache.get(player.textChannelId!);
 	if (!channel?.isSendable()) return;
 
 	const guildData = await client.getGuildData(guild.id);
 
-	if (!player.queue.isEmpty && !guildData.plugins.music.autoPlay) {
+	if (player.queue.tracks.length && !guildData.plugins.music.autoPlay) {
 		channel.send({
 			content: await translateContext(guild, "music/play:ERR_RESOLVING_QUEUE", {
-				track: track.title,
+				track: track?.info.title,
 			}),
 		});
 
@@ -43,10 +43,10 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack, me
 	} else {
 		channel.send({
 			content: await translateContext(guild, "music/play:ERR_RESOLVING_EMPTY", {
-				track: track.title,
+				track: track?.info.title,
 			}),
 		});
 
-		return await player.stop(true);
+		return await player.destroy("track error", true);
 	}
 }

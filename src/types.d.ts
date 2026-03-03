@@ -11,9 +11,9 @@ import {
 } from "discord.js";
 import { UserReminds } from "./models/UserModel.ts";
 import { ExtendedClient } from "./structures/client.ts";
-import { RainlinkPlayer } from "rainlink";
+import { Player } from "lavalink-client";
 
-export interface RainlinkPlayerCustom extends RainlinkPlayer {
+export interface PlayerCustom extends Player {
 	message: Message | null;
 }
 

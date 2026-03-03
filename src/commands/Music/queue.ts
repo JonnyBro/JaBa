@@ -13,7 +13,7 @@ import {
 	StringSelectMenuBuilder,
 	StringSelectMenuOptionBuilder,
 } from "discord.js";
-import { RainlinkPlayer } from "rainlink";
+import { Player } from "lavalink-client";
 
 const client = useClient();
 
@@ -29,7 +29,7 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
-	const player = client.rainlink.players.get(interaction.guildId!);
+	const player = client.lavalink.getPlayer(interaction.guildId!);
 	if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
 
 	const { embeds, size } = await generateQueueEmbeds(interaction, player);
@@ -60,7 +60,7 @@ client.on("interactionCreate", async interaction => {
 	if (!interaction.isButton()) return;
 
 	if (interaction.customId.startsWith("queue_")) {
-		const player = client.rainlink.players.get(interaction.guildId!);
+		const player = client.lavalink.getPlayer(interaction.guildId!);
 		if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
 
 		const pageText = interaction.message.content.match(/\*\*(\d+)\*\*\/\*\*(\d+)\*\*/);
@@ -213,43 +213,43 @@ client.on("interactionCreate", async interaction => {
 	}
 });
 
-async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPlayer) {
+async function generateQueueEmbeds(interaction: Interaction, player: Player) {
 	const embeds = [];
 	const currentTrack = player.queue.current!;
 	const queue = player.queue;
 	const translated = {
-		none: await translateContext(interaction, "common:DISABLED"),
-		song: await translateContext(interaction, "music/loop:TRACK"),
+		off: await translateContext(interaction, "common:DISABLED"),
+		track: await translateContext(interaction, "music/loop:TRACK"),
 		queue: await translateContext(interaction, "music/loop:QUEUE"),
 	};
 
-	if (!queue.length) {
+	if (!queue.tracks.length) {
 		const embed = createEmbed({
 			title: await translateContext(interaction, "music/queue:CURRENTLY_PLAYING"),
 			description: `${await translateContext(interaction, "music/queue:REPEAT", {
-				mode: `\`${translated[player.loop]}\``,
-			})}\n[${currentTrack.title}](${currentTrack.uri}) - ${convertTime(
-				currentTrack.duration,
+				mode: `\`${translated[player.repeatMode]}\``,
+			})}\n[${currentTrack.info.title}](${currentTrack.info.uri}) - ${convertTime(
+				currentTrack.info.duration,
 			)}\n> ${await translateContext(
 				interaction,
 				"music/queue:ADDED",
-			)} ${currentTrack.requester}\n\n**${await translateContext(
+			)} ${currentTrack.requester?.toString()}\n\n**${await translateContext(
 				interaction,
 				"music/queue:NEXT",
 			)}**\n${await translateContext(interaction, "music/queue:NO_QUEUE")}`,
-		}).setThumbnail(currentTrack.artworkUrl);
+		}).setThumbnail(currentTrack.info.artworkUrl);
 
 		embeds.push(embed);
 
 		return { embeds, size: embeds.length };
 	}
 
-	const totalDuration = queue.reduce((acc, track) => acc + track.duration, currentTrack.duration);
+	const totalDuration = queue.utils.totalDuration();
 	const formattedTotalDuration = convertTime(totalDuration);
 
 	let k = 10;
-	for (let i = 0; i < queue.length; i += 10) {
-		const current = queue.slice(i, k);
+	for (let i = 0; i < queue.tracks.length; i += 10) {
+		const current = queue.tracks.slice(i, k);
 		let j = i;
 		k += 10;
 
@@ -263,9 +263,9 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 			await Promise.all(
 				current.map(async (track, index) => {
 					const queueIndex = i + index;
-					return `${++j}. [${track.title}](${track.uri}) - ${convertTime(
-						track.duration,
-					)}\n> ${addedText} ${track.requester}\n> ${await playsIn(queueIndex)}`;
+					return `${++j}. [${track.info.title}](${track.info.uri}) - ${convertTime(
+						track.info.duration || 0,
+					)}\n> ${addedText} ${track.requester?.toString()}\n> ${await playsIn(queueIndex)}`;
 				}),
 			)
 		).join("\n");
@@ -275,13 +275,13 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 			description: `${await translateContext(interaction, "music/queue:DURATION_QUEUE", {
 				time: formattedTotalDuration,
 			})}\n${await translateContext(interaction, "music/queue:REPEAT", {
-				mode: `\`${translated[player.loop]}\``,
-			})}\n[${currentTrack.title}](${currentTrack.uri}) - ${convertTime(
-				currentTrack.duration,
+				mode: `\`${translated[player.repeatMode]}\``,
+			})}\n[${currentTrack.info.title}](${currentTrack.info.uri}) - ${convertTime(
+				currentTrack.info.duration,
 			)}\n * ${await translateContext(interaction, "music/queue:ADDED")} ${
-				currentTrack.requester
+				currentTrack.requester?.toString()
 			}\n\n**${await translateContext(interaction, "music/queue:NEXT")}**\n${info}`,
-		}).setThumbnail(currentTrack.artworkUrl);
+		}).setThumbnail(currentTrack.info.artworkUrl);
 
 		embeds.push(embed);
 	}
@@ -289,14 +289,14 @@ async function generateQueueEmbeds(interaction: Interaction, player: RainlinkPla
 	return { embeds, size: embeds.length };
 }
 
-function getTimeUntilTrack(player: RainlinkPlayer, queueIndex: number) {
+function getTimeUntilTrack(player: Player, queueIndex: number) {
 	const currentPosition = player.position || 0;
 	const currentTrack = player.queue.current!;
-	const currentTrackDuration = currentTrack.isStream ? 0 : currentTrack.duration;
+	const currentTrackDuration = currentTrack.info.isStream ? 0 : currentTrack.info.duration;
 	const remainingCurrentTrack = Math.max(0, currentTrackDuration - currentPosition);
 
 	let sumQueueDurations = 0;
-	for (let i = 0; i < queueIndex; i++) sumQueueDurations += player.queue[i]?.duration || 0;
+	for (let i = 0; i < queueIndex; i++) sumQueueDurations += player.queue.tracks[i].info.duration || 0;
 
 	const totalTime = remainingCurrentTrack + sumQueueDurations;
 

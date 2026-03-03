@@ -1,5 +1,5 @@
 import logger from "@/helpers/logger.js";
-import { RainlinkPlayerCustom } from "@/types.js";
+import { PlayerCustom } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 
 const client = useClient();
@@ -11,7 +11,7 @@ export const data = {
 	once: false,
 };
 
-export async function run(player: RainlinkPlayerCustom) {
+export async function run(player: PlayerCustom) {
 	if (!player) return;
 
 	const guild = client.guilds.cache.get(player.guildId);

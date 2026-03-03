@@ -9,9 +9,7 @@ export class CronManager {
 	private constructor() {}
 
 	public static getInstance(): CronManager {
-		if (!CronManager.instance) {
-			CronManager.instance = new CronManager();
-		}
+		if (!CronManager.instance) CronManager.instance = new CronManager();
 		return CronManager.instance;
 	}
 

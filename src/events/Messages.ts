@@ -23,7 +23,6 @@ export async function run(message: Message) {
 	return;
 }
 
-// Handle the quote deletion button
 client.on("interactionCreate", async interaction => {
 	if (!interaction.isButton()) return;
 	if (interaction.customId !== DELETE_BUTTON_ID) return;

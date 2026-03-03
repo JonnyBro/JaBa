@@ -1,7 +1,8 @@
 import { translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
-import { RainlinkPlayerCustom } from "@/types.js";
+import { PlayerCustom } from "@/types.js";
 import useClient from "@/utils/use-client.js";
+import { Track, TrackStuckEvent } from "lavalink-client";
 
 const client = useClient();
 const debug = !client.configService.get<boolean>("production");
@@ -12,7 +13,7 @@ export const data = {
 	once: false,
 };
 
-export async function run(player: RainlinkPlayerCustom, data: Record<string, any>) {
+export async function run(player: PlayerCustom, _track: Track | null, payload: TrackStuckEvent) {
 	if (!player) return;
 
 	const guild = client.guilds.cache.get(player.guildId);
@@ -20,14 +21,14 @@ export async function run(player: RainlinkPlayerCustom, data: Record<string, any
 
 	if (player.message?.deletable) await player.message.delete().catch(() => {});
 
-	if (debug) logger.debug(`Track got stuck in ${guild.name} (${guild.id})\nData:`, data);
+	if (debug) logger.debug(`Track got stuck in ${guild.name} (${guild.id})\npayload:`, payload);
 
-	const channel = guild.channels.cache.get(player.textId);
+	const channel = guild.channels.cache.get(player.textChannelId!);
 	if (!channel?.isSendable()) return;
 
 	const guildData = await client.getGuildData(guild.id);
 
-	if (!player.queue.isEmpty && !guildData.plugins.music.autoPlay) {
+	if (player.queue.tracks.length && !guildData.plugins.music.autoPlay) {
 		channel.send({
 			content: await translateContext(guild, "music/play:ERR_STUCK_QUEUE"),
 		});
@@ -38,6 +39,6 @@ export async function run(player: RainlinkPlayerCustom, data: Record<string, any
 			content: await translateContext(guild, "music/play:ERR_STUCK_EMPTY"),
 		});
 
-		return await player.stop(true);
+		return await player.destroy("track stuck", true);
 	}
 }
