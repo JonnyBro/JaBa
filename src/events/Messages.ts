@@ -110,7 +110,7 @@ const handleLinkQuote = async (message: Message) => {
 };
 
 const updateXp = async (message: Message) => {
-	const memberData = await client.getMemberData(message.author.id, message.guild!.id);
+	const memberData = await client.getMemberData(message.guild!.id, message.author.id);
 	const now = Date.now();
 
 	if (xpCooldown[message.author.id] && xpCooldown[message.author.id] > now) return;

@@ -77,7 +77,7 @@ export class ExtendedClient extends Client<true> {
 		return usersData;
 	}
 
-	async getMemberData(memberId: string, guildID: string) {
+	async getMemberData(guildID: string, memberId: string) {
 		const { default: MemberModel } = await import("@/models/MemberModel.js");
 		const memberData = await this.adapter.findOneOrCreate(MemberModel, {
 			id: memberId,

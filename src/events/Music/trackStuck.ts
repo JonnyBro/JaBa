@@ -26,9 +26,8 @@ export async function run(player: PlayerCustom, _track: Track | null, payload: T
 	const channel = guild.channels.cache.get(player.textChannelId!);
 	if (!channel?.isSendable()) return;
 
-	const guildData = await client.getGuildData(guild.id);
-
-	if (player.queue.tracks.length && !guildData.plugins.music.autoPlay) {
+	// NOTE: reimplement autoplay
+	if (player.queue.tracks.length) {
 		channel.send({
 			content: await translateContext(guild, "music/play:ERR_STUCK_QUEUE"),
 		});

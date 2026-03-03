@@ -1,4 +1,4 @@
-import { editReplySuccess, formatString, getLocalizedDesc } from "@/helpers/functions.js";
+import { editReplySuccess, getLocalizedDesc, shortenString } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import {
@@ -68,7 +68,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			break;
 
 		case "set": {
-			const bio = formatString(interaction.options.getString("text", true), 150);
+			const bio = shortenString(interaction.options.getString("text", true), 150);
 
 			// escape the 'escape' characters and add a zero width space to mentions to disable them
 			userData.set("bio", escapeEscape(bio).replace("@", "@\u200b"));

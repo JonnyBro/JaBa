@@ -1,18 +1,18 @@
-import { asyncForEach, formatString, getUsername, replySuccess, translateContext } from "@/helpers/functions.js";
+import { asyncForEach, getUsername, replySuccess, shortenString, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import {
-	BaseInteraction,
-	ChannelType,
-	ThreadAutoArchiveDuration,
 	ActionRowBuilder,
+	BaseInteraction,
 	ButtonBuilder,
 	ButtonStyle,
+	ChannelType,
+	MessageFlags,
 	ModalBuilder,
+	PermissionsBitField,
 	TextInputBuilder,
 	TextInputStyle,
-	MessageFlags,
-	PermissionsBitField,
+	ThreadAutoArchiveDuration,
 	ThreadChannel,
 } from "discord.js";
 
@@ -75,11 +75,11 @@ export async function run(interaction: BaseInteraction) {
 					flags: MessageFlags.Ephemeral,
 				});
 
-				const name = formatString(`${getUsername(interaction.user)}: ${subject}`, 100);
+				const name = shortenString(`${getUsername(interaction.user)}: ${subject}`, 100);
 				const thread = await interaction.channel.threads.create({
 					name,
 					autoArchiveDuration: ThreadAutoArchiveDuration.ThreeDays,
-					// @ts-ignore: type is not undefined only
+					// @ts-ignore: bug in the discord.js types
 					type: ChannelType.PrivateThread,
 				});
 

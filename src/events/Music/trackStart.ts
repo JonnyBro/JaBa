@@ -1,4 +1,4 @@
-import { capitalizeString, convertTime, formatString, translateContext } from "@/helpers/functions.js";
+import { capitalizeString, convertTime, shortenString, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { PlayerCustom } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
@@ -110,6 +110,7 @@ export async function run(player: PlayerCustom, track: Track | null) {
 
 						const embed = createEmbed();
 
+						// NOTE: reimplement autoplay
 						if (!player.queue.tracks.length) {
 							embed.setDescription(await translateContext(guild, "music/queue:NO_QUEUE"));
 
@@ -133,40 +134,43 @@ export async function run(player: PlayerCustom, track: Track | null) {
 						break;
 					}
 
-					// case ButtonId.PREV_BUTTON_ID: {
-					// 	await interaction.deferUpdate();
+					case ButtonId.PREV_BUTTON_ID: {
+						await interaction.deferUpdate();
 
-					// 	const embed = createEmbed();
+						const embed = createEmbed();
 
-					// 	if (!player.queue.previous.length) {
-					// 		embed.setDescription(await translateContext(guild, "music/back:NO_PREV_SONG"));
+						if (!player.queue.previous.length) {
+							embed.setDescription(await translateContext(guild, "music/back:NO_PREV_SONG"));
 
-					// 		await interaction.followUp({
-					// 			embeds: [embed],
-					// 			flags: MessageFlags.Ephemeral,
-					// 		});
+							await interaction.followUp({
+								embeds: [embed],
+								flags: MessageFlags.Ephemeral,
+							});
 
-					// 		return;
-					// 	}
+							return;
+						}
 
-					// 	await player.previous();
+						await player.play({
+							track: player.queue.previous[0],
+						});
 
-					// 	embed.setDescription(await translateContext(guild, "music/back:SUCCESS"));
+						embed.setDescription(await translateContext(guild, "music/back:SUCCESS"));
 
-					// 	await interaction.followUp({
-					// 		embeds: [embed],
-					// 		flags: MessageFlags.Ephemeral,
-					// 	});
+						await interaction.followUp({
+							embeds: [embed],
+							flags: MessageFlags.Ephemeral,
+						});
 
-					// 	break;
-					// }
+						break;
+					}
 
+					// NOTE: reimplement autoplay
 					case ButtonId.SKIP_BUTTON_ID: {
 						await interaction.deferUpdate();
 
 						const guildData = await client.getGuildData(player.guildId);
 
-						if (!player.queue.tracks.length && !guildData.plugins.music.autoPlay) {
+						if (!guildData.plugins.music.autoPlay) {
 							const embed = createEmbed({
 								description: await translateContext(guild, "music/queue:NO_QUEUE"),
 							});
@@ -215,8 +219,8 @@ const createTrackEmbed = async (player: PlayerCustom, track: Track, guildId: str
 	const guild = client.guilds.cache.get(guildId);
 	if (!guild) throw logger.error("[trackStart] Guild not found");
 
-	const trackTitle = formatString(track.info.title || "Unknown", 30).replace(/ - Topic$/, "");
-	const trackAuthor = formatString(track.info.author || "Unknown", 25).replace(/ - Topic$/, "");
+	const trackTitle = shortenString(track.info.title || "Unknown", 30).replace(/ - Topic$/, "");
+	const trackAuthor = shortenString(track.info.author || "Unknown", 25).replace(/ - Topic$/, "");
 	const trackDuration = track.info.isStream ? ":red_circle:" : `\`${convertTime(track.info.duration)}\``;
 	const trackRequester = track.requester;
 
@@ -227,7 +231,9 @@ const createTrackEmbed = async (player: PlayerCustom, track: Track, guildId: str
 				: await translateContext(guild, "music/queue:PLAYING"),
 			iconURL: client.user.displayAvatarURL(),
 		},
-		description: `**[${trackTitle} - ${trackAuthor}](${track.info.uri})**`,
+		description: /^https?:\/\//.test(track.info.uri)
+			? `**[${trackTitle} - ${trackAuthor}](${track.info.uri})**`
+			: `**${trackTitle} - ${trackAuthor}**`,
 		fields: [
 			{
 				name: await translateContext(guild, "music/queue:SOURCE"),
@@ -249,12 +255,14 @@ const createTrackEmbed = async (player: PlayerCustom, track: Track, guildId: str
 
 	const nextTrack = player.queue.tracks[0];
 	if (nextTrack) {
-		const nextTrackTitle = formatString(nextTrack.info.title || "Unknown", 30).replace(/ - Topic$/, "");
-		const nextTrackAuthor = formatString(nextTrack.info.author || "Unknown", 25).replace(/ - Topic$/, "");
+		const nextTrackTitle = shortenString(nextTrack.info.title || "Unknown", 30).replace(/ - Topic$/, "");
+		const nextTrackAuthor = shortenString(nextTrack.info.author || "Unknown", 25).replace(/ - Topic$/, "");
 
 		embed.addFields({
 			name: await translateContext(guild, "music/queue:NEXT"),
-			value: `**[${nextTrackTitle} - ${nextTrackAuthor}](${nextTrack.info.uri})**`,
+			value: /^https?:\/\//.test(nextTrack.info.uri!)
+				? `**[${nextTrackTitle} - ${nextTrackAuthor}](${nextTrack?.info?.uri})**`
+				: `**${nextTrackTitle} - ${nextTrackAuthor}**`,
 		});
 	}
 
@@ -264,7 +272,9 @@ const createTrackEmbed = async (player: PlayerCustom, track: Track, guildId: str
 const buildControlButtons = (
 	player: PlayerCustom,
 ): [ActionRowBuilder<ButtonBuilder>, ActionRowBuilder<ButtonBuilder>] => {
-	const { emoji, style } = getLoopEmojiAndStyle(player.repeatMode);
+	const repeat = player.repeatMode;
+	const loopEmoji = repeat === "off" ? "🔃" : repeat === "track" ? "🔂" : "🔁";
+	const loopStyle = repeat === "off" ? ButtonStyle.Secondary : ButtonStyle.Primary;
 
 	const buttons1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 		new ButtonBuilder()
@@ -273,34 +283,17 @@ const buildControlButtons = (
 			.setStyle(player.paused ? ButtonStyle.Primary : ButtonStyle.Secondary),
 		new ButtonBuilder().setCustomId(ButtonId.VOLUMEDOWN_BUTTON_ID).setEmoji("➖").setStyle(ButtonStyle.Secondary),
 		new ButtonBuilder().setCustomId(ButtonId.VOLUMEUP_BUTTON_ID).setEmoji("➕").setStyle(ButtonStyle.Secondary),
-		new ButtonBuilder().setCustomId(ButtonId.LOOP_BUTTON_ID).setEmoji(emoji).setStyle(style),
+		new ButtonBuilder().setCustomId(ButtonId.LOOP_BUTTON_ID).setEmoji(loopEmoji).setStyle(loopStyle),
 	);
 
 	const buttons2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 		new ButtonBuilder().setCustomId(ButtonId.SHUFFLE_BUTTON_ID).setEmoji("🔀").setStyle(ButtonStyle.Secondary),
-		// new ButtonBuilder().setCustomId(ButtonId.PREV_BUTTON_ID).setEmoji("⏮️").setStyle(ButtonStyle.Secondary),
+		new ButtonBuilder().setCustomId(ButtonId.PREV_BUTTON_ID).setEmoji("⏮️").setStyle(ButtonStyle.Secondary),
 		new ButtonBuilder().setCustomId(ButtonId.SKIP_BUTTON_ID).setEmoji("⏭️").setStyle(ButtonStyle.Secondary),
 		new ButtonBuilder().setCustomId(ButtonId.STOP_BUTTON_ID).setEmoji("❌").setStyle(ButtonStyle.Danger),
 	);
 
 	return [buttons1, buttons2];
-};
-
-const getLoopEmojiAndStyle = (
-	mode: RepeatMode,
-): { emoji: string; style: ButtonStyle.Primary | ButtonStyle.Secondary } => {
-	let emoji = "🔃";
-
-	switch (mode) {
-		case "track":
-			emoji = "🔂";
-			break;
-		case "queue":
-			emoji = "🔁";
-			break;
-	}
-
-	return { emoji, style: mode !== "off" ? ButtonStyle.Primary : ButtonStyle.Secondary };
 };
 
 const updatePlayerMessage = async (

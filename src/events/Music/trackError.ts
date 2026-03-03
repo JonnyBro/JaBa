@@ -32,7 +32,8 @@ export async function run(player: PlayerCustom, track: Track | UnresolvedTrack |
 
 	const guildData = await client.getGuildData(guild.id);
 
-	if (player.queue.tracks.length && !guildData.plugins.music.autoPlay) {
+	// NOTE: reimplement autoplay
+	if (guildData.plugins.music.autoPlay) {
 		channel.send({
 			content: await translateContext(guild, "music/play:ERR_RESOLVING_QUEUE", {
 				track: track?.info.title,
