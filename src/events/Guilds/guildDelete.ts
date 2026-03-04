@@ -19,7 +19,7 @@ export async function run(guild: Guild) {
 				name: guild.name,
 				iconURL: guild.iconURL() || client.user.avatarURL() || undefined,
 			},
-			description: `Left from guild!\n${guild.name}`,
+			description: `Left from a guild!\n${guild.name}`,
 		});
 
 		await logChannel.send({
