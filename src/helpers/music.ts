@@ -3,6 +3,7 @@ import useClient from "@/utils/use-client.js";
 import { GuildMember } from "discord.js";
 import { randomNum } from "./functions.js";
 import logger from "./logger.js";
+import { Player } from "lavalink-client";
 
 const client = useClient();
 const debug = !client.configService.get<boolean>("production");
@@ -13,6 +14,7 @@ export const addToQueue = async (
 	voiceChannelId: string,
 	member: GuildMember | null,
 	query: string,
+	autoPlay?: boolean,
 ) => {
 	const player =
 		client.lavalink.getPlayer(guildId) ||
@@ -28,7 +30,7 @@ export const addToQueue = async (
 
 	if (!res || !res.tracks.length) return null;
 
-	player.queue.add(res.tracks);
+	player.queue.add(autoPlay ? res.tracks[randomNum(1, res.tracks.length)] : res.tracks);
 
 	if (!player.connected) await player.connect();
 	if (!player.playing) await player.play();
@@ -36,13 +38,13 @@ export const addToQueue = async (
 	return res;
 };
 
-export const doAutoplay = async (player: PlayerCustom) => {
+export const doAutoplay = async (player: Player | PlayerCustom) => {
 	const guildName = client.guilds.cache.get(player.guildId)?.name;
 	const guildId = player.guildId;
 
 	if (debug) logger.debug(`[Lavalink] Starting autoplay in ${guildName} (${guildId})`);
 
-	const track = player.queue.previous[0];
+	const track = player.queue.previous[0] || player.queue.current;
 	if (!track) return await player.destroy("queue ended", true);
 
 	let trackRadioLink;
@@ -55,5 +57,5 @@ export const doAutoplay = async (player: PlayerCustom) => {
 		trackRadioLink = `https://music.youtube.com/watch?v=${id}&list=RD${id}`;
 	}
 
-	await addToQueue(guildId, player.textChannelId!, player.voiceChannelId!, null, trackRadioLink);
+	return await addToQueue(guildId, player.textChannelId!, player.voiceChannelId!, null, trackRadioLink, true);
 };

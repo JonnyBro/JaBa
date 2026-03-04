@@ -1,5 +1,6 @@
 import { translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
+import { doAutoplay } from "@/helpers/music.js";
 import { PlayerCustom } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import { Track, TrackExceptionEvent, UnresolvedTrack } from "lavalink-client";
@@ -40,6 +41,7 @@ export async function run(player: PlayerCustom, track: Track | UnresolvedTrack |
 			}),
 		});
 
+		await doAutoplay(player);
 		return await player.skip();
 	} else {
 		channel.send({

@@ -1,5 +1,6 @@
 import { capitalizeString, convertTime, shortenString, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
+import { doAutoplay } from "@/helpers/music.js";
 import { PlayerCustom } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
@@ -168,13 +169,12 @@ export async function run(player: PlayerCustom, track: Track | null) {
 						break;
 					}
 
-					// NOTE: reimplement autoplay
 					case ButtonId.SKIP_BUTTON_ID: {
 						await interaction.deferUpdate();
 
 						const guildData = await client.getGuildData(player.guildId);
 
-						if (!guildData.plugins.music.autoPlay) {
+						if (!guildData.plugins.music.autoPlay && !player.queue.tracks.length) {
 							const embed = createEmbed({
 								description: await translateContext(guild, "music/queue:NO_QUEUE"),
 							});
@@ -187,7 +187,12 @@ export async function run(player: PlayerCustom, track: Track | null) {
 							return;
 						}
 
-						player.skip();
+						if (guildData.plugins.music.autoPlay) {
+							await doAutoplay(player);
+							return await player.skip();
+						}
+
+						await player.skip();
 
 						break;
 					}
@@ -204,10 +209,10 @@ export async function run(player: PlayerCustom, track: Track | null) {
 			} catch (e) {
 				logger.error("[trackStart] Error handling button interaction:", e);
 
-				await interaction.reply({
-					content: "unfunny error happened, let admin know",
-					flags: MessageFlags.Ephemeral,
-				});
+				if (interaction.channel?.isSendable())
+					await interaction.channel.send({
+						content: "unfunny error happened, let admin know",
+					});
 			}
 		});
 
