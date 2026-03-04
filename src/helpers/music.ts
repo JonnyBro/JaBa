@@ -1,42 +1,59 @@
+import { PlayerCustom } from "@/types.js";
 import useClient from "@/utils/use-client.js";
-import { ChatInputCommandInteraction, GuildMember, MessageContextMenuCommandInteraction } from "discord.js";
-import { editReplyError, editReplySuccess } from "./functions.js";
+import { GuildMember } from "discord.js";
+import { randomNum } from "./functions.js";
+import logger from "./logger.js";
 
 const client = useClient();
+const debug = !client.configService.get<boolean>("production");
 
-export const playQuery = async (
-	interaction: ChatInputCommandInteraction | MessageContextMenuCommandInteraction,
-	member: GuildMember,
+export const addToQueue = async (
+	guildId: string,
+	textChannelId: string,
+	voiceChannelId: string,
+	member: GuildMember | null,
 	query: string,
 ) => {
 	const player =
-		client.lavalink.getPlayer(interaction.guildId!) ||
+		client.lavalink.getPlayer(guildId) ||
 		client.lavalink.createPlayer({
-			guildId: interaction.guildId!,
-			textChannelId: interaction.channelId,
-			voiceChannelId: member.voice.channel!.id,
+			guildId,
+			textChannelId,
+			voiceChannelId,
 			volume: 100,
 			selfDeaf: true,
 		});
 
-	const res = await player.search(query, interaction.member);
+	const res = await player.search(query, member || client.user);
 
-	if (!res || !res.tracks.length)
-		return editReplyError(interaction, "music/play:NO_RESULT", {
-			query,
-		});
+	if (!res || !res.tracks.length) return null;
 
-	const isPlaylist = res.loadType === "playlist";
-
-	if (isPlaylist) for (const track of res.tracks) player.queue.add(track);
-	else player.queue.add(res.tracks[0]);
+	player.queue.add(res.tracks);
 
 	if (!player.connected) await player.connect();
 	if (!player.playing) await player.play();
 
-	await editReplySuccess(interaction, `music/play:ADDED_${isPlaylist ? "PLAYLIST" : "TRACK"}`, {
-		name: res.playlist?.title || res.tracks[0].info.title,
-		url: res.playlist?.uri || res.tracks[0].info.uri,
-		count: res.tracks.length,
-	});
+	return res;
+};
+
+export const doAutoplay = async (player: PlayerCustom) => {
+	const guildName = client.guilds.cache.get(player.guildId)?.name;
+	const guildId = player.guildId;
+
+	if (debug) logger.debug(`[Lavalink] Starting autoplay in ${guildName} (${guildId})`);
+
+	const track = player.queue.previous[0];
+	if (!track) return await player.destroy("queue ended", true);
+
+	let trackRadioLink;
+	if (track.info.sourceName === "youtube") {
+		const id = track.info.identifier;
+		trackRadioLink = `https://music.youtube.com/watch?v=${id}&list=RD${id}`;
+	} else {
+		const tracks = (await player.search(track.info.title, client.user)).tracks;
+		const id = tracks[randomNum(0, tracks.length)].info.identifier;
+		trackRadioLink = `https://music.youtube.com/watch?v=${id}&list=RD${id}`;
+	}
+
+	await addToQueue(guildId, player.textChannelId!, player.voiceChannelId!, null, trackRadioLink);
 };

@@ -9,5 +9,11 @@ export const data = {
 };
 
 export async function run(node: LavalinkNode, error: Error, payload: unknown) {
-	logger.error(`Lavalink node ${node.options.id}: Error Caught:\n`, error, "Payload:\n", payload);
+	logger.error(
+		`[Lavalink] Node "${node.options.id}" caught an error!
+		Error:\n`,
+		error,
+		"Payload:\n",
+		payload,
+	);
 }

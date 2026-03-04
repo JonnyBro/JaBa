@@ -254,9 +254,10 @@ async function generateQueueEmbeds(interaction: Interaction, player: Player) {
 		k += 10;
 
 		const addedText = await translateContext(interaction, "music/queue:ADDED");
+
 		const playsIn = async (index: number) =>
 			await translateContext(interaction, "music/queue:PLAYS_IN", {
-				time: getTimeUntilTrack(player, index),
+				time: `<t:${Math.trunc((Date.now() + getTimeUntilTrack(player, index)) / 1000)}:R>`,
 			});
 
 		const info = (
@@ -272,15 +273,18 @@ async function generateQueueEmbeds(interaction: Interaction, player: Player) {
 
 		const embed = createEmbed({
 			title: await translateContext(interaction, "music/queue:CURRENTLY_PLAYING"),
-			description: `${await translateContext(interaction, "music/queue:DURATION_QUEUE", {
-				time: formattedTotalDuration,
-			})}\n${await translateContext(interaction, "music/queue:REPEAT", {
-				mode: `\`${translated[player.repeatMode]}\``,
-			})}\n[${currentTrack.info.title}](${currentTrack.info.uri}) - ${convertTime(
-				currentTrack.info.duration,
-			)}\n * ${await translateContext(interaction, "music/queue:ADDED")} ${
-				currentTrack.requester?.toString()
-			}\n\n**${await translateContext(interaction, "music/queue:NEXT")}**\n${info}`,
+			description:
+				`${await translateContext(interaction, "music/queue:DURATION_QUEUE", {
+					time: formattedTotalDuration,
+				})}\n${await translateContext(interaction, "music/queue:REPEAT", {
+					mode: `\`${translated[player.repeatMode]}\``,
+				})}\n[${currentTrack.info.title}](${currentTrack.info.uri}) - ${convertTime(
+					currentTrack.info.duration,
+				)}\n * ${await translateContext(
+					interaction,
+					"music/queue:ADDED",
+				)} ${currentTrack.requester?.toString()}\n\n**` +
+				`${await translateContext(interaction, "music/queue:NEXT")}**\n${info}`,
 		}).setThumbnail(currentTrack.info.artworkUrl);
 
 		embeds.push(embed);
@@ -300,5 +304,5 @@ function getTimeUntilTrack(player: Player, queueIndex: number) {
 
 	const totalTime = remainingCurrentTrack + sumQueueDurations;
 
-	return convertTime(totalTime);
+	return totalTime;
 }

@@ -23,7 +23,8 @@ export async function run(player: PlayerCustom, track: Track | UnresolvedTrack |
 
 	if (debug)
 		logger.debug(
-			`Track resolve error in ${guild.name} (${guild.id})\nTrack: ${track?.info.title} (${track?.info.uri})`,
+			`[Lavalink] Error resolving track in ${guild.name} (${guild.id})
+			Track: ${track?.info.title} (${track?.info.uri}). Payload:\n`,
 			payload.error,
 		);
 
@@ -32,7 +33,6 @@ export async function run(player: PlayerCustom, track: Track | UnresolvedTrack |
 
 	const guildData = await client.getGuildData(guild.id);
 
-	// NOTE: reimplement autoplay
 	if (guildData.plugins.music.autoPlay) {
 		channel.send({
 			content: await translateContext(guild, "music/play:ERR_RESOLVING_QUEUE", {

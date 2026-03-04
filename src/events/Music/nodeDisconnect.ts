@@ -15,5 +15,9 @@ export async function run(
 		reason?: string;
 	},
 ) {
-	logger.warn(`Lavalink node ${node.options.id}: Disconnected!\nReason:\n`, reason.reason);
+	logger.warn(
+		`[Lavalink] Node "${node.options.id}" has disconnected!
+		Reason: `,
+		reason.reason || "No reason given",
+	);
 }

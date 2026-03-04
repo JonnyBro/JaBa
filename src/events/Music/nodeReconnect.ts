@@ -9,5 +9,5 @@ export const data = {
 };
 
 export async function run(node: LavalinkNode) {
-	logger.warn(`Lavalink node ${node.options.id}: reconnecting...`);
+	logger.warn(`[Lavalink] Node "${node.options.id}" is reconnecting...`);
 }

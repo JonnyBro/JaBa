@@ -1,5 +1,5 @@
-import { editReplyError, getLocalizedDesc } from "@/helpers/functions.js";
-import { playQuery } from "@/helpers/music.js";
+import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/functions.js";
+import { addToQueue } from "@/helpers/music.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import {
 	ApplicationCommandOptionType,
@@ -32,5 +32,18 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	const query = interaction.options.getString("query", true);
 
-	await playQuery(interaction, member, query);
+	const res = await addToQueue(interaction.guildId!, interaction.channelId, member.voice.channelId!, member, query);
+
+	if (!res)
+		return editReplyError(interaction, "music/play:NO_RESULT", {
+			query,
+		});
+
+	const isPlaylist = res.loadType === "playlist";
+
+	await editReplySuccess(interaction, `music/play:ADDED_${isPlaylist ? "PLAYLIST" : "TRACK"}`, {
+		name: isPlaylist ? res.playlist?.title : res.tracks[0].info.title,
+		url: isPlaylist ? query : res.tracks[0].info.uri,
+		count: res.tracks.length,
+	});
 };

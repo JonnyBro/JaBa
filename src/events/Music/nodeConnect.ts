@@ -9,5 +9,5 @@ export const data = {
 };
 
 export async function run(node: LavalinkNode) {
-	logger.ready(`Lavalink node ${node.options.id}: Ready!`);
+	logger.ready(`[Lavalink] Node "${node.options.id}" is ready!`);
 }

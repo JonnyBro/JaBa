@@ -16,5 +16,5 @@ export async function run(player: Player) {
 	const guild = client.guilds.cache.get(player.guildId);
 	if (!guild) return;
 
-	logger.log(`Player created in ${guild.name} (${guild.id})`);
+	logger.log(`[Lavalink] Created player in guild ${guild.name} (${guild.id})`);
 }

@@ -18,5 +18,5 @@ export async function run(player: PlayerCustom) {
 
 	if (player.message?.deletable) await player.message.delete().catch(() => {});
 
-	logger.log(`Player destroyed in ${guild.name} (${guild.id})`);
+	logger.log(`[Lavalink] Player destroyed in guild ${guild.name} (${guild.id})`);
 }

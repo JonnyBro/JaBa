@@ -47,7 +47,8 @@ export async function run(player: PlayerCustom, track: Track | null) {
 		if (debug)
 			logger.debug(
 				`Track started in ${guild.name} (${guild.id})
-				Track: ${track.info.title || "Unknown"}\nURL: ${track.info.uri}`,
+				Track: ${track.info.title || "Unknown"}
+				URL: ${track.info.uri}`,
 			);
 
 		const trackEmbed = await createTrackEmbed(player, track, player.guildId);
@@ -62,7 +63,7 @@ export async function run(player: PlayerCustom, track: Track | null) {
 		});
 
 		const collector = player.message.createMessageComponentCollector({
-			time: 600_000, // 10 mins
+			time: track.info.duration + 1_000, // track duration + 1 minute
 		});
 
 		collector.on("collect", async (interaction: ButtonInteraction) => {
@@ -87,30 +88,33 @@ export async function run(player: PlayerCustom, track: Track | null) {
 						await handlePlayPause(interaction, player, trackEmbed, buttons);
 
 						break;
+
 					case ButtonId.VOLUMEUP_BUTTON_ID:
 						await interaction.deferUpdate();
 
 						await handleVolumeChange(interaction, player, 10);
 
 						break;
+
 					case ButtonId.VOLUMEDOWN_BUTTON_ID:
 						await interaction.deferUpdate();
 
 						await handleVolumeChange(interaction, player, -10);
 
 						break;
+
 					case ButtonId.LOOP_BUTTON_ID:
 						await interaction.deferUpdate();
 
 						await handleLoop(interaction, player);
 
 						break;
+
 					case ButtonId.SHUFFLE_BUTTON_ID: {
 						await interaction.deferUpdate();
 
 						const embed = createEmbed();
 
-						// NOTE: reimplement autoplay
 						if (!player.queue.tracks.length) {
 							embed.setDescription(await translateContext(guild, "music/queue:NO_QUEUE"));
 
@@ -201,7 +205,7 @@ export async function run(player: PlayerCustom, track: Track | null) {
 				logger.error("[trackStart] Error handling button interaction:", e);
 
 				await interaction.reply({
-					content: "unfunny error happened",
+					content: "unfunny error happened, let admin know",
 					flags: MessageFlags.Ephemeral,
 				});
 			}
