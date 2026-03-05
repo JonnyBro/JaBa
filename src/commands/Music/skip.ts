@@ -21,11 +21,14 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const player = client.lavalink.getPlayer(interaction.guildId!);
 	if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
 
-	const guildData = await client.getGuildData(interaction.guildId!);
+	const isAutoPlay = (await client.getGuildData(interaction.guildId!)).plugins.music.autoPlay;
 
-	if (!player.queue.tracks.length && guildData.plugins.music.autoPlay) {
-		await doAutoplay(player);
-		return await player.skip();
+	if (!player.queue.tracks.length && !isAutoPlay) return editReplyError(interaction, "music/queue:NO_QUEUE");
+
+	if (!player.queue.tracks.length && isAutoPlay) {
+		const res = await doAutoplay(player);
+
+		if (!res) return editReplyError(interaction, "music/queue:NO_QUEUE");
 	}
 
 	await player.skip();

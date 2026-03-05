@@ -81,7 +81,7 @@ const registerDevCommands = async (client: ExtendedClient, commands: CommandFile
 						.edit(data as Partial<ApplicationCommandData>)
 						.catch(() =>
 							logger.error(
-								`Failed to update command: ${data.name} in ${guildCommands.guild.name} server`,
+								`Failed to update command: ${data.name} in ${guildCommands.guild.name}`,
 							),
 						);
 
@@ -91,7 +91,7 @@ const registerDevCommands = async (client: ExtendedClient, commands: CommandFile
 						.create(data)
 						.catch(() =>
 							logger.error(
-								`Failed to register command: ${data.name} in ${guildCommands.guild.name} server`,
+								`Failed to register command: ${data.name} in ${guildCommands.guild.name}`,
 							),
 						);
 					logger.debug(`Command ${data.name} loaded in dev`);

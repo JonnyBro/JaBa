@@ -32,16 +32,19 @@ export async function run(player: PlayerCustom, track: Track | UnresolvedTrack |
 	const channel = guild.channels.cache.get(player.textChannelId!);
 	if (!channel?.isSendable()) return;
 
-	const guildData = await client.getGuildData(guild.id);
+	const isAutoPlay = (await client.getGuildData(guild.id)).plugins.music.autoPlay;
 
-	if (guildData.plugins.music.autoPlay) {
+	if (isAutoPlay) {
 		channel.send({
 			content: await translateContext(guild, "music/play:ERR_RESOLVING_QUEUE", {
 				track: track?.info.title,
 			}),
 		});
 
-		await doAutoplay(player);
+		const res = await doAutoplay(player);
+
+		if (!res) return await player.destroy("autoplay resolve error", true);
+
 		return await player.skip();
 	} else {
 		channel.send({

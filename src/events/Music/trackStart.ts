@@ -47,8 +47,8 @@ export async function run(player: PlayerCustom, track: Track | null) {
 	try {
 		if (debug)
 			logger.debug(
-				`Track started in ${guild.name} (${guild.id})
-				Track: ${track.info.title || "Unknown"}
+				`[Lavalink] Track started in ${guild.name} (${guild.id})
+				Track: ${track.info.title}
 				URL: ${track.info.uri}`,
 			);
 
@@ -107,7 +107,7 @@ export async function run(player: PlayerCustom, track: Track | null) {
 					case ButtonId.LOOP_BUTTON_ID:
 						await interaction.deferUpdate();
 
-						await handleLoop(interaction, player);
+						await handleLoop(interaction, player, trackEmbed, buttons);
 
 						break;
 
@@ -172,23 +172,24 @@ export async function run(player: PlayerCustom, track: Track | null) {
 					case ButtonId.SKIP_BUTTON_ID: {
 						await interaction.deferUpdate();
 
-						const guildData = await client.getGuildData(player.guildId);
+						const isAutoPlay = (await client.getGuildData(player.guildId)).plugins.music.autoPlay;
 
-						if (!guildData.plugins.music.autoPlay && !player.queue.tracks.length) {
+						if (!player.queue.tracks.length && !isAutoPlay) {
 							const embed = createEmbed({
 								description: await translateContext(guild, "music/queue:NO_QUEUE"),
 							});
 
-							await interaction.followUp({
+							return await interaction.followUp({
 								embeds: [embed],
 								flags: MessageFlags.Ephemeral,
 							});
-
-							return;
 						}
 
-						if (guildData.plugins.music.autoPlay) {
-							await doAutoplay(player);
+						if (!player.queue.tracks.length && isAutoPlay) {
+							const res = await doAutoplay(player);
+
+							if (!res) return;
+
 							return await player.skip();
 						}
 
@@ -380,7 +381,12 @@ const handleVolumeChange = async (
 	await interaction.followUp({ embeds: [embed], flags: MessageFlags.Ephemeral });
 };
 
-const handleLoop = async (interaction: ButtonInteraction, player: PlayerCustom): Promise<void> => {
+const handleLoop = async (
+	interaction: ButtonInteraction,
+	player: PlayerCustom,
+	trackEmbed: EmbedBuilder,
+	components: Array<ActionRowBuilder<ButtonBuilder>>,
+): Promise<void> => {
 	const embed = createEmbed();
 	let newMode: RepeatMode;
 
@@ -404,6 +410,13 @@ const handleLoop = async (interaction: ButtonInteraction, player: PlayerCustom):
 	player.setRepeatMode(newMode);
 
 	embed.setDescription(await translateContext(interaction.guild!, `music/loop:SUCCESS_${newMode.toUpperCase()}`));
+
+	const loopEmoji = newMode === "off" ? "🔃" : newMode === "track" ? "🔂" : "🔁";
+	const loopStyle = newMode === "off" ? ButtonStyle.Secondary : ButtonStyle.Primary;
+
+	components[0].components[3].setEmoji(loopEmoji).setStyle(loopStyle);
+
+	await updatePlayerMessage(player, trackEmbed, components);
 
 	await interaction.followUp({ embeds: [embed], flags: MessageFlags.Ephemeral });
 };
