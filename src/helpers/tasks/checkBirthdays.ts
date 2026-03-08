@@ -12,37 +12,37 @@ export const data = {
 
 		const guilds = client.guilds.cache.values();
 		const users = await client.adapter.find(UserModel, {
-			birthdate: { $ne: false },
+			birthdate: { $ne: null },
 		});
 
-		const currentData = new Date();
-		const currentYear = currentData.getFullYear();
-		const currentMonth = currentData.getMonth();
-		const currentDate = currentData.getDate();
+		const date = new Date();
+		const currentYear = date.getFullYear();
+		const currentMonth = date.getMonth();
+		const currentDate = date.getDate();
 
 		for (const guild of guilds)
 			try {
-				const data = await client.getGuildData(guild.id);
-				if (!data.plugins.birthdays) continue;
+				const guildData = await client.getGuildData(guild.id);
+				if (typeof guildData.plugins.birthdays !== "string") continue;
 
-				const channel = await client.channels.fetch(data.plugins.birthdays);
+				const channel = await client.channels.fetch(guildData.plugins.birthdays);
 				if (!channel || !channel.isSendable()) continue;
 
 				const userIDs: string[] = users.filter(u => guild.members.cache.has(u.id)).map(u => u.id);
 
 				for (const userID of userIDs) {
-					const user = users.find(u => u.id === userID);
-					if (!user || !user.birthdate) continue;
-					if (isNaN(user.birthdate)) continue;
+					const userData = users.find(u => u.id === userID);
+					if (!userData || !userData.birthdate) continue;
+					if (isNaN(userData.birthdate)) continue;
 
-					const discordUser = await client.users.fetch(user.id);
-					const userData =
-						new Date(user.birthdate).getFullYear() <= 1970
-							? new Date(user.birthdate! * 1000)
-							: new Date(user.birthdate!);
+					const user = await client.users.fetch(userData.id);
+					const userDate =
+						new Date(userData.birthdate).getFullYear() <= 1970
+							? new Date(userData.birthdate * 1000)
+							: new Date(userData.birthdate);
 
-					if (userData.getDate() === currentDate && userData.getMonth() === currentMonth) {
-						const age = currentYear - userData.getFullYear();
+					if (userDate.getDate() === currentDate && userDate.getMonth() === currentMonth) {
+						const age = currentYear - userDate.getFullYear();
 						const embed = createEmbed({
 							author: {
 								name: client.user.username,
@@ -50,12 +50,12 @@ export const data = {
 							fields: [
 								{
 									name: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY", {
-										lng: data.language,
+										lng: guildData.language,
 									}),
 									value: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
-										user: discordUser.toString(),
+										user: user.toString(),
 										age: age.toString(),
-										lng: data.language,
+										lng: guildData.language,
 									}),
 								},
 							],
@@ -65,7 +65,7 @@ export const data = {
 					}
 				}
 			} catch (e) {
-				logger.error(`Birthday error in guild ${guild.id}:`, e);
+				logger.error(`[checkBirthdays] Error in guild ${guild.id}:`, e);
 			}
 	},
 	schedule: "0 5 * * *",
