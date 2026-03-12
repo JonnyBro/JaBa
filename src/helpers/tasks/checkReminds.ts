@@ -23,7 +23,6 @@ export const data: CronTaskData = {
 		client.cacheReminds.forEach(async ({ id, reminds }) => {
 			try {
 				const cachedUser = client.users.cache.get(id);
-
 				if (!cachedUser) return;
 
 				const mustSent = reminds.filter(r => r.sendAt < Math.floor(Date.now() / 1000));

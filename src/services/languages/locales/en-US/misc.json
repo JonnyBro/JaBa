@@ -75,6 +75,26 @@
 	},
 
 	"NOUNS": {
+		"AGE": {
+			"1": "year",
+			"2": "years",
+			"5": "years"
+		},
+		"BOTS": {
+			"1": "bot",
+			"2": "bots",
+			"5": "bots"
+		},
+		"CATEGORY": {
+			"1": "category",
+			"2": "categories",
+			"5": "categories"
+		},
+		"COMMANDS": {
+			"1": "command",
+			"2": "commands",
+			"5": "commands"
+		},
 		"CREDIT": {
 			"1": "credit",
 			"2": "credits",
@@ -85,65 +105,45 @@
 			"2": "credits",
 			"5": "credits"
 		},
-		"COMMANDS": {
-			"1": "command",
-			"2": "commands",
-			"5": "commands"
+		"DAYS": {
+			"1": "day",
+			"2": "days",
+			"5": "days"
 		},
-		"POINTS": {
-			"1": "point",
-			"2": "points",
-			"5": "points"
+		"HOURS": {
+			"1": "hour",
+			"2": "hours",
+			"5": "hours"
+		},
+		"LEVEL": {
+			"1": "level",
+			"2": "levels",
+			"5": "levels"
 		},
 		"MEMBERS": {
 			"1": "member",
 			"2": "members",
 			"5": "members"
 		},
-		"USERS": {
-			"1": "user",
-			"2": "users",
-			"5": "users"
+		"MESSAGES": {
+			"1": "message",
+			"2": "messages",
+			"5": "messages"
+		},
+		"MINUTES": {
+			"1": "minute",
+			"2": "minutes",
+			"5": "minutes"
 		},
 		"PLAYERS": {
 			"1": "player",
 			"2": "players",
 			"5": "players"
 		},
-		"TRACKS": {
-			"1": "track",
-			"2": "tracks",
-			"5": "tracks"
-		},
-		"BOTS": {
-			"1": "bot",
-			"2": "bots",
-			"5": "bots"
-		},
-		"TEXT": {
-			"1": "text channel",
-			"2": "text channels",
-			"5": "text channels"
-		},
-		"VOICE": {
-			"1": "voice channel",
-			"2": "voice channels",
-			"5": "voice channels"
-		},
-		"CATEGORY": {
-			"1": "category",
-			"2": "categories",
-			"5": "categories"
-		},
-		"MESSAGES": {
-			"1": "message",
-			"2": "messages",
-			"5": "messages"
-		},
-		"WARNS": {
-			"1": "warning",
-			"2": "warnings",
-			"5": "warnings"
+		"POINTS": {
+			"1": "point",
+			"2": "points",
+			"5": "points"
 		},
 		"SECONDS": {
 			"1": "second",
@@ -160,15 +160,30 @@
 			"2": "servers",
 			"5": "servers"
 		},
-		"AGE": {
-			"1": "year",
-			"2": "years",
-			"5": "years"
+		"TEXT": {
+			"1": "text channel",
+			"2": "text channels",
+			"5": "text channels"
 		},
-		"LEVEL": {
-			"1": "level",
-			"2": "levels",
-			"5": "levels"
+		"TRACKS": {
+			"1": "track",
+			"2": "tracks",
+			"5": "tracks"
+		},
+		"USERS": {
+			"1": "user",
+			"2": "users",
+			"5": "users"
+		},
+		"VOICE": {
+			"1": "voice channel",
+			"2": "voice channels",
+			"5": "voice channels"
+		},
+		"WARNS": {
+			"1": "warning",
+			"2": "warnings",
+			"5": "warnings"
 		},
 		"XP": {
 			"1": "xp",

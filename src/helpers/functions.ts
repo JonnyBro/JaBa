@@ -21,7 +21,7 @@ interface Options extends InteractionReplyOptions {
 	mention?: boolean;
 }
 
-// According to https://discord.com/developers/docs/reference#locales
+// NOTE: According to https://discord.com/developers/docs/reference#locales
 const localeExcludes = ["en", "es", "pt", "sv", "zh"];
 
 const getAppEmojis = () => {
@@ -82,6 +82,7 @@ export const replyTranslated = async <T extends CacheType = CacheType>(
 
 		await context.reply({
 			content,
+			allowedMentions: { repliedUser: options?.mention || false },
 			flags: options?.ephemeral ? MessageFlags.Ephemeral : undefined,
 		});
 
@@ -128,11 +129,7 @@ export const replySuccess = async <T extends CacheType = CacheType>(
 	options: Options = { prefixEmoji: "success" },
 ) => await replyTranslated(context, key, args, { prefixEmoji: "success", ...options });
 
-export const getLocale = async (guildId: string) => {
-	const client = useClient();
-	const guild = await client.getGuildData(guildId);
-	return guild.language;
-};
+export const getLocale = async (guildId: string) => (await useClient().getGuildData(guildId)).language;
 
 export const getLocalizedDesc = (key: string) => {
 	const client = useClient();
@@ -145,7 +142,7 @@ export const getLocalizedDesc = (key: string) => {
 
 			return acc;
 		},
-		{} as Record<Locale, string | null>,
+		{} as Record<Locale, string>,
 	);
 
 	return {

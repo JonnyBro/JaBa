@@ -4,12 +4,10 @@ import { APIEmbedFooter, ColorResolvable, EmbedBuilder, EmbedData } from "discor
 import useClient from "./use-client.js";
 
 const client = useClient();
-const debug = !IS_PROD;
 
 const defaultFooter: APIEmbedFooter = {
-	text: client.configService.get<string>("EMBED_FOOTER"),
+	text: `${client.configService.get<string>("EMBED_FOOTER")} ${IS_PROD ? `| ${packageJson.version}` : ""}`,
 };
-if (!debug) defaultFooter.text += ` | ${packageJson.version}`;
 
 const defaultColor = client.configService.get<ColorResolvable>("EMBED_COLOR");
 
