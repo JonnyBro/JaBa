@@ -39,7 +39,7 @@ export const data: CommandData = {
 function getCategoryFromPath(filepath: string): string {
 	const segments = filepath.split(/[\\/]/);
 	const commandsIndex = segments.lastIndexOf("commands");
-	return segments[commandsIndex + 1] || "uncategorized";
+	return segments[commandsIndex + 1].toLowerCase() || "uncategorized";
 }
 
 // TODO: Rewrite to components v2

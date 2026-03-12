@@ -2,7 +2,7 @@ import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/fu
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "discord.js";
-import { RainlinkLoopMode } from "rainlink";
+import { RepeatMode } from "lavalink-client";
 
 const client = useClient();
 
@@ -19,9 +19,9 @@ export const data: CommandData = {
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			choices: [
-				{ name: client.i18n.translate("music/loop:DISABLE"), value: "none" },
-				{ name: client.i18n.translate("music/loop:TRACK"), value: "song" },
 				{ name: client.i18n.translate("music/loop:QUEUE"), value: "queue" },
+				{ name: client.i18n.translate("music/loop:TRACK"), value: "track" },
+				{ name: client.i18n.translate("music/loop:DISABLE"), value: "off" },
 			],
 		},
 	],
@@ -30,12 +30,12 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
-	const player = client.rainlink.players.get(interaction.guildId!);
+	const player = client.lavalink.getPlayer(interaction.guildId!);
 	if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
 
 	const mode = interaction.options.getString("mode", true);
 
-	player.setLoop(mode as RainlinkLoopMode);
+	player.setRepeatMode(mode as RepeatMode);
 
 	await editReplySuccess(interaction, `music/loop:SUCCESS_${mode.toUpperCase()}`);
 };

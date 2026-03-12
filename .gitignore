@@ -3,6 +3,7 @@
 Thumbs.db
 
 # Configuration
+.env
 /config.json
 /config.json.*
 

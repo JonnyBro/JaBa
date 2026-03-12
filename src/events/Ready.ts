@@ -32,7 +32,6 @@ export async function run(client: ExtendedClient) {
 		])}`,
 	);
 
-	// Fetching all app emojis, because we need to use them
 	await client.application.emojis.fetch();
 
 	const tasksPath = join(PROJECT_ROOT, "helpers", "tasks");
@@ -40,7 +39,6 @@ export async function run(client: ExtendedClient) {
 	const cronManager = CronManager.getInstance();
 	await cronManager.init(cronTasks);
 
-	// Update guilds count
 	let i = 0;
 	setInterval(async () => {
 		guildsCount = (await client.guilds.fetch()).size;
@@ -51,6 +49,6 @@ export async function run(client: ExtendedClient) {
 			state: status[i],
 		});
 
-		i = (i + 1) % status.length; // Wrap around to the start when reaching the end
-	}, 30 * 1000); // Every 30 seconds
+		i = (i + 1) % status.length;
+	}, 30_000); // 30 sec
 }

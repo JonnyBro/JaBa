@@ -26,12 +26,18 @@ importers:
       discord.js:
         specifier: ^14.20.0
         version: 14.20.0
+      dotenv:
+        specifier: ^17.3.1
+        version: 17.3.1
       i18next:
         specifier: ^24.2.2
         version: 24.2.3(typescript@5.8.3)
       i18next-fs-backend:
         specifier: ^2.6.0
         version: 2.6.0
+      lavalink-client:
+        specifier: ^2.9.7
+        version: 2.9.7
       md5:
         specifier: ^2.3.0
         version: 2.3.0
@@ -44,9 +50,6 @@ importers:
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
-      rainlink:
-        specifier: ^1.2.9
-        version: 1.2.9
     devDependencies:
       '@eslint/js':
         specifier: ^9.21.0
@@ -880,6 +883,10 @@ packages:
   dlv@1.1.3:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
 
+  dotenv@17.3.1:
+    resolution: {integrity: sha512-IO8C/dzEb6O3F9/twg6ZLXz164a2fhTnEWb95H23Dm4OuN+92NmEAlTrupP9VW6Jm3sO26tQlqyvyi4CsnY9GA==}
+    engines: {node: '>=12'}
+
   duplexer@0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
 
@@ -1380,6 +1387,10 @@ packages:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
     engines: {node: '>=0.10.0'}
 
+  lavalink-client@2.9.7:
+    resolution: {integrity: sha512-tknzDqP58/cjn8ScywGyTPEGoXfqFBhZzbSM5n9hulhlaxQmzZvVN1mfKcfr1SCyE2nqXyPOHnmz8QVl80Iz6w==}
+    engines: {bun: '>=1.1.27', node: '>=18.0.0'}
+
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -1752,9 +1763,6 @@ packages:
 
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
-
-  rainlink@1.2.9:
-    resolution: {integrity: sha512-UZk9JHLGmDLmphxFZABIMBObizqT5oE1rkKhZZlRO1jERhgyjQIPQjuOw4ADCyIuP8fkLSp/Y9lrF0FkVSPqqA==}
 
   randomatic@3.1.1:
     resolution: {integrity: sha512-TuDE5KxZ0J461RVjrJZCJc+J+zCkTb1MbH9AQUq68sMhOMcy9jLcb3BrZKgp9q9Ncltdg4QVqWrH02W2EFFVYw==}
@@ -2963,6 +2971,8 @@ snapshots:
 
   dlv@1.1.3: {}
 
+  dotenv@17.3.1: {}
+
   duplexer@0.1.2: {}
 
   eastasianwidth@0.2.0: {}
@@ -3531,6 +3541,14 @@ snapshots:
 
   kind-of@6.0.3: {}
 
+  lavalink-client@2.9.7:
+    dependencies:
+      tslib: 2.8.1
+      ws: 8.19.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   levn@0.4.1:
     dependencies:
       prelude-ls: 1.2.1
@@ -3884,13 +3902,6 @@ snapshots:
   queue-lit@1.5.2: {}
 
   queue-microtask@1.2.3: {}
-
-  rainlink@1.2.9:
-    dependencies:
-      ws: 8.19.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
 
   randomatic@3.1.1:
     dependencies:

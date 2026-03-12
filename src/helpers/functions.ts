@@ -11,6 +11,7 @@ import {
 	MessageFlags,
 	User,
 } from "discord.js";
+import { parseLavalinkConnUrl } from "lavalink-client";
 
 interface Options extends InteractionReplyOptions {
 	prefixEmoji?: string;
@@ -49,7 +50,7 @@ export const translateContext = async <T extends CacheType = CacheType>(
 	const localeResolvers = {
 		string: (ctx: string) => getLocale(ctx),
 		Guild: (ctx: Guild) => getLocale(ctx.id),
-		default: () => client.configService.get<string>("defaultLang"),
+		default: () => client.configService.get<string>("DEFAULT_LANG"),
 	};
 
 	const getLocaleFromContext = async (): Promise<string> => {
@@ -209,7 +210,13 @@ export const convertTime = (duration: number) => {
 		: `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 };
 
-export const formatString = (str: string, maxLength: number) =>
+export const shortenString = (str: string, maxLength: number) =>
 	str.length > maxLength ? str.slice(0, maxLength - 3) + "..." : str;
 
 export const capitalizeString = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
+export const lavalinkNodesFromString = (str: string) =>
+	str
+		.split(" ")
+		.filter(v => v.length)
+		.map(url => parseLavalinkConnUrl(url));

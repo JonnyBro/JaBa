@@ -1,6 +1,7 @@
+import logger from "@/helpers/logger.js";
 import MemberModel from "@/models/MemberModel.js";
 import { CronTaskData } from "@/types.js";
-import useClient from "../../utils/use-client.js";
+import useClient from "@/utils/use-client.js";
 
 const client = useClient();
 
@@ -10,10 +11,14 @@ export const data: CronTaskData = {
 		const members = await client.adapter.find(MemberModel, { transactions: { $gt: [] } });
 
 		for (const member of members)
-			if (member.transactions.length > 20) {
-				member.set("transactions", member.transactions.slice(0, 19));
-				await member.save();
+			try {
+				if (member.transactions.length > 20) {
+					member.set("transactions", member.transactions.slice(0, 19));
+					await member.save();
+				}
+			} catch (e) {
+				logger.error(`[clearTransactions] Error in member ${member.id}:`, e);
 			}
 	},
-	schedule: "0 0 * * MON",
+	schedule: "0 0 * * *",
 };

@@ -27,8 +27,7 @@ export default class InternationalizationService {
 		this.client = client;
 		this.options = {
 			localesPath: join(PROJECT_ROOT, "services", "languages", "locales"),
-			defaultLanguage:
-				options.defaultLanguage || this.client.configService.get("defaultLang"),
+			defaultLanguage: options.defaultLanguage || this.client.configService.get("DEFAULT_LANG"),
 		};
 		this.init();
 	}
@@ -45,7 +44,7 @@ export default class InternationalizationService {
 		const files = await fs.readdir(dir, { withFileTypes: true });
 
 		const languages: string[] = [];
-		for (const file of files) {
+		for (const file of files)
 			if (file.isDirectory()) {
 				const isLanguage = file.name.includes("-");
 				if (isLanguage) languages.push(file.name);
@@ -57,10 +56,8 @@ export default class InternationalizationService {
 				);
 
 				namespaces = folder.namespaces;
-			} else {
-				namespaces.push(`${folderName}${file.name.substr(0, file.name.length - 5)}`);
-			}
-		}
+			} else namespaces.push(`${folderName}${file.name.substr(0, file.name.length - 5)}`);
+
 		return { namespaces: [...new Set(namespaces)], languages };
 	}
 

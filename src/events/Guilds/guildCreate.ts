@@ -10,7 +10,7 @@ export const data = {
 };
 
 export async function run(guild: Guild) {
-	const logChannelId = client.configService.get<string>("devLogs.joins");
+	const logChannelId = client.configService.get<string>("DEV_LOGS_JOINS");
 	const logChannel = client.channels.cache.get(logChannelId);
 
 	if (logChannel && logChannel.isSendable()) {

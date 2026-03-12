@@ -1,4 +1,4 @@
-import useClient from "@/utils/use-client.js";
+import { IS_PROD } from "@/constants/index.js";
 import chalk from "chalk";
 
 function format(tDate: Date | number) {
@@ -36,9 +36,7 @@ export default {
 	},
 
 	debug(...content: unknown[]) {
-		const client = useClient();
-		const isProd = client.configService.get("production");
-		if (isProd) return;
+		if (IS_PROD) return;
 		return console.log(`[${format(Date.now())}]: ${logLevels.DEBUG}`, ...content);
 	},
 

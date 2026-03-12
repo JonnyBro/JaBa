@@ -23,7 +23,6 @@ export async function run(message: Message) {
 	return;
 }
 
-// Handle the quote deletion button
 client.on("interactionCreate", async interaction => {
 	if (!interaction.isButton()) return;
 	if (interaction.customId !== DELETE_BUTTON_ID) return;
@@ -111,7 +110,7 @@ const handleLinkQuote = async (message: Message) => {
 };
 
 const updateXp = async (message: Message) => {
-	const memberData = await client.getMemberData(message.author.id, message.guild!.id);
+	const memberData = await client.getMemberData(message.guild!.id, message.author.id);
 	const now = Date.now();
 
 	if (xpCooldown[message.author.id] && xpCooldown[message.author.id] > now) return;

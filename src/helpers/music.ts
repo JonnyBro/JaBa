@@ -1,42 +1,62 @@
+import { IS_PROD } from "@/constants/index.js";
+import { PlayerCustom } from "@/types.js";
 import useClient from "@/utils/use-client.js";
-import { ChatInputCommandInteraction, GuildMember, MessageContextMenuCommandInteraction } from "discord.js";
-import { editReplyError, editReplySuccess } from "./functions.js";
+import { GuildMember } from "discord.js";
+import { Player } from "lavalink-client";
+import { randomNum } from "./functions.js";
+import logger from "./logger.js";
 
 const client = useClient();
+const debug = !IS_PROD;
 
-export const playQuery = async (
-	interaction: ChatInputCommandInteraction | MessageContextMenuCommandInteraction,
-	member: GuildMember,
+export const addToQueue = async (
+	guildId: string,
+	textChannelId: string,
+	voiceChannelId: string,
+	member: GuildMember | null,
 	query: string,
+	autoPlay?: boolean,
 ) => {
-	const res = await client.rainlink.search(query, {
-		requester: interaction.user,
-	});
-
-	if (res.tracks.length <= 0)
-		return editReplyError(interaction, "music/play:NO_RESULT", {
-			query,
+	const player =
+		client.lavalink.getPlayer(guildId) ||
+		client.lavalink.createPlayer({
+			guildId,
+			textChannelId,
+			voiceChannelId,
+			volume: 100,
+			selfDeaf: true,
 		});
 
-	const player = await client.rainlink.create({
-		guildId: interaction.guildId!,
-		textId: interaction.channelId,
-		voiceId: member.voice.channel!.id,
-		volume: 100,
-		shardId: 0,
-		deaf: true,
-	});
+	const res = await player.search(query, member || client.user);
 
-	const isPlaylist = res.type === "PLAYLIST";
+	if (!res || !res.tracks.length) return null;
 
-	if (isPlaylist) for (const track of res.tracks) player.queue.add(track);
-	else player.queue.add(res.tracks[0]);
+	player.queue.add(autoPlay ? res.tracks[randomNum(1, res.tracks.length)] : res.tracks);
 
+	if (!player.connected) await player.connect();
 	if (!player.playing) await player.play();
 
-	await editReplySuccess(interaction, `music/play:ADDED_${isPlaylist ? "PLAYLIST" : "TRACK"}`, {
-		name: res.playlistName || res.tracks[0].title,
-		url: isPlaylist ? query : res.tracks[0].uri,
-		count: res.tracks.length,
-	});
+	return res;
+};
+
+export const doAutoplay = async (player: Player | PlayerCustom) => {
+	const guildName = client.guilds.cache.get(player.guildId)?.name;
+	const guildId = player.guildId;
+
+	if (debug) logger.debug(`[Lavalink] Starting autoplay in ${guildName} (${guildId})`);
+
+	const track = player.queue.previous[0] || player.queue.current;
+	if (!track) return await player.destroy("queue ended", true);
+
+	let trackRadioLink;
+	if (track.info.sourceName === "youtube") {
+		const id = track.info.identifier;
+		trackRadioLink = `https://music.youtube.com/watch?v=${id}&list=RD${id}`;
+	} else {
+		const tracks = (await player.search(track.info.title, client.user)).tracks;
+		const id = tracks[randomNum(0, tracks.length)].info.identifier;
+		trackRadioLink = `https://music.youtube.com/watch?v=${id}&list=RD${id}`;
+	}
+
+	return await addToQueue(guildId, player.textChannelId!, player.voiceChannelId!, null, trackRadioLink, true);
 };

@@ -5,7 +5,7 @@ import { ChannelType } from "discord.js";
 export default function ({ interaction, targetCommand, client }: BuiltInValidationParams) {
 	if (interaction.isAutocomplete()) return;
 
-	const devGuildsIds = client.configService.get<string[]>("devGuildsIds");
+	const devGuildsIds = client.configService.get<string[]>("DEV_GUILDS_IDS");
 
 	if (!targetCommand.options?.devOnly) return;
 	if (!interaction.isRepliable()) return;
@@ -26,7 +26,7 @@ export default function ({ interaction, targetCommand, client }: BuiltInValidati
 		return true;
 	}
 
-	if (interaction.user.id !== client.configService.get<string>("owner.id")) {
+	if (interaction.user.id !== client.configService.get<string>("OWNER")) {
 		replyError(interaction, "This command is only available by the developer", null, {
 			ephemeral: true,
 		});

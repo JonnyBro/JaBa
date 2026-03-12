@@ -1,6 +1,8 @@
-import { capitalizeString, convertTime, formatString, translateContext } from "@/helpers/functions.js";
+import { IS_PROD } from "@/constants/index.js";
+import { capitalizeString, convertTime, shortenString, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
-import { RainlinkPlayerCustom } from "@/types.js";
+import { doAutoplay } from "@/helpers/music.js";
+import { PlayerCustom } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
 import {
@@ -11,12 +13,11 @@ import {
 	EmbedBuilder,
 	GuildMember,
 	MessageFlags,
-	User,
 } from "discord.js";
-import { RainlinkLoopMode, RainlinkTrack } from "rainlink";
+import { RepeatMode, Track } from "lavalink-client";
 
 const client = useClient();
-const debug = !client.configService.get<boolean>("production");
+const debug = !IS_PROD;
 
 enum ButtonId {
 	PLAY_PAUSE_BUTTON_ID = "trackStart_play_pause",
@@ -38,23 +39,24 @@ export const data = {
 	once: false,
 };
 
-export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
+export async function run(player: PlayerCustom, track: Track | null) {
 	if (!player || !track) return;
 
 	const guild = client.guilds.cache.get(player.guildId);
 	if (!guild) return;
 
 	try {
-		if (debug) {
-			const g = guild;
-			const trackTitle = formatString(track?.title || "Unknown", 30).replace(/ - Topic$/, "");
-			logger.debug(`Track started in ${g.name} (${g.id})\nTrack: ${trackTitle}\nURL: ${track.uri}`);
-		}
+		if (debug)
+			logger.debug(
+				`[Lavalink] Track started in ${guild.name} (${guild.id})
+				Track: ${track.info.title}
+				URL: ${track.info.uri}`,
+			);
 
 		const trackEmbed = await createTrackEmbed(player, track, player.guildId);
 		const buttons = buildControlButtons(player);
 
-		const channel = client.channels.cache.get(player.textId);
+		const channel = client.channels.cache.get(player.textChannelId!);
 		if (!channel || !channel.isSendable()) return;
 
 		player.message = await channel.send({
@@ -63,7 +65,7 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 		});
 
 		const collector = player.message.createMessageComponentCollector({
-			time: 600_000, // 10 mins
+			time: track.info.duration + 1_000, // track duration + 1 minute
 		});
 
 		collector.on("collect", async (interaction: ButtonInteraction) => {
@@ -71,7 +73,7 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 
 			try {
 				const member = interaction.member as GuildMember;
-				if (!member.voice.channel || player.voiceId !== member.voice.channelId) {
+				if (!member.voice.channel || player.voiceChannelId !== member.voice.channelId) {
 					const embed = createEmbed({
 						description: await translateContext(guild, "music/play:NOT_SAME_CHANNEL"),
 					});
@@ -88,30 +90,34 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 						await handlePlayPause(interaction, player, trackEmbed, buttons);
 
 						break;
+
 					case ButtonId.VOLUMEUP_BUTTON_ID:
 						await interaction.deferUpdate();
 
 						await handleVolumeChange(interaction, player, 10);
 
 						break;
+
 					case ButtonId.VOLUMEDOWN_BUTTON_ID:
 						await interaction.deferUpdate();
 
 						await handleVolumeChange(interaction, player, -10);
 
 						break;
+
 					case ButtonId.LOOP_BUTTON_ID:
 						await interaction.deferUpdate();
 
-						await handleLoop(interaction, player);
+						await handleLoop(interaction, player, trackEmbed, buttons);
 
 						break;
+
 					case ButtonId.SHUFFLE_BUTTON_ID: {
 						await interaction.deferUpdate();
 
 						const embed = createEmbed();
 
-						if (player.queue.isEmpty) {
+						if (!player.queue.tracks.length) {
 							embed.setDescription(await translateContext(guild, "music/queue:NO_QUEUE"));
 
 							await interaction.reply({
@@ -150,7 +156,9 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 							return;
 						}
 
-						await player.previous();
+						await player.play({
+							track: player.queue.previous[0],
+						});
 
 						embed.setDescription(await translateContext(guild, "music/back:SUCCESS"));
 
@@ -165,22 +173,28 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 					case ButtonId.SKIP_BUTTON_ID: {
 						await interaction.deferUpdate();
 
-						const guildData = await client.getGuildData(player.guildId);
+						const isAutoPlay = (await client.getGuildData(player.guildId)).plugins.music.autoPlay;
 
-						if (player.queue.isEmpty && !guildData.plugins.music.autoPlay) {
+						if (!player.queue.tracks.length && !isAutoPlay) {
 							const embed = createEmbed({
 								description: await translateContext(guild, "music/queue:NO_QUEUE"),
 							});
 
-							await interaction.followUp({
+							return await interaction.followUp({
 								embeds: [embed],
 								flags: MessageFlags.Ephemeral,
 							});
-
-							return;
 						}
 
-						player.skip();
+						if (!player.queue.tracks.length && isAutoPlay) {
+							const res = await doAutoplay(player);
+
+							if (!res) return;
+
+							return await player.skip();
+						}
+
+						await player.skip();
 
 						break;
 					}
@@ -188,7 +202,7 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 					case ButtonId.STOP_BUTTON_ID:
 						await interaction.deferUpdate();
 
-						await player.stop(true);
+						await player.destroy("stopped by user", true);
 
 						collector.stop();
 
@@ -197,10 +211,10 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 			} catch (e) {
 				logger.error("[trackStart] Error handling button interaction:", e);
 
-				await interaction.reply({
-					content: "unfunny error happened",
-					flags: MessageFlags.Ephemeral,
-				});
+				if (interaction.channel?.isSendable())
+					await interaction.channel.send({
+						content: "unfunny error happened, let admin know",
+					});
 			}
 		});
 
@@ -212,18 +226,14 @@ export async function run(player: RainlinkPlayerCustom, track: RainlinkTrack) {
 	}
 }
 
-const createTrackEmbed = async (
-	player: RainlinkPlayerCustom,
-	track: RainlinkTrack,
-	guildId: string,
-): Promise<EmbedBuilder> => {
+const createTrackEmbed = async (player: PlayerCustom, track: Track, guildId: string): Promise<EmbedBuilder> => {
 	const guild = client.guilds.cache.get(guildId);
 	if (!guild) throw logger.error("[trackStart] Guild not found");
 
-	const trackTitle = formatString(track?.title || "Unknown", 30).replace(/ - Topic$/, "");
-	const trackAuthor = formatString(track?.author || "Unknown", 25).replace(/ - Topic$/, "");
-	const trackDuration = track.isStream ? ":red_circle:" : `\`${convertTime(track.duration)}\``;
-	const trackRequester = track.requester as User;
+	const trackTitle = shortenString(track.info.title || "Unknown", 30).replace(/ - Topic$/, "");
+	const trackAuthor = shortenString(track.info.author || "Unknown", 25).replace(/ - Topic$/, "");
+	const trackDuration = track.info.isStream ? ":red_circle:" : `\`${convertTime(track.info.duration)}\``;
+	const trackRequester = track.requester;
 
 	const embed = createEmbed({
 		author: {
@@ -232,11 +242,13 @@ const createTrackEmbed = async (
 				: await translateContext(guild, "music/queue:PLAYING"),
 			iconURL: client.user.displayAvatarURL(),
 		},
-		description: `**[${trackTitle} - ${trackAuthor}](${track.uri})**`,
+		description: /^https?:\/\//.test(track.info.uri)
+			? `**[${trackTitle} - ${trackAuthor}](${track.info.uri})**`
+			: `**${trackTitle} - ${trackAuthor}**`,
 		fields: [
 			{
 				name: await translateContext(guild, "music/queue:SOURCE"),
-				value: `${capitalizeString(track.source)}`,
+				value: `${capitalizeString(track.info.sourceName)}`,
 				inline: true,
 			},
 			{
@@ -246,20 +258,22 @@ const createTrackEmbed = async (
 			},
 			{
 				name: await translateContext(guild, "music/queue:ADDED"),
-				value: trackRequester.toString() || "Unknown",
+				value: trackRequester?.toString() || "Unknown",
 				inline: true,
 			},
 		],
-	}).setThumbnail(track?.artworkUrl || null);
+	}).setThumbnail(track.info.artworkUrl || null);
 
-	const nextTrack = player.queue[0];
+	const nextTrack = player.queue.tracks[0];
 	if (nextTrack) {
-		const nextTrackTitle = formatString(nextTrack.title || "Unknown", 30).replace(/ - Topic$/, "");
-		const nextTrackAuthor = formatString(nextTrack.author || "Unknown", 25).replace(/ - Topic$/, "");
+		const nextTrackTitle = shortenString(nextTrack.info.title || "Unknown", 30).replace(/ - Topic$/, "");
+		const nextTrackAuthor = shortenString(nextTrack.info.author || "Unknown", 25).replace(/ - Topic$/, "");
 
 		embed.addFields({
 			name: await translateContext(guild, "music/queue:NEXT"),
-			value: `**[${nextTrackTitle} - ${nextTrackAuthor}](${nextTrack.uri})**`,
+			value: /^https?:\/\//.test(nextTrack.info.uri!)
+				? `**[${nextTrackTitle} - ${nextTrackAuthor}](${nextTrack?.info?.uri})**`
+				: `**${nextTrackTitle} - ${nextTrackAuthor}**`,
 		});
 	}
 
@@ -267,8 +281,12 @@ const createTrackEmbed = async (
 };
 
 const buildControlButtons = (
-	player: RainlinkPlayerCustom,
+	player: PlayerCustom,
 ): [ActionRowBuilder<ButtonBuilder>, ActionRowBuilder<ButtonBuilder>] => {
+	const repeat = player.repeatMode;
+	const loopEmoji = repeat === "off" ? "🔃" : repeat === "track" ? "🔂" : "🔁";
+	const loopStyle = repeat === "off" ? ButtonStyle.Secondary : ButtonStyle.Primary;
+
 	const buttons1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 		new ButtonBuilder()
 			.setCustomId(ButtonId.PLAY_PAUSE_BUTTON_ID)
@@ -276,10 +294,7 @@ const buildControlButtons = (
 			.setStyle(player.paused ? ButtonStyle.Primary : ButtonStyle.Secondary),
 		new ButtonBuilder().setCustomId(ButtonId.VOLUMEDOWN_BUTTON_ID).setEmoji("➖").setStyle(ButtonStyle.Secondary),
 		new ButtonBuilder().setCustomId(ButtonId.VOLUMEUP_BUTTON_ID).setEmoji("➕").setStyle(ButtonStyle.Secondary),
-		new ButtonBuilder()
-			.setCustomId(ButtonId.LOOP_BUTTON_ID)
-			.setEmoji(getLoopEmoji(player.loop))
-			.setStyle(getLoopStyle(player.loop)),
+		new ButtonBuilder().setCustomId(ButtonId.LOOP_BUTTON_ID).setEmoji(loopEmoji).setStyle(loopStyle),
 	);
 
 	const buttons2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -292,22 +307,8 @@ const buildControlButtons = (
 	return [buttons1, buttons2];
 };
 
-const getLoopEmoji = (mode: RainlinkLoopMode): string => {
-	switch (mode) {
-		case RainlinkLoopMode.SONG:
-			return "🔂";
-		case RainlinkLoopMode.QUEUE:
-			return "🔁";
-		default:
-			return "🔃";
-	}
-};
-
-const getLoopStyle = (mode: RainlinkLoopMode): ButtonStyle =>
-	mode !== RainlinkLoopMode.NONE ? ButtonStyle.Primary : ButtonStyle.Secondary;
-
 const updatePlayerMessage = async (
-	player: RainlinkPlayerCustom,
+	player: PlayerCustom,
 	trackEmbed: EmbedBuilder,
 	components: Array<ActionRowBuilder<ButtonBuilder>>,
 ): Promise<void> => {
@@ -325,7 +326,7 @@ const updatePlayerMessage = async (
 
 const handlePlayPause = async (
 	interaction: ButtonInteraction,
-	player: RainlinkPlayerCustom,
+	player: PlayerCustom,
 	trackEmbed: EmbedBuilder,
 	components: Array<ActionRowBuilder<ButtonBuilder>>,
 ): Promise<void> => {
@@ -354,7 +355,7 @@ const handlePlayPause = async (
 
 const handleVolumeChange = async (
 	interaction: ButtonInteraction,
-	player: RainlinkPlayerCustom,
+	player: PlayerCustom,
 	amount: number,
 ): Promise<void> => {
 	const embed = createEmbed();
@@ -381,30 +382,42 @@ const handleVolumeChange = async (
 	await interaction.followUp({ embeds: [embed], flags: MessageFlags.Ephemeral });
 };
 
-const handleLoop = async (interaction: ButtonInteraction, player: RainlinkPlayerCustom): Promise<void> => {
+const handleLoop = async (
+	interaction: ButtonInteraction,
+	player: PlayerCustom,
+	trackEmbed: EmbedBuilder,
+	components: Array<ActionRowBuilder<ButtonBuilder>>,
+): Promise<void> => {
 	const embed = createEmbed();
-	let newLoopMode;
+	let newMode: RepeatMode;
 
-	switch (player.loop) {
-		case "none":
-			newLoopMode = RainlinkLoopMode.SONG;
+	switch (player.repeatMode) {
+		case "off":
+			newMode = "track";
 			break;
 
-		case "song":
-			newLoopMode = RainlinkLoopMode.QUEUE;
+		case "track":
+			newMode = "queue";
 			break;
 
 		case "queue":
-			newLoopMode = RainlinkLoopMode.NONE;
+			newMode = "off";
 			break;
 
 		default:
-			newLoopMode = RainlinkLoopMode.NONE;
+			newMode = "off";
 	}
 
-	player.setLoop(newLoopMode);
+	player.setRepeatMode(newMode);
 
-	embed.setDescription(await translateContext(interaction.guild!, `music/loop:SUCCESS_${newLoopMode.toUpperCase()}`));
+	embed.setDescription(await translateContext(interaction.guild!, `music/loop:SUCCESS_${newMode.toUpperCase()}`));
+
+	const loopEmoji = newMode === "off" ? "🔃" : newMode === "track" ? "🔂" : "🔁";
+	const loopStyle = newMode === "off" ? ButtonStyle.Secondary : ButtonStyle.Primary;
+
+	components[0].components[3].setEmoji(loopEmoji).setStyle(loopStyle);
+
+	await updatePlayerMessage(player, trackEmbed, components);
 
 	await interaction.followUp({ embeds: [embed], flags: MessageFlags.Ephemeral });
 };

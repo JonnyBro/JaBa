@@ -10,7 +10,7 @@ export const data = {
 };
 
 export async function run(guild: Guild) {
-	const logChannelId = client.configService.get<string>("devLogs.joins");
+	const logChannelId = client.configService.get<string>("DEV_LOGS_JOINS");
 	const logChannel = client.channels.cache.get(logChannelId);
 
 	if (logChannel && logChannel.isSendable()) {
@@ -19,7 +19,7 @@ export async function run(guild: Guild) {
 				name: guild.name,
 				iconURL: guild.iconURL() || client.user.avatarURL() || undefined,
 			},
-			description: `Left from guild!\n${guild.name}`,
+			description: `Left from a guild!\n${guild.name}`,
 		});
 
 		await logChannel.send({

@@ -1,13 +1,17 @@
 import packageJson from "@/../package.json" with { type: "json" };
+import { IS_PROD } from "@/constants/index.js";
 import { APIEmbedFooter, ColorResolvable, EmbedBuilder, EmbedData } from "discord.js";
 import useClient from "./use-client.js";
 
 const client = useClient();
-const prod = client.configService.get<boolean>("production");
+const debug = !IS_PROD;
 
-const defaultFooter = client.configService.get<APIEmbedFooter>("embed.footer");
-if (prod) defaultFooter.text += ` | ${packageJson.version}`;
-const defaultColor = client.configService.get<ColorResolvable>("embed.color");
+const defaultFooter: APIEmbedFooter = {
+	text: client.configService.get<string>("EMBED_FOOTER"),
+};
+if (!debug) defaultFooter.text += ` | ${packageJson.version}`;
+
+const defaultColor = client.configService.get<ColorResolvable>("EMBED_COLOR");
 
 export const createEmbed = (data?: EmbedData) =>
 	new EmbedBuilder({

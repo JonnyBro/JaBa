@@ -41,7 +41,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const user = interaction.options.getUser("user") || interaction.user;
 	if (user.bot) return editReplyError(interaction, "misc:BOT_USER");
 
-	const memberData = await client.getMemberData(user.id, interaction.guildId!);
+	const memberData = await client.getMemberData(interaction.guildId!, user.id);
 	const userData = await client.getUserData(user.id);
 
 	let globalMoney = 0;
@@ -49,7 +49,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const guldsArray = Array.from(guilds.values());
 
 	await asyncForEach(guldsArray, async guild => {
-		const data = await client.getMemberData(user.id, guild.id);
+		const data = await client.getMemberData(guild.id, user.id);
 		globalMoney += data.money + data.bank;
 	});
 

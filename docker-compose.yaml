@@ -1,24 +1,35 @@
 services:
-    app:
-        build: .
+    jaba:
         container_name: jaba
-        volumes:
-            - ./config.json:/root/app/config.json
+        build: .
+        # Or use the pre-build version
+        # image: ghcr.io/jonnybro/jaba:main
+        env_file:
+            - .env
         environment:
             NODE_ENV: production
         depends_on:
-            - mongo
+            mongo:
+                condition: service_healthy
+        restart: unless-stopped
+
     mongo:
-        image: mongo:8
         container_name: mongo
+        image: mongo:8
+        # Uncomment if you need access to the database
         # ports:
         #     - 27017:27017
         volumes:
-            - mongo_data:/data/db
+            - jaba_mongo_data:/data/db
+            - jaba_mongo_config:/data/configdb
         healthcheck:
-            test: echo 'db.runCommand("ping").ok' | mongosh mongodb://localhost --quiet
+            test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
             interval: 30s
             timeout: 10s
+            retries: 3
+            start_period: 10s
+        restart: unless-stopped
 
 volumes:
-    mongo_data:
+    jaba_mongo_data:
+    jaba_mongo_config:

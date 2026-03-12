@@ -1,22 +1,22 @@
 import logger from "@/helpers/logger.js";
-import { RainlinkPlayerCustom } from "@/types.js";
+import { PlayerCustom } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 
 const client = useClient();
-const debug = !client.configService.get<boolean>("production");
 
 export const data = {
-	name: "trackEnd",
+	name: "playerDestroy",
 	player: true,
 	once: false,
 };
 
-export async function run(player: RainlinkPlayerCustom) {
+export async function run(player: PlayerCustom) {
 	if (!player) return;
 
 	const guild = client.guilds.cache.get(player.guildId);
 	if (!guild) return;
 
 	if (player.message?.deletable) await player.message.delete().catch(() => {});
-	if (debug) logger.debug(`Track ended in ${guild.name} (${guild.id})`);
+
+	logger.log(`[Lavalink] Player destroyed in guild ${guild.name} (${guild.id})`);
 }

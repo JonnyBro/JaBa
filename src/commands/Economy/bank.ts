@@ -99,7 +99,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	const guildId = interaction.guildId!;
 	const memberId = interaction.user.id;
-	const memberData = await client.getMemberData(memberId, guildId);
+	const memberData = await client.getMemberData(guildId, memberId);
 	const embed = createEmbed();
 
 	switch (subcommand) {
@@ -108,14 +108,14 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
 
 			const targetData =
-				targetUser.id === interaction.user.id ? memberData : await client.getMemberData(targetUser.id, guildId);
+				targetUser.id === interaction.user.id ? memberData : await client.getMemberData(guildId, targetUser.id);
 
 			let globalMoney = 0;
 			const guilds = client.guilds.cache.filter(g => g.members.cache.has(targetUser.id));
 			const guldsArray = Array.from(guilds.values());
 
 			await asyncForEach(guldsArray, async guild => {
-				const data = await client.getMemberData(targetUser.id, guild.id);
+				const data = await client.getMemberData(guild.id, targetUser.id);
 				globalMoney += data.money + data.bank;
 			});
 
@@ -207,7 +207,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			if (memberData.bank < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
 			if (interaction.user.id === targetUser.id) return editReplyError(interaction, "misc:CANT_YOURSELF");
 
-			const recieverData = await client.getMemberData(targetUser.id, guildId);
+			const recieverData = await client.getMemberData(guildId, targetUser.id);
 
 			memberData.set("bank", memberData.bank - credits);
 			recieverData.set("bank", recieverData.bank + credits);

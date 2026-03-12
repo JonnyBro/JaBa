@@ -8,7 +8,7 @@
 	"TRACK": "Current track",
 	"QUEUE": "Queue",
 
-	"SUCCESS_NONE": "Repeat **disabled**",
-	"SUCCESS_SONG": "Current track repeat **enabled**",
+	"SUCCESS_OFF": "Repeat **disabled**",
+	"SUCCESS_TRACK": "Current track repeat **enabled**",
 	"SUCCESS_QUEUE": "Queue repeat **enabled**"
 }

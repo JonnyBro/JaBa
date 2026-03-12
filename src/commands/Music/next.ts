@@ -24,27 +24,23 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
-	const player = client.rainlink.players.get(interaction.guildId!);
+	const player = client.lavalink.getPlayer(interaction.guildId!);
 	if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
 
 	const query = interaction.options.getString("query", true);
 
-	const res = await client.rainlink.search(query, {
-		requester: interaction.user,
-	});
+	const res = await player.search(query, interaction.user);
 
-	if (res.tracks.length <= 0)
+	if (!res || !res.tracks.length)
 		return editReplyError(interaction, "music/play:NO_RESULT", {
 			query,
 		});
 
-	const isPlaylist = res.type === "PLAYLIST";
-
 	player.queue.splice(0, 0, ...res.tracks);
 
-	await editReplySuccess(interaction, `music/play:ADDED_${isPlaylist ? "PLAYLIST" : "TRACK"}`, {
-		name: res.playlistName || res.tracks[0].title,
-		url: isPlaylist ? query : res.tracks[0].uri,
+	await editReplySuccess(interaction, `music/play:ADDED_${res.loadType === "playlist" ? "PLAYLIST" : "TRACK"}`, {
+		name: res.playlist?.title || res.tracks[0].info.title,
+		url: res.playlist?.uri || res.tracks[0].info.uri,
 		count: res.tracks.length,
 	});
 };

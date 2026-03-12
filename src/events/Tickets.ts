@@ -1,18 +1,18 @@
-import { asyncForEach, formatString, getUsername, replySuccess, translateContext } from "@/helpers/functions.js";
+import { asyncForEach, getUsername, replySuccess, shortenString, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import {
-	BaseInteraction,
-	ChannelType,
-	ThreadAutoArchiveDuration,
 	ActionRowBuilder,
+	BaseInteraction,
 	ButtonBuilder,
 	ButtonStyle,
+	ChannelType,
+	MessageFlags,
 	ModalBuilder,
+	PermissionsBitField,
 	TextInputBuilder,
 	TextInputStyle,
-	MessageFlags,
-	PermissionsBitField,
+	ThreadAutoArchiveDuration,
 	ThreadChannel,
 } from "discord.js";
 
@@ -36,7 +36,6 @@ export async function run(interaction: BaseInteraction) {
 			)
 				return;
 
-			// Modal stuff
 			const modalSubject = new TextInputBuilder()
 				.setCustomId("tickets_modal_subject")
 				.setLabel(await translateContext(interaction, "tickets/ticketsembed:MODAL_SUBJECT_TITLE"))
@@ -62,7 +61,6 @@ export async function run(interaction: BaseInteraction) {
 
 			await interaction.showModal(modal);
 
-			// Handle modal submit
 			try {
 				const submitted = await interaction.awaitModalSubmit({
 					time: 60_000 * 2, // 2 mins
@@ -77,19 +75,18 @@ export async function run(interaction: BaseInteraction) {
 					flags: MessageFlags.Ephemeral,
 				});
 
-				// Thread stuff
-				const name = formatString(`${getUsername(interaction.user)}: ${subject}`, 100);
+				const name = shortenString(`${getUsername(interaction.user)}: ${subject}`, 100);
 				const thread = await interaction.channel.threads.create({
 					name,
 					autoArchiveDuration: ThreadAutoArchiveDuration.ThreeDays,
-					// @ts-ignore: type is not undefined only
+					// @ts-ignore: bug in the discord.js types
 					type: ChannelType.PrivateThread,
 				});
 
 				await thread.members.add(interaction.user.id);
 				await thread.members.add("@me");
 
-				// not sure about this...
+				// FIXME: not sure about this...
 				const moders = Array.from(
 					interaction.guild.members.cache
 						.filter(m => m.permissions.has([PermissionsBitField.Flags.ModerateMembers]))

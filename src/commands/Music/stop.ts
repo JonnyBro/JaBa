@@ -17,10 +17,10 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
-	const player = client.rainlink.players.get(interaction.guildId!);
+	const player = client.lavalink.getPlayer(interaction.guildId!);
 	if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
 
-	await player.stop(true);
+	await player.destroy("stopped by user", true);
 
 	await editReplySuccess(interaction, "music/stop:SUCCESS");
 };
