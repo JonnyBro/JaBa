@@ -1,3 +1,4 @@
+import { IS_PROD } from "@/constants/index.js";
 import { translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { PlayerCustom } from "@/types.js";
@@ -5,7 +6,7 @@ import useClient from "@/utils/use-client.js";
 import { Track, TrackStuckEvent } from "lavalink-client";
 
 const client = useClient();
-const debug = !client.configService.get<boolean>("production");
+const debug = !IS_PROD;
 
 export const data = {
 	name: "trackStuck",

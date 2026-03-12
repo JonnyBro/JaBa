@@ -1,12 +1,13 @@
+import { IS_PROD } from "@/constants/index.js";
 import { PlayerCustom } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import { GuildMember } from "discord.js";
+import { Player } from "lavalink-client";
 import { randomNum } from "./functions.js";
 import logger from "./logger.js";
-import { Player } from "lavalink-client";
 
 const client = useClient();
-const debug = !client.configService.get<boolean>("production");
+const debug = !IS_PROD;
 
 export const addToQueue = async (
 	guildId: string,

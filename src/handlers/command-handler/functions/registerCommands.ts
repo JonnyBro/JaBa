@@ -17,7 +17,7 @@ const handleRegistration = async (client: ExtendedClient, commands: CommandFileO
 	const devOnlyCommands = commands.filter(cmd => cmd.options?.devOnly);
 	const globalCommands = commands.filter(cmd => !cmd.options?.devOnly);
 
-	const devGuildsIds = client.configService.get<string[]>("devGuildsIds");
+	const devGuildsIds = client.configService.get<string>("DEV_GUILDS_IDS").split(" ");
 
 	await registerGlobalCommands(client, globalCommands);
 	await registerDevCommands(client, devOnlyCommands, devGuildsIds);

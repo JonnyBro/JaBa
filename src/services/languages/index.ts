@@ -27,7 +27,7 @@ export default class InternationalizationService {
 		this.client = client;
 		this.options = {
 			localesPath: join(PROJECT_ROOT, "services", "languages", "locales"),
-			defaultLanguage: options.defaultLanguage || this.client.configService.get("defaultLang"),
+			defaultLanguage: options.defaultLanguage || this.client.configService.get("DEFAULT_LANG"),
 		};
 		this.init();
 	}

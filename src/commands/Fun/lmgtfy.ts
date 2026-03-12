@@ -50,8 +50,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	});
 
 	if (short) {
-		const shortenerUrl = client.configService.get<string>("apiKeys.urlShortener.url");
-		const shortenerKey = client.configService.get<string>("apiKeys.urlShortener.key");
+		const shortenerUrl = client.configService.get<string>("URL_SHORTENER_URL");
+		const shortenerKey = client.configService.get<string>("URL_SHORTENER_KEY");
 
 		if (!shortenerUrl || !shortenerKey) return editReplyError(interaction, "API URL or key not set!");
 

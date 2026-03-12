@@ -35,13 +35,13 @@ const guildSchema = new Schema<IGuildSchema>({
 	id: { type: String, required: true },
 	language: {
 		type: String,
-		default: () => client.configService.get<string>("defaultLang"),
+		default: () => client.configService.get<string>("DEFAULT_LANG"),
 	},
 	plugins: { type: pluginsSchema, default: () => ({}) },
 });
 
 guildSchema.pre("validate", function (next) {
-	const defaultLang = client.configService.get<string>("defaultLang");
+	const defaultLang = client.configService.get<string>("DEFAULT_LANG");
 
 	if (typeof this.language !== "string") this.language = defaultLang;
 

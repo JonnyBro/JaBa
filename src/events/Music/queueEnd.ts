@@ -1,10 +1,11 @@
+import { IS_PROD } from "@/constants/index.js";
 import logger from "@/helpers/logger.js";
 import { doAutoplay } from "@/helpers/music.js";
 import { PlayerCustom } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 
 const client = useClient();
-const debug = !client.configService.get<boolean>("production");
+const debug = !IS_PROD;
 
 export const data = {
 	name: "queueEnd",

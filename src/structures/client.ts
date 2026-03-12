@@ -1,24 +1,25 @@
 import MongooseAdapter from "@/adapters/database/MongooseAdapter.js";
 import { SUPER_CONTEXT } from "@/constants/index.js";
 import { Handlers } from "@/handlers/index.js";
+import { lavalinkNodesFromString } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import ConfigService from "@/services/config/index.js";
 import InternationalizationService from "@/services/languages/index.js";
 import { cacheRemindsData, CommandFileObject } from "@/types.js";
 import { Client, ClientOptions } from "discord.js";
-import { LavalinkManager, LavalinkNodeOptions } from "lavalink-client";
+import { LavalinkManager } from "lavalink-client";
 
 export class ExtendedClient extends Client<true> {
-	configService = new ConfigService();
-	adapter = new MongooseAdapter(this.configService.get<string>("mongoDB"));
+	configService = new ConfigService().loadConfig();
+	adapter = new MongooseAdapter(this.configService.get<string>("MONGODB_URI"));
 	cacheReminds = new Map<string, cacheRemindsData>();
 	i18n = new InternationalizationService(this);
 	lavalink = new LavalinkManager({
-		nodes: this.configService.get<LavalinkNodeOptions[]>("music.nodes"),
+		nodes: lavalinkNodesFromString(this.configService.get<string>("LAVALINK_NODES")),
 		sendToShard: (guildId, payload) => this.guilds.cache.get(guildId)?.shard?.send(payload),
 		autoSkip: true,
 		client: {
-			id: this.configService.get<string>("clientId"),
+			id: this.configService.get<string>("CLIENT_ID"),
 			username: "JaBa",
 		},
 	});
@@ -39,11 +40,11 @@ export class ExtendedClient extends Client<true> {
 			await this.adapter.connect();
 
 			await this.lavalink.init({
-				id: this.configService.get<string>("clientId"),
+				id: this.configService.get<string>("CLIENT_ID"),
 				username: "JaBa",
 			});
 
-			await this.login(this.configService.get("token"));
+			await this.login(this.configService.get<string>("TOKEN"));
 		} catch (error) {
 			logger.error(error);
 		}

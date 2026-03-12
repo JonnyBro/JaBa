@@ -1,3 +1,4 @@
+import { IS_PROD } from "@/constants/index.js";
 import { capitalizeString, convertTime, shortenString, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { doAutoplay } from "@/helpers/music.js";
@@ -16,7 +17,7 @@ import {
 import { RepeatMode, Track } from "lavalink-client";
 
 const client = useClient();
-const debug = !client.configService.get<boolean>("production");
+const debug = !IS_PROD;
 
 enum ButtonId {
 	PLAY_PAUSE_BUTTON_ID = "trackStart_play_pause",

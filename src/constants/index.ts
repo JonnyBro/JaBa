@@ -1,10 +1,10 @@
-import path from "node:path";
+import { ExtendedClient } from "@/structures/client.js";
 import { GatewayIntentBits, MessageMentionOptions, Partials } from "discord.js";
 import { AsyncLocalStorage } from "node:async_hooks";
-import { ExtendedClient } from "@/structures/client.js";
+import path from "node:path";
 
 export const PROJECT_ROOT = path.join(import.meta.dirname, "..");
-export const CONFIG_PATH = path.join(PROJECT_ROOT, "..", "config.json");
+export const IS_PROD = Boolean(process.env.PROD);
 export const CLIENT_INTENTS = [
 	GatewayIntentBits.Guilds,
 	GatewayIntentBits.GuildMembers,
