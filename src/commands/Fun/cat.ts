@@ -28,8 +28,16 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
 	});
 
-	const res = await fetch("https://api.pur.cat/random-cat").then(r => r.json());
-	const embed = createEmbed({ image: res.url });
+	const res = (await fetch("https://api.thecatapi.com/v1/images/search").then(r => r.json()))[0];
+	if (!res) return interaction.editReply("error in the api");
+
+	const embed = createEmbed({
+		image: {
+			url: res.url,
+			height: res.height,
+			width: res.width,
+		},
+	});
 
 	await interaction.editReply({ embeds: [embed] });
 };
