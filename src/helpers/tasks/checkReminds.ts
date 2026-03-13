@@ -9,7 +9,7 @@ const client = useClient();
 export const data: CronTaskData = {
 	name: "checkReminds",
 	task: async () => {
-		const users = await client.adapter.find(UserModel, { reminds: { $gt: [] } });
+		const users = await client.db.find(UserModel, { reminds: { $gt: [] } });
 
 		for (const user of users) {
 			if (!client.users.cache.has(user.id)) client.users.fetch(user.id);
@@ -56,7 +56,7 @@ export const data: CronTaskData = {
 						embeds: [embed],
 					});
 
-					await client.adapter.updateOne(
+					await client.db.updateOne(
 						UserModel,
 						{ id },
 						{

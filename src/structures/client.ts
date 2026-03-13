@@ -11,7 +11,7 @@ import { LavalinkManager } from "lavalink-client";
 
 export class ExtendedClient extends Client<true> {
 	configService = new ConfigService().loadConfig();
-	adapter = new MongooseAdapter(this.configService.get<string>("MONGODB_URI"));
+	db = new MongooseAdapter(this.configService.get<string>("MONGODB_URI"));
 	cacheReminds = new Map<string, cacheRemindsData>();
 	i18n = new InternationalizationService(this);
 	lavalink = new LavalinkManager({
@@ -37,7 +37,7 @@ export class ExtendedClient extends Client<true> {
 
 	async init() {
 		try {
-			await this.adapter.connect();
+			await this.db.connect();
 
 			await this.lavalink.init({
 				id: this.configService.get<string>("CLIENT_ID"),
@@ -52,35 +52,35 @@ export class ExtendedClient extends Client<true> {
 
 	async getGuildData(guildId: string) {
 		const { default: GuildModel } = await import("@/models/GuildModel.js");
-		const guildData = await this.adapter.findOneOrCreate(GuildModel, { id: guildId });
+		const guildData = await this.db.findOneOrCreate(GuildModel, { id: guildId });
 
 		return guildData;
 	}
 
 	async getGuildsData() {
 		const { default: GuildModel } = await import("@/models/GuildModel.js");
-		const guildsData = await this.adapter.find(GuildModel);
+		const guildsData = await this.db.find(GuildModel);
 
 		return guildsData;
 	}
 
 	async getUserData(userID: string) {
 		const { default: UserModel } = await import("@/models/UserModel.js");
-		const userData = await this.adapter.findOneOrCreate(UserModel, { id: userID });
+		const userData = await this.db.findOneOrCreate(UserModel, { id: userID });
 
 		return userData;
 	}
 
 	async getUsersData() {
 		const { default: UserModel } = await import("@/models/UserModel.js");
-		const usersData = await this.adapter.find(UserModel);
+		const usersData = await this.db.find(UserModel);
 
 		return usersData;
 	}
 
 	async getMemberData(guildID: string, memberId: string) {
 		const { default: MemberModel } = await import("@/models/MemberModel.js");
-		const memberData = await this.adapter.findOneOrCreate(MemberModel, {
+		const memberData = await this.db.findOneOrCreate(MemberModel, {
 			id: memberId,
 			guildID,
 		});
@@ -90,7 +90,7 @@ export class ExtendedClient extends Client<true> {
 
 	async getMembersData(guildID: string) {
 		const { default: MemberModel } = await import("@/models/MemberModel.js");
-		const membersData = await this.adapter.find(MemberModel, {
+		const membersData = await this.db.find(MemberModel, {
 			guildID,
 		});
 

@@ -1,6 +1,7 @@
 import { getLocalizedDesc, translateContext } from "@/helpers/functions.js";
 import { UserReminds } from "@/models/UserModel.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
+import { componentRouter } from "@/utils/component-router.js";
 import useClient from "@/utils/use-client.js";
 import {
 	ApplicationIntegrationType,
@@ -40,9 +41,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	});
 };
 
-client.on("interactionCreate", async interaction => {
+componentRouter.register("REMIND_DELETE", async interaction => {
 	if (!interaction.isButton()) return;
-	if (!interaction.customId.startsWith("REMIND_DELETE")) return;
 
 	const index = Number(interaction.customId.split(":")[1]);
 	const userData = await client.getUserData(interaction.user.id);

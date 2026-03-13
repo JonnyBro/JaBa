@@ -11,7 +11,7 @@ export const data = {
 		if (!client.isReady()) return;
 
 		const guilds = client.guilds.cache.values();
-		const users = await client.adapter.find(UserModel, {
+		const users = await client.db.find(UserModel, {
 			birthdate: { $ne: null },
 		});
 

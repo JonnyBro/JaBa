@@ -8,7 +8,7 @@ const client = useClient();
 export const data: CronTaskData = {
 	name: "clearTransactions",
 	task: async () => {
-		const members = await client.adapter.find(MemberModel, { transactions: { $gt: [] } });
+		const members = await client.db.find(MemberModel, { transactions: { $gt: [] } });
 
 		for (const member of members)
 			try {

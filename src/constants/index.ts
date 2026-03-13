@@ -4,7 +4,7 @@ import { AsyncLocalStorage } from "node:async_hooks";
 import path from "node:path";
 
 export const PROJECT_ROOT = path.join(import.meta.dirname, "..");
-export const IS_PROD = Boolean(process.env.PROD);
+export const IS_PROD = process.env.PROD === "true" ? true : false;
 export const CLIENT_INTENTS = [
 	GatewayIntentBits.Guilds,
 	GatewayIntentBits.GuildMembers,

@@ -1,5 +1,6 @@
 import { getLocalizedDesc, getNoun, getXpForNextLevel, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
+import { componentRouter } from "@/utils/component-router.js";
 import useClient from "@/utils/use-client.js";
 import {
 	ActionRowBuilder,
@@ -29,7 +30,7 @@ enum LeaderboardType {
 	Reputation = "rep",
 }
 
-const LEADERBOARD_SELECTOR_ID = "leaderboard_selector";
+const LEADERBOARD_SELECTOR_ID = "LEADERBOARD_SELECTOR";
 
 async function fetchAndBuildEntries<T>(
 	fetcher: () => Promise<T[]>,
@@ -145,9 +146,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 };
 
 // Handle leaderboard selector
-client.on("interactionCreate", async interaction => {
+componentRouter.register(LEADERBOARD_SELECTOR_ID, async interaction => {
 	if (!interaction.isStringSelectMenu()) return;
-	if (interaction.customId !== LEADERBOARD_SELECTOR_ID) return;
 
 	const selected = interaction.values[0];
 	const membersData = client.getMembersData(interaction.guildId!);

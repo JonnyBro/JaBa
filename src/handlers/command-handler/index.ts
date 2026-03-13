@@ -1,12 +1,12 @@
-import { join } from "node:path";
+import { PROJECT_ROOT } from "@/constants/index.js";
 import logger from "@/helpers/logger.js";
-import { getFilePaths } from "@/utils/get-path.js";
-import { toFileURL } from "@/utils/resolve-file.js";
-import registerCommands from "./functions/registerCommands.js";
 import { ExtendedClient } from "@/structures/client.js";
 import { BuiltInValidation, CommandFileObject } from "@/types.js";
+import { getFilePaths } from "@/utils/get-path.js";
+import { toFileURL } from "@/utils/resolve-file.js";
+import { join } from "node:path";
+import registerCommands from "./functions/registerCommands.js";
 import builtInValidationsFunctions from "./validations/index.js";
-import { PROJECT_ROOT } from "@/constants/index.js";
 
 export class CommandHandler {
 	client: ExtendedClient;

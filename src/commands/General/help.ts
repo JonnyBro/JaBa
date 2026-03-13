@@ -1,5 +1,6 @@
 import { editReplyError, getLocalizedDesc, translateContext } from "@/helpers/functions.js";
 import { AutocompleteProps, CommandData, SlashCommandProps } from "@/types.js";
+import { componentRouter } from "@/utils/component-router.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
 import {
@@ -13,7 +14,7 @@ import {
 
 const client = useClient();
 
-const HELP_SELECT_ID = "help_category_select";
+const HELP_SELECT_ID = "HELP_CATEGORY_SELECT";
 
 export const data: CommandData = {
 	name: "help",
@@ -124,9 +125,8 @@ export const autocompleteRun = async ({ interaction }: AutocompleteProps) => {
 	await interaction.respond(results);
 };
 
-client.on("interactionCreate", async interaction => {
+componentRouter.register(HELP_SELECT_ID, async interaction => {
 	if (!interaction.isStringSelectMenu()) return;
-	if (interaction.customId !== HELP_SELECT_ID) return;
 
 	await interaction.deferUpdate();
 

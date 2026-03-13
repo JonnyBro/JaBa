@@ -1,5 +1,6 @@
 import { getUsername, getXpForNextLevel, randomNum, replyTranslated, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
+import { componentRouter } from "@/utils/component-router.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, GuildTextBasedChannel, Message } from "discord.js";
@@ -7,7 +8,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, GuildTextBasedChannel, Me
 const client = useClient();
 const xpCooldown: Record<string, number> = {};
 const QUOTE_REGEXP = /discord\.com\/channels\/(?<guildId>\d+)\/(?<channelId>\d+)\/(?<messageId>\d+)/g;
-const DELETE_BUTTON_ID = "quote_delete";
+const DELETE_BUTTON_ID = "QUOTE_DELETE";
 
 export const data = {
 	name: "messageCreate",
@@ -23,12 +24,9 @@ export async function run(message: Message) {
 	return;
 }
 
-client.on("interactionCreate", async interaction => {
+componentRouter.register(DELETE_BUTTON_ID, async interaction => {
 	if (!interaction.isButton()) return;
-	if (interaction.customId !== DELETE_BUTTON_ID) return;
-
 	await interaction.deferUpdate();
-
 	if (interaction.message.deletable) await interaction.message.delete();
 });
 

@@ -58,157 +58,147 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 client.on("interactionCreate", async interaction => {
 	if (!interaction.isButton()) return;
+	if (!interaction.customId.startsWith("queue_")) return;
 
-	if (interaction.customId.startsWith("queue_")) {
-		const player = client.lavalink.getPlayer(interaction.guildId!);
-		if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
+	const player = client.lavalink.getPlayer(interaction.guildId!);
+	if (!player) return editReplyError(interaction, "music/play:NOT_PLAYING");
 
-		const pageText = interaction.message.content.match(/\*\*(\d+)\*\*\/\*\*(\d+)\*\*/);
-		let currentPage = pageText ? parseInt(pageText[1], 10) - 1 : 0;
+	const pageText = interaction.message.content.match(/\*\*(\d+)\*\*\/\*\*(\d+)\*\*/);
+	let currentPage = pageText ? parseInt(pageText[1], 10) - 1 : 0;
 
-		const { embeds, size } = await generateQueueEmbeds(interaction, player);
+	const { embeds, size } = await generateQueueEmbeds(interaction, player);
 
-		switch (interaction.customId) {
-			case "queue_prev_page": {
-				await interaction.deferUpdate();
+	switch (interaction.customId) {
+		case "queue_prev_page": {
+			await interaction.deferUpdate();
 
-				if (currentPage !== 0) {
-					--currentPage;
+			if (currentPage !== 0) {
+				--currentPage;
 
-					const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-						new ButtonBuilder()
-							.setCustomId("queue_prev_page")
-							.setStyle(ButtonStyle.Primary)
-							.setEmoji("⬅️")
-							.setDisabled(currentPage === 0),
-						new ButtonBuilder()
-							.setCustomId("queue_next_page")
-							.setStyle(ButtonStyle.Primary)
-							.setEmoji("➡️")
-							.setDisabled(currentPage >= size - 1),
-						new ButtonBuilder()
-							.setCustomId("queue_jump_page")
-							.setStyle(ButtonStyle.Secondary)
-							.setEmoji("↗️"),
-						new ButtonBuilder().setCustomId("queue_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
-					);
-
-					interaction.editReply({
-						content: `${await translateContext(
-							interaction,
-							"common:PAGE",
-						)}: **${currentPage + 1}**/**${size}**`,
-						embeds: [embeds[currentPage]],
-						components: [row],
-					});
-				}
-
-				break;
-			}
-
-			case "queue_next_page": {
-				await interaction.deferUpdate();
-
-				if (currentPage < size - 1) {
-					currentPage++;
-
-					const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-						new ButtonBuilder()
-							.setCustomId("queue_prev_page")
-							.setStyle(ButtonStyle.Primary)
-							.setEmoji("⬅️")
-							.setDisabled(currentPage === 0),
-						new ButtonBuilder()
-							.setCustomId("queue_next_page")
-							.setStyle(ButtonStyle.Primary)
-							.setEmoji("➡️")
-							.setDisabled(currentPage >= size - 1),
-						new ButtonBuilder()
-							.setCustomId("queue_jump_page")
-							.setStyle(ButtonStyle.Secondary)
-							.setEmoji("↗️"),
-						new ButtonBuilder().setCustomId("queue_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
-					);
-
-					interaction.editReply({
-						content: `${await translateContext(
-							interaction,
-							"common:PAGE",
-						)}: **${currentPage + 1}**/**${size}**`,
-						embeds: [embeds[currentPage]],
-						components: [row],
-					});
-				}
-
-				break;
-			}
-
-			case "queue_jump_page": {
-				const m = await interaction.deferUpdate();
-
-				const selectMenu = new StringSelectMenuBuilder()
-					.setCustomId("queue_select")
-					.setPlaceholder(await translateContext(interaction, "common:NOTHING_SELECTED"));
-
-				for (let i = 0; i < size; i++)
-					selectMenu.addOptions(
-						new StringSelectMenuOptionBuilder().setLabel((i + 1).toString()).setValue(i.toString()),
-					);
-
-				const selectRow = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(selectMenu);
-
-				let page = 0;
-
-				await interaction.followUp({
-					components: [selectRow],
-					flags: MessageFlags.Ephemeral,
-				});
-
-				client.once("interactionCreate", async interaction => {
-					if (!interaction.isStringSelectMenu()) return;
-					if (interaction.customId !== "queue_select") return;
-
-					await interaction.deferUpdate();
-
-					page = Number(interaction.values[0]);
-
-					const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-						new ButtonBuilder()
-							.setCustomId("queue_prev_page")
-							.setStyle(ButtonStyle.Primary)
-							.setEmoji("⬅️")
-							.setDisabled(page === 0),
-						new ButtonBuilder()
-							.setCustomId("queue_next_page")
-							.setStyle(ButtonStyle.Primary)
-							.setEmoji("➡️")
-							.setDisabled(page >= size - 1),
-						new ButtonBuilder()
-							.setCustomId("queue_jump_page")
-							.setStyle(ButtonStyle.Secondary)
-							.setEmoji("↗️"),
-						new ButtonBuilder().setCustomId("queue_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
-					);
-
-					await m.edit({
-						content: `${await translateContext(interaction, "common:PAGE")}: **${page + 1}**/**${size}**`,
-						embeds: [embeds[page]],
-						components: [row],
-					});
-				});
-
-				break;
-			}
-
-			case "queue_stop": {
-				await interaction.deferUpdate();
+				const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+					new ButtonBuilder()
+						.setCustomId("queue_prev_page")
+						.setStyle(ButtonStyle.Primary)
+						.setEmoji("⬅️")
+						.setDisabled(currentPage === 0),
+					new ButtonBuilder()
+						.setCustomId("queue_next_page")
+						.setStyle(ButtonStyle.Primary)
+						.setEmoji("➡️")
+						.setDisabled(currentPage >= size - 1),
+					new ButtonBuilder().setCustomId("queue_jump_page").setStyle(ButtonStyle.Secondary).setEmoji("↗️"),
+					new ButtonBuilder().setCustomId("queue_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
+				);
 
 				interaction.editReply({
-					components: [],
+					content: `${await translateContext(
+						interaction,
+						"common:PAGE",
+					)}: **${currentPage + 1}**/**${size}**`,
+					embeds: [embeds[currentPage]],
+					components: [row],
 				});
-
-				break;
 			}
+
+			break;
+		}
+
+		case "queue_next_page": {
+			await interaction.deferUpdate();
+
+			if (currentPage < size - 1) {
+				currentPage++;
+
+				const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+					new ButtonBuilder()
+						.setCustomId("queue_prev_page")
+						.setStyle(ButtonStyle.Primary)
+						.setEmoji("⬅️")
+						.setDisabled(currentPage === 0),
+					new ButtonBuilder()
+						.setCustomId("queue_next_page")
+						.setStyle(ButtonStyle.Primary)
+						.setEmoji("➡️")
+						.setDisabled(currentPage >= size - 1),
+					new ButtonBuilder().setCustomId("queue_jump_page").setStyle(ButtonStyle.Secondary).setEmoji("↗️"),
+					new ButtonBuilder().setCustomId("queue_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
+				);
+
+				interaction.editReply({
+					content: `${await translateContext(
+						interaction,
+						"common:PAGE",
+					)}: **${currentPage + 1}**/**${size}**`,
+					embeds: [embeds[currentPage]],
+					components: [row],
+				});
+			}
+
+			break;
+		}
+
+		case "queue_jump_page": {
+			const m = await interaction.deferUpdate();
+
+			const selectMenu = new StringSelectMenuBuilder()
+				.setCustomId("queue_select")
+				.setPlaceholder(await translateContext(interaction, "common:NOTHING_SELECTED"));
+
+			for (let i = 0; i < size; i++)
+				selectMenu.addOptions(
+					new StringSelectMenuOptionBuilder().setLabel((i + 1).toString()).setValue(i.toString()),
+				);
+
+			const selectRow = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(selectMenu);
+
+			let page = 0;
+
+			await interaction.followUp({
+				components: [selectRow],
+				flags: MessageFlags.Ephemeral,
+			});
+
+			client.once("interactionCreate", async interaction => {
+				if (!interaction.isStringSelectMenu()) return;
+				if (interaction.customId !== "queue_select") return;
+
+				await interaction.deferUpdate();
+
+				page = Number(interaction.values[0]);
+
+				const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+					new ButtonBuilder()
+						.setCustomId("queue_prev_page")
+						.setStyle(ButtonStyle.Primary)
+						.setEmoji("⬅️")
+						.setDisabled(page === 0),
+					new ButtonBuilder()
+						.setCustomId("queue_next_page")
+						.setStyle(ButtonStyle.Primary)
+						.setEmoji("➡️")
+						.setDisabled(page >= size - 1),
+					new ButtonBuilder().setCustomId("queue_jump_page").setStyle(ButtonStyle.Secondary).setEmoji("↗️"),
+					new ButtonBuilder().setCustomId("queue_stop").setStyle(ButtonStyle.Danger).setEmoji("❌"),
+				);
+
+				await m.edit({
+					content: `${await translateContext(interaction, "common:PAGE")}: **${page + 1}**/**${size}**`,
+					embeds: [embeds[page]],
+					components: [row],
+				});
+			});
+
+			break;
+		}
+
+		case "queue_stop": {
+			await interaction.deferUpdate();
+
+			interaction.editReply({
+				components: [],
+			});
+
+			break;
 		}
 	}
 });
