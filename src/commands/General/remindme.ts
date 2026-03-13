@@ -32,18 +32,11 @@ export const data: CommandData = {
 			autocomplete: true,
 			required: true,
 		},
-		{
-			name: "ephemeral",
-			...getLocalizedDesc("misc:EPHEMERAL_RESPONSE"),
-			type: ApplicationCommandOptionType.Boolean,
-		},
 	],
 };
 
 export const run = async ({ interaction }: SlashCommandProps) => {
-	await interaction.deferReply({
-		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
-	});
+	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
 	const conditions = ["s", "m", "h", "d", "w", "y"];
 	const time = interaction.options.getString("time", true);

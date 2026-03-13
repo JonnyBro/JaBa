@@ -1,9 +1,13 @@
 {
 	"DESCRIPTION": "Lists your reminds",
 	"USAGE": "",
+
 	"EXAMPLES": "reminds",
+
 	"NO_REMINDS": "No reminds",
+
 	"REMINDS_LIST": "Reminds List",
-	"DELETE": "Delete {{pos}}",
-	"DELETED": "Deleted remind №{{pos}}"
+
+	"DELETE": "Delete",
+	"DELETED": "Remind #{{pos}} was deleted succesfully."
 }
