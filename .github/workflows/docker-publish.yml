@@ -91,20 +91,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Scan image with Trivy
-        if: github.event_name != 'pull_request'
-        uses: aquasecurity/trivy-action@0.33.1
-        with:
-          image-ref: ${{ env.REGISTRY_GHCR }}/${{ env.IMAGE_NAME }}:latest
-          format: sarif
-          output: trivy-results.sarif
-
-      - name: Upload scan results
-        if: github.event_name != 'pull_request'
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: trivy-results.sarif
-
       - name: Update Docker Hub description
         if: github.event_name != 'pull_request'
         uses: peter-evans/dockerhub-description@v4
