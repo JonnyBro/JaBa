@@ -3,7 +3,8 @@ services:
         container_name: jaba
         build: .
         # Or use the pre-build version
-        # image: ghcr.io/jonnybro/jaba:main
+        # image: ghcr.io/jonnybro/jaba:latest  # GitHub repo
+        # image: jonnybro/jaba:latest  # Docker Hub
         env_file:
             - .env
         environment:
