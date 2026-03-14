@@ -1,6 +1,7 @@
+<!-- markdownlint-disable MD024 -->
 # Changelog
 
-I'll try to keep this up to date.
+> *I'll try to keep this up to date.*
 
 ----
 
@@ -9,9 +10,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [5.3.2] - 2026-03-14
 
-nothin'
+## Added
+
+- Components router for buttons, select menus and such.
+
+## Fixed
+
+- `/cat` and `/dog` not working.
+- `/addemoji` trying to add local files.
+
+## [5.3.1] - 2026-03-13
+
+## Added
+
+- `/remindme` command - Bot will remind you of whatever you want.
+- `/reminds` command - Manage your reminds.
+
+## [5.3.0] - 2026-03-11
+
+## Changed
+
+- Music now uses `lavalink-client` under the hood.
+- Rewrote and fixed autoplay.
+- Replaced `config.json` with environment variables.
 
 ## [5.2.5] - 2025-11-01
 
@@ -53,7 +76,7 @@ nothin'
 - CI/CD: GitHub Actions workflows:
   - Automatic Docker container build and publish to `ghcr.io`.
   - Automatic releases on tags push.
-- Music: New `/next` command to queue a track to play after the current one
+- Music: New `/next` command to queue a track to play right after the current one
 - UI: "Current track" embed now displays the next upcoming track
 - DevOps: Added MongoDB healthcheck to Docker Compose configuration
 - Build: Added rimraf to clean dist folder during build process
@@ -135,4 +158,3 @@ nothin'
 - Features: Removed AFK status functionality
 
 > Note: Previous versions involved a complete TypeScript rewrite of the codebase.
-
