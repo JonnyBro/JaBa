@@ -6,6 +6,7 @@
 	"LINK_OR_EMOJI": "Image link or emoji from a server",
 
 	"MISSING_NAME": "Please provide a name for the emoji",
+	"INVALID_LINK": "Please provide a valid link for the attachment",
 
 	"SUCCESS": "{{emoji}} has been added",
 	"ERROR": "An error occurred while adding {{name}}.\n```{{error}}```"
