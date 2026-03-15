@@ -8,7 +8,7 @@ import { ActivityType } from "discord.js";
 import { join } from "node:path";
 
 export const data = {
-	name: "ready",
+	name: "clientReady",
 	once: true,
 };
 

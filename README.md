@@ -5,8 +5,8 @@
 JaBa is an open-source Discord Bot written in [TypeScript](https://www.typescriptlang.org/) using [discord.js](https://github.com/discordjs/discord.js) and [Mongoose](https://mongoosejs.com).
 
 ![Discord](https://img.shields.io/discord/892727526911258654?style=for-the-badge&logo=discord&label=Support%20Server&color=00BFFF&link=https%3A%2F%2Fgoogle.com)
-![DiscordJS](https://img.shields.io/badge/discord.js-v14.20.0-blue.svg?logo=npm&style=for-the-badge)
-![TypeScript](https://img.shields.io/badge/TypeScript-v5.8.2-blue.svg?logo=typescript&style=for-the-badge)
+![DiscordJS](https://img.shields.io/badge/discord.js-v14.25.1-blue.svg?logo=npm&style=for-the-badge)
+![TypeScript](https://img.shields.io/badge/TypeScript-v5.9.3-blue.svg?logo=typescript&style=for-the-badge)
 ![Workflow](https://img.shields.io/github/actions/workflow/status/JonnyBro/JaBa/docker-publish.yml?branch=main&style=for-the-badge)
 ![License](https://img.shields.io/github/license/JonnyBro/JaBa?label=License&style=for-the-badge)
 

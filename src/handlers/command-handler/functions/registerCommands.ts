@@ -10,7 +10,7 @@ type RegisterCommandProps = {
 };
 
 export default async function registerCommands(props: RegisterCommandProps) {
-	props.client.once("ready", () => handleRegistration(props.client, props.commands));
+	props.client.once("clientReady", () => handleRegistration(props.client, props.commands));
 }
 
 const handleRegistration = async (client: ExtendedClient, commands: CommandFileObject[]) => {
