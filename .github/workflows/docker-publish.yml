@@ -75,9 +75,6 @@ jobs:
             # v1.2.3 -> 1
             type=semver,pattern={{major}}
 
-            # SHA fallback for manual runs
-            type=sha
-
       - name: Build and push
         uses: docker/build-push-action@v7
         with:
