@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 
 # Install all dependencies using lock file
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --dangerously-allow-all-builds
 
 COPY . .
 
@@ -25,7 +25,7 @@ COPY --from=builder /app/dist ./dist
 COPY package.json pnpm-lock.yaml ./
 
 # Install only production dependencies
-RUN pnpm install --frozen-lockfile --prod
+RUN pnpm install --frozen-lockfile --prod --dangerously-allow-all-builds
 
 # Run the application
 CMD ["node", "dist/index.js"]
