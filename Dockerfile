@@ -5,10 +5,10 @@ RUN npm install -g pnpm
 WORKDIR /app
 
 # Copy dependency files and lock file for caching
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # Install all dependencies using lock file
-RUN pnpm install --frozen-lockfile --dangerously-allow-all-builds
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
@@ -22,10 +22,10 @@ WORKDIR /root/app
 
 # Copy built code
 COPY --from=builder /app/dist ./dist
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # Install only production dependencies
-RUN pnpm install --frozen-lockfile --prod --dangerously-allow-all-builds
+RUN pnpm install --frozen-lockfile --prod
 
 # Run the application
 CMD ["node", "dist/index.js"]
