@@ -1,5 +1,12 @@
 import { REST, Routes } from "discord.js";
-import { clientId, token } from "./config.json";
+import env from "dotenv";
+
+env.config({
+	quiet: true,
+});
+
+const clientId = process.env.clientId;
+const token = process.env.token;
 
 if (!clientId) throw new Error("clientId is not defined in the config");
 if (!token) throw new Error("token is not defined in the config");
