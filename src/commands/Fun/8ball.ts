@@ -1,12 +1,15 @@
-import { shortenString, getLocalizedDesc, randomNum, translateContext } from "@/helpers/functions.js";
+import { getLocalizedDesc, randomNum, shortenString, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
+import useClient from "@/utils/use-client.js";
 import {
 	ApplicationCommandOptionType,
 	ApplicationIntegrationType,
 	InteractionContextType,
 	MessageFlags,
 } from "discord.js";
+
+const client = useClient();
 
 export const data: CommandData = {
 	name: "8ball",
@@ -51,5 +54,5 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	setTimeout(() => {
 		interaction.editReply({ embeds: [embed] });
-	}, 2500);
+	}, client.configService.get<number>("8BALL_TYPING_TIME"));
 };
