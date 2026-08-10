@@ -1,0 +1,4 @@
+allowBuilds:
+  '@discordjs/opus': true
+  core-js: true
+  esbuild: true

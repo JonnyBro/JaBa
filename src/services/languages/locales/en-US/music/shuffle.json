@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Shuffles the queue",
-	"USAGE": "",
-	"EXAMPLES": "shuffle",
-	"SUCCESS": "Queue shuffled successfully"
-}

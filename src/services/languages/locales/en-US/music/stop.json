@@ -1,6 +1,0 @@
-{
-	"DESCRIPTION": "Stops and removes the queue",
-	"USAGE": "",
-	"EXAMPLES": "stop",
-	"SUCCESS": "Playback stopped"
-}
