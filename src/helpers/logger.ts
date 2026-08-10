@@ -13,13 +13,13 @@ function format(tDate: Date | number) {
 }
 
 const logLevels = {
-	CMD: chalk.black.bgWhite("CMD"),
-	DEBUG: chalk.green("DEBUG"),
-	ERROR: chalk.black.bgRed("ERROR"),
-	INFO: chalk.black.bgGreen("INFO"),
+	CMD: chalk.black("CMD"),
+	DEBUG: chalk.magenta("DEBUG"),
+	ERROR: chalk.red("ERROR"),
+	INFO: chalk.blue("INFO"),
 	LOG: chalk.bgBlue("LOG"),
-	READY: chalk.black.bgGreen("READY"),
-	WARN: chalk.black.bgYellow("WARN"),
+	READY: chalk.green("READY"),
+	WARN: chalk.yellow("WARN"),
 };
 
 export default {

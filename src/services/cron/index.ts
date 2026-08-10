@@ -53,9 +53,11 @@ export class CronManager {
 				isRunning: false,
 				isError: false,
 			});
+
+			logger.debug(`Task ${task.name} started`);
 		}
 
-		logger.info(`Scheduled ${this.jobs.size} cron tasks`);
+		logger.info(`Scheduled ${this.jobs.size} cron task(s)`);
 	}
 
 	stopAll() {
@@ -64,7 +66,7 @@ export class CronManager {
 		for (const [name, jobInfo] of this.jobs.entries()) {
 			jobInfo.job.stop();
 
-			logger.debug(`Stopped cron task "${name}"`);
+			logger.log(`Stopped cron task "${name}"`);
 		}
 
 		this.jobs.clear();

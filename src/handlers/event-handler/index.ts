@@ -63,7 +63,7 @@ export class EventHandler {
 			logger.error("Error build events: ", error);
 		}
 
-		logger.log(`Loaded ${eventFilePaths.length} event(s)`);
+		logger.info(`Loaded ${eventFilePaths.length} event(s)`);
 	}
 
 	$registerEvents() {

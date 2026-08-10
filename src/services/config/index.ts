@@ -12,7 +12,7 @@ class ConfigService {
 			return process.exit(1);
 		}
 
-		logger.info("Config loaded successfully!");
+		logger.info("Config loaded successfully");
 
 		return this;
 	}

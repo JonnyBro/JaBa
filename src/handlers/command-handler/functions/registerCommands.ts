@@ -46,7 +46,7 @@ const registerGlobalCommands = async (client: ExtendedClient, commands: CommandF
 		}),
 	);
 
-	logger.log(`Registered ${commands.length} global command(s)`);
+	logger.info(`Registered ${commands.length} global command(s)`);
 };
 
 const registerDevCommands = async (client: ExtendedClient, commands: CommandFileObject[], guildsIds: string[]) => {
@@ -100,5 +100,5 @@ const registerDevCommands = async (client: ExtendedClient, commands: CommandFile
 		}),
 	);
 
-	logger.log(`Registered ${commands.length} dev command(s) in ${devGuilds.length} server(s)`);
+	logger.info(`Registered ${commands.length} dev command(s) in ${devGuilds.length} server(s)`);
 };

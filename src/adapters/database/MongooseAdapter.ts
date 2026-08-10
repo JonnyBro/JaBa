@@ -16,19 +16,20 @@ export default class MongooseAdapter extends IDatabaseAdapter<
 
 	constructor(uri: string, options: ConnectOptions = {}) {
 		super();
-		if (!uri) throw new Error("MongooseAdapter: URI is required.");
+
+		if (!uri) throw new Error("MongooseAdapter: URI is required");
 		this.options = options;
 		this.uri = uri;
 	}
 
 	async connect() {
 		await mongoose.connect(this.uri, this.options);
-		logger.log("Database connected");
+		logger.info("Database connected");
 	}
 
 	async disconnect() {
 		await mongoose.disconnect();
-		logger.warn("Database disconnected.");
+		logger.warn("Database disconnected");
 		this.cache.clear();
 	}
 
