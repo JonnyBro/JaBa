@@ -70,13 +70,6 @@ export const generateFields = async (
 ) => {
 	const fieldsConfig: ConfigField[] = [
 		{
-			type: ConfigFieldsType.plugin,
-			nameKey: "administration/config:AUTOPLAY",
-			valueKey: "common:ENABLED",
-			enabled: guildData.plugins.music.autoPlay,
-			data: { channel: "" },
-		},
-		{
 			type: ConfigFieldsType.group,
 			nameKey: "administration/config:SPECIAL_CHANNELS",
 			items: [

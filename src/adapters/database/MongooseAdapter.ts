@@ -1,7 +1,7 @@
-import mongoose, { ConnectOptions, Model, FilterQuery, QueryOptions, UpdateQuery, HydratedDocument } from "mongoose";
-import IDatabaseAdapter from "./IDatabaseAdapter.js";
+import Cache from "@/adapters/cache/MapCache.js";
 import logger from "@/helpers/logger.js";
-import Cache from "../cache/MapCache.js";
+import mongoose, { ConnectOptions, FilterQuery, HydratedDocument, Model, QueryOptions, UpdateQuery } from "mongoose";
+import IDatabaseAdapter from "./IDatabaseAdapter.js";
 
 export default class MongooseAdapter extends IDatabaseAdapter<
 	Model<any>,

@@ -1,6 +1,6 @@
+import { PROJECT_ROOT } from "@/constants/index.js";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { PROJECT_ROOT } from "@/constants/index.js";
 
 export const getFilePaths = async (directory: string, nesting: boolean) => {
 	let filePaths: string[] = [];

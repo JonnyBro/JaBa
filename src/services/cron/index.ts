@@ -1,6 +1,6 @@
-import { CronJob } from "cron";
-import logger from "../../helpers/logger.js";
+import logger from "@/helpers/logger.js";
 import { CronTaskData } from "@/types.js";
+import { CronJob } from "cron";
 
 export class CronManager {
 	private static instance: CronManager;
@@ -54,7 +54,8 @@ export class CronManager {
 				isError: false,
 			});
 		}
-		logger.log(`Scheduled ${this.jobs.size} cron tasks`);
+
+		logger.info(`Scheduled ${this.jobs.size} cron tasks`);
 	}
 
 	stopAll() {
@@ -68,6 +69,6 @@ export class CronManager {
 
 		this.jobs.clear();
 
-		logger.log("All cron jobs stopped and cleared.");
+		logger.info("All cron jobs stopped and cleared.");
 	}
 }

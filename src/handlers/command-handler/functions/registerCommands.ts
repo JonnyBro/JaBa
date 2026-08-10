@@ -1,6 +1,6 @@
-import { ExtendedClient } from "@/structures/client.js";
+import differentCommands from "@/handlers/command-handler/utils/differentcommands.js";
 import logger from "@/helpers/logger.js";
-import differentCommands from "../utils/differentcommands.js";
+import { ExtendedClient } from "@/structures/client.js";
 import { CommandFileObject } from "@/types.js";
 import { ApplicationCommandData, GuildApplicationCommandManager } from "discord.js";
 

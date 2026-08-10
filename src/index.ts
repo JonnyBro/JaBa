@@ -1,6 +1,6 @@
-import { ExtendedClient } from "./structures/client.js";
-import logger from "./helpers/logger.js";
-import { CLIENT_INTENTS, CLIENT_PARTIALS, CLIENT_ALLOWED_MENTIONS } from "./constants/index.js";
+import { CLIENT_ALLOWED_MENTIONS, CLIENT_INTENTS, CLIENT_PARTIALS } from "@/constants/index.js";
+import logger from "@/helpers/logger.js";
+import { ExtendedClient } from "@/structures/client.js";
 
 const client = new ExtendedClient({
 	intents: CLIENT_INTENTS,

@@ -13,26 +13,18 @@ function format(tDate: Date | number) {
 }
 
 const logLevels = {
-	LOG: chalk.bgBlue("LOG"),
-	WARN: chalk.black.bgYellow("WARN"),
-	ERROR: chalk.black.bgRed("ERROR"),
-	DEBUG: chalk.green("DEBUG"),
 	CMD: chalk.black.bgWhite("CMD"),
+	DEBUG: chalk.green("DEBUG"),
+	ERROR: chalk.black.bgRed("ERROR"),
+	INFO: chalk.black.bgGreen("INFO"),
+	LOG: chalk.bgBlue("LOG"),
 	READY: chalk.black.bgGreen("READY"),
+	WARN: chalk.black.bgYellow("WARN"),
 };
 
 export default {
-	log(...content: unknown[]) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.LOG}`, ...content);
-	},
-
-	warn(...content: unknown[]) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.WARN}`, ...content);
-	},
-
-	error(...content: unknown[]) {
-		const formattedContent = content.map(item => (item instanceof Error ? item.stack || item.toString() : item));
-		return console.error(`[${format(Date.now())}]: ${logLevels.ERROR}`, ...formattedContent);
+	cmd(...content: unknown[]) {
+		return console.log(`[${format(Date.now())}]: ${logLevels.CMD}`, ...content);
 	},
 
 	debug(...content: unknown[]) {
@@ -40,11 +32,24 @@ export default {
 		return console.log(`[${format(Date.now())}]: ${logLevels.DEBUG}`, ...content);
 	},
 
-	cmd(...content: unknown[]) {
-		return console.log(`[${format(Date.now())}]: ${logLevels.CMD}`, ...content);
+	error(...content: unknown[]) {
+		const formattedContent = content.map(item => (item instanceof Error ? item.stack || item.toString() : item));
+		return console.error(`[${format(Date.now())}]: ${logLevels.ERROR}`, ...formattedContent);
+	},
+
+	info(...content: unknown[]) {
+		return console.log(`[${format(Date.now())}]: ${logLevels.INFO}`, ...content);
+	},
+
+	log(...content: unknown[]) {
+		return console.log(`[${format(Date.now())}]: ${logLevels.LOG}`, ...content);
 	},
 
 	ready(...content: unknown[]) {
 		return console.log(`[${format(Date.now())}]: ${logLevels.READY}`, ...content);
+	},
+
+	warn(...content: unknown[]) {
+		return console.log(`[${format(Date.now())}]: ${logLevels.WARN}`, ...content);
 	},
 };

@@ -73,19 +73,6 @@ export const data: CommandData = {
 				},
 			],
 		},
-		{
-			name: "autoplay",
-			...getLocalizedDesc("administration/config:AUTOPLAY"),
-			type: ApplicationCommandOptionType.Subcommand,
-			options: [
-				{
-					name: "state",
-					...getLocalizedDesc("common:STATE"),
-					type: ApplicationCommandOptionType.Boolean,
-					required: true,
-				},
-			],
-		},
 	],
 };
 
@@ -167,15 +154,6 @@ async function changeSetting(interaction: ChatInputCommandInteraction, subcomman
 
 			return await generateReply(interaction, subcommand, {
 				channel: options.channel.toString(),
-			});
-		case "autoplay":
-			if (!guildData.plugins.music) guildData.plugins.music = { autoPlay: false };
-
-			guildData.set("plugins.music.autoPlay", options.state);
-			await guildData.save();
-
-			return await generateReply(interaction, subcommand, {
-				state: options.state,
 			});
 	}
 }

@@ -11,7 +11,6 @@ import {
 	MessageFlags,
 	User,
 } from "discord.js";
-import { parseLavalinkConnUrl } from "lavalink-client";
 
 interface Options extends InteractionReplyOptions {
 	prefixEmoji?: string;
@@ -211,9 +210,3 @@ export const shortenString = (str: string, maxLength: number) =>
 	str.length > maxLength ? str.slice(0, maxLength - 3) + "..." : str;
 
 export const capitalizeString = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
-
-export const lavalinkNodesFromString = (str: string) =>
-	str
-		.split(" ")
-		.filter(v => v.length)
-		.map(url => parseLavalinkConnUrl(url));

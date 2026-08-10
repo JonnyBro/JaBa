@@ -1,11 +1,11 @@
+import { PROJECT_ROOT } from "@/constants/index.js";
+import logger from "@/helpers/logger.js";
+import { ExtendedClient } from "@/structures/client.js";
+import fs from "fs/promises";
 import i18next, { TOptionsBase } from "i18next";
 import Backend from "i18next-fs-backend";
-import fs from "fs/promises";
-import { resolve, join } from "path";
-import logger from "@/helpers/logger.js";
+import { join, resolve } from "path";
 import supportedLanguages from "./language-meta.js";
-import { ExtendedClient } from "@/structures/client.js";
-import { PROJECT_ROOT } from "@/constants/index.js";
 
 interface InternationalizationServiceOptions {
 	defaultLanguage?: string;
@@ -90,7 +90,7 @@ export default class InternationalizationService {
 			initImmediate: false,
 		});
 
-		logger.log("Internationalization initialized");
+		logger.info("Internationalization initialized");
 
 		return i18nInstance;
 	}

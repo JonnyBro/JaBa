@@ -1,6 +1,6 @@
 {
     "name": "jaba",
-    "version": "5.3.3",
+    "version": "5.4.0",
     "main": "src/index.js",
     "type": "module",
     "scripts": {
@@ -41,5 +41,6 @@
         "tsc-alias": "^1.8.16",
         "tsx": "^4.20.3",
         "typescript": "^5.9.3"
-    }
+    },
+    "packageManager": "pnpm@11.18.0"
 }

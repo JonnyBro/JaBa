@@ -1,5 +1,5 @@
+import logger from "@/helpers/logger.js";
 import { CronTaskData } from "@/types.js";
-import logger from "../helpers/logger.js";
 import { getFilePaths } from "./get-path.js";
 import { toFileURL } from "./resolve-file.js";
 
