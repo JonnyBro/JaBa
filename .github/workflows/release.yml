@@ -1,34 +1,51 @@
 name: Release
 
 on:
-  workflow_run:
-    workflows: ["Docker Publish"]
-    types:
-      - completed
+  push:
+    tags:
+      - "v*"
 
 permissions:
   contents: write
+  packages: write
+  security-events: write
+  id-token: write
 
 jobs:
+  docker:
+    name: Publish Docker image
+    uses: ./.github/workflows/docker-publish.yml
+    with:
+      push: true
+    secrets: inherit
+
   release:
-    if: github.event.workflow_run.conclusion == 'success'
+    name: Create GitHub release
+    needs: docker
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - name: Install git-cliff
-        uses: kenji-miyake/setup-git-cliff@v1
-
       - name: Generate changelog
-        run: |
-          git cliff --latest --strip header > CHANGELOG.md
+        id: git-cliff
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --latest --strip header
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
 
       - name: Create release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
-          tag_name: ${{ github.event.release.tag_name }}
+          tag_name: ${{ github.ref_name }}
           body_path: CHANGELOG.md
           generate_release_notes: false
