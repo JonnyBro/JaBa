@@ -54,5 +54,5 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	setTimeout(() => {
 		interaction.editReply({ embeds: [embed] });
-	}, client.configService.get<number>("8BALL_TYPING_TIME"));
+	}, client.configService.get<number>("COMMAND_8BALL_TYPING_TIME") || 2500);
 };
