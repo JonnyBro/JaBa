@@ -9,6 +9,8 @@ services:
             - .env
         environment:
             NODE_ENV: production
+        volumes:
+            - ./.env:/root/app/.env
         depends_on:
             mongo:
                 condition: service_healthy
