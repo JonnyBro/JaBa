@@ -1,38 +1,38 @@
 services:
-    jaba:
-        container_name: jaba
-        build: .
-        # Or use the pre-build version
-        # image: ghcr.io/jonnybro/jaba:latest  # GitHub repo
-        # image: jonnybro/jaba:latest  # Docker Hub
-        env_file:
-            - .env
-        environment:
-            NODE_ENV: production
-        volumes:
-            - ./.env:/root/app/.env
-        depends_on:
-            mongo:
-                condition: service_healthy
-        restart: unless-stopped
+  jaba:
+    container_name: jaba
+    image: jonnybro/jaba:latest          # Docker Hub
+    #      ghcr.io/jonnybro/jaba:latest  # GitHub repo
+    # Or build from source
+    # build: .
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+    volumes:
+      - ./.env:/root/app/.env
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: unless-stopped
 
-    mongo:
-        container_name: mongo
-        image: mongo:8
-        # Uncomment if you need access to the database
-        # ports:
-        #     - 27017:27017
-        volumes:
-            - jaba_mongo_data:/data/db
-            - jaba_mongo_config:/data/configdb
-        healthcheck:
-            test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
-            interval: 30s
-            timeout: 10s
-            retries: 3
-            start_period: 10s
-        restart: unless-stopped
+  mongo:
+    container_name: mongo
+    image: mongo:8
+    # Uncomment if you need access to the database
+    # ports:
+    #   - 27017:27017
+    volumes:
+      - jaba_mongo_data:/data/db
+      - jaba_mongo_config:/data/configdb
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
 
 volumes:
-    jaba_mongo_data:
-    jaba_mongo_config:
+  jaba_mongo_data:
+  jaba_mongo_config:

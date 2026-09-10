@@ -5,8 +5,8 @@ env.config({
 	quiet: true,
 });
 
-const clientId = process.env.clientId;
-const token = process.env.token;
+const clientId = process.env.CLIENT_ID;
+const token = process.env.TOKEN;
 
 if (!clientId) throw new Error("clientId is not defined in the config");
 if (!token) throw new Error("token is not defined in the config");

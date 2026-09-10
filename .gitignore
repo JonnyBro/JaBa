@@ -4,6 +4,8 @@ Thumbs.db
 
 # Configuration
 .env
+.env.*
+!.env.example
 /config.json
 /config.json.*
 
