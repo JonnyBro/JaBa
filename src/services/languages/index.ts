@@ -22,6 +22,7 @@ export default class InternationalizationService {
 		localesPath: string;
 		defaultLanguage: string;
 	};
+	public readonly ready: Promise<unknown>;
 
 	constructor(client: ExtendedClient, options: InternationalizationServiceOptions = {}) {
 		this.client = client;
@@ -29,7 +30,7 @@ export default class InternationalizationService {
 			localesPath: join(PROJECT_ROOT, "services", "languages", "locales"),
 			defaultLanguage: options.defaultLanguage || this.client.configService.get("DEFAULT_LANG"),
 		};
-		this.init();
+		this.ready = this.init();
 	}
 
 	get SupportedLanguages(): string[] {

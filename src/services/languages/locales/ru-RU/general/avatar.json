@@ -2,6 +2,7 @@
 	"DESCRIPTION": "Показывает аватар пользователя",
 	"USAGE": "[user/server] (@user)",
 	"EXAMPLES": "avatar user\navatar server user:@jonny_bro",
+	"CONTEXT_NAME": "Получить аватар",
 
 	"USER": "Показать основной аватар",
 	"SERVER": "Показать аватар на сервере"

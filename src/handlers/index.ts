@@ -11,6 +11,8 @@ export class Handlers {
 	}
 
 	private async init() {
+		await this.client.i18n.ready;
+
 		const eventHandler = new EventHandler(this.client);
 		await eventHandler.init();
 

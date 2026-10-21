@@ -13,18 +13,9 @@ import {
 const client = useClient();
 
 export const data = new ContextMenuCommandBuilder()
-	.setName(
-		client.i18n.translate("general/avatarcontext:NAME", {
-			lng: "en-US",
-		}),
-	)
+	.setName(client.i18n.translate("general/avatar:CONTEXT_NAME", { lng: "en-US" }))
 	.setNameLocalizations({
-		"en-US": client.i18n.translate("general/avatarcontext:NAME", {
-			lng: "en-US",
-		}),
-		ru: client.i18n.translate("general/avatarcontext:NAME", {
-			lng: "ru-RU",
-		}),
+		ru: client.i18n.translate("general/avatar:CONTEXT_NAME", { lng: "ru-RU" }),
 	})
 	.setType(ApplicationCommandType.User)
 	.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])

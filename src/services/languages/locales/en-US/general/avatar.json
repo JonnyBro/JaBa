@@ -2,6 +2,7 @@
 	"DESCRIPTION": "Shows a user's avatar",
 	"USAGE": "[user/server] (@user)",
 	"EXAMPLES": "avatar user\navatar server user:@jonny_bro",
+	"CONTEXT_NAME": "Get Avatar",
 
 	"USER": "Show the user's main avatar",
 	"SERVER": "Show the user's server avatar"

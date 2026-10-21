@@ -115,7 +115,7 @@ export const addToQueue = async ({
 	if (!player.connected) await player.connect();
 	if (!player.playing && !player.paused) await player.play();
 
-	return { res, error: null };
+	return { res, error: "misc:UNKNOWN_ERROR" };
 };
 
 export const formatTrack = (track: Track, maxTitle = 50) => {
