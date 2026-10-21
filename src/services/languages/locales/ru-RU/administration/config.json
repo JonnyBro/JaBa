@@ -1,0 +1,15 @@
+{
+	"DESCRIPTION": "Показывает или меняет настройки сервера",
+	"USAGE": "list\nlanguage [language]\nbirthdays [state] (channel)",
+	"EXAMPLES": "config list\nconfig language language:Русский\nconfig birthdays state:True channel:#birthdays",
+
+	"SPECIAL_CHANNELS": "Особые каналы",
+
+	"LANG": "Изменить язык бота на сервере",
+	"LIST": "Показать настройки сервера",
+	"LANGUAGE": "Язык бота на этом сервере",
+	"BIRTHDAYS": "Канал для поздравлений с днём рождения",
+
+	"LANGUAGE_REPLY": "{{flag}} Язык сервера: **{{lang}}**",
+	"BIRTHDAYS_REPLY": "Канал для дней рождения: **{{channel}}**"
+}

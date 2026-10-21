@@ -152,7 +152,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				bank: memberData.bank + credits,
 			});
 			memberData.transactions.push({
-				user: await translateContext(interaction, "economy/transactions:BANK"),
+				user: await translateContext(interaction, "economy/bank:BANK"),
 				amount: credits,
 				date: Date.now(),
 				type: "send",
@@ -180,7 +180,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				bank: memberData.bank - credits,
 			});
 			memberData.transactions.push({
-				user: await translateContext(interaction, "economy/transactions:BANK"),
+				user: await translateContext(interaction, "economy/bank:BANK"),
 				amount: credits,
 				date: Date.now(),
 				type: "got",

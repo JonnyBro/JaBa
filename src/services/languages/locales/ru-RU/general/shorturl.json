@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Сокращает ссылку",
+	"USAGE": "[url]",
+	"EXAMPLES": "shorturl url:https://google.com",
+	"NO_API": "Не задан адрес или ключ API сокращателя ссылок",
+	"NOT_A_LINK": "Это не ссылка"
+}

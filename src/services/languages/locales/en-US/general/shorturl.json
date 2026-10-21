@@ -2,6 +2,6 @@
 	"DESCRIPTION": "Shortens a URL",
 	"USAGE": "[url]",
 	"EXAMPLES": "shorturl url:https://google.com",
-	"NO_API": "API URL or key are not set.",
-	"NOT_A_LINK": "Provide a proper URL."
+	"NO_API": "URL shortener API URL or key is not set",
+	"NOT_A_LINK": "That's not a valid link"
 }

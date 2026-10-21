@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Показывает пинг бота",
+	"USAGE": "",
+	"EXAMPLES": "ping",
+
+	"PONG": "Понг!",
+	"PING": "Мой пинг: **{{ping}}** мс"
+}

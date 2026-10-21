@@ -8,6 +8,9 @@ Thumbs.db
 !.env.example
 /config.json
 /config.json.*
+/lavalink/application.yml
+/lavalink/plugins
+/lavalink/logs
 
 # Node
 node_modules

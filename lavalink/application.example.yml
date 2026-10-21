@@ -1,0 +1,123 @@
+# Copy this file to application.yml and fill in the tokens.
+# The password is taken from LAVALINK_SERVER_PASSWORD (see docker-compose.yaml).
+server:
+  port: 2333
+  address: 0.0.0.0
+  http2:
+    enabled: false
+
+lavalink:
+  plugins:
+    # 1.18.2 fails every video with "This video requires login" (lavalink-devs/youtube-source#240),
+    # the fix is only in main for now. Switch back to a release once there is one after 1.18.2
+    - dependency: "dev.lavalink.youtube:youtube-plugin:2be8e542d3f6f178e048dca565892684c2e40177"
+      snapshot: true
+    - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
+      snapshot: false
+  server:
+    password: "overridden-by-LAVALINK_SERVER_PASSWORD-env"
+    sources:
+      youtube: false # Deprecated, replaced by youtube-plugin
+      bandcamp: true
+      soundcloud: true
+      twitch: true
+      vimeo: true
+      nico: true
+      http: true
+      local: false
+    bufferDurationMs: 400
+    frameBufferDurationMs: 5000
+    opusEncodingQuality: 10
+    resamplingQuality: LOW
+    trackStuckThresholdMs: 10000
+    useSeekGhosting: true
+    playerUpdateInterval: 5
+    soundcloudSearchEnabled: true
+    gc-warnings: true
+    timeouts:
+      connectTimeoutMs: 10000
+      connectionRequestTimeoutMs: 10000
+      socketTimeoutMs: 15000
+
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
+    # https://github.com/lavalink-devs/youtube-source#available-clients
+    clients:
+      - MUSIC # Search only (ytmsearch:)
+      - TV # Playback with OAuth
+      - ANDROID_VR
+      - WEB
+      - WEBEMBEDDED
+      - TVHTML5_SIMPLY
+    # Sign in once with a burner Google account (the link and code appear in the logs),
+    # then paste the refresh token from the logs below. Don't use your main account, it can get banned
+    oauth:
+      enabled: true
+      # refreshToken: ""
+    # Deciphers YouTube stream signatures, https://github.com/kikkia/yt-cipher
+    # Public instance, can be self-hosted (ghcr.io/kikkia/yt-cipher) with a password
+    remoteCipher:
+      url: "https://cipher.kikkia.dev/"
+      userAgent: "jaba"
+
+  lavasrc:
+    # How Spotify tracks are resolved to playable audio, in order
+    providers:
+      - "ymsearch:%QUERY%"
+      - "ytsearch:\"%ISRC%\""
+      - "ytsearch:%QUERY%"
+    sources:
+      spotify: true
+      yandexmusic: true
+      applemusic: false
+      deezer: false
+      flowerytts: false
+      youtube: false
+      vkmusic: false
+      tidal: false
+      qobuz: false
+      ytdlp: false
+      jiosaavn: false
+    lyrics-sources:
+      yandexmusic: true
+    # https://developer.spotify.com/dashboard
+    spotify:
+      clientId: ""
+      clientSecret: ""
+      countryCode: "US"
+      playlistLoadLimit: 6
+      albumLoadLimit: 6
+      resolveArtistsInSearch: true
+      localFiles: false
+    # https://github.com/topi314/LavaSrc#yandex-music
+    yandexmusic:
+      accessToken: ""
+      playlistLoadLimit: 3
+      albumLoadLimit: 3
+      artistLoadLimit: 1
+      # Yandex Music blocks some regions, uncomment if the server is outside of Russia/CIS
+      # proxy:
+      #   url: "https://example.org"
+
+logging:
+  file:
+    path: ./logs/
+  level:
+    root: INFO
+    lavalink: INFO
+    dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO # Shows the OAuth sign-in link and refresh token
+  request:
+    enabled: true
+    includeClientInfo: true
+    includeHeaders: false
+    includeQueryString: true
+    includePayload: true
+    maxPayloadLength: 10000
+  logback:
+    rollingpolicy:
+      max-file-size: 100MB
+      max-history: 7

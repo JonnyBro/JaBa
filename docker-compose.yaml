@@ -9,11 +9,30 @@ services:
       - .env
     environment:
       NODE_ENV: production
+      LAVALINK_HOST: lavalink
     volumes:
       - ./.env:/root/app/.env
     depends_on:
       mongo:
         condition: service_healthy
+      lavalink:
+        condition: service_started
+    restart: unless-stopped
+
+  lavalink:
+    container_name: lavalink
+    image: ghcr.io/lavalink-devs/lavalink:4-alpine
+    environment:
+      _JAVA_OPTIONS: -Xmx1G
+      SERVER_PORT: 2333
+      LAVALINK_SERVER_PASSWORD: ${LAVALINK_PASSWORD:?LAVALINK_PASSWORD is not set in .env}
+    volumes:
+    # Copy lavalink/application.example.yml to lavalink/application.yml and fill in the tokens
+      - ./lavalink/application.yml:/opt/Lavalink/application.yml
+      - ./lavalink/plugins/:/opt/Lavalink/plugins
+    # Uncomment if you need access to Lavalink from the host (e.g. for curl checks)
+    # ports:
+    #   - 127.0.0.1:2333:2333
     restart: unless-stopped
 
   mongo:
@@ -21,10 +40,10 @@ services:
     image: mongo:8
     # Uncomment if you need access to the database
     # ports:
-    #   - 27017:27017
+    #   - 127.0.0.1:27017:27017
     volumes:
-      - jaba_mongo_data:/data/db
       - jaba_mongo_config:/data/configdb
+      - jaba_mongo_data:/data/db
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
       interval: 30s

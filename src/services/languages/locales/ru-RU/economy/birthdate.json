@@ -1,0 +1,22 @@
+{
+	"DESCRIPTION": "Устанавливает дату рождения",
+	"USAGE": "[day] [month] [year]",
+	"EXAMPLES": "birthdate day:17 month:03 year:2000",
+
+	"CLEAR": "Удалить дату рождения",
+	"SET": "Указать дату рождения",
+
+	"DAY": "День",
+	"MONTH": "Месяц",
+	"YEAR": "Год",
+
+	"INVALID_DATE": "Неправильная дата",
+	"DATE_TOO_LOW": "Ты уверен? :eyes:",
+	"DATE_TOO_HIGH": "Хм... Ты ещё не родился",
+
+	"SUCCESS": "Твоя дата рождения: **{{date}}**",
+	"SUCCESS_CLEAR": "Дата рождения удалена",
+
+	"HAPPY_BIRTHDAY": "С днём рождения",
+	"HAPPY_BIRTHDAY_MESSAGE": "С днём рождения, {{user}}! Сегодня тебе {{age}}!"
+}

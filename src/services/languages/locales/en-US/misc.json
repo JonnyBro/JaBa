@@ -3,9 +3,9 @@
 	"NO_BOT_PERMS": "I don't have enough permissions to do that",
 	"CANT_YOURSELF": "You can't use this command on yourself",
 	"CANT_YOU": "You can't use that",
-	"EPHEMERAL_RESPONSE": "Make bot's response ephemeral?",
+	"EPHEMERAL_RESPONSE": "Show the reply only to you?",
 	"LEVEL_UP": "You have reached the next level! Your new level is: **{{level}}**",
-	"MORE_THAN_ZERO": "Please specify an integer greater than 0",
+	"MORE_THAN_ZERO": "Please enter a whole number greater than 0",
 	"USER_NOT_FOUND": "Member/user not found!",
 	"NO_ARGS": "No arguments required",
 	"SELECT_PLACEHOLDER": "Select something",
@@ -14,7 +14,7 @@
 	"QUOTE_CONTENT": "Content",
 	"QUOTE_ATTACHED": "Attached files",
 	"QUOTE_JUMP": "Jump to",
-	"QUOTE_FOOTER": "Sended at",
+	"QUOTE_FOOTER": "Sent at",
 
 	"MONTHS": {
 		"JANUARY": "January",

@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Показывает аватар пользователя",
+	"USAGE": "[user/server] (@user)",
+	"EXAMPLES": "avatar user\navatar server user:@jonny_bro",
+
+	"USER": "Показать основной аватар",
+	"SERVER": "Показать аватар на сервере"
+}

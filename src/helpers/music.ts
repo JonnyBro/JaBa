@@ -1,0 +1,315 @@
+import { capitalizeString, convertTime, shortenString, translateContext } from "@/helpers/functions.js";
+import logger from "@/helpers/logger.js";
+import { createEmbed } from "@/utils/create-embed.js";
+import useClient from "@/utils/use-client.js";
+import {
+	ActionRowBuilder,
+	ButtonBuilder,
+	ButtonStyle,
+	Guild,
+	GuildMember,
+	Interaction,
+	Message,
+	MessageCreateOptions,
+	User,
+} from "discord.js";
+import { Player, SearchPlatform, SearchResult, Track, UnresolvedSearchResult } from "lavalink-client";
+
+export const MUSIC_CONTROL_ID = "MUSIC_CTRL";
+export const MAX_VOLUME = 150;
+
+const NOW_PLAYING_KEY = "nowPlayingMessage";
+const AUTOPLAY_KEY = "autoplay";
+const EMPTY_CHANNEL_TIMEOUT = 60_000;
+
+export const SEARCH_SOURCES = {
+	ytm: "ytmsearch",
+	yt: "ytsearch",
+	ym: "ymsearch",
+	sp: "spsearch",
+	sc: "scsearch",
+} satisfies Record<string, SearchPlatform>;
+
+export type SearchSource = keyof typeof SEARCH_SOURCES;
+
+const emptyChannelTimers = new Map<string, ReturnType<typeof setTimeout>>();
+
+export const checkVoice = (member: GuildMember, player?: Player) => {
+	if (!member.voice.channelId) return "music/play:NO_VOICE_CHANNEL";
+	if (player && player.voiceChannelId !== member.voice.channelId) return "music/play:NOT_SAME_CHANNEL";
+
+	return null;
+};
+
+export const getControllablePlayer = (interaction: Interaction) => {
+	const client = useClient();
+	const player = interaction.guildId ? client.lavalink.getPlayer(interaction.guildId) : undefined;
+
+	if (!player || !player.queue.current) return { player: null, error: "music/play:NOT_PLAYING" };
+
+	const error = checkVoice(interaction.member as GuildMember, player);
+
+	return { player: error ? null : player, error };
+};
+
+const isLoadFailed = (res: SearchResult | UnresolvedSearchResult) =>
+	res.loadType === "error" || res.loadType === "empty" || !res.tracks.length;
+
+type AddToQueueOptions = {
+	guildId: string;
+	textChannelId: string;
+	voiceChannelId: string;
+	requester: User;
+	query: string;
+	source?: SearchSource;
+	next?: boolean;
+};
+
+export const addToQueue = async ({
+	guildId,
+	textChannelId,
+	voiceChannelId,
+	requester,
+	query,
+	source,
+	next,
+}: AddToQueueOptions) => {
+	const client = useClient();
+
+	if (!client.lavalink.useable) return { res: null, error: "music/play:NODE_UNAVAILABLE" };
+
+	const player =
+		client.lavalink.getPlayer(guildId) ||
+		client.lavalink.createPlayer({
+			guildId,
+			textChannelId,
+			voiceChannelId,
+			volume: 50,
+			selfDeaf: true,
+		});
+
+	const res = await player.search({ query, source: source ? SEARCH_SOURCES[source] : undefined }, requester);
+
+	if (isLoadFailed(res)) {
+		if (res.exception)
+			logger.warn(
+				`[Lavalink] Failed to load "${query}" in ${guildId}: ${res.exception.message}\n`,
+				`Cause: ${res.exception.cause}`,
+			);
+		else logger.debug(`[Lavalink] Nothing found for "${query}" in ${guildId} (loadType: ${res.loadType})`);
+
+		if (!player.queue.current && !player.queue.tracks.length) await player.destroy("nothing found", true);
+
+		return {
+			res: null,
+			error: res.exception ? "music/play:LOAD_FAILED" : "music/play:NO_RESULT",
+			exception: res.exception,
+		};
+	}
+
+	const tracks = res.loadType === "playlist" ? res.tracks : [res.tracks[0]];
+
+	if (next) await player.queue.splice(0, 0, ...tracks);
+	else await player.queue.add(tracks);
+
+	if (!player.connected) await player.connect();
+	if (!player.playing && !player.paused) await player.play();
+
+	return { res, error: null };
+};
+
+export const formatTrack = (track: Track, maxTitle = 50) => {
+	const title = shortenString(track.info.title || "Unknown", maxTitle);
+	const author = shortenString((track.info.author || "Unknown").replace(/ - Topic$/, ""), 30);
+	const text = `${title} — ${author}`;
+
+	return track.info.uri && /^https?:\/\//.test(track.info.uri) ? `[${text}](<${track.info.uri}>)` : text;
+};
+
+export const formatDuration = (track: Track) => (track.info.isStream ? "🔴 LIVE" : convertTime(track.info.duration));
+
+// Autoplay
+export const isAutoplayEnabled = (player: Player) => !!player.getData<boolean>(AUTOPLAY_KEY);
+
+export const setAutoplay = (player: Player, enabled: boolean) => player.setData(AUTOPLAY_KEY, enabled);
+
+const getRadioQuery = async (player: Player, track: Track) => {
+	const client = useClient();
+
+	if (track.info.sourceName === "youtube")
+		return `https://www.youtube.com/watch?v=${track.info.identifier}&list=RD${track.info.identifier}`;
+
+	if (track.info.sourceName === "yandexmusic") return `ymrec:${track.info.identifier}`;
+
+	// Spotify recommendations are not available for new apps, so find the track on YouTube and use its mix
+	const res = await player.search(
+		{ query: `${track.info.title} ${track.info.author}`, source: "ytmsearch" },
+		client.user,
+	);
+	const found = res.tracks[0];
+	if (!found) return null;
+
+	return `https://www.youtube.com/watch?v=${found.info.identifier}&list=RD${found.info.identifier}`;
+};
+
+export const autoPlayFunction = async (player: Player, lastTrack: Track) => {
+	if (!isAutoplayEnabled(player) || !lastTrack) return;
+
+	const client = useClient();
+
+	try {
+		const query = await getRadioQuery(player, lastTrack);
+		if (!query) return;
+
+		const res = await player.search(query, client.user);
+		if (isLoadFailed(res)) return;
+
+		const playedIds = new Set([lastTrack, ...player.queue.previous].map(t => t.info.identifier));
+		const candidates = (res.tracks as Track[]).filter(t => !playedIds.has(t.info.identifier));
+
+		await player.queue.add(candidates.slice(0, 5));
+
+		logger.debug(`[Lavalink] Autoplay added ${Math.min(candidates.length, 5)} track(s) in ${player.guildId}`);
+	} catch (error) {
+		logger.error("[Lavalink] Autoplay failed:", error);
+	}
+};
+
+// Leave Empty Channels
+const isChannelEmpty = (guild: Guild, channelId: string) => {
+	const channel = guild.channels.cache.get(channelId);
+	if (!channel?.isVoiceBased()) return true;
+
+	return !channel.members.some(member => !member.user.bot);
+};
+
+export const checkEmptyChannel = (player: Player) => {
+	const client = useClient();
+	const guild = client.guilds.cache.get(player.guildId);
+	if (!guild || !player.voiceChannelId) return;
+
+	const timer = emptyChannelTimers.get(player.guildId);
+
+	if (!isChannelEmpty(guild, player.voiceChannelId)) {
+		if (timer) clearTimeout(timer);
+		emptyChannelTimers.delete(player.guildId);
+
+		return;
+	}
+
+	if (timer) return;
+
+	emptyChannelTimers.set(
+		player.guildId,
+		setTimeout(async () => {
+			emptyChannelTimers.delete(player.guildId);
+
+			const current = client.lavalink.getPlayer(player.guildId);
+			if (!current?.voiceChannelId || !isChannelEmpty(guild, current.voiceChannelId)) return;
+
+			await sendToPlayerChannel(current, await translateContext(guild, "music/play:STOP_EMPTY"));
+			await current.destroy("voice channel is empty", true);
+		}, EMPTY_CHANNEL_TIMEOUT),
+	);
+};
+
+export const clearEmptyChannelTimer = (guildId: string) => {
+	const timer = emptyChannelTimers.get(guildId);
+	if (timer) clearTimeout(timer);
+
+	emptyChannelTimers.delete(guildId);
+};
+
+// Messages
+export const sendToPlayerChannel = async (player: Player, content: string | MessageCreateOptions) => {
+	const client = useClient();
+	const channel = player.textChannelId ? client.channels.cache.get(player.textChannelId) : null;
+	if (!channel?.isSendable()) return null;
+
+	return channel.send(content).catch(error => {
+		logger.warn(`[Lavalink] Can't send a message to ${player.textChannelId}:`, error.message);
+
+		return null;
+	});
+};
+
+export const deleteNowPlaying = async (player: Player) => {
+	const message = player.getData<Message | undefined>(NOW_PLAYING_KEY);
+	player.deleteData(NOW_PLAYING_KEY);
+
+	if (message?.deletable) await message.delete().catch(() => {});
+};
+
+const buildNowPlaying = async (player: Player, track: Track) => {
+	const client = useClient();
+	const guild = client.guilds.cache.get(player.guildId)!;
+	const t = (key: string, args?: Record<string, unknown>) => translateContext(guild, key, args);
+
+	const embed = createEmbed({
+		author: {
+			name: await t(player.paused ? "music/queue:PAUSED" : "music/queue:PLAYING"),
+			iconURL: client.user.displayAvatarURL(),
+		},
+		description: `**${formatTrack(track, 60)}**`,
+		fields: [
+			{ name: await t("music/queue:SOURCE"), value: capitalizeString(track.info.sourceName), inline: true },
+			{ name: await t("music/queue:DURATION"), value: formatDuration(track), inline: true },
+			{
+				name: await t("music/queue:ADDED"),
+				value: (track.requester as User | undefined)?.toString() || (await t("common:UNKNOWN")),
+				inline: true,
+			},
+			{
+				name: await t("music/queue:SETTINGS"),
+				value: await t("music/queue:SETTINGS_VALUE", {
+					volume: player.volume,
+					loop: await t(`music/loop:MODE_${player.repeatMode.toUpperCase()}`),
+					autoplay: await t(isAutoplayEnabled(player) ? "common:ENABLED" : "common:DISABLED"),
+				}),
+			},
+		],
+	});
+
+	if (track.info.artworkUrl) embed.setThumbnail(track.info.artworkUrl);
+
+	const nextTrack = player.queue.tracks[0] as Track | undefined;
+	if (nextTrack) embed.addFields({ name: await t("music/queue:NEXT"), value: formatTrack(nextTrack) });
+
+	const button = (action: string, emoji: string, style = ButtonStyle.Secondary) =>
+		new ButtonBuilder().setCustomId(`${MUSIC_CONTROL_ID}:${action}`).setEmoji(emoji).setStyle(style);
+
+	const loopEmoji = { off: "🔁", queue: "🔁", track: "🔂" }[player.repeatMode];
+
+	const rows = [
+		new ActionRowBuilder<ButtonBuilder>().addComponents(
+			button("back", "⏮️"),
+			player.paused ? button("pause", "▶️", ButtonStyle.Primary) : button("pause", "⏸️"),
+			button("skip", "⏭️"),
+			button("stop", "⏹️", ButtonStyle.Danger),
+		),
+		new ActionRowBuilder<ButtonBuilder>().addComponents(
+			button("voldown", "🔉"),
+			button("volup", "🔊"),
+			button("loop", loopEmoji, player.repeatMode === "off" ? ButtonStyle.Secondary : ButtonStyle.Primary),
+			button("shuffle", "🔀"),
+			button("autoplay", "♾️", isAutoplayEnabled(player) ? ButtonStyle.Primary : ButtonStyle.Secondary),
+		),
+	];
+
+	return { embeds: [embed], components: rows };
+};
+
+export const sendNowPlaying = async (player: Player, track: Track) => {
+	await deleteNowPlaying(player);
+
+	const message = await sendToPlayerChannel(player, await buildNowPlaying(player, track));
+	if (message) player.setData(NOW_PLAYING_KEY, message);
+};
+
+export const updateNowPlaying = async (player: Player) => {
+	const message = player.getData<Message | undefined>(NOW_PLAYING_KEY);
+	const track = player.queue.current;
+	if (!message || !track) return;
+
+	await message.edit(await buildNowPlaying(player, track)).catch(() => {});
+};

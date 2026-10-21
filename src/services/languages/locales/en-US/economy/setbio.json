@@ -6,7 +6,7 @@
 	"CLEAR": "Clear your bio",
 	"SET": "Set your bio",
 
-	"TEXT": "Text of your bio",
+	"TEXT": "Your bio text",
 
 	"SUCCESS": "Your bio has been changed to: {{text}}",
 	"SUCCESS_CLEAR": "Your bio has been cleared"

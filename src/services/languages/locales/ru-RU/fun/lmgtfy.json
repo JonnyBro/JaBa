@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Создаёт ссылку 'Давай я погуглю за тебя'",
+	"USAGE": "[query] [short]",
+	"QUERY": "Запрос",
+	"SHORT": "Сократить ссылку?",
+	"EXAMPLES": "lmgtfy query:Как сделать бота для Discord? short:False"
+}

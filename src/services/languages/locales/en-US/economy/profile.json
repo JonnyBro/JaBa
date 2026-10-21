@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Shows user profile",
+	"DESCRIPTION": "Shows a user's profile",
 	"USAGE": "(@user)",
 	"EXAMPLES": "profile\nprofile user:@jonny_bro",
 

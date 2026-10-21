@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Plays the previous track",
+	"USAGE": "",
+	"EXAMPLES": "back",
+	"NO_PREV_SONG": "There is no previous track",
+	"SUCCESS": "Playing the previous track"
+}

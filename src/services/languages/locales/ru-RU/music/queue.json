@@ -1,0 +1,20 @@
+{
+	"DESCRIPTION": "Показывает очередь",
+	"USAGE": "",
+	"EXAMPLES": "queue",
+
+	"QUEUE": "Очередь",
+	"NO_QUEUE": "Очередь пуста",
+	"CURRENTLY_PLAYING": "Сейчас играет",
+	"NEXT": "Дальше",
+	"TOTAL": "Треков: {{count}}, общее время: {{time}}",
+
+	"SETTINGS": "Настройки",
+	"SETTINGS_VALUE": "Громкость: **{{volume}}** • Повтор: **{{loop}}** • Автоплей: **{{autoplay}}**",
+
+	"DURATION": "Длительность",
+	"SOURCE": "Источник",
+	"ADDED": "Добавил",
+	"PAUSED": "На паузе",
+	"PLAYING": "Сейчас играет"
+}

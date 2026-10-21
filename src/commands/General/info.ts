@@ -58,7 +58,7 @@ async function getUserInfo(interaction: ChatInputCommandInteraction, member: Gui
 	const rolesCache = member.roles.cache;
 	const roles =
 		rolesCache.size < 1
-			? await translateContext(interaction, "genera/info:NO_ROLE")
+			? await translateContext(interaction, "general/info:NO_ROLE")
 			: rolesCache.size > 10
 				? rolesCache
 					.map(r => r)

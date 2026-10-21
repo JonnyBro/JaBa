@@ -1,0 +1,34 @@
+{
+	"DESCRIPTION": "Включает трек или добавляет его в очередь",
+	"USAGE": "[query] (source) (next)",
+	"EXAMPLES": "play query:Never Gonna Give You Up\nplay query:https://music.yandex.ru/album/1/track/2\nplay query:Rick Astley source:ym next:True",
+	"QUERY": "Название или ссылка (YouTube, Яндекс Музыка, Spotify, SoundCloud...)",
+	"SOURCE": "Где искать (по умолчанию YouTube Music)",
+	"NEXT": "Включить сразу после текущего трека?",
+	"CONTEXT_NAME": "Добавить в очередь",
+
+	"SOURCES": {
+		"ytm": "YouTube Music",
+		"yt": "YouTube",
+		"ym": "Яндекс Музыка",
+		"sp": "Spotify",
+		"sc": "SoundCloud"
+	},
+
+	"NO_LINK": "В этом сообщении нет ссылок",
+	"NO_VOICE_CHANNEL": "Зайди в голосовой канал",
+	"NOT_SAME_CHANNEL": "Ты должен быть в том же голосовом канале, что и я",
+	"NO_RESULT": "Ничего не нашлось по запросу `{{query}}`",
+	"LOAD_FAILED": "Не получилось загрузить `{{query}}`: {{error}}",
+	"NODE_UNAVAILABLE": "Музыкальный сервер сейчас недоступен, попробуй позже",
+	"NOT_PLAYING": "Сейчас ничего не играет",
+	"QUEUE_ENDED": "Очередь закончилась",
+	"ADDED_TRACK": "[{{name}}](<{{url}}>) добавлен в очередь",
+	"ADDED_PLAYLIST": "Добавлено треков из [{{name}}](<{{url}}>): {{count}}",
+	"NEXT_TRACK": "[{{name}}](<{{url}}>) заиграет следующим",
+	"NEXT_PLAYLIST": "Треки из [{{name}}](<{{url}}>) ({{count}}) заиграют следующими",
+	"STOP_EMPTY": "Все ушли из голосового канала, так что я выключил музыку",
+
+	"ERR_TRACK": "Не получилось включить **{{track}}**, пропускаю: {{error}}",
+	"ERR_STUCK": "**{{track}}** завис, пропускаю"
+}

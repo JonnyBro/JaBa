@@ -1,0 +1,14 @@
+{
+	"DESCRIPTION": "Включает или выключает повтор",
+	"USAGE": "[mode]",
+	"EXAMPLES": "loop mode:Queue",
+	"MODE": "Режим повтора",
+
+	"MODE_OFF": "Выключен",
+	"MODE_TRACK": "Текущий трек",
+	"MODE_QUEUE": "Очередь",
+
+	"SUCCESS_OFF": "Повтор **выключен**",
+	"SUCCESS_TRACK": "Повторяю **текущий трек**",
+	"SUCCESS_QUEUE": "Повторяю **очередь**"
+}

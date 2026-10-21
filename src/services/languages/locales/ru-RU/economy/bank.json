@@ -1,0 +1,32 @@
+{
+	"DESCRIPTION": "Управление банковским счётом",
+	"USAGE": "[option] [credits/all]",
+	"EXAMPLES": "bank option:deposit credits:1000\nbank option:withdraw credits:all",
+	"OPTION": "Действие",
+	"OPTION_NAN_ALL": "Целое число больше 0 или `all`.",
+
+	"BALANCE": "Показать баланс",
+	"DEPOSIT": "Положить в банк",
+	"WITHDRAW": "Снять из банка",
+	"TRANSFER": "Перевести участнику из банка",
+	"TRANSACTIONS": "Показать историю переводов (последние 20)",
+
+	"NOT_ENOUGH_CREDITS": "У тебя не хватает кредитов",
+	"NOT_ENOUGH_BANK": "В банке не хватает кредитов",
+	"SUCCESS_DEP": "{{credits}} положено в банк",
+	"SUCCESS_WD": "{{credits}} снято из банка",
+	"SUCCESS_TRANSFER": "Ты перевёл {{credits}} пользователю {{reciever}}",
+
+	"NO_TRANSACTIONS": "У тебя нет переводов",
+	"EMBED_TRANSACTIONS": "Твои переводы",
+	"BANK": "Банк",
+	"NUMBERS": "Угадай число",
+	"TRANSFER_TO": "Перевод для {{user}}",
+	"TRANSFER_FROM": "Перевод от {{user}}",
+	"T_GOT": "Пополнение",
+	"T_SEND": "Списание",
+	"T_USER_GOT": "Отправитель",
+	"T_USER_SEND": "Получатель",
+	"T_AMOUNT": "Сумма",
+	"T_DATE": "Дата"
+}

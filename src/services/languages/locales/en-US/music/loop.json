@@ -1,0 +1,14 @@
+{
+	"DESCRIPTION": "Sets the repeat mode",
+	"USAGE": "[mode]",
+	"EXAMPLES": "loop mode:Queue",
+	"MODE": "Repeat mode",
+
+	"MODE_OFF": "Off",
+	"MODE_TRACK": "Current track",
+	"MODE_QUEUE": "Queue",
+
+	"SUCCESS_OFF": "Repeat **disabled**",
+	"SUCCESS_TRACK": "Now repeating the **current track**",
+	"SUCCESS_QUEUE": "Now repeating the **queue**"
+}

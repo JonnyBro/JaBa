@@ -9,13 +9,13 @@
 	"DEPOSIT": "Deposit to the bank",
 	"WITHDRAW": "Withdraw from the bank",
 	"TRANSFER": "Transfer from your bank to a member",
-	"TRANSACTIONS": "Show your transactions history (last 20)",
+	"TRANSACTIONS": "Show your transaction history (last 20)",
 
 	"NOT_ENOUGH_CREDITS": "You don't have enough credits",
-	"NOT_ENOUGH_BANK": "Insufficient credits in your bank account",
+	"NOT_ENOUGH_BANK": "You don't have enough credits in the bank",
 	"SUCCESS_DEP": "{{credits}} deposited into your bank account",
 	"SUCCESS_WD": "You have withdrawn {{credits}} from your bank account",
-	"SUCCESS_TRANSFER": "You have transfered {{credits}} to {{reciever}}",
+	"SUCCESS_TRANSFER": "You have transferred {{credits}} to {{reciever}}",
 
 	"NO_TRANSACTIONS": "You have no transactions",
 	"EMBED_TRANSACTIONS": "Your Transactions",
