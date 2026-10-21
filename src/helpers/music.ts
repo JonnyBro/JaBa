@@ -84,7 +84,7 @@ export const addToQueue = async ({
 			guildId,
 			textChannelId,
 			voiceChannelId,
-			volume: 50,
+			volume: 100,
 			selfDeaf: true,
 		});
 
