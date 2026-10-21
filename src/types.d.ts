@@ -4,18 +4,12 @@ import {
 	ChatInputCommandInteraction,
 	ContextMenuCommandInteraction,
 	Interaction,
-	Message,
 	MessageContextMenuCommandInteraction,
 	RESTPostAPIApplicationCommandsJSONBody,
 	UserContextMenuCommandInteraction,
 } from "discord.js";
 import { UserReminds } from "./models/UserModel.ts";
 import { ExtendedClient } from "./structures/client.ts";
-import { Player } from "lavalink-client";
-
-export interface PlayerCustom extends Player {
-	message: Message | null;
-}
 
 export type CommandData = RESTPostAPIApplicationCommandsJSONBody;
 

@@ -1,0 +1,20 @@
+{
+	"DESCRIPTION": "Shows the queue",
+	"USAGE": "",
+	"EXAMPLES": "queue",
+
+	"QUEUE": "Queue",
+	"NO_QUEUE": "The queue is empty",
+	"CURRENTLY_PLAYING": "Now playing",
+	"NEXT": "Up next",
+	"TOTAL": "Tracks: {{count}}, total time: {{time}}",
+
+	"SETTINGS": "Settings",
+	"SETTINGS_VALUE": "Volume: **{{volume}}** • Repeat: **{{loop}}** • Autoplay: **{{autoplay}}**",
+
+	"DURATION": "Duration",
+	"SOURCE": "Source",
+	"ADDED": "Added by",
+	"PAUSED": "Paused",
+	"PLAYING": "Now playing"
+}

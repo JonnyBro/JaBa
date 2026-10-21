@@ -1,0 +1,20 @@
+{
+	"DESCRIPTION": "Показывает список команд или помощь по команде",
+	"USAGE": "(command)",
+	"EXAMPLES": "help\nhelp command:ping",
+
+	"NOT_FOUND": "Команда `{{command}}` не найдена",
+	"COMMANDS_IN": "Команды в категории \"{{category}}\":",
+
+	"FIELD_USAGE": "Использование",
+	"FIELD_DESCRIPTION": "Описание",
+	"FIELD_EXAMPLES": "Примеры",
+
+	"CMD_TITLE": "Помощь по {{cmd}}",
+	"INFO": "● Чтобы получить помощь по команде, используй `/help [command]`",
+	"FIELD_PERMISSIONS": "Нужные права",
+	"NO_REQUIRED_PERMISSION": "Особых прав не нужно",
+	"TITLE": "{{name}} | Команды",
+	"GUILD_ONLY": "Только на серверах",
+	"NOT_GUILD_ONLY": "На серверах и в ЛС"
+}

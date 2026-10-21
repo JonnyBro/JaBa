@@ -1,0 +1,6 @@
+{
+	"DESCRIPTION": "Stops the music and clears the queue",
+	"USAGE": "",
+	"EXAMPLES": "stop",
+	"SUCCESS": "Music stopped"
+}

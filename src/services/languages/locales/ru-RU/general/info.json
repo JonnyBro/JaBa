@@ -1,0 +1,17 @@
+{
+	"DESCRIPTION": "Показывает информацию о пользователе или сервере",
+	"USAGE": "[user/server] (@user)",
+	"EXAMPLES": "info server\ninfo user\ninfo user user:@jonny_bro",
+	"USER": "Информация о пользователе",
+	"CUSTOM": "Пользовательский статус",
+	"NO_ACTIVITY": "Ни во что не играет",
+	"NO_ROLE": "Нет роли",
+	"ROLE": "Высшая роль",
+	"NO_NICKNAME": "Нет ника",
+	"MORE_ROLES": "и ещё {{count}}",
+	"SERVER": "Информация о сервере",
+	"AFK_CHANNEL": "AFK-канал",
+	"BOOSTS": "Бустов",
+	"LINK": "Статистика сервера",
+	"LINK_TEXT": "Открыть статистику сервера в панели управления"
+}

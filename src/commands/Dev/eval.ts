@@ -15,7 +15,7 @@ const client = useClient();
 
 export const data: CommandData = {
 	name: "eval",
-	...getLocalizedDesc("owner/eval:DESCRIPTION"),
+	...getLocalizedDesc("dev/eval:DESCRIPTION"),
 	// eslint-disable-next-line camelcase
 	integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
 	contexts: [InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel],
@@ -23,7 +23,7 @@ export const data: CommandData = {
 		{
 			name: "code",
 			type: ApplicationCommandOptionType.String,
-			...getLocalizedDesc("owner/eval:CODE"),
+			...getLocalizedDesc("dev/eval:CODE"),
 			required: true,
 		},
 	],

@@ -1,8 +1,8 @@
 {
-	"DESCRIPTION": "Sends information about an IP address",
+	"DESCRIPTION": "Shows info about an IP address",
 	"USAGE": "[IP]",
 	"EXAMPLES": "whois IP:8.8.8.8",
-	"ERROR": "An error occurred while retrieving data for {{ip}}",
+	"ERROR": "Couldn't get data for {{ip}}",
 	"INFO_ABOUT": "Information about {{ip}}",
 	"COUNTRY": "Country",
 	"REGION": "Region",
@@ -15,5 +15,5 @@
 	"INFO": "Additional Information",
 	"PROXY": "This IP belongs to Tor, VPN, or proxy",
 	"MOBILE": "This IP is used for mobile data",
-	"HOSTING": "This IP belongs to hosting or data center"
+	"HOSTING": "This IP belongs to a hosting provider or data center"
 }

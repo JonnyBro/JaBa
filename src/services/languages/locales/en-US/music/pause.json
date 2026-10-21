@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Pauses or resumes the music",
+	"USAGE": "",
+	"EXAMPLES": "pause",
+	"PAUSED": "Paused",
+	"RESUMED": "Resumed"
+}

@@ -1,0 +1,10 @@
+{
+	"DESCRIPTION": "Jumps to a specific time in the current track",
+	"USAGE": "[time]",
+	"EXAMPLES": "seek time:90\nseek time:1:30",
+	"TIME": "Time in seconds or as m:ss",
+	"NOT_SEEKABLE": "Can't seek in this track",
+	"INVALID_TIME": "Invalid time, use seconds (`90`) or `m:ss` (`1:30`)",
+	"TOO_FAR": "The track is only `{{duration}}` long",
+	"SUCCESS": "Jumped to `{{time}}`"
+}

@@ -14,12 +14,12 @@ const client = useClient();
 
 export const data = new ContextMenuCommandBuilder()
 	.setName(
-		client.i18n.translate("genera/avatarcontext:NAME", {
+		client.i18n.translate("general/avatarcontext:NAME", {
 			lng: "en-US",
 		}),
 	)
 	.setNameLocalizations({
-		"en-US": client.i18n.translate("genera/avatarcontext:NAME", {
+		"en-US": client.i18n.translate("general/avatarcontext:NAME", {
 			lng: "en-US",
 		}),
 		ru: client.i18n.translate("general/avatarcontext:NAME", {

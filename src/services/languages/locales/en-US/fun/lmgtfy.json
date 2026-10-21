@@ -1,6 +1,7 @@
 {
-	"DESCRIPTION": "Creates an 'Let Me Google That For You' link",
+	"DESCRIPTION": "Creates a 'Let Me Google That For You' link",
 	"USAGE": "[query] [short]",
 	"QUERY": "Query",
+	"SHORT": "Shorten the link?",
 	"EXAMPLES": "lmgtfy query:How to create a Discord bot? short:False"
 }

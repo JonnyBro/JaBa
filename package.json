@@ -1,6 +1,6 @@
 {
     "name": "jaba",
-    "version": "5.4.2",
+    "version": "5.5.1",
     "main": "src/index.js",
     "type": "module",
     "scripts": {
@@ -20,6 +20,7 @@
         "dotenv": "^17.3.1",
         "i18next": "^24.2.2",
         "i18next-fs-backend": "^2.6.0",
+        "lavalink-client": "2.11.0",
         "md5": "^2.3.0",
         "mongoose": "^8.12.1",
         "ms": "^2.1.3",

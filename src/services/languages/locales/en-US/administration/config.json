@@ -1,16 +1,15 @@
 {
-	"DESCRIPTION": "Modify or display server settings",
-	"USAGE": "list\nlanguage [lang]",
-	"EXAMPLES": "config list\nlanguage English",
+	"DESCRIPTION": "Shows or changes server settings",
+	"USAGE": "list\nlanguage [language]\nbirthdays [state] (channel)",
+	"EXAMPLES": "config list\nconfig language language:English\nconfig birthdays state:True channel:#birthdays",
 
 	"SPECIAL_CHANNELS": "Special Channels",
 
-	"LIST": "Show server's settings",
+	"LANG": "Change the bot's language on this server",
+	"LIST": "Show server settings",
 	"LANGUAGE": "Bot's language for this server",
-	"BIRTHDAYS": "A channel for the birthdays announcements",
-	"AUTOPLAY": "Music autoplay mode",
+	"BIRTHDAYS": "Channel for birthday announcements",
 
-	"LANGUAGE_REPLY": "{{flag}} Server's language was set to: **{{lang}}**",
-	"BIRTHDAYS_REPLY": "Birthdays channel was set to: **{{channel}}**",
-	"AUTOPLAY_REPLY": "Autoplay mode was set to: **{{state}}**"
+	"LANGUAGE_REPLY": "{{flag}} Server language set to **{{lang}}**",
+	"BIRTHDAYS_REPLY": "Birthday channel set to **{{channel}}**"
 }

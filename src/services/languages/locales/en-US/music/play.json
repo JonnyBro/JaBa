@@ -1,0 +1,34 @@
+{
+	"DESCRIPTION": "Plays a track or adds it to the queue",
+	"USAGE": "[query] (source) (next)",
+	"EXAMPLES": "play query:Never Gonna Give You Up\nplay query:https://music.yandex.ru/album/1/track/2\nplay query:Rick Astley source:ym next:True",
+	"QUERY": "Title or link (YouTube, Yandex Music, Spotify, SoundCloud...)",
+	"SOURCE": "Where to search (YouTube Music by default)",
+	"NEXT": "Play right after the current track?",
+	"CONTEXT_NAME": "Add to Queue",
+
+	"SOURCES": {
+		"ytm": "YouTube Music",
+		"yt": "YouTube",
+		"ym": "Yandex Music",
+		"sp": "Spotify",
+		"sc": "SoundCloud"
+	},
+
+	"NO_LINK": "This message doesn't contain any links",
+	"NO_VOICE_CHANNEL": "You must be in a voice channel",
+	"NOT_SAME_CHANNEL": "You must be in the same voice channel as me",
+	"NO_RESULT": "Nothing found for `{{query}}`",
+	"LOAD_FAILED": "Couldn't load `{{query}}`: {{error}}",
+	"NODE_UNAVAILABLE": "Music server is unavailable right now, try again later",
+	"NOT_PLAYING": "Nothing is playing right now",
+	"QUEUE_ENDED": "The queue has ended",
+	"ADDED_TRACK": "Added [{{name}}](<{{url}}>) to the queue",
+	"ADDED_PLAYLIST": "Added {{count}} tracks from [{{name}}](<{{url}}>) to the queue",
+	"NEXT_TRACK": "[{{name}}](<{{url}}>) will play next",
+	"NEXT_PLAYLIST": "{{count}} tracks from [{{name}}](<{{url}}>) will play next",
+	"STOP_EMPTY": "Everyone left the voice channel, so I stopped the music",
+
+	"ERR_TRACK": "Couldn't play **{{track}}**, skipping it: {{error}}",
+	"ERR_STUCK": "**{{track}}** got stuck, skipping it"
+}

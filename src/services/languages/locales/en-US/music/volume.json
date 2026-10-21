@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Sets the volume",
+	"USAGE": "[volume]",
+	"EXAMPLES": "volume volume:50",
+	"VOLUME": "Volume from 0 to 150",
+	"SUCCESS": "Volume set to **{{volume}}**"
+}

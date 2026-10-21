@@ -33,6 +33,7 @@ export async function run(client: ExtendedClient) {
 	);
 
 	await client.application.emojis.fetch();
+	await client.lavalink.init({ id: client.user.id, username: client.user.username });
 
 	const tasksPath = join(PROJECT_ROOT, "helpers", "tasks");
 	const cronTasks = await loadCronTasks(tasksPath);

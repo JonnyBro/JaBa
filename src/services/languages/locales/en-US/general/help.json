@@ -3,7 +3,7 @@
 	"USAGE": "(command)",
 	"EXAMPLES": "help\nhelp command:ping",
 
-	"NOT_FOUND": "Command {{command}} not found",
+	"NOT_FOUND": "Command `{{command}}` not found",
 	"COMMANDS_IN": "Available commands in category \"{{category}}\":",
 
 	"FIELD_USAGE": "Usage",
@@ -15,6 +15,6 @@
 	"FIELD_PERMISSIONS": "Required Permissions",
 	"NO_REQUIRED_PERMISSION": "No special permissions required",
 	"TITLE": "{{name}} | Commands",
-	"GUILD_ONLY": "Guild Only",
-	"NOT_GUILD_ONLY": "Guild and DM"
+	"GUILD_ONLY": "Servers only",
+	"NOT_GUILD_ONLY": "Servers and DMs"
 }

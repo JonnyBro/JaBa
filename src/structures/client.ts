@@ -6,6 +6,7 @@ import ConfigService from "@/services/config/index.js";
 import InternationalizationService from "@/services/languages/index.js";
 import { cacheRemindsData, CommandFileObject } from "@/types.js";
 import { Client, ClientOptions } from "discord.js";
+import { LavalinkManager } from "lavalink-client";
 
 export class ExtendedClient extends Client<true> {
 	configService = new ConfigService().loadConfig();
@@ -13,6 +14,37 @@ export class ExtendedClient extends Client<true> {
 	cacheReminds = new Map<string, cacheRemindsData>();
 	i18n = new InternationalizationService(this);
 	commands: CommandFileObject[] = [];
+	lavalink = new LavalinkManager({
+		nodes: [
+			{
+				id: "main",
+				host: this.configService.get<string>("LAVALINK_HOST") || "localhost",
+				port: Number(this.configService.get<string>("LAVALINK_PORT")) || 2333,
+				authorization: this.configService.get<string>("LAVALINK_PASSWORD"),
+				secure: this.configService.get<string>("LAVALINK_SECURE") === "true",
+				retryAmount: Infinity,
+				retryDelay: 10_000,
+			},
+		],
+		sendToShard: (guildId, payload) => this.guilds.cache.get(guildId)?.shard?.send(payload),
+		autoSkip: true,
+		autoSkipOnResolveError: true,
+		playerOptions: {
+			defaultSearchPlatform: "ytmsearch",
+			onDisconnect: {
+				autoReconnect: true,
+				destroyPlayer: false,
+			},
+			onEmptyQueue: {
+				destroyAfterMs: 60_000,
+				autoPlayFunction: async (player, lastTrack) =>
+					(await import("@/helpers/music.js")).autoPlayFunction(player, lastTrack),
+			},
+		},
+		queueOptions: {
+			maxPreviousTracks: 25,
+		},
+	});
 
 	constructor(options: ClientOptions) {
 		if (SUPER_CONTEXT.getStore()) return SUPER_CONTEXT.getStore() as ExtendedClient;
