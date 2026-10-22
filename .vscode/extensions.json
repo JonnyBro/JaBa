@@ -3,7 +3,6 @@
 		"dbaeumer.vscode-eslint",
 		"esbenp.prettier-vscode",
 		"yoavbls.pretty-ts-errors",
-		"rvest.vs-code-prettier-eslint",
-		"EditorConfig.EditorConfig"
+		"rvest.vs-code-prettier-eslint"
 	]
 }
