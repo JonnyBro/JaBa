@@ -130,7 +130,7 @@ export const addToQueue = async ({
 export const formatTrack = (track: Track, maxTitle = 50) => {
 	const title = shortenString(track.info.title || "Unknown", maxTitle);
 	const author = shortenString((track.info.author || "Unknown").replace(/ - Topic$/, ""), 30);
-	const text = `${title} — ${author}`;
+	const text = `${title} - ${author}`;
 
 	return track.info.uri && /^https?:\/\//.test(track.info.uri) ? `[${text}](<${track.info.uri}>)` : text;
 };

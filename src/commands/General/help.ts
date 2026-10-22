@@ -1,14 +1,16 @@
-import { editReplyError, getLocalizedDesc, translateContext } from "@/helpers/functions.js";
+import { capitalizeString, editReplyError, getLocalizedDesc, translateContext } from "@/helpers/functions.js";
 import { AutocompleteProps, CommandData, SlashCommandProps } from "@/types.js";
 import { componentRouter } from "@/utils/component-router.js";
-import { createEmbed } from "@/utils/create-embed.js";
+import { createContainer, createFooter, createSeparator, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
 import {
 	ActionRowBuilder,
 	ApplicationCommandOptionType,
 	ApplicationIntegrationType,
+	Interaction,
 	InteractionContextType,
 	MessageFlags,
+	PermissionsBitField,
 	StringSelectMenuBuilder,
 } from "discord.js";
 
@@ -43,72 +45,141 @@ function getCategoryFromPath(filepath: string): string {
 	return segments[commandsIndex + 1].toLowerCase() || "uncategorized";
 }
 
-// TODO: Rewrite to components v2
+const groupByCategory = () => {
+	const grouped = new Map<string, typeof client.commands>();
+
+	for (const cmd of client.commands) {
+		const category = getCategoryFromPath(cmd.filePath);
+		if (!grouped.has(category)) grouped.set(category, []);
+		grouped.get(category)!.push(cmd);
+	}
+
+	return grouped;
+};
+
+const toV2 = (container: ReturnType<typeof createContainer>) => ({
+	flags: MessageFlags.IsComponentsV2 as const,
+	components: [container],
+});
+
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply({
 		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
 	});
 
 	const inputCommand = interaction.options.getString("command");
-	const commandEntries = client.commands;
 
 	if (inputCommand) {
-		const cmd = commandEntries.find(c => c.data.name === inputCommand);
+		const cmd = client.commands.find(c => c.data.name === inputCommand);
 		if (!cmd) return editReplyError(interaction, "general/help:NOT_FOUND", { command: inputCommand });
 
-		const category = getCategoryFromPath(cmd.filePath);
-
-		const embed = createEmbed({
-			author: {
-				name: await translateContext(interaction, "general/help:CMD_TITLE", {
-					cmd: cmd.data.name,
-				}),
-			},
-			fields: [
-				{
-					name: await translateContext(interaction, "general/help:FIELD_DESCRIPTION"),
-					value: await translateContext(interaction, `${category}/${cmd.data.name}:DESCRIPTION`),
-				},
-				{
-					name: await translateContext(interaction, "general/help:FIELD_USAGE"),
-					value:
-						(await translateContext(interaction, `${category}/${cmd.data.name}:USAGE`)) ||
-						(await translateContext(interaction, "misc:NO_ARGS")),
-				},
-				{
-					name: await translateContext(interaction, "general/help:FIELD_EXAMPLES"),
-					value: await translateContext(interaction, `${category}/${cmd.data.name}:EXAMPLES`),
-				},
-			],
-		});
-
-		return interaction.editReply({ embeds: [embed] });
+		return interaction.editReply(await buildCommandHelp(interaction, cmd));
 	}
 
-	const grouped = new Map<string, typeof commandEntries>();
-	for (const cmd of commandEntries) {
-		const category = getCategoryFromPath(cmd.filePath);
-		if (!grouped.has(category)) grouped.set(category, []);
-		grouped.get(category)!.push(cmd);
+	await interaction.editReply(await buildCategoryPanel(interaction));
+};
+
+async function buildCategoryPanel(interaction: Interaction, selected?: string) {
+	const t = (key: string, args?: Record<string, unknown>) => translateContext(interaction, key, args);
+	const grouped = groupByCategory();
+
+	const container = createContainer().addTextDisplayComponents(
+		createText(`## ${await t("general/help:TITLE", { name: client.user.username })}`),
+	);
+
+	const commands = selected ? grouped.get(selected) : undefined;
+
+	if (selected && commands) {
+		const lines = await Promise.all(
+			commands.map(
+				async cmd =>
+					`**/${cmd.data.name}** - ${await t(`${selected}/${cmd.data.name.toLowerCase()}:DESCRIPTION`)}`,
+			),
+		);
+
+		container
+			.addTextDisplayComponents(
+				createText(`-# ${await t("general/help:COMMANDS_IN", { category: capitalizeString(selected) })}`),
+			)
+			.addSeparatorComponents(createSeparator())
+			.addTextDisplayComponents(createText(lines.join("\n")));
+	} else {
+		const lines = Array.from(grouped.entries()).map(
+			([category, cmds]) => `**${capitalizeString(category)}** - \`${cmds.length}\``,
+		);
+
+		container.addSeparatorComponents(createSeparator()).addTextDisplayComponents(createText(lines.join("\n")));
 	}
 
 	const select = new StringSelectMenuBuilder()
 		.setCustomId(HELP_SELECT_ID)
-		.setPlaceholder(await translateContext(interaction, "common:NOTHING_SELECTED"))
+		.setPlaceholder(await t("common:NOTHING_SELECTED"))
 		.addOptions(
 			Array.from(grouped.entries()).map(([category, cmds]) => ({
-				label: `${category} (${cmds.length})`,
+				label: `${capitalizeString(category)} (${cmds.length})`,
 				value: category,
+				default: category === selected,
 			})),
 		);
 
-	const row = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(select);
+	container
+		.addSeparatorComponents(createSeparator())
+		.addActionRowComponents(new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(select))
+		.addTextDisplayComponents(createFooter(await t("general/help:INFO")));
 
-	await interaction.editReply({
-		content: await translateContext(interaction, "general/help:INFO"),
-		components: [row],
-	});
-};
+	return toV2(container);
+}
+
+async function buildCommandHelp(interaction: Interaction, cmd: (typeof client.commands)[number]) {
+	const t = (key: string, args?: Record<string, unknown>) => translateContext(interaction, key, args);
+	const category = getCategoryFromPath(cmd.filePath);
+	const name = cmd.data.name;
+
+	const guildOnly = !!cmd.data.contexts && cmd.data.contexts.every(c => c === InteractionContextType.Guild);
+	const toCodeLines = (text: string, prefix: string) =>
+		text
+			.split("\n")
+			.filter(Boolean)
+			.map(line => `\`${prefix}${line}\``)
+			.join("\n");
+
+	const usage = toCodeLines(await t(`${category}/${name}:USAGE`), `/${name} `);
+	const examples = toCodeLines(await t(`${category}/${name}:EXAMPLES`), "/");
+
+	const permissions = cmd.data.default_member_permissions
+		? new PermissionsBitField(BigInt(cmd.data.default_member_permissions)).toArray()
+		: [];
+	const context = await t(guildOnly ? "general/help:GUILD_ONLY" : "general/help:NOT_GUILD_ONLY");
+
+	const container = createContainer()
+		.addTextDisplayComponents(
+			createText(
+				[
+					`## /${name}`,
+					`-# ${capitalizeString(category)} • ${context}`,
+					await t(`${category}/${name}:DESCRIPTION`),
+				].join("\n"),
+			),
+		)
+		.addSeparatorComponents(createSeparator())
+		.addTextDisplayComponents(
+			createText(
+				[
+					`**${await t("general/help:FIELD_USAGE")}**`,
+					usage || (await t("misc:NO_ARGS")),
+					"",
+					`**${await t("general/help:FIELD_EXAMPLES")}**`,
+					examples || `\`/${name}\``,
+					"",
+					`**${await t("general/help:FIELD_PERMISSIONS")}**`,
+					permissions.map(p => `\`${p}\``).join(", ") || (await t("general/help:NO_REQUIRED_PERMISSION")),
+				].join("\n"),
+			),
+		)
+		.addTextDisplayComponents(createFooter());
+
+	return toV2(container);
+}
 
 export const autocompleteRun = async ({ interaction }: AutocompleteProps) => {
 	const query = interaction.options.getFocused();
@@ -128,32 +199,5 @@ export const autocompleteRun = async ({ interaction }: AutocompleteProps) => {
 componentRouter.register(HELP_SELECT_ID, async interaction => {
 	if (!interaction.isStringSelectMenu()) return;
 
-	await interaction.deferUpdate();
-
-	const category = interaction.values[0];
-	const commandEntries = client.commands;
-
-	const filtered = commandEntries.filter(cmd => getCategoryFromPath(cmd.filePath) === category);
-
-	const embed = createEmbed({
-		author: {
-			name: await translateContext(interaction, "general/help:COMMANDS_IN", { category }),
-		},
-		fields: await Promise.all(
-			filtered.map(async cmd => ({
-				name: `**${cmd.data.name}**`,
-				value: await translateContext(
-					interaction,
-					await translateContext(
-						interaction,
-						`${category.toLowerCase()}/${cmd.data.name.toLowerCase()}:DESCRIPTION`,
-					),
-				),
-			})),
-		),
-	});
-
-	await interaction.editReply({
-		embeds: [embed],
-	});
+	await interaction.update(await buildCategoryPanel(interaction, interaction.values[0]));
 });

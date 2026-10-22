@@ -94,7 +94,7 @@ export const autocompleteRun = async ({ interaction }: AutocompleteProps) => {
 				.filter(track => track.info.uri && track.info.uri.length <= 100)
 				.slice(0, 10)
 				.map(track => ({
-					name: shortenString(`${track.info.title} — ${track.info.author.replace(/ - Topic$/, "")}`, 100),
+					name: shortenString(`${track.info.title} - ${track.info.author.replace(/ - Topic$/, "")}`, 100),
 					value: track.info.uri!,
 				})),
 		);

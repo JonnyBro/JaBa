@@ -1,6 +1,6 @@
 import { asyncForEach, getUsername, replySuccess, shortenString, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
-import { createEmbed } from "@/utils/create-embed.js";
+import { createContainer, createSeparator, createText } from "@/utils/create-container.js";
 import {
 	ActionRowBuilder,
 	BaseInteraction,
@@ -97,14 +97,6 @@ export async function run(interaction: BaseInteraction) {
 					await thread.members.add(m.user.id);
 				});
 
-				const ticketsEmbed = createEmbed({
-					description: await translateContext(interaction, "tickets/ticketsembed:TICKET_DESC", {
-						user: interaction.user.toString(),
-						time: Math.floor(Date.now() / 1_000),
-						text: desc,
-					}),
-				});
-
 				const ticketEmbedsButtons = [
 					new ButtonBuilder()
 						.setCustomId("tickets_adduser")
@@ -116,11 +108,23 @@ export async function run(interaction: BaseInteraction) {
 						.setLabel(await translateContext(interaction, "tickets/ticketsembed:CLOSE_TICKET")),
 				];
 
-				const ticketsEmbedRow = new ActionRowBuilder<ButtonBuilder>().addComponents(ticketEmbedsButtons);
+				const author = await translateContext(interaction, "tickets/ticketsembed:TICKET_AUTHOR", {
+					user: interaction.user.toString(),
+					time: Math.floor(Date.now() / 1_000),
+				});
 
+				const container = createContainer()
+					.addTextDisplayComponents(createText(`## ${subject}\n-# ${author}`))
+					.addSeparatorComponents(createSeparator())
+					.addTextDisplayComponents(createText(`>>> ${desc}`))
+					.addSeparatorComponents(createSeparator(false))
+					.addActionRowComponents(new ActionRowBuilder<ButtonBuilder>().addComponents(ticketEmbedsButtons));
+
+				// Unlike embeds, mentions inside text displays do ping
 				await thread.send({
-					embeds: [ticketsEmbed],
-					components: [ticketsEmbedRow],
+					flags: MessageFlags.IsComponentsV2,
+					components: [container],
+					allowedMentions: { parse: [] },
 				});
 			} catch (e) {
 				logger.error(e);

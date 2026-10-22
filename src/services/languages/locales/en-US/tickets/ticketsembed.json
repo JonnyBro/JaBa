@@ -13,7 +13,7 @@
 	"MODAL_SUBJECT_TITLE": "Ticket subject",
 	"MODAL_INPUT_TITLE": "Your message",
 
-	"TICKET_DESC": "Created by: {{user}}\nCreated at: <t:{{time}}>\nMessage: {{text}}",
+	"TICKET_AUTHOR": "Created by {{user}} • <t:{{time}}:f>",
 
 	"ADD_USER": "Add a member to the ticket",
 	"ADD_USER_RES": "Mention who you want to add to the ticket",
