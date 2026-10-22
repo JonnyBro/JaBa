@@ -1,6 +1,6 @@
-import { getLocalizedDesc } from "@/helpers/functions.js";
+import { buildAnimalPanel } from "@/helpers/animals.js";
+import { editReplyError, getLocalizedDesc } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
-import { createEmbed } from "@/utils/create-embed.js";
 import {
 	ApplicationCommandOptionType,
 	ApplicationIntegrationType,
@@ -28,16 +28,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
 	});
 
-	const res = (await fetch("https://api.thecatapi.com/v1/images/search").then(r => r.json()))[0];
-	if (!res) return interaction.editReply("error in the api");
+	const panel = await buildAnimalPanel("cat");
+	if (!panel) return editReplyError(interaction, "misc:UNKNOWN_ERROR");
 
-	const embed = createEmbed({
-		image: {
-			url: res.url,
-			height: res.height,
-			width: res.width,
-		},
-	});
-
-	await interaction.editReply({ embeds: [embed] });
+	await interaction.editReply(panel);
 };
