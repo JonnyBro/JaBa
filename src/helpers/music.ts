@@ -1,6 +1,12 @@
 import { capitalizeString, convertTime, shortenString, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
-import { createEmbed } from "@/utils/create-embed.js";
+import {
+	addTextWithThumbnail,
+	createContainer,
+	createFooter,
+	createSeparator,
+	createText,
+} from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
 import {
 	ActionRowBuilder,
@@ -11,12 +17,15 @@ import {
 	Interaction,
 	Message,
 	MessageCreateOptions,
+	MessageFlags,
 	User,
 } from "discord.js";
 import { Player, SearchPlatform, SearchResult, Track, UnresolvedSearchResult } from "lavalink-client";
 
 export const MUSIC_CONTROL_ID = "MUSIC_CTRL";
 export const MAX_VOLUME = 150;
+
+export type Translate = (key: string, args?: Record<string, unknown>) => Promise<string>;
 
 const NOW_PLAYING_KEY = "nowPlayingMessage";
 const AUTOPLAY_KEY = "autoplay";
@@ -240,63 +249,74 @@ export const deleteNowPlaying = async (player: Player) => {
 	if (message?.deletable) await message.delete().catch(() => {});
 };
 
+export const formatPlayerSettings = async (player: Player, t: Translate) =>
+	t("music/queue:SETTINGS_VALUE", {
+		volume: player.volume,
+		loop: await t(`music/loop:MODE_${player.repeatMode.toUpperCase()}`),
+		autoplay: await t(isAutoplayEnabled(player) ? "common:ENABLED" : "common:DISABLED"),
+	});
+
 const buildNowPlaying = async (player: Player, track: Track) => {
 	const client = useClient();
 	const guild = client.guilds.cache.get(player.guildId)!;
-	const t = (key: string, args?: Record<string, unknown>) => translateContext(guild, key, args);
+	const t: Translate = (key, args) => translateContext(guild, key, args);
 
-	const embed = createEmbed({
-		author: {
-			name: await t(player.paused ? "music/queue:PAUSED" : "music/queue:PLAYING"),
-			iconURL: client.user.displayAvatarURL(),
-		},
-		description: `**${formatTrack(track, 60)}**`,
-		fields: [
-			{ name: await t("music/queue:SOURCE"), value: capitalizeString(track.info.sourceName), inline: true },
-			{ name: await t("music/queue:DURATION"), value: formatDuration(track), inline: true },
-			{
-				name: await t("music/queue:ADDED"),
-				value: (track.requester as User | undefined)?.toString() || (await t("common:UNKNOWN")),
-				inline: true,
-			},
-			{
-				name: await t("music/queue:SETTINGS"),
-				value: await t("music/queue:SETTINGS_VALUE", {
-					volume: player.volume,
-					loop: await t(`music/loop:MODE_${player.repeatMode.toUpperCase()}`),
-					autoplay: await t(isAutoplayEnabled(player) ? "common:ENABLED" : "common:DISABLED"),
-				}),
-			},
-		],
-	});
-
-	if (track.info.artworkUrl) embed.setThumbnail(track.info.artworkUrl);
-
+	const requester = (track.requester as User | undefined)?.toString() || (await t("common:UNKNOWN"));
+	const status = player.paused ? `⏸️ ${await t("music/queue:PAUSED")}` : `▶️ ${await t("music/queue:PLAYING")}`;
 	const nextTrack = player.queue.tracks[0] as Track | undefined;
-	if (nextTrack) embed.addFields({ name: await t("music/queue:NEXT"), value: formatTrack(nextTrack) });
+
+	const container = createContainer();
+
+	addTextWithThumbnail(
+		container,
+		[
+			`-# ${status}`,
+			`### ${formatTrack(track, 60)}`,
+			[
+				`\`${formatDuration(track)}\``,
+				capitalizeString(track.info.sourceName),
+				`${await t("music/queue:ADDED")}: ${requester}`,
+			].join(" • "),
+		].join("\n"),
+		track.info.artworkUrl,
+	);
+
+	container.addSeparatorComponents(createSeparator());
+	container.addTextDisplayComponents(createText(await formatPlayerSettings(player, t)));
+
+	if (nextTrack)
+		container.addTextDisplayComponents(createText(`**${await t("music/queue:NEXT")}:** ${formatTrack(nextTrack)}`));
 
 	const button = (action: string, emoji: string, style = ButtonStyle.Secondary) =>
 		new ButtonBuilder().setCustomId(`${MUSIC_CONTROL_ID}:${action}`).setEmoji(emoji).setStyle(style);
 
 	const loopEmoji = { off: "🔁", queue: "🔁", track: "🔂" }[player.repeatMode];
 
-	const rows = [
-		new ActionRowBuilder<ButtonBuilder>().addComponents(
-			button("back", "⏮️"),
-			player.paused ? button("pause", "▶️", ButtonStyle.Primary) : button("pause", "⏸️"),
-			button("skip", "⏭️"),
-			button("stop", "⏹️", ButtonStyle.Danger),
-		),
-		new ActionRowBuilder<ButtonBuilder>().addComponents(
-			button("voldown", "🔉"),
-			button("volup", "🔊"),
-			button("loop", loopEmoji, player.repeatMode === "off" ? ButtonStyle.Secondary : ButtonStyle.Primary),
-			button("shuffle", "🔀"),
-			button("autoplay", "♾️", isAutoplayEnabled(player) ? ButtonStyle.Primary : ButtonStyle.Secondary),
-		),
-	];
+	container
+		.addSeparatorComponents(createSeparator(false))
+		.addActionRowComponents(
+			new ActionRowBuilder<ButtonBuilder>().addComponents(
+				button("back", "⏮️"),
+				player.paused ? button("pause", "▶️", ButtonStyle.Primary) : button("pause", "⏸️"),
+				button("skip", "⏭️"),
+				button("stop", "⏹️", ButtonStyle.Danger),
+			),
+			new ActionRowBuilder<ButtonBuilder>().addComponents(
+				button("voldown", "🔉"),
+				button("volup", "🔊"),
+				button("loop", loopEmoji, player.repeatMode === "off" ? ButtonStyle.Secondary : ButtonStyle.Primary),
+				button("shuffle", "🔀"),
+				button("autoplay", "♾️", isAutoplayEnabled(player) ? ButtonStyle.Primary : ButtonStyle.Secondary),
+			),
+		)
+		.addTextDisplayComponents(createFooter());
 
-	return { embeds: [embed], components: rows };
+	// Unlike embeds, mentions inside text displays do ping
+	return {
+		flags: MessageFlags.IsComponentsV2 as const,
+		components: [container],
+		allowedMentions: { parse: [] },
+	};
 };
 
 export const sendNowPlaying = async (player: Player, track: Track) => {

@@ -23,9 +23,11 @@ export const data = {
 		for (const guild of guilds)
 			try {
 				const guildData = await client.getGuildData(guild.id);
-				if (typeof guildData.plugins.birthdays !== "string") continue;
+				const channelId = String(guildData.plugins.birthdays);
+				// Mongoose casts the "disabled" default (false) to the string "false"
+				if (!/^\d+$/.test(channelId)) continue;
 
-				const channel = await client.channels.fetch(guildData.plugins.birthdays);
+				const channel = await client.channels.fetch(channelId);
 				if (!channel || !channel.isSendable()) continue;
 
 				const userIDs: string[] = users.filter(u => guild.members.cache.has(u.id)).map(u => u.id);

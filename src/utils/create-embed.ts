@@ -5,11 +5,13 @@ import useClient from "./use-client.js";
 
 const client = useClient();
 
-const defaultFooter: APIEmbedFooter = {
-	text: `${client.configService.get<string>("EMBED_FOOTER")} ${IS_PROD ? `| ${packageJson.version}` : ""}`,
-};
+const footerBase = client.configService.get<string>("EMBED_FOOTER");
 
-const defaultColor = client.configService.get<ColorResolvable>("EMBED_COLOR");
+export const defaultFooterText = IS_PROD ? `${footerBase} | ${packageJson.version}` : footerBase;
+
+const defaultFooter: APIEmbedFooter = { text: defaultFooterText };
+
+export const defaultColor = client.configService.get<ColorResolvable>("EMBED_COLOR");
 
 export const createEmbed = (data?: EmbedData) =>
 	new EmbedBuilder({
