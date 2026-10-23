@@ -1,3 +1,10 @@
+import {
+	getCategoryFromPath,
+	getCommandType,
+	getDescriptionKey,
+	getLocaleNamespace,
+	isContextCommand,
+} from "@/helpers/commands.js";
 import { capitalizeString, editReplyError, getLocalizedDesc, translateContext } from "@/helpers/functions.js";
 import { AutocompleteProps, CommandData, SlashCommandProps } from "@/types.js";
 import { componentRouter } from "@/utils/component-router.js";
@@ -14,7 +21,6 @@ import {
 	PermissionsBitField,
 	StringSelectMenuBuilder,
 } from "discord.js";
-import { basename } from "node:path";
 
 const client = useClient();
 
@@ -41,34 +47,10 @@ export const data: CommandData = {
 	],
 };
 
-function getCategoryFromPath(filepath: string): string {
-	const segments = filepath.split(/[\\/]/);
-	const commandsIndex = segments.lastIndexOf("commands");
-	return segments[commandsIndex + 1].toLowerCase() || "uncategorized";
-}
-
 type Command = (typeof client.commands)[number];
 
-const getCommandType = (cmd: Command) =>
-	(cmd.data as { type?: ApplicationCommandType }).type ?? ApplicationCommandType.ChatInput;
-
-const isContextCommand = (cmd: Command) => getCommandType(cmd) !== ApplicationCommandType.ChatInput;
-
-// Context menu commands keep their strings next to the slash command they belong to: playcontext.ts -> music/play
-const getLocaleNamespace = (cmd: Command) => {
-	const category = getCategoryFromPath(cmd.filePath);
-	if (!isContextCommand(cmd)) return `${category}/${cmd.data.name.toLowerCase()}`;
-
-	return `${category}/${basename(cmd.filePath)
-		.replace(/\.[jt]s$/, "")
-		.replace(/context$/, "")}`;
-};
-
 const getDescription = (interaction: Interaction, cmd: Command) =>
-	translateContext(
-		interaction,
-		`${getLocaleNamespace(cmd)}:${isContextCommand(cmd) ? "CONTEXT_DESCRIPTION" : "DESCRIPTION"}`,
-	);
+	translateContext(interaction, getDescriptionKey(cmd));
 
 const getDisplayName = async (interaction: Interaction, cmd: Command) =>
 	isContextCommand(cmd)

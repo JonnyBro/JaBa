@@ -2,11 +2,14 @@ import MongooseAdapter from "@/adapters/database/MongooseAdapter.js";
 import { SUPER_CONTEXT } from "@/constants/index.js";
 import { Handlers } from "@/handlers/index.js";
 import logger from "@/helpers/logger.js";
+import { QueueChangesNotifier } from "@/helpers/music-events.js";
 import { runMigrations } from "@/migrations/index.js";
+import { loadBotSettings } from "@/services/bot-settings/index.js";
+import { startCommandStats } from "@/services/command-stats/index.js";
 import ConfigService from "@/services/config/index.js";
 import InternationalizationService from "@/services/languages/index.js";
 import { CommandFileObject } from "@/types.js";
-import { Client, ClientOptions } from "discord.js";
+import { Client, ClientOptions, User } from "discord.js";
 import { LavalinkManager } from "lavalink-client";
 
 export class ExtendedClient extends Client<true> {
@@ -31,6 +34,16 @@ export class ExtendedClient extends Client<true> {
 		autoSkipOnResolveError: true,
 		playerOptions: {
 			defaultSearchPlatform: "ytmsearch",
+			// Tracks rebuilt from Lavalink events get the requester back as plain JSON from userData,
+			// and without one the library falls back to { id, username } of the bot. Both become a real User again
+			requesterTransformer: (requester: unknown) => {
+				if (requester instanceof User) return requester;
+
+				const id = (requester as { id?: unknown } | null)?.id;
+				if (typeof id !== "string") return requester;
+
+				return (id === this.user?.id ? this.user : this.users.cache.get(id)) ?? requester;
+			},
 			onDisconnect: {
 				autoReconnect: true,
 				destroyPlayer: false,
@@ -43,6 +56,7 @@ export class ExtendedClient extends Client<true> {
 		},
 		queueOptions: {
 			maxPreviousTracks: 25,
+			queueChangesWatcher: new QueueChangesNotifier(),
 		},
 	});
 
@@ -60,6 +74,8 @@ export class ExtendedClient extends Client<true> {
 		try {
 			await this.db.connect();
 			await runMigrations();
+			await loadBotSettings();
+			startCommandStats();
 
 			await this.login(this.configService.get<string>("TOKEN"));
 		} catch (error) {

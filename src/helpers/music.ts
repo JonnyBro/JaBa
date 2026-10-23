@@ -1,5 +1,6 @@
 import { capitalizeString, convertTime, shortenString, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
+import { notifyMusicChange } from "@/helpers/music-events.js";
 import {
 	addTextWithThumbnail,
 	createContainer,
@@ -20,7 +21,7 @@ import {
 	MessageFlags,
 	User,
 } from "discord.js";
-import { Player, SearchPlatform, SearchResult, Track, UnresolvedSearchResult } from "lavalink-client";
+import { Player, RepeatMode, SearchPlatform, SearchResult, Track, UnresolvedSearchResult } from "lavalink-client";
 
 export const MUSIC_CONTROL_ID = "MUSIC_CTRL";
 export const MAX_VOLUME = 150;
@@ -137,10 +138,77 @@ export const formatTrack = (track: Track, maxTitle = 50) => {
 
 export const formatDuration = (track: Track) => (track.info.isStream ? "🔴 LIVE" : convertTime(track.info.duration));
 
+// Player controls, shared by the now playing buttons and the dashboard
+export type PlayerAction = "pause" | "back" | "skip" | "stop" | "voldown" | "volup" | "loop" | "shuffle" | "autoplay";
+
+/** These start another track or destroy the player, which sends or deletes the now playing message on its own */
+export const TRACK_CHANGING_ACTIONS: PlayerAction[] = ["back", "skip", "stop"];
+
+export const nextRepeatMode: Record<RepeatMode, RepeatMode> = {
+	off: "track",
+	track: "queue",
+	queue: "off",
+};
+
+/** Returns a locale key to show when the action can't be done */
+export const runPlayerAction = async (player: Player, action: PlayerAction): Promise<string | null> => {
+	switch (action) {
+		case "pause":
+			if (player.paused) await player.resume();
+			else await player.pause();
+			return null;
+
+		case "back": {
+			const previous = player.queue.previous[0];
+			if (!previous) return "music/back:NO_PREV_SONG";
+
+			await player.queue.previous.shift();
+			await player.play({ clientTrack: previous });
+			return null;
+		}
+
+		case "skip":
+			if (!player.queue.tracks.length && !isAutoplayEnabled(player)) return "music/queue:NO_QUEUE";
+
+			if (player.queue.tracks.length) await player.skip();
+			else await player.stopPlaying(false, true);
+			return null;
+
+		case "stop":
+			await player.destroy("stopped by user", true);
+			return null;
+
+		case "voldown":
+			await player.setVolume(Math.max(player.volume - 10, 0));
+			return null;
+
+		case "volup":
+			await player.setVolume(Math.min(player.volume + 10, MAX_VOLUME));
+			return null;
+
+		case "loop":
+			await player.setRepeatMode(nextRepeatMode[player.repeatMode]);
+			return null;
+
+		case "shuffle":
+			if (!player.queue.tracks.length) return "music/queue:NO_QUEUE";
+
+			await player.queue.shuffle();
+			return "music/shuffle:SUCCESS";
+
+		case "autoplay":
+			setAutoplay(player, !isAutoplayEnabled(player));
+			return null;
+	}
+};
+
 // Autoplay
 export const isAutoplayEnabled = (player: Player) => !!player.getData<boolean>(AUTOPLAY_KEY);
 
-export const setAutoplay = (player: Player, enabled: boolean) => player.setData(AUTOPLAY_KEY, enabled);
+export const setAutoplay = (player: Player, enabled: boolean) => {
+	player.setData(AUTOPLAY_KEY, enabled);
+	notifyMusicChange(player.guildId);
+};
 
 const getRadioQuery = async (player: Player, track: Track) => {
 	const client = useClient();
@@ -261,7 +329,13 @@ const buildNowPlaying = async (player: Player, track: Track) => {
 	const guild = client.guilds.cache.get(player.guildId)!;
 	const t: Translate = (key, args) => translateContext(guild, key, args);
 
-	const requester = (track.requester as User | undefined)?.toString() || (await t("common:UNKNOWN"));
+	const requester = track.requester as User | { id?: string } | undefined;
+	const requesterMention =
+		requester instanceof User
+			? requester.toString()
+			: requester?.id
+				? `<@${requester.id}>`
+				: await t("common:UNKNOWN");
 	const status = player.paused ? `⏸️ ${await t("music/queue:PAUSED")}` : `▶️ ${await t("music/queue:PLAYING")}`;
 	const nextTrack = player.queue.tracks[0] as Track | undefined;
 
@@ -275,7 +349,7 @@ const buildNowPlaying = async (player: Player, track: Track) => {
 			[
 				`\`${formatDuration(track)}\``,
 				capitalizeString(track.info.sourceName),
-				`${await t("music/queue:ADDED")}: ${requester}`,
+				`${await t("music/queue:ADDED")}: ${requesterMention}`,
 			].join(" • "),
 		].join("\n"),
 		track.info.artworkUrl,

@@ -1,0 +1,120 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./themes.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+	--font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+	--font-hud: "JetBrains Mono Variable", ui-monospace, monospace;
+	--font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+	--radius-xs: var(--radius);
+	--radius-sm: var(--radius);
+	--radius-md: var(--radius);
+	--radius-lg: var(--radius);
+	--radius-xl: var(--radius);
+	--radius-2xl: var(--radius);
+
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-hl: var(--hl);
+	--color-hl-foreground: var(--hl-foreground);
+	--color-edge: var(--edge);
+	--color-gold: var(--gold);
+	--color-silver: var(--silver);
+	--color-bronze: var(--bronze);
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+
+	html {
+		scrollbar-gutter: stable;
+		scrollbar-color: var(--border) transparent;
+	}
+
+	body {
+		@apply bg-background text-foreground font-sans antialiased;
+	}
+
+	::selection {
+		background: var(--hl);
+		color: var(--hl-foreground);
+	}
+
+	kbd {
+		@apply border border-current/40 px-1 font-hud text-[0.85em];
+	}
+}
+
+/* Mono font for headings, numbers and labels */
+@utility font-hud {
+	font-family: var(--font-hud);
+	font-weight: 500;
+	letter-spacing: -0.01em;
+	font-variant-numeric: tabular-nums;
+}
+
+@utility tabular {
+	font-variant-numeric: tabular-nums;
+}
+
+@utility hud-panel {
+	position: relative;
+	background: var(--card);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+}
+
+/*
+ * Highlighted panel: the solid line is the panel's own left border.
+ * The doubled selector beats the 1px border from hud-panel regardless of utility order
+ */
+@utility hud-edge {
+	&,
+	&.hud-panel {
+		border-left-width: 4px;
+		border-left-style: solid;
+		border-left-color: var(--edge);
+	}
+}
+
+@utility hud-bar {
+	position: relative;
+	height: 5px;
+	background: color-mix(in srgb, var(--foreground) 12%, transparent);
+
+	& > span {
+		position: absolute;
+		inset: 0 auto 0 0;
+		background: var(--hl);
+	}
+}
+
+@utility hud-title {
+	font-family: var(--font-hud);
+	font-weight: 600;
+	font-size: 1.25rem;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}

@@ -1,4 +1,7 @@
 {
+	"MAINTENANCE": "The bot is under maintenance, try again later",
+	"MAINTENANCE_MESSAGE": "The bot is under maintenance: {{message}}",
+	"BLACKLISTED": "You or this server are not allowed to use the bot",
 	"BOT_USER": "You can't use this command on bots",
 	"CANT_YOU": "You can't use that",
 	"CANT_YOURSELF": "You can't use this command on yourself",

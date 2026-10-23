@@ -1,3 +1,8 @@
+packages:
+  - dashboard
+
 allowBuilds:
+  "@tailwindcss/oxide": true
   core-js: true
   esbuild: true
+  vue-demi: true

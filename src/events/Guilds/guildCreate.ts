@@ -1,3 +1,5 @@
+import logger from "@/helpers/logger.js";
+import { isBlacklisted } from "@/services/bot-settings/index.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
 import { Guild } from "discord.js";
@@ -10,6 +12,11 @@ export const data = {
 };
 
 export async function run(guild: Guild) {
+	if (isBlacklisted("guild", guild.id)) {
+		logger.info(`Left blacklisted guild ${guild.name} (${guild.id})`);
+		return guild.leave();
+	}
+
 	const logChannelId = client.configService.get<string>("DEV_LOGS_JOINS");
 	const logChannel = client.channels.cache.get(logChannelId);
 

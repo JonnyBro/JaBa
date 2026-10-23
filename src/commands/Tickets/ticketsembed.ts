@@ -1,12 +1,9 @@
 import { editReplySuccess, getLocalizedDesc } from "@/helpers/functions.js";
+import { buildTicketPanel } from "@/helpers/tickets.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
-import { createContainer, createFooter, createSeparator, createText } from "@/utils/create-container.js";
 import {
-	ActionRowBuilder,
 	ApplicationCommandOptionType,
 	ApplicationIntegrationType,
-	ButtonBuilder,
-	ButtonStyle,
 	InteractionContextType,
 	MessageFlags,
 } from "discord.js";
@@ -45,23 +42,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const label = interaction.options.getString("label", true);
 	const emoji = interaction.options.getString("emoji");
 
-	const button = new ButtonBuilder().setCustomId("tickets_create").setLabel(label).setStyle(ButtonStyle.Success);
-
-	if (emoji) button.setEmoji(emoji.trim());
-
-	const container = createContainer()
-		.addTextDisplayComponents(createText(text))
-		.addSeparatorComponents(createSeparator(false))
-		.addActionRowComponents(new ActionRowBuilder<ButtonBuilder>().addComponents(button))
-		.addTextDisplayComponents(createFooter());
-
-	// Unlike embeds, mentions inside text displays do ping
-	if (interaction.channel?.isSendable())
-		await interaction.channel.send({
-			flags: MessageFlags.IsComponentsV2,
-			components: [container],
-			allowedMentions: { parse: [] },
-		});
+	if (interaction.channel?.isSendable()) await interaction.channel.send(buildTicketPanel(text, label, emoji));
 
 	await editReplySuccess(interaction, "tickets/ticketsembed:SUCCESS");
 };
