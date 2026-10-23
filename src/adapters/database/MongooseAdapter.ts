@@ -93,10 +93,17 @@ export default class MongooseAdapter extends IDatabaseAdapter<
 		filter: FilterQuery<TSchema>,
 	): Promise<TDoc> {
 		this.cache.clear();
-		const result = await model.findOne(filter).then(result => {
-			if (result) return result as TDoc;
-			return model.create(filter) as unknown as TDoc;
-		});
-		return result;
+
+		const existing = await model.findOne(filter);
+		if (existing) return existing as TDoc;
+
+		try {
+			return (await model.create(filter)) as unknown as TDoc;
+		} catch (error) {
+			// A parallel call created the same document first, the unique index rejected ours
+			if ((error as { code?: number }).code !== 11000) throw error;
+
+			return (await model.findOne(filter)) as TDoc;
+		}
 	}
 }

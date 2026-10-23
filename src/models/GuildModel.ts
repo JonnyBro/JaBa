@@ -4,7 +4,7 @@ import { model, Schema } from "mongoose";
 const client = useClient();
 
 export interface GuildPlugins {
-	birthdays: string | false;
+	birthdays: string | null;
 }
 
 export interface IGuildSchema {
@@ -15,7 +15,7 @@ export interface IGuildSchema {
 
 const pluginsSchema = new Schema(
 	{
-		birthdays: { type: String, default: false },
+		birthdays: { type: String, default: null },
 	},
 	{ _id: false },
 );
@@ -27,18 +27,6 @@ const guildSchema = new Schema<IGuildSchema>({
 		default: () => client.configService.get<string>("DEFAULT_LANG"),
 	},
 	plugins: { type: pluginsSchema, default: () => ({}) },
-});
-
-guildSchema.pre("validate", function (next) {
-	const defaultLang = client.configService.get<string>("DEFAULT_LANG");
-
-	if (typeof this.language !== "string") this.language = defaultLang;
-
-	this.plugins = {
-		birthdays: typeof this.plugins?.birthdays === "string" ? this.plugins.birthdays : false,
-	};
-
-	next();
 });
 
 export default model<IGuildSchema>("Guild", guildSchema);

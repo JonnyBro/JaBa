@@ -2,6 +2,7 @@ import MongooseAdapter from "@/adapters/database/MongooseAdapter.js";
 import { SUPER_CONTEXT } from "@/constants/index.js";
 import { Handlers } from "@/handlers/index.js";
 import logger from "@/helpers/logger.js";
+import { runMigrations } from "@/migrations/index.js";
 import ConfigService from "@/services/config/index.js";
 import InternationalizationService from "@/services/languages/index.js";
 import { CommandFileObject } from "@/types.js";
@@ -58,10 +59,13 @@ export class ExtendedClient extends Client<true> {
 	async init() {
 		try {
 			await this.db.connect();
+			await runMigrations();
 
 			await this.login(this.configService.get<string>("TOKEN"));
 		} catch (error) {
-			logger.error(error);
+			logger.error("Failed to start the bot:", error);
+
+			process.exit(1);
 		}
 	}
 

@@ -42,27 +42,4 @@ const userSchema = new Schema<IUserSchema>({
 	},
 });
 
-userSchema.pre("validate", function (next) {
-	if (!this.isNew) return next();
-
-	const now = Date.now();
-
-	if (!Array.isArray(this.reminds)) this.reminds = [];
-	else
-		this.reminds = this.reminds.map(remind => ({
-			message: typeof remind.message === "string" ? remind.message : "",
-			createdAt: typeof remind.createdAt === "number" ? remind.createdAt : now,
-			sendAt: typeof remind.sendAt === "number" ? remind.sendAt : now,
-		}));
-
-	this.rep = typeof this.rep === "number" ? this.rep : 0;
-	this.bio = typeof this.bio === "string" ? this.bio : null;
-	this.registeredAt = typeof this.registeredAt === "number" ? this.registeredAt : now;
-
-	if (!this.cooldowns || typeof this.cooldowns !== "object") this.cooldowns = { rep: 0 };
-	else if (typeof this.cooldowns.rep !== "number") this.cooldowns.rep = 0;
-
-	next();
-});
-
 export default model<IUserSchema>("User", userSchema);

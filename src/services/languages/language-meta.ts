@@ -11,10 +11,4 @@ export default [
 		locale: "ru-RU",
 		format: "HH:mm:ss, Do MMMM YYYY",
 	},
-	{
-		name: "Ukrainian",
-		nativeName: "Українська",
-		locale: "uk-UA",
-		format: "HH:mm:ss, Do MMMM YYYY",
-	},
 ];

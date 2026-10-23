@@ -8,9 +8,6 @@ const client = useClient();
 
 const MEMBERS_CHUNK_SIZE = 100;
 
-const toBirthDate = (birthdate: number) =>
-	new Date(birthdate).getFullYear() <= 1970 ? new Date(birthdate * 1000) : new Date(birthdate);
-
 export const data: CronTaskData = {
 	name: "checkBirthdays",
 	task: async () => {
@@ -19,7 +16,7 @@ export const data: CronTaskData = {
 		const today = new Date();
 		const users = (await UserModel.find({ birthdate: { $ne: null } }))
 			.filter(u => !isNaN(u.birthdate!))
-			.map(u => ({ id: u.id, date: toBirthDate(u.birthdate!) }))
+			.map(u => ({ id: u.id, date: new Date(u.birthdate!) }))
 			.filter(u => u.date.getDate() === today.getDate() && u.date.getMonth() === today.getMonth());
 
 		if (!users.length) return;
@@ -27,8 +24,8 @@ export const data: CronTaskData = {
 		for (const guild of client.guilds.cache.values())
 			try {
 				const guildData = await client.getGuildData(guild.id);
-				const channelId = String(guildData.plugins.birthdays);
-				if (!/^\d+$/.test(channelId)) continue;
+				const channelId = guildData.plugins.birthdays;
+				if (!channelId) continue;
 
 				const channel = await client.channels.fetch(channelId).catch(() => null);
 				if (!channel?.isSendable()) continue;

@@ -50,8 +50,7 @@ async function buildConfigPanel(interaction: Interaction) {
 	const guildData = await client.getGuildData(guild.id);
 
 	const lang = languageMeta.find(l => l.locale === guildData.language);
-	// Mongoose casts the "disabled" default (false) to the string "false"
-	const birthdays = /^\d+$/.test(String(guildData.plugins.birthdays)) ? String(guildData.plugins.birthdays) : null;
+	const birthdays = guildData.plugins.birthdays;
 
 	const languageSelect = new StringSelectMenuBuilder()
 		.setCustomId(`${CONFIG_PANEL_ID}:language`)
@@ -131,7 +130,7 @@ componentRouter.register(CONFIG_PANEL_ID, async interaction => {
 
 	if (setting === "language" && interaction.isStringSelectMenu()) guildData.set("language", interaction.values[0]);
 	if (setting === "birthdays" && interaction.isChannelSelectMenu())
-		guildData.set("plugins.birthdays", interaction.values[0] || false);
+		guildData.set("plugins.birthdays", interaction.values[0] || null);
 
 	await guildData.save();
 
