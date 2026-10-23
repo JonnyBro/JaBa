@@ -8,15 +8,9 @@ import {
 	RESTPostAPIApplicationCommandsJSONBody,
 	UserContextMenuCommandInteraction,
 } from "discord.js";
-import { UserReminds } from "./models/UserModel.ts";
 import { ExtendedClient } from "./structures/client.ts";
 
 export type CommandData = RESTPostAPIApplicationCommandsJSONBody;
-
-export type cacheRemindsData = {
-	id: string;
-	reminds: UserReminds[];
-};
 
 export type BuiltInValidationParams = {
 	targetCommand: CommandFileObject;

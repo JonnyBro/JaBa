@@ -4,14 +4,13 @@ import { Handlers } from "@/handlers/index.js";
 import logger from "@/helpers/logger.js";
 import ConfigService from "@/services/config/index.js";
 import InternationalizationService from "@/services/languages/index.js";
-import { cacheRemindsData, CommandFileObject } from "@/types.js";
+import { CommandFileObject } from "@/types.js";
 import { Client, ClientOptions } from "discord.js";
 import { LavalinkManager } from "lavalink-client";
 
 export class ExtendedClient extends Client<true> {
 	configService = new ConfigService().loadConfig();
 	db = new MongooseAdapter(this.configService.get<string>("MONGODB_URI"));
-	cacheReminds = new Map<string, cacheRemindsData>();
 	i18n = new InternationalizationService(this);
 	commands: CommandFileObject[] = [];
 	lavalink = new LavalinkManager({

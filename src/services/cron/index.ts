@@ -4,7 +4,7 @@ import { CronJob } from "cron";
 
 export class CronManager {
 	private static instance: CronManager;
-	private jobs = new Map<string, { job: CronJob; isRunning: boolean; isError: boolean }>();
+	private jobs = new Map<string, { job: CronJob; isRunning: boolean }>();
 
 	private constructor() {}
 
@@ -28,18 +28,16 @@ export class CronManager {
 				task.schedule,
 				async () => {
 					const jobInfo = this.jobs.get(task.name);
-					if (!jobInfo || jobInfo.isError) return;
+					if (!jobInfo || jobInfo.isRunning) return;
+
+					jobInfo.isRunning = true;
 
 					try {
-						this.jobs.set(task.name, { ...jobInfo, isRunning: true });
-
 						await task.task();
-
-						this.jobs.set(task.name, { ...jobInfo, isRunning: false, isError: false });
 					} catch (error) {
 						logger.error(`Error executing cron task "${task.name}":`, error);
-
-						this.jobs.set(task.name, { ...jobInfo, isRunning: false, isError: true });
+					} finally {
+						jobInfo.isRunning = false;
 					}
 				},
 				null,
@@ -48,11 +46,8 @@ export class CronManager {
 			);
 
 			job.start();
-			this.jobs.set(task.name, {
-				job,
-				isRunning: false,
-				isError: false,
-			});
+
+			this.jobs.set(task.name, { job, isRunning: false });
 
 			logger.debug(`Task ${task.name} started`);
 		}

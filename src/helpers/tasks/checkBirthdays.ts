@@ -1,70 +1,67 @@
 import logger from "@/helpers/logger.js";
 import UserModel from "@/models/UserModel.js";
+import { CronTaskData } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
 
 const client = useClient();
 
-export const data = {
+const MEMBERS_CHUNK_SIZE = 100;
+
+const toBirthDate = (birthdate: number) =>
+	new Date(birthdate).getFullYear() <= 1970 ? new Date(birthdate * 1000) : new Date(birthdate);
+
+export const data: CronTaskData = {
 	name: "checkBirthdays",
 	task: async () => {
 		if (!client.isReady()) return;
 
-		const guilds = client.guilds.cache.values();
-		const users = await client.db.find(UserModel, {
-			birthdate: { $ne: null },
-		});
+		const today = new Date();
+		const users = (await UserModel.find({ birthdate: { $ne: null } }))
+			.filter(u => !isNaN(u.birthdate!))
+			.map(u => ({ id: u.id, date: toBirthDate(u.birthdate!) }))
+			.filter(u => u.date.getDate() === today.getDate() && u.date.getMonth() === today.getMonth());
 
-		const date = new Date();
-		const currentYear = date.getFullYear();
-		const currentMonth = date.getMonth();
-		const currentDate = date.getDate();
+		if (!users.length) return;
 
-		for (const guild of guilds)
+		for (const guild of client.guilds.cache.values())
 			try {
 				const guildData = await client.getGuildData(guild.id);
 				const channelId = String(guildData.plugins.birthdays);
-				// Mongoose casts the "disabled" default (false) to the string "false"
 				if (!/^\d+$/.test(channelId)) continue;
 
-				const channel = await client.channels.fetch(channelId);
-				if (!channel || !channel.isSendable()) continue;
+				const channel = await client.channels.fetch(channelId).catch(() => null);
+				if (!channel?.isSendable()) continue;
 
-				const userIDs: string[] = users.filter(u => guild.members.cache.has(u.id)).map(u => u.id);
+				const memberIds = new Set<string>();
+				for (let i = 0; i < users.length; i += MEMBERS_CHUNK_SIZE) {
+					const members = await guild.members.fetch({
+						user: users.slice(i, i + MEMBERS_CHUNK_SIZE).map(u => u.id),
+					});
 
-				for (const userID of userIDs) {
-					const userData = users.find(u => u.id === userID);
-					if (!userData || !userData.birthdate) continue;
-					if (isNaN(userData.birthdate)) continue;
+					members.forEach(m => memberIds.add(m.id));
+				}
 
-					const user = await client.users.fetch(userData.id);
-					const userDate =
-						new Date(userData.birthdate).getFullYear() <= 1970
-							? new Date(userData.birthdate * 1000)
-							: new Date(userData.birthdate);
-
-					if (userDate.getDate() === currentDate && userDate.getMonth() === currentMonth) {
-						const age = currentYear - userDate.getFullYear();
-						const embed = createEmbed({
-							author: {
-								name: client.user.username,
+				for (const { id, date } of users.filter(u => memberIds.has(u.id))) {
+					const embed = createEmbed({
+						author: {
+							name: client.user.username,
+						},
+						fields: [
+							{
+								name: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY", {
+									lng: guildData.language,
+								}),
+								value: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
+									user: `<@${id}>`,
+									age: String(today.getFullYear() - date.getFullYear()),
+									lng: guildData.language,
+								}),
 							},
-							fields: [
-								{
-									name: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY", {
-										lng: guildData.language,
-									}),
-									value: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
-										user: user.toString(),
-										age: age.toString(),
-										lng: guildData.language,
-									}),
-								},
-							],
-						});
+						],
+					});
 
-						await channel.send({ embeds: [embed] }).then(m => m.react("🎉"));
-					}
+					await channel.send({ embeds: [embed] }).then(m => m.react("🎉"));
 				}
 			} catch (e) {
 				logger.error(`[checkBirthdays] Error in guild ${guild.id}:`, e);
