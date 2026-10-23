@@ -11,7 +11,9 @@ import {
 } from "discord.js";
 
 const client = useClient();
-const LINK_REGEXP = /https?:\/\/[^\s<>]+/;
+
+const LINK_REGEXP = /https?:\/\/[^\s<>`"'|*()[\]]+/;
+const TRAILING_PUNCTUATION = /[.,;:!?~_]+$/;
 
 export const data = new ContextMenuCommandBuilder()
 	.setName(client.i18n.translate("music/play:CONTEXT_NAME", { lng: "en-US" }))
@@ -25,7 +27,7 @@ export const data = new ContextMenuCommandBuilder()
 export const run = async ({ interaction }: MessageContextCommandProps) => {
 	await interaction.deferReply();
 
-	const query = interaction.targetMessage.content.match(LINK_REGEXP)?.[0];
+	const query = interaction.targetMessage.content.match(LINK_REGEXP)?.[0].replace(TRAILING_PUNCTUATION, "");
 	if (!query) return editReplyError(interaction, "music/play:NO_LINK");
 
 	const member = interaction.member as GuildMember;
