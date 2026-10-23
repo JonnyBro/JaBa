@@ -1,5 +1,6 @@
 import { PROJECT_ROOT } from "@/constants/index.js";
 import logger from "@/helpers/logger.js";
+import { recordCommandUsage } from "@/services/command-stats/index.js";
 import { ExtendedClient } from "@/structures/client.js";
 import { BuiltInValidation, CommandFileObject } from "@/types.js";
 import { getFilePaths } from "@/utils/get-path.js";
@@ -95,6 +96,8 @@ export class CommandHandler {
 			if (!canRun) return;
 
 			const command = targetCommand[isAutocomplete ? "autocompleteRun" : "run"]!;
+
+			if (!isAutocomplete) recordCommandUsage(targetCommand.data.name);
 
 			try {
 				await command({

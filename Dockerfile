@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Copy dependency files and lock file for caching
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY dashboard/package.json ./dashboard/
 
 # Install all dependencies using the locked pnpm version
 RUN pnpm install --frozen-lockfile
@@ -14,7 +15,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Build application
-RUN pnpm build
+RUN pnpm build && pnpm build:dashboard
 
 FROM node:22.23.0-alpine AS runner
 
@@ -24,10 +25,12 @@ WORKDIR /root/app
 
 # Copy built application
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/dashboard/dist ./dashboard/dist
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY dashboard/package.json ./dashboard/
 
-# Install only production dependencies
-RUN pnpm install --frozen-lockfile --prod
+# Install only production dependencies of the bot, the dashboard is already built
+RUN pnpm install --frozen-lockfile --prod --filter jaba
 
 # Run application
 CMD ["node", "dist/index.js"]

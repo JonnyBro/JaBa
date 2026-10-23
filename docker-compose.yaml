@@ -10,6 +10,8 @@ services:
     environment:
       NODE_ENV: production
       LAVALINK_HOST: lavalink
+    ports:
+      - "6548:6548"                      # Dashboard, remove if DASHBOARD_URL is empty
     volumes:
       - ./.env:/root/app/.env
     depends_on:

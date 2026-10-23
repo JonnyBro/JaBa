@@ -39,3 +39,13 @@ export const runMigrations = async () => {
 
 	logger.info(`[Migrations] Applied ${pending.length} migration(s)`);
 };
+
+export const getMigrationStatus = async () => {
+	const applied = new Map(
+		(await mongoose.connection.db!.collection<{ _id: string; appliedAt: Date }>("migrations").find().toArray()).map(
+			m => [m._id, m.appliedAt.getTime()],
+		),
+	);
+
+	return migrations.map(m => ({ id: m.id, description: m.description, appliedAt: applied.get(m.id) ?? null }));
+};

@@ -1,0 +1,97 @@
+/*
+ * Themes are set as data-theme="<name>" on <html>, dark ones also get the "dark" class.
+ * Keep this list in sync with src/lib/theme.ts and the inline script in index.html
+ *
+ * --hl      the accent, used for active and highlighted states
+ * --edge    the accent line on highlighted panels
+ * --gold/silver/bronze  places in the leaderboards
+ */
+
+:root,
+:root[data-theme="dark"] {
+	--radius: 10px;
+	--background: rgb(17 18 23);
+	--foreground: rgb(236 237 242);
+	--card: rgb(26 27 34);
+	--card-foreground: rgb(236 237 242);
+	--popover: rgb(30 31 39);
+	--popover-foreground: rgb(236 237 242);
+	--primary: rgb(124 92 255);
+	--primary-foreground: rgb(255 255 255);
+	--secondary: rgb(38 39 49);
+	--secondary-foreground: rgb(236 237 242);
+	--muted: rgb(38 39 49);
+	--muted-foreground: rgb(150 153 168);
+	--accent: rgb(44 45 57);
+	--accent-foreground: rgb(236 237 242);
+	--destructive: rgb(220 50 70);
+	--destructive-foreground: rgb(255 120 135);
+	--border: rgb(46 47 59);
+	--input: rgb(52 53 66);
+	--ring: rgb(124 92 255);
+	--hl: rgb(150 122 255);
+	--hl-foreground: rgb(255 255 255);
+	--edge: rgb(124 92 255);
+	--gold: rgb(240 190 50);
+	--silver: rgb(180 186 200);
+	--bronze: rgb(205 127 70);
+}
+
+:root[data-theme="light"] {
+	--radius: 10px;
+	--background: rgb(246 246 250);
+	--foreground: rgb(22 23 30);
+	--card: rgb(255 255 255);
+	--card-foreground: rgb(22 23 30);
+	--popover: rgb(255 255 255);
+	--popover-foreground: rgb(22 23 30);
+	--primary: rgb(104 70 240);
+	--primary-foreground: rgb(255 255 255);
+	--secondary: rgb(236 236 243);
+	--secondary-foreground: rgb(22 23 30);
+	--muted: rgb(236 236 243);
+	--muted-foreground: rgb(100 103 118);
+	--accent: rgb(232 230 245);
+	--accent-foreground: rgb(22 23 30);
+	--destructive: rgb(210 40 60);
+	--destructive-foreground: rgb(190 30 50);
+	--border: rgb(224 224 234);
+	--input: rgb(214 214 226);
+	--ring: rgb(104 70 240);
+	--hl: rgb(104 70 240);
+	--hl-foreground: rgb(255 255 255);
+	--edge: rgb(104 70 240);
+	--gold: rgb(200 145 10);
+	--silver: rgb(120 126 140);
+	--bronze: rgb(170 95 40);
+}
+
+/* Pure black for OLED screens */
+:root[data-theme="amoled"] {
+	--radius: 10px;
+	--background: rgb(0 0 0);
+	--foreground: rgb(236 237 242);
+	--card: rgb(12 12 15);
+	--card-foreground: rgb(236 237 242);
+	--popover: rgb(18 18 22);
+	--popover-foreground: rgb(236 237 242);
+	--primary: rgb(124 92 255);
+	--primary-foreground: rgb(255 255 255);
+	--secondary: rgb(26 26 32);
+	--secondary-foreground: rgb(236 237 242);
+	--muted: rgb(26 26 32);
+	--muted-foreground: rgb(145 148 162);
+	--accent: rgb(30 30 38);
+	--accent-foreground: rgb(236 237 242);
+	--destructive: rgb(220 50 70);
+	--destructive-foreground: rgb(255 120 135);
+	--border: rgb(36 36 44);
+	--input: rgb(44 44 54);
+	--ring: rgb(124 92 255);
+	--hl: rgb(150 122 255);
+	--hl-foreground: rgb(255 255 255);
+	--edge: rgb(124 92 255);
+	--gold: rgb(240 190 50);
+	--silver: rgb(180 186 200);
+	--bronze: rgb(205 127 70);
+}

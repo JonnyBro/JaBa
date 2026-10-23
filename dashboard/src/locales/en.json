@@ -1,0 +1,380 @@
+{
+	"meta": {
+		"name": "English"
+	},
+	"common": {
+		"unknown": "Unknown",
+		"loading": "Loading...",
+		"somethingWrong": "Something went wrong",
+		"loadError": "Couldn't load this",
+		"tryAgain": "Try again",
+		"cancel": "Cancel",
+		"confirm": "Confirm",
+		"save": "Save",
+		"delete": "Delete",
+		"open": "Open",
+		"edit": "Edit",
+		"actions": "Actions",
+		"copied": "Copied to clipboard",
+		"copyFailed": "Couldn't copy to clipboard",
+		"previous": "Previous",
+		"next": "Next",
+		"signIn": "Sign in",
+		"backHome": "Back to home"
+	},
+	"header": {
+		"home": "Home",
+		"servers": "Servers",
+		"menu": "Menu",
+		"github": "JaBa on GitHub",
+		"theme": "Theme",
+		"language": "Language",
+		"languageAuto": "Browser language",
+		"commands": "Commands",
+		"leaderboard": "Leaderboard",
+		"owner": "Owner",
+		"subtitle": "Dashboard"
+	},
+	"userMenu": {
+		"account": "Account",
+		"servers": "My servers",
+		"signOut": "Sign out",
+		"profile": "Profile"
+	},
+	"footer": {
+		"tagline": "JaBa - a Discord bot",
+		"source": "Source code"
+	},
+	"notFound": {
+		"text": "Page not found"
+	},
+	"home": {
+		"intro": "Music, economy, reminders and server tools. Manage the bot on your servers right from here.",
+		"invite": "Add to server",
+		"myServers": "My servers",
+		"title": "Bot stats",
+		"stats": {
+			"servers": "Servers",
+			"users": "Users",
+			"commands": "Commands",
+			"uptime": "Uptime",
+			"ping": "Ping",
+			"music": "Playing now",
+			"musicHint": "{n} player | {n} players"
+		}
+	},
+	"servers": {
+		"title": "Servers",
+		"subtitle": "Servers where you can manage the bot",
+		"empty": "No servers",
+		"emptyText": "You need the Manage Server permission on a server to see it here.",
+		"manage": "Manage",
+		"invite": "Invite",
+		"music": "Music"
+	},
+	"server": {
+		"back": "All servers",
+		"members": "{n} members",
+		"settings": "Settings",
+		"language": "Bot language",
+		"birthdays": "Birthday announcements channel",
+		"disabled": "Disabled",
+		"saved": "Settings saved",
+		"tabs": {
+			"settings": "Settings",
+			"members": "Members",
+			"tickets": "Tickets",
+			"messages": "Messages",
+			"audit": "Audit log",
+			"music": "Music",
+			"leaderboard": "Leaders"
+		},
+		"pickChannel": "Pick a channel"
+	},
+	"members": {
+		"search": "Search by name or ID",
+		"sort": {
+			"name": "By name",
+			"money": "By money",
+			"bank": "By bank",
+			"level": "By level",
+			"joined": "By join date"
+		},
+		"member": "Member",
+		"money": "Money",
+		"bank": "Bank",
+		"exp": "Experience",
+		"level": "Level",
+		"joined": "Joined",
+		"rep": "Reputation",
+		"bot": "Bot",
+		"timedOut": "Timed out",
+		"timedOutUntil": "Timed out until",
+		"empty": "Nobody found",
+		"economy": "Economy",
+		"saved": "Economy saved",
+		"transactions": "Last transactions",
+		"noTransactions": "No transactions yet",
+		"resetMember": "Reset",
+		"resetMemberTitle": "Reset {name}?",
+		"resetMemberText": "Money, bank, experience, level and transactions of this member on the server will be deleted.",
+		"memberReset": "Member data reset",
+		"resetEconomy": "Reset economy",
+		"resetEconomyTitle": "Reset the economy of the whole server?",
+		"resetEconomyText": "Money, bank, experience, levels and transactions of every member of {name} will be deleted. This can't be undone.",
+		"economyReset": "Reset {n} member | Reset {n} members",
+		"moderation": {
+			"title": "Moderation",
+			"timeout": "Timeout",
+			"removeTimeout": "Remove timeout",
+			"kick": "Kick",
+			"ban": "Ban",
+			"notAllowed": "You or the bot don't have the permission or the role is too low",
+			"timeoutTitle": "Timeout {name}",
+			"kickTitle": "Kick {name}",
+			"banTitle": "Ban {name}",
+			"reasonHint": "The reason goes to the server audit log together with your name.",
+			"reason": "Reason",
+			"duration": "Duration",
+			"deleteMessages": "Delete their messages",
+			"dontDelete": "Don't delete",
+			"minutes": "{n} minute | {n} minutes",
+			"hours": "{n} hour | {n} hours",
+			"days": "{n} day | {n} days",
+			"done": {
+				"timeout": "{name} is timed out",
+				"kick": "{name} was kicked",
+				"ban": "{name} was banned",
+				"timeoutRemoved": "Timeout of {name} removed"
+			}
+		}
+	},
+	"tickets": {
+		"intro": "Sends a message with a button that opens a private ticket thread in the same channel. The bot needs to be able to create private threads there.",
+		"channel": "Channel",
+		"text": "Message text",
+		"textPlaceholder": "Need help? Open a ticket and we'll get back to you.",
+		"label": "Button text",
+		"labelPlaceholder": "Open a ticket",
+		"emoji": "Emoji",
+		"send": "Send panel",
+		"sent": "Ticket panel sent"
+	},
+	"messages": {
+		"channel": "Channel",
+		"color": "Color strip",
+		"mentions": "Allow mentions",
+		"preview": "Preview",
+		"send": "Send",
+		"sent": "Message sent",
+		"textPlaceholder": "Text, Discord markdown works: **bold**, # heading, -# small text",
+		"divider": "Line",
+		"large": "Big gap",
+		"addImage": "Add image",
+		"addButton": "Add button",
+		"buttonLabel": "Button text",
+		"blocks": {
+			"text": "Text",
+			"separator": "Separator",
+			"gallery": "Images",
+			"buttons": "Link buttons"
+		}
+	},
+	"audit": {
+		"empty": "Nothing here yet",
+		"emptyText": "Changes made in the dashboard will show up here.",
+		"reason": "Reason: {reason}",
+		"openMessage": "Open message",
+		"actions": {
+			"settings.update": "changed the settings",
+			"member.economy": "changed the economy of",
+			"member.reset": "reset the data of",
+			"economy.reset": "reset the economy of the server",
+			"member.kick": "kicked",
+			"member.ban": "banned",
+			"member.timeout": "timed out",
+			"tickets.panel": "sent a ticket panel",
+			"message.send": "sent a message"
+		}
+	},
+	"music": {
+		"reconnecting": "Connection lost, reconnecting…",
+		"joinToControl": "Join the voice channel {channel} to control the music",
+		"cantControl": "Join the bot's voice channel to control the music",
+		"paused": "Paused",
+		"playing": "Now playing",
+		"requestedBy": "Added by {name}",
+		"back": "Previous",
+		"pause": "Play / pause",
+		"skip": "Skip",
+		"stop": "Stop",
+		"shuffle": "Shuffle",
+		"autoplay": "Autoplay similar tracks",
+		"repeat": {
+			"off": "Repeat: off",
+			"track": "Repeat: track",
+			"queue": "Repeat: queue"
+		},
+		"nothing": "Nothing is playing",
+		"nothingText": "Add a track below, the bot will join your voice channel.",
+		"joinToStart": "Join a voice channel on the server to start the music.",
+		"addPlaceholder": "Link or search query",
+		"sources": {
+			"auto": "Auto",
+			"ytm": "YouTube Music",
+			"yt": "YouTube",
+			"sp": "Spotify",
+			"ym": "Yandex Music",
+			"sc": "SoundCloud"
+		},
+		"next": "Play next",
+		"add": "Add",
+		"added": "Added: {title}",
+		"addedMany": "Added {n} tracks from {title}",
+		"queue": "Queue",
+		"queueInfo": "{n} track, {time} | {n} tracks, {time}",
+		"clear": "Clear",
+		"emptyQueue": "The queue is empty",
+		"more": "And {n} more"
+	},
+	"leaderboard": {
+		"title": "Reputation",
+		"subtitle": "Top 50 by reputation across all servers",
+		"empty": "Nobody here yet",
+		"credits": "Credits",
+		"level": "Level",
+		"levelShort": "Lv. {n}"
+	},
+	"commands": {
+		"title": "Commands",
+		"subtitle": "Everything the bot can do",
+		"search": "Search commands",
+		"empty": "No commands found",
+		"guildOnly": "Servers only",
+		"context": {
+			"user": "Right-click a user",
+			"message": "Right-click a message"
+		}
+	},
+	"profile": {
+		"rep": "Reputation",
+		"registered": "With JaBa since",
+		"bio": "Bio",
+		"bioPlaceholder": "A few words about yourself, shown in /profile",
+		"birthdate": "Birthday",
+		"birthdateHint": "The bot congratulates you on servers with birthday announcements on.",
+		"clear": "Clear",
+		"saved": "Saved",
+		"reminds": "Reminders",
+		"remindsHint": "The bot sends them to your DMs, same as /remindme",
+		"remindMessage": "What to remind about",
+		"remindAt": "When",
+		"addRemind": "Add",
+		"remindCreated": "Reminder added",
+		"noReminds": "No reminders",
+		"economy": "Economy",
+		"economyHint": "Your balance and level on servers with the bot",
+		"noEconomy": "You don't have any economy data yet",
+		"economyLine": "{credits} credits · level {level}"
+	},
+	"owner": {
+		"title": "Owner",
+		"subtitle": "Tools only you can see",
+		"saved": "Saved",
+		"tabs": {
+			"overview": "Overview",
+			"servers": "Servers",
+			"lavalink": "Lavalink",
+			"stats": "Statistics",
+			"blacklist": "Blacklist",
+			"logs": "Logs"
+		},
+		"maintenance": {
+			"title": "Maintenance",
+			"hint": "While it's on, commands answer with a maintenance notice for everyone but you.",
+			"enabled": "Maintenance mode",
+			"message": "Message for users (optional)"
+		},
+		"status": {
+			"title": "Bot status",
+			"hint": "Replaces the rotating status. Leave empty to go back to the rotation.",
+			"placeholder": "Custom status"
+		},
+		"tasks": {
+			"title": "Scheduled tasks",
+			"name": "Task",
+			"schedule": "Schedule",
+			"lastRun": "Last run",
+			"nextRun": "Next run",
+			"run": "Run now",
+			"running": "Running",
+			"failed": "Failed",
+			"started": "{name} started"
+		},
+		"migrations": {
+			"title": "Migrations",
+			"pending": "Pending"
+		},
+		"servers": {
+			"search": "Search by name or ID",
+			"empty": "No servers",
+			"server": "Server ({n})",
+			"members": "Members",
+			"joined": "Joined",
+			"leave": "Leave",
+			"blacklist": "Blacklist",
+			"leaveTitle": "Leave {name}?",
+			"leaveText": "The bot leaves the server, its data stays in the database.",
+			"leaveDone": "Left {name}",
+			"blacklistTitle": "Blacklist {name}?",
+			"blacklistText": "The bot leaves the server and leaves again every time it is added there.",
+			"blacklistDone": "{name} is blacklisted"
+		},
+		"lavalink": {
+			"connected": "Connected",
+			"disconnected": "Disconnected",
+			"players": "Players",
+			"playersHint": "Playing / total",
+			"cpu": "CPU",
+			"system": "System: {value}",
+			"memory": "Memory",
+			"allocated": "Allocated: {value}",
+			"activePlayers": "Players",
+			"noPlayers": "Nothing is playing anywhere",
+			"server": "Server",
+			"track": "Track",
+			"listeners": "Listeners",
+			"queue": "Queue",
+			"destroy": "Stop the player",
+			"destroyed": "Player stopped"
+		},
+		"stats": {
+			"days": "{n} days",
+			"total": "Commands used",
+			"average": "Per day",
+			"top": "Most used",
+			"perDay": "Commands per day",
+			"commands": "By command",
+			"empty": "No data yet",
+			"emptyText": "Command usage is counted since this version and saved once a minute."
+		},
+		"blacklist": {
+			"user": "User",
+			"guild": "Server",
+			"reason": "Reason (optional)",
+			"add": "Blacklist",
+			"added": "Added to the blacklist",
+			"empty": "The blacklist is empty",
+			"hint": "Blacklisted users and servers can't use any commands, the bot leaves blacklisted servers."
+		},
+		"logs": {
+			"search": "Filter",
+			"live": "Live",
+			"offline": "Offline",
+			"pause": "Pause",
+			"resume": "Resume",
+			"clear": "Clear",
+			"empty": "No lines"
+		}
+	}
+}

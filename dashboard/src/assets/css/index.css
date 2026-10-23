@@ -1,0 +1,115 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./themes.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+	--font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+	--font-mono: ui-monospace, "JetBrains Mono", "Cascadia Code", monospace;
+
+	--radius-xs: calc(var(--radius) - 6px);
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+	--radius-2xl: calc(var(--radius) + 8px);
+
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-hl: var(--hl);
+	--color-hl-foreground: var(--hl-foreground);
+	--color-edge: var(--edge);
+	--color-gold: var(--gold);
+	--color-silver: var(--silver);
+	--color-bronze: var(--bronze);
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+
+	html {
+		scrollbar-gutter: stable;
+		scrollbar-color: var(--border) transparent;
+	}
+
+	body {
+		@apply bg-background text-foreground font-sans antialiased;
+		font-feature-settings: "cv11", "ss01";
+	}
+
+	::selection {
+		background: color-mix(in srgb, var(--hl) 35%, transparent);
+	}
+
+	kbd {
+		@apply rounded border border-current/30 px-1 font-mono text-[0.85em];
+	}
+}
+
+/* Headings and numbers: a bit heavier, numbers keep their width */
+@utility font-display {
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	font-variant-numeric: tabular-nums;
+}
+
+@utility tabular {
+	font-variant-numeric: tabular-nums;
+}
+
+@utility panel {
+	background: var(--card);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+}
+
+/* A highlighted panel, the accent line follows the rounded corner */
+@utility panel-accent {
+	&,
+	&.panel {
+		border-left-width: 3px;
+		border-left-color: var(--edge);
+	}
+}
+
+@utility progress-bar {
+	position: relative;
+	height: 6px;
+	overflow: hidden;
+	border-radius: 9999px;
+	background: color-mix(in srgb, var(--foreground) 10%, transparent);
+
+	& > span {
+		position: absolute;
+		inset: 0 auto 0 0;
+		border-radius: inherit;
+		background: var(--hl);
+	}
+}
+
+@utility section-title {
+	font-size: 1.25rem;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+}

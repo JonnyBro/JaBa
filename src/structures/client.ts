@@ -2,7 +2,10 @@ import MongooseAdapter from "@/adapters/database/MongooseAdapter.js";
 import { SUPER_CONTEXT } from "@/constants/index.js";
 import { Handlers } from "@/handlers/index.js";
 import logger from "@/helpers/logger.js";
+import { QueueChangesNotifier } from "@/helpers/music-events.js";
 import { runMigrations } from "@/migrations/index.js";
+import { loadBotSettings } from "@/services/bot-settings/index.js";
+import { startCommandStats } from "@/services/command-stats/index.js";
 import ConfigService from "@/services/config/index.js";
 import InternationalizationService from "@/services/languages/index.js";
 import { CommandFileObject } from "@/types.js";
@@ -43,6 +46,7 @@ export class ExtendedClient extends Client<true> {
 		},
 		queueOptions: {
 			maxPreviousTracks: 25,
+			queueChangesWatcher: new QueueChangesNotifier(),
 		},
 	});
 
@@ -60,6 +64,8 @@ export class ExtendedClient extends Client<true> {
 		try {
 			await this.db.connect();
 			await runMigrations();
+			await loadBotSettings();
+			startCommandStats();
 
 			await this.login(this.configService.get<string>("TOKEN"));
 		} catch (error) {
