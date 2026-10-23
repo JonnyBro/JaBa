@@ -1,97 +1,108 @@
 /*
- * Themes are set as data-theme="<name>" on <html>, dark ones also get the "dark" class.
- * Keep this list in sync with src/lib/theme.ts and the inline script in index.html
+ * Two independent attributes on <html>, keep both lists in sync with src/lib/theme.ts and index.html:
+ * data-theme  the surfaces (dark ones also get the "dark" class)
+ * data-accent the highlight color
  *
- * --hl      the accent, used for active and highlighted states
- * --edge    the accent line on highlighted panels
+ * --hl      active and highlighted states
+ * --edge    the solid line on the left of highlighted panels
  * --gold/silver/bronze  places in the leaderboards
  */
 
 :root,
 :root[data-theme="dark"] {
-	--radius: 10px;
-	--background: rgb(17 18 23);
-	--foreground: rgb(236 237 242);
-	--card: rgb(26 27 34);
-	--card-foreground: rgb(236 237 242);
-	--popover: rgb(30 31 39);
-	--popover-foreground: rgb(236 237 242);
-	--primary: rgb(124 92 255);
-	--primary-foreground: rgb(255 255 255);
-	--secondary: rgb(38 39 49);
-	--secondary-foreground: rgb(236 237 242);
-	--muted: rgb(38 39 49);
-	--muted-foreground: rgb(150 153 168);
-	--accent: rgb(44 45 57);
-	--accent-foreground: rgb(236 237 242);
-	--destructive: rgb(220 50 70);
-	--destructive-foreground: rgb(255 120 135);
-	--border: rgb(46 47 59);
-	--input: rgb(52 53 66);
-	--ring: rgb(124 92 255);
-	--hl: rgb(150 122 255);
-	--hl-foreground: rgb(255 255 255);
-	--edge: rgb(124 92 255);
-	--gold: rgb(240 190 50);
-	--silver: rgb(180 186 200);
-	--bronze: rgb(205 127 70);
-}
-
-:root[data-theme="light"] {
-	--radius: 10px;
-	--background: rgb(246 246 250);
-	--foreground: rgb(22 23 30);
-	--card: rgb(255 255 255);
-	--card-foreground: rgb(22 23 30);
-	--popover: rgb(255 255 255);
-	--popover-foreground: rgb(22 23 30);
-	--primary: rgb(104 70 240);
-	--primary-foreground: rgb(255 255 255);
-	--secondary: rgb(236 236 243);
-	--secondary-foreground: rgb(22 23 30);
-	--muted: rgb(236 236 243);
-	--muted-foreground: rgb(100 103 118);
-	--accent: rgb(232 230 245);
-	--accent-foreground: rgb(22 23 30);
-	--destructive: rgb(210 40 60);
-	--destructive-foreground: rgb(190 30 50);
-	--border: rgb(224 224 234);
-	--input: rgb(214 214 226);
-	--ring: rgb(104 70 240);
-	--hl: rgb(104 70 240);
-	--hl-foreground: rgb(255 255 255);
-	--edge: rgb(104 70 240);
-	--gold: rgb(200 145 10);
-	--silver: rgb(120 126 140);
-	--bronze: rgb(170 95 40);
+	--radius: 0px;
+	--background: rgb(14 14 16);
+	--foreground: rgb(240 240 242);
+	--card: rgb(22 22 25);
+	--card-foreground: rgb(240 240 242);
+	--popover: rgb(26 26 30);
+	--popover-foreground: rgb(240 240 242);
+	--primary: rgb(240 240 242);
+	--primary-foreground: rgb(14 14 16);
+	--secondary: rgb(34 34 39);
+	--secondary-foreground: rgb(240 240 242);
+	--muted: rgb(34 34 39);
+	--muted-foreground: rgb(150 150 160);
+	--accent: rgb(40 40 46);
+	--accent-foreground: rgb(240 240 242);
+	--destructive: rgb(200 30 40);
+	--destructive-foreground: rgb(255 105 110);
+	--border: rgb(48 48 55);
+	--input: rgb(54 54 62);
+	--gold: rgb(250 200 40);
+	--silver: rgb(190 192 200);
+	--bronze: rgb(210 130 60);
 }
 
 /* Pure black for OLED screens */
 :root[data-theme="amoled"] {
-	--radius: 10px;
 	--background: rgb(0 0 0);
-	--foreground: rgb(236 237 242);
-	--card: rgb(12 12 15);
-	--card-foreground: rgb(236 237 242);
-	--popover: rgb(18 18 22);
-	--popover-foreground: rgb(236 237 242);
-	--primary: rgb(124 92 255);
+	--card: rgb(10 10 12);
+	--popover: rgb(16 16 19);
+	--secondary: rgb(24 24 28);
+	--muted: rgb(24 24 28);
+	--accent: rgb(30 30 35);
+	--border: rgb(36 36 42);
+	--input: rgb(44 44 50);
+}
+
+:root[data-theme="light"] {
+	--background: rgb(244 244 246);
+	--foreground: rgb(18 18 22);
+	--card: rgb(255 255 255);
+	--card-foreground: rgb(18 18 22);
+	--popover: rgb(255 255 255);
+	--popover-foreground: rgb(18 18 22);
+	--primary: rgb(18 18 22);
 	--primary-foreground: rgb(255 255 255);
-	--secondary: rgb(26 26 32);
-	--secondary-foreground: rgb(236 237 242);
-	--muted: rgb(26 26 32);
-	--muted-foreground: rgb(145 148 162);
-	--accent: rgb(30 30 38);
-	--accent-foreground: rgb(236 237 242);
-	--destructive: rgb(220 50 70);
-	--destructive-foreground: rgb(255 120 135);
-	--border: rgb(36 36 44);
-	--input: rgb(44 44 54);
-	--ring: rgb(124 92 255);
-	--hl: rgb(150 122 255);
+	--secondary: rgb(232 232 236);
+	--secondary-foreground: rgb(18 18 22);
+	--muted: rgb(232 232 236);
+	--muted-foreground: rgb(95 95 108);
+	--accent: rgb(226 226 232);
+	--accent-foreground: rgb(18 18 22);
+	--destructive: rgb(200 30 40);
+	--destructive-foreground: rgb(180 20 30);
+	--border: rgb(214 214 222);
+	--input: rgb(204 204 214);
+	--gold: rgb(190 140 0);
+	--silver: rgb(110 114 126);
+	--bronze: rgb(165 90 30);
+}
+
+/* Accents */
+:root,
+:root[data-accent="red"] {
+	--hl: rgb(235 45 45);
+}
+
+:root[data-accent="violet"] {
+	--hl: rgb(139 92 246);
+}
+
+:root[data-accent="green"] {
+	--hl: rgb(34 197 94);
+}
+
+:root[data-accent="amber"] {
+	--hl: rgb(245 158 11);
+}
+
+:root[data-accent="blue"] {
+	--hl: rgb(59 130 246);
+}
+
+/* The bright ones are too faint on white */
+:root[data-theme="light"][data-accent="green"] {
+	--hl: rgb(22 150 70);
+}
+
+:root[data-theme="light"][data-accent="amber"] {
+	--hl: rgb(200 120 0);
+}
+
+:root {
 	--hl-foreground: rgb(255 255 255);
-	--edge: rgb(124 92 255);
-	--gold: rgb(240 190 50);
-	--silver: rgb(180 186 200);
-	--bronze: rgb(205 127 70);
+	--ring: var(--hl);
+	--edge: var(--hl);
 }

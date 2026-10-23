@@ -89,7 +89,7 @@ const reset = useMutation({
 		</div>
 		<EmptyState v-else-if="!members.data.value?.items.length" :title="$t('members.empty')" />
 		<template v-else>
-			<div class="panel overflow-x-auto" :class="members.isPlaceholderData.value && 'opacity-60'">
+			<div class="hud-panel overflow-x-auto" :class="members.isPlaceholderData.value && 'opacity-60'">
 				<Table>
 					<TableHeader>
 						<TableRow>
@@ -120,13 +120,13 @@ const reset = useMutation({
 									</Badge>
 								</div>
 							</TableCell>
-							<TableCell class="text-right font-display text-base">{{
+							<TableCell class="text-right font-hud text-base">{{
 								member.economy ? formatCompact(member.economy.money) : "—"
 							}}</TableCell>
-							<TableCell class="text-right font-display text-base">{{
+							<TableCell class="text-right font-hud text-base">{{
 								member.economy ? formatCompact(member.economy.bank) : "—"
 							}}</TableCell>
-							<TableCell class="text-right font-display text-base">{{
+							<TableCell class="text-right font-hud text-base">{{
 								member.economy?.level ?? "—"
 							}}</TableCell>
 							<TableCell class="hidden text-right text-muted-foreground sm:table-cell">

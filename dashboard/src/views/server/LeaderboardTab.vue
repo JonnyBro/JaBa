@@ -45,7 +45,7 @@ const leaderboard = useQuery({
 		</div>
 		<EmptyState v-else-if="!leaderboard.data.value?.items.length" :title="$t('leaderboard.empty')" />
 
-		<ol v-else class="panel divide-y">
+		<ol v-else class="hud-panel divide-y">
 			<li
 				v-for="entry in leaderboard.data.value.items"
 				:key="entry.id"
@@ -55,15 +55,15 @@ const leaderboard = useQuery({
 				<UserAvatar :name="entry.displayName" :src="entry.avatar" class="size-8" />
 				<span class="min-w-0 flex-1 truncate">{{ entry.displayName }}</span>
 
-				<span v-if="type === 'credits'" class="font-display text-lg">{{
+				<span v-if="type === 'credits'" class="font-hud text-lg">{{
 					formatNumber(entry.money + entry.bank)
 				}}</span>
 				<div v-else class="w-40 space-y-1">
-					<p class="flex justify-between font-display text-sm">
+					<p class="flex justify-between font-hud text-sm">
 						<span>{{ $t("leaderboard.levelShort", { n: entry.level }) }}</span>
 						<span class="text-muted-foreground">{{ entry.exp }} / {{ entry.nextLevelExp }}</span>
 					</p>
-					<div class="progress-bar">
+					<div class="hud-bar">
 						<span :style="{ width: `${Math.min(100, (entry.exp / entry.nextLevelExp) * 100)}%` }" />
 					</div>
 				</div>

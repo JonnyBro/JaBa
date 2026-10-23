@@ -75,11 +75,11 @@ const tiles = computed(() => [
 
 		<div class="grid gap-4 lg:grid-cols-2">
 			<form
-				class="panel space-y-3 p-4"
-				:class="form.maintenance && 'panel-accent'"
+				class="hud-panel space-y-3 p-4"
+				:class="form.maintenance && 'hud-edge'"
 				@submit.prevent="saveMaintenance"
 			>
-				<h3 class="section-title text-lg">{{ $t("owner.maintenance.title") }}</h3>
+				<h3 class="hud-title text-lg">{{ $t("owner.maintenance.title") }}</h3>
 				<p class="text-sm text-muted-foreground">{{ $t("owner.maintenance.hint") }}</p>
 				<Label class="flex items-center gap-2 font-normal">
 					<input v-model="form.maintenance" type="checkbox" class="accent-[var(--hl)]" />
@@ -94,8 +94,8 @@ const tiles = computed(() => [
 				</div>
 			</form>
 
-			<form class="panel space-y-3 p-4" @submit.prevent="saveStatus">
-				<h3 class="section-title text-lg">{{ $t("owner.status.title") }}</h3>
+			<form class="hud-panel space-y-3 p-4" @submit.prevent="saveStatus">
+				<h3 class="hud-title text-lg">{{ $t("owner.status.title") }}</h3>
 				<p class="text-sm text-muted-foreground">{{ $t("owner.status.hint") }}</p>
 				<Input v-model="form.status" maxlength="128" :placeholder="$t('owner.status.placeholder')" />
 				<div class="flex justify-end">
@@ -110,8 +110,8 @@ const tiles = computed(() => [
 		<ErrorState v-if="tasks.isError.value" :error="tasks.error.value" @retry="tasks.refetch()" />
 		<template v-else-if="tasks.data.value">
 			<section class="space-y-3">
-				<h3 class="section-title text-lg">{{ $t("owner.tasks.title") }}</h3>
-				<div class="panel overflow-x-auto">
+				<h3 class="hud-title text-lg">{{ $t("owner.tasks.title") }}</h3>
+				<div class="hud-panel overflow-x-auto">
 					<Table>
 						<TableHeader>
 							<TableRow>
@@ -126,7 +126,7 @@ const tiles = computed(() => [
 							<TableRow v-for="task in tasks.data.value.tasks" :key="task.name">
 								<TableCell>
 									<div class="flex items-center gap-2">
-										<span class="font-display">{{ task.name }}</span>
+										<span class="font-hud">{{ task.name }}</span>
 										<Badge v-if="task.isRunning" variant="secondary">
 											<LoaderCircle class="animate-spin" /> {{ $t("owner.tasks.running") }}
 										</Badge>
@@ -170,8 +170,8 @@ const tiles = computed(() => [
 			</section>
 
 			<section class="space-y-3">
-				<h3 class="section-title text-lg">{{ $t("owner.migrations.title") }}</h3>
-				<ul class="panel divide-y">
+				<h3 class="hud-title text-lg">{{ $t("owner.migrations.title") }}</h3>
+				<ul class="hud-panel divide-y">
 					<li
 						v-for="migration in tasks.data.value.migrations"
 						:key="migration.id"
@@ -180,7 +180,7 @@ const tiles = computed(() => [
 						<Check v-if="migration.appliedAt" class="size-4 shrink-0 text-muted-foreground" />
 						<CircleAlert v-else class="size-4 shrink-0 text-destructive-foreground" />
 						<div class="min-w-0 flex-1">
-							<p class="truncate font-display">{{ migration.id }}</p>
+							<p class="truncate font-hud">{{ migration.id }}</p>
 							<p class="truncate text-sm text-muted-foreground">{{ migration.description }}</p>
 						</div>
 						<span class="shrink-0 text-sm text-muted-foreground">

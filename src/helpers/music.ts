@@ -329,7 +329,13 @@ const buildNowPlaying = async (player: Player, track: Track) => {
 	const guild = client.guilds.cache.get(player.guildId)!;
 	const t: Translate = (key, args) => translateContext(guild, key, args);
 
-	const requester = (track.requester as User | undefined)?.toString() || (await t("common:UNKNOWN"));
+	const requester = track.requester as User | { id?: string } | undefined;
+	const requesterMention =
+		requester instanceof User
+			? requester.toString()
+			: requester?.id
+				? `<@${requester.id}>`
+				: await t("common:UNKNOWN");
 	const status = player.paused ? `⏸️ ${await t("music/queue:PAUSED")}` : `▶️ ${await t("music/queue:PLAYING")}`;
 	const nextTrack = player.queue.tracks[0] as Track | undefined;
 
@@ -343,7 +349,7 @@ const buildNowPlaying = async (player: Player, track: Track) => {
 			[
 				`\`${formatDuration(track)}\``,
 				capitalizeString(track.info.sourceName),
-				`${await t("music/queue:ADDED")}: ${requester}`,
+				`${await t("music/queue:ADDED")}: ${requesterMention}`,
 			].join(" • "),
 		].join("\n"),
 		track.info.artworkUrl,

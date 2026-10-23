@@ -26,7 +26,7 @@ const tabs = [
 				:to="{ name: tab.name }"
 				:class="
 					cn(
-						'-mb-px shrink-0 border-b-2 border-transparent px-3 py-2 font-display text-sm  text-muted-foreground transition-colors hover:text-hl',
+						'-mb-px shrink-0 border-b-2 border-transparent px-3 py-2 font-hud text-sm text-muted-foreground transition-colors hover:text-hl',
 						route.name === tab.name && 'border-hl text-foreground',
 					)
 				"

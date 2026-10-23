@@ -40,7 +40,7 @@ const send = useMutation({
 
 <template>
 	<div class="grid gap-6 lg:grid-cols-2">
-		<form class="panel space-y-4 p-4" @submit.prevent="send.mutate()">
+		<form class="hud-panel space-y-4 p-4" @submit.prevent="send.mutate()">
 			<p class="text-muted-foreground">{{ $t("tickets.intro") }}</p>
 
 			<div class="space-y-2">

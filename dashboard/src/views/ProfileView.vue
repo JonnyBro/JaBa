@@ -105,10 +105,10 @@ const removeRemind = useMutation({
 
 		<template v-else-if="profile.data.value">
 			<section class="flex flex-col gap-4 sm:flex-row sm:items-stretch">
-				<div class="panel panel-accent flex flex-1 items-center gap-4 p-4">
+				<div class="hud-panel hud-edge flex flex-1 items-center gap-4 p-4">
 					<UserAvatar :name="me.displayName" :src="me.avatar" class="size-16" />
 					<div class="min-w-0">
-						<h1 class="truncate font-display text-3xl">{{ me.displayName }}</h1>
+						<h1 class="truncate font-hud text-3xl">{{ me.displayName }}</h1>
 						<p class="truncate text-muted-foreground">{{ me.username }}</p>
 					</div>
 				</div>
@@ -121,8 +121,8 @@ const removeRemind = useMutation({
 			</section>
 
 			<section class="grid gap-4 lg:grid-cols-2">
-				<form class="panel space-y-3 p-4" @submit.prevent="saveBio.mutate()">
-					<Label for="bio" class="section-title text-lg">{{ $t("profile.bio") }}</Label>
+				<form class="hud-panel space-y-3 p-4" @submit.prevent="saveBio.mutate()">
+					<Label for="bio" class="hud-title text-lg">{{ $t("profile.bio") }}</Label>
 					<textarea
 						id="bio"
 						v-model="bio"
@@ -132,7 +132,7 @@ const removeRemind = useMutation({
 						class="w-full resize-y rounded-md border border-input bg-card px-3 py-2 text-sm outline-none placeholder:text-muted-foreground focus-visible:border-hl"
 					/>
 					<div class="flex items-center justify-between">
-						<span class="font-display text-sm text-muted-foreground">{{ bio.length }} / {{ MAX_BIO }}</span>
+						<span class="font-hud text-sm text-muted-foreground">{{ bio.length }} / {{ MAX_BIO }}</span>
 						<Button type="submit" size="sm" :disabled="saveBio.isPending.value">
 							<LoaderCircle v-if="saveBio.isPending.value" class="animate-spin" />
 							<Save v-else />
@@ -141,8 +141,8 @@ const removeRemind = useMutation({
 					</div>
 				</form>
 
-				<form class="panel space-y-3 p-4" @submit.prevent="saveBirthdate.mutate(false)">
-					<Label for="birthdate" class="section-title text-lg">{{ $t("profile.birthdate") }}</Label>
+				<form class="hud-panel space-y-3 p-4" @submit.prevent="saveBirthdate.mutate(false)">
+					<Label for="birthdate" class="hud-title text-lg">{{ $t("profile.birthdate") }}</Label>
 					<p class="text-sm text-muted-foreground">{{ $t("profile.birthdateHint") }}</p>
 					<Input id="birthdate" v-model="birthdate" type="date" :max="toDateInput(Date.now())" />
 					<div class="flex justify-end gap-2">
@@ -167,7 +167,7 @@ const removeRemind = useMutation({
 				<SectionTitle :title="$t('profile.reminds')" :subtitle="$t('profile.remindsHint')" />
 
 				<form
-					class="panel grid gap-3 p-4 sm:grid-cols-[1fr_14rem_auto] sm:items-end"
+					class="hud-panel grid gap-3 p-4 sm:grid-cols-[1fr_14rem_auto] sm:items-end"
 					@submit.prevent="addRemind.mutate()"
 				>
 					<div class="space-y-1">
@@ -186,7 +186,7 @@ const removeRemind = useMutation({
 				</form>
 
 				<EmptyState v-if="!profile.data.value.reminds.length" :title="$t('profile.noReminds')" />
-				<ul v-else class="panel divide-y">
+				<ul v-else class="hud-panel divide-y">
 					<li
 						v-for="remind in profile.data.value.reminds"
 						:key="`${remind.createdAt}-${remind.sendAt}`"
@@ -220,11 +220,11 @@ const removeRemind = useMutation({
 						v-for="server in profile.data.value.servers"
 						:key="server.id"
 						:to="{ name: 'server-leaderboard', params: { id: server.id } }"
-						class="panel flex items-center gap-3 p-3 transition-colors hover:border-hl"
+						class="hud-panel flex items-center gap-3 p-3 transition-colors hover:border-hl"
 					>
 						<UserAvatar :name="server.name" :src="server.icon" class="size-10" />
 						<div class="min-w-0 flex-1">
-							<p class="truncate font-display">{{ server.name }}</p>
+							<p class="truncate font-hud">{{ server.name }}</p>
 							<p class="text-sm text-muted-foreground">
 								{{
 									$t("profile.economyLine", {

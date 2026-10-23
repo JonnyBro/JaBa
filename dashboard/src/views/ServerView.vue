@@ -54,10 +54,10 @@ watch(
 		<Skeleton v-else-if="guild.isPending.value" class="h-24" />
 
 		<template v-else-if="guild.data.value">
-			<section class="panel panel-accent flex items-center gap-4 p-4">
+			<section class="hud-panel hud-edge flex items-center gap-4 p-4">
 				<UserAvatar :name="guild.data.value.name" :src="guild.data.value.icon" class="size-16" />
 				<div class="min-w-0">
-					<h1 class="truncate font-display text-3xl">{{ guild.data.value.name }}</h1>
+					<h1 class="truncate font-hud text-3xl">{{ guild.data.value.name }}</h1>
 					<p class="text-muted-foreground">
 						{{ $t("server.members", { n: formatNumber(guild.data.value.memberCount) }) }}
 					</p>
@@ -71,7 +71,7 @@ watch(
 					:to="{ name: tab.name, params: { id: guild.id.value } }"
 					:class="
 						cn(
-							'-mb-px shrink-0 border-b-2 border-transparent px-3 py-2 font-display text-sm  text-muted-foreground transition-colors hover:text-hl',
+							'-mb-px shrink-0 border-b-2 border-transparent px-3 py-2 font-hud text-sm text-muted-foreground transition-colors hover:text-hl',
 							route.name === tab.name && 'border-hl text-foreground',
 						)
 					"

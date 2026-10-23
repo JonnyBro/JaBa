@@ -127,23 +127,20 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 				}}
 			</p>
 
-			<section v-if="active" class="panel panel-accent grid gap-4 p-4 sm:grid-cols-[10rem_1fr]">
+			<section v-if="active" class="hud-panel hud-edge grid gap-4 p-4 sm:grid-cols-[10rem_1fr]">
 				<img
 					v-if="active.current.artworkUrl"
 					:src="active.current.artworkUrl"
 					alt=""
 					class="aspect-square w-full max-w-40 object-cover"
 				/>
-				<div
-					v-else
-					class="flex aspect-square max-w-40 items-center justify-center bg-muted font-display text-4xl"
-				>
+				<div v-else class="flex aspect-square max-w-40 items-center justify-center bg-muted font-hud text-4xl">
 					♪
 				</div>
 
 				<div class="flex min-w-0 flex-col gap-3">
 					<div class="min-w-0">
-						<p class="font-display text-sm text-muted-foreground">
+						<p class="font-hud text-sm text-muted-foreground">
 							{{ active.paused ? $t("music.paused") : $t("music.playing") }}
 							<template v-if="active.voiceChannel"> · 🔊 {{ active.voiceChannel.name }}</template>
 						</p>
@@ -152,11 +149,11 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 							:href="active.current.uri"
 							target="_blank"
 							rel="noopener"
-							class="block truncate font-display text-2xl hover:text-hl"
+							class="block truncate font-hud text-2xl hover:text-hl"
 						>
 							{{ active.current.title }}
 						</a>
-						<p v-else class="truncate font-display text-2xl">{{ active.current.title }}</p>
+						<p v-else class="truncate font-hud text-2xl">{{ active.current.title }}</p>
 						<p class="truncate text-muted-foreground">{{ active.current.author }}</p>
 						<p
 							v-if="active.current.requester"
@@ -173,12 +170,12 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 
 					<div class="space-y-1">
 						<div
-							:class="cn('progress-bar', canControl && !active.current.isStream && 'cursor-pointer')"
+							:class="cn('hud-bar', canControl && !active.current.isStream && 'cursor-pointer')"
 							@click="seek"
 						>
 							<span :style="{ width: `${progress}%` }" />
 						</div>
-						<div class="flex justify-between font-display text-sm text-muted-foreground">
+						<div class="flex justify-between font-hud text-sm text-muted-foreground">
 							<span>{{ formatTrackTime(position) }}</span>
 							<span>{{
 								active.current.isStream ? "LIVE" : formatTrackTime(active.current.duration)
@@ -256,7 +253,7 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 							</Button>
 						</Hint>
 
-						<label class="ml-auto flex items-center gap-2 font-display text-sm">
+						<label class="ml-auto flex items-center gap-2 font-hud text-sm">
 							<Volume2 class="size-4 text-muted-foreground" />
 							<input
 								v-model.number="volume"
@@ -280,7 +277,7 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 				:description="canStart ? $t('music.nothingText') : $t('music.joinToStart')"
 			/>
 
-			<form class="panel flex flex-col gap-2 p-3 sm:flex-row sm:items-center" @submit.prevent="add.mutate()">
+			<form class="hud-panel flex flex-col gap-2 p-3 sm:flex-row sm:items-center" @submit.prevent="add.mutate()">
 				<Input
 					v-model="query"
 					maxlength="500"
@@ -309,9 +306,9 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 
 			<section v-if="active" class="space-y-3">
 				<div class="flex items-end justify-between gap-2">
-					<h2 class="section-title">{{ $t("music.queue") }}</h2>
+					<h2 class="hud-title">{{ $t("music.queue") }}</h2>
 					<div class="flex items-center gap-3">
-						<span class="font-display text-sm text-muted-foreground">
+						<span class="font-hud text-sm text-muted-foreground">
 							{{
 								$t("music.queueInfo", {
 									n: active.queueTotal,
@@ -334,13 +331,13 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 
 				<p v-if="!active.queue.length" class="text-muted-foreground">{{ $t("music.emptyQueue") }}</p>
 
-				<ol v-else class="panel divide-y">
+				<ol v-else class="hud-panel divide-y">
 					<li
 						v-for="(track, i) in active.queue"
 						:key="`${i}-${track.uri}`"
 						class="flex items-center gap-3 px-3 py-2"
 					>
-						<span class="w-6 text-right font-display text-sm text-muted-foreground">{{ i + 1 }}</span>
+						<span class="w-6 text-right font-hud text-sm text-muted-foreground">{{ i + 1 }}</span>
 						<img
 							v-if="track.artworkUrl"
 							:src="track.artworkUrl"
@@ -354,7 +351,7 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 								<template v-if="track.requester"> · {{ track.requester.name }}</template>
 							</p>
 						</div>
-						<span class="font-display text-sm text-muted-foreground">
+						<span class="font-hud text-sm text-muted-foreground">
 							{{ track.isStream ? "LIVE" : formatTrackTime(track.duration) }}
 						</span>
 						<div v-if="canControl" class="flex">

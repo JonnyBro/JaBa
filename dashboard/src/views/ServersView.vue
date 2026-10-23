@@ -32,11 +32,11 @@ const guilds = useQuery({ queryKey: ["guilds"], queryFn: getGuilds });
 			<div
 				v-for="guild in guilds.data.value"
 				:key="guild.id"
-				class="panel flex items-center gap-3 p-3"
-				:class="guild.botPresent ? 'panel-accent' : 'opacity-70'"
+				class="hud-panel flex items-center gap-3 p-3"
+				:class="guild.botPresent ? 'hud-edge' : 'opacity-70'"
 			>
 				<UserAvatar :name="guild.name" :src="guild.icon" class="size-12" />
-				<span class="min-w-0 flex-1 truncate font-display text-lg">{{ guild.name }}</span>
+				<span class="min-w-0 flex-1 truncate font-hud text-lg">{{ guild.name }}</span>
 
 				<Button v-if="guild.botPresent && guild.manageable" as-child size="sm">
 					<RouterLink :to="{ name: 'server', params: { id: guild.id } }">

@@ -87,13 +87,13 @@ const time = (ms: number) => new Date(ms).toLocaleTimeString();
 				:key="level"
 				size="sm"
 				:variant="hidden.has(level) ? 'ghost' : 'outline'"
-				:class="cn('font-display', hidden.has(level) && 'line-through opacity-60')"
+				:class="cn('font-hud', hidden.has(level) && 'line-through opacity-60')"
 				@click="toggleLevel(level)"
 			>
 				{{ level }}
 			</Button>
 			<div class="ml-auto flex items-center gap-2">
-				<span class="flex items-center gap-1.5 font-display text-sm text-muted-foreground">
+				<span class="flex items-center gap-1.5 font-hud text-sm text-muted-foreground">
 					<span :class="cn('size-2 rounded-full', connected ? 'bg-hl' : 'bg-muted-foreground')" />
 					{{ connected ? $t("owner.logs.live") : $t("owner.logs.offline") }}
 				</span>
@@ -108,7 +108,7 @@ const time = (ms: number) => new Date(ms).toLocaleTimeString();
 			</div>
 		</div>
 
-		<div ref="container" class="panel h-[60vh] overflow-y-auto p-3 font-mono text-xs leading-relaxed">
+		<div ref="container" class="hud-panel h-[60vh] overflow-y-auto p-3 font-mono text-xs leading-relaxed">
 			<p v-if="!visible.length" class="text-muted-foreground">{{ $t("owner.logs.empty") }}</p>
 			<p v-for="(line, i) in visible" :key="i" class="break-words whitespace-pre-wrap">
 				<span class="text-muted-foreground">{{ time(line.time) }}</span>

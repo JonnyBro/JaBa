@@ -161,7 +161,7 @@ const timeoutLabel = (value: number) =>
 							class="size-14"
 						/>
 						<div class="min-w-0">
-							<SheetTitle class="truncate font-display text-2xl">{{
+							<SheetTitle class="truncate font-hud text-2xl">{{
 								member.data.value.displayName
 							}}</SheetTitle>
 							<SheetDescription class="truncate">
@@ -179,7 +179,7 @@ const timeoutLabel = (value: number) =>
 						</div>
 						<div>
 							<dt class="text-muted-foreground">{{ $t("members.rep") }}</dt>
-							<dd class="font-display">{{ formatNumber(member.data.value.rep) }}</dd>
+							<dd class="font-hud">{{ formatNumber(member.data.value.rep) }}</dd>
 						</div>
 						<div v-if="member.data.value.timeoutUntil" class="col-span-2">
 							<dt class="text-muted-foreground">{{ $t("members.timedOutUntil") }}</dt>
@@ -195,7 +195,7 @@ const timeoutLabel = (value: number) =>
 					</div>
 
 					<section v-if="member.data.value.economy" class="space-y-3">
-						<h3 class="section-title text-lg">{{ $t("members.economy") }}</h3>
+						<h3 class="hud-title text-lg">{{ $t("members.economy") }}</h3>
 						<form class="grid grid-cols-2 gap-3" @submit.prevent="saveEconomy.mutate()">
 							<div v-for="field in ECONOMY_FIELDS" :key="field" class="space-y-1">
 								<Label :for="`economy-${field}`">{{ $t(`members.${field}`) }}</Label>
@@ -222,7 +222,7 @@ const timeoutLabel = (value: number) =>
 					</section>
 
 					<section class="space-y-3">
-						<h3 class="section-title text-lg">{{ $t("members.moderation.title") }}</h3>
+						<h3 class="hud-title text-lg">{{ $t("members.moderation.title") }}</h3>
 						<div class="flex flex-wrap gap-2">
 							<Hint
 								:text="
@@ -286,7 +286,7 @@ const timeoutLabel = (value: number) =>
 					</section>
 
 					<section v-if="member.data.value.economy" class="space-y-3">
-						<h3 class="section-title text-lg">{{ $t("members.transactions") }}</h3>
+						<h3 class="hud-title text-lg">{{ $t("members.transactions") }}</h3>
 						<p v-if="!member.data.value.transactions.length" class="text-muted-foreground">
 							{{ $t("members.noTransactions") }}
 						</p>
@@ -297,11 +297,11 @@ const timeoutLabel = (value: number) =>
 								class="flex items-center justify-between gap-2 px-3 py-2 text-sm"
 							>
 								<span class="min-w-0 truncate">
-									<span class="font-display">{{ tx.type }}</span>
+									<span class="font-hud">{{ tx.type }}</span>
 									<span v-if="tx.user" class="text-muted-foreground"> · {{ tx.user }}</span>
 								</span>
 								<span class="shrink-0 text-right">
-									<span class="font-display">{{ formatNumber(tx.amount) }}</span>
+									<span class="font-hud">{{ formatNumber(tx.amount) }}</span>
 									<span class="block text-xs text-muted-foreground">{{
 										formatDateTime(tx.date)
 									}}</span>

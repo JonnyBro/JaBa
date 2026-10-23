@@ -31,9 +31,7 @@ const select = (value: unknown) => setLocale(value === AUTO ? null : String(valu
 			</Button>
 		</DropdownMenuTrigger>
 		<DropdownMenuContent align="end" class="w-52">
-			<DropdownMenuLabel class="font-display text-muted-foreground">{{
-				$t("header.language")
-			}}</DropdownMenuLabel>
+			<DropdownMenuLabel class="font-hud text-muted-foreground">{{ $t("header.language") }}</DropdownMenuLabel>
 			<DropdownMenuSeparator />
 			<DropdownMenuRadioGroup :model-value="selected" @update:model-value="select">
 				<DropdownMenuRadioItem :value="AUTO">{{ $t("header.languageAuto") }}</DropdownMenuRadioItem>

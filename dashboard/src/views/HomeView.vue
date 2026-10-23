@@ -2,6 +2,7 @@
 import { getStats, loginUrl } from "@/api";
 import SectionTitle from "@/components/common/SectionTitle.vue";
 import StatTile from "@/components/common/StatTile.vue";
+import jabaAscii from "@/assets/jaba-ascii.txt?raw";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/composables/useAuth";
 import { formatCompact, formatDuration } from "@/lib/format";
@@ -14,6 +15,9 @@ import { DiscordIcon } from "vue3-simple-icons";
 const { t } = useI18n();
 const { isLoggedIn } = useAuth();
 const { data: stats } = useQuery({ queryKey: ["stats"], queryFn: getStats, refetchInterval: 30_000 });
+
+const asciiLines = jabaAscii.trimEnd().split("\n");
+const asciiWidth = Math.max(...asciiLines.map(l => l.length));
 
 const tiles = computed(() => [
 	{ label: t("home.stats.servers"), value: formatCompact(stats.value?.guilds) },
@@ -31,13 +35,24 @@ const tiles = computed(() => [
 
 <template>
 	<div class="space-y-10">
-		<section class="panel panel-accent flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-end lg:justify-between">
-			<div class="space-y-3">
-				<h1 class="font-display text-5xl sm:text-6xl">JaBa</h1>
+		<section
+			class="hud-panel hud-edge relative flex flex-col gap-6 overflow-hidden p-6 sm:p-8 lg:flex-row lg:items-end lg:justify-between"
+		>
+			<svg
+				aria-hidden="true"
+				:viewBox="`0 0 ${asciiWidth * 6} ${asciiLines.length * 10}`"
+				class="pointer-events-none absolute inset-y-0 right-0 h-full translate-x-1/2 fill-foreground font-mono [mask-image:linear-gradient(to_right,transparent,black_25%)] text-[10px] opacity-20 select-none"
+			>
+				<text v-for="(line, i) in asciiLines" :key="i" :y="(i + 1) * 10" class="whitespace-pre">
+					{{ line }}
+				</text>
+			</svg>
+			<div class="relative space-y-3">
+				<h1 class="font-hud text-5xl sm:text-6xl">JaBa</h1>
 				<p class="max-w-xl text-lg text-muted-foreground">{{ $t("home.intro") }}</p>
 			</div>
 
-			<div class="flex flex-wrap gap-2 lg:justify-end">
+			<div class="relative flex flex-wrap gap-2 lg:justify-end">
 				<Button v-if="stats" as="a" :href="stats.invite" target="_blank" rel="noopener" variant="outline">
 					<Plus />
 					{{ $t("home.invite") }}

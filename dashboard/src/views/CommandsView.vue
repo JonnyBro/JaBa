@@ -56,12 +56,12 @@ const lines = (text: string) => text.split("\n").filter(Boolean);
 
 		<div v-else class="space-y-8">
 			<div v-for="group in groups" :key="group.category" class="space-y-3">
-				<h2 class="section-title capitalize">{{ group.category }}</h2>
+				<h2 class="hud-title capitalize">{{ group.category }}</h2>
 
 				<div class="grid gap-3 md:grid-cols-2">
-					<article v-for="cmd in group.slash" :key="cmd.name" class="panel space-y-2 p-3">
+					<article v-for="cmd in group.slash" :key="cmd.name" class="hud-panel space-y-2 p-3">
 						<div class="flex flex-wrap items-center gap-2">
-							<span class="font-display text-lg">{{ cmd.displayName }}</span>
+							<span class="font-hud text-lg">{{ cmd.displayName }}</span>
 							<Badge v-if="cmd.guildOnly" variant="secondary"
 								><Server /> {{ $t("commands.guildOnly") }}</Badge
 							>
@@ -78,9 +78,9 @@ const lines = (text: string) => text.split("\n").filter(Boolean);
 						</div>
 					</article>
 
-					<article v-for="cmd in group.context" :key="cmd.name" class="panel space-y-2 p-3">
+					<article v-for="cmd in group.context" :key="cmd.name" class="hud-panel space-y-2 p-3">
 						<div class="flex flex-wrap items-center gap-2">
-							<span class="font-display text-lg">{{ cmd.displayName }}</span>
+							<span class="font-hud text-lg">{{ cmd.displayName }}</span>
 							<Badge variant="outline">
 								<User v-if="cmd.type === 'user'" />
 								<MessageSquare v-else />

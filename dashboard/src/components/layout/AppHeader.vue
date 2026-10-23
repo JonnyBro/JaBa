@@ -7,12 +7,9 @@ import { Menu } from "lucide-vue-next";
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { GitHubIcon } from "vue3-simple-icons";
-import DevLogin from "./DevLogin.vue";
 import LanguagePicker from "./LanguagePicker.vue";
 import ThemePicker from "./ThemePicker.vue";
 import UserMenu from "./UserMenu.vue";
-
-const isDev = import.meta.env.DEV;
 
 const { isLoggedIn, isOwner } = useAuth();
 const route = useRoute();
@@ -41,7 +38,7 @@ const isActive = (name: string) => route.matched.some(r => r.name === name || r.
 		<div class="mx-auto flex h-14 max-w-7xl items-center gap-6 px-4">
 			<RouterLink
 				:to="{ name: 'home' }"
-				class="flex items-baseline gap-2 font-display text-lg transition-colors hover:text-hl"
+				class="flex items-baseline gap-2 font-hud text-lg transition-colors hover:text-hl"
 			>
 				<span>JaBa</span>
 				<span class="hidden text-sm text-muted-foreground sm:inline">{{ $t("header.subtitle") }}</span>
@@ -54,7 +51,7 @@ const isActive = (name: string) => route.matched.some(r => r.name === name || r.
 					:to="{ name: item.name }"
 					:class="
 						cn(
-							'flex items-center border-b-2 border-transparent px-3 font-display text-sm  text-muted-foreground transition-colors hover:text-hl',
+							'flex items-center border-b-2 border-transparent px-3 font-hud text-sm text-muted-foreground transition-colors hover:text-hl',
 							isActive(item.name) && 'border-hl text-foreground',
 						)
 					"
@@ -80,7 +77,6 @@ const isActive = (name: string) => route.matched.some(r => r.name === name || r.
 				</Button>
 				<LanguagePicker />
 				<ThemePicker />
-				<DevLogin v-if="isDev" />
 				<UserMenu />
 
 				<Sheet v-model:open="mobileOpen">
@@ -91,7 +87,7 @@ const isActive = (name: string) => route.matched.some(r => r.name === name || r.
 					</SheetTrigger>
 					<SheetContent side="left" class="w-72">
 						<SheetHeader>
-							<SheetTitle class="font-display">JaBa</SheetTitle>
+							<SheetTitle class="font-hud">JaBa</SheetTitle>
 						</SheetHeader>
 						<nav class="flex flex-col px-4">
 							<RouterLink
@@ -100,7 +96,7 @@ const isActive = (name: string) => route.matched.some(r => r.name === name || r.
 								:to="{ name: item.name }"
 								:class="
 									cn(
-										'border-l-2 border-transparent px-3 py-2 font-display  text-muted-foreground hover:text-hl',
+										'border-l-2 border-transparent px-3 py-2 font-hud text-muted-foreground hover:text-hl',
 										isActive(item.name) && 'border-hl text-foreground',
 									)
 								"
@@ -114,7 +110,7 @@ const isActive = (name: string) => route.matched.some(r => r.name === name || r.
 								:href="link.href"
 								target="_blank"
 								rel="noopener"
-								class="flex items-center gap-2 px-3 py-2 font-display text-sm text-muted-foreground hover:text-hl"
+								class="flex items-center gap-2 px-3 py-2 font-hud text-sm text-muted-foreground hover:text-hl"
 							>
 								<component :is="link.icon" class="size-4" />
 								{{ $t(link.label) }}

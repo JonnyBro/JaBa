@@ -61,10 +61,10 @@ const dayLabel = (day: string) => formatDate(new Date(`${day}T12:00:00Z`).getTim
 			/>
 
 			<template v-else>
-				<section class="panel space-y-2 p-4">
+				<section class="hud-panel space-y-2 p-4">
 					<div class="flex items-baseline justify-between">
-						<h3 class="section-title text-lg">{{ $t("owner.stats.perDay") }}</h3>
-						<span class="font-display text-sm text-muted-foreground">max {{ formatNumber(dailyMax) }}</span>
+						<h3 class="hud-title text-lg">{{ $t("owner.stats.perDay") }}</h3>
+						<span class="font-hud text-sm text-muted-foreground">max {{ formatNumber(dailyMax) }}</span>
 					</div>
 
 					<div
@@ -90,25 +90,25 @@ const dayLabel = (day: string) => formatDate(new Date(`${day}T12:00:00Z`).getTim
 						</Hint>
 					</div>
 
-					<div class="flex justify-between font-display text-xs text-muted-foreground">
+					<div class="flex justify-between font-hud text-xs text-muted-foreground">
 						<span>{{ dayLabel(stats.data.value.daily[0].day) }}</span>
 						<span>{{ dayLabel(stats.data.value.daily[stats.data.value.daily.length - 1].day) }}</span>
 					</div>
 				</section>
 
-				<section class="panel space-y-3 p-4">
-					<h3 class="section-title text-lg">{{ $t("owner.stats.commands") }}</h3>
+				<section class="hud-panel space-y-3 p-4">
+					<h3 class="hud-title text-lg">{{ $t("owner.stats.commands") }}</h3>
 					<ol class="space-y-2">
 						<li
 							v-for="item in stats.data.value.commands"
 							:key="item.command"
 							class="grid grid-cols-[8rem_1fr_4rem] items-center gap-3"
 						>
-							<span class="truncate font-display">/{{ item.command }}</span>
-							<div class="progress-bar">
-								<span class="!bg-hl" :style="{ width: `${(item.count / topMax) * 100}%` }" />
+							<span class="truncate font-hud">/{{ item.command }}</span>
+							<div class="hud-bar">
+								<span class="bg-hl!" :style="{ width: `${(item.count / topMax) * 100}%` }" />
 							</div>
-							<span class="text-right font-display tabular">{{ formatNumber(item.count) }}</span>
+							<span class="text-right font-hud tabular">{{ formatNumber(item.count) }}</span>
 						</li>
 					</ol>
 				</section>

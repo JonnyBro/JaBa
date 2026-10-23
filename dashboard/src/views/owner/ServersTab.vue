@@ -61,7 +61,7 @@ const act = useMutation({
 		</div>
 		<EmptyState v-else-if="!filtered.length" :title="$t('owner.servers.empty')" />
 
-		<div v-else class="panel overflow-x-auto">
+		<div v-else class="hud-panel overflow-x-auto">
 			<Table>
 				<TableHeader>
 					<TableRow>
@@ -83,7 +83,7 @@ const act = useMutation({
 								<Badge v-if="guild.playing" variant="secondary"><Music /></Badge>
 							</div>
 						</TableCell>
-						<TableCell class="text-right font-display">{{ formatNumber(guild.memberCount) }}</TableCell>
+						<TableCell class="text-right font-hud">{{ formatNumber(guild.memberCount) }}</TableCell>
 						<TableCell class="hidden text-right text-muted-foreground sm:table-cell">
 							{{ formatDate(guild.joinedAt) }}
 						</TableCell>

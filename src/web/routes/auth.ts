@@ -1,22 +1,10 @@
-import { IS_PROD } from "@/constants/index.js";
 import logger from "@/helpers/logger.js";
-import useClient from "@/utils/use-client.js";
 import { FastifyInstance, FastifyRequest } from "fastify";
 import { randomBytes } from "node:crypto";
 import { buildAuthorizeUrl, exchangeCode, fetchUser } from "../discord-oauth.js";
-import { SessionUser } from "../types.js";
-import { fail, safeRedirect } from "../utils.js";
+import { safeRedirect } from "../utils.js";
 
 const getRedirect = (req: FastifyRequest) => safeRedirect((req.query as { redirect?: string }).redirect);
-
-const devUsers = (): Record<string, SessionUser> => {
-	const owner = useClient().configService.get<string>("OWNER");
-
-	return {
-		owner: { id: owner, username: "dev_owner", globalName: "Dev Owner", avatar: null },
-		user: { id: "1", username: "dev_user", globalName: "Dev User", avatar: null },
-	};
-};
 
 export default async function authRoutes(fastify: FastifyInstance) {
 	fastify.get("/auth/login", async (req, reply) => {
@@ -50,17 +38,6 @@ export default async function authRoutes(fastify: FastifyInstance) {
 
 		return reply.redirect(redirect);
 	});
-
-	if (!IS_PROD)
-		fastify.get("/auth/dev/:name", async (req, reply) => {
-			const user = devUsers()[(req.params as { name: string }).name];
-			if (!user) return fail(reply, 404, "Unknown dev account");
-
-			await req.session.regenerate();
-			req.session.user = user;
-
-			return reply.redirect(getRedirect(req));
-		});
 
 	fastify.get("/auth/logout", async (req, reply) => {
 		await req.session.destroy();

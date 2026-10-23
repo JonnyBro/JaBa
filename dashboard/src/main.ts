@@ -1,4 +1,5 @@
-import "@fontsource-variable/inter";
+import "@fontsource-variable/geist";
+import "@fontsource-variable/jetbrains-mono";
 import "vue-sonner/style.css";
 import "./assets/css/index.css";
 

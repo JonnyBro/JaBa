@@ -8,7 +8,7 @@ const MAX_QUEUE_ITEMS = 100;
 const serializeUser = (user: User) => ({
 	id: user.id,
 	name: user.globalName ?? user.username,
-	avatar: user.displayAvatarURL(),
+	avatar: user instanceof User ? user.displayAvatarURL() : null,
 });
 
 const serializeTrack = (track: Track | UnresolvedTrack) => {

@@ -25,7 +25,7 @@ const leaderboard = useQuery({ queryKey: ["leaderboard", "rep"], queryFn: getRep
 		</div>
 		<EmptyState v-else-if="!leaderboard.data.value?.length" :title="$t('leaderboard.empty')" />
 
-		<ol v-else class="panel divide-y">
+		<ol v-else class="hud-panel divide-y">
 			<li
 				v-for="entry in leaderboard.data.value"
 				:key="entry.id"
@@ -34,7 +34,7 @@ const leaderboard = useQuery({ queryKey: ["leaderboard", "rep"], queryFn: getRep
 				<PositionBadge :position="entry.position" class="w-10" />
 				<UserAvatar :name="entry.displayName" :src="entry.avatar" class="size-8" />
 				<span class="min-w-0 flex-1 truncate">{{ entry.displayName }}</span>
-				<span class="font-display text-lg">{{ formatNumber(entry.rep) }}</span>
+				<span class="font-hud text-lg">{{ formatNumber(entry.rep) }}</span>
 			</li>
 		</ol>
 	</section>

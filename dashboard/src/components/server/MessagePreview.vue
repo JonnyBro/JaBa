@@ -7,7 +7,7 @@ defineProps<{ blocks: MessageBlock[]; color: string | null }>();
 
 <template>
 	<div class="space-y-1.5">
-		<p class="font-display text-sm text-muted-foreground">{{ $t("messages.preview") }}</p>
+		<p class="font-hud text-sm text-muted-foreground">{{ $t("messages.preview") }}</p>
 		<div
 			class="space-y-2 border border-l-4 bg-[rgb(43_45_49)] p-3 text-sm text-[rgb(219_222_225)]"
 			:style="{ borderLeftColor: color ?? 'transparent' }"
@@ -16,7 +16,7 @@ defineProps<{ blocks: MessageBlock[]; color: string | null }>();
 				<!-- eslint-disable-next-line vue/no-v-html -->
 				<div
 					v-if="block.type === 'text'"
-					class="space-y-0.5 break-words"
+					class="space-y-0.5 wrap-break-word"
 					v-html="renderDiscordMarkdown(block.content)"
 				/>
 				<hr

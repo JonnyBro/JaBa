@@ -45,7 +45,7 @@ const save = useMutation({
 </script>
 
 <template>
-	<form class="panel grid gap-6 p-4 sm:grid-cols-2" @submit.prevent="save.mutate()">
+	<form class="hud-panel grid gap-6 p-4 sm:grid-cols-2" @submit.prevent="save.mutate()">
 		<div class="space-y-2">
 			<Label for="language">{{ $t("server.language") }}</Label>
 			<Select id="language" v-model="language">

@@ -10,12 +10,17 @@
 		<script>
 			(function () {
 				var themes = { dark: 1, light: 0, amoled: 1 };
+				var accents = { red: 1, violet: 1, green: 1, amber: 1, blue: 1 };
 				var theme = "dark";
+				var accent = "red";
 				try {
-					var saved = localStorage.getItem("jaba-theme");
-					if (saved && saved in themes) theme = saved;
+					var savedTheme = localStorage.getItem("jaba-theme");
+					var savedAccent = localStorage.getItem("jaba-accent");
+					if (savedTheme && savedTheme in themes) theme = savedTheme;
+					if (savedAccent && savedAccent in accents) accent = savedAccent;
 				} catch (e) {}
 				document.documentElement.dataset.theme = theme;
+				document.documentElement.dataset.accent = accent;
 				if (themes[theme]) document.documentElement.classList.add("dark");
 			})();
 		</script>

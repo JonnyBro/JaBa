@@ -50,7 +50,7 @@ const reason = (entry: AuditEntry) => entry.details.reason as string | null | un
 			:description="$t('audit.emptyText')"
 		/>
 		<template v-else>
-			<ul class="panel divide-y" :class="audit.isPlaceholderData.value && 'opacity-60'">
+			<ul class="hud-panel divide-y" :class="audit.isPlaceholderData.value && 'opacity-60'">
 				<li v-for="entry in audit.data.value.items" :key="entry.id" class="flex gap-3 p-3">
 					<UserAvatar :name="entry.actorName" :src="entry.actorAvatar" class="size-8" />
 					<div class="min-w-0 flex-1 space-y-1">
@@ -63,7 +63,7 @@ const reason = (entry: AuditEntry) => entry.details.reason as string | null | un
 								<span class="font-medium">{{ entry.targetName }}</span>
 							</template>
 						</p>
-						<ul v-if="diff(entry).length" class="font-display text-sm text-muted-foreground">
+						<ul v-if="diff(entry).length" class="font-hud text-sm text-muted-foreground">
 							<li v-for="change in diff(entry)" :key="change.key">
 								{{ change.key }}: {{ change.from }} →
 								<span class="text-foreground">{{ change.to }}</span>

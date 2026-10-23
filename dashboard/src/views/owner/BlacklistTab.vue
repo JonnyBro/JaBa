@@ -46,7 +46,7 @@ const remove = useMutation({
 
 <template>
 	<div class="space-y-4">
-		<form class="panel grid gap-2 p-3 sm:grid-cols-[9rem_14rem_1fr_auto]" @submit.prevent="add.mutate()">
+		<form class="hud-panel grid gap-2 p-3 sm:grid-cols-[9rem_14rem_1fr_auto]" @submit.prevent="add.mutate()">
 			<Select v-model="type">
 				<SelectTrigger class="w-full">
 					<SelectValue />
@@ -69,7 +69,7 @@ const remove = useMutation({
 		<Skeleton v-else-if="blacklist.isPending.value" class="h-32" />
 		<EmptyState v-else-if="!blacklist.data.value?.length" :title="$t('owner.blacklist.empty')" />
 
-		<ul v-else class="panel divide-y">
+		<ul v-else class="hud-panel divide-y">
 			<li
 				v-for="entry in blacklist.data.value"
 				:key="`${entry.type}-${entry.id}`"

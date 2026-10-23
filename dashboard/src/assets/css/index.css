@@ -5,15 +5,16 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-	--font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-	--font-mono: ui-monospace, "JetBrains Mono", "Cascadia Code", monospace;
+	--font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+	--font-hud: "JetBrains Mono Variable", ui-monospace, monospace;
+	--font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
-	--radius-xs: calc(var(--radius) - 6px);
-	--radius-sm: calc(var(--radius) - 4px);
-	--radius-md: calc(var(--radius) - 2px);
+	--radius-xs: var(--radius);
+	--radius-sm: var(--radius);
+	--radius-md: var(--radius);
 	--radius-lg: var(--radius);
-	--radius-xl: calc(var(--radius) + 4px);
-	--radius-2xl: calc(var(--radius) + 8px);
+	--radius-xl: var(--radius);
+	--radius-2xl: var(--radius);
 
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
@@ -54,21 +55,22 @@
 
 	body {
 		@apply bg-background text-foreground font-sans antialiased;
-		font-feature-settings: "cv11", "ss01";
 	}
 
 	::selection {
-		background: color-mix(in srgb, var(--hl) 35%, transparent);
+		background: var(--hl);
+		color: var(--hl-foreground);
 	}
 
 	kbd {
-		@apply rounded border border-current/30 px-1 font-mono text-[0.85em];
+		@apply border border-current/40 px-1 font-hud text-[0.85em];
 	}
 }
 
-/* Headings and numbers: a bit heavier, numbers keep their width */
-@utility font-display {
-	font-weight: 600;
+/* Mono font for headings, numbers and labels */
+@utility font-hud {
+	font-family: var(--font-hud);
+	font-weight: 500;
 	letter-spacing: -0.01em;
 	font-variant-numeric: tabular-nums;
 }
@@ -77,39 +79,42 @@
 	font-variant-numeric: tabular-nums;
 }
 
-@utility panel {
+@utility hud-panel {
+	position: relative;
 	background: var(--card);
 	border: 1px solid var(--border);
 	border-radius: var(--radius);
 }
 
-/* A highlighted panel, the accent line follows the rounded corner */
-@utility panel-accent {
+/*
+ * Highlighted panel: the solid line is the panel's own left border.
+ * The doubled selector beats the 1px border from hud-panel regardless of utility order
+ */
+@utility hud-edge {
 	&,
-	&.panel {
-		border-left-width: 3px;
+	&.hud-panel {
+		border-left-width: 4px;
+		border-left-style: solid;
 		border-left-color: var(--edge);
 	}
 }
 
-@utility progress-bar {
+@utility hud-bar {
 	position: relative;
-	height: 6px;
-	overflow: hidden;
-	border-radius: 9999px;
-	background: color-mix(in srgb, var(--foreground) 10%, transparent);
+	height: 5px;
+	background: color-mix(in srgb, var(--foreground) 12%, transparent);
 
 	& > span {
 		position: absolute;
 		inset: 0 auto 0 0;
-		border-radius: inherit;
 		background: var(--hl);
 	}
 }
 
-@utility section-title {
+@utility hud-title {
+	font-family: var(--font-hud);
+	font-weight: 600;
 	font-size: 1.25rem;
-	font-weight: 700;
-	letter-spacing: -0.01em;
 	line-height: 1.2;
+	letter-spacing: -0.02em;
 }

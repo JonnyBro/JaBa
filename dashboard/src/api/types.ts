@@ -133,7 +133,7 @@ export type MusicTrack = {
 	duration: number;
 	isStream: boolean;
 	sourceName: string | null;
-	requester: { id: string; name: string; avatar: string } | null;
+	requester: { id: string; name: string; avatar: string | null } | null;
 };
 
 export type RepeatMode = "off" | "track" | "queue";

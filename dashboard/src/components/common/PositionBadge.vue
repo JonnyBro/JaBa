@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { cn } from "@/lib/utils";
 
-// The top 3 get medal colors
 defineProps<{ position: number }>();
 
 const placeColor: Record<number, string> = {
@@ -12,11 +11,11 @@ const placeColor: Record<number, string> = {
 </script>
 
 <template>
-	<span
-		:class="
-			cn('inline-flex items-center gap-1 font-display tabular', placeColor[position] ?? 'text-muted-foreground')
-		"
-	>
-		{{ position }}
+	<span :class="cn(
+		'inline-flex items-center gap-1 font-hud text-base tabular',
+		placeColor[position] ?? 'text-muted-foreground',
+	)
+		">
+		{{ position }}.
 	</span>
 </template>

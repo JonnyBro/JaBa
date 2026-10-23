@@ -96,7 +96,7 @@ const send = useMutation({
 <template>
 	<div class="grid gap-6 lg:grid-cols-2">
 		<form class="space-y-4" @submit.prevent="send.mutate()">
-			<div class="panel grid gap-4 p-4 sm:grid-cols-2">
+			<div class="hud-panel grid gap-4 p-4 sm:grid-cols-2">
 				<div class="space-y-2 sm:col-span-2">
 					<Label for="message-channel">{{ $t("messages.channel") }}</Label>
 					<ChannelSelect id="message-channel" v-model="channelId" :channels="guild.channels" />
@@ -117,9 +117,9 @@ const send = useMutation({
 				</Label>
 			</div>
 
-			<div v-for="(block, i) in blocks" :key="i" class="panel space-y-3 p-3">
+			<div v-for="(block, i) in blocks" :key="i" class="hud-panel space-y-3 p-3">
 				<div class="flex items-center gap-1">
-					<span class="mr-auto font-display text-sm text-muted-foreground">
+					<span class="mr-auto font-hud text-sm text-muted-foreground">
 						{{ $t(`messages.blocks.${block.type}`) }}
 					</span>
 					<Button type="button" variant="ghost" size="icon-sm" :disabled="i === 0" @click="move(i, -1)">

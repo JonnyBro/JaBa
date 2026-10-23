@@ -33,10 +33,10 @@ const route = useRoute();
 				class="flex h-9 max-w-48 cursor-pointer items-center gap-2 border border-transparent px-1.5 transition-colors hover:border-foreground/30 hover:text-hl data-[state=open]:border-foreground/30"
 			>
 				<UserAvatar :name="me.displayName" :src="me.avatar" class="size-6" />
-				<span class="hidden truncate font-display text-sm sm:inline">{{ me.displayName }}</span>
+				<span class="hidden truncate font-hud text-sm sm:inline">{{ me.displayName }}</span>
 			</button>
 		</DropdownMenuTrigger>
-		<DropdownMenuContent align="end" class="w-52 font-display">
+		<DropdownMenuContent align="end" class="w-52 font-hud">
 			<DropdownMenuItem as-child>
 				<RouterLink :to="{ name: 'profile' }">
 					<User />

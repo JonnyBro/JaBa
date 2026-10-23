@@ -3,7 +3,7 @@ import { OAuth2Scopes, PermissionsBitField } from "discord.js";
 import { FastifyInstance, FastifyRequest } from "fastify";
 import { fetchGuilds } from "../discord-oauth.js";
 import { OAuthGuild } from "../types.js";
-import { canManage, isOwner, requireUser, send } from "../utils.js";
+import { canManage, requireUser, send } from "../utils.js";
 
 const GUILDS_CACHE_MS = 60_000;
 
@@ -30,25 +30,19 @@ const getOAuthGuilds = async (req: FastifyRequest): Promise<OAuthGuild[]> => {
 	return list;
 };
 
-const getVisibleGuilds = async (req: FastifyRequest, userId: string) => {
+const getVisibleGuilds = async (req: FastifyRequest) => {
 	const bot = useClient().guilds.cache;
 
-	if (req.session.accessToken)
-		return (await getOAuthGuilds(req))
-			.map(g => ({ id: g.id, name: g.name, icon: g.icon, manageable: g.owner || canManage(g.permissions) }))
-			.filter(g => g.manageable || bot.has(g.id));
-
-	// Dev accounts have no OAuth token, the owner one just gets every guild of the bot
-	if (!isOwner(userId)) return [];
-
-	return bot.map(g => ({ id: g.id, name: g.name, icon: g.icon, manageable: true }));
+	return (await getOAuthGuilds(req))
+		.map(g => ({ id: g.id, name: g.name, icon: g.icon, manageable: g.owner || canManage(g.permissions) }))
+		.filter(g => g.manageable || bot.has(g.id));
 };
 
 export default async function guildsRoutes(fastify: FastifyInstance) {
 	fastify.get("/api/guilds", { preHandler: requireUser }, async (req, reply) => {
 		const client = useClient();
 
-		const list = (await getVisibleGuilds(req, req.session.user!.id))
+		const list = (await getVisibleGuilds(req))
 			.map(g => {
 				const botPresent = client.guilds.cache.has(g.id);
 

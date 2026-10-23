@@ -18,7 +18,7 @@ const props = defineProps<{
 			)
 		"
 	>
-		<p class="font-display text-lg">{{ title }}</p>
+		<p class="font-hud text-lg">{{ title }}</p>
 		<p v-if="description" class="max-w-md text-muted-foreground">{{ description }}</p>
 		<slot />
 	</div>

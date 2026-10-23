@@ -5,7 +5,7 @@ defineProps<{ title: string; subtitle?: string }>();
 <template>
 	<div class="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
 		<div class="space-y-1.5">
-			<h2 class="section-title">{{ title }}</h2>
+			<h2 class="hud-title">{{ title }}</h2>
 			<p v-if="subtitle" class="text-muted-foreground">{{ subtitle }}</p>
 		</div>
 		<slot />

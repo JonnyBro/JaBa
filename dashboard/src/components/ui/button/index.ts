@@ -3,16 +3,18 @@ import { cva } from "class-variance-authority";
 
 export { default as Button } from "./Button.vue";
 
+// Buttons follow the in-game AEUI style: outlined text that lights up on hover
 export const buttonVariants = cva(
-	"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md border text-sm font-medium transition-colors cursor-pointer disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring/60 aria-invalid:border-destructive",
+	"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md border font-hud text-sm transition-colors cursor-pointer disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-hl focus-visible:text-hl aria-invalid:border-destructive",
 	{
 		variants: {
 			variant: {
-				default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/90",
-				destructive: "border-transparent bg-destructive text-white hover:bg-destructive/90",
-				outline: "border-border bg-card text-foreground hover:bg-accent",
-				secondary: "border-transparent bg-secondary text-secondary-foreground hover:bg-accent",
-				ghost: "border-transparent text-foreground hover:bg-accent",
+				default:
+					"border-primary bg-primary text-primary-foreground hover:border-hl hover:bg-hl hover:text-hl-foreground",
+				destructive: "border-destructive text-destructive-foreground hover:bg-destructive hover:text-white",
+				outline: "border-foreground/30 bg-transparent text-foreground hover:border-hl hover:text-hl",
+				secondary: "border-transparent bg-secondary text-secondary-foreground hover:text-hl",
+				ghost: "border-transparent text-foreground hover:text-hl",
 				link: "border-transparent text-hl underline-offset-4 hover:underline",
 			},
 			size: {

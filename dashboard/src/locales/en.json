@@ -376,5 +376,18 @@
 			"clear": "Clear",
 			"empty": "No lines"
 		}
+	},
+	"theme": {
+		"accent": "Accent",
+		"dark": "Dark",
+		"light": "Light",
+		"amoled": "AMOLED",
+		"accents": {
+			"red": "Red",
+			"violet": "Violet",
+			"green": "Green",
+			"amber": "Amber",
+			"blue": "Blue"
+		}
 	}
 }

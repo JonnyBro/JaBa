@@ -38,11 +38,11 @@ const destroy = useMutation({
 	<div v-else-if="lavalink.data.value" class="space-y-6">
 		<section v-for="node in lavalink.data.value.nodes" :key="node.id" class="space-y-3">
 			<div class="flex items-center gap-2">
-				<h3 class="section-title text-lg">{{ node.id }}</h3>
+				<h3 class="hud-title text-lg">{{ node.id }}</h3>
 				<Badge :variant="node.connected ? 'secondary' : 'destructive'">
 					{{ node.connected ? $t("owner.lavalink.connected") : $t("owner.lavalink.disconnected") }}
 				</Badge>
-				<span v-if="node.version" class="font-display text-sm text-muted-foreground">v{{ node.version }}</span>
+				<span v-if="node.version" class="font-hud text-sm text-muted-foreground">v{{ node.version }}</span>
 			</div>
 			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 				<StatTile
@@ -69,9 +69,9 @@ const destroy = useMutation({
 		</section>
 
 		<section class="space-y-3">
-			<h3 class="section-title text-lg">{{ $t("owner.lavalink.activePlayers") }}</h3>
+			<h3 class="hud-title text-lg">{{ $t("owner.lavalink.activePlayers") }}</h3>
 			<EmptyState v-if="!lavalink.data.value.players.length" :title="$t('owner.lavalink.noPlayers')" />
-			<div v-else class="panel overflow-x-auto">
+			<div v-else class="hud-panel overflow-x-auto">
 				<Table>
 					<TableHeader>
 						<TableRow>
@@ -96,8 +96,8 @@ const destroy = useMutation({
 									{{ player.current ?? "—" }}
 								</span>
 							</TableCell>
-							<TableCell class="text-right font-display">{{ player.listeners }}</TableCell>
-							<TableCell class="text-right font-display">{{ player.queue }}</TableCell>
+							<TableCell class="text-right font-hud">{{ player.listeners }}</TableCell>
+							<TableCell class="text-right font-hud">{{ player.queue }}</TableCell>
 							<TableCell>
 								<Button
 									variant="ghost"
