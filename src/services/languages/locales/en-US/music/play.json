@@ -6,6 +6,7 @@
 	"SOURCE": "Where to search (YouTube Music by default)",
 	"NEXT": "Play right after the current track?",
 	"CONTEXT_NAME": "Add to Queue",
+	"CONTEXT_DESCRIPTION": "Adds the link from the message to the queue",
 
 	"SOURCES": {
 		"ytm": "YouTube Music",

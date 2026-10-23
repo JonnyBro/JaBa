@@ -3,6 +3,7 @@
 	"USAGE": "(@user)",
 	"EXAMPLES": "avatar\navatar user:@jonny_bro",
 	"CONTEXT_NAME": "Get Avatar",
+	"CONTEXT_DESCRIPTION": "Shows the user's avatar",
 
 	"GLOBAL": "Main",
 	"SERVER": "Server"

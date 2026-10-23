@@ -16,5 +16,9 @@
 	"NO_REQUIRED_PERMISSION": "No special permissions required",
 	"TITLE": "{{name}} | Commands",
 	"GUILD_ONLY": "Servers only",
-	"NOT_GUILD_ONLY": "Servers and DMs"
+	"NOT_GUILD_ONLY": "Servers and DMs",
+
+	"CONTEXT_MENU": "Context menu",
+	"CONTEXT_USAGE_USER": "Right-click a user → Apps → **{{name}}**",
+	"CONTEXT_USAGE_MESSAGE": "Right-click a message → Apps → **{{name}}**"
 }

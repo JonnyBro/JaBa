@@ -16,5 +16,9 @@
 	"NO_REQUIRED_PERMISSION": "Особых прав не нужно",
 	"TITLE": "{{name}} | Команды",
 	"GUILD_ONLY": "Только на серверах",
-	"NOT_GUILD_ONLY": "На серверах и в ЛС"
+	"NOT_GUILD_ONLY": "На серверах и в ЛС",
+
+	"CONTEXT_MENU": "Контекстное меню",
+	"CONTEXT_USAGE_USER": "ПКМ по пользователю → Приложения → **{{name}}**",
+	"CONTEXT_USAGE_MESSAGE": "ПКМ по сообщению → Приложения → **{{name}}**"
 }

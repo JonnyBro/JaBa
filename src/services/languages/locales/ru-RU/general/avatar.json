@@ -3,6 +3,7 @@
 	"USAGE": "(@user)",
 	"EXAMPLES": "avatar\navatar user:@jonny_bro",
 	"CONTEXT_NAME": "Получить аватар",
+	"CONTEXT_DESCRIPTION": "Показывает аватар пользователя",
 
 	"GLOBAL": "Основной",
 	"SERVER": "Серверный"

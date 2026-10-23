@@ -6,6 +6,7 @@ import useClient from "@/utils/use-client.js";
 import {
 	ActionRowBuilder,
 	ApplicationCommandOptionType,
+	ApplicationCommandType,
 	ApplicationIntegrationType,
 	Interaction,
 	InteractionContextType,
@@ -13,6 +14,7 @@ import {
 	PermissionsBitField,
 	StringSelectMenuBuilder,
 } from "discord.js";
+import { basename } from "node:path";
 
 const client = useClient();
 
@@ -44,6 +46,34 @@ function getCategoryFromPath(filepath: string): string {
 	const commandsIndex = segments.lastIndexOf("commands");
 	return segments[commandsIndex + 1].toLowerCase() || "uncategorized";
 }
+
+type Command = (typeof client.commands)[number];
+
+const getCommandType = (cmd: Command) =>
+	(cmd.data as { type?: ApplicationCommandType }).type ?? ApplicationCommandType.ChatInput;
+
+const isContextCommand = (cmd: Command) => getCommandType(cmd) !== ApplicationCommandType.ChatInput;
+
+// Context menu commands keep their strings next to the slash command they belong to: playcontext.ts -> music/play
+const getLocaleNamespace = (cmd: Command) => {
+	const category = getCategoryFromPath(cmd.filePath);
+	if (!isContextCommand(cmd)) return `${category}/${cmd.data.name.toLowerCase()}`;
+
+	return `${category}/${basename(cmd.filePath)
+		.replace(/\.[jt]s$/, "")
+		.replace(/context$/, "")}`;
+};
+
+const getDescription = (interaction: Interaction, cmd: Command) =>
+	translateContext(
+		interaction,
+		`${getLocaleNamespace(cmd)}:${isContextCommand(cmd) ? "CONTEXT_DESCRIPTION" : "DESCRIPTION"}`,
+	);
+
+const getDisplayName = async (interaction: Interaction, cmd: Command) =>
+	isContextCommand(cmd)
+		? translateContext(interaction, `${getLocaleNamespace(cmd)}:CONTEXT_NAME`)
+		: `/${cmd.data.name}`;
 
 const groupByCategory = () => {
 	const grouped = new Map<string, typeof client.commands>();
@@ -90,19 +120,29 @@ async function buildCategoryPanel(interaction: Interaction, selected?: string) {
 	const commands = selected ? grouped.get(selected) : undefined;
 
 	if (selected && commands) {
-		const lines = await Promise.all(
-			commands.map(
-				async cmd =>
-					`**/${cmd.data.name}** - ${await t(`${selected}/${cmd.data.name.toLowerCase()}:DESCRIPTION`)}`,
-			),
-		);
+		const toLines = (cmds: Command[]) =>
+			Promise.all(
+				cmds.map(
+					async cmd =>
+						`**${await getDisplayName(interaction, cmd)}** - ${await getDescription(interaction, cmd)}`,
+				),
+			);
+
+		const slashLines = await toLines(commands.filter(cmd => !isContextCommand(cmd)));
+		const contextLines = await toLines(commands.filter(isContextCommand));
 
 		container
 			.addTextDisplayComponents(
 				createText(`-# ${await t("general/help:COMMANDS_IN", { category: capitalizeString(selected) })}`),
 			)
-			.addSeparatorComponents(createSeparator())
-			.addTextDisplayComponents(createText(lines.join("\n")));
+			.addSeparatorComponents(createSeparator());
+
+		if (slashLines.length) container.addTextDisplayComponents(createText(slashLines.join("\n")));
+		if (slashLines.length && contextLines.length) container.addSeparatorComponents(createSeparator());
+		if (contextLines.length)
+			container.addTextDisplayComponents(
+				createText(`**${await t("general/help:CONTEXT_MENU")}**\n${contextLines.join("\n")}`),
+			);
 	} else {
 		const lines = Array.from(grouped.entries()).map(
 			([category, cmds]) => `**${capitalizeString(category)}** - \`${cmds.length}\``,
@@ -130,34 +170,57 @@ async function buildCategoryPanel(interaction: Interaction, selected?: string) {
 	return toV2(container);
 }
 
-async function buildCommandHelp(interaction: Interaction, cmd: (typeof client.commands)[number]) {
+const toCodeLines = (text: string, prefix: string) =>
+	text
+		.split("\n")
+		.filter(Boolean)
+		.map(line => `\`${prefix}${line}\``)
+		.join("\n");
+
+async function getUsageLines(interaction: Interaction, cmd: Command, displayName: string) {
 	const t = (key: string, args?: Record<string, unknown>) => translateContext(interaction, key, args);
-	const category = getCategoryFromPath(cmd.filePath);
+	const title = `**${await t("general/help:FIELD_USAGE")}**`;
+
+	if (isContextCommand(cmd)) {
+		const key =
+			getCommandType(cmd) === ApplicationCommandType.User
+				? "general/help:CONTEXT_USAGE_USER"
+				: "general/help:CONTEXT_USAGE_MESSAGE";
+
+		return [title, await t(key, { name: displayName })];
+	}
+
+	const namespace = getLocaleNamespace(cmd);
 	const name = cmd.data.name;
 
+	return [
+		title,
+		toCodeLines(await t(`${namespace}:USAGE`), `/${name} `) || (await t("misc:NO_ARGS")),
+		"",
+		`**${await t("general/help:FIELD_EXAMPLES")}**`,
+		toCodeLines(await t(`${namespace}:EXAMPLES`), "/") || `\`/${name}\``,
+	];
+}
+
+async function buildCommandHelp(interaction: Interaction, cmd: Command) {
+	const t = (key: string, args?: Record<string, unknown>) => translateContext(interaction, key, args);
+	const category = getCategoryFromPath(cmd.filePath);
+	const displayName = await getDisplayName(interaction, cmd);
+
 	const guildOnly = !!cmd.data.contexts && cmd.data.contexts.every(c => c === InteractionContextType.Guild);
-	const toCodeLines = (text: string, prefix: string) =>
-		text
-			.split("\n")
-			.filter(Boolean)
-			.map(line => `\`${prefix}${line}\``)
-			.join("\n");
-
-	const usage = toCodeLines(await t(`${category}/${name}:USAGE`), `/${name} `);
-	const examples = toCodeLines(await t(`${category}/${name}:EXAMPLES`), "/");
-
 	const permissions = cmd.data.default_member_permissions
 		? new PermissionsBitField(BigInt(cmd.data.default_member_permissions)).toArray()
 		: [];
 	const context = await t(guildOnly ? "general/help:GUILD_ONLY" : "general/help:NOT_GUILD_ONLY");
+	const usageLines = await getUsageLines(interaction, cmd, displayName);
 
 	const container = createContainer()
 		.addTextDisplayComponents(
 			createText(
 				[
-					`## /${name}`,
+					`## ${displayName}`,
 					`-# ${capitalizeString(category)} • ${context}`,
-					await t(`${category}/${name}:DESCRIPTION`),
+					await getDescription(interaction, cmd),
 				].join("\n"),
 			),
 		)
@@ -165,11 +228,7 @@ async function buildCommandHelp(interaction: Interaction, cmd: (typeof client.co
 		.addTextDisplayComponents(
 			createText(
 				[
-					`**${await t("general/help:FIELD_USAGE")}**`,
-					usage || (await t("misc:NO_ARGS")),
-					"",
-					`**${await t("general/help:FIELD_EXAMPLES")}**`,
-					examples || `\`/${name}\``,
+					...usageLines,
 					"",
 					`**${await t("general/help:FIELD_PERMISSIONS")}**`,
 					permissions.map(p => `\`${p}\``).join(", ") || (await t("general/help:NO_REQUIRED_PERMISSION")),

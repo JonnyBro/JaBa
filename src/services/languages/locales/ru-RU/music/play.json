@@ -6,6 +6,7 @@
 	"SOURCE": "Где искать (по умолчанию YouTube Music)",
 	"NEXT": "Включить сразу после текущего трека?",
 	"CONTEXT_NAME": "Добавить в очередь",
+	"CONTEXT_DESCRIPTION": "Добавляет в очередь ссылку из сообщения",
 
 	"SOURCES": {
 		"ytm": "YouTube Music",
