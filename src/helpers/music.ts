@@ -185,7 +185,7 @@ export const autoPlayFunction = async (player: Player, lastTrack: Track) => {
 };
 
 // Leave Empty Channels
-const isChannelEmpty = (guild: Guild, channelId: string) => {
+export const isChannelEmpty = (guild: Guild, channelId: string) => {
 	const channel = guild.channels.cache.get(channelId);
 	if (!channel?.isVoiceBased()) return true;
 
@@ -324,6 +324,8 @@ export const sendNowPlaying = async (player: Player, track: Track) => {
 
 	const message = await sendToPlayerChannel(player, await buildNowPlaying(player, track));
 	if (message) player.setData(NOW_PLAYING_KEY, message);
+
+	return message;
 };
 
 export const updateNowPlaying = async (player: Player) => {

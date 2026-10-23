@@ -9,6 +9,7 @@ import {
 	setAutoplay,
 	updateNowPlaying,
 } from "@/helpers/music.js";
+import { savePlayerState } from "@/helpers/music-resume.js";
 import { componentRouter } from "@/utils/component-router.js";
 import { MessageFlags } from "discord.js";
 import { Player, RepeatMode, Track } from "lavalink-client";
@@ -24,7 +25,8 @@ export async function run(player: Player, track: Track | null) {
 
 	logger.debug(`[Lavalink] Track started in ${player.guildId}: "${track.info.title}" (${track.info.uri})`);
 
-	await sendNowPlaying(player, track);
+	const message = await sendNowPlaying(player, track);
+	await savePlayerState(player, message?.id);
 }
 
 const nextRepeatMode: Record<RepeatMode, RepeatMode> = {

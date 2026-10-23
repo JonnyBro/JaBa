@@ -1,6 +1,7 @@
 import { PROJECT_ROOT } from "@/constants/index.js";
 import { getNoun, getUsername } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
+import { applySavedSessions } from "@/helpers/music-resume.js";
 import { CronManager } from "@/services/cron/index.js";
 import { ExtendedClient } from "@/structures/client.js";
 import loadCronTasks from "@/utils/loadCronTasks.js";
@@ -33,6 +34,7 @@ export async function run(client: ExtendedClient) {
 	);
 
 	await client.application.emojis.fetch();
+	await applySavedSessions();
 	await client.lavalink.init({ id: client.user.id, username: client.user.username });
 
 	const tasksPath = join(PROJECT_ROOT, "helpers", "tasks");
