@@ -21,7 +21,15 @@ import {
 	MessageFlags,
 	User,
 } from "discord.js";
-import { Player, RepeatMode, SearchPlatform, SearchResult, Track, UnresolvedSearchResult } from "lavalink-client";
+import {
+	Player,
+	RepeatMode,
+	SearchPlatform,
+	SearchResult,
+	Track,
+	UnresolvedSearchResult,
+	UnresolvedTrack,
+} from "lavalink-client";
 
 export const MUSIC_CONTROL_ID = "MUSIC_CTRL";
 export const MAX_VOLUME = 150;
@@ -65,39 +73,52 @@ export const getControllablePlayer = (interaction: Interaction) => {
 const isLoadFailed = (res: SearchResult | UnresolvedSearchResult) =>
 	res.loadType === "error" || res.loadType === "empty" || !res.tracks.length;
 
-type AddToQueueOptions = {
+type PlayerTarget = {
 	guildId: string;
 	textChannelId: string;
 	voiceChannelId: string;
+};
+
+const getOrCreatePlayer = ({ guildId, textChannelId, voiceChannelId }: PlayerTarget) => {
+	const client = useClient();
+
+	return (
+		client.lavalink.getPlayer(guildId) ||
+		client.lavalink.createPlayer({ guildId, textChannelId, voiceChannelId, volume: 100, selfDeaf: true })
+	);
+};
+
+const enqueue = async (player: Player, tracks: (Track | UnresolvedTrack)[], next?: boolean) => {
+	if (next) await player.queue.splice(0, 0, ...tracks);
+	else await player.queue.add(tracks);
+
+	if (!player.connected) await player.connect();
+	if (!player.playing && !player.paused) await player.play();
+};
+
+/** Queues tracks that are already resolved, like the ones from a saved playlist */
+export const addTracks = async ({ tracks, next, ...target }: PlayerTarget & { tracks: Track[]; next?: boolean }) => {
+	if (!useClient().lavalink.useable) return "music/play:NODE_UNAVAILABLE";
+
+	await enqueue(getOrCreatePlayer(target), tracks, next);
+
+	return null;
+};
+
+type AddToQueueOptions = PlayerTarget & {
 	requester: User;
 	query: string;
 	source?: SearchSource;
 	next?: boolean;
 };
 
-export const addToQueue = async ({
-	guildId,
-	textChannelId,
-	voiceChannelId,
-	requester,
-	query,
-	source,
-	next,
-}: AddToQueueOptions) => {
+export const addToQueue = async ({ requester, query, source, next, ...target }: AddToQueueOptions) => {
 	const client = useClient();
+	const { guildId } = target;
 
 	if (!client.lavalink.useable) return { res: null, error: "music/play:NODE_UNAVAILABLE" };
 
-	const player =
-		client.lavalink.getPlayer(guildId) ||
-		client.lavalink.createPlayer({
-			guildId,
-			textChannelId,
-			voiceChannelId,
-			volume: 100,
-			selfDeaf: true,
-		});
-
+	const player = getOrCreatePlayer(target);
 	const res = await player.search({ query, source: source ? SEARCH_SOURCES[source] : undefined }, requester);
 
 	if (isLoadFailed(res)) {
@@ -117,15 +138,21 @@ export const addToQueue = async ({
 		};
 	}
 
-	const tracks = res.loadType === "playlist" ? res.tracks : [res.tracks[0]];
-
-	if (next) await player.queue.splice(0, 0, ...tracks);
-	else await player.queue.add(tracks);
-
-	if (!player.connected) await player.connect();
-	if (!player.playing && !player.paused) await player.play();
+	await enqueue(player, res.loadType === "playlist" ? res.tracks : [res.tracks[0]], next);
 
 	return { res, error: "misc:UNKNOWN_ERROR" };
+};
+
+/** Searches without a player, for things like saving tracks to a playlist */
+export const searchTracks = async (query: string, requester: User, source?: SearchSource) => {
+	const node = useClient().lavalink.nodeManager.leastUsedNodes("playingPlayers")[0];
+	if (!node) return { res: null, error: "music/play:NODE_UNAVAILABLE" };
+
+	const res = await node.search({ query, source: SEARCH_SOURCES[source || "ytm"] }, requester);
+	if (isLoadFailed(res))
+		return { res: null, error: res.exception ? "music/play:LOAD_FAILED" : "music/play:NO_RESULT" };
+
+	return { res, error: null };
 };
 
 export const formatTrack = (track: Track, maxTitle = 50) => {

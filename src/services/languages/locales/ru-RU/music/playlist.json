@@ -1,0 +1,11 @@
+{
+	"DESCRIPTION": "Включает один из твоих плейлистов с сайта",
+	"USAGE": "[name] (shuffle)",
+	"EXAMPLES": "playlist name:Чилл\nplaylist name:Зал shuffle:True",
+	"NAME": "Название плейлиста",
+	"SHUFFLE": "Перемешать треки?",
+
+	"NOT_FOUND": "У тебя нет плейлиста `{{name}}`. Его можно создать на сайте",
+	"EMPTY": "В этом плейлисте пока нет треков",
+	"ADDED": "Добавлено треков из **{{name}}**: {{count}}"
+}

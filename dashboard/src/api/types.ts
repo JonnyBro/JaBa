@@ -166,6 +166,21 @@ export type PlayerAction = "pause" | "back" | "skip" | "stop" | "loop" | "shuffl
 
 export type SearchSource = "ytm" | "yt" | "ym" | "sp" | "sc";
 
+export type PlaylistTrack = Omit<MusicTrack, "requester">;
+
+export type PlaylistSummary = {
+	id: string;
+	name: string;
+	trackCount: number;
+	duration: number;
+	artworkUrl: string | null;
+	updatedAt: string;
+};
+
+export type Playlist = PlaylistSummary & { tracks: PlaylistTrack[] };
+
+export type PlaylistList = { max: number; maxTracks: number; items: PlaylistSummary[] };
+
 export type Remind = {
 	message: string;
 	createdAt: number;

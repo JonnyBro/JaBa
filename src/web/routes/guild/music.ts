@@ -11,6 +11,8 @@ import {
 	TRACK_CHANGING_ACTIONS,
 	updateNowPlaying,
 } from "@/helpers/music.js";
+import { appendTracks, createPlaylist, findPlaylist, playPlaylist } from "@/helpers/playlists.js";
+import { MAX_PLAYLIST_TRACKS } from "@/models/PlaylistModel.js";
 import useClient from "@/utils/use-client.js";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { Player } from "lavalink-client";
@@ -35,6 +37,24 @@ const getControllablePlayer = async (req: FastifyRequest, reply: FastifyReply) =
 		return void (await failWith(req, reply, 403, "music/play:NOT_SAME_CHANNEL"));
 
 	return player;
+};
+
+/** Where new music goes, the user has to be in a voice channel and in the bot's one if it is already playing */
+const getPlayTarget = async (req: FastifyRequest, reply: FastifyReply) => {
+	const member = await req.guild.members.fetch(req.session.user!.id).catch(() => null);
+	if (!member) return void (await failWith(req, reply, 403, "music/play:NO_VOICE_CHANNEL"));
+
+	const current = useClient().lavalink.getPlayer(req.guild.id);
+	const voiceError = checkVoice(member, current?.queue.current ? current : undefined);
+	if (voiceError) return void (await failWith(req, reply, 403, voiceError));
+
+	// A voice channel has its own text chat, so the now playing message lands next to the listeners
+	return {
+		guildId: req.guild.id,
+		textChannelId: current?.textChannelId ?? member.voice.channelId!,
+		voiceChannelId: member.voice.channelId!,
+		requester: member.user,
+	};
 };
 
 const done = async (reply: FastifyReply, player: Player, refreshMessage = true) => {
@@ -141,24 +161,10 @@ export default async function musicRoutes(fastify: FastifyInstance) {
 			typeof body.source === "string" && body.source in SEARCH_SOURCES
 				? (body.source as SearchSource)
 				: undefined;
-		const member = await req.guild.members.fetch(req.session.user!.id).catch(() => null);
-		if (!member) return failWith(req, reply, 403, "music/play:NO_VOICE_CHANNEL");
+		const target = await getPlayTarget(req, reply);
+		if (!target) return;
 
-		const current = useClient().lavalink.getPlayer(req.guild.id);
-		const voiceError = checkVoice(member, current?.queue.current ? current : undefined);
-		if (voiceError) return failWith(req, reply, 403, voiceError);
-
-		// A voice channel has its own text chat, so the now playing message lands next to the listeners
-		const { res, error } = await addToQueue({
-			guildId: req.guild.id,
-			textChannelId: current?.textChannelId ?? member.voice.channelId!,
-			voiceChannelId: member.voice.channelId!,
-			requester: member.user,
-			query,
-			source,
-			next: body.next === true,
-		});
-
+		const { res, error } = await addToQueue({ ...target, query, source, next: body.next === true });
 		if (!res) return failWith(req, reply, 400, error);
 
 		notifyMusicChange(req.guild.id);
@@ -167,5 +173,43 @@ export default async function musicRoutes(fastify: FastifyInstance) {
 			added: res.loadType === "playlist" ? res.tracks.length : 1,
 			title: res.loadType === "playlist" ? (res.playlist?.title ?? null) : res.tracks[0].info.title,
 		});
+	});
+
+	fastify.post("/music/playlist", async (req, reply) => {
+		const body = (req.body ?? {}) as { playlistId?: unknown; shuffle?: unknown };
+		const playlist =
+			typeof body.playlistId === "string" ? await findPlaylist(req.session.user!.id, body.playlistId) : null;
+		if (!playlist) return fail(reply, 404, "Playlist not found");
+		if (!playlist.tracks.length) return failWith(req, reply, 400, "music/playlist:EMPTY");
+
+		const target = await getPlayTarget(req, reply);
+		if (!target) return;
+
+		const error = await playPlaylist({ ...target, playlist, shuffle: body.shuffle === true });
+		if (error) return failWith(req, reply, 400, error);
+
+		notifyMusicChange(req.guild.id);
+
+		return send(reply, { added: playlist.tracks.length, title: playlist.name });
+	});
+
+	// Anyone who can see the player can save it, no need to be in the voice channel for that
+	fastify.post("/music/save", async (req, reply) => {
+		const body = (req.body ?? {}) as { playlistId?: unknown; name?: unknown };
+		const player = useClient().lavalink.getPlayer(req.guild.id);
+		if (!player?.queue.current) return failWith(req, reply, 400, "music/play:NOT_PLAYING");
+
+		const userId = req.session.user!.id;
+		const created = typeof body.playlistId === "string" ? null : await createPlaylist(userId, body.name);
+		if (created && !created.playlist) return fail(reply, 400, created.error!);
+
+		const playlist = created?.playlist ?? (await findPlaylist(userId, body.playlistId as string).catch(() => null));
+		if (!playlist) return fail(reply, 404, "Playlist not found");
+		if (playlist.tracks.length >= MAX_PLAYLIST_TRACKS)
+			return fail(reply, 400, `A playlist can have up to ${MAX_PLAYLIST_TRACKS} tracks`);
+
+		const { added, skipped } = await appendTracks(playlist, [player.queue.current, ...player.queue.tracks]);
+
+		return send(reply, { added, skipped, playlistId: playlist._id.toString(), title: playlist.name });
 	});
 }

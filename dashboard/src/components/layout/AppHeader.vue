@@ -24,7 +24,12 @@ const nav = computed(() => [
 	{ name: "home", label: "header.home" },
 	{ name: "commands", label: "header.commands" },
 	{ name: "leaderboard", label: "header.leaderboard" },
-	...(isLoggedIn.value ? [{ name: "servers", label: "header.servers" }] : []),
+	...(isLoggedIn.value
+		? [
+			{ name: "servers", label: "header.servers" },
+			{ name: "playlists", label: "header.playlists" },
+		]
+		: []),
 	...(isOwner.value ? [{ name: "owner", label: "header.owner" }] : []),
 ]);
 

@@ -13,6 +13,7 @@ import authRoutes from "./routes/auth.js";
 import guildRoutes from "./routes/guild/index.js";
 import guildsRoutes from "./routes/guilds.js";
 import ownerRoutes from "./routes/owner.js";
+import playlistsRoutes from "./routes/playlists.js";
 import profileRoutes from "./routes/profile.js";
 import publicRoutes from "./routes/public.js";
 import statsRoutes from "./routes/stats.js";
@@ -74,6 +75,7 @@ export const startDashboard = async () => {
 	await fastify.register(statsRoutes);
 	await fastify.register(publicRoutes);
 	await fastify.register(profileRoutes);
+	await fastify.register(playlistsRoutes);
 	await fastify.register(guildsRoutes);
 	await fastify.register(guildRoutes, { prefix: "/api/guilds/:id" });
 	await fastify.register(ownerRoutes, { prefix: "/api/owner" });

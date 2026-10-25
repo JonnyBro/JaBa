@@ -33,7 +33,8 @@
 		"commands": "Commands",
 		"leaderboard": "Leaderboard",
 		"owner": "Owner",
-		"subtitle": "Dashboard"
+		"subtitle": "Dashboard",
+		"playlists": "Playlists"
 	},
 	"userMenu": {
 		"account": "Account",
@@ -235,7 +236,33 @@
 		"queueInfo": "{n} track, {time} | {n} tracks, {time}",
 		"clear": "Clear",
 		"emptyQueue": "The queue is empty",
-		"more": "And {n} more"
+		"more": "And {n} more",
+		"playlist": "Playlist",
+		"pickPlaylist": "Pick a playlist",
+		"playPlaylist": "Play",
+		"shufflePlaylist": "Shuffle",
+		"noPlaylists": "You have no playlists yet.",
+		"managePlaylists": "Manage playlists",
+		"saveQueue": "Save to playlist",
+		"saveQueueText": "The current track and the whole queue are added to the end of the playlist.",
+		"newPlaylist": "New playlist",
+		"savedToPlaylist": "Saved {n} track to {title} | Saved {n} tracks to {title}"
+	},
+	"playlists": {
+		"title": "Playlists",
+		"subtitle": "Your own playlists, they work on every server with the bot",
+		"newPlaceholder": "New playlist name",
+		"create": "Create playlist",
+		"count": "{n} of {max} playlists",
+		"tracks": "{n} track | {n} tracks",
+		"empty": "No playlists yet",
+		"emptyText": "Create one on the left and add tracks to it.",
+		"noTracks": "No tracks yet. Add a link or search for something above.",
+		"saved": "Saved",
+		"skipped": "{n} track didn't fit, a playlist is limited | {n} tracks didn't fit, a playlist is limited",
+		"howToPlay": "To play it, open the Music tab on a server or use {command} in Discord.",
+		"deleteTitle": "Delete {name}?",
+		"deleteText": "The playlist and all of its tracks will be gone."
 	},
 	"leaderboard": {
 		"title": "Reputation",

@@ -48,6 +48,12 @@ const router = createRouter({
 			meta: { title: "userMenu.profile", requiresAuth: true },
 		},
 		{
+			path: "/playlists",
+			name: "playlists",
+			component: () => import("@/views/PlaylistsView.vue"),
+			meta: { title: "header.playlists", requiresAuth: true },
+		},
+		{
 			path: "/servers",
 			name: "servers",
 			component: () => import("@/views/ServersView.vue"),

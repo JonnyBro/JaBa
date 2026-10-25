@@ -1,0 +1,11 @@
+{
+	"DESCRIPTION": "Plays one of your playlists from the dashboard",
+	"USAGE": "[name] (shuffle)",
+	"EXAMPLES": "playlist name:Chill\nplaylist name:Gym shuffle:True",
+	"NAME": "Playlist name",
+	"SHUFFLE": "Shuffle the tracks?",
+
+	"NOT_FOUND": "You don't have a playlist called `{{name}}`. You can create one in the dashboard",
+	"EMPTY": "This playlist has no tracks yet",
+	"ADDED": "Added {{count}} tracks from **{{name}}** to the queue"
+}

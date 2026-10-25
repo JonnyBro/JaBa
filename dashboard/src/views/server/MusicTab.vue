@@ -1,29 +1,50 @@
 <script setup lang="ts">
-import { musicAction, musicClear, musicMove, musicPlay, musicRemove, musicSeek, musicVolume } from "@/api";
+import {
+	getPlaylists,
+	musicAction,
+	musicClear,
+	musicMove,
+	musicPlay,
+	musicPlayPlaylist,
+	musicRemove,
+	musicSaveQueue,
+	musicSeek,
+	musicVolume,
+} from "@/api";
 import type { GuildInfo, PlayerAction } from "@/api/types";
 import EmptyState from "@/components/common/EmptyState.vue";
 import Hint from "@/components/common/Hint.vue";
 import UserAvatar from "@/components/common/UserAvatar.vue";
 import { Button } from "@/components/ui/button";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useMusic } from "@/composables/useMusic";
-import { formatDuration, formatTrackTime } from "@/lib/format";
+import { formatDuration, formatSource, formatTrackTime } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { getErrorMessage } from "@/plugins/axios";
-import { useMutation } from "@tanstack/vue-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
 import {
 	ArrowDown,
 	ArrowUp,
 	Infinity as InfinityIcon,
+	ListMusic,
 	ListPlus,
 	LoaderCircle,
 	Pause,
 	Play,
 	Repeat,
 	Repeat1,
+	Save,
 	Shuffle,
 	SkipBack,
 	SkipForward,
@@ -103,6 +124,54 @@ const add = useMutation({
 	onError: error => toast.error(getErrorMessage(error)),
 });
 
+const playlists = useQuery({ queryKey: ["playlists"], queryFn: getPlaylists });
+const playlistId = ref<string>();
+const shufflePlaylist = ref(false);
+
+watch(
+	() => playlists.data.value?.items,
+	items => {
+		if (!items?.some(p => p.id === playlistId.value)) playlistId.value = items?.[0]?.id;
+	},
+	{ immediate: true },
+);
+
+const playPlaylist = useMutation({
+	mutationFn: () =>
+		musicPlayPlaylist(guildId.value, { playlistId: playlistId.value!, shuffle: shufflePlaylist.value }),
+	onSuccess: ({ added, title }) => toast.success(t("music.addedMany", { n: added, title })),
+	onError: error => toast.error(getErrorMessage(error)),
+});
+
+// "new" in the select means a new playlist with the typed name
+const queryClient = useQueryClient();
+const saveOpen = ref(false);
+const saveTarget = ref("new");
+const saveName = ref("");
+
+const openSave = () => {
+	const items = playlists.data.value?.items ?? [];
+	saveTarget.value = items.length < (playlists.data.value?.max ?? 0) ? "new" : (items[0]?.id ?? "new");
+	saveName.value = "";
+	saveOpen.value = true;
+};
+
+const saveQueue = useMutation({
+	mutationFn: () =>
+		musicSaveQueue(
+			guildId.value,
+			saveTarget.value === "new" ? { name: saveName.value } : { playlistId: saveTarget.value },
+		),
+	onSuccess: async ({ added, skipped, title }) => {
+		saveOpen.value = false;
+		toast.success(t("music.savedToPlaylist", { n: added, title }));
+		if (skipped) toast.warning(t("playlists.skipped", { n: skipped }));
+		await queryClient.invalidateQueries({ queryKey: ["playlists"] });
+		await queryClient.invalidateQueries({ queryKey: ["playlist"] });
+	},
+	onError: error => toast.error(getErrorMessage(error)),
+});
+
 const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ?? "off"}`));
 </script>
 
@@ -154,7 +223,12 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 							{{ active.current.title }}
 						</a>
 						<p v-else class="truncate font-hud text-2xl">{{ active.current.title }}</p>
-						<p class="truncate text-muted-foreground">{{ active.current.author }}</p>
+						<p class="truncate text-muted-foreground">
+							{{ active.current.author }}
+							<template v-if="active.current.sourceName">
+								· {{ formatSource(active.current.sourceName) }}
+							</template>
+						</p>
 						<p
 							v-if="active.current.requester"
 							class="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground"
@@ -261,7 +335,7 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 								min="0"
 								:max="active.maxVolume"
 								step="5"
-								class="w-28 accent-[var(--hl)]"
+								class="w-28 accent-hl"
 								:disabled="!canControl"
 								@change="commitVolume"
 							/>
@@ -294,7 +368,7 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 					</SelectContent>
 				</Select>
 				<Label class="flex items-center gap-2 font-normal">
-					<input v-model="playNext" type="checkbox" class="accent-[var(--hl)]" :disabled="!canAdd" />
+					<input v-model="playNext" type="checkbox" class="accent-hl" :disabled="!canAdd" />
 					{{ $t("music.next") }}
 				</Label>
 				<Button type="submit" :disabled="!canAdd || !query.trim() || add.isPending.value">
@@ -304,10 +378,51 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 				</Button>
 			</form>
 
+			<form
+				v-if="playlists.data.value?.items.length"
+				class="hud-panel flex flex-col gap-2 p-3 sm:flex-row sm:items-center"
+				@submit.prevent="playPlaylist.mutate()"
+			>
+				<Select v-model="playlistId" :disabled="!canAdd">
+					<SelectTrigger class="w-full sm:flex-1">
+						<SelectValue :placeholder="$t('music.pickPlaylist')" />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectItem v-for="p in playlists.data.value.items" :key="p.id" :value="p.id">
+							{{ p.name }} · {{ $t("playlists.tracks", { n: p.trackCount }) }}
+						</SelectItem>
+					</SelectContent>
+				</Select>
+				<Label class="flex items-center gap-2 font-normal">
+					<input v-model="shufflePlaylist" type="checkbox" class="accent-hl" :disabled="!canAdd" />
+					{{ $t("music.shufflePlaylist") }}
+				</Label>
+				<Button type="submit" :disabled="!canAdd || !playlistId || playPlaylist.isPending.value">
+					<LoaderCircle v-if="playPlaylist.isPending.value" class="animate-spin" />
+					<ListMusic v-else />
+					{{ $t("music.playPlaylist") }}
+				</Button>
+				<Button variant="ghost" as-child>
+					<RouterLink :to="{ name: 'playlists', query: playlistId ? { id: playlistId } : {} }">
+						{{ $t("music.managePlaylists") }}
+					</RouterLink>
+				</Button>
+			</form>
+			<p v-else-if="playlists.data.value" class="text-sm text-muted-foreground">
+				{{ $t("music.noPlaylists") }}
+				<RouterLink :to="{ name: 'playlists' }" class="text-hl hover:underline">
+					{{ $t("music.managePlaylists") }}
+				</RouterLink>
+			</p>
+
 			<section v-if="active" class="space-y-3">
 				<div class="flex items-end justify-between gap-2">
 					<h2 class="hud-title">{{ $t("music.queue") }}</h2>
 					<div class="flex items-center gap-3">
+						<Button variant="ghost" size="sm" :disabled="!playlists.data.value" @click="openSave">
+							<Save />
+							{{ $t("music.saveQueue") }}
+						</Button>
 						<span class="font-hud text-sm text-muted-foreground">
 							{{
 								$t("music.queueInfo", {
@@ -348,6 +463,7 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 							<p class="truncate">{{ track.title }}</p>
 							<p class="truncate text-sm text-muted-foreground">
 								{{ track.author }}
+								<template v-if="track.sourceName"> · {{ formatSource(track.sourceName) }}</template>
 								<template v-if="track.requester"> · {{ track.requester.name }}</template>
 							</p>
 						</div>
@@ -382,5 +498,53 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 				</p>
 			</section>
 		</template>
+		<Dialog v-model:open="saveOpen">
+			<DialogContent>
+				<DialogHeader>
+					<DialogTitle>{{ $t("music.saveQueue") }}</DialogTitle>
+					<DialogDescription>{{ $t("music.saveQueueText") }}</DialogDescription>
+				</DialogHeader>
+
+				<form id="save-queue" class="space-y-4" @submit.prevent="saveQueue.mutate()">
+					<Select v-model="saveTarget">
+						<SelectTrigger class="w-full">
+							<SelectValue />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectItem
+								value="new"
+								:disabled="
+									(playlists.data.value?.items.length ?? 0) >= (playlists.data.value?.max ?? 0)
+								"
+							>
+								{{ $t("music.newPlaylist") }}
+							</SelectItem>
+							<SelectItem v-for="p in playlists.data.value?.items" :key="p.id" :value="p.id">
+								{{ p.name }} · {{ $t("playlists.tracks", { n: p.trackCount }) }}
+							</SelectItem>
+						</SelectContent>
+					</Select>
+					<Input
+						v-if="saveTarget === 'new'"
+						v-model="saveName"
+						maxlength="50"
+						:placeholder="$t('playlists.newPlaceholder')"
+					/>
+				</form>
+
+				<DialogFooter>
+					<Button variant="outline" @click="saveOpen = false">{{ $t("common.cancel") }}</Button>
+					<Button
+						type="submit"
+						form="save-queue"
+						:disabled="(saveTarget === 'new' && !saveName.trim()) || saveQueue.isPending.value"
+					>
+						<LoaderCircle v-if="saveQueue.isPending.value" class="animate-spin" />
+						<Save v-else />
+						{{ $t("common.save") }}
+					</Button>
+				</DialogFooter>
+			</DialogContent>
+		</Dialog>
 	</div>
 </template>

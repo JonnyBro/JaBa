@@ -15,7 +15,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Build application
-RUN pnpm build && pnpm build:dashboard
+RUN pnpm build && pnpm dashboard:build
 
 FROM node:22.23.0-alpine AS runner
 

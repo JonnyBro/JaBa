@@ -8,8 +8,8 @@
         "dev": "NODE_ENV=dev tsx src/index.ts",
         "build": "rimraf tsconfig.tsbuildinfo dist && tsc && tsc-alias",
         "postbuild": "cpx \"src/**/*.{json,png}\" dist",
-        "dev:dashboard": "pnpm --filter @jaba/dashboard dev",
-        "build:dashboard": "pnpm --filter @jaba/dashboard build",
+        "dashboard:dev": "pnpm --filter @jaba/dashboard dev",
+        "dashboard:build": "pnpm --filter @jaba/dashboard build",
         "delete-commands": "tsx delete-commands.ts",
         "pm2": "NODE_ENV=production pm2 start --name jaba dist/index.js"
     },

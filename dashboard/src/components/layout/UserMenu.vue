@@ -10,7 +10,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/composables/useAuth";
-import { LogOut, Server, User } from "lucide-vue-next";
+import { ListMusic, LogOut, Server, User } from "lucide-vue-next";
 import { useRoute } from "vue-router";
 import { DiscordIcon } from "vue3-simple-icons";
 
@@ -47,6 +47,12 @@ const route = useRoute();
 				<RouterLink :to="{ name: 'servers' }">
 					<Server />
 					{{ $t("userMenu.servers") }}
+				</RouterLink>
+			</DropdownMenuItem>
+			<DropdownMenuItem as-child>
+				<RouterLink :to="{ name: 'playlists' }">
+					<ListMusic />
+					{{ $t("header.playlists") }}
 				</RouterLink>
 			</DropdownMenuItem>
 			<DropdownMenuSeparator />

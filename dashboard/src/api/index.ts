@@ -26,6 +26,8 @@ import type {
 	OwnerGuild,
 	Paginated,
 	PlayerAction,
+	Playlist,
+	PlaylistList,
 	Profile,
 	Remind,
 	RepStanding,
@@ -98,6 +100,32 @@ export const musicMove = (id: string, from: number, to: number) =>
 export const musicClear = (id: string) => post<{ ok: true }>(guildUrl(id, "/music/clear"));
 export const musicPlay = (id: string, body: { query: string; source?: SearchSource; next?: boolean }) =>
 	post<{ added: number; title: string | null }>(guildUrl(id, "/music/play"), body);
+
+export const musicPlayPlaylist = (id: string, body: { playlistId: string; shuffle?: boolean }) =>
+	post<{ added: number; title: string }>(guildUrl(id, "/music/playlist"), body);
+
+export const musicSaveQueue = (id: string, body: { playlistId?: string; name?: string }) =>
+	post<{ added: number; skipped: number; playlistId: string; title: string }>(guildUrl(id, "/music/save"), body);
+
+// Playlists
+const playlistUrl = (id: string, path = "") => `/api/users/me/playlists/${encodeURIComponent(id)}${path}`;
+
+export const getPlaylists = () => get<PlaylistList>("/api/users/me/playlists");
+export const getPlaylist = (id: string) => get<Playlist>(playlistUrl(id));
+export const createPlaylist = (name: string) => post<Playlist>("/api/users/me/playlists", { name });
+export const renamePlaylist = async (id: string, name: string) =>
+	(await api.patch<Response<Playlist>>(playlistUrl(id), { name })).data.data;
+export const deletePlaylist = async (id: string) =>
+	(await api.delete<Response<{ ok: true }>>(playlistUrl(id))).data.data;
+export const addPlaylistTracks = (id: string, body: { query: string; source?: SearchSource }) =>
+	post<{ added: number; skipped: number; title: string | null; playlist: Playlist }>(
+		playlistUrl(id, "/tracks"),
+		body,
+	);
+export const removePlaylistTrack = async (id: string, index: number) =>
+	(await api.delete<Response<Playlist>>(playlistUrl(id, `/tracks/${index}`))).data.data;
+export const movePlaylistTrack = (id: string, from: number, to: number) =>
+	post<Playlist>(playlistUrl(id, "/move"), { from, to });
 
 // Profile
 export const getProfile = () => get<Profile>("/api/users/me/profile");
