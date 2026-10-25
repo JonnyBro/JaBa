@@ -1,4 +1,4 @@
-import { isAutoplayEnabled, MAX_VOLUME } from "@/helpers/music.js";
+import { formatSource, isAutoplayEnabled, MAX_VOLUME } from "@/helpers/music.js";
 import useClient from "@/utils/use-client.js";
 import { Guild, User } from "discord.js";
 import { Track, UnresolvedTrack } from "lavalink-client";
@@ -21,7 +21,7 @@ const serializeTrack = (track: Track | UnresolvedTrack) => {
 		artworkUrl: track.info.artworkUrl ?? null,
 		duration: track.info.duration ?? 0,
 		isStream: !!track.info.isStream,
-		sourceName: track.info.sourceName ?? null,
+		source: track.info.sourceName ? formatSource(track.info.sourceName) : null,
 		requester: requester ? serializeUser(requester) : null,
 	};
 };

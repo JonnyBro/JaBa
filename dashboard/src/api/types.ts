@@ -132,7 +132,7 @@ export type MusicTrack = {
 	artworkUrl: string | null;
 	duration: number;
 	isStream: boolean;
-	sourceName: string | null;
+	source: string | null;
 	requester: { id: string; name: string; avatar: string | null } | null;
 };
 

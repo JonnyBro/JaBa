@@ -29,7 +29,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useMusic } from "@/composables/useMusic";
-import { formatDuration, formatSource, formatTrackTime } from "@/lib/format";
+import { formatDuration, formatTrackTime } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { getErrorMessage } from "@/plugins/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
@@ -225,9 +225,7 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 						<p v-else class="truncate font-hud text-2xl">{{ active.current.title }}</p>
 						<p class="truncate text-muted-foreground">
 							{{ active.current.author }}
-							<template v-if="active.current.sourceName">
-								· {{ formatSource(active.current.sourceName) }}
-							</template>
+							<template v-if="active.current.source"> · {{ active.current.source }}</template>
 						</p>
 						<p
 							v-if="active.current.requester"
@@ -463,7 +461,7 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 							<p class="truncate">{{ track.title }}</p>
 							<p class="truncate text-sm text-muted-foreground">
 								{{ track.author }}
-								<template v-if="track.sourceName"> · {{ formatSource(track.sourceName) }}</template>
+								<template v-if="track.source"> · {{ track.source }}</template>
 								<template v-if="track.requester"> · {{ track.requester.name }}</template>
 							</p>
 						</div>

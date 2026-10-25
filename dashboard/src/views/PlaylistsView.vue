@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import { formatDuration, formatSource, formatTrackTime } from "@/lib/format";
+import { formatDuration, formatTrackTime } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { getErrorMessage } from "@/plugins/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
@@ -292,7 +292,7 @@ const edit = useMutation({
 							<p v-else class="truncate">{{ track.title }}</p>
 							<p class="truncate text-sm text-muted-foreground">
 								{{ track.author }}
-								<template v-if="track.sourceName"> · {{ formatSource(track.sourceName) }}</template>
+								<template v-if="track.source"> · {{ track.source }}</template>
 							</p>
 						</div>
 						<span class="font-hud text-sm text-muted-foreground">

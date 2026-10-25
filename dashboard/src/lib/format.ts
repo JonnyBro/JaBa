@@ -101,22 +101,3 @@ export const initials = (name: string) =>
 		.slice(0, 2)
 		.map(part => part[0].toUpperCase())
 		.join("") || "?";
-
-const SOURCE_NAMES: Record<string, string> = {
-	youtube: "YouTube",
-	youtubemusic: "YouTube Music",
-	soundcloud: "SoundCloud",
-	spotify: "Spotify",
-	yandexmusic: "Yandex Music",
-	deezer: "Deezer",
-	applemusic: "Apple Music",
-	bandcamp: "Bandcamp",
-	twitch: "Twitch",
-	vimeo: "Vimeo",
-	http: "HTTP",
-	local: "Local",
-};
-
-/** Lavalink gives ids like "yandexmusic", the bot itself only capitalizes them */
-export const formatSource = (source: string | null | undefined) =>
-	source ? (SOURCE_NAMES[source.toLowerCase()] ?? source[0].toUpperCase() + source.slice(1)) : null;

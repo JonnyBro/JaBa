@@ -155,6 +155,23 @@ export const searchTracks = async (query: string, requester: User, source?: Sear
 	return { res, error: null };
 };
 
+const SOURCE_NAMES: Record<string, string> = {
+	youtube: "YouTube",
+	youtubemusic: "YouTube Music",
+	soundcloud: "SoundCloud",
+	spotify: "Spotify",
+	yandexmusic: "Yandex Music",
+	deezer: "Deezer",
+	applemusic: "Apple Music",
+	bandcamp: "Bandcamp",
+	twitch: "Twitch",
+	vimeo: "Vimeo",
+	http: "HTTP",
+	local: "Local",
+};
+
+export const formatSource = (source: string) => SOURCE_NAMES[source.toLowerCase()] ?? capitalizeString(source);
+
 export const formatTrack = (track: Track, maxTitle = 50) => {
 	const title = shortenString(track.info.title || "Unknown", maxTitle);
 	const author = shortenString((track.info.author || "Unknown").replace(/ - Topic$/, ""), 30);
@@ -375,7 +392,7 @@ const buildNowPlaying = async (player: Player, track: Track) => {
 			`### ${formatTrack(track, 60)}`,
 			[
 				`\`${formatDuration(track)}\``,
-				capitalizeString(track.info.sourceName),
+				formatSource(track.info.sourceName),
 				`${await t("music/queue:ADDED")}: ${requesterMention}`,
 			].join(" • "),
 		].join("\n"),

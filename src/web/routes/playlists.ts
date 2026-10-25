@@ -1,4 +1,4 @@
-import { SEARCH_SOURCES, SearchSource, searchTracks } from "@/helpers/music.js";
+import { formatSource, SEARCH_SOURCES, SearchSource, searchTracks } from "@/helpers/music.js";
 import { appendTracks, createPlaylist, normalizePlaylistName, playlistNameTaken } from "@/helpers/playlists.js";
 import PlaylistModel, {
 	IPlaylistSchema,
@@ -26,7 +26,7 @@ const serializeTrack = ({ info }: PlaylistTrack) => ({
 	artworkUrl: info.artworkUrl ?? null,
 	duration: info.duration ?? 0,
 	isStream: !!info.isStream,
-	sourceName: info.sourceName ?? null,
+	source: info.sourceName ? formatSource(info.sourceName) : null,
 });
 
 const serializeSummary = (playlist: IPlaylistSchema) => ({
