@@ -1,4 +1,4 @@
-import packageJson from "@/../package.json" with { type: "json" };
+import dashboardPackageJson from "@/../dashboard/package.json" with { type: "json" };
 import { PROJECT_ROOT, SUPER_CONTEXT } from "@/constants/index.js";
 import logger from "@/helpers/logger.js";
 import useClient from "@/utils/use-client.js";
@@ -108,5 +108,5 @@ export const startDashboard = async () => {
 	const port = Number(config.get<string>("DASHBOARD_PORT")) || DEFAULT_PORT;
 	await fastify.listen({ host: config.get<string>("DASHBOARD_HOST") || "0.0.0.0", port });
 
-	logger.ready(`[Dashboard] v${packageJson.version} is listening on port ${port} (${url})`);
+	logger.ready(`[Dashboard] v${dashboardPackageJson.version} is listening on port ${port} (${url})`);
 };

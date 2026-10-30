@@ -3,6 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import vueDevTools from "vite-plugin-vue-devtools";
+import packageJson from "./package.json" with { type: "json" };
 
 const backend = "http://localhost:6548";
 
@@ -14,6 +15,7 @@ export default defineConfig({
 		__VUE_I18N_FULL_INSTALL__: true,
 		__VUE_I18N_LEGACY_API__: false,
 		__INTLIFY_PROD_DEVTOOLS__: false,
+		__DASHBOARD_VERSION__: JSON.stringify(packageJson.version),
 	},
 	resolve: {
 		alias: {
