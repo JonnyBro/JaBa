@@ -1,0 +1,9 @@
+{
+	"DESCRIPTION": "Pick one of the options for you",
+	"USAGE": "[options]",
+	"EXAMPLES": "choose options:pizza, sushi, burgers",
+	"OPTIONS": "Options separated by commas or |",
+
+	"BAD_OPTIONS": "Give me 2 to {{max}} different options separated by commas",
+	"RESULT": "🤔 I choose **{{choice}}**"
+}

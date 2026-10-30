@@ -13,18 +13,27 @@ import {
 
 const ANIMAL_REROLL_ID = "ANIMAL_REROLL";
 
+type ImageList = Array<{ url?: string }>;
+
 const ANIMAL_APIS = {
-	cat: "https://api.thecatapi.com/v1/images/search",
-	dog: "https://api.thedogapi.com/v1/images/search",
+	cat: { url: "https://api.thecatapi.com/v1/images/search", image: (data: ImageList) => data[0]?.url },
+	dog: { url: "https://api.thedogapi.com/v1/images/search", image: (data: ImageList) => data[0]?.url },
+	fox: { url: "https://randomfox.ca/floof/", image: (data: { image?: string }) => data.image },
+	duck: {
+		url: "https://random-d.uk/api/v2/random",
+		image: (data: { url?: string }) => data.url?.replace(/^http:/, "https:"),
+	},
 };
 
 export type Animal = keyof typeof ANIMAL_APIS;
 
 const fetchImage = async (animal: Animal) => {
-	try {
-		const [res] = (await fetch(ANIMAL_APIS[animal]).then(r => r.json())) as Array<{ url?: string }>;
+	const api = ANIMAL_APIS[animal];
 
-		return res?.url || null;
+	try {
+		const data = await fetch(api.url).then(r => r.json());
+
+		return (api.image as (data: unknown) => string | undefined)(data) || null;
 	} catch (error) {
 		logger.warn(`Failed to fetch a random ${animal}:`, error);
 

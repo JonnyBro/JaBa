@@ -1,0 +1,9 @@
+{
+	"DESCRIPTION": "Roll dice",
+	"USAGE": "(dice)",
+	"EXAMPLES": "roll\nroll dice:d20\nroll dice:4d6-1",
+	"DICE": "Dice like d20, 2d6 or 4d6+3 (1d6 by default)",
+
+	"BAD_DICE": "Write the dice like `d20`, `2d6` or `4d6+3`: up to {{dice}} dice with 2 to {{sides}} sides",
+	"RESULT": "🎲 **{{notation}}**: {{rolls}}**{{total}}**"
+}

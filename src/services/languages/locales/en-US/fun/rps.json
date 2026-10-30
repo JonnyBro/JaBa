@@ -1,0 +1,25 @@
+{
+	"DESCRIPTION": "Rock, paper, scissors against the bot or another member",
+	"USAGE": "[move] (@user)",
+	"EXAMPLES": "rps move:rock\nrps move:paper user:@jonny_bro",
+	"MOVE": "Your move",
+	"OPPONENT": "Challenge a member instead of playing against the bot",
+	"MOVES": {
+		"rock": "Rock",
+		"paper": "Paper",
+		"scissors": "Scissors"
+	},
+
+	"BOT_WIN": "{{move}} beats {{bot}}. You win!",
+	"BOT_LOSE": "{{bot}} beats {{move}}. I win!",
+	"BOT_DRAW": "We both picked {{move}}. It's a draw",
+
+	"CHALLENGE": "✊ {{user}} challenges {{opponent}} to rock, paper, scissors. {{opponent}}, make your move, the challenger's move is hidden",
+	"DECLINE": "Decline",
+	"NOT_YOURS": "This challenge isn't for you",
+	"EXPIRED": "✊ The challenge has expired",
+	"DECLINED": "✊ {{user}} declined the challenge",
+	"CANCELLED": "✊ {{user}} cancelled the challenge",
+	"PVP_RESULT": "✊ {{challenger}}: {{challengerMove}}, {{opponent}}: {{opponentMove}}. {{winner}} wins!",
+	"PVP_DRAW": "✊ {{challenger}}: {{challengerMove}}, {{opponent}}: {{opponentMove}}. It's a draw"
+}

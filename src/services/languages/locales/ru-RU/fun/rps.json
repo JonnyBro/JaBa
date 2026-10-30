@@ -1,0 +1,25 @@
+{
+	"DESCRIPTION": "Камень, ножницы, бумага против бота или другого участника",
+	"USAGE": "[move] (@user)",
+	"EXAMPLES": "rps move:rock\nrps move:paper user:@jonny_bro",
+	"MOVE": "Твой ход",
+	"OPPONENT": "Вызвать участника вместо игры с ботом",
+	"MOVES": {
+		"rock": "Камень",
+		"paper": "Бумага",
+		"scissors": "Ножницы"
+	},
+
+	"BOT_WIN": "{{move}} бьёт {{bot}}. Ты победил!",
+	"BOT_LOSE": "{{bot}} бьёт {{move}}. Я победил!",
+	"BOT_DRAW": "Мы оба выбрали {{move}}. Ничья",
+
+	"CHALLENGE": "✊ {{user}} вызывает {{opponent}} на камень, ножницы, бумагу. {{opponent}}, твой ход, ход соперника скрыт",
+	"DECLINE": "Отказаться",
+	"NOT_YOURS": "Этот вызов не тебе",
+	"EXPIRED": "✊ Время на вызов истекло",
+	"DECLINED": "✊ {{user}} отказался от вызова",
+	"CANCELLED": "✊ {{user}} отменил вызов",
+	"PVP_RESULT": "✊ {{challenger}}: {{challengerMove}}, {{opponent}}: {{opponentMove}}. Побеждает {{winner}}!",
+	"PVP_DRAW": "✊ {{challenger}}: {{challengerMove}}, {{opponent}}: {{opponentMove}}. Ничья"
+}

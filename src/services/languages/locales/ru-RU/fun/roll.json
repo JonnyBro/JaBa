@@ -1,0 +1,9 @@
+{
+	"DESCRIPTION": "Бросить кубики",
+	"USAGE": "(dice)",
+	"EXAMPLES": "roll\nroll dice:d20\nroll dice:4d6-1",
+	"DICE": "Кубики, например d20, 2d6 или 4d6+3 (по умолчанию 1d6)",
+
+	"BAD_DICE": "Напиши кубики как `d20`, `2d6` или `4d6+3`: до {{dice}} кубиков, от 2 до {{sides}} граней",
+	"RESULT": "🎲 **{{notation}}**: {{rolls}}**{{total}}**"
+}
