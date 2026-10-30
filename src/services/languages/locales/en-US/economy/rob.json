@@ -1,0 +1,18 @@
+{
+	"DESCRIPTION": "Try to steal some cash from a member. Money in the bank is safe",
+	"USAGE": "[@user]",
+	"EXAMPLES": "rob user:@jonny_bro",
+
+	"COOLDOWN": "The police are still looking for you, lie low until {{time}}",
+	"TOO_POOR": "You need at least {{credits}} on hand to pay the fine if you get caught",
+	"TARGET_POOR": "{{user}} has almost no cash on hand, it's not worth the risk",
+	"ESCAPED": "{{user}} spent everything right before you got there",
+	"SUCCESS": "You robbed {{user}} and got away with {{credits}}",
+	"CAUGHT": "{{user}} caught you. You paid them {{credits}} so they wouldn't call the police",
+	"CAUGHT_BROKE": "{{user}} caught you, but you had nothing to pay with, so they just kicked you out",
+
+	"ROBBED_BY": "Robbed by {{user}}",
+	"ROBBED_FROM": "Robbery of {{user}}",
+	"FINE": "Fine for a failed robbery",
+	"COMPENSATION": "Compensation from {{user}}"
+}

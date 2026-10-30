@@ -1,0 +1,29 @@
+{
+	"DESCRIPTION": "Flip a coin for credits, against the bot or another member",
+	"USAGE": "[bet] [side] (@user)",
+	"EXAMPLES": "coinflip bet:500 side:heads\ncoinflip bet:1000 side:tails user:@jonny_bro",
+	"BET": "How much to bet",
+	"SIDE": "Heads or tails",
+	"OPPONENT": "Challenge a member instead of playing against the bot",
+	"SIDES": {
+		"heads": "Heads",
+		"tails": "Tails"
+	},
+
+	"NOT_ENOUGH": "You don't have {{credits}} on hand",
+	"TRANSACTION": "Coinflip",
+	"TRANSACTION_VS": "Coinflip against {{user}}",
+	"FLIPPING": "🪙 The coin is in the air...",
+	"WON": "🪙 **{{side}}!** You won {{credits}}",
+	"LOST": "🪙 **{{side}}.** You lost {{credits}}",
+
+	"CHALLENGE": "🪙 {{user}} challenges {{opponent}} to a coinflip for {{credits}}\n{{user}} takes **{{side}}**, {{opponent}} gets **{{other}}**. The winner takes both bets",
+	"ACCEPT": "Accept",
+	"DECLINE": "Decline",
+	"NOT_YOURS": "This challenge isn't for you",
+	"EXPIRED": "🪙 The challenge has expired",
+	"DECLINED": "🪙 {{user}} declined the challenge",
+	"CANCELLED": "🪙 {{user}} cancelled the challenge",
+	"CHALLENGER_BROKE": "🪙 {{user}} no longer has enough credits, the challenge is off",
+	"PVP_RESULT": "🪙 **{{side}}!** {{winner}} beats {{loser}} and takes {{credits}}"
+}

@@ -1,0 +1,10 @@
+{
+	"DESCRIPTION": "Claim your daily reward, it grows if you come every day",
+	"USAGE": "",
+	"EXAMPLES": "daily",
+
+	"COOLDOWN": "You've already claimed today's reward, the next one is available {{time}}",
+	"TRANSACTION": "Daily reward",
+	"SUCCESS": "You got {{credits}}. Streak: **{{streak}}** days in a row, tomorrow you'll get {{next}}",
+	"SUCCESS_MAX": "You got {{credits}}. Streak: **{{streak}}** days in a row, that's the biggest reward"
+}

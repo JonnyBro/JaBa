@@ -1,0 +1,17 @@
+{
+	"DESCRIPTION": "Work a shift and earn some credits",
+	"USAGE": "",
+	"EXAMPLES": "work",
+
+	"COOLDOWN": "You're still tired after the last shift, come back {{time}}",
+	"TRANSACTION": "Work",
+
+	"JOB_1": "You washed dishes in a cafe all evening and got {{credits}}",
+	"JOB_2": "You delivered pizza across the city and earned {{credits}}",
+	"JOB_3": "You fixed a neighbour's computer, they paid you {{credits}}",
+	"JOB_4": "You walked three dogs at once and survived. Pay: {{credits}}",
+	"JOB_5": "You unloaded a truck at the warehouse and got {{credits}}",
+	"JOB_6": "You wrote a landing page for a startup, the invoice was {{credits}}",
+	"JOB_7": "You worked a night shift at the gas station and earned {{credits}}",
+	"JOB_8": "You moderated a Discord server for the whole day. Somebody actually paid you {{credits}}"
+}

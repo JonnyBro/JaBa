@@ -1,0 +1,21 @@
+{
+	"DESCRIPTION": "Spin a 5-reel slot machine with 10 paylines, wilds and free spins",
+	"USAGE": "[bet]",
+	"EXAMPLES": "slots bet:100",
+	"BET": "Total bet per spin, split across 10 lines",
+
+	"TITLE": "Slots",
+	"BET_INFO": "Bet {{bet}} • {{lines}} lines • 🃏 replaces anything but ⭐ • 3+ ⭐ anywhere start free spins",
+	"SPINNING": "Spinning...",
+	"NOT_ENOUGH": "You don't have {{credits}} on hand",
+	"NOT_YOURS": "This machine is taken, start your own with /slots",
+
+	"LINE": "Line {{line}} · {{symbol}} ×{{count}} · +{{win}}",
+	"SCATTER": "⭐ ×{{count}} · +{{win}}",
+	"BONUS": "{{spins}} free spins, wins ×{{multiplier}}",
+	"BONUS_RESULT": "Free spins: {{spins}} (×{{multiplier}}) · +{{win}}",
+	"BEST_SPIN": "Best free spin:",
+	"NO_WIN": "No win",
+	"WIN": "+{{credits}}",
+	"BALANCE": "Cash on hand: {{credits}}"
+}
