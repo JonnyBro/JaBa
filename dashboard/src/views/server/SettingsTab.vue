@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { getErrorMessage } from "@/plugins/axios";
 import { useMutation, useQueryClient } from "@tanstack/vue-query";
-import { LoaderCircle, Save } from "lucide-vue-next";
+import { LoaderCircle, Save } from "@lucide/vue";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";

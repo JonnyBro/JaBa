@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useGuild } from "@/composables/useGuild";
 import { formatNumber } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import { ArrowLeft } from "lucide-vue-next";
+import { ArrowLeft } from "@lucide/vue";
 import { computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 

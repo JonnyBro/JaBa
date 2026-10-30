@@ -9,7 +9,7 @@ import UserAvatar from "@/components/common/UserAvatar.vue";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDateTime, formatRelative } from "@/lib/format";
 import { keepPreviousData, useQuery } from "@tanstack/vue-query";
-import { ExternalLink } from "lucide-vue-next";
+import { ExternalLink } from "@lucide/vue";
 import { computed, ref } from "vue";
 
 const PER_PAGE = 25;

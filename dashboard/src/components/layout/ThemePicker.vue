@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { accents, themes, useTheme, type AccentName, type ThemeName } from "@/lib/theme";
 import { cn } from "@/lib/utils";
-import { Check, Palette } from "lucide-vue-next";
+import { Check, Palette } from "@lucide/vue";
 
 const { theme, accent } = useTheme();
 

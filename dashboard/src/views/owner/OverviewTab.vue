@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { formatCompact, formatDateTime, formatDuration, formatRelative } from "@/lib/format";
 import { getErrorMessage } from "@/plugins/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
-import { Check, CircleAlert, LoaderCircle, Play, Save } from "lucide-vue-next";
+import { Check, CircleAlert, LoaderCircle, Play, Save } from "@lucide/vue";
 import { computed, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
@@ -82,7 +82,7 @@ const tiles = computed(() => [
 				<h3 class="hud-title text-lg">{{ $t("owner.maintenance.title") }}</h3>
 				<p class="text-sm text-muted-foreground">{{ $t("owner.maintenance.hint") }}</p>
 				<Label class="flex items-center gap-2 font-normal">
-					<input v-model="form.maintenance" type="checkbox" class="accent-[var(--hl)]" />
+					<input v-model="form.maintenance" type="checkbox" class="accent-hl" />
 					{{ $t("owner.maintenance.enabled") }}
 				</Label>
 				<Input v-model="form.message" maxlength="128" :placeholder="$t('owner.maintenance.message')" />

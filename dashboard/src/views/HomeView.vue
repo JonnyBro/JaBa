@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/composables/useAuth";
 import { formatCompact, formatDuration } from "@/lib/format";
 import { useQuery } from "@tanstack/vue-query";
-import { Plus, Server } from "lucide-vue-next";
+import { Plus, Server } from "@lucide/vue";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { DiscordIcon } from "vue3-simple-icons";
@@ -41,7 +41,7 @@ const tiles = computed(() => [
 			<svg
 				aria-hidden="true"
 				:viewBox="`0 0 ${asciiWidth * 6} ${asciiLines.length * 10}`"
-				class="pointer-events-none absolute inset-y-0 right-0 h-full translate-x-1/2 fill-foreground font-mono [mask-image:linear-gradient(to_right,transparent,black_25%)] text-[10px] opacity-20 select-none"
+				class="pointer-events-none absolute inset-y-0 right-0 h-full translate-x-1/2 fill-foreground font-mono mask-[linear-gradient(to_right,transparent,black_25%)] text-[10px] opacity-20 select-none"
 			>
 				<text v-for="(line, i) in asciiLines" :key="i" :y="(i + 1) * 10" class="whitespace-pre">
 					{{ line }}

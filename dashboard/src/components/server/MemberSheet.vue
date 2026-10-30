@@ -23,7 +23,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate, formatDateTime, formatNumber } from "@/lib/format";
 import { getErrorMessage } from "@/plugins/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
-import { Ban, Clock, LoaderCircle, RotateCcw, Save, UserX } from "lucide-vue-next";
+import { Ban, Clock, LoaderCircle, RotateCcw, Save, UserX } from "@lucide/vue";
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";

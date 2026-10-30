@@ -10,7 +10,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/composables/useAuth";
-import { ListMusic, LogOut, Server, User } from "lucide-vue-next";
+import { ListMusic, LogOut, Server, User } from "@lucide/vue";
 import { useRoute } from "vue-router";
 import { DiscordIcon } from "vue3-simple-icons";
 

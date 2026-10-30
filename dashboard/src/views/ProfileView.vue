@@ -14,7 +14,7 @@ import { useAuth } from "@/composables/useAuth";
 import { formatDate, formatDateTime, formatNumber, formatRelative } from "@/lib/format";
 import { getErrorMessage } from "@/plugins/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
-import { BellPlus, LoaderCircle, Save, Trash2, Trophy } from "lucide-vue-next";
+import { BellPlus, LoaderCircle, Save, Trash2, Trophy } from "@lucide/vue";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
@@ -192,7 +192,7 @@ const removeRemind = useMutation({
 						class="flex items-center gap-3 px-3 py-2"
 					>
 						<div class="min-w-0 flex-1">
-							<p class="break-words">{{ remind.message }}</p>
+							<p class="wrap-break-word">{{ remind.message }}</p>
 							<p class="text-sm text-muted-foreground">
 								{{ formatDateTime(remind.sendAt * 1000) }} · {{ formatRelative(remind.sendAt * 1000) }}
 							</p>

@@ -7,7 +7,7 @@ import UserAvatar from "@/components/common/UserAvatar.vue";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/vue-query";
-import { Music, Plus, Settings } from "lucide-vue-next";
+import { Music, Plus, Settings } from "@lucide/vue";
 
 const guilds = useQuery({ queryKey: ["guilds"], queryFn: getGuilds });
 </script>

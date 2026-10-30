@@ -17,7 +17,7 @@ import { formatCompact, formatDate } from "@/lib/format";
 import { getErrorMessage } from "@/plugins/axios";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
 import { refDebounced } from "@vueuse/core";
-import { Bot, Clock, RotateCcw, Search } from "lucide-vue-next";
+import { Bot, Clock, RotateCcw, Search } from "@lucide/vue";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";

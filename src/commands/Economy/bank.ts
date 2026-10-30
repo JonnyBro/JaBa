@@ -19,6 +19,13 @@ import {
 
 const client = useClient();
 
+const parseCredits = (option: string | null, all: number) => {
+	if (option?.toLowerCase() === "all") return all;
+
+	const credits = Number(option);
+	return Number.isSafeInteger(credits) ? credits : NaN;
+};
+
 export const data: CommandData = {
 	name: "bank",
 	...getLocalizedDesc("economy/bank:DESCRIPTION"),
@@ -141,10 +148,9 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		}
 
 		case "deposit": {
-			const creditsOption = interaction.options.getString("credits")?.toLowerCase();
-			const credits = creditsOption === "all" ? memberData.money : Number(creditsOption);
+			const credits = parseCredits(interaction.options.getString("credits"), memberData.money);
 
-			if (credits <= 0) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
+			if (!(credits > 0)) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 			if (memberData.money < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDITS");
 
 			memberData.set({
@@ -169,10 +175,9 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		}
 
 		case "withdraw": {
-			const creditsOption = interaction.options.getString("credits")?.toLowerCase();
-			const credits = creditsOption === "all" ? memberData.money : Number(creditsOption);
+			const credits = parseCredits(interaction.options.getString("credits"), memberData.bank);
 
-			if (credits <= 0) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
+			if (!(credits > 0)) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 			if (memberData.bank < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
 
 			memberData.set({
@@ -197,13 +202,12 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		}
 
 		case "transfer": {
-			const creditsOption = interaction.options.getString("credits")?.toLowerCase();
-			const credits = creditsOption === "all" ? memberData.bank : Number(creditsOption);
+			const credits = parseCredits(interaction.options.getString("credits"), memberData.bank);
 
 			const targetUser = interaction.options.getUser("user") || interaction.user;
 			if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
 
-			if (credits <= 0) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
+			if (!(credits > 0)) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
 			if (memberData.bank < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
 			if (interaction.user.id === targetUser.id) return editReplyError(interaction, "misc:CANT_YOURSELF");
 

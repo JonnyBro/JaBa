@@ -4,7 +4,7 @@ import type { LogLine } from "@/api/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Pause, Play, Trash2 } from "lucide-vue-next";
+import { Pause, Play, Trash2 } from "@lucide/vue";
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
 
 const MAX_LINES = 1000;
@@ -109,7 +109,7 @@ const time = (ms: number) => new Date(ms).toLocaleTimeString();
 
 		<div ref="container" class="hud-panel h-[60vh] overflow-y-auto p-3 font-mono text-xs leading-relaxed">
 			<p v-if="!visible.length" class="text-muted-foreground">{{ $t("owner.logs.empty") }}</p>
-			<p v-for="(line, i) in visible" :key="i" class="break-words whitespace-pre-wrap">
+			<p v-for="(line, i) in visible" :key="i" class="wrap-break-word whitespace-pre-wrap">
 				<span class="text-muted-foreground">{{ time(line.time) }}</span>
 				{{ " " }}
 				<span :class="cn('font-bold', levelColor[line.level])">{{ line.level }}</span>

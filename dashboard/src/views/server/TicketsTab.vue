@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getErrorMessage } from "@/plugins/axios";
 import { useMutation } from "@tanstack/vue-query";
-import { LoaderCircle, Send } from "lucide-vue-next";
+import { LoaderCircle, Send } from "@lucide/vue";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";

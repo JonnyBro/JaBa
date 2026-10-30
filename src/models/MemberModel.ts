@@ -43,21 +43,13 @@ const cooldownSchema = new Schema(
 const memberSchema = new Schema<IMemberSchema>({
 	id: { type: String, required: true },
 	guildID: { type: String, required: true, ref: "Guild" },
-	money: { type: Number, default: 0 },
-	bank: { type: Number, default: 0 },
-	exp: { type: Number, default: 0 },
-	level: { type: Number, default: 0 },
+	money: { type: Number, default: 0, min: 0 },
+	bank: { type: Number, default: 0, min: 0 },
+	exp: { type: Number, default: 0, min: 0 },
+	level: { type: Number, default: 0, min: 0 },
 	transactions: { type: [transactionSchema], default: [] },
 	registeredAt: { type: Number, default: () => Date.now() },
 	cooldowns: { type: cooldownSchema, default: () => ({ work: 0, rob: 0 }) },
-});
-
-memberSchema.pre("validate", function (next) {
-	(["money", "bank", "exp", "level"] as const).forEach(field => {
-		if (typeof this[field] !== "number" || isNaN(this[field]) || this[field] < 0) this[field] = 0;
-	});
-
-	next();
 });
 
 export default model<IMemberSchema>("Member", memberSchema);

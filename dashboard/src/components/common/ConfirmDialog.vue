@@ -9,7 +9,7 @@ import {
 	AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { LoaderCircle } from "lucide-vue-next";
+import { LoaderCircle } from "@lucide/vue";
 
 withDefaults(
 	defineProps<{

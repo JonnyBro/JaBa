@@ -1,6 +1,6 @@
 import { musicSocketUrl } from "@/api";
 import type { MusicState } from "@/api/types";
-import { useNow } from "@vueuse/core";
+import { useIntervalFn, useNow } from "@vueuse/core";
 import { computed, onBeforeUnmount, onMounted, ref, type Ref } from "vue";
 
 const MAX_RETRY_DELAY = 15_000;
@@ -48,7 +48,7 @@ export const useMusic = (guildId: Ref<string>) => {
 		socket?.close();
 	});
 
-	const now = useNow({ interval: 500 });
+	const now = useNow({ scheduler: tick => useIntervalFn(tick, 500) });
 
 	/** Lavalink only reports the position every few seconds, in between it is counted here */
 	const position = computed(() => {

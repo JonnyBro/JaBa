@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { DropdownMenuRadioItemEmits, DropdownMenuRadioItemProps } from "reka-ui";
 import type { HTMLAttributes } from "vue";
-import { Circle } from "lucide-vue-next";
+import { Circle } from "@lucide/vue";
 import { reactiveOmit } from "@vueuse/core";
 import { cn } from "@/lib/utils";
 import { DropdownMenuItemIndicator, DropdownMenuRadioItem, useForwardPropsEmits } from "reka-ui";
@@ -21,7 +21,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 		v-bind="forwarded"
 		:class="
 			cn(
-				`focus:bg-foreground/5 focus:text-hl relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4`,
+				`focus:bg-foreground/5 focus:text-hl relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4`,
 				props.class,
 			)
 		"

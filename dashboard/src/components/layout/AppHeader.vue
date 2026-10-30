@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useAuth } from "@/composables/useAuth";
 import { cn } from "@/lib/utils";
-import { Menu } from "lucide-vue-next";
+import { Menu } from "@lucide/vue";
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { GitHubIcon } from "vue3-simple-icons";

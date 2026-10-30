@@ -19,7 +19,7 @@ import {
 	Send,
 	Trash2,
 	Type,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
@@ -101,7 +101,7 @@ const send = useMutation({
 					<ChannelSelect id="message-channel" v-model="channelId" :channels="guild.channels" />
 				</div>
 				<Label class="flex items-center gap-2 font-normal">
-					<input v-model="useColor" type="checkbox" class="accent-[var(--hl)]" />
+					<input v-model="useColor" type="checkbox" class="accent-hl" />
 					{{ $t("messages.color") }}
 					<input
 						v-if="useColor"
@@ -111,7 +111,7 @@ const send = useMutation({
 					/>
 				</Label>
 				<Label class="flex items-center gap-2 font-normal">
-					<input v-model="mentions" type="checkbox" class="accent-[var(--hl)]" />
+					<input v-model="mentions" type="checkbox" class="accent-hl" />
 					{{ $t("messages.mentions") }}
 				</Label>
 			</div>
@@ -149,18 +149,18 @@ const send = useMutation({
 
 				<div v-else-if="block.type === 'separator'" class="flex flex-wrap gap-4">
 					<Label class="flex items-center gap-2 font-normal">
-						<input v-model="block.divider" type="checkbox" class="accent-[var(--hl)]" />
+						<input v-model="block.divider" type="checkbox" class="accent-hl" />
 						{{ $t("messages.divider") }}
 					</Label>
 					<Label class="flex items-center gap-2 font-normal">
-						<input v-model="block.large" type="checkbox" class="accent-[var(--hl)]" />
+						<input v-model="block.large" type="checkbox" class="accent-hl" />
 						{{ $t("messages.large") }}
 					</Label>
 				</div>
 
 				<div v-else-if="block.type === 'gallery'" class="space-y-2">
 					<div v-for="(_url, j) in block.urls" :key="j" class="flex gap-2">
-						<Input v-model="block.urls[j]" type="url" placeholder="https://…/image.png" />
+						<Input v-model="block.urls[j]" type="url" :placeholder="'https:\/\/...\/image.png'" />
 						<Button type="button" variant="ghost" size="icon" @click="block.urls.splice(j, 1)">
 							<Trash2 />
 						</Button>
@@ -180,7 +180,7 @@ const send = useMutation({
 				<div v-else-if="block.type === 'buttons'" class="space-y-2">
 					<div v-for="(button, j) in block.buttons" :key="j" class="grid grid-cols-[1fr_1.5fr_auto] gap-2">
 						<Input v-model="button.label" maxlength="80" :placeholder="$t('messages.buttonLabel')" />
-						<Input v-model="button.url" type="url" placeholder="https://…" />
+						<Input v-model="button.url" type="url" :placeholder="'https:\/\/...'" />
 						<Button type="button" variant="ghost" size="icon" @click="block.buttons.splice(j, 1)">
 							<Trash2 />
 						</Button>

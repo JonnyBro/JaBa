@@ -10,7 +10,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { isAutoLocale, locales, setLocale } from "@/i18n";
-import { Languages } from "lucide-vue-next";
+import { Languages } from "@lucide/vue";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 

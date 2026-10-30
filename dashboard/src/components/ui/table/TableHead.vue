@@ -12,7 +12,7 @@ const props = defineProps<{
 		data-slot="table-head"
 		:class="
 			cn(
-				'font-hud text-muted-foreground h-9 px-3 text-left align-middle text-sm whitespace-nowrap [&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5',
+				'font-hud text-muted-foreground h-9 px-3 text-left align-middle text-sm whitespace-nowrap has-[[role=checkbox]]:pr-0 *:[[role=checkbox]]:translate-y-0.5',
 				props.class,
 			)
 		"

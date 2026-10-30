@@ -52,7 +52,7 @@ import {
 	Trash2,
 	Volume2,
 	WifiOff,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
