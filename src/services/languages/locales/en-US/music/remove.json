@@ -1,0 +1,9 @@
+{
+	"DESCRIPTION": "Removes a track from the queue",
+	"USAGE": "[position]",
+	"EXAMPLES": "remove position:3",
+	"POSITION": "Position of the track in the queue",
+
+	"NO_TRACK": "There's no track at this position, the queue has {{count}}",
+	"SUCCESS": "Removed {{track}} from the queue"
+}

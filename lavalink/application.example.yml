@@ -14,6 +14,8 @@ lavalink:
       snapshot: true
     - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
       snapshot: false
+    - dependency: "com.github.topi314.lavalyrics:lavalyrics-plugin:1.1.0"
+      snapshot: false
   server:
     password: "overridden-by-LAVALINK_SERVER_PASSWORD-env"
     sources:
@@ -83,7 +85,9 @@ plugins:
       ytdlp: false
       jiosaavn: false
     lyrics-sources:
+      lrcLib: true
       yandexmusic: true
+      youtube: true
     # https://developer.spotify.com/dashboard
     spotify:
       clientId: ""
@@ -102,6 +106,12 @@ plugins:
       # Yandex Music blocks some regions, uncomment if the server is outside of Russia/CIS
       # proxy:
       #   url: "https://example.org"
+
+  lavalyrics:
+    sources:
+      - lrclib
+      - yandexmusic
+      - youtube
 
 logging:
   file:

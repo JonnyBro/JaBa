@@ -1,0 +1,9 @@
+{
+	"DESCRIPTION": "Moves a track to another position in the queue",
+	"USAGE": "[from] [to]",
+	"EXAMPLES": "move from:5 to:1",
+	"FROM": "Current position of the track",
+	"TO": "New position of the track",
+
+	"SUCCESS": "{{track}} is now #{{position}} in the queue"
+}

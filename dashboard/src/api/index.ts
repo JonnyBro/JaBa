@@ -22,6 +22,7 @@ import type {
 	MemberSort,
 	MessageBlock,
 	ModerationAction,
+	MusicLyrics,
 	MusicState,
 	OwnerGuild,
 	Paginated,
@@ -89,6 +90,7 @@ export const getAudit = (id: string, params: { page?: number; limit?: number }) 
 export const musicSocketUrl = (id: string) =>
 	`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}${guildUrl(id, "/music/ws")}`;
 export const getMusic = (id: string) => get<MusicState>(guildUrl(id, "/music"));
+export const getMusicLyrics = (id: string) => get<MusicLyrics>(guildUrl(id, "/music/lyrics"));
 export const musicAction = (id: string, action: PlayerAction) =>
 	post<{ ok: true }>(guildUrl(id, "/music/action"), { action });
 export const musicVolume = (id: string, value: number) => post<{ ok: true }>(guildUrl(id, "/music/volume"), { value });

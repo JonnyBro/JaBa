@@ -160,6 +160,14 @@ export type MusicState =
 			queueDuration: number;
 	  });
 
+export type MusicLyrics = {
+	source: string;
+	/** With timed lines `lines` is filled, otherwise only `text` */
+	synced: boolean;
+	lines: { time: number; text: string }[];
+	text: string | null;
+} | null;
+
 export type PlayerAction = "pause" | "back" | "skip" | "stop" | "loop" | "shuffle" | "autoplay";
 
 export type SearchSource = "ytm" | "yt" | "ym" | "sp" | "sc";

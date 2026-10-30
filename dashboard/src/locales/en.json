@@ -246,7 +246,11 @@
 		"saveQueue": "Save to playlist",
 		"saveQueueText": "The current track and the whole queue are added to the end of the playlist.",
 		"newPlaylist": "New playlist",
-		"savedToPlaylist": "Saved {n} track to {title} | Saved {n} tracks to {title}"
+		"savedToPlaylist": "Saved {n} track to {title} | Saved {n} tracks to {title}",
+		"lyrics": {
+			"title": "Lyrics",
+			"notFound": "No lyrics found for this track"
+		}
 	},
 	"playlists": {
 		"title": "Playlists",

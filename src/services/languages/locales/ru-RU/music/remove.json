@@ -1,0 +1,9 @@
+{
+	"DESCRIPTION": "Убирает трек из очереди",
+	"USAGE": "[position]",
+	"EXAMPLES": "remove position:3",
+	"POSITION": "Номер трека в очереди",
+
+	"NO_TRACK": "На этом месте нет трека, в очереди {{count}}",
+	"SUCCESS": "{{track}} убран из очереди"
+}

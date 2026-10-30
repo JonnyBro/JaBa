@@ -15,13 +15,33 @@ import { appendTracks, createPlaylist, findPlaylist, playPlaylist } from "@/help
 import { MAX_PLAYLIST_TRACKS } from "@/models/PlaylistModel.js";
 import useClient from "@/utils/use-client.js";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { Player } from "lavalink-client";
+import { LyricsResult, Player } from "lavalink-client";
 import { subscribe } from "../../music-hub.js";
 import { getMusicState } from "../../music-state.js";
 import { fail, send } from "../../utils.js";
 
 const PLAYER_ACTIONS: PlayerAction[] = ["pause", "back", "skip", "stop", "loop", "shuffle", "autoplay"];
 const MAX_QUERY = 500;
+const LYRICS_CACHE_SIZE = 200;
+const LYRICS_CACHE_TTL = 30 * 60 * 1000;
+
+type Lyrics = { source: string; synced: boolean; lines: { time: number; text: string }[]; text: string | null };
+
+// Every open dashboard asks on each track change, the cache keeps that to one Lavalink request per track
+const lyricsCache = new Map<string, { lyrics: Lyrics | null; expiresAt: number }>();
+
+const toLyrics = (result: LyricsResult | null): Lyrics | null => {
+	if (!result) return null;
+
+	const lines = result.lines.map(line => ({ time: line.timestamp, text: line.line }));
+	// Plain lyrics from some sources still come as lines, all at 0
+	const synced = lines.some(line => line.time > 0);
+	const text = result.text?.trim() || (synced ? null : lines.map(line => line.text).join("\n")) || null;
+
+	if (!synced && !text) return null;
+
+	return { source: result.provider || result.sourceName, synced, lines: synced ? lines : [], text };
+};
 
 const failWith = async (req: FastifyRequest, reply: FastifyReply, code: number, key: string) =>
 	fail(reply, code, await translateContext(req.guild, key));
@@ -64,6 +84,29 @@ const done = async (reply: FastifyReply, player: Player, refreshMessage = true) 
 
 export default async function musicRoutes(fastify: FastifyInstance) {
 	fastify.get("/music", async (req, reply) => send(reply, getMusicState(req.guild, req.session.user!.id)));
+
+	fastify.get("/music/lyrics", async (req, reply) => {
+		const player = useClient().lavalink.getPlayer(req.guild.id);
+		const track = player?.queue.current;
+		if (!player || !track?.encoded) return failWith(req, reply, 404, "music/play:NOT_PLAYING");
+
+		const key = `${req.guild.id}:${track.encoded}`;
+		const cached = lyricsCache.get(key);
+		if (cached && cached.expiresAt > Date.now()) return send(reply, cached.lyrics);
+
+		let lyrics: Lyrics | null;
+		try {
+			lyrics = toLyrics(await player.getCurrentLyrics());
+		} catch {
+			// lavalink-client throws when the node has no LavaLyrics plugin
+			return failWith(req, reply, 503, "music/lyrics:UNAVAILABLE");
+		}
+
+		if (lyricsCache.size >= LYRICS_CACHE_SIZE) lyricsCache.delete(lyricsCache.keys().next().value!);
+		lyricsCache.set(key, { lyrics, expiresAt: Date.now() + LYRICS_CACHE_TTL });
+
+		return send(reply, lyrics);
+	});
 
 	fastify.get("/music/ws", { websocket: true }, (socket, req) =>
 		subscribe(req.guild.id, { socket, userId: req.session.user!.id }),

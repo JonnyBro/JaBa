@@ -15,6 +15,7 @@ import type { GuildInfo, PlayerAction } from "@/api/types";
 import EmptyState from "@/components/common/EmptyState.vue";
 import Hint from "@/components/common/Hint.vue";
 import UserAvatar from "@/components/common/UserAvatar.vue";
+import LyricsPanel from "@/components/server/LyricsPanel.vue";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -33,12 +34,14 @@ import { formatDuration, formatTrackTime } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { getErrorMessage } from "@/plugins/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
+import { useStorage } from "@vueuse/core";
 import {
 	ArrowDown,
 	ArrowUp,
 	Infinity as InfinityIcon,
 	ListMusic,
 	ListPlus,
+	MicVocal,
 	LoaderCircle,
 	Pause,
 	Play,
@@ -171,6 +174,13 @@ const saveQueue = useMutation({
 	},
 	onError: error => toast.error(getErrorMessage(error)),
 });
+
+const showLyrics = useStorage("jaba-lyrics", false);
+const trackKey = computed(() => {
+	const track = active.value?.current;
+	return track ? [track.title, track.author, track.duration, track.uri].join("|") : "";
+});
+const seekTo = (ms: number) => run.mutate(() => musicSeek(guildId.value, ms));
 
 const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ?? "off"}`));
 </script>
@@ -325,6 +335,18 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 							</Button>
 						</Hint>
 
+						<Hint :text="$t('music.lyrics.title')">
+							<Button
+								variant="ghost"
+								size="icon"
+								:class="showLyrics && 'text-hl'"
+								:aria-pressed="showLyrics"
+								@click="showLyrics = !showLyrics"
+							>
+								<MicVocal />
+							</Button>
+						</Hint>
+
 						<label class="ml-auto flex items-center gap-2 font-hud text-sm">
 							<Volume2 class="size-4 text-muted-foreground" />
 							<input
@@ -347,6 +369,15 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 				v-else
 				:title="$t('music.nothing')"
 				:description="canStart ? $t('music.nothingText') : $t('music.joinToStart')"
+			/>
+
+			<LyricsPanel
+				v-if="active && showLyrics"
+				:guild-id="guildId"
+				:track-key="trackKey"
+				:position="position"
+				:can-seek="canControl && !active.current.isStream"
+				@seek="seekTo"
 			/>
 
 			<form class="hud-panel flex flex-col gap-2 p-3 sm:flex-row sm:items-center" @submit.prevent="add.mutate()">

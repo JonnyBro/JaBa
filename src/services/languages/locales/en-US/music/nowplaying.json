@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Moves the player message to this channel",
+	"USAGE": "",
+	"EXAMPLES": "nowplaying",
+
+	"SUCCESS": "The player is now in this channel"
+}

@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Clears the queue, the current track keeps playing",
+	"USAGE": "",
+	"EXAMPLES": "clear",
+
+	"SUCCESS": "Removed {{count}} tracks from the queue"
+}
