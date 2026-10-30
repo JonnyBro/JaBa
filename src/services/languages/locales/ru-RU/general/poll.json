@@ -1,0 +1,42 @@
+{
+	"DESCRIPTION": "Создать опрос с кнопками",
+	"USAGE": "(duration) (anonymous) (multiple) (hidden)",
+	"EXAMPLES": "poll\npoll duration:2h anonymous:True\npoll duration:3d multiple:True hidden:True",
+	"DURATION": "Сколько идёт опрос, например 30m, 2h или 3d (по умолчанию сутки)",
+	"ANONYMOUS_OPTION": "Скрыть, кто за что голосовал",
+	"MULTIPLE_OPTION": "Разрешить выбрать несколько ответов",
+	"HIDDEN_OPTION": "Показать результаты только после завершения",
+
+	"MODAL_TITLE": "Новый опрос",
+	"QUESTION": "Вопрос",
+	"OPTIONS": "Варианты ответа, по одному на строку",
+	"OPTIONS_PLACEHOLDER": "Пицца\nСуши\nБургеры",
+	"BAD_DURATION": "Длительность должна быть от 1 минуты до 30 дней, например 30m, 2h или 3d",
+	"BAD_OPTIONS": "В опросе должно быть от 2 до {{max}} разных вариантов, каждый до {{length}} символов",
+
+	"AUTHOR": "Автор {{user}}",
+	"ENDS": "Завершится {{time}}",
+	"ENDED": "Завершён",
+	"ANONYMOUS": "Анонимный",
+	"MULTIPLE": "Несколько ответов",
+	"HIDDEN": "Результаты после завершения",
+	"TOTAL": "{{count}} {{votes}}",
+	"VOTES": {
+		"1": "голос",
+		"2": "голоса",
+		"5": "голосов"
+	},
+	"VOTERS_BUTTON": "Кто голосовал",
+	"END_BUTTON": "Завершить",
+
+	"YOUR_VOTE": "Твой голос: {{options}}",
+	"VOTE_REMOVED": "Твой голос отменён",
+	"NOT_FOUND": "Этого опроса больше нет",
+	"ALREADY_ENDED": "Этот опрос уже завершён",
+	"CANT_END": "Завершить опрос может только автор или тот, кто может управлять сообщениями",
+	"VOTERS_HIDDEN": "В этом опросе голоса скрыты",
+
+	"RESULT": "📊 {{user}}, твой опрос **{{question}}** завершён. Победил вариант {{winner}}: {{count}} {{votes}} ({{percent}}%)",
+	"RESULT_TIE": "📊 {{user}}, твой опрос **{{question}}** завершён ничьей между {{winner}}, по {{count}} {{votes}} ({{percent}}%)",
+	"RESULT_EMPTY": "📊 {{user}}, твой опрос **{{question}}** завершён, но никто не проголосовал"
+}

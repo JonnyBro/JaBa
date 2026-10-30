@@ -1,0 +1,42 @@
+{
+	"DESCRIPTION": "Create a poll with buttons",
+	"USAGE": "(duration) (anonymous) (multiple) (hidden)",
+	"EXAMPLES": "poll\npoll duration:2h anonymous:True\npoll duration:3d multiple:True hidden:True",
+	"DURATION": "How long the poll runs, like 30m, 2h or 3d (1 day by default)",
+	"ANONYMOUS_OPTION": "Hide who voted for what",
+	"MULTIPLE_OPTION": "Allow picking more than one answer",
+	"HIDDEN_OPTION": "Show the results only after the poll ends",
+
+	"MODAL_TITLE": "New poll",
+	"QUESTION": "Question",
+	"OPTIONS": "Answers, one per line",
+	"OPTIONS_PLACEHOLDER": "Pizza\nSushi\nBurgers",
+	"BAD_DURATION": "The duration must be from 1 minute to 30 days, like 30m, 2h or 3d",
+	"BAD_OPTIONS": "A poll needs 2 to {{max}} different answers, each up to {{length}} characters",
+
+	"AUTHOR": "By {{user}}",
+	"ENDS": "Ends {{time}}",
+	"ENDED": "Ended",
+	"ANONYMOUS": "Anonymous",
+	"MULTIPLE": "Several answers",
+	"HIDDEN": "Results after the end",
+	"TOTAL": "{{count}} {{votes}}",
+	"VOTES": {
+		"1": "vote",
+		"2": "votes",
+		"5": "votes"
+	},
+	"VOTERS_BUTTON": "Voters",
+	"END_BUTTON": "End poll",
+
+	"YOUR_VOTE": "Your vote: {{options}}",
+	"VOTE_REMOVED": "Your vote was removed",
+	"NOT_FOUND": "This poll no longer exists",
+	"ALREADY_ENDED": "This poll has already ended",
+	"CANT_END": "Only the author or someone who can manage messages can end this poll",
+	"VOTERS_HIDDEN": "Voters are hidden in this poll",
+
+	"RESULT": "📊 {{user}}, your poll **{{question}}** has ended. The winner is {{winner}} with {{count}} {{votes}} ({{percent}}%)",
+	"RESULT_TIE": "📊 {{user}}, your poll **{{question}}** has ended in a tie between {{winner}}, {{count}} {{votes}} each ({{percent}}%)",
+	"RESULT_EMPTY": "📊 {{user}}, your poll **{{question}}** has ended, but nobody voted"
+}
