@@ -26,9 +26,11 @@ export interface IMemberSchema {
 	level: number;
 	transactions: Transaction[];
 	registeredAt: number;
+	dailyStreak: number;
 	cooldowns: {
 		work: number;
 		rob: number;
+		daily: number;
 	};
 }
 
@@ -36,6 +38,7 @@ const cooldownSchema = new Schema(
 	{
 		work: { type: Number, default: 0 },
 		rob: { type: Number, default: 0 },
+		daily: { type: Number, default: 0 },
 	},
 	{ _id: false },
 );
@@ -49,7 +52,8 @@ const memberSchema = new Schema<IMemberSchema>({
 	level: { type: Number, default: 0, min: 0 },
 	transactions: { type: [transactionSchema], default: [] },
 	registeredAt: { type: Number, default: () => Date.now() },
-	cooldowns: { type: cooldownSchema, default: () => ({ work: 0, rob: 0 }) },
+	dailyStreak: { type: Number, default: 0, min: 0 },
+	cooldowns: { type: cooldownSchema, default: () => ({ work: 0, rob: 0, daily: 0 }) },
 });
 
 export default model<IMemberSchema>("Member", memberSchema);
