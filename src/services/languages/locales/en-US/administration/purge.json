@@ -1,0 +1,12 @@
+{
+	"DESCRIPTION": "Delete recent messages in this channel",
+	"USAGE": "[amount] (@user) (bots)",
+	"EXAMPLES": "purge amount:20\npurge amount:50 user:@jonny_bro\npurge amount:10 bots:True",
+	"AMOUNT": "How many messages to delete",
+	"USER": "Delete only this member's messages",
+	"BOTS": "Delete only messages from bots",
+
+	"NOTHING": "There are no matching messages from the last 14 days. Older and pinned messages can't be purged",
+	"SUCCESS": "Messages deleted: {{count}}",
+	"PARTIAL": "Deleted {{count}} of {{amount}} messages: there were no more matching ones from the last 14 days. Older and pinned messages are skipped"
+}
