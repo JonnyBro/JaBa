@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
-// Tooltip around a single element. Without text it renders the element as is
 defineProps<{ text?: string | null; side?: "top" | "bottom" | "left" | "right" }>();
 </script>
 

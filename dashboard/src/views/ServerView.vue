@@ -29,7 +29,6 @@ const canManage = computed(() => Boolean(guild.data.value?.canManage));
 const tabs = computed(() => (canManage.value ? [...MANAGE_TABS, ...MEMBER_TABS] : MEMBER_TABS));
 const isMemberTab = computed(() => MEMBER_TABS.some(tab => tab.name === route.name));
 
-// Members without Manage Server only get the music and the leaderboard, other tabs lead to the music
 watch(
 	() => guild.data.value,
 	data => {

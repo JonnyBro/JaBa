@@ -9,6 +9,7 @@ export type PlaylistTrack = {
 	encoded: string;
 	info: TrackInfo;
 	pluginInfo: Partial<PluginInfo>;
+	fileId?: string;
 };
 
 export interface IPlaylistSchema {

@@ -96,7 +96,6 @@ const enqueue = async (player: Player, tracks: (Track | UnresolvedTrack)[], next
 	if (!player.playing && !player.paused) await player.play();
 };
 
-/** Queues tracks that are already resolved, like the ones from a saved playlist */
 export const addTracks = async ({ tracks, next, ...target }: PlayerTarget & { tracks: Track[]; next?: boolean }) => {
 	if (!useClient().lavalink.useable) return "music/play:NODE_UNAVAILABLE";
 
@@ -143,7 +142,6 @@ export const addToQueue = async ({ requester, query, source, next, ...target }: 
 	return { res, error: "misc:UNKNOWN_ERROR" };
 };
 
-/** Searches without a player, for things like saving tracks to a playlist */
 export const searchTracks = async (query: string, requester: User, source?: SearchSource) => {
 	const node = useClient().lavalink.nodeManager.leastUsedNodes("playingPlayers")[0];
 	if (!node) return { res: null, error: "music/play:NODE_UNAVAILABLE" };
@@ -168,6 +166,7 @@ const SOURCE_NAMES: Record<string, string> = {
 	vimeo: "Vimeo",
 	http: "HTTP",
 	local: "Local",
+	upload: "File",
 };
 
 export const formatSource = (source: string) => SOURCE_NAMES[source.toLowerCase()] ?? capitalizeString(source);
@@ -182,7 +181,7 @@ export const formatTrack = (track: Track, maxTitle = 50) => {
 
 export const formatDuration = (track: Track) => (track.info.isStream ? "🔴 LIVE" : convertTime(track.info.duration));
 
-// Player controls, shared by the now playing buttons and the dashboard
+// Player controls
 export type PlayerAction = "pause" | "back" | "skip" | "stop" | "voldown" | "volup" | "loop" | "shuffle" | "autoplay";
 
 /** These start another track or destroy the player, which sends or deletes the now playing message on its own */
@@ -194,7 +193,6 @@ export const nextRepeatMode: Record<RepeatMode, RepeatMode> = {
 	queue: "off",
 };
 
-/** Returns a locale key to show when the action can't be done */
 export const runPlayerAction = async (player: Player, action: PlayerAction): Promise<string | null> => {
 	switch (action) {
 		case "pause":

@@ -11,11 +11,7 @@ import musicRoutes from "./music.js";
 import settingsRoutes from "./settings.js";
 import ticketsRoutes from "./tickets.js";
 
-/**
- * Every member of the guild gets the info, the music and the leaderboard, the rest needs Manage Server.
- * Access is checked against the bot's own view of the guild, the OAuth guild list can be minutes old
- * and doesn't exist for dev accounts
- */
+// Access is checked against the bot's own view of the guild, the OAuth guild list can be minutes old
 export default async function guildRoutes(fastify: FastifyInstance) {
 	fastify.decorateRequest("guild", null as never);
 	fastify.decorateRequest("canManage", false);

@@ -14,7 +14,6 @@ import { logAction } from "../../audit.js";
 import { getSendableChannel } from "../../channels.js";
 import { fail, send } from "../../utils.js";
 
-// Discord limits for a Components V2 message
 const MAX_COMPONENTS = 40;
 const MAX_TEXT = 4000;
 const MAX_GALLERY_ITEMS = 10;
@@ -37,7 +36,6 @@ const isUrl = (value: unknown): value is string => {
 	}
 };
 
-/** Validates the blocks from the request, returns an error message for the first broken one */
 const parseBlocks = (input: unknown): Block[] | string => {
 	if (!Array.isArray(input) || !input.length) return "Add at least one block";
 

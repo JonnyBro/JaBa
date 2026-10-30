@@ -9,7 +9,6 @@ const BUFFER_SIZE = 500;
 
 const buffer: LogLine[] = [];
 
-/** Recent lines for the dashboard, without the terminal colors */
 export const logEvents = new EventEmitter<{ line: [LogLine] }>();
 
 export const getRecentLogs = () => [...buffer];

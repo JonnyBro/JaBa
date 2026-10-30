@@ -181,7 +181,6 @@ export default async function ownerRoutes(fastify: FastifyInstance) {
 
 		await addToBlacklist(type, id, reason);
 
-		// The bot doesn't stay on a blacklisted server
 		if (type === "guild") await useClient().guilds.cache.get(id)?.leave();
 
 		return send(reply, { ok: true });
@@ -210,7 +209,6 @@ export default async function ownerRoutes(fastify: FastifyInstance) {
 			byDay.set(doc.day, (byDay.get(doc.day) ?? 0) + doc.count);
 		}
 
-		// Every day of the range, including the ones without any command
 		const daily = Array.from({ length: days }, (_, i) => {
 			const day = dayKey(new Date(since.getTime() + i * 24 * 60 * 60 * 1000));
 			return { day, count: byDay.get(day) ?? 0 };

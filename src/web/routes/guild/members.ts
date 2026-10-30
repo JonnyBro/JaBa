@@ -46,7 +46,6 @@ const getActor = (req: FastifyRequest) => req.guild.members.fetch(req.session.us
 const outranks = (actor: GuildMember, target: GuildMember) =>
 	actor.id === actor.guild.ownerId || actor.roles.highest.comparePositionTo(target.roles.highest) > 0;
 
-/** What the signed in user can do to the member, the bot itself must be able to do it too */
 const getModeration = (actor: GuildMember | null, target: GuildMember) => {
 	const allowed = (permission: bigint, botCan: boolean) =>
 		!!actor &&
@@ -100,7 +99,6 @@ export default async function membersRoutes(fastify: FastifyInstance) {
 			if (sort === "name") return a.displayName.localeCompare(b.displayName);
 			if (sort === "joined") return (a.joinedAt ?? 0) - (b.joinedAt ?? 0);
 
-			// Bots have no economy and go to the end
 			return (b.economy?.[sort] ?? -1) - (a.economy?.[sort] ?? -1);
 		});
 

@@ -1,6 +1,5 @@
 import { EventEmitter } from "node:events";
 
-/** Fired whenever the player of a guild changes in a way the dashboard should show */
 export const musicEvents = new EventEmitter<{ change: [guildId: string] }>();
 
 export const notifyMusicChange = (guildId: string) => musicEvents.emit("change", guildId);

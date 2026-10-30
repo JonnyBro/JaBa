@@ -1,3 +1,4 @@
+import { markFilePlayed } from "@/helpers/audio-files.js";
 import { translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import {
@@ -24,6 +25,9 @@ export async function run(player: Player, track: Track | null) {
 	if (!track) return;
 
 	logger.debug(`[Lavalink] Track started in ${player.guildId}: "${track.info.title}" (${track.info.uri})`);
+
+	const fileId = (track.userData as { fileId?: unknown } | undefined)?.fileId;
+	if (typeof fileId === "string") await markFilePlayed(fileId);
 
 	const message = await sendNowPlaying(player, track);
 	await savePlayerState(player, message?.id);

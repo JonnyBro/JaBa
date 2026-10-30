@@ -12,7 +12,6 @@ const dashboardSessionSchema = new Schema<IDashboardSessionSchema>({
 	expiresAt: { type: Date, required: true },
 });
 
-// Mongo removes expired sessions on its own
 dashboardSessionSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 export default model<IDashboardSessionSchema>("DashboardSession", dashboardSessionSchema);

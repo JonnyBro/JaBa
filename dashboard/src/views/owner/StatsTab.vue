@@ -77,7 +77,6 @@ const dayLabel = (day: string) => formatDate(new Date(`${day}T12:00:00Z`).getTim
 							:key="point.day"
 							:text="`${dayLabel(point.day)}: ${formatNumber(point.count)}`"
 						>
-							<!-- The whole column is the hover target, not just the bar -->
 							<div class="group flex h-full min-w-0 flex-1 cursor-default items-end" tabindex="0">
 								<div
 									class="w-full bg-hl transition-opacity group-hover:opacity-80"

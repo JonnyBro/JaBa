@@ -1,8 +1,6 @@
 <!-- markdownlint-disable MD024 -->
 # Changelog
 
-> *I'll try to keep this up to date.*
-
 ----
 
 All notable changes to this project will be documented in this file.

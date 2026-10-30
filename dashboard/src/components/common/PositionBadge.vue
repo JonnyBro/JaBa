@@ -11,11 +11,14 @@ const placeColor: Record<number, string> = {
 </script>
 
 <template>
-	<span :class="cn(
-		'inline-flex items-center gap-1 font-hud text-base tabular',
-		placeColor[position] ?? 'text-muted-foreground',
-	)
-		">
+	<span
+		:class="
+			cn(
+				'inline-flex items-center gap-1 font-hud text-base tabular',
+				placeColor[position] ?? 'text-muted-foreground',
+			)
+		"
+	>
 		{{ position }}.
 	</span>
 </template>

@@ -2,7 +2,9 @@ import packageJson from "@/../package.json" with { type: "json" };
 import { PROJECT_ROOT, SUPER_CONTEXT } from "@/constants/index.js";
 import logger from "@/helpers/logger.js";
 import useClient from "@/utils/use-client.js";
+import { STORAGE_QUOTA } from "@/helpers/audio-files.js";
 import fastifyCookie from "@fastify/cookie";
+import fastifyMultipart from "@fastify/multipart";
 import fastifySession from "@fastify/session";
 import fastifyStatic from "@fastify/static";
 import fastifyWebsocket from "@fastify/websocket";
@@ -10,6 +12,7 @@ import Fastify, { FastifyError } from "fastify";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import authRoutes from "./routes/auth.js";
+import filesRoutes from "./routes/files.js";
 import guildRoutes from "./routes/guild/index.js";
 import guildsRoutes from "./routes/guilds.js";
 import ownerRoutes from "./routes/owner.js";
@@ -69,7 +72,9 @@ export const startDashboard = async () => {
 	});
 
 	await fastify.register(fastifyWebsocket);
+	await fastify.register(fastifyMultipart, { limits: { fileSize: STORAGE_QUOTA, files: 1, fields: 0 } });
 
+	await fastify.register(filesRoutes);
 	await fastify.register(authRoutes);
 	await fastify.register(usersRoutes);
 	await fastify.register(statsRoutes);

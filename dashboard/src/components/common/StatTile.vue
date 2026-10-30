@@ -8,7 +8,6 @@ const props = defineProps<{
 	label: string;
 	value: string | number;
 	hint?: string;
-	/** Shown on hover, explains what the number means */
 	tip?: string;
 	icon?: HudIconName;
 	class?: HTMLAttributes["class"];

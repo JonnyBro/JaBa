@@ -71,6 +71,5 @@ export const initMusicHub = () => {
 			if (source) scheduleBroadcast((source as { guildId: string }).guildId);
 		});
 
-	// Joining or leaving the player's channel changes who can control it
 	client.on("voiceStateUpdate", (_old, state) => scheduleBroadcast(state.guild.id));
 };

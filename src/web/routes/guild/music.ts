@@ -26,7 +26,6 @@ const MAX_QUERY = 500;
 const failWith = async (req: FastifyRequest, reply: FastifyReply, code: number, key: string) =>
 	fail(reply, code, await translateContext(req.guild, key));
 
-/** Same rule as the now playing buttons: only from the bot's voice channel */
 const getControllablePlayer = async (req: FastifyRequest, reply: FastifyReply) => {
 	const player = useClient().lavalink.getPlayer(req.guild.id);
 	if (!player?.queue.current) return void (await failWith(req, reply, 400, "music/play:NOT_PLAYING"));
@@ -39,7 +38,6 @@ const getControllablePlayer = async (req: FastifyRequest, reply: FastifyReply) =
 	return player;
 };
 
-/** Where new music goes, the user has to be in a voice channel and in the bot's one if it is already playing */
 const getPlayTarget = async (req: FastifyRequest, reply: FastifyReply) => {
 	const member = await req.guild.members.fetch(req.session.user!.id).catch(() => null);
 	if (!member) return void (await failWith(req, reply, 403, "music/play:NO_VOICE_CHANNEL"));
@@ -185,15 +183,18 @@ export default async function musicRoutes(fastify: FastifyInstance) {
 		const target = await getPlayTarget(req, reply);
 		if (!target) return;
 
-		const error = await playPlaylist({ ...target, playlist, shuffle: body.shuffle === true });
+		const { error, added, unavailable } = await playPlaylist({
+			...target,
+			playlist,
+			shuffle: body.shuffle === true,
+		});
 		if (error) return failWith(req, reply, 400, error);
 
 		notifyMusicChange(req.guild.id);
 
-		return send(reply, { added: playlist.tracks.length, title: playlist.name });
+		return send(reply, { added, unavailable, title: playlist.name });
 	});
 
-	// Anyone who can see the player can save it, no need to be in the voice channel for that
 	fastify.post("/music/save", async (req, reply) => {
 		const body = (req.body ?? {}) as { playlistId?: unknown; name?: unknown };
 		const player = useClient().lavalink.getPlayer(req.guild.id);

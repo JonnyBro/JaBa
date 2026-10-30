@@ -49,7 +49,6 @@ export default async function publicRoutes(fastify: FastifyInstance) {
 		return send(reply, commands);
 	});
 
-	// Users who never got any reputation aren't worth a Discord request, the top is cached for a minute
 	fastify.get("/api/leaderboard/rep", async (_req, reply) => {
 		if (repCache && Date.now() - repCache.at < LEADERBOARD_CACHE_MS) return send(reply, repCache.items);
 

@@ -6,7 +6,6 @@ import { send } from "../../utils.js";
 
 const LIMIT = 50;
 
-// Same orders as the /leaderboard command
 const SORTS = {
 	credits: { $add: [{ $ifNull: ["$money", 0] }, { $ifNull: ["$bank", 0] }] },
 	level: { $add: [{ $multiply: [{ $ifNull: ["$level", 0] }, 1e9] }, { $ifNull: ["$exp", 0] }] },

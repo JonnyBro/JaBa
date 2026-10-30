@@ -24,7 +24,6 @@ const audit = useQuery({
 	placeholderData: keepPreviousData,
 });
 
-/** "field: old → new" for every field that changed */
 const diff = (entry: AuditEntry) => {
 	const { before, after } = entry.details as { before?: Record<string, unknown>; after?: Record<string, unknown> };
 	if (!before || !after) return [];

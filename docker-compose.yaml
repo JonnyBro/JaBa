@@ -10,10 +10,12 @@ services:
     environment:
       NODE_ENV: production
       LAVALINK_HOST: lavalink
+      DASHBOARD_INTERNAL_URL: http://jaba:6548
     ports:
       - "6548:6548"                      # Dashboard, remove if DASHBOARD_URL is empty
     volumes:
       - ./.env:/root/app/.env
+      - jaba_uploads:/root/app/uploads   # Music files uploaded in the dashboard
     depends_on:
       mongo:
         condition: service_healthy
@@ -55,5 +57,6 @@ services:
     restart: unless-stopped
 
 volumes:
+  jaba_uploads:
   jaba_mongo_data:
   jaba_mongo_config:

@@ -26,7 +26,6 @@ const serializeTrack = (track: Track | UnresolvedTrack) => {
 	};
 };
 
-/** The player state as one user sees it, canControl depends on their voice channel */
 export const getMusicState = (guild: Guild, userId: string) => {
 	const player = useClient().lavalink.getPlayer(guild.id);
 	const userChannelId = guild.voiceStates.cache.get(userId)?.channelId ?? null;

@@ -52,10 +52,8 @@ export class CronManager {
 		logger.info(`Scheduled ${this.jobs.size} cron task(s)`);
 	}
 
-	/** Runs the task now, unless it is already running. Returns false when it was skipped */
 	async execute(name: string) {
 		const jobInfo = this.jobs.get(name);
-		// Frequent tasks must not overlap with a previous run that is still going
 		if (!jobInfo || jobInfo.isRunning) return false;
 
 		const startedAt = Date.now();

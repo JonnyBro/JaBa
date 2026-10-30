@@ -1,7 +1,6 @@
 import { computed, type WritableComputedRef } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-/** Two-way binding between a URL query parameter and a ref, so filters survive reloads and can be shared */
 export function useRouteQuery(name: string, defaultValue: number): WritableComputedRef<number>;
 export function useRouteQuery(name: string, defaultValue: string): WritableComputedRef<string>;
 export function useRouteQuery(name: string, defaultValue: string | number) {

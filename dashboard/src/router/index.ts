@@ -7,7 +7,6 @@ import { createRouter, createWebHistory } from "vue-router";
 
 declare module "vue-router" {
 	interface RouteMeta {
-		/** i18n key of the page title */
 		title?: string;
 		requiresAuth?: boolean;
 		requiresOwner?: boolean;
@@ -122,7 +121,6 @@ router.beforeEach(async to => {
 		.fetchQuery({ queryKey: ME_QUERY_KEY, queryFn: getMe, staleTime: 60_000 })
 		.catch(() => null);
 
-	// Discord login is a full page redirect, not a route
 	if (!me) {
 		window.location.href = loginUrl(to.fullPath);
 		return false;

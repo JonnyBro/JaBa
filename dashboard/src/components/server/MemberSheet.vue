@@ -125,7 +125,6 @@ const moderate = useMutation({
 		const done = removeTimeout ? "timeoutRemoved" : action.value;
 		toast.success(t(`members.moderation.done.${done}`, { name: member.data.value?.displayName }));
 
-		// Kicked and banned members are gone from the server
 		if (action.value === "kick" || action.value === "ban") userId.value = null;
 
 		action.value = null;

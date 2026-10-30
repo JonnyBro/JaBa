@@ -3,7 +3,6 @@ import { cva } from "class-variance-authority";
 
 export { default as Button } from "./Button.vue";
 
-// Buttons follow the in-game AEUI style: outlined text that lights up on hover
 export const buttonVariants = cva(
 	"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md border font-hud text-sm transition-colors cursor-pointer disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-hl focus-visible:text-hl aria-invalid:border-destructive",
 	{

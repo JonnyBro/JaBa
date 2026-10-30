@@ -1,12 +1,4 @@
-/*
- * Two independent attributes on <html>, keep both lists in sync with src/lib/theme.ts and index.html:
- * data-theme  the surfaces (dark ones also get the "dark" class)
- * data-accent the highlight color
- *
- * --hl      active and highlighted states
- * --edge    the solid line on the left of highlighted panels
- * --gold/silver/bronze  places in the leaderboards
- */
+/* Keep the themes and accents in sync with src/lib/theme.ts and the inline script in index.html */
 
 :root,
 :root[data-theme="dark"] {
@@ -34,7 +26,6 @@
 	--bronze: rgb(210 130 60);
 }
 
-/* Pure black for OLED screens */
 :root[data-theme="amoled"] {
 	--background: rgb(0 0 0);
 	--card: rgb(10 10 12);

@@ -16,7 +16,6 @@ export const isOwner = (userId?: string) => !!userId && userId === useClient().c
 export const canManage = (permissions: string | bigint) =>
 	new PermissionsBitField(BigInt(permissions)).has(PermissionsBitField.Flags.ManageGuild);
 
-/** Only lets through relative paths, so the login can't redirect to another site */
 export const safeRedirect = (redirect?: string) =>
 	redirect && redirect.startsWith("/") && !redirect.startsWith("//") ? redirect : "/servers";
 

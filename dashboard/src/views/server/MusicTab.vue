@@ -57,7 +57,6 @@ import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
-// "auto" lets the bot pick, which is YouTube Music
 const SOURCES = ["auto", "ytm", "yt", "sp", "ym", "sc"] as const;
 
 const props = defineProps<{ guild: GuildInfo }>();
@@ -80,7 +79,6 @@ const run = useMutation({
 
 const act = (action: PlayerAction) => run.mutate(() => musicAction(guildId.value, action));
 
-// The slider sends the value once it is released, not on every step
 const volume = ref(100);
 watch(
 	() => active.value?.volume,
@@ -139,11 +137,13 @@ watch(
 const playPlaylist = useMutation({
 	mutationFn: () =>
 		musicPlayPlaylist(guildId.value, { playlistId: playlistId.value!, shuffle: shufflePlaylist.value }),
-	onSuccess: ({ added, title }) => toast.success(t("music.addedMany", { n: added, title })),
+	onSuccess: ({ added, unavailable, title }) => {
+		toast.success(t("music.addedMany", { n: added, title }));
+		if (unavailable) toast.warning(t("playlists.filesUnavailable", { n: unavailable }));
+	},
 	onError: error => toast.error(getErrorMessage(error)),
 });
 
-// "new" in the select means a new playlist with the typed name
 const queryClient = useQueryClient();
 const saveOpen = ref(false);
 const saveTarget = ref("new");

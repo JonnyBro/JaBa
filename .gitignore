@@ -15,6 +15,9 @@ Thumbs.db
 # Node
 node_modules
 
+# Music files uploaded in the dashboard
+/uploads
+
 # TypeScript build
 dist
 tsconfig.tsbuildinfo

@@ -67,7 +67,6 @@
 	}
 }
 
-/* Mono font for headings, numbers and labels */
 @utility font-hud {
 	font-family: var(--font-hud);
 	font-weight: 500;
@@ -86,10 +85,7 @@
 	border-radius: var(--radius);
 }
 
-/*
- * Highlighted panel: the solid line is the panel's own left border.
- * The doubled selector beats the 1px border from hud-panel regardless of utility order
- */
+/* The doubled selector beats the 1px border from hud-panel regardless of utility order */
 @utility hud-edge {
 	&,
 	&.hud-panel {

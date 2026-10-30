@@ -21,7 +21,6 @@ export const useAuth = () => {
 	};
 };
 
-/** Invalidates the cached session, e.g. after the key was regenerated */
 export const useRefreshAuth = () => {
 	const client = useQueryClient();
 	return () => client.invalidateQueries({ queryKey: ME_QUERY_KEY });

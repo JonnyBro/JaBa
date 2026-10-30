@@ -1,6 +1,6 @@
 import { currentLocale } from "@/i18n";
 
-// Formatters follow the site language. Reading currentLocale inside the functions keeps templates reactive to it
+// Reading currentLocale inside the functions keeps templates reactive to the site language
 const formatters = new Map<string, Intl.NumberFormat | Intl.DateTimeFormat | Intl.RelativeTimeFormat>();
 
 const cached = <T extends Intl.NumberFormat | Intl.DateTimeFormat | Intl.RelativeTimeFormat>(
@@ -56,7 +56,6 @@ const units: Array<[Intl.RelativeTimeFormatUnit, number]> = [
 	["minute", 60],
 ];
 
-/** Track time like 3:07 or 1:02:45 */
 export const formatTrackTime = (ms: number) => {
 	const total = Math.max(0, Math.floor(ms / 1000));
 	const pad = (n: number) => String(n).padStart(2, "0");
@@ -65,7 +64,6 @@ export const formatTrackTime = (ms: number) => {
 	return h ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
 };
 
-/** Uptime like "3d 4h 12m" */
 export const formatDuration = (ms: number | null | undefined) => {
 	if (!ms) return "—";
 

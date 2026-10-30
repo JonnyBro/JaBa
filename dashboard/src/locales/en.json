@@ -262,7 +262,20 @@
 		"skipped": "{n} track didn't fit, a playlist is limited | {n} tracks didn't fit, a playlist is limited",
 		"howToPlay": "To play it, open the Music tab on a server or use {command} in Discord.",
 		"deleteTitle": "Delete {name}?",
-		"deleteText": "The playlist and all of its tracks will be gone."
+		"deleteText": "The playlist and all of its tracks will be gone.",
+		"storage": "Files: {used} of {max} MB",
+		"upload": "Upload file",
+		"uploadHint": "Uploaded files share {max} MB per account. Formats: {formats}. A file that isn't played for 2 weeks is deleted.",
+		"fileExpired": "Deleted after 2 weeks without plays, upload it again or remove it",
+		"fileExpires": "Will be deleted {time} if not played",
+		"fileExpiresHint": "Every play resets the 2 week timer",
+		"reupload": "Upload again",
+		"filesUnavailable": "{n} uploaded file was deleted after 2 weeks without plays, upload it again on the Playlists page | {n} uploaded files were deleted after 2 weeks without plays, upload them again on the Playlists page",
+		"dropTo": "Drop to upload to {name}",
+		"dropBusy": "Wait for the current upload to finish",
+		"dropNoPlaylist": "Create a playlist first",
+		"filesLeft": "{n} left",
+		"unsupported": "Skipped {files}, supported formats: {formats}"
 	},
 	"leaderboard": {
 		"title": "Reputation",

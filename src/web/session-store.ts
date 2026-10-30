@@ -4,7 +4,6 @@ import { Session } from "fastify";
 
 type Callback = (error?: unknown) => void;
 
-/** Keeps dashboard logins in Mongo, so they survive a restart of the bot */
 export class MongoSessionStore implements SessionStore {
 	constructor(private readonly ttl: number) {}
 

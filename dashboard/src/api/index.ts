@@ -102,7 +102,7 @@ export const musicPlay = (id: string, body: { query: string; source?: SearchSour
 	post<{ added: number; title: string | null }>(guildUrl(id, "/music/play"), body);
 
 export const musicPlayPlaylist = (id: string, body: { playlistId: string; shuffle?: boolean }) =>
-	post<{ added: number; title: string }>(guildUrl(id, "/music/playlist"), body);
+	post<{ added: number; unavailable: number; title: string }>(guildUrl(id, "/music/playlist"), body);
 
 export const musicSaveQueue = (id: string, body: { playlistId?: string; name?: string }) =>
 	post<{ added: number; skipped: number; playlistId: string; title: string }>(guildUrl(id, "/music/save"), body);
@@ -124,6 +124,22 @@ export const addPlaylistTracks = (id: string, body: { query: string; source?: Se
 	);
 export const removePlaylistTrack = async (id: string, index: number) =>
 	(await api.delete<Response<Playlist>>(playlistUrl(id, `/tracks/${index}`))).data.data;
+export const uploadPlaylistFile = async (
+	id: string,
+	file: File,
+	index?: number,
+	onProgress?: (percent: number) => void,
+) => {
+	const form = new FormData();
+	form.append("file", file);
+
+	const url = playlistUrl(id, index === undefined ? "/upload" : `/tracks/${index}/upload`);
+	const { data } = await api.post<Response<{ title: string; playlist: Playlist }>>(url, form, {
+		onUploadProgress: event => event.total && onProgress?.(Math.round((event.loaded / event.total) * 100)),
+	});
+
+	return data.data;
+};
 export const movePlaylistTrack = (id: string, from: number, to: number) =>
 	post<Playlist>(playlistUrl(id, "/move"), { from, to });
 

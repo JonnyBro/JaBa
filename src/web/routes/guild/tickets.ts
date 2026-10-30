@@ -18,7 +18,6 @@ export default async function ticketsRoutes(fastify: FastifyInstance) {
 		if (!text || text.length > MAX_TEXT) return fail(reply, 400, `Text must be 1-${MAX_TEXT} characters`);
 		if (!label || label.length > MAX_LABEL) return fail(reply, 400, `Label must be 1-${MAX_LABEL} characters`);
 
-		// Tickets are private threads in the same channel
 		const channel = getSendableChannel(req.guild, body.channelId, [
 			PermissionsBitField.Flags.CreatePrivateThreads,
 			PermissionsBitField.Flags.SendMessagesInThreads,

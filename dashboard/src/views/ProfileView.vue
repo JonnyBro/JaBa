@@ -74,7 +74,6 @@ const saveBirthdate = useMutation({
 
 const remindMessage = ref("");
 const remindAt = ref("");
-// The picker can't go below the current minute
 const minRemindAt = computed(() => {
 	const now = new Date(Date.now() + 60_000);
 	return `${toDateInput(now.getTime())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;

@@ -60,7 +60,6 @@ const move = (index: number, by: number) => {
 
 const accent = computed(() => (useColor.value ? color.value : null));
 
-// Empty inputs are dropped instead of failing the request
 const cleaned = computed(() =>
 	blocks.value
 		.map(block => {

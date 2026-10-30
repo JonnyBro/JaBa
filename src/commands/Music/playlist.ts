@@ -49,7 +49,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	if (!playlist) return editReplyError(interaction, "music/playlist:NOT_FOUND", { name });
 	if (!playlist.tracks.length) return editReplyError(interaction, "music/playlist:EMPTY");
 
-	const error = await playPlaylist({
+	const { error, added, unavailable } = await playPlaylist({
 		playlist,
 		guildId: interaction.guildId!,
 		textChannelId: interaction.channelId,
@@ -60,14 +60,17 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	if (error) return editReplyError(interaction, error);
 
-	await editReplySuccess(interaction, "music/playlist:ADDED", { name: playlist.name, count: playlist.tracks.length });
+	await editReplySuccess(interaction, unavailable ? "music/playlist:ADDED_SKIPPED" : "music/playlist:ADDED", {
+		name: playlist.name,
+		count: added,
+		skipped: unavailable,
+	});
 };
 
 export const autocompleteRun = async ({ interaction }: AutocompleteProps) => {
 	const query = interaction.options.getFocused().trim().toLowerCase();
 	const playlists = await PlaylistModel.find({ userId: interaction.user.id }, { name: 1, tracks: 1 }).lean();
 
-	// The id is the value, so names that differ only in case or have odd characters still work
 	await interaction
 		.respond(
 			playlists

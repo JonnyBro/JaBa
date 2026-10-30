@@ -8,6 +8,7 @@ import {
 	movePlaylistTrack,
 	removePlaylistTrack,
 	renamePlaylist,
+	uploadPlaylistFile,
 } from "@/api";
 import type { Playlist } from "@/api/types";
 import ConfirmDialog from "@/components/common/ConfirmDialog.vue";
@@ -18,11 +19,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import { formatDuration, formatTrackTime } from "@/lib/format";
+import { formatDuration, formatRelative, formatTrackTime } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { getErrorMessage } from "@/plugins/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
-import { ArrowDown, ArrowUp, ListMusic, ListPlus, LoaderCircle, Plus, Save, Trash2 } from "lucide-vue-next";
+import { useEventListener } from "@vueuse/core";
+import {
+	ArrowDown,
+	ArrowUp,
+	FileWarning,
+	ListMusic,
+	ListPlus,
+	LoaderCircle,
+	Plus,
+	Save,
+	Trash2,
+	Upload,
+} from "lucide-vue-next";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
@@ -116,6 +129,113 @@ const addTracks = useMutation({
 	onError,
 });
 
+const formatMegabytes = (bytes: number) => (bytes / 1024 / 1024).toFixed(1);
+const storagePercent = computed(() => {
+	const storage = list.data.value?.storage;
+	return storage ? Math.min(100, (storage.used / storage.max) * 100) : 0;
+});
+const accept = computed(() => list.data.value?.extensions.map(ext => `.${ext}`).join(",") ?? "audio/*");
+
+const fileInput = ref<HTMLInputElement>();
+const uploadIndex = ref<number>();
+const uploadProgress = ref(0);
+
+const pickFile = (index?: number) => {
+	uploadIndex.value = index;
+	fileInput.value?.click();
+};
+
+const upload = useMutation({
+	mutationFn: ({ file, index }: { file: File; index?: number }) => {
+		uploadProgress.value = 0;
+		return uploadPlaylistFile(selectedId.value, file, index, p => (uploadProgress.value = p));
+	},
+	onSuccess: async ({ title, playlist }) => {
+		toast.success(t("music.added", { title }));
+		await setPlaylist(playlist);
+	},
+	onError,
+});
+
+const filesLeft = ref(0);
+
+const uploadFiles = async (files: File[], index?: number) => {
+	const extensions = list.data.value?.extensions ?? [];
+	const supported = files.filter(f => extensions.includes(f.name.split(".").pop()?.toLowerCase() ?? ""));
+	const rejected = files.filter(f => !supported.includes(f));
+
+	if (rejected.length)
+		toast.warning(
+			t("playlists.unsupported", { files: rejected.map(f => f.name).join(", "), formats: extensions.join(", ") }),
+		);
+
+	filesLeft.value = supported.length;
+
+	for (const file of supported) {
+		try {
+			await upload.mutateAsync({ file, index });
+		} catch {
+			// The toast is already shown, and the next files would most likely hit the same limit
+			break;
+		} finally {
+			filesLeft.value--;
+		}
+	}
+
+	filesLeft.value = 0;
+};
+
+const onFileChosen = async (event: Event) => {
+	const input = event.target as HTMLInputElement;
+	const files = [...(input.files ?? [])];
+	input.value = "";
+
+	await uploadFiles(files, uploadIndex.value);
+};
+
+const dragDepth = ref(0);
+const canDrop = computed(() => !!playlist.data.value && !upload.isPending.value);
+const hasFiles = (event: DragEvent) => !!event.dataTransfer?.types.includes("Files");
+
+const CURSOR_GAP = 20;
+const dragPoint = ref({ x: 0, y: 0 });
+const dropHint = ref<HTMLElement>();
+const dropHintStyle = computed(() => {
+	const { x, y } = dragPoint.value;
+	const width = dropHint.value?.offsetWidth ?? 0;
+	const height = dropHint.value?.offsetHeight ?? 0;
+
+	const left = x + CURSOR_GAP + width > window.innerWidth ? x - CURSOR_GAP - width : x + CURSOR_GAP;
+	const top = y + CURSOR_GAP + height > window.innerHeight ? y - CURSOR_GAP - height : y + CURSOR_GAP;
+
+	return { transform: `translate(${Math.max(8, left)}px, ${Math.max(8, top)}px)` };
+});
+
+useEventListener(window, "dragenter", event => {
+	if (!hasFiles(event)) return;
+	event.preventDefault();
+	dragDepth.value++;
+});
+
+useEventListener(window, "dragleave", event => {
+	if (hasFiles(event)) dragDepth.value = Math.max(0, dragDepth.value - 1);
+});
+
+useEventListener(window, "dragover", event => {
+	if (!hasFiles(event)) return;
+	event.preventDefault();
+	event.dataTransfer!.dropEffect = canDrop.value ? "copy" : "none";
+	dragPoint.value = { x: event.clientX, y: event.clientY };
+});
+
+useEventListener(window, "drop", event => {
+	if (!hasFiles(event)) return;
+	event.preventDefault();
+	dragDepth.value = 0;
+
+	if (canDrop.value) void uploadFiles([...(event.dataTransfer?.files ?? [])]);
+});
+
 const edit = useMutation({
 	mutationFn: (request: () => Promise<Playlist>) => request(),
 	onSuccess: setPlaylist,
@@ -152,6 +272,19 @@ const edit = useMutation({
 				<p class="font-hud text-sm text-muted-foreground">
 					{{ $t("playlists.count", { n: list.data.value.items.length, max: list.data.value.max }) }}
 				</p>
+				<div class="space-y-1">
+					<div class="hud-bar">
+						<span :style="{ width: `${storagePercent}%` }" />
+					</div>
+					<p class="font-hud text-sm text-muted-foreground">
+						{{
+							$t("playlists.storage", {
+								used: formatMegabytes(list.data.value.storage.used),
+								max: formatMegabytes(list.data.value.storage.max),
+							})
+						}}
+					</p>
+				</div>
 
 				<ul v-if="list.data.value.items.length" class="hud-panel divide-y">
 					<li v-for="item in list.data.value.items" :key="item.id">
@@ -261,7 +394,42 @@ const edit = useMutation({
 						<ListPlus v-else />
 						{{ $t("music.add") }}
 					</Button>
+					<Button
+						type="button"
+						variant="outline"
+						:disabled="
+							upload.isPending.value ||
+							(playlist.data.value.trackCount >= list.data.value.maxTracks && uploadIndex === undefined)
+						"
+						@click="pickFile()"
+					>
+						<LoaderCircle v-if="upload.isPending.value" class="animate-spin" />
+						<Upload v-else />
+						<template v-if="upload.isPending.value">
+							{{ uploadProgress }}%
+							<template v-if="filesLeft > 1"
+								>· {{ $t("playlists.filesLeft", { n: filesLeft }) }}</template
+							>
+						</template>
+						<template v-else>{{ $t("playlists.upload") }}</template>
+					</Button>
+					<input
+						ref="fileInput"
+						type="file"
+						:accept="accept"
+						:multiple="uploadIndex === undefined"
+						class="hidden"
+						@change="onFileChosen"
+					/>
 				</form>
+				<p class="text-sm text-muted-foreground">
+					{{
+						$t("playlists.uploadHint", {
+							max: formatMegabytes(list.data.value.storage.max),
+							formats: list.data.value.extensions.join(", "),
+						})
+					}}
+				</p>
 
 				<p v-if="!playlist.data.value.tracks.length" class="text-muted-foreground">
 					{{ $t("playlists.noTracks") }}
@@ -269,8 +437,8 @@ const edit = useMutation({
 				<ol v-else class="hud-panel divide-y">
 					<li
 						v-for="(track, i) in playlist.data.value.tracks"
-						:key="`${i}-${track.uri}`"
-						class="flex items-center gap-3 px-3 py-2"
+						:key="`${i}-${track.uri}-${track.title}`"
+						:class="cn('flex items-center gap-3 px-3 py-2', track.file?.expired && 'bg-destructive/10')"
 					>
 						<span class="w-6 text-right font-hud text-sm text-muted-foreground">{{ i + 1 }}</span>
 						<img
@@ -294,7 +462,35 @@ const edit = useMutation({
 								{{ track.author }}
 								<template v-if="track.source"> · {{ track.source }}</template>
 							</p>
+							<p
+								v-if="track.file?.expired"
+								class="flex items-center gap-1 text-sm text-destructive-foreground"
+							>
+								<FileWarning class="size-4 shrink-0" />
+								{{ $t("playlists.fileExpired") }}
+							</p>
+							<p
+								v-else-if="track.file?.expiresAt"
+								class="truncate text-xs text-muted-foreground"
+								:title="$t('playlists.fileExpiresHint')"
+							>
+								{{
+									$t("playlists.fileExpires", {
+										time: formatRelative(Date.parse(track.file.expiresAt)),
+									})
+								}}
+							</p>
 						</div>
+						<Button
+							v-if="track.file?.expired"
+							variant="outline"
+							size="sm"
+							:disabled="upload.isPending.value"
+							@click="pickFile(i)"
+						>
+							<Upload />
+							{{ $t("playlists.reupload") }}
+						</Button>
 						<span class="font-hud text-sm text-muted-foreground">
 							{{ track.isStream ? "LIVE" : formatTrackTime(track.duration) }}
 						</span>
@@ -338,5 +534,34 @@ const edit = useMutation({
 			:loading="remove.isPending.value"
 			@confirm="remove.mutate()"
 		/>
+
+		<div v-if="dragDepth > 0" class="pointer-events-none fixed inset-0 z-50 bg-background/30">
+			<div
+				ref="dropHint"
+				:style="dropHintStyle"
+				:class="
+					cn(
+						'hud-panel absolute top-0 left-0 flex max-w-72 items-center gap-3 border-2 border-dashed p-3 shadow-lg',
+						canDrop ? 'border-hl' : 'border-muted-foreground',
+					)
+				"
+			>
+				<Upload :class="cn('size-6 shrink-0', canDrop ? 'text-hl' : 'text-muted-foreground')" />
+				<div class="min-w-0">
+					<p class="font-hud">
+						{{
+							canDrop
+								? $t("playlists.dropTo", { name: playlist.data.value?.name })
+								: upload.isPending.value
+									? $t("playlists.dropBusy")
+									: $t("playlists.dropNoPlaylist")
+						}}
+					</p>
+					<p v-if="canDrop && list.data.value" class="text-xs text-muted-foreground">
+						{{ list.data.value.extensions.join(", ") }}
+					</p>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>

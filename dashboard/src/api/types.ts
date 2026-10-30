@@ -48,7 +48,6 @@ export type GuildLanguage = {
 	nativeName: string;
 };
 
-/** What every member of the guild gets */
 export type GuildInfo = {
 	id: string;
 	name: string;
@@ -58,7 +57,6 @@ export type GuildInfo = {
 	canManage: boolean;
 };
 
-/** Only returned to those who can manage the guild */
 export type GuildDetails = GuildInfo & {
 	settings: GuildSettings;
 	channels: GuildChannel[];
@@ -166,7 +164,9 @@ export type PlayerAction = "pause" | "back" | "skip" | "stop" | "loop" | "shuffl
 
 export type SearchSource = "ytm" | "yt" | "ym" | "sp" | "sc";
 
-export type PlaylistTrack = Omit<MusicTrack, "requester">;
+export type PlaylistTrack = Omit<MusicTrack, "requester"> & {
+	file: { expired: boolean; expiresAt: string | null } | null;
+};
 
 export type PlaylistSummary = {
 	id: string;
@@ -179,7 +179,13 @@ export type PlaylistSummary = {
 
 export type Playlist = PlaylistSummary & { tracks: PlaylistTrack[] };
 
-export type PlaylistList = { max: number; maxTracks: number; items: PlaylistSummary[] };
+export type PlaylistList = {
+	max: number;
+	maxTracks: number;
+	storage: { used: number; max: number };
+	extensions: string[];
+	items: PlaylistSummary[];
+};
 
 export type Remind = {
 	message: string;

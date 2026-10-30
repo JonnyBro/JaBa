@@ -65,7 +65,6 @@ const toggleLevel = (level: string) => {
 	hidden.value = next;
 };
 
-// Only follows the bottom when the reader is already there
 watch(visible, async () => {
 	const el = container.value;
 	if (!el) return;

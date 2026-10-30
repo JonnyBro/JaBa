@@ -18,7 +18,6 @@ const messages = Object.fromEntries(
 export const FALLBACK_LOCALE = "en";
 const STORAGE_KEY = "jaba-locale";
 
-/** Languages for the picker, sorted by their own name */
 export const locales = Object.entries(messages)
 	.map(([code, data]) => ({ code, name: data.meta?.name ?? code }))
 	.sort((a, b) => a.name.localeCompare(b.name));
@@ -39,7 +38,6 @@ const readSaved = () => {
 	}
 };
 
-/** First browser language we have a translation for */
 export const detectBrowserLocale = () => {
 	for (const lang of navigator.languages ?? [navigator.language]) {
 		const found = findLocale(lang);
@@ -78,10 +76,8 @@ export const i18n = createI18n({
 	fallbackWarn: false,
 });
 
-/** Current locale, also used for dates and numbers */
 export const currentLocale = computed(() => i18n.global.locale.value);
 
-/** Whether the language follows the browser or was picked by the user */
 export const isAutoLocale = ref(!(saved && findLocale(saved)));
 
 export const setLocale = (code: string | null) => {

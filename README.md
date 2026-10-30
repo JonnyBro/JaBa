@@ -12,26 +12,30 @@ JaBa is an open-source Discord Bot written in [TypeScript](https://www.typescrip
 
 ## What it can do
 
-- Music playback
-- Utility commands
-- Fun games
-- A little bit of economy
-- TODO: rewrite this...
+- Dashboard!
+- Music
+- Utility
+- Some economy
 
 ## Using the Bot
 
 ### Hosted
 
-[Click here to add JaBa](https://discord.com/oauth2/authorize?client_id=708637495054565426)
+[Click here to invite JaBa or add it to your profile](https://discord.com/oauth2/authorize?client_id=708637495054565426)
 
 ### Selfhosting
+
+> [!WARNING]
+> Somewhat outdated! Don't follow if you don't really know what your are doing.\
+> I'll rewrite it sometime later.
 
 You can also host JaBa yourself! Follow [this instruction](https://github.com/JonnyBro/JaBa/wiki/Self-Hosting) to learn how.
 
 ## Links
 
-- [Commits History](https://github.com/JonnyBro/JaBa/commits)
 - [Discord Support Server](https://discord.gg/Ptkj2n9nzZ)
+- [Commits History](https://github.com/JonnyBro/JaBa/commits)
+- [Old changelog](/CHANGELOG_OLD.md)
 
 ## Support
 
@@ -41,11 +45,6 @@ If you have any questions, you can ask them on my [support server](#links).
 
 Pull requests are welcome!
 
-## TODO
-
-- [ ] Dashboard maybe.
-- [ ] Host a lavalink node.
-
 ## License
 
-JaBa uses GNU GPL v3.0 license. [You can find it here](LICENSE).
+JaBa uses GNU GPL v3.0 license. [You can find it here](/LICENSE).

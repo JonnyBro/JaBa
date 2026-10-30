@@ -3,7 +3,6 @@ import CommandUsageModel from "@/models/CommandUsageModel.js";
 
 const FLUSH_INTERVAL = 60_000;
 
-// Counted in memory and written once a minute instead of one write per command
 const pending = new Map<string, number>();
 
 const today = () => new Date().toISOString().slice(0, 10);

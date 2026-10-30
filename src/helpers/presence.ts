@@ -21,7 +21,6 @@ const getRotation = () => {
 	];
 };
 
-/** A status set in the dashboard replaces the rotation */
 export const applyPresence = () => {
 	const { status } = getBotSettings();
 	const rotation = getRotation();
