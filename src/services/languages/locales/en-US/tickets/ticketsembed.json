@@ -16,7 +16,7 @@
 	"TICKET_AUTHOR": "Created by {{user}} • <t:{{time}}:f>",
 
 	"ADD_USER": "Add a member to the ticket",
-	"ADD_USER_RES": "Mention who you want to add to the ticket",
+	"ADD_USER_RES": "Pick who to add to the ticket",
 	"CLOSE_TICKET": "Close the ticket",
 	"CLOSE_TICKET_CONFIRM": "Are you sure you want to close the ticket?",
 	"CLOSE_DONE": "Ticket closed"

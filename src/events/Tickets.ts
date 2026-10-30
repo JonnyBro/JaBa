@@ -1,5 +1,7 @@
-import { asyncForEach, getUsername, replySuccess, shortenString, translateContext } from "@/helpers/functions.js";
+import { asyncForEach, getUsername, shortenString, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
+import { canCloseTicket, closeTicket, getTicket, isTicketStaff } from "@/helpers/tickets.js";
+import TicketModel from "@/models/TicketModel.js";
 import { createContainer, createSeparator, createText } from "@/utils/create-container.js";
 import {
 	ActionRowBuilder,
@@ -7,14 +9,17 @@ import {
 	ButtonBuilder,
 	ButtonStyle,
 	ChannelType,
+	GuildMember,
 	MessageFlags,
 	ModalBuilder,
 	PermissionsBitField,
 	TextInputBuilder,
 	TextInputStyle,
 	ThreadAutoArchiveDuration,
-	ThreadChannel,
+	UserSelectMenuBuilder,
 } from "discord.js";
+
+const ADD_USER_SELECT_ID = "tickets_adduser_select";
 
 export const data = {
 	name: "interactionCreate",
@@ -23,6 +28,30 @@ export const data = {
 
 export async function run(interaction: BaseInteraction) {
 	if (!interaction.guild) return;
+
+	if (interaction.isUserSelectMenu() && interaction.customId === ADD_USER_SELECT_ID) {
+		const ticket = await getTicket(interaction.channel);
+		if (!ticket) return;
+
+		const added: string[] = [];
+		const failed: string[] = [];
+		for (const user of interaction.users.values()) {
+			const ok = !user.bot && (await ticket.thread.members.add(user.id).catch(() => null));
+			(ok ? added : failed).push(user.toString());
+		}
+
+		const lines = [
+			added.length &&
+				(await translateContext(interaction, "tickets/ticket:ADD_DONE", { user: added.join(", ") })),
+			failed.length &&
+				(await translateContext(interaction, "tickets/ticket:ADD_FAILED", { user: failed.join(", ") })),
+		];
+
+		await interaction.update({ content: lines.filter(Boolean).join("\n"), components: [] });
+
+		return;
+	}
+
 	if (!interaction.isButton()) return;
 	if (!interaction.customId.includes("tickets_")) return;
 	if (!interaction.channel?.isTextBased()) return;
@@ -83,6 +112,13 @@ export async function run(interaction: BaseInteraction) {
 					type: ChannelType.PrivateThread,
 				});
 
+				await TicketModel.create({
+					guildId: interaction.guild.id,
+					threadId: thread.id,
+					authorId: interaction.user.id,
+					subject,
+				});
+
 				await thread.members.add(interaction.user.id);
 				await thread.members.add("@me");
 
@@ -134,8 +170,25 @@ export async function run(interaction: BaseInteraction) {
 		}
 
 		case "tickets_adduser": {
+			const ticket = await getTicket(interaction.channel);
+			const member = interaction.member as GuildMember;
+			if (!ticket) return;
+
+			if (!isTicketStaff(member) && member.id !== ticket.authorId) {
+				await interaction.reply({
+					content: await translateContext(interaction, "tickets/ticket:NO_PERMISSION"),
+					flags: MessageFlags.Ephemeral,
+				});
+				break;
+			}
+
 			await interaction.reply({
 				content: await translateContext(interaction, "tickets/ticketsembed:ADD_USER_RES"),
+				components: [
+					new ActionRowBuilder<UserSelectMenuBuilder>().addComponents(
+						new UserSelectMenuBuilder().setCustomId(ADD_USER_SELECT_ID).setMinValues(1).setMaxValues(5),
+					),
+				],
 				flags: MessageFlags.Ephemeral,
 			});
 
@@ -143,51 +196,49 @@ export async function run(interaction: BaseInteraction) {
 		}
 
 		case "tickets_closeticket": {
-			const closeButtons = [
-				new ButtonBuilder()
-					.setCustomId("tickets_close_yes")
-					.setStyle(ButtonStyle.Success)
-					.setLabel(await translateContext(interaction, "common:YES")),
-				new ButtonBuilder()
-					.setCustomId("tickets_close_no")
-					.setStyle(ButtonStyle.Danger)
-					.setLabel(await translateContext(interaction, "common:NO")),
-			];
+			const ticket = await getTicket(interaction.channel);
+			if (!ticket) return;
 
-			const row = new ActionRowBuilder<ButtonBuilder>().addComponents(closeButtons);
+			if (!canCloseTicket(interaction.member as GuildMember, ticket)) {
+				await interaction.reply({
+					content: await translateContext(interaction, "tickets/ticket:NO_PERMISSION"),
+					flags: MessageFlags.Ephemeral,
+				});
+				break;
+			}
 
-			await interaction.deferUpdate();
-
-			const msg = await interaction.channel.send({
+			const confirm = await interaction.reply({
 				content: await translateContext(interaction, "tickets/ticketsembed:CLOSE_TICKET_CONFIRM"),
-				components: [row],
+				components: [
+					new ActionRowBuilder<ButtonBuilder>().addComponents(
+						new ButtonBuilder()
+							.setCustomId("tickets_close_yes")
+							.setStyle(ButtonStyle.Danger)
+							.setLabel(await translateContext(interaction, "common:YES")),
+						new ButtonBuilder()
+							.setCustomId("tickets_close_no")
+							.setStyle(ButtonStyle.Secondary)
+							.setLabel(await translateContext(interaction, "common:NO")),
+					),
+				],
+				flags: MessageFlags.Ephemeral,
+				withResponse: true,
 			});
 
-			try {
-				const button = await msg.awaitMessageComponent({
-					time: 60_000, // 1 min
-					filter: i => i.user.id === interaction.user.id && i.customId.includes("tickets_close_"),
-				});
-				const channel = button.channel as ThreadChannel;
+			const button = await confirm.resource?.message
+				?.awaitMessageComponent({ time: 60_000, filter: i => i.user.id === interaction.user.id })
+				.catch(() => null);
 
-				switch (button.customId) {
-					case "tickets_close_yes": {
-						await channel.setLocked(true);
-						await replySuccess(button, "tickets/ticketsembed:CLOSE_DONE");
-
-						break;
-					}
-
-					case "tickets_close_no": {
-						await button.deferUpdate();
-						if (msg.deletable) await msg.delete();
-
-						break;
-					}
-				}
-			} catch (e) {
-				logger.error(e);
+			if (button?.customId !== "tickets_close_yes") {
+				await interaction.deleteReply().catch(() => {});
+				break;
 			}
+
+			await button.update({
+				content: await translateContext(interaction, "tickets/ticket:CLOSE_DONE"),
+				components: [],
+			});
+			await closeTicket(ticket.thread, interaction.user);
 
 			break;
 		}

@@ -6,6 +6,7 @@ import {
 	ApplicationIntegrationType,
 	InteractionContextType,
 	MessageFlags,
+	PermissionsBitField,
 } from "discord.js";
 
 export const data: CommandData = {
@@ -14,6 +15,8 @@ export const data: CommandData = {
 	// eslint-disable-next-line camelcase
 	integration_types: [ApplicationIntegrationType.GuildInstall],
 	contexts: [InteractionContextType.Guild],
+	// eslint-disable-next-line camelcase
+	default_member_permissions: String(PermissionsBitField.Flags.ManageGuild),
 	options: [
 		{
 			name: "text",

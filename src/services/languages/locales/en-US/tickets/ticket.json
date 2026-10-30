@@ -1,0 +1,27 @@
+{
+	"DESCRIPTION": "Manage the ticket you're in",
+	"USAGE": "[close/reopen/add/remove] (reason/@user)",
+	"EXAMPLES": "ticket close reason:Solved\nticket add user:@jonny_bro",
+	"CLOSE": "Close the ticket",
+	"REOPEN": "Reopen a closed ticket",
+	"ADD": "Add a member to the ticket",
+	"REMOVE": "Remove a member from the ticket",
+	"REASON": "Why the ticket is closed",
+
+	"NOT_A_TICKET": "Use this command inside a ticket",
+	"NO_PERMISSION": "Only the ticket author or staff can do that",
+	"STAFF_ONLY": "Only staff can do that",
+	"ALREADY_CLOSED": "This ticket is already closed",
+	"NOT_CLOSED": "This ticket isn't closed",
+	"CANT_REMOVE": "The ticket author and the bot can't be removed",
+
+	"CLOSE_DONE": "Closing the ticket",
+	"REOPEN_DONE": "Ticket reopened",
+	"ADD_DONE": "Added to the ticket: {{user}}",
+	"ADD_FAILED": "Couldn't add {{user}} to the ticket. Members must be able to see this channel to join a private thread",
+	"REMOVE_DONE": "Removed from the ticket: {{user}}",
+
+	"CLOSED": "🔒 {{user}} closed the ticket",
+	"CLOSED_REASON": "🔒 {{user}} closed the ticket: {{reason}}",
+	"REOPENED": "🔓 {{user}} reopened the ticket"
+}
