@@ -115,7 +115,7 @@ const removeRemind = useMutation({
 				<StatTile
 					:label="$t('profile.registered')"
 					:value="formatDate(profile.data.value.registeredAt)"
-					class="sm:w-56"
+					class="sm:shrink-0"
 				/>
 			</section>
 
