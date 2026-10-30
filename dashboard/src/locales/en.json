@@ -275,7 +275,10 @@
 		"dropBusy": "Wait for the current upload to finish",
 		"dropNoPlaylist": "Create a playlist first",
 		"filesLeft": "{n} left",
-		"unsupported": "Skipped {files}, supported formats: {formats}"
+		"unsupported": "Skipped {files}, supported formats: {formats}",
+		"renameTrack": "Rename",
+		"trackTitle": "Title",
+		"trackAuthor": "Artist"
 	},
 	"leaderboard": {
 		"title": "Reputation",

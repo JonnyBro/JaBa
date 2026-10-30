@@ -7,6 +7,7 @@ import {
 	getPlaylists,
 	movePlaylistTrack,
 	removePlaylistTrack,
+	renamePlaylistTrack,
 	renamePlaylist,
 	uploadPlaylistFile,
 } from "@/api";
@@ -31,10 +32,12 @@ import {
 	ListMusic,
 	ListPlus,
 	LoaderCircle,
+	Pencil,
 	Plus,
 	Save,
 	Trash2,
 	Upload,
+	X,
 } from "@lucide/vue";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -236,9 +239,33 @@ useEventListener(window, "drop", event => {
 	if (canDrop.value) void uploadFiles([...(event.dataTransfer?.files ?? [])]);
 });
 
+const renaming = ref<{ index: number; title: string; author: string } | null>(null);
+watch(selectedId, () => (renaming.value = null));
+
 const edit = useMutation({
 	mutationFn: (request: () => Promise<Playlist>) => request(),
-	onSuccess: setPlaylist,
+	onSuccess: async data => {
+		// Moving or removing a track shifts the indexes, the open form would rename the wrong one
+		renaming.value = null;
+		await setPlaylist(data);
+	},
+	onError,
+});
+
+const startRename = (index: number) => {
+	const track = playlist.data.value?.tracks[index];
+	if (track) renaming.value = { index, title: track.title, author: track.author };
+};
+
+const renameTrack = useMutation({
+	mutationFn: () => {
+		const { index, title, author } = renaming.value!;
+		return renamePlaylistTrack(selectedId.value, index, { title, author });
+	},
+	onSuccess: async data => {
+		renaming.value = null;
+		await setPlaylist(data);
+	},
 	onError,
 });
 </script>
@@ -447,7 +474,47 @@ const edit = useMutation({
 							alt=""
 							class="size-10 shrink-0 object-cover"
 						/>
-						<div class="min-w-0 flex-1">
+						<form
+							v-if="renaming?.index === i"
+							class="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row"
+							@submit.prevent="renameTrack.mutate()"
+							@keydown.esc="renaming = null"
+						>
+							<Input
+								v-model="renaming.title"
+								maxlength="200"
+								:placeholder="$t('playlists.trackTitle')"
+								class="sm:flex-1"
+								autofocus
+							/>
+							<Input
+								v-model="renaming.author"
+								maxlength="100"
+								:placeholder="$t('playlists.trackAuthor')"
+								class="sm:w-48"
+							/>
+							<div class="flex gap-1">
+								<Button
+									type="submit"
+									size="icon-sm"
+									:aria-label="$t('common.save')"
+									:disabled="!renaming.title.trim() || renameTrack.isPending.value"
+								>
+									<LoaderCircle v-if="renameTrack.isPending.value" class="animate-spin" />
+									<Save v-else />
+								</Button>
+								<Button
+									type="button"
+									variant="ghost"
+									size="icon-sm"
+									:aria-label="$t('common.cancel')"
+									@click="renaming = null"
+								>
+									<X />
+								</Button>
+							</div>
+						</form>
+						<div v-else class="min-w-0 flex-1">
 							<a
 								v-if="track.uri"
 								:href="track.uri"
@@ -495,6 +562,16 @@ const edit = useMutation({
 							{{ track.isStream ? "LIVE" : formatTrackTime(track.duration) }}
 						</span>
 						<div class="flex">
+							<Button
+								v-if="track.file"
+								variant="ghost"
+								size="icon-sm"
+								:aria-label="$t('playlists.renameTrack')"
+								:disabled="renaming?.index === i"
+								@click="startRename(i)"
+							>
+								<Pencil />
+							</Button>
 							<Button
 								variant="ghost"
 								size="icon-sm"

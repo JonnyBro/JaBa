@@ -32,6 +32,8 @@ import { pipeline } from "node:stream/promises";
 import { fail, requireUser, send } from "../utils.js";
 
 const MAX_QUERY = 500;
+const MAX_TITLE = 200;
+const MAX_AUTHOR = 100;
 
 const SEARCH_ERRORS: Record<string, string> = {
 	"music/play:NODE_UNAVAILABLE": "Music server is unavailable right now, try again later",
@@ -195,6 +197,28 @@ export default async function playlistsRoutes(fastify: FastifyInstance) {
 		playlist.markModified("tracks");
 		await playlist.save();
 		await releaseFiles(playlist.userId, [removed.fileId]);
+
+		return send(reply, await serializePlaylist(playlist));
+	});
+
+	fastify.patch("/api/users/me/playlists/:playlistId/tracks/:index", async (req, reply) => {
+		const playlist = await getOwnPlaylist(req, reply);
+		if (!playlist) return;
+
+		const index = Number((req.params as { index: string }).index);
+		const track = Number.isInteger(index) ? playlist.tracks[index] : undefined;
+		if (!track?.fileId) return fail(reply, 400, "Only uploaded files can be renamed");
+
+		const body = (req.body ?? {}) as { title?: unknown; author?: unknown };
+		const title = typeof body.title === "string" ? body.title.trim() : "";
+		const author = typeof body.author === "string" ? body.author.trim() : "";
+		if (!title || title.length > MAX_TITLE) return fail(reply, 400, `The title must be 1-${MAX_TITLE} characters`);
+		if (author.length > MAX_AUTHOR) return fail(reply, 400, `The artist must be up to ${MAX_AUTHOR} characters`);
+
+		const user = req.session.user!;
+		track.info = { ...track.info, title, author: author || (user.globalName ?? user.username) };
+		playlist.markModified("tracks");
+		await playlist.save();
 
 		return send(reply, await serializePlaylist(playlist));
 	});

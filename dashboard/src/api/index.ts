@@ -140,6 +140,8 @@ export const uploadPlaylistFile = async (
 
 	return data.data;
 };
+export const renamePlaylistTrack = async (id: string, index: number, body: { title: string; author: string }) =>
+	(await api.patch<Response<Playlist>>(playlistUrl(id, `/tracks/${index}`), body)).data.data;
 export const movePlaylistTrack = (id: string, from: number, to: number) =>
 	post<Playlist>(playlistUrl(id, "/move"), { from, to });
 

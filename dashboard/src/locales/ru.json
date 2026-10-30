@@ -275,7 +275,10 @@
 		"dropBusy": "Дождись окончания текущей загрузки",
 		"dropNoPlaylist": "Сначала создай плейлист",
 		"filesLeft": "осталось {n}",
-		"unsupported": "Пропущены {files}, поддерживаются: {formats}"
+		"unsupported": "Пропущены {files}, поддерживаются: {formats}",
+		"renameTrack": "Переименовать",
+		"trackTitle": "Название",
+		"trackAuthor": "Исполнитель"
 	},
 	"leaderboard": {
 		"title": "Репутация",
