@@ -1,21 +1,9 @@
-import {
-	asyncForEach,
-	editReplyError,
-	getLocalizedDesc,
-	getNoun,
-	getUsername,
-	translateContext,
-} from "@/helpers/functions.js";
+import { asyncForEach, editReplyError, getLocalizedDesc, getUsername, translateContext } from "@/helpers/functions.js";
+import { formatCredits } from "@/helpers/economy.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { createEmbed } from "@/utils/create-embed.js";
 import useClient from "@/utils/use-client.js";
-import {
-	ApplicationCommandOptionType,
-	ApplicationIntegrationType,
-	CacheType,
-	ChatInputCommandInteraction,
-	InteractionContextType,
-} from "discord.js";
+import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "discord.js";
 
 const client = useClient();
 
@@ -298,13 +286,3 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	await interaction.editReply({ embeds: [embed] });
 };
-
-async function formatCredits(interaction: ChatInputCommandInteraction<CacheType>, amount: number) {
-	const forms = [
-		await translateContext(interaction, "misc:NOUNS:CREDIT:1"),
-		await translateContext(interaction, "misc:NOUNS:CREDIT:2"),
-		await translateContext(interaction, "misc:NOUNS:CREDIT:5"),
-	];
-	const noun = getNoun(amount, forms);
-	return `**${amount}** ${noun}`;
-}
