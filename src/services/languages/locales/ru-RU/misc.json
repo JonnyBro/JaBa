@@ -15,7 +15,6 @@
 	"USER_NOT_FOUND": "Участник/пользователь не найден!",
 
 	"QUOTE_TITLE": "Сообщение от {{user}}",
-	"QUOTE_CONTENT": "Содержимое",
 	"QUOTE_ATTACHED": "Вложения",
 	"QUOTE_JUMP": "Перейти",
 	"QUOTE_FOOTER": "Отправлено",

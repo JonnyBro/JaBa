@@ -3,5 +3,6 @@
 	"USAGE": "[type]",
 	"EXAMPLES": "leaderboard type:Level",
 	"TITLE": "Топ: {{name}}",
-	"SELECT": "Выбери, что показать"
+	"SELECT": "Выбери, что показать",
+	"EMPTY": "Тут пока никого"
 }

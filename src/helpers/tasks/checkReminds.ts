@@ -1,33 +1,19 @@
 import logger from "@/helpers/logger.js";
 import UserModel, { UserReminds } from "@/models/UserModel.js";
 import { CronTaskData } from "@/types.js";
-import { createEmbed } from "@/utils/create-embed.js";
+import { containerMessage, createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
 
 const client = useClient();
 
-const buildRemindEmbed = (remind: UserReminds) =>
-	createEmbed({
-		author: {
-			name: client.i18n.translate("general/remindme:EMBED_TITLE"),
-		},
-		fields: [
-			{
-				name: client.i18n.translate("general/remindme:EMBED_CREATED"),
-				value: `<t:${remind.createdAt}:f>`,
-				inline: true,
-			},
-			{
-				name: client.i18n.translate("general/remindme:EMBED_TIME"),
-				value: `<t:${remind.sendAt}:f>`,
-				inline: true,
-			},
-			{
-				name: client.i18n.translate("common:MESSAGE"),
-				value: remind.message,
-			},
-		],
-	});
+const buildRemind = (remind: UserReminds) =>
+	containerMessage(
+		createContainer().addTextDisplayComponents(
+			createText(`## ⏰ ${client.i18n.translate("general/remindme:EMBED_TITLE")}`),
+			createText(remind.message),
+			createText(`-# ${client.i18n.translate("general/remindme:EMBED_CREATED")} <t:${remind.createdAt}:f>`),
+		),
+	);
 
 export const data: CronTaskData = {
 	name: "checkReminds",
@@ -41,7 +27,7 @@ export const data: CronTaskData = {
 
 				for (const remind of userData.reminds.filter(r => r.sendAt <= now))
 					await user
-						?.send({ embeds: [buildRemindEmbed(remind)] })
+						?.send(buildRemind(remind))
 						.catch(e => logger.warn(`[checkReminds] Can't send a remind to ${userData.id}:`, e.message));
 
 				// Remove even undelivered ones (closed DMs), otherwise they would be retried every minute forever

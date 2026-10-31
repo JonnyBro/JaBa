@@ -1,6 +1,6 @@
 import { editReplyError, getLocalizedDesc } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
-import { createEmbed } from "@/utils/create-embed.js";
+import { containerMessage, createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
 import {
 	ApplicationCommandOptionType,
@@ -42,14 +42,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
 	});
 
-	const query = interaction.options.getString("query", true).replace(/\s+/g, "+");
-	const short = interaction.options.getBoolean("short");
-	const url = `https://letmegooglethat.com/?q=${encodeURIComponent(query)}`;
-	const embed = createEmbed({
-		description: url,
-	});
+	const query = interaction.options.getString("query", true).trim();
+	let url = `https://letmegooglethat.com/?q=${encodeURIComponent(query)}`;
 
-	if (short) {
+	if (interaction.options.getBoolean("short")) {
 		const shortenerUrl = client.configService.get<string>("URL_SHORTENER_URL");
 		const shortenerKey = client.configService.get<string>("URL_SHORTENER_KEY");
 
@@ -64,13 +60,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			body: JSON.stringify({ destination: url }),
 		}).then(res => res.json());
 
-		embed.setDescription(res.url);
+		url = res.url;
+	}
 
-		interaction.editReply({
-			embeds: [embed],
-		});
-	} else
-		interaction.editReply({
-			embeds: [embed],
-		});
+	await interaction.editReply(containerMessage(createContainer().addTextDisplayComponents(createText(url))));
 };

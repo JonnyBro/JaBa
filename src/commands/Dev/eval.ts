@@ -1,7 +1,7 @@
 import { getLocalizedDesc } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { CommandData, CommandOptions, SlashCommandProps } from "@/types.js";
-import { createEmbed } from "@/utils/create-embed.js";
+import { containerMessage, createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
 import {
 	ApplicationCommandOptionType,
@@ -44,13 +44,9 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			if (typeof output !== "string") output = inspect(output);
 			if (output.includes(client.token)) output = output.replace(client.token, "there_be_tokens");
 
-			const embed = createEmbed({
-				description: `Code:\n\`\`\`${code}\`\`\`\nOutput:\n\`\`\`ts\n${output}`.slice(0, 4090) + "\n```",
-			});
+			const text = `Code:\n\`\`\`ts\n${code}\n\`\`\`\nOutput:\n\`\`\`ts\n${output}`.slice(0, 3990) + "\n```";
 
-			interaction.editReply({
-				embeds: [embed],
-			});
+			interaction.editReply(containerMessage(createContainer().addTextDisplayComponents(createText(text))));
 		})
 		.catch(err => {
 			logger.error("[eval]", err);

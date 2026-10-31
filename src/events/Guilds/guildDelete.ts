@@ -1,4 +1,4 @@
-import { createEmbed } from "@/utils/create-embed.js";
+import { addTextWithThumbnail, containerMessage, createContainer } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
 import { Guild } from "discord.js";
 
@@ -14,16 +14,9 @@ export async function run(guild: Guild) {
 	const logChannel = client.channels.cache.get(logChannelId);
 
 	if (logChannel && logChannel.isSendable()) {
-		const embed = createEmbed({
-			author: {
-				name: guild.name,
-				iconURL: guild.iconURL() || client.user.avatarURL() || undefined,
-			},
-			description: `Left from a guild!\n${guild.name}`,
-		});
+		const text = `### 📤 ${guild.name}\n-# Left a guild`;
+		const container = addTextWithThumbnail(createContainer(), text, guild.iconURL());
 
-		await logChannel.send({
-			embeds: [embed],
-		});
+		await logChannel.send(containerMessage(container));
 	}
 }

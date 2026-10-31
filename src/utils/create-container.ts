@@ -1,6 +1,9 @@
+import packageJson from "@/../package.json" with { type: "json" };
+import { IS_PROD } from "@/constants/index.js";
 import {
 	ColorResolvable,
 	ContainerBuilder,
+	MessageFlags,
 	resolveColor,
 	SectionBuilder,
 	SeparatorBuilder,
@@ -8,7 +11,15 @@ import {
 	TextDisplayBuilder,
 	ThumbnailBuilder,
 } from "discord.js";
-import { defaultColor, defaultFooterText } from "./create-embed.js";
+import useClient from "./use-client.js";
+
+const client = useClient();
+
+const footerBase = client.configService.get<string>("EMBED_FOOTER");
+
+export const defaultFooterText = IS_PROD ? `${footerBase} | ${packageJson.version}` : footerBase;
+
+const defaultColor = client.configService.get<ColorResolvable>("EMBED_COLOR");
 
 export const createContainer = (color?: ColorResolvable) =>
 	new ContainerBuilder().setAccentColor(resolveColor(color || defaultColor));
@@ -29,3 +40,9 @@ export const addTextWithThumbnail = (container: ContainerBuilder, content: strin
 
 	return container.addSectionComponents(section);
 };
+
+export const containerMessage = (container: ContainerBuilder) => ({
+	flags: MessageFlags.IsComponentsV2 as const,
+	components: [container],
+	allowedMentions: { parse: [] },
+});

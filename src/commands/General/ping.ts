@@ -1,6 +1,6 @@
 import { getLocalizedDesc, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
-import { createEmbed } from "@/utils/create-embed.js";
+import { containerMessage, createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
 import {
 	ApplicationCommandOptionType,
@@ -31,16 +31,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		flags: interaction.options.getBoolean("ephemeral") ? MessageFlags.Ephemeral : undefined,
 	});
 
-	const embed = createEmbed({
-		author: {
-			name: await translateContext(interaction, "general/ping:PONG"),
-		},
-		description: await translateContext(interaction, "general/ping:PING", {
-			ping: Math.round(client.ws.ping),
-		}),
-	});
+	const pong = await translateContext(interaction, "general/ping:PONG");
+	const ping = await translateContext(interaction, "general/ping:PING", { ping: Math.round(client.ws.ping) });
 
-	interaction.editReply({
-		embeds: [embed],
-	});
+	const container = createContainer().addTextDisplayComponents(createText(`## 🏓 ${pong}\n${ping}`));
+
+	await interaction.editReply(containerMessage(container));
 };

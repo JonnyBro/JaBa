@@ -1,15 +1,12 @@
 import { getLocalizedDesc, randomNum, shortenString, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
-import { createEmbed } from "@/utils/create-embed.js";
-import useClient from "@/utils/use-client.js";
+import { containerMessage, createContainer, createText } from "@/utils/create-container.js";
 import {
 	ApplicationCommandOptionType,
 	ApplicationIntegrationType,
 	InteractionContextType,
 	MessageFlags,
 } from "discord.js";
-
-const client = useClient();
 
 export const data: CommandData = {
 	name: "8ball",
@@ -38,21 +35,14 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	});
 
 	const question = shortenString(interaction.options.getString("question", true), 200);
+	const answer = await translateContext(interaction, `fun/8ball:RESPONSE_${randomNum(1, 20)}`);
 
-	const embed = createEmbed({
-		fields: [
-			{
-				name: await translateContext(interaction, "fun/8ball:QUESTION"),
-				value: question,
-			},
-			{
-				name: await translateContext(interaction, "fun/8ball:ANSWER"),
-				value: await translateContext(interaction, `fun/8ball:RESPONSE_${randomNum(1, 20)}`),
-			},
-		],
-	});
+	const container = createContainer().addTextDisplayComponents(
+		createText(`-# ${await translateContext(interaction, "fun/8ball:QUESTION")}\n${question}`),
+		createText(`-# ${await translateContext(interaction, "fun/8ball:ANSWER")}\n### 🎱 ${answer}`),
+	);
 
 	setTimeout(() => {
-		interaction.editReply({ embeds: [embed] });
-	}, client.configService.get<number>("COMMAND_8BALL_TYPING_TIME") || 2500);
+		interaction.editReply(containerMessage(container));
+	}, 2500);
 };

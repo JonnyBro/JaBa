@@ -1,32 +1,32 @@
 {
-	"DESCRIPTION": "Manages your bank account",
-	"USAGE": "[option] [credits/all]",
-	"EXAMPLES": "bank option:deposit credits:1000\nbank option:withdraw credits:all",
-	"OPTION": "Action",
-	"OPTION_NAN_ALL": "An integer greater than 0 or `all`.",
+	"DESCRIPTION": "Opens your bank: balance, deposits, withdrawals and transfers",
+	"USAGE": "(@user)",
+	"EXAMPLES": "bank\nbank user:@jonny_bro",
 
-	"BALANCE": "Show your balance",
 	"DEPOSIT": "Deposit to the bank",
 	"WITHDRAW": "Withdraw from the bank",
-	"TRANSFER": "Transfer from your bank to a member",
-	"TRANSACTIONS": "Show your transaction history (last 20)",
+	"TRANSFER": "Transfer from your bank",
+
+	"BTN_DEPOSIT": "Deposit",
+	"BTN_WITHDRAW": "Withdraw",
+	"BTN_TRANSFER": "Transfer",
+	"BTN_HISTORY": "History",
+	"BTN_BACK": "Back",
+
+	"AMOUNT": "Amount",
+	"AMOUNT_PLACEHOLDER": "For example 1000, or all",
+	"RECIPIENT": "Recipient",
+	"NOT_YOURS": "This isn't your bank, open your own with /bank",
 
 	"NOT_ENOUGH_CREDITS": "You don't have enough credits",
 	"NOT_ENOUGH_BANK": "You don't have enough credits in the bank",
 	"SUCCESS_DEP": "{{credits}} deposited into your bank account",
 	"SUCCESS_WD": "You have withdrawn {{credits}} from your bank account",
 	"SUCCESS_TRANSFER": "You have transferred {{credits}} to {{reciever}}",
-
 	"NO_TRANSACTIONS": "You have no transactions",
 	"EMBED_TRANSACTIONS": "Your Transactions",
 	"BANK": "Bank",
 	"NUMBERS": "Guess the Number",
 	"TRANSFER_TO": "Transfer to {{user}}",
-	"TRANSFER_FROM": "Transfer from {{user}}",
-	"T_GOT": "Deposit",
-	"T_SEND": "Withdrawal",
-	"T_USER_GOT": "Source",
-	"T_USER_SEND": "Recipient",
-	"T_AMOUNT": "Amount",
-	"T_DATE": "Date"
+	"TRANSFER_FROM": "Transfer from {{user}}"
 }

@@ -1,6 +1,6 @@
 import { editReplyError, getLocalizedDesc, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
-import { createEmbed } from "@/utils/create-embed.js";
+import { containerMessage, createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
 import {
 	ApplicationCommandOptionType,
@@ -54,20 +54,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		body: JSON.stringify({ destination: url }),
 	}).then(res => res.json());
 
-	const embed = createEmbed({
-		fields: [
-			{
-				name: await translateContext(interaction, "common:DESTINATION"),
-				value: res.destination,
-			},
-			{
-				name: await translateContext(interaction, "common:URL"),
-				value: res.url,
-			},
-		],
-	});
+	const container = createContainer().addTextDisplayComponents(
+		createText(`### ${res.url}`),
+		createText(`-# ${await translateContext(interaction, "common:DESTINATION")}: ${res.destination}`),
+	);
 
-	interaction.editReply({
-		embeds: [embed],
-	});
+	await interaction.editReply(containerMessage(container));
 };

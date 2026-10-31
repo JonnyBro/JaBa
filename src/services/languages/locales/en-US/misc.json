@@ -15,7 +15,6 @@
 	"USER_NOT_FOUND": "Member/user not found!",
 
 	"QUOTE_TITLE": "Message from {{user}}",
-	"QUOTE_CONTENT": "Content",
 	"QUOTE_ATTACHED": "Attached files",
 	"QUOTE_JUMP": "Jump to",
 	"QUOTE_FOOTER": "Sent at",

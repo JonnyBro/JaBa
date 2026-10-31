@@ -1,6 +1,6 @@
 import { editReplyError, getLocalizedDesc, getNoun, translateContext } from "@/helpers/functions.js";
 import { AutocompleteProps, CommandData, SlashCommandProps } from "@/types.js";
-import { createEmbed } from "@/utils/create-embed.js";
+import { containerMessage, createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
 import {
 	ApplicationCommandOptionType,
@@ -42,7 +42,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const time = interaction.options.getString("time", true);
 	const message = interaction.options.getString("message", true);
 
-	if (!conditions.some(s => time.includes(s))) return editReplyError(interaction, "general/remindme:TIME");
+	if (!conditions.some(s => time.includes(s))) return editReplyError(interaction, "general/remindme:ERROR_TIME");
 
 	const userData = await client.getUserData(interaction.user.id);
 	const dateNow = Date.now();
@@ -59,25 +59,13 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	await userData.save();
 
-	const embed = createEmbed({
-		author: {
-			name: await translateContext(interaction, "general/remindme:EMBED_SAVED"),
-		},
-		fields: [
-			{
-				name: await translateContext(interaction, "general/remindme:EMBED_TIME"),
-				value: `<t:${reminder.sendAt}:R>`,
-			},
-			{
-				name: await translateContext(interaction, "common:MESSAGE"),
-				value: reminder.message,
-			},
-		],
-	});
+	const container = createContainer().addTextDisplayComponents(
+		createText(`## ⏰ ${await translateContext(interaction, "general/remindme:EMBED_SAVED")}`),
+		createText(`-# ${await translateContext(interaction, "general/remindme:EMBED_TIME")} <t:${reminder.sendAt}:R>`),
+		createText(reminder.message),
+	);
 
-	interaction.editReply({
-		embeds: [embed],
-	});
+	await interaction.editReply(containerMessage(container));
 };
 
 export const autocompleteRun = async ({ interaction }: AutocompleteProps) => {

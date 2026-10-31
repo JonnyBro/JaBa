@@ -1,14 +1,29 @@
-import { getUsername, getXpForNextLevel, randomNum, replyTranslated, translateContext } from "@/helpers/functions.js";
+import {
+	getUsername,
+	getXpForNextLevel,
+	randomNum,
+	replyTranslated,
+	shortenString,
+	translateContext,
+} from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { componentRouter } from "@/utils/component-router.js";
-import { createEmbed } from "@/utils/create-embed.js";
+import { addTextWithThumbnail, containerMessage, createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, GuildTextBasedChannel, Message } from "discord.js";
+import {
+	ActionRowBuilder,
+	ButtonBuilder,
+	ButtonStyle,
+	GuildTextBasedChannel,
+	MediaGalleryItemBuilder,
+	Message,
+} from "discord.js";
 
 const client = useClient();
 const xpCooldown: Record<string, number> = {};
 const QUOTE_REGEXP = /discord\.com\/channels\/(?<guildId>\d+)\/(?<channelId>\d+)\/(?<messageId>\d+)/g;
 const DELETE_BUTTON_ID = "QUOTE_DELETE";
+const QUOTE_LENGTH = 3000;
 
 export const data = {
 	name: "messageCreate",
@@ -49,54 +64,43 @@ const handleLinkQuote = async (message: Message) => {
 		const msg = await channel.messages.fetch(messageId).catch(() => null);
 		if (!msg) return;
 
-		const embed = createEmbed({
-			author: {
-				name: await translateContext(message, "misc:QUOTE_TITLE", {
-					user: getUsername(msg.author),
-				}),
-				iconURL: "https://wynem.com/assets/images/icons/quote.webp",
-			},
-			footer: {
-				text: await translateContext(message, "misc:QUOTE_FOOTER"),
-			},
-			timestamp: msg.createdTimestamp,
-		}).setThumbnail(msg.author.displayAvatarURL());
+		const sentAt = Math.floor(msg.createdTimestamp / 1000);
+		const title = await translateContext(message, "misc:QUOTE_TITLE", { user: getUsername(msg.author) });
+		const sent = await translateContext(message, "misc:QUOTE_FOOTER");
+		const header = `### ${title}\n-# ${sent} <t:${sentAt}:f> · ${msg.channel}`;
 
-		if (msg.content)
-			embed.addFields([
-				{
-					name: await translateContext(message, "misc:QUOTE_CONTENT"),
-					value: msg.content,
-				},
-			]);
+		const container = addTextWithThumbnail(createContainer(), header, msg.author.displayAvatarURL());
 
-		if (msg.attachments.size > 0) {
-			const firstAttachment = msg.attachments.find(a => a.contentType?.includes("image/"));
+		if (msg.content) container.addTextDisplayComponents(createText(shortenString(msg.content, QUOTE_LENGTH)));
 
-			if (firstAttachment) {
-				embed.setImage(firstAttachment.url);
+		const images = msg.attachments.filter(a => a.contentType?.startsWith("image/")).first(10);
+		if (images.length)
+			container.addMediaGalleryComponents(gallery =>
+				gallery.addItems(images.map(image => new MediaGalleryItemBuilder().setURL(image.url))),
+			);
 
-				embed.addFields([
-					{
-						name: await translateContext(message, "misc:QUOTE_ATTACHED"),
-						value: msg.attachments.map(a => `[${a.name}](${a.url})`).join(", "),
-					},
-				]);
-			}
+		const files = msg.attachments.filter(a => !a.contentType?.startsWith("image/"));
+		if (files.size) {
+			const attached = await translateContext(message, "misc:QUOTE_ATTACHED");
+			const links = files.map(a => `[${a.name}](${a.url})`).join(", ");
+
+			container.addTextDisplayComponents(createText(`-# ${attached}: ${links}`));
 		}
 
-		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-			new ButtonBuilder()
-				.setLabel(await translateContext(message, "misc:QUOTE_JUMP"))
-				.setStyle(ButtonStyle.Link)
-				.setURL(msg.url),
-			new ButtonBuilder()
-				.setCustomId(DELETE_BUTTON_ID)
-				.setEmoji("1273665480451948544")
-				.setStyle(ButtonStyle.Danger),
+		container.addActionRowComponents(
+			new ActionRowBuilder<ButtonBuilder>().addComponents(
+				new ButtonBuilder()
+					.setLabel(await translateContext(message, "misc:QUOTE_JUMP"))
+					.setStyle(ButtonStyle.Link)
+					.setURL(msg.url),
+				new ButtonBuilder()
+					.setCustomId(DELETE_BUTTON_ID)
+					.setEmoji("1273665480451948544")
+					.setStyle(ButtonStyle.Danger),
+			),
 		);
 
-		await message.reply({ embeds: [embed], components: [row] });
+		await message.reply({ ...containerMessage(container), allowedMentions: { parse: [], repliedUser: false } });
 	} catch (e) {
 		if (e instanceof Error)
 			if (e.message.toLowerCase().includes("missing access"))

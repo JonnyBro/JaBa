@@ -17,19 +17,19 @@ export const formatCredits = async (context: Interaction, amount: number) => {
 
 export const cooldownTime = (until: number) => `<t:${Math.floor(until / 1000)}:R>`;
 
-const transaction = (user: string, amount: number, type: Transaction["type"]): Transaction => ({
+export const transaction = (user: string, amount: number, type: Transaction["type"]): Transaction => ({
 	user,
 	amount,
 	date: Date.now(),
 	type,
 });
 
-const update = (filter: QueryFilter<IMemberSchema>, changes: UpdateQuery<IMemberSchema>) =>
+export const updateMember = (filter: QueryFilter<IMemberSchema>, changes: UpdateQuery<IMemberSchema>) =>
 	useClient().db.updateOne(MemberModel, filter, changes);
 
 /** Every change is a single conditional update, so parallel commands and button spam can't overdraw or claim twice */
 export const takeCredits = async (member: MemberRef, amount: number, label?: string) => {
-	const result = await update(
+	const result = await updateMember(
 		{ _id: member._id, money: { $gte: amount } },
 		{ $inc: { money: -amount }, ...(label && { $push: { transactions: transaction(label, amount, "send") } }) },
 	);
@@ -38,7 +38,7 @@ export const takeCredits = async (member: MemberRef, amount: number, label?: str
 };
 
 export const giveCredits = (member: MemberRef, amount: number, label?: string) =>
-	update(
+	updateMember(
 		{ _id: member._id },
 		{ $inc: { money: amount }, ...(label && { $push: { transactions: transaction(label, amount, "got") } }) },
 	);
@@ -51,7 +51,7 @@ export const claimCooldown = async (
 	changes: UpdateQuery<IMemberSchema> = {},
 ) => {
 	const path = `cooldowns.${cooldown}`;
-	const result = await update(
+	const result = await updateMember(
 		{
 			_id: member._id,
 			$or: [{ [path]: { $lte: Date.now() } }, { [path]: { $exists: false } }],

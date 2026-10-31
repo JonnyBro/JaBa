@@ -1,8 +1,9 @@
 import logger from "@/helpers/logger.js";
 import UserModel from "@/models/UserModel.js";
 import { CronTaskData } from "@/types.js";
-import { createEmbed } from "@/utils/create-embed.js";
+import { createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
+import { MessageFlags } from "discord.js";
 
 const client = useClient();
 
@@ -40,25 +41,26 @@ export const data: CronTaskData = {
 				}
 
 				for (const { id, date } of users.filter(u => memberIds.has(u.id))) {
-					const embed = createEmbed({
-						author: {
-							name: client.user.username,
-						},
-						fields: [
-							{
-								name: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY", {
-									lng: guildData.language,
-								}),
-								value: client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
-									user: `<@${id}>`,
-									age: String(today.getFullYear() - date.getFullYear()),
-									lng: guildData.language,
-								}),
-							},
-						],
-					});
+					const lng = guildData.language;
+					const title = client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY", { lng });
+					const container = createContainer().addTextDisplayComponents(
+						createText(`## 🎂 ${title}`),
+						createText(
+							client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
+								user: `<@${id}>`,
+								age: String(today.getFullYear() - date.getFullYear()),
+								lng,
+							}),
+						),
+					);
 
-					await channel.send({ embeds: [embed] }).then(m => m.react("🎉"));
+					await channel
+						.send({
+							flags: MessageFlags.IsComponentsV2,
+							components: [container],
+							allowedMentions: { users: [id] },
+						})
+						.then(m => m.react("🎉"));
 				}
 			} catch (e) {
 				logger.error(`[checkBirthdays] Error in guild ${guild.id}:`, e);

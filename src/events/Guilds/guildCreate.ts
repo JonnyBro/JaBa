@@ -1,6 +1,6 @@
 import logger from "@/helpers/logger.js";
 import { isBlacklisted } from "@/services/bot-settings/index.js";
-import { createEmbed } from "@/utils/create-embed.js";
+import { addTextWithThumbnail, containerMessage, createContainer } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
 import { Guild } from "discord.js";
 
@@ -24,16 +24,9 @@ export async function run(guild: Guild) {
 		const users = guild.members.cache.filter(m => !m.user.bot).size;
 		const bots = guild.members.cache.filter(m => m.user.bot).size;
 
-		const embed = createEmbed({
-			author: {
-				name: guild.name,
-				iconURL: guild.iconURL() || client.user.avatarURL() || undefined,
-			},
-			description: `Joined a new guild!\n${guild.name}\nIt has **${users}** users and **${bots}** bots.`,
-		});
+		const text = `### 📥 ${guild.name}\n-# Joined a new guild\nIt has **${users}** users and **${bots}** bots.`;
+		const container = addTextWithThumbnail(createContainer(), text, guild.iconURL());
 
-		await logChannel.send({
-			embeds: [embed],
-		});
+		await logChannel.send(containerMessage(container));
 	}
 }
