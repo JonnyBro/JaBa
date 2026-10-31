@@ -1,0 +1,8 @@
+{
+	"DESCRIPTION": "Показує топ за кредитами, рівнем або репутацією",
+	"USAGE": "[type]",
+	"EXAMPLES": "leaderboard type:Level",
+	"TITLE": "Топ: {{name}}",
+	"SELECT": "Обери, що показати",
+	"EMPTY": "Тут поки нікого"
+}

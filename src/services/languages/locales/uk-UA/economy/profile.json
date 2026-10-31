@@ -1,0 +1,14 @@
+{
+	"DESCRIPTION": "Показує профіль користувача",
+	"USAGE": "(@user)",
+	"EXAMPLES": "profile\nprofile user:@jonny_bro",
+
+	"CREDITS": "💵 Кредити на руках: {{credits}}",
+	"BANK": "💳 У банку: {{credits}}",
+	"GLOBAL": "🌍 Кредити на всіх серверах: {{credits}}",
+	"REPUTATION": "🎩 Репутація: {{rep}}",
+	"LEVEL": "📊 Рівень: {{level}}",
+	"XP": "🔮 Досвід: {{xp}}/{{totalXp}}",
+	"BIRTHDATE": "🎂 День народження: {{birthdate}}",
+	"REGISTERED": "📅 Зареєстрований у боті: {{date}}"
+}

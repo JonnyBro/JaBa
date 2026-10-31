@@ -1,0 +1,13 @@
+{
+	"DESCRIPTION": "Додає емодзі на цей сервер за посиланням або з іншого сервера",
+	"USAGE": "(name) [string]",
+	"EXAMPLES": "addemoji name:google string:https://google.com",
+
+	"LINK_OR_EMOJI": "Посилання на картинку або емодзі з сервера",
+
+	"MISSING_NAME": "Вкажи назву емодзі",
+	"INVALID_LINK": "Вкажи нормальне посилання на картинку",
+
+	"SUCCESS": "{{emoji}} додано",
+	"ERROR": "Не вдалося додати {{name}}\n```{{error}}```"
+}

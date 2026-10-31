@@ -1,0 +1,11 @@
+{
+	"DESCRIPTION": "Показує текст поточного треку або будь-якої пісні",
+	"USAGE": "(query)",
+	"EXAMPLES": "lyrics\nlyrics query:Never Gonna Give You Up",
+	"QUERY": "Пісня для пошуку замість поточного треку",
+
+	"NOT_FOUND": "Текст для {{track}} не знайдено",
+	"UNAVAILABLE": "Тексти зараз недоступні, музичний сервер їх не підтримує",
+	"EXPIRED": "Цей текст більше недоступний, виклич /lyrics знову",
+	"FOOTER": "Текст: {{source}} • Сторінка {{page}}/{{pages}}"
+}

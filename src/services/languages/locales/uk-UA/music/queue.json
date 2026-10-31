@@ -1,0 +1,20 @@
+{
+	"DESCRIPTION": "Показує чергу",
+	"USAGE": "",
+	"EXAMPLES": "queue",
+
+	"QUEUE": "Черга",
+	"NO_QUEUE": "Черга порожня",
+	"CURRENTLY_PLAYING": "Зараз грає",
+	"NEXT": "Далі",
+	"TOTAL": "Треків: {{count}}, загальний час: {{time}}",
+
+	"SETTINGS": "Налаштування",
+	"SETTINGS_VALUE": "Гучність: **{{volume}}** • Повтор: **{{loop}}** • Автоплей: **{{autoplay}}**",
+
+	"DURATION": "Тривалість",
+	"SOURCE": "Джерело",
+	"ADDED": "Додав",
+	"PAUSED": "На паузі",
+	"PLAYING": "Зараз грає"
+}

@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Змінює гучність",
+	"USAGE": "[volume]",
+	"EXAMPLES": "volume volume:50",
+	"VOLUME": "Гучність від 0 до 150",
+	"SUCCESS": "Гучність: **{{volume}}**"
+}

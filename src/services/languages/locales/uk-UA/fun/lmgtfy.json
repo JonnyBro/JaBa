@@ -1,0 +1,7 @@
+{
+	"DESCRIPTION": "Створює посилання 'Давай я погуглю за тебе'",
+	"USAGE": "[query] [short]",
+	"QUERY": "Запит",
+	"SHORT": "Скоротити посилання?",
+	"EXAMPLES": "lmgtfy query:Як зробити бота для Discord? short:False"
+}

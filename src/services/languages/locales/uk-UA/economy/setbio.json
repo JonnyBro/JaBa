@@ -1,0 +1,13 @@
+{
+	"DESCRIPTION": "Встановлює опис профілю",
+	"USAGE": "[text]",
+	"EXAMPLES": "setbio text:Мене звати Джонні :shock:",
+
+	"CLEAR": "Видалити опис",
+	"SET": "Вказати опис",
+
+	"TEXT": "Текст опису",
+
+	"SUCCESS": "Твій опис: {{text}}",
+	"SUCCESS_CLEAR": "Опис видалено"
+}

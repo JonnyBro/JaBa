@@ -1,0 +1,9 @@
+{
+	"DESCRIPTION": "Переносить трек на інше місце в черзі",
+	"USAGE": "[from] [to]",
+	"EXAMPLES": "move from:5 to:1",
+	"FROM": "Поточний номер треку",
+	"TO": "Новий номер треку",
+
+	"SUCCESS": "{{track}} тепер #{{position}} у черзі"
+}

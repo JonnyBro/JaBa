@@ -1,4 +1,4 @@
-import { editReplyError, editReplySuccess, getLocalizedDesc } from "@/helpers/functions.js";
+import { editReplyError, editReplySuccess, getLocalizations, getLocalizedDesc } from "@/helpers/functions.js";
 import { getControllablePlayer, updateNowPlaying } from "@/helpers/music.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
@@ -22,9 +22,7 @@ export const data: CommandData = {
 			choices: (["queue", "track", "off"] as const).map(mode => ({
 				name: client.i18n.translate(`music/loop:MODE_${mode.toUpperCase()}`),
 				// eslint-disable-next-line camelcase
-				name_localizations: {
-					ru: client.i18n.translate(`music/loop:MODE_${mode.toUpperCase()}`, { lng: "ru-RU" }),
-				},
+				name_localizations: getLocalizations(`music/loop:MODE_${mode.toUpperCase()}`),
 				value: mode,
 			})),
 		},

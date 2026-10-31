@@ -1,0 +1,32 @@
+{
+	"DESCRIPTION": "Відкриває банк: баланс, поповнення, зняття та перекази",
+	"USAGE": "(@user)",
+	"EXAMPLES": "bank\nbank user:@jonny_bro",
+
+	"DEPOSIT": "Покласти в банк",
+	"WITHDRAW": "Зняти з банку",
+	"TRANSFER": "Переказати з банку",
+
+	"BTN_DEPOSIT": "Покласти",
+	"BTN_WITHDRAW": "Зняти",
+	"BTN_TRANSFER": "Переказати",
+	"BTN_HISTORY": "Історія",
+	"BTN_BACK": "Назад",
+
+	"AMOUNT": "Сума",
+	"AMOUNT_PLACEHOLDER": "Наприклад 1000 або all",
+	"RECIPIENT": "Отримувач",
+	"NOT_YOURS": "Це не твій банк, відкрий свій через /bank",
+
+	"NOT_ENOUGH_CREDITS": "У тебе не вистачає кредитів",
+	"NOT_ENOUGH_BANK": "У банку не вистачає кредитів",
+	"SUCCESS_DEP": "{{credits}} покладено в банк",
+	"SUCCESS_WD": "{{credits}} знято з банку",
+	"SUCCESS_TRANSFER": "Ти переказав {{credits}} користувачу {{reciever}}",
+	"NO_TRANSACTIONS": "У тебе немає переказів",
+	"EMBED_TRANSACTIONS": "Твої перекази",
+	"BANK": "Банк",
+	"NUMBERS": "Вгадай число",
+	"TRANSFER_TO": "Переказ для {{user}}",
+	"TRANSFER_FROM": "Переказ від {{user}}"
+}

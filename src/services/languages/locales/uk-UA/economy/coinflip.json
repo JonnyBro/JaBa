@@ -1,0 +1,29 @@
+{
+	"DESCRIPTION": "Підкинути монетку на кредити, проти бота або іншого учасника",
+	"USAGE": "[bet] [side] (@user)",
+	"EXAMPLES": "coinflip bet:500 side:heads\ncoinflip bet:1000 side:tails user:@jonny_bro",
+	"BET": "Скільки поставити",
+	"SIDE": "Орел чи решка",
+	"OPPONENT": "Викликати учасника замість гри з ботом",
+	"SIDES": {
+		"heads": "Орел",
+		"tails": "Решка"
+	},
+
+	"NOT_ENOUGH": "У тебе немає {{credits}} при собі",
+	"TRANSACTION": "Монетка",
+	"TRANSACTION_VS": "Монетка проти {{user}}",
+	"FLIPPING": "🪙 Монета в повітрі...",
+	"WON": "🪙 **{{side}}!** Ти виграв {{credits}}",
+	"LOST": "🪙 **{{side}}.** Ти програв {{credits}}",
+
+	"CHALLENGE": "🪙 {{user}} викликає {{opponent}} зіграти в монетку на {{credits}}\n{{user}} ставить на **{{side}}**, {{opponent}} дістається **{{other}}**. Переможець забирає обидві ставки",
+	"ACCEPT": "Прийняти",
+	"DECLINE": "Відмовитися",
+	"NOT_YOURS": "Цей виклик не тобі",
+	"EXPIRED": "🪙 Час на виклик минув",
+	"DECLINED": "🪙 {{user}} відмовився від виклику",
+	"CANCELLED": "🪙 {{user}} скасував виклик",
+	"CHALLENGER_BROKE": "🪙 У {{user}} більше не вистачає кредитів, виклик скасовано",
+	"PVP_RESULT": "🪙 **{{side}}!** {{winner}} обіграє {{loser}} і забирає {{credits}}"
+}

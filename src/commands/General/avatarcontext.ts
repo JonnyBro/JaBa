@@ -1,4 +1,5 @@
 import { buildAvatarPanel } from "@/helpers/avatar.js";
+import { getLocalizations } from "@/helpers/functions.js";
 import { UserContextCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import {
@@ -13,9 +14,7 @@ const client = useClient();
 
 export const data = new ContextMenuCommandBuilder()
 	.setName(client.i18n.translate("general/avatar:CONTEXT_NAME", { lng: "en-US" }))
-	.setNameLocalizations({
-		ru: client.i18n.translate("general/avatar:CONTEXT_NAME", { lng: "ru-RU" }),
-	})
+	.setNameLocalizations(getLocalizations("general/avatar:CONTEXT_NAME"))
 	.setType(ApplicationCommandType.User)
 	.setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
 	.setContexts([InteractionContextType.BotDM, InteractionContextType.PrivateChannel, InteractionContextType.Guild]);

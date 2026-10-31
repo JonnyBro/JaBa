@@ -1,4 +1,4 @@
-import { editReplyError, editReplySuccess } from "@/helpers/functions.js";
+import { editReplyError, editReplySuccess, getLocalizations } from "@/helpers/functions.js";
 import { addToQueue, checkVoice } from "@/helpers/music.js";
 import { MessageContextCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
@@ -17,9 +17,7 @@ const TRAILING_PUNCTUATION = /[.,;:!?~_]+$/;
 
 export const data = new ContextMenuCommandBuilder()
 	.setName(client.i18n.translate("music/play:CONTEXT_NAME", { lng: "en-US" }))
-	.setNameLocalizations({
-		ru: client.i18n.translate("music/play:CONTEXT_NAME", { lng: "ru-RU" }),
-	})
+	.setNameLocalizations(getLocalizations("music/play:CONTEXT_NAME"))
 	.setType(ApplicationCommandType.Message)
 	.setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
 	.setContexts([InteractionContextType.Guild]);

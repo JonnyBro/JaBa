@@ -1,5 +1,12 @@
 import { formatCredits, giveCredits, takeCredits } from "@/helpers/economy.js";
-import { editReplyError, getLocalizedDesc, getUsername, randomNum, translateContext } from "@/helpers/functions.js";
+import {
+	editReplyError,
+	getLocalizations,
+	getLocalizedDesc,
+	getUsername,
+	randomNum,
+	translateContext,
+} from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { componentRouter } from "@/utils/component-router.js";
 import { createContainer, createText } from "@/utils/create-container.js";
@@ -57,7 +64,7 @@ export const data: CommandData = {
 			choices: (["heads", "tails"] as const).map(side => ({
 				name: client.i18n.translate(`economy/coinflip:SIDES:${side}`),
 				// eslint-disable-next-line camelcase
-				name_localizations: { ru: client.i18n.translate(`economy/coinflip:SIDES:${side}`, { lng: "ru-RU" }) },
+				name_localizations: getLocalizations(`economy/coinflip:SIDES:${side}`),
 				value: side,
 			})),
 		},

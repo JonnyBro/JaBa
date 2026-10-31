@@ -2,7 +2,7 @@ import logger from "@/helpers/logger.js";
 import useClient from "@/utils/use-client.js";
 import { Migration } from "./types.js";
 
-const SUPPORTED_LANGUAGES = ["en-US", "ru-RU"];
+const SUPPORTED_LANGUAGES = ["en-US", "ru-RU", "uk-UA"];
 
 export default {
 	id: "004-guild-language",

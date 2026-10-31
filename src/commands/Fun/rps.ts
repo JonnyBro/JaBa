@@ -1,4 +1,10 @@
-import { editReplyError, getLocalizedDesc, randomNum, translateContext } from "@/helpers/functions.js";
+import {
+	editReplyError,
+	getLocalizations,
+	getLocalizedDesc,
+	randomNum,
+	translateContext,
+} from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { componentRouter } from "@/utils/component-router.js";
 import useClient from "@/utils/use-client.js";
@@ -43,9 +49,7 @@ export const data: CommandData = {
 			choices: MOVES.map(move => ({
 				name: `${EMOJI[move]} ${client.i18n.translate(`fun/rps:MOVES:${move}`)}`,
 				// eslint-disable-next-line camelcase
-				name_localizations: {
-					ru: `${EMOJI[move]} ${client.i18n.translate(`fun/rps:MOVES:${move}`, { lng: "ru-RU" })}`,
-				},
+				name_localizations: getLocalizations(`fun/rps:MOVES:${move}`, text => `${EMOJI[move]} ${text}`),
 				value: move,
 			})),
 		},

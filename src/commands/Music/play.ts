@@ -1,4 +1,10 @@
-import { editReplyError, editReplySuccess, getLocalizedDesc, shortenString } from "@/helpers/functions.js";
+import {
+	editReplyError,
+	editReplySuccess,
+	getLocalizations,
+	getLocalizedDesc,
+	shortenString,
+} from "@/helpers/functions.js";
 import { addToQueue, checkVoice, SEARCH_SOURCES, SearchSource } from "@/helpers/music.js";
 import { AutocompleteProps, CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
@@ -32,7 +38,7 @@ export const data: CommandData = {
 			choices: Object.keys(SEARCH_SOURCES).map(source => ({
 				name: client.i18n.translate(`music/play:SOURCES:${source}`),
 				// eslint-disable-next-line camelcase
-				name_localizations: { ru: client.i18n.translate(`music/play:SOURCES:${source}`, { lng: "ru-RU" }) },
+				name_localizations: getLocalizations(`music/play:SOURCES:${source}`),
 				value: source,
 			})),
 		},

@@ -1,0 +1,42 @@
+{
+	"DESCRIPTION": "Створити опитування з кнопками",
+	"USAGE": "(duration) (anonymous) (multiple) (hidden)",
+	"EXAMPLES": "poll\npoll duration:2h anonymous:True\npoll duration:3d multiple:True hidden:True",
+	"DURATION": "Скільки триває опитування, наприклад 30m, 2h або 3d (за замовчуванням доба)",
+	"ANONYMOUS_OPTION": "Приховати, хто за що голосував",
+	"MULTIPLE_OPTION": "Дозволити обрати кілька відповідей",
+	"HIDDEN_OPTION": "Показати результати лише після завершення",
+
+	"MODAL_TITLE": "Нове опитування",
+	"QUESTION": "Питання",
+	"OPTIONS": "Варіанти відповіді, по одному на рядок",
+	"OPTIONS_PLACEHOLDER": "Піца\nСуші\nБургери",
+	"BAD_DURATION": "Тривалість має бути від 1 хвилини до 30 днів, наприклад 30m, 2h або 3d",
+	"BAD_OPTIONS": "В опитуванні має бути від 2 до {{max}} різних варіантів, кожен до {{length}} символів",
+
+	"AUTHOR": "Автор {{user}}",
+	"ENDS": "Завершиться {{time}}",
+	"ENDED": "Завершено",
+	"ANONYMOUS": "Анонімне",
+	"MULTIPLE": "Кілька відповідей",
+	"HIDDEN": "Результати після завершення",
+	"TOTAL": "{{count}} {{votes}}",
+	"VOTES": {
+		"1": "голос",
+		"2": "голоси",
+		"5": "голосів"
+	},
+	"VOTERS_BUTTON": "Хто голосував",
+	"END_BUTTON": "Завершити",
+
+	"YOUR_VOTE": "Твій голос: {{options}}",
+	"VOTE_REMOVED": "Твій голос скасовано",
+	"NOT_FOUND": "Цього опитування більше немає",
+	"ALREADY_ENDED": "Це опитування вже завершено",
+	"CANT_END": "Завершити опитування може лише автор або той, хто може керувати повідомленнями",
+	"VOTERS_HIDDEN": "У цьому опитуванні голоси приховано",
+
+	"RESULT": "📊 {{user}}, твоє опитування **{{question}}** завершено. Переміг варіант {{winner}}: {{count}} {{votes}} ({{percent}}%)",
+	"RESULT_TIE": "📊 {{user}}, твоє опитування **{{question}}** завершилося нічиєю між {{winner}}, по {{count}} {{votes}} ({{percent}}%)",
+	"RESULT_EMPTY": "📊 {{user}}, твоє опитування **{{question}}** завершено, але ніхто не проголосував"
+}

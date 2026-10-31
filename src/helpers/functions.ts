@@ -130,26 +130,27 @@ export const replySuccess = async <T extends CacheType = CacheType>(
 
 export const getLocale = async (guildId: string) => (await useClient().getGuildData(guildId)).language;
 
-export const getLocalizedDesc = (key: string) => {
+/** Translations of a key for every supported language, keyed by Discord locale codes */
+export const getLocalizations = (key: string, format: (text: string) => string = text => text) => {
 	const client = useClient();
 
-	const locals = client.i18n.SupportedLanguages.reduce(
+	return client.i18n.SupportedLanguages.reduce(
 		(acc, lng) => {
 			const splitted = lng.split("-")[0];
 			const short = localeExcludes.includes(splitted) ? lng : splitted;
-			acc[short as Locale] = client.i18n.translate(key, { lng });
+			acc[short as Locale] = format(client.i18n.translate(key, { lng }));
 
 			return acc;
 		},
 		{} as Record<Locale, string>,
 	);
-
-	return {
-		description: client.i18n.translate(key),
-		// eslint-disable-next-line camelcase
-		description_localizations: locals,
-	};
 };
+
+export const getLocalizedDesc = (key: string) => ({
+	description: useClient().i18n.translate(key),
+	// eslint-disable-next-line camelcase
+	description_localizations: getLocalizations(key),
+});
 
 export const getNoun = (number: number, wordForms: string[]) => {
 	if (!Array.isArray(wordForms) || wordForms.length !== 3)

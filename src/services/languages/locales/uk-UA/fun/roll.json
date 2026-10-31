@@ -1,0 +1,9 @@
+{
+	"DESCRIPTION": "Кинути кубики",
+	"USAGE": "(dice)",
+	"EXAMPLES": "roll\nroll dice:d20\nroll dice:4d6-1",
+	"DICE": "Кубики, наприклад d20, 2d6 або 4d6+3 (за замовчуванням 1d6)",
+
+	"BAD_DICE": "Напиши кубики як `d20`, `2d6` або `4d6+3`: до {{dice}} кубиків, від 2 до {{sides}} граней",
+	"RESULT": "🎲 **{{notation}}**: {{rolls}}**{{total}}**"
+}
