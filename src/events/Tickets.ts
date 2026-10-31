@@ -1,4 +1,4 @@
-import { asyncForEach, getUsername, shortenString, translateContext } from "@/helpers/functions.js";
+import { getUsername, shortenString, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
 import { canCloseTicket, closeTicket, getTicket, isTicketStaff } from "@/helpers/tickets.js";
 import TicketModel from "@/models/TicketModel.js";
@@ -12,7 +12,6 @@ import {
 	GuildMember,
 	MessageFlags,
 	ModalBuilder,
-	PermissionsBitField,
 	TextInputBuilder,
 	TextInputStyle,
 	ThreadAutoArchiveDuration,
@@ -121,17 +120,6 @@ export async function run(interaction: BaseInteraction) {
 
 				await thread.members.add(interaction.user.id);
 				await thread.members.add("@me");
-
-				// FIXME: not sure about this...
-				const moders = Array.from(
-					interaction.guild.members.cache
-						.filter(m => m.permissions.has([PermissionsBitField.Flags.ModerateMembers]))
-						.values(),
-				);
-
-				asyncForEach(moders, async m => {
-					await thread.members.add(m.user.id);
-				});
 
 				const ticketEmbedsButtons = [
 					new ButtonBuilder()
