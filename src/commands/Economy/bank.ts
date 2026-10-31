@@ -1,18 +1,36 @@
-import { asyncForEach, editReplyError, getLocalizedDesc, getUsername, translateContext } from "@/helpers/functions.js";
-import { formatCredits } from "@/helpers/economy.js";
+import { formatCredits, transaction, updateMember } from "@/helpers/economy.js";
+import { editReplyError, getLocalizedDesc, getUsername, replyError, translateContext } from "@/helpers/functions.js";
+import MemberModel from "@/models/MemberModel.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
-import { createEmbed } from "@/utils/create-embed.js";
+import { componentRouter } from "@/utils/component-router.js";
+import { containerMessage, createContainer, createSeparator, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "discord.js";
+import {
+	ActionRowBuilder,
+	ApplicationCommandOptionType,
+	ApplicationIntegrationType,
+	ButtonBuilder,
+	ButtonInteraction,
+	ButtonStyle,
+	Interaction,
+	InteractionContextType,
+	LabelBuilder,
+	MessageFlags,
+	ModalBuilder,
+	ModalSubmitInteraction,
+	TextInputBuilder,
+	TextInputStyle,
+	User,
+	UserSelectMenuBuilder,
+} from "discord.js";
 
 const client = useClient();
 
-const parseCredits = (option: string | null, all: number) => {
-	if (option?.toLowerCase() === "all") return all;
+const BANK_ID = "ECO_BANK";
+const MODAL_TIMEOUT = 5 * 60 * 1000;
+const HISTORY_SIZE = 20;
 
-	const credits = Number(option);
-	return Number.isSafeInteger(credits) ? credits : NaN;
-};
+type Action = "deposit" | "withdraw" | "transfer" | "history" | "back";
 
 export const data: CommandData = {
 	name: "bank",
@@ -22,267 +40,272 @@ export const data: CommandData = {
 	contexts: [InteractionContextType.Guild],
 	options: [
 		{
-			name: "balance",
-			...getLocalizedDesc("economy/bank:BALANCE"),
-			type: ApplicationCommandOptionType.Subcommand,
-			options: [
-				{
-					name: "user",
-					...getLocalizedDesc("common:USER"),
-					type: ApplicationCommandOptionType.User,
-				},
-			],
-		},
-		{
-			name: "deposit",
-			...getLocalizedDesc("economy/bank:DEPOSIT"),
-			type: ApplicationCommandOptionType.Subcommand,
-			options: [
-				{
-					name: "credits",
-					...getLocalizedDesc("economy/bank:OPTION_NAN_ALL"),
-					type: ApplicationCommandOptionType.String,
-					required: true,
-				},
-			],
-		},
-		{
-			name: "withdraw",
-			...getLocalizedDesc("economy/bank:WITHDRAW"),
-			type: ApplicationCommandOptionType.Subcommand,
-			options: [
-				{
-					name: "credits",
-					...getLocalizedDesc("economy/bank:OPTION_NAN_ALL"),
-					type: ApplicationCommandOptionType.String,
-					required: true,
-				},
-			],
-		},
-		{
-			name: "transfer",
-			...getLocalizedDesc("economy/bank:TRANSFER"),
-			type: ApplicationCommandOptionType.Subcommand,
-			options: [
-				{
-					name: "user",
-					...getLocalizedDesc("common:USER"),
-					type: ApplicationCommandOptionType.User,
-					required: true,
-				},
-				{
-					name: "credits",
-					...getLocalizedDesc("economy/bank:OPTION_NAN_ALL"),
-					type: ApplicationCommandOptionType.String,
-					required: true,
-				},
-			],
-		},
-		{
-			name: "transactions",
-			...getLocalizedDesc("economy/bank:TRANSACTIONS"),
-			type: ApplicationCommandOptionType.Subcommand,
+			name: "user",
+			...getLocalizedDesc("common:USER"),
+			type: ApplicationCommandOptionType.User,
 		},
 	],
 };
 
-// TODO: Move from embeds to components v2
+const parseCredits = (input: string, all: number) => {
+	if (input.trim().toLowerCase() === "all") return all;
+
+	const credits = Number(input.replace(/[\s,]/g, ""));
+	return Number.isSafeInteger(credits) ? credits : NaN;
+};
+
+const t = (interaction: Interaction, key: string, args?: Record<string, unknown>) =>
+	translateContext(interaction, key, args);
+
+const button = (id: string, label: string, style: ButtonStyle, emoji: string) =>
+	new ButtonBuilder().setCustomId(id).setLabel(label).setStyle(style).setEmoji(emoji);
+
+const renderPanel = async (interaction: Interaction, user: User, status?: string) => {
+	const memberData = await client.getMemberData(interaction.guildId!, user.id);
+
+	const everywhere = await MemberModel.find({ id: user.id }, { guildID: 1, money: 1, bank: 1 }).lean();
+	const globalMoney = everywhere
+		.filter(m => client.guilds.cache.has(m.guildID))
+		.reduce((sum, m) => sum + m.money + m.bank, 0);
+
+	const lines = [
+		await t(interaction, "economy/profile:CREDITS", {
+			credits: await formatCredits(interaction, memberData.money),
+		}),
+		await t(interaction, "economy/profile:BANK", { credits: await formatCredits(interaction, memberData.bank) }),
+		await t(interaction, "economy/profile:GLOBAL", { credits: await formatCredits(interaction, globalMoney) }),
+	];
+
+	const container = createContainer()
+		.addTextDisplayComponents(
+			createText(`## 🏦 ${await t(interaction, "economy/bank:BANK")} · ${getUsername(user)}`),
+		)
+		.addSeparatorComponents(createSeparator())
+		.addTextDisplayComponents(createText(lines.join("\n")));
+
+	// Someone else's balance is read-only
+	if (user.id === interaction.user.id)
+		container.addActionRowComponents(
+			new ActionRowBuilder<ButtonBuilder>().addComponents(
+				button(
+					`${BANK_ID}:deposit:${user.id}`,
+					await t(interaction, "economy/bank:BTN_DEPOSIT"),
+					ButtonStyle.Success,
+					"📥",
+				),
+				button(
+					`${BANK_ID}:withdraw:${user.id}`,
+					await t(interaction, "economy/bank:BTN_WITHDRAW"),
+					ButtonStyle.Primary,
+					"📤",
+				),
+				button(
+					`${BANK_ID}:transfer:${user.id}`,
+					await t(interaction, "economy/bank:BTN_TRANSFER"),
+					ButtonStyle.Secondary,
+					"💸",
+				),
+				button(
+					`${BANK_ID}:history:${user.id}`,
+					await t(interaction, "economy/bank:BTN_HISTORY"),
+					ButtonStyle.Secondary,
+					"📜",
+				),
+			),
+		);
+
+	if (status) container.addSeparatorComponents(createSeparator()).addTextDisplayComponents(createText(status));
+
+	return containerMessage(container);
+};
+
+const renderHistory = async (interaction: ButtonInteraction) => {
+	const memberData = await client.getMemberData(interaction.guildId!, interaction.user.id);
+	const transactions = [...memberData.transactions].sort((a, b) => b.date - a.date).slice(0, HISTORY_SIZE);
+
+	const lines = await Promise.all(
+		transactions.map(async tr => {
+			const sign = tr.type === "got" ? "🟢 +" : "🔴 −";
+			const amount = await formatCredits(interaction, tr.amount);
+
+			return `${sign}${amount} · ${tr.user} · <t:${Math.floor(tr.date / 1000)}:R>`;
+		}),
+	);
+
+	const container = createContainer()
+		.addTextDisplayComponents(createText(`## 📜 ${await t(interaction, "economy/bank:EMBED_TRANSACTIONS")}`))
+		.addSeparatorComponents(createSeparator())
+		.addTextDisplayComponents(
+			createText(lines.length ? lines.join("\n") : await t(interaction, "economy/bank:NO_TRANSACTIONS")),
+		)
+		.addActionRowComponents(
+			new ActionRowBuilder<ButtonBuilder>().addComponents(
+				button(
+					`${BANK_ID}:back:${interaction.user.id}`,
+					await t(interaction, "economy/bank:BTN_BACK"),
+					ButtonStyle.Secondary,
+					"⬅️",
+				),
+			),
+		);
+
+	return containerMessage(container);
+};
+
+const amountLabel = async (interaction: Interaction) =>
+	new LabelBuilder().setLabel(await t(interaction, "economy/bank:AMOUNT")).setTextInputComponent(
+		new TextInputBuilder()
+			.setCustomId("amount")
+			.setStyle(TextInputStyle.Short)
+			.setPlaceholder(await t(interaction, "economy/bank:AMOUNT_PLACEHOLDER"))
+			.setMaxLength(20)
+			.setRequired(true),
+	);
+
+const askAmount = async (interaction: ButtonInteraction, action: "deposit" | "withdraw" | "transfer") => {
+	// Each click gets its own modal id, so an older modal can't pick up this one's submit
+	const modalId = `${BANK_ID}_MODAL:${interaction.id}`;
+	const modal = new ModalBuilder()
+		.setCustomId(modalId)
+		.setTitle(await t(interaction, `economy/bank:${action.toUpperCase()}`));
+
+	if (action === "transfer")
+		modal.addLabelComponents(
+			new LabelBuilder()
+				.setLabel(await t(interaction, "economy/bank:RECIPIENT"))
+				.setUserSelectMenuComponent(new UserSelectMenuBuilder().setCustomId("user").setRequired(true)),
+		);
+
+	modal.addLabelComponents(await amountLabel(interaction));
+
+	await interaction.showModal(modal);
+
+	return interaction.awaitModalSubmit({ time: MODAL_TIMEOUT, filter: i => i.customId === modalId }).catch(() => null);
+};
+
+const fail = async (submitted: ModalSubmitInteraction, key: string) => {
+	await replyError(submitted, key, null, { prefixEmoji: "error", ephemeral: true });
+};
+
+const move = async (interaction: ButtonInteraction, action: "deposit" | "withdraw") => {
+	const submitted = await askAmount(interaction, action);
+	if (!submitted?.isFromMessage()) return;
+
+	const memberData = await client.getMemberData(interaction.guildId!, interaction.user.id);
+	const deposit = action === "deposit";
+	const credits = parseCredits(
+		submitted.fields.getTextInputValue("amount"),
+		deposit ? memberData.money : memberData.bank,
+	);
+	if (!(credits > 0)) return fail(submitted, "misc:MORE_THAN_ZERO");
+
+	const result = await updateMember(
+		deposit ? { _id: memberData._id, money: { $gte: credits } } : { _id: memberData._id, bank: { $gte: credits } },
+		{
+			$inc: deposit ? { money: -credits, bank: credits } : { money: credits, bank: -credits },
+			$push: {
+				transactions: transaction(await t(interaction, "economy/bank:BANK"), credits, deposit ? "send" : "got"),
+			},
+		},
+	);
+	if (!result.modifiedCount)
+		return fail(submitted, deposit ? "economy/bank:NOT_ENOUGH_CREDITS" : "economy/bank:NOT_ENOUGH_BANK");
+
+	const status = await t(interaction, deposit ? "economy/bank:SUCCESS_DEP" : "economy/bank:SUCCESS_WD", {
+		credits: await formatCredits(interaction, credits),
+	});
+
+	await submitted.update(await renderPanel(interaction, interaction.user, `-# ✅ ${status}`));
+};
+
+const transfer = async (interaction: ButtonInteraction) => {
+	const submitted = await askAmount(interaction, "transfer");
+	if (!submitted?.isFromMessage()) return;
+
+	const target = submitted.fields.getSelectedUsers("user", true).first()!;
+	if (target.bot) return fail(submitted, "misc:BOT_USER");
+	if (target.id === interaction.user.id) return fail(submitted, "misc:CANT_YOURSELF");
+
+	const member = await interaction.guild!.members.fetch(target.id).catch(() => null);
+	if (!member) return fail(submitted, "misc:USER_NOT_FOUND");
+
+	const memberData = await client.getMemberData(interaction.guildId!, interaction.user.id);
+	const credits = parseCredits(submitted.fields.getTextInputValue("amount"), memberData.bank);
+	if (!(credits > 0)) return fail(submitted, "misc:MORE_THAN_ZERO");
+
+	const recieverData = await client.getMemberData(interaction.guildId!, target.id);
+
+	const result = await updateMember(
+		{ _id: memberData._id, bank: { $gte: credits } },
+		{
+			$inc: { bank: -credits },
+			$push: {
+				transactions: transaction(
+					await t(interaction, "economy/bank:TRANSFER_TO", { user: getUsername(target) }),
+					credits,
+					"send",
+				),
+			},
+		},
+	);
+	if (!result.modifiedCount) return fail(submitted, "economy/bank:NOT_ENOUGH_BANK");
+
+	await updateMember(
+		{ _id: recieverData._id },
+		{
+			$inc: { bank: credits },
+			$push: {
+				transactions: transaction(
+					await t(interaction, "economy/bank:TRANSFER_FROM", { user: getUsername(interaction.user) }),
+					credits,
+					"got",
+				),
+			},
+		},
+	);
+
+	const status = await t(interaction, "economy/bank:SUCCESS_TRANSFER", {
+		reciever: target.toString(),
+		credits: await formatCredits(interaction, credits),
+	});
+
+	await submitted.update(await renderPanel(interaction, interaction.user, `-# ✅ ${status}`));
+};
+
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
-	const subcommand = interaction.options.getSubcommand();
+	const user = interaction.options.getUser("user") ?? interaction.user;
+	if (user.bot) return editReplyError(interaction, "misc:BOT_USER");
 
-	const guildId = interaction.guildId!;
-	const memberId = interaction.user.id;
-	const memberData = await client.getMemberData(guildId, memberId);
-	const embed = createEmbed();
+	await interaction.editReply(await renderPanel(interaction, user));
+};
 
-	switch (subcommand) {
-		case "balance": {
-			const targetUser = interaction.options.getUser("user") || interaction.user;
-			if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
+componentRouter.register(BANK_ID, async interaction => {
+	if (!interaction.isButton()) return;
 
-			const targetData =
-				targetUser.id === interaction.user.id ? memberData : await client.getMemberData(guildId, targetUser.id);
+	const [, action, ownerId] = interaction.customId.split(":") as [string, Action, string];
 
-			let globalMoney = 0;
-			const guilds = client.guilds.cache.filter(g => g.members.cache.has(targetUser.id));
-			const guldsArray = Array.from(guilds.values());
-
-			await asyncForEach(guldsArray, async guild => {
-				const data = await client.getMemberData(guild.id, targetUser.id);
-				globalMoney += data.money + data.bank;
-			});
-
-			embed.setFields([
-				{
-					name: (await translateContext(interaction, "economy/profile:CREDITS")).split(":")[0],
-					value: await formatCredits(interaction, targetData.money),
-					inline: true,
-				},
-				{
-					name: (await translateContext(interaction, "economy/profile:BANK")).split(":")[0],
-					value: await formatCredits(interaction, targetData.bank),
-					inline: true,
-				},
-				{
-					name: (await translateContext(interaction, "economy/profile:GLOBAL")).split(":")[0],
-					value: await formatCredits(interaction, globalMoney),
-					inline: true,
-				},
-			]);
-
-			break;
-		}
-
-		case "deposit": {
-			const credits = parseCredits(interaction.options.getString("credits"), memberData.money);
-
-			if (!(credits > 0)) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
-			if (memberData.money < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_CREDITS");
-
-			memberData.set({
-				money: memberData.money - credits,
-				bank: memberData.bank + credits,
-			});
-			memberData.transactions.push({
-				user: await translateContext(interaction, "economy/bank:BANK"),
-				amount: credits,
-				date: Date.now(),
-				type: "send",
-			});
-			await memberData.save();
-
-			embed.setDescription(
-				await translateContext(interaction, "economy/bank:SUCCESS_DEP", {
-					credits: await formatCredits(interaction, credits),
-				}),
-			);
-
-			break;
-		}
-
-		case "withdraw": {
-			const credits = parseCredits(interaction.options.getString("credits"), memberData.bank);
-
-			if (!(credits > 0)) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
-			if (memberData.bank < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
-
-			memberData.set({
-				money: memberData.money + credits,
-				bank: memberData.bank - credits,
-			});
-			memberData.transactions.push({
-				user: await translateContext(interaction, "economy/bank:BANK"),
-				amount: credits,
-				date: Date.now(),
-				type: "got",
-			});
-			await memberData.save();
-
-			embed.setDescription(
-				await translateContext(interaction, "economy/bank:SUCCESS_WD", {
-					credits: await formatCredits(interaction, credits),
-				}),
-			);
-
-			break;
-		}
-
-		case "transfer": {
-			const credits = parseCredits(interaction.options.getString("credits"), memberData.bank);
-
-			const targetUser = interaction.options.getUser("user") || interaction.user;
-			if (targetUser.bot) return editReplyError(interaction, "misc:BOT_USER");
-
-			if (!(credits > 0)) return editReplyError(interaction, "misc:MORE_THAN_ZERO");
-			if (memberData.bank < credits) return editReplyError(interaction, "economy/bank:NOT_ENOUGH_BANK");
-			if (interaction.user.id === targetUser.id) return editReplyError(interaction, "misc:CANT_YOURSELF");
-
-			const recieverData = await client.getMemberData(guildId, targetUser.id);
-
-			memberData.set("bank", memberData.bank - credits);
-			recieverData.set("bank", recieverData.bank + credits);
-
-			memberData.transactions.push({
-				user: await translateContext(interaction, "economy/bank:TRANSFER_TO", {
-					user: getUsername(targetUser),
-				}),
-				amount: credits,
-				date: Date.now(),
-				type: "send",
-			});
-
-			recieverData.transactions.push({
-				user: await translateContext(interaction, "economy/bank:TRANSFER_FROM", {
-					user: getUsername(interaction.user),
-				}),
-				amount: credits,
-				date: Date.now(),
-				type: "got",
-			});
-
-			await memberData.save();
-			await recieverData.save();
-
-			embed.setDescription(
-				await translateContext(interaction, "economy/bank:SUCCESS_TRANSFER", {
-					reciever: targetUser.toString(),
-					credits: await formatCredits(interaction, credits),
-				}),
-			);
-
-			break;
-		}
-
-		case "transactions": {
-			const transactions = memberData.transactions;
-			const sortedTransactions: string[][] = [[], []];
-
-			const sortedTransactionArray = transactions.sort((a, b) => b.date - a.date).slice(0, 20);
-
-			await Promise.all(
-				sortedTransactionArray.map(async t => {
-					const array = t.type === "got" ? sortedTransactions[0] : sortedTransactions[1];
-
-					const [translated, amountText, dateText] = await Promise.all([
-						translateContext(interaction, "economy/bank:T_USER_" + t.type.toUpperCase()),
-						translateContext(interaction, "economy/bank:T_AMOUNT"),
-						translateContext(interaction, "economy/bank:T_DATE"),
-					]);
-
-					array.push(
-						`${translated}: ${t.user}\n${amountText}: ${t.amount}\n${dateText}:
-						<t:${Math.floor(t.date / 1000)}:f>\n`,
-					);
-				}),
-			);
-
-			if (transactions.length <= 0)
-				embed.setDescription(await translateContext(interaction, "economy/bank:NO_TRANSACTIONS"));
-			else {
-				if (sortedTransactions[0].length > 0)
-					embed.addFields([
-						{
-							name: await translateContext(interaction, "economy/bank:T_GOT"),
-							value: sortedTransactions[0].join("\n"),
-							inline: true,
-						},
-					]);
-
-				if (sortedTransactions[1].length > 0)
-					embed.addFields([
-						{
-							name: await translateContext(interaction, "economy/bank:T_SEND"),
-							value: sortedTransactions[1].join("\n"),
-							inline: true,
-						},
-					]);
-			}
-
-			break;
-		}
+	if (interaction.user.id !== ownerId) {
+		await interaction.reply({
+			content: await t(interaction, "economy/bank:NOT_YOURS"),
+			flags: MessageFlags.Ephemeral,
+		});
+		return;
 	}
 
-	await interaction.editReply({ embeds: [embed] });
-};
+	switch (action) {
+		case "deposit":
+		case "withdraw":
+			return move(interaction, action);
+
+		case "transfer":
+			return transfer(interaction);
+
+		case "history":
+			return void (await interaction.update(await renderHistory(interaction)));
+
+		case "back":
+			return void (await interaction.update(await renderPanel(interaction, interaction.user)));
+	}
+});
