@@ -1,4 +1,5 @@
 import { claimCooldown, cooldownTime, formatCredits } from "@/helpers/economy.js";
+import { PROJECT_ROOT } from "@/constants/index.js";
 import {
 	editReplyError,
 	editReplySuccess,
@@ -8,14 +9,17 @@ import {
 } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
-import { ApplicationIntegrationType, InteractionContextType } from "discord.js";
+import { ApplicationIntegrationType, AttachmentBuilder, InteractionContextType } from "discord.js";
+import { join } from "path";
 
 const client = useClient();
 
 const COOLDOWN = 60 * 60 * 1000;
+const FORM_COOLDOWN = 30 * 1000;
 const MIN_PAY = 100;
 const MAX_PAY = 300;
 const JOBS = 8;
+const APPLICATION_FORM = join(PROJECT_ROOT, "assets", "job-application.webp");
 
 export const data: CommandData = {
 	name: "work",
@@ -30,6 +34,16 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
 	const memberData = await client.getMemberData(interaction.guildId!, interaction.user.id);
+
+	if (!memberData.cooldowns.work) {
+		const claimed = await claimCooldown(memberData, "work", Date.now() + FORM_COOLDOWN);
+		if (claimed)
+			return interaction.editReply({
+				content: await translateContext(interaction, "economy/work:FIRST_SHIFT"),
+				files: [new AttachmentBuilder(APPLICATION_FORM, { name: "job-application.webp" })],
+			});
+	}
+
 	const pay = randomNum(MIN_PAY, MAX_PAY);
 	const label = await translateContext(interaction, "economy/work:TRANSACTION");
 
@@ -38,8 +52,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		$push: { transactions: { user: label, amount: pay, date: Date.now(), type: "got" } },
 	});
 
-	if (!claimed)
-		return editReplyError(interaction, "economy/work:COOLDOWN", { time: cooldownTime(memberData.cooldowns.work) });
+	if (!claimed) {
+		const { cooldowns } = await client.getMemberData(interaction.guildId!, interaction.user.id);
+		return editReplyError(interaction, "economy/work:COOLDOWN", { time: cooldownTime(cooldowns.work) });
+	}
 
 	await editReplySuccess(interaction, `economy/work:JOB_${randomNum(1, JOBS)}`, {
 		credits: await formatCredits(interaction, pay),

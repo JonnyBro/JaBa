@@ -4,6 +4,7 @@
 	"EXAMPLES": "work",
 
 	"COOLDOWN": "You're still tired after the last shift, come back {{time}}",
+	"FIRST_SHIFT": "Hey! Where are you going? Fill out the paperwork come back",
 	"TRANSACTION": "Work",
 
 	"JOB_1": "You washed dishes in a cafe all evening and got {{credits}}",

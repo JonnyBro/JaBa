@@ -1,6 +1,6 @@
 {
     "name": "jaba",
-    "version": "6.3.1",
+    "version": "6.3.2",
     "main": "src/index.js",
     "type": "module",
     "scripts": {
@@ -8,7 +8,7 @@
         "dev": "pnpm run \"/^(bot|dashboard):dev$/\"",
         "build": "pnpm bot:build && pnpm dashboard:build",
         "bot:dev": "NODE_ENV=dev tsx src/index.ts",
-        "bot:build": "rimraf tsconfig.tsbuildinfo dist && tsc && tsc-alias && cpx \"src/**/*.{json,png}\" dist",
+        "bot:build": "rimraf tsconfig.tsbuildinfo dist && tsc && tsc-alias && cpx \"src/**/*.{json,png,webp}\" dist",
         "dashboard:dev": "pnpm --filter @jaba/dashboard dev",
         "dashboard:build": "pnpm --filter @jaba/dashboard build",
         "delete-commands": "tsx delete-commands.ts",
