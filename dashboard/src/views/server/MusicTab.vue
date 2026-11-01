@@ -33,16 +33,14 @@ import { useMusic } from "@/composables/useMusic";
 import { formatDuration, formatTrackTime } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { getErrorMessage } from "@/plugins/axios";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
-import { useStorage } from "@vueuse/core";
 import {
 	ArrowDown,
 	ArrowUp,
 	Infinity as InfinityIcon,
 	ListMusic,
 	ListPlus,
-	MicVocal,
 	LoaderCircle,
+	MicVocal,
 	Pause,
 	Play,
 	Repeat,
@@ -56,6 +54,8 @@ import {
 	Volume2,
 	WifiOff,
 } from "@lucide/vue";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
+import { useStorage } from "@vueuse/core";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";

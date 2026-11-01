@@ -6,8 +6,8 @@ import SectionTitle from "@/components/common/SectionTitle.vue";
 import UserAvatar from "@/components/common/UserAvatar.vue";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useQuery } from "@tanstack/vue-query";
 import { Music, Plus, Settings } from "@lucide/vue";
+import { useQuery } from "@tanstack/vue-query";
 
 const guilds = useQuery({ queryKey: ["guilds"], queryFn: getGuilds });
 </script>

@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getErrorMessage } from "@/plugins/axios";
-import { useMutation } from "@tanstack/vue-query";
 import {
 	ArrowDown,
 	ArrowUp,
@@ -20,6 +19,7 @@ import {
 	Trash2,
 	Type,
 } from "@lucide/vue";
+import { useMutation } from "@tanstack/vue-query";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";

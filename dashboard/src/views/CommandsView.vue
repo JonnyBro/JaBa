@@ -8,8 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { currentLocale } from "@/i18n";
-import { useQuery } from "@tanstack/vue-query";
 import { MessageSquare, Search, Server, User } from "@lucide/vue";
+import { useQuery } from "@tanstack/vue-query";
 import { computed, ref } from "vue";
 
 const commands = useQuery({

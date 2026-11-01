@@ -1,6 +1,6 @@
-import { createI18n } from "vue-i18n";
-import { computed, ref, watchEffect } from "vue";
 import en from "@/locales/en.json";
+import { computed, ref, watchEffect } from "vue";
+import { createI18n } from "vue-i18n";
 
 /**
  * Every JSON file in src/locales is a language. To add one, copy en.json to <code>.json

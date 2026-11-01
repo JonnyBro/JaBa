@@ -1,8 +1,8 @@
 import dashboardPackageJson from "@/../dashboard/package.json" with { type: "json" };
 import { PROJECT_ROOT, SUPER_CONTEXT } from "@/constants/index.js";
+import { STORAGE_QUOTA } from "@/helpers/audio-files.js";
 import logger from "@/helpers/logger.js";
 import useClient from "@/utils/use-client.js";
-import { STORAGE_QUOTA } from "@/helpers/audio-files.js";
 import fastifyCookie from "@fastify/cookie";
 import fastifyMultipart from "@fastify/multipart";
 import fastifySession from "@fastify/session";
@@ -11,6 +11,7 @@ import fastifyWebsocket from "@fastify/websocket";
 import Fastify, { FastifyError } from "fastify";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
+import { initMusicHub } from "./music-hub.js";
 import authRoutes from "./routes/auth.js";
 import filesRoutes from "./routes/files.js";
 import guildRoutes from "./routes/guild/index.js";
@@ -21,9 +22,8 @@ import profileRoutes from "./routes/profile.js";
 import publicRoutes from "./routes/public.js";
 import statsRoutes from "./routes/stats.js";
 import usersRoutes from "./routes/users.js";
-import "./types.js";
-import { initMusicHub } from "./music-hub.js";
 import { MongoSessionStore } from "./session-store.js";
+import "./types.js";
 import { fail } from "./utils.js";
 
 const DEFAULT_PORT = 6548;

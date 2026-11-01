@@ -7,8 +7,8 @@ import {
 	getPlaylists,
 	movePlaylistTrack,
 	removePlaylistTrack,
-	renamePlaylistTrack,
 	renamePlaylist,
+	renamePlaylistTrack,
 	uploadPlaylistFile,
 } from "@/api";
 import type { Playlist } from "@/api/types";
@@ -23,8 +23,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { formatDuration, formatRelative, formatTrackTime } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { getErrorMessage } from "@/plugins/axios";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
-import { useEventListener } from "@vueuse/core";
 import {
 	ArrowDown,
 	ArrowUp,
@@ -39,6 +37,8 @@ import {
 	Upload,
 	X,
 } from "@lucide/vue";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
+import { useEventListener } from "@vueuse/core";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";

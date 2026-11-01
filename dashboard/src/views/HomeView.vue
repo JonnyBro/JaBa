@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { getStats, loginUrl } from "@/api";
+import jabaAscii from "@/assets/jaba-ascii.txt?raw";
 import SectionTitle from "@/components/common/SectionTitle.vue";
 import StatTile from "@/components/common/StatTile.vue";
-import jabaAscii from "@/assets/jaba-ascii.txt?raw";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/composables/useAuth";
 import { formatCompact, formatDuration } from "@/lib/format";
-import { useQuery } from "@tanstack/vue-query";
 import { Plus, Server } from "@lucide/vue";
+import { useQuery } from "@tanstack/vue-query";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { DiscordIcon } from "vue3-simple-icons";

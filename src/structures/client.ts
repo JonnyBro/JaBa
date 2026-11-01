@@ -34,8 +34,7 @@ export class ExtendedClient extends Client<true> {
 		autoSkipOnResolveError: true,
 		playerOptions: {
 			defaultSearchPlatform: "ytmsearch",
-			// Tracks rebuilt from Lavalink events get the requester back as plain JSON from userData,
-			// and without one the library falls back to { id, username } of the bot. Both become a real User again
+			// Resolve JSON from Lavalink back to a real User
 			requesterTransformer: (requester: unknown) => {
 				if (requester instanceof User) return requester;
 
