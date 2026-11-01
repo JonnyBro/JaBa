@@ -8,6 +8,7 @@ import { ExtendedClient } from "@/structures/client.js";
 import loadCronTasks from "@/utils/loadCronTasks.js";
 import { startDashboard } from "@/web/index.js";
 import { join } from "node:path";
+import packageJson from "@/../package.json" with { type: "json" };
 
 export const data = {
 	name: "clientReady",
@@ -18,7 +19,7 @@ export async function run(client: ExtendedClient) {
 	const guildsCount = client.guilds.cache.size;
 
 	logger.ready(
-		`${getUsername(client.user)} is online! Serving ${guildsCount} ${getNoun(guildsCount, [
+		`${getUsername(client.user)} v${packageJson.version} is online! Serving ${guildsCount} ${getNoun(guildsCount, [
 			client.i18n.translate("misc:NOUNS:SERVER:1"),
 			client.i18n.translate("misc:NOUNS:SERVER:2"),
 			client.i18n.translate("misc:NOUNS:SERVER:5"),

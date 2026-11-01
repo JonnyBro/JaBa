@@ -5,7 +5,13 @@ import {
 	getLocaleNamespace,
 	isContextCommand,
 } from "@/helpers/commands.js";
-import { capitalizeString, editReplyError, getLocalizedDesc, translateContext } from "@/helpers/functions.js";
+import {
+	capitalizeString,
+	editReplyError,
+	getLocalizedDesc,
+	shortenString,
+	translateContext,
+} from "@/helpers/functions.js";
 import { AutocompleteProps, CommandData, SlashCommandProps } from "@/types.js";
 import { componentRouter } from "@/utils/component-router.js";
 import { createContainer, createFooter, createSeparator, createText } from "@/utils/create-container.js";
@@ -15,6 +21,8 @@ import {
 	ApplicationCommandOptionType,
 	ApplicationCommandType,
 	ApplicationIntegrationType,
+	ButtonBuilder,
+	ButtonStyle,
 	Interaction,
 	InteractionContextType,
 	MessageFlags,
@@ -146,8 +154,21 @@ async function buildCategoryPanel(interaction: Interaction, selected?: string) {
 
 	container
 		.addSeparatorComponents(createSeparator())
-		.addActionRowComponents(new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(select))
-		.addTextDisplayComponents(createFooter(await t("general/help:INFO")));
+		.addActionRowComponents(new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(select));
+
+	const dashboardUrl = client.configService.get<string>("DASHBOARD_URL");
+	if (dashboardUrl)
+		container.addActionRowComponents(
+			new ActionRowBuilder<ButtonBuilder>().addComponents(
+				new ButtonBuilder()
+					.setLabel(await t("general/help:DASHBOARD"))
+					.setEmoji("🌐")
+					.setStyle(ButtonStyle.Link)
+					.setURL(`${dashboardUrl.replace(/\/$/, "")}/commands`),
+			),
+		);
+
+	container.addTextDisplayComponents(createFooter(await t("general/help:INFO")));
 
 	return toV2(container);
 }
@@ -223,16 +244,21 @@ async function buildCommandHelp(interaction: Interaction, cmd: Command) {
 }
 
 export const autocompleteRun = async ({ interaction }: AutocompleteProps) => {
-	const query = interaction.options.getFocused();
-	const commandEntries = client.commands as Array<{ data: CommandData }>;
+	const query = interaction.options.getFocused().toLowerCase().trim();
 
-	const results = commandEntries
-		.filter(cmd => cmd.data.name.includes(query))
+	const entries = await Promise.all(
+		client.commands
+			.filter(cmd => !isContextCommand(cmd))
+			.map(async cmd => ({ name: cmd.data.name, description: await getDescription(interaction, cmd) })),
+	);
+
+	const results = entries
+		.filter(e => e.name.includes(query) || e.description.toLowerCase().includes(query))
+		.sort(
+			(a, b) => Number(!a.name.includes(query)) - Number(!b.name.includes(query)) || a.name.localeCompare(b.name),
+		)
 		.slice(0, 25)
-		.map(cmd => ({
-			name: cmd.data.name,
-			value: cmd.data.name,
-		}));
+		.map(e => ({ name: shortenString(`/${e.name} - ${e.description}`, 100), value: e.name }));
 
 	await interaction.respond(results);
 };

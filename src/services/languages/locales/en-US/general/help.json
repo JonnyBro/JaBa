@@ -11,6 +11,7 @@
 	"FIELD_EXAMPLES": "Examples",
 
 	"CMD_TITLE": "Help for {{cmd}}",
+	"DASHBOARD": "All commands in the dashboard",
 	"INFO": "● To get help for a specific command, use `/help [command]`",
 	"FIELD_PERMISSIONS": "Required Permissions",
 	"NO_REQUIRED_PERMISSION": "No special permissions required",

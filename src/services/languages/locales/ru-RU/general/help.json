@@ -11,6 +11,7 @@
 	"FIELD_EXAMPLES": "Примеры",
 
 	"CMD_TITLE": "Помощь по {{cmd}}",
+	"DASHBOARD": "Все команды в панели",
 	"INFO": "● Чтобы получить помощь по команде, используй `/help [command]`",
 	"FIELD_PERMISSIONS": "Нужные права",
 	"NO_REQUIRED_PERMISSION": "Особых прав не нужно",
