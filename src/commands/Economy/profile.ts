@@ -1,6 +1,7 @@
 import { renderBankPanel } from "@/commands/Economy/bank.js";
 import { cooldownTime, formatCredits, getGlobalCredits, giveRep } from "@/helpers/economy.js";
 import { editReplyError, getLocalizedDesc, getXpForNextLevel, translateContext } from "@/helpers/functions.js";
+import { activeEffects, EFFECT_EMOJI, getShopItems, itemLabel } from "@/helpers/shop.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { componentRouter } from "@/utils/component-router.js";
 import {
@@ -51,10 +52,11 @@ const bar = (share: number) => {
 const renderProfile = async (interaction: Interaction, user: User) => {
 	const t = (key: string, args?: Record<string, unknown>) => translateContext(interaction, key, args);
 
-	const [memberData, userData, globalCredits] = await Promise.all([
+	const [memberData, userData, globalCredits, shopItems] = await Promise.all([
 		client.getMemberData(interaction.guildId!, user.id),
 		client.getUserData(user.id),
 		getGlobalCredits(user.id),
+		getShopItems(interaction.guildId!),
 	]);
 
 	const member = await interaction.guild!.members.fetch(user.id).catch(() => null);
@@ -75,6 +77,23 @@ const renderProfile = async (interaction: Interaction, user: User) => {
 		await t("economy/profile:REPUTATION", { rep: userData.rep }),
 	];
 
+	const shopById = new Map(shopItems.map(item => [item._id.toString(), item]));
+	const collectibles = memberData.inventory
+		.map(entry => ({ item: shopById.get(entry.item.toString()), quantity: entry.quantity }))
+		.filter(entry => entry.item?.type === "item" && entry.quantity > 0)
+		.map(({ item, quantity }) => `${itemLabel(item!)}${quantity > 1 ? ` ×${quantity}` : ""}`);
+	const effects = await Promise.all(
+		activeEffects(memberData).map(
+			async ({ effect, until }) =>
+				`${EFFECT_EMOJI[effect]} ${await t(`economy/shop:EFFECTS:${effect}`)} ${cooldownTime(until)}`,
+		),
+	);
+
+	const extras = [
+		collectibles.length && (await t("economy/profile:ITEMS", { items: collectibles.join(", ") })),
+		effects.length && (await t("economy/profile:EFFECTS", { effects: effects.join(", ") })),
+	].filter(Boolean);
+
 	const notDefined = await t("common:NOT_DEFINED");
 	const dates = [
 		await t("economy/profile:BIRTHDATE", {
@@ -88,8 +107,14 @@ const renderProfile = async (interaction: Interaction, user: User) => {
 		.addTextDisplayComponents(createText(economy.join("\n")))
 		.addSeparatorComponents(createSeparator(false))
 		.addTextDisplayComponents(createText(progress.join("\n")))
-		.addSeparatorComponents(createSeparator(false))
-		.addTextDisplayComponents(createText(`-# ${dates.join(" • ")}`));
+		.addSeparatorComponents(createSeparator(false));
+
+	if (extras.length)
+		container
+			.addTextDisplayComponents(createText(extras.join("\n")))
+			.addSeparatorComponents(createSeparator(false));
+
+	container.addTextDisplayComponents(createText(`-# ${dates.join(" • ")}`));
 
 	const own = user.id === interaction.user.id;
 	const button = new ButtonBuilder()

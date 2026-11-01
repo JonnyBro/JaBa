@@ -47,9 +47,9 @@ export const data: CommandData = {
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			choices: MOVES.map(move => ({
-				name: `${EMOJI[move]} ${client.i18n.translate(`fun/rps:MOVES:${move}`)}`,
+				name: client.i18n.translate(`fun/rps:MOVES:${move}`),
 				// eslint-disable-next-line camelcase
-				name_localizations: getLocalizations(`fun/rps:MOVES:${move}`, text => `${EMOJI[move]} ${text}`),
+				name_localizations: getLocalizations(`fun/rps:MOVES:${move}`),
 				value: move,
 			})),
 		},

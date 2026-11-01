@@ -131,14 +131,14 @@ export const replySuccess = async <T extends CacheType = CacheType>(
 export const getLocale = async (guildId: string) => (await useClient().getGuildData(guildId)).language;
 
 /** Translations of a key for every supported language, keyed by Discord locale codes */
-export const getLocalizations = (key: string, format: (text: string) => string = text => text) => {
+export const getLocalizations = (key: string) => {
 	const client = useClient();
 
 	return client.i18n.SupportedLanguages.reduce(
 		(acc, lng) => {
 			const splitted = lng.split("-")[0];
 			const short = localeExcludes.includes(splitted) ? lng : splitted;
-			acc[short as Locale] = format(client.i18n.translate(key, { lng }));
+			acc[short as Locale] = client.i18n.translate(key, { lng });
 
 			return acc;
 		},

@@ -3,6 +3,7 @@
 	"USAGE": "",
 	"EXAMPLES": "work",
 
+	"BOOSTED": "Double pay, thanks to your boost",
 	"COOLDOWN": "You're still tired after the last shift, come back {{time}}",
 	"FIRST_SHIFT": "Hey! Where are you going? Fill out the paperwork come back",
 	"TRANSACTION": "Work",

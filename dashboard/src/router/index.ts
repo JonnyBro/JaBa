@@ -70,6 +70,16 @@ const router = createRouter({
 					component: () => import("@/views/server/MembersTab.vue"),
 				},
 				{
+					path: "levels",
+					name: "server-levels",
+					component: () => import("@/views/server/LevelsTab.vue"),
+				},
+				{
+					path: "shop",
+					name: "server-shop",
+					component: () => import("@/views/server/ShopTab.vue"),
+				},
+				{
 					path: "tickets",
 					name: "server-tickets",
 					component: () => import("@/views/server/TicketsTab.vue"),

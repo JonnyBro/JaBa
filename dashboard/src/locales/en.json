@@ -84,6 +84,8 @@
 		"tabs": {
 			"settings": "Settings",
 			"members": "Members",
+			"levels": "Levels",
+			"shop": "Shop",
 			"tickets": "Tickets",
 			"messages": "Messages",
 			"audit": "Audit log",
@@ -150,6 +152,84 @@
 			}
 		}
 	},
+	"levels": {
+		"messageTitle": "Level up message",
+		"mode": "Where to congratulate",
+		"modes": {
+			"reply": "Reply in the same channel",
+			"channel": "In a separate channel",
+			"off": "Don't congratulate"
+		},
+		"channel": "Channel",
+		"rewardsTitle": "Rewards",
+		"rewardsHint": "A member gets the reward once they reach the level. Each level can have a role, credits or both.",
+		"addReward": "Add reward",
+		"noRewards": "No rewards yet.",
+		"level": "Level",
+		"role": "Role",
+		"noRole": "No role",
+		"credits": "Credits",
+		"stack": "Keep the roles of lower levels",
+		"roleHint": "When it's off, a member only keeps the role of their highest reward. Only roles below the bot's highest role are listed.",
+		"saved": "Level settings saved",
+		"syncTitle": "Give out rewards",
+		"syncHint": "Gives every member the reward roles for the levels they already have. With the toggle above off, lower reward roles are taken away. Credits aren't paid again. Save your changes first.",
+		"sync": "Give out roles",
+		"syncConfirm": "Give out reward roles to everyone?",
+		"syncConfirmText": "On a big server this can take a few minutes, the bot works through members in the background.",
+		"syncStarted": "Started for {n} member | Started for {n} members"
+	},
+	"shop": {
+		"intro": "Items members can buy with /shop.",
+		"count": "{n} of {max} items.",
+		"add": "Add item",
+		"empty": "The shop is empty",
+		"emptyText": "Add roles, collectibles or boosts that members can buy with credits.",
+		"search": "Search by name, description or role",
+		"notFound": "Nothing found",
+		"item": "Item",
+		"type": "Type",
+		"price": "Price",
+		"stock": "Stock",
+		"hidden": "Hidden",
+		"hours": "{n} hour | {n} hours",
+		"addTitle": "New item",
+		"editTitle": "Edit item",
+		"formHint": "Members see the shop with /shop and their items with /inventory.",
+		"name": "Name",
+		"emoji": "Emoji",
+		"description": "Description",
+		"role": "Role",
+		"pickRole": "Pick a role",
+		"roleHint": "Only roles below the bot's highest role are listed.",
+		"effect": "Effect",
+		"duration": "Duration, hours",
+		"requiredLevel": "Required level",
+		"unlimited": "Unlimited",
+		"perUserLimit": "Per member limit",
+		"sellable": "Can be sold back for half the price",
+		"enabled": "Show in the shop",
+		"saved": "Item saved",
+		"deleted": "Item deleted",
+		"deleteTitle": "Delete {name}?",
+		"deleteText": "Members lose this item from their inventories. Roles that were already bought stay.",
+		"types": {
+			"role": "Role",
+			"temp_role": "Temporary role",
+			"item": "Collectible",
+			"consumable": "Consumable"
+		},
+		"typeHints": {
+			"role": "The member gets the role for good.",
+			"temp_role": "The role is taken away when the time runs out. Buying again adds more time.",
+			"item": "Goes to the inventory and shows up in /profile. Can be gifted.",
+			"consumable": "Goes to the inventory, using it turns on an effect for a while."
+		},
+		"effects": {
+			"robShield": "Protection from /rob",
+			"workBoost": "Double pay for /work"
+		}
+	},
 	"tickets": {
 		"intro": "Sends a message with a button that opens a private ticket thread in the same channel. The bot needs to be able to create private threads there.",
 		"channel": "Channel",
@@ -195,7 +275,12 @@
 			"member.ban": "banned",
 			"member.timeout": "timed out",
 			"tickets.panel": "sent a ticket panel",
-			"message.send": "sent a message"
+			"message.send": "sent a message",
+			"shop.create": "added a shop item",
+			"shop.update": "changed a shop item",
+			"shop.delete": "deleted a shop item",
+			"levels.update": "changed the level settings",
+			"levels.sync": "gave out level reward roles"
 		}
 	},
 	"music": {

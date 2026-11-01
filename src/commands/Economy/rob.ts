@@ -7,6 +7,7 @@ import {
 	randomNum,
 	translateContext,
 } from "@/helpers/functions.js";
+import { hasEffect } from "@/helpers/shop.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import useClient from "@/utils/use-client.js";
 import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "discord.js";
@@ -49,6 +50,11 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		client.getMemberData(interaction.guildId!, target.id),
 	]);
 
+	if (hasEffect(victim, "robShield"))
+		return editReplyError(interaction, "economy/rob:SHIELDED", {
+			user: target.toString(),
+			time: cooldownTime(victim.effects.robShield),
+		});
 	if (robber.cooldowns.rob > Date.now())
 		return editReplyError(interaction, "economy/rob:COOLDOWN", { time: cooldownTime(robber.cooldowns.rob) });
 	if (robber.money < MIN_OWN_MONEY)

@@ -318,3 +318,36 @@ export type CommandStats = {
 };
 
 export type LogLine = { time: number; level: string; text: string };
+
+export type ShopItemType = "role" | "temp_role" | "item" | "consumable";
+export type ShopEffect = "robShield" | "workBoost";
+
+export type ShopItemInput = {
+	name: string;
+	description: string;
+	emoji: string | null;
+	type: ShopItemType;
+	price: number;
+	roleId: string | null;
+	durationHours: number | null;
+	effect: ShopEffect | null;
+	stock: number | null;
+	perUserLimit: number | null;
+	requiredLevel: number;
+	sellable: boolean;
+	enabled: boolean;
+};
+
+export type ShopItem = ShopItemInput & { id: string };
+
+export type GuildRole = { id: string; name: string; color: string };
+
+export type GuildShop = { items: ShopItem[]; roles: GuildRole[]; effects: ShopEffect[]; max: number };
+
+export type LevelUpMode = "reply" | "channel" | "off";
+
+export type LevelReward = { level: number; roleId: string | null; credits: number };
+
+export type LevelSettings = { mode: LevelUpMode; channel: string | null; stack: boolean; rewards: LevelReward[] };
+
+export type GuildLevels = LevelSettings & { roles: GuildRole[] };

@@ -2,18 +2,20 @@ import { getNoun, translateContext } from "@/helpers/functions.js";
 import MemberModel, { IMemberSchema, Transaction } from "@/models/MemberModel.js";
 import UserModel from "@/models/UserModel.js";
 import useClient from "@/utils/use-client.js";
-import { Interaction } from "discord.js";
+import { Interaction, Message } from "discord.js";
 import { QueryFilter, Types, UpdateQuery } from "mongoose";
 
 type MemberRef = { _id: Types.ObjectId };
 type Cooldown = keyof IMemberSchema["cooldowns"];
 
-export const formatCredits = async (context: Interaction, amount: number) => {
+export const formatCredits = async (context: Interaction | Message, amount: number) => {
 	const forms = await Promise.all(
 		["1", "2", "5"].map(form => translateContext(context, `misc:NOUNS:CREDIT:${form}`)),
 	);
 
-	return `**${amount.toLocaleString(context.guildLocale ?? "en-US")}** ${getNoun(amount, forms)}`;
+	const locale = ("guildLocale" in context ? context.guildLocale : context.guild?.preferredLocale) ?? "en-US";
+
+	return `**${amount.toLocaleString(locale)}** ${getNoun(amount, forms)}`;
 };
 
 export const cooldownTime = (until: number) => `<t:${Math.floor(until / 1000)}:R>`;
@@ -25,8 +27,11 @@ export const transaction = (user: string, amount: number, type: Transaction["typ
 	type,
 });
 
-export const updateMember = (filter: QueryFilter<IMemberSchema>, changes: UpdateQuery<IMemberSchema>) =>
-	useClient().db.updateOne(MemberModel, filter, changes);
+export const updateMember = (
+	filter: QueryFilter<IMemberSchema>,
+	changes: UpdateQuery<IMemberSchema>,
+	options: { runValidators?: boolean } = {},
+) => useClient().db.updateOne(MemberModel, filter, changes, options);
 
 export const takeCredits = async (member: MemberRef, amount: number, label?: string) => {
 	const result = await updateMember(

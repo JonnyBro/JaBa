@@ -1,12 +1,6 @@
 import { updateMember } from "@/helpers/economy.js";
-import {
-	getUsername,
-	getXpForNextLevel,
-	randomNum,
-	replyTranslated,
-	shortenString,
-	translateContext,
-} from "@/helpers/functions.js";
+import { getUsername, getXpForNextLevel, randomNum, shortenString, translateContext } from "@/helpers/functions.js";
+import { handleLevelUp } from "@/helpers/levels.js";
 import logger from "@/helpers/logger.js";
 import { componentRouter } from "@/utils/component-router.js";
 import { addTextWithThumbnail, containerMessage, createContainer, createText } from "@/utils/create-container.js";
@@ -140,7 +134,7 @@ const updateXp = async (message: Message) => {
 			{ $inc: { level: 1 }, $set: { exp: memberData.exp + won - needed } },
 		);
 
-		if (result.modifiedCount) await replyTranslated(message, "misc:LEVEL_UP", { level: memberData.level + 1 });
+		if (result.modifiedCount) await handleLevelUp(message as Message<true>, memberData, memberData.level + 1);
 	} catch (error) {
 		logger.error(`Failed to update XP for ${message.author.id}: ${error}`);
 		xpCooldown.delete(key);

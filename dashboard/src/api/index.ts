@@ -9,14 +9,17 @@ import type {
 	CronTaskInfo,
 	Economy,
 	GuildDetails,
+	GuildLevels,
 	GuildInfo,
 	GuildLeaderboardType,
 	GuildListItem,
 	GuildMember,
 	GuildMemberDetails,
 	GuildSettings,
+	GuildShop,
 	GuildStanding,
 	LavalinkInfo,
+	LevelSettings,
 	Me,
 	MemberSort,
 	MessageBlock,
@@ -33,6 +36,8 @@ import type {
 	Remind,
 	RepStanding,
 	SearchSource,
+	ShopItem,
+	ShopItemInput,
 } from "./types";
 
 const get = async <T>(url: string, params?: object) => (await api.get<Response<T>>(url, { params })).data.data;
@@ -81,6 +86,20 @@ export const sendMessage = (
 	id: string,
 	body: { channelId: string; blocks: MessageBlock[]; color: string | null; mentions: boolean },
 ) => post<{ url: string }>(guildUrl(id, "/messages"), body);
+
+// Levels
+export const getLevels = (id: string) => get<GuildLevels>(guildUrl(id, "/levels"));
+export const updateLevels = async (id: string, body: LevelSettings) =>
+	(await api.put<Response<LevelSettings>>(guildUrl(id, "/levels"), body)).data.data;
+export const syncLevelRoles = (id: string) => post<{ members: number }>(guildUrl(id, "/levels/sync"));
+
+// Shop
+export const getShop = (id: string) => get<GuildShop>(guildUrl(id, "/shop"));
+export const createShopItem = (id: string, body: ShopItemInput) => post<ShopItem>(guildUrl(id, "/shop"), body);
+export const updateShopItem = async (id: string, itemId: string, body: ShopItemInput) =>
+	(await api.put<Response<ShopItem>>(guildUrl(id, `/shop/${encodeURIComponent(itemId)}`), body)).data.data;
+export const deleteShopItem = async (id: string, itemId: string) =>
+	(await api.delete<Response<{ ok: true }>>(guildUrl(id, `/shop/${encodeURIComponent(itemId)}`))).data.data;
 
 // Audit log
 export const getAudit = (id: string, params: { page?: number; limit?: number }) =>

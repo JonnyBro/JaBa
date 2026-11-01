@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 
 export interface Transaction {
 	user: string;
@@ -13,6 +13,19 @@ const transactionSchema = new Schema<Transaction>(
 		amount: { type: Number, required: true },
 		date: { type: Number, required: true },
 		type: { type: String, required: true },
+	},
+	{ _id: false },
+);
+
+export interface InventoryEntry {
+	item: Types.ObjectId;
+	quantity: number;
+}
+
+const inventorySchema = new Schema<InventoryEntry>(
+	{
+		item: { type: Schema.Types.ObjectId, required: true, ref: "ShopItem" },
+		quantity: { type: Number, required: true, min: 0 },
 	},
 	{ _id: false },
 );
@@ -32,6 +45,12 @@ export interface IMemberSchema {
 		rob: number;
 		daily: number;
 	};
+	inventory: InventoryEntry[];
+	/** Until when a consumable's effect lasts */
+	effects: {
+		robShield: number;
+		workBoost: number;
+	};
 }
 
 const cooldownSchema = new Schema(
@@ -39,6 +58,14 @@ const cooldownSchema = new Schema(
 		work: { type: Number, default: 0 },
 		rob: { type: Number, default: 0 },
 		daily: { type: Number, default: 0 },
+	},
+	{ _id: false },
+);
+
+const effectsSchema = new Schema(
+	{
+		robShield: { type: Number, default: 0 },
+		workBoost: { type: Number, default: 0 },
 	},
 	{ _id: false },
 );
@@ -54,6 +81,8 @@ const memberSchema = new Schema<IMemberSchema>({
 	registeredAt: { type: Number, default: () => Date.now() },
 	dailyStreak: { type: Number, default: 0, min: 0 },
 	cooldowns: { type: cooldownSchema, default: () => ({ work: 0, rob: 0, daily: 0 }) },
+	inventory: { type: [inventorySchema], default: [] },
+	effects: { type: effectsSchema, default: () => ({ robShield: 0, workBoost: 0 }) },
 });
 
 export default model<IMemberSchema>("Member", memberSchema);

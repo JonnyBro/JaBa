@@ -1,0 +1,25 @@
+{
+	"DESCRIPTION": "Shows your items and lets you use, sell or gift them",
+	"USAGE": "",
+	"EXAMPLES": "inventory",
+
+	"TITLE": "Inventory",
+	"EMPTY": "Your inventory is empty, take a look at /shop",
+	"EFFECTS": "Active effects",
+	"EFFECT_UNTIL": "{{effect}}, ends {{time}}",
+	"SELECT": "Pick an item",
+	"USE": "Use",
+	"SELL": "Sell for {{credits}}",
+	"GIFT": "Gift",
+	"RECIPIENT": "Who gets it",
+
+	"USED": "{{item}} used: {{effect}}, ends {{time}}",
+	"SOLD": "Sold {{item}} for {{credits}}",
+	"GIFTED": "You gave {{item}} to {{user}}",
+	"TRANSACTION_SELL": "Sold: {{item}}",
+
+	"NOT_HELD": "You don't have this item anymore",
+	"NOT_USABLE": "This item can't be used",
+	"NOT_SELLABLE": "This item can't be sold",
+	"RECEIVER_LIMIT": "{{user}} already has as many as they can"
+}

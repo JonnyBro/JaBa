@@ -13,6 +13,8 @@ import { useRoute, useRouter } from "vue-router";
 const MANAGE_TABS = [
 	{ name: "server", label: "server.tabs.settings" },
 	{ name: "server-members", label: "server.tabs.members" },
+	{ name: "server-levels", label: "server.tabs.levels" },
+	{ name: "server-shop", label: "server.tabs.shop" },
 	{ name: "server-tickets", label: "server.tabs.tickets" },
 	{ name: "server-messages", label: "server.tabs.messages" },
 	{ name: "server-audit", label: "server.tabs.audit" },
