@@ -1,3 +1,4 @@
+import { updateMember } from "@/helpers/economy.js";
 import {
 	getUsername,
 	getXpForNextLevel,
@@ -20,7 +21,9 @@ import {
 } from "discord.js";
 
 const client = useClient();
-const xpCooldown: Record<string, number> = {};
+const XP_COOLDOWN = 15_000;
+const XP_COOLDOWN_PRUNE_SIZE = 1000;
+const xpCooldown = new Map<string, number>();
 const QUOTE_REGEXP = /discord\.com\/channels\/(?<guildId>\d+)\/(?<channelId>\d+)\/(?<messageId>\d+)/g;
 const DELETE_BUTTON_ID = "QUOTE_DELETE";
 const QUOTE_LENGTH = 3000;
@@ -112,30 +115,34 @@ const handleLinkQuote = async (message: Message) => {
 };
 
 const updateXp = async (message: Message) => {
-	const memberData = await client.getMemberData(message.guild!.id, message.author.id);
+	const key = `${message.guildId}:${message.author.id}`;
 	const now = Date.now();
 
-	if (xpCooldown[message.author.id] && xpCooldown[message.author.id] > now) return;
+	if ((xpCooldown.get(key) ?? 0) > now) return;
 
-	xpCooldown[message.author.id] = now + 15_000; // 15 sec
+	xpCooldown.set(key, now + XP_COOLDOWN);
 
-	const won = randomNum(1, 3);
-	const newXp = memberData.exp + won;
-	const neededXp = getXpForNextLevel(memberData.level);
+	if (xpCooldown.size > XP_COOLDOWN_PRUNE_SIZE)
+		for (const [id, until] of xpCooldown) if (until <= now) xpCooldown.delete(id);
 
 	try {
-		if (newXp >= neededXp) {
-			memberData.set({
-				level: memberData.level + 1,
-				exp: 0,
-			});
+		const memberData = await client.getMemberData(message.guildId!, message.author.id);
+		const won = randomNum(1, 3);
+		const needed = getXpForNextLevel(memberData.level);
 
-			await replyTranslated(message, "misc:LEVEL_UP", { level: memberData.level });
-		} else memberData.set("exp", newXp);
+		if (memberData.exp + won < needed) {
+			await updateMember({ _id: memberData._id }, { $inc: { exp: won } });
+			return;
+		}
 
-		await memberData.save();
+		const result = await updateMember(
+			{ _id: memberData._id, level: memberData.level, exp: memberData.exp },
+			{ $inc: { level: 1 }, $set: { exp: memberData.exp + won - needed } },
+		);
+
+		if (result.modifiedCount) await replyTranslated(message, "misc:LEVEL_UP", { level: memberData.level + 1 });
 	} catch (error) {
 		logger.error(`Failed to update XP for ${message.author.id}: ${error}`);
-		delete xpCooldown[message.author.id];
+		xpCooldown.delete(key);
 	}
 };
