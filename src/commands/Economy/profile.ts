@@ -1,24 +1,32 @@
-import {
-	asyncForEach,
-	editReplyError,
-	getLocalizedDesc,
-	getXpForNextLevel,
-	translateContext,
-} from "@/helpers/functions.js";
+import { renderBankPanel } from "@/commands/Economy/bank.js";
+import { cooldownTime, formatCredits, getGlobalCredits, giveRep } from "@/helpers/economy.js";
+import { editReplyError, getLocalizedDesc, getXpForNextLevel, translateContext } from "@/helpers/functions.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
+import { componentRouter } from "@/utils/component-router.js";
+import {
+	addTextWithThumbnail,
+	containerMessage,
+	createContainer,
+	createSeparator,
+	createText,
+} from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
 import {
+	ActionRowBuilder,
 	ApplicationCommandOptionType,
 	ApplicationIntegrationType,
-	ContainerBuilder,
+	ButtonBuilder,
+	ButtonStyle,
+	Interaction,
 	InteractionContextType,
 	MessageFlags,
-	SectionBuilder,
-	SeparatorSpacingSize,
-	TextDisplayBuilder,
+	User,
 } from "discord.js";
 
 const client = useClient();
+
+const PROFILE_ID = "ECO_PROFILE";
+const BAR_SIZE = 12;
 
 export const data: CommandData = {
 	name: "profile",
@@ -35,65 +43,103 @@ export const data: CommandData = {
 	],
 };
 
+const bar = (share: number) => {
+	const filled = Math.min(Math.round(share * BAR_SIZE), BAR_SIZE);
+	return `${"▰".repeat(filled)}${"▱".repeat(BAR_SIZE - filled)}`;
+};
+
+const renderProfile = async (interaction: Interaction, user: User) => {
+	const t = (key: string, args?: Record<string, unknown>) => translateContext(interaction, key, args);
+
+	const [memberData, userData, globalCredits] = await Promise.all([
+		client.getMemberData(interaction.guildId!, user.id),
+		client.getUserData(user.id),
+		getGlobalCredits(user.id),
+	]);
+
+	const member = await interaction.guild!.members.fetch(user.id).catch(() => null);
+	const name = member?.displayName ?? user.displayName;
+	const neededXp = getXpForNextLevel(memberData.level);
+
+	const header = [`## ${name}`, userData.bio && `*${userData.bio}*`, `-# ${user.toString()}`].filter(Boolean);
+
+	const economy = [
+		await t("economy/profile:CREDITS", { credits: await formatCredits(interaction, memberData.money) }),
+		await t("economy/profile:BANK", { credits: await formatCredits(interaction, memberData.bank) }),
+		await t("economy/profile:GLOBAL", { credits: await formatCredits(interaction, globalCredits) }),
+	];
+
+	const progress = [
+		await t("economy/profile:LEVEL", { level: memberData.level }),
+		`${bar(memberData.exp / neededXp)} ${await t("economy/profile:XP", { xp: memberData.exp, totalXp: neededXp })}`,
+		await t("economy/profile:REPUTATION", { rep: userData.rep }),
+	];
+
+	const notDefined = await t("common:NOT_DEFINED");
+	const dates = [
+		await t("economy/profile:BIRTHDATE", {
+			birthdate: userData.birthdate ? `<t:${Math.floor(userData.birthdate / 1000)}:D>` : notDefined,
+		}),
+		await t("economy/profile:REGISTERED", { date: `<t:${Math.floor(memberData.registeredAt / 1000)}:D>` }),
+	];
+
+	const container = addTextWithThumbnail(createContainer(), header.join("\n"), user.displayAvatarURL({ size: 256 }))
+		.addSeparatorComponents(createSeparator())
+		.addTextDisplayComponents(createText(economy.join("\n")))
+		.addSeparatorComponents(createSeparator(false))
+		.addTextDisplayComponents(createText(progress.join("\n")))
+		.addSeparatorComponents(createSeparator(false))
+		.addTextDisplayComponents(createText(`-# ${dates.join(" • ")}`));
+
+	const own = user.id === interaction.user.id;
+	const button = new ButtonBuilder()
+		.setCustomId(`${PROFILE_ID}:${own ? "bank" : "rep"}:${user.id}`)
+		.setLabel(await t(own ? "economy/bank:BANK" : "economy/profile:BTN_REP"))
+		.setEmoji(own ? "🏦" : "🎩")
+		.setStyle(own ? ButtonStyle.Secondary : ButtonStyle.Success);
+
+	container.addActionRowComponents(new ActionRowBuilder<ButtonBuilder>().addComponents(button));
+
+	return containerMessage(container);
+};
+
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
 	const user = interaction.options.getUser("user") || interaction.user;
 	if (user.bot) return editReplyError(interaction, "misc:BOT_USER");
 
-	const memberData = await client.getMemberData(interaction.guildId!, user.id);
-	const userData = await client.getUserData(user.id);
-
-	let globalMoney = 0;
-	const guilds = client.guilds.cache.filter(g => g.members.cache.has(user.id));
-	const guldsArray = Array.from(guilds.values());
-
-	await asyncForEach(guldsArray, async guild => {
-		const data = await client.getMemberData(guild.id, user.id);
-		globalMoney += data.money + data.bank;
-	});
-
-	const notDefined = await translateContext(interaction, "common:NOT_DEFINED");
-
-	const content = `
-${await translateContext(interaction, "economy/profile:CREDITS", {
-	credits: memberData.money,
-})}
-${await translateContext(interaction, "economy/profile:BANK", {
-	credits: memberData.bank,
-})}
-${await translateContext(interaction, "economy/profile:GLOBAL", { credits: globalMoney })}
-${await translateContext(interaction, "economy/profile:REPUTATION", { rep: userData.rep })}
-${await translateContext(interaction, "economy/profile:LEVEL", { level: memberData.level })}
-${await translateContext(interaction, "economy/profile:XP", {
-	xp: memberData.exp,
-	totalXp: getXpForNextLevel(memberData.level),
-})}
-${await translateContext(interaction, "economy/profile:BIRTHDATE", {
-	birthdate: userData.birthdate ? `<t:${Math.floor(userData.birthdate / 1000)}:D>` : notDefined,
-})}
-${await translateContext(interaction, "economy/profile:REGISTERED", {
-	date: `<t:${Math.floor(memberData.registeredAt / 1000)}:f>`,
-})}`;
-
-	const container = new ContainerBuilder()
-		.addSectionComponents(
-			new SectionBuilder()
-				.setThumbnailAccessory(t => t.setURL(user.avatarURL() || client.user.avatarURL()!))
-				.addTextDisplayComponents(
-					new TextDisplayBuilder().setContent(
-						`# ${user.toString()}${userData.bio ? `\n**${userData.bio}**` : ""}\n`,
-					),
-				),
-		)
-		.addSeparatorComponents(s => s.setSpacing(SeparatorSpacingSize.Small).setDivider(true))
-		.addTextDisplayComponents(t => t.setContent(content));
-
-	interaction.editReply({
-		flags: MessageFlags.IsComponentsV2,
-		components: [container],
-		allowedMentions: {
-			parse: [],
-		},
-	});
+	await interaction.editReply(await renderProfile(interaction, user));
 };
+
+componentRouter.register(PROFILE_ID, async interaction => {
+	if (!interaction.isButton()) return;
+
+	const [, action, userId] = interaction.customId.split(":");
+	const ephemeral = async (content: string) =>
+		void (await interaction.reply({ content, flags: MessageFlags.Ephemeral, allowedMentions: { parse: [] } }));
+
+	if (action === "bank") {
+		if (interaction.user.id !== userId)
+			return ephemeral(await translateContext(interaction, "economy/bank:NOT_YOURS"));
+
+		await interaction.reply({
+			...(await renderBankPanel(interaction, interaction.user)),
+			flags: MessageFlags.IsComponentsV2 | MessageFlags.Ephemeral,
+		});
+		return;
+	}
+
+	if (action !== "rep") return;
+	if (interaction.user.id === userId) return ephemeral(await translateContext(interaction, "misc:CANT_YOURSELF"));
+
+	const { given, until } = await giveRep(interaction.user.id, userId);
+	if (!given)
+		return ephemeral(await translateContext(interaction, "economy/rep:COOLDOWN", { time: cooldownTime(until) }));
+
+	const target = await client.users.fetch(userId);
+
+	// The profile was opened by someone else, so the rep button stays and the numbers refresh
+	await interaction.message.edit(await renderProfile(interaction, target)).catch(() => {});
+	await ephemeral(await translateContext(interaction, "economy/rep:SUCCESS", { user: target.toString() }));
+});

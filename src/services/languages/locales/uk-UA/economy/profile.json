@@ -10,5 +10,7 @@
 	"LEVEL": "📊 Рівень: {{level}}",
 	"XP": "🔮 Досвід: {{xp}}/{{totalXp}}",
 	"BIRTHDATE": "🎂 День народження: {{birthdate}}",
-	"REGISTERED": "📅 Зареєстрований у боті: {{date}}"
+	"REGISTERED": "📅 Зареєстрований у боті: {{date}}",
+
+	"BTN_REP": "Дати репутацію"
 }

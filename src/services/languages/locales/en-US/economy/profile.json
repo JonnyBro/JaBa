@@ -10,5 +10,7 @@
 	"LEVEL": "📊 Level: {{level}}",
 	"XP": "🔮 XP: {{xp}}/{{totalXp}}",
 	"BIRTHDATE": "🎂 Birthdate: {{birthdate}}",
-	"REGISTERED": "📅 Registered in the bot: {{date}}"
+	"REGISTERED": "📅 Registered in the bot: {{date}}",
+
+	"BTN_REP": "Give reputation"
 }
