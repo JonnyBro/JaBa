@@ -1,5 +1,6 @@
 import { getNoun, translateContext } from "@/helpers/functions.js";
 import MemberModel, { IMemberSchema, Transaction } from "@/models/MemberModel.js";
+import UserModel from "@/models/UserModel.js";
 import useClient from "@/utils/use-client.js";
 import { Interaction } from "discord.js";
 import { QueryFilter, Types, UpdateQuery } from "mongoose";
@@ -27,7 +28,6 @@ export const transaction = (user: string, amount: number, type: Transaction["typ
 export const updateMember = (filter: QueryFilter<IMemberSchema>, changes: UpdateQuery<IMemberSchema>) =>
 	useClient().db.updateOne(MemberModel, filter, changes);
 
-/** Every change is a single conditional update, so parallel commands and button spam can't overdraw or claim twice */
 export const takeCredits = async (member: MemberRef, amount: number, label?: string) => {
 	const result = await updateMember(
 		{ _id: member._id, money: { $gte: amount } },
@@ -43,7 +43,6 @@ export const giveCredits = (member: MemberRef, amount: number, label?: string) =
 		{ $inc: { money: amount }, ...(label && { $push: { transactions: transaction(label, amount, "got") } }) },
 	);
 
-/** Starts the cooldown and applies the changes only if the previous cooldown is over */
 export const claimCooldown = async (
 	member: MemberRef,
 	cooldown: Cooldown,
@@ -60,4 +59,34 @@ export const claimCooldown = async (
 	);
 
 	return result.modifiedCount === 1;
+};
+
+export const getGlobalCredits = async (userId: string) => {
+	const members = await MemberModel.find({ id: userId }, { guildID: 1, money: 1, bank: 1 }).lean();
+	const guilds = useClient().guilds.cache;
+
+	return members.filter(m => guilds.has(m.guildID)).reduce((sum, m) => sum + m.money + m.bank, 0);
+};
+
+export const REP_COOLDOWN = 12 * 60 * 60 * 1000;
+
+export const giveRep = async (giverId: string, targetId: string) => {
+	const client = useClient();
+	await client.getUserData(giverId);
+
+	const claimed = await client.db.updateOne(
+		UserModel,
+		{ id: giverId, "cooldowns.rep": { $lte: Date.now() } },
+		{ $set: { "cooldowns.rep": Date.now() + REP_COOLDOWN } },
+	);
+
+	if (!claimed.modifiedCount) {
+		const giver = await client.getUserData(giverId);
+		return { given: false, until: giver.cooldowns.rep };
+	}
+
+	await client.getUserData(targetId);
+	await client.db.updateOne(UserModel, { id: targetId }, { $inc: { rep: 1 } });
+
+	return { given: true, until: 0 };
 };

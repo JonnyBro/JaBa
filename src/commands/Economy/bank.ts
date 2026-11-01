@@ -1,6 +1,5 @@
-import { formatCredits, transaction, updateMember } from "@/helpers/economy.js";
+import { formatCredits, getGlobalCredits, transaction, updateMember } from "@/helpers/economy.js";
 import { editReplyError, getLocalizedDesc, getUsername, replyError, translateContext } from "@/helpers/functions.js";
-import MemberModel from "@/models/MemberModel.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { componentRouter } from "@/utils/component-router.js";
 import { containerMessage, createContainer, createSeparator, createText } from "@/utils/create-container.js";
@@ -60,13 +59,10 @@ const t = (interaction: Interaction, key: string, args?: Record<string, unknown>
 const button = (id: string, label: string, style: ButtonStyle, emoji: string) =>
 	new ButtonBuilder().setCustomId(id).setLabel(label).setStyle(style).setEmoji(emoji);
 
-const renderPanel = async (interaction: Interaction, user: User, status?: string) => {
+export const renderBankPanel = async (interaction: Interaction, user: User, status?: string) => {
 	const memberData = await client.getMemberData(interaction.guildId!, user.id);
 
-	const everywhere = await MemberModel.find({ id: user.id }, { guildID: 1, money: 1, bank: 1 }).lean();
-	const globalMoney = everywhere
-		.filter(m => client.guilds.cache.has(m.guildID))
-		.reduce((sum, m) => sum + m.money + m.bank, 0);
+	const globalMoney = await getGlobalCredits(user.id);
 
 	const lines = [
 		await t(interaction, "economy/profile:CREDITS", {
@@ -215,7 +211,7 @@ const move = async (interaction: ButtonInteraction, action: "deposit" | "withdra
 		credits: await formatCredits(interaction, credits),
 	});
 
-	await submitted.update(await renderPanel(interaction, interaction.user, `-# ✅ ${status}`));
+	await submitted.update(await renderBankPanel(interaction, interaction.user, `-# ✅ ${status}`));
 };
 
 const transfer = async (interaction: ButtonInteraction) => {
@@ -269,7 +265,7 @@ const transfer = async (interaction: ButtonInteraction) => {
 		credits: await formatCredits(interaction, credits),
 	});
 
-	await submitted.update(await renderPanel(interaction, interaction.user, `-# ✅ ${status}`));
+	await submitted.update(await renderBankPanel(interaction, interaction.user, `-# ✅ ${status}`));
 };
 
 export const run = async ({ interaction }: SlashCommandProps) => {
@@ -278,7 +274,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const user = interaction.options.getUser("user") ?? interaction.user;
 	if (user.bot) return editReplyError(interaction, "misc:BOT_USER");
 
-	await interaction.editReply(await renderPanel(interaction, user));
+	await interaction.editReply(await renderBankPanel(interaction, user));
 };
 
 componentRouter.register(BANK_ID, async interaction => {
@@ -306,6 +302,6 @@ componentRouter.register(BANK_ID, async interaction => {
 			return void (await interaction.update(await renderHistory(interaction)));
 
 		case "back":
-			return void (await interaction.update(await renderPanel(interaction, interaction.user)));
+			return void (await interaction.update(await renderBankPanel(interaction, interaction.user)));
 	}
 });
