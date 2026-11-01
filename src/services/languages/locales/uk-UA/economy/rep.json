@@ -2,6 +2,6 @@
 	"DESCRIPTION": "Дає користувачу очко репутації",
 	"USAGE": "[@user]",
 	"EXAMPLES": "rep user:@jonny_bro",
-	"COOLDOWN": "Зачекай **{{time}}**, перш ніж використати знову",
+	"COOLDOWN": "Наступне очко репутації можна дати {{time}}",
 	"SUCCESS": "Ти дав очко репутації {{user}}"
 }

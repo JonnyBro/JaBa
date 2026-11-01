@@ -2,6 +2,6 @@
 	"DESCRIPTION": "Gives reputation to a user",
 	"USAGE": "[@user]",
 	"EXAMPLES": "rep user:@jonny_bro",
-	"COOLDOWN": "You must wait **{{time}}** before using it again",
+	"COOLDOWN": "You can give your next reputation point {{time}}",
 	"SUCCESS": "You have given a reputation point to {{user}}"
 }
