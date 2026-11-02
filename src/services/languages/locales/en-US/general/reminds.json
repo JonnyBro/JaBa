@@ -1,12 +1,12 @@
 {
-	"DESCRIPTION": "Shows your reminders",
+	"DESCRIPTION": "Show your reminders",
 	"USAGE": "",
 
 	"EXAMPLES": "reminds",
 
 	"NO_REMINDS": "You have no reminders",
 
-	"REMINDS_LIST": "Your Reminders",
+	"REMINDS_LIST": "Your reminders",
 
 	"DELETE": "Delete",
 	"DELETED": "Reminder #{{pos}} deleted"

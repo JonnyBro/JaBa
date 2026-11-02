@@ -1,12 +1,12 @@
 {
-	"DESCRIPTION": "Creates a message with buttons to create tickets",
+	"DESCRIPTION": "Send a message with a button for opening tickets",
 	"USAGE": "",
 	"EXAMPLES": "ticketsembed",
-	"TEXT": "Embed text",
+	"TEXT": "Message text",
 	"LABEL": "Text on the ticket button",
 	"EMOJI": "Button emoji (optional)",
 
-	"SUCCESS": "Embed created",
+	"SUCCESS": "Message sent",
 	"SUCCESS_TICKET": "Ticket created",
 
 	"MODAL_TITLE": "New ticket",
@@ -16,8 +16,8 @@
 	"TICKET_AUTHOR": "Created by {{user}} • <t:{{time}}:f>",
 
 	"ADD_USER": "Add a member to the ticket",
-	"ADD_USER_RES": "Pick who to add to the ticket",
+	"ADD_USER_RES": "Pick who to add",
 	"CLOSE_TICKET": "Close the ticket",
-	"CLOSE_TICKET_CONFIRM": "Are you sure you want to close the ticket?",
+	"CLOSE_TICKET_CONFIRM": "Close the ticket?",
 	"CLOSE_DONE": "Ticket closed"
 }

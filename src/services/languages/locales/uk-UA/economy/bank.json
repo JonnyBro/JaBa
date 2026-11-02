@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Відкриває банк: баланс, поповнення, зняття та перекази",
+	"DESCRIPTION": "Відкрити банк: баланс, поповнення, зняття та перекази",
 	"USAGE": "(@user)",
 	"EXAMPLES": "bank\nbank user:@jonny_bro",
 
@@ -16,13 +16,13 @@
 	"AMOUNT": "Сума",
 	"AMOUNT_PLACEHOLDER": "Наприклад 1000 або all",
 	"RECIPIENT": "Отримувач",
-	"NOT_YOURS": "Це не твій банк, відкрий свій через /bank",
+	"NOT_YOURS": "Це не твій банк. Відкрий свій через /bank",
 
 	"NOT_ENOUGH_CREDITS": "У тебе не вистачає кредитів",
 	"NOT_ENOUGH_BANK": "У банку не вистачає кредитів",
-	"SUCCESS_DEP": "{{credits}} покладено в банк",
-	"SUCCESS_WD": "{{credits}} знято з банку",
-	"SUCCESS_TRANSFER": "Ти переказав {{credits}} користувачу {{reciever}}",
+	"SUCCESS_DEP": "Поклав у банк {{credits}}",
+	"SUCCESS_WD": "Зняв з банку {{credits}}",
+	"SUCCESS_TRANSFER": "Переказав {{credits}} користувачу {{reciever}}",
 	"NO_TRANSACTIONS": "У тебе немає переказів",
 	"EMBED_TRANSACTIONS": "Твої перекази",
 	"BANK": "Банк",

@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Moves a track to another position in the queue",
+	"DESCRIPTION": "Move a track in the queue",
 	"USAGE": "[from] [to]",
 	"EXAMPLES": "move from:5 to:1",
 	"FROM": "Current position of the track",

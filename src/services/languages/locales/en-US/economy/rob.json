@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Try to steal some cash from a member. Money in the bank is safe",
+	"DESCRIPTION": "Try to steal some credits from a member",
 	"USAGE": "[@user]",
 	"EXAMPLES": "rob user:@jonny_bro",
 

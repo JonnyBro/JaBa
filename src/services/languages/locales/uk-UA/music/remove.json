@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Прибирає трек із черги",
+	"DESCRIPTION": "Прибрати трек із черги",
 	"USAGE": "[position]",
 	"EXAMPLES": "remove position:3",
 	"POSITION": "Номер треку в черзі",

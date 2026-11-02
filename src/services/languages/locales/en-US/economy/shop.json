@@ -1,18 +1,18 @@
 {
-	"DESCRIPTION": "Opens the server shop: roles, items and boosts for credits",
+	"DESCRIPTION": "Open the server shop: roles, items and boosts",
 	"USAGE": "",
 	"EXAMPLES": "shop",
 
 	"TITLE": "Shop",
 	"CASH": "Cash on hand: {{credits}}",
-	"EMPTY": "The shop is empty for now. Admins can add items in the dashboard",
+	"EMPTY": "The shop is empty. Admins can add items in the dashboard",
 	"SELECT": "Pick an item",
 	"PRICE": "Price",
 	"STOCK": "{{count}} left",
 	"SOLD_OUT": "Sold out",
-	"LIMIT": "Up to {{limit}} per member, you have {{held}}",
+	"LIMIT": "Max {{limit}} per member, you have {{held}}",
 	"LEVEL": "Requires level {{level}}",
-	"SELLABLE": "Can be sold back for {{credits}}",
+	"SELLABLE": "Sells back for {{credits}}",
 	"BUY": "Buy",
 	"BACK": "Back",
 	"TRANSACTION": "Shop: {{item}}",
@@ -30,13 +30,13 @@
 	},
 
 	"ERRORS": {
-		"BUSY": "Wait a second, your previous action isn't done yet",
+		"BUSY": "Wait a second, I'm still on your last action",
 		"NOT_FOUND": "This item isn't sold anymore",
 		"LEVEL": "You need level {{level}} for this",
 		"OUT_OF_STOCK": "Sold out",
-		"LIMIT": "You already have as many as you can",
+		"LIMIT": "You already have the max amount",
 		"HAS_ROLE": "You already have this role",
-		"ROLE_UNAVAILABLE": "I can't give this role. Ask an admin to put my role above it",
+		"ROLE_UNAVAILABLE": "I can't give this role. Ask an admin to move my role above it",
 		"NOT_ENOUGH": "You don't have {{credits}} on hand"
 	}
 }

@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Даёт пользователю очко репутации",
+	"DESCRIPTION": "Дать пользователю очко репутации",
 	"USAGE": "[@user]",
 	"EXAMPLES": "rep user:@jonny_bro",
 	"COOLDOWN": "Следующее очко репутации можно дать {{time}}",

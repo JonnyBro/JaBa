@@ -1,14 +1,14 @@
 {
-	"DESCRIPTION": "Creates a reminder",
+	"DESCRIPTION": "Create a reminder",
 	"USAGE": "[time] [message]",
 
 	"EXAMPLES": "remindme time:12h message:Use the command 'work'\nremindme time:5m message:Get the chicken from the freezer!",
 
-	"TIME": "Time (e.g., 10s, 5m, 2h, 1d, 3w)",
-	"ERROR_TIME": "Invalid time!",
+	"TIME": "When, like 10s, 5m, 2h, 1d or 3w",
+	"ERROR_TIME": "Invalid time",
 
-	"EMBED_SAVED": "Reminder saved!",
-	"EMBED_TIME": "Will be sent",
-	"EMBED_TITLE": "Reminder!",
-	"EMBED_CREATED": "Created at"
+	"EMBED_SAVED": "Reminder saved",
+	"EMBED_TIME": "I'll remind you",
+	"EMBED_TITLE": "Reminder",
+	"EMBED_CREATED": "Created"
 }

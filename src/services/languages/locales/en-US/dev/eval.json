@@ -1,6 +1,6 @@
 {
-	"DESCRIPTION": "Executes the code",
+	"DESCRIPTION": "Execute code",
 	"USAGE": "[code]",
 	"EXAMPLES": "eval code:interaction.channel.send({ content: \"Hello World!\" })",
-	"CODE": "Code to be executed"
+	"CODE": "Code to run"
 }

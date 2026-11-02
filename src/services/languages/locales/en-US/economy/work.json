@@ -1,11 +1,11 @@
 {
-	"DESCRIPTION": "Work a shift and earn some credits",
+	"DESCRIPTION": "Work a shift to earn some credits",
 	"USAGE": "",
 	"EXAMPLES": "work",
 
 	"BOOSTED": "Double pay, thanks to your boost",
 	"COOLDOWN": "You're still tired after the last shift, come back {{time}}",
-	"FIRST_SHIFT": "Hey! Where are you going? Fill out the paperwork come back",
+	"FIRST_SHIFT": "Hey! Where are you going? Fill out the paperwork and try again\n-# This is a joke, obviously, just type the command again :-)",
 	"TRANSACTION": "Work",
 
 	"JOB_1": "You washed dishes in a cafe all evening and got {{credits}}",

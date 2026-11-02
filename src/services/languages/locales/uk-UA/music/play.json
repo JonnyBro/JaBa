@@ -1,12 +1,12 @@
 {
-	"DESCRIPTION": "Вмикає трек або додає його в чергу",
+	"DESCRIPTION": "Увімкнути трек або додати його в чергу",
 	"USAGE": "[query] (source) (next)",
 	"EXAMPLES": "play query:Never Gonna Give You Up\nplay query:https://music.yandex.ru/album/1/track/2\nplay query:Rick Astley source:ym next:True",
 	"QUERY": "Назва або посилання (YouTube, Яндекс Музика, Spotify, SoundCloud...)",
 	"SOURCE": "Де шукати (за замовчуванням YouTube Music)",
 	"NEXT": "Увімкнути одразу після поточного треку?",
 	"CONTEXT_NAME": "Додати в чергу",
-	"CONTEXT_DESCRIPTION": "Додає в чергу посилання з повідомлення",
+	"CONTEXT_DESCRIPTION": "Додати посилання з повідомлення в чергу",
 
 	"SOURCES": {
 		"ytm": "YouTube Music",

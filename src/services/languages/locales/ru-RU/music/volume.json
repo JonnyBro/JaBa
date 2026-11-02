@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Меняет громкость",
+	"DESCRIPTION": "Поменять громкость",
 	"USAGE": "[volume]",
 	"EXAMPLES": "volume volume:50",
 	"VOLUME": "Громкость от 0 до 150",

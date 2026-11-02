@@ -1,9 +1,9 @@
 {
-	"DESCRIPTION": "Показывает аватар пользователя",
+	"DESCRIPTION": "Показать аватар пользователя",
 	"USAGE": "(@user)",
 	"EXAMPLES": "avatar\navatar user:@jonny_bro",
 	"CONTEXT_NAME": "Получить аватар",
-	"CONTEXT_DESCRIPTION": "Показывает аватар пользователя",
+	"CONTEXT_DESCRIPTION": "Показать аватар пользователя",
 
 	"GLOBAL": "Основной",
 	"SERVER": "Серверный"

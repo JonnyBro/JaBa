@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Керувати тікетом, у якому ти перебуваєш",
+	"DESCRIPTION": "Керувати тікетом, у якому ти зараз",
 	"USAGE": "[close/reopen/add/remove] (reason/@user)",
 	"EXAMPLES": "ticket close reason:Вирішено\nticket add user:@jonny_bro",
 	"CLOSE": "Закрити тікет",

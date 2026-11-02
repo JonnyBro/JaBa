@@ -1,9 +1,9 @@
 {
-	"DESCRIPTION": "Rock, paper, scissors against the bot or another member",
+	"DESCRIPTION": "Play rock, paper, scissors against the bot or someone else",
 	"USAGE": "[move] (@user)",
 	"EXAMPLES": "rps move:rock\nrps move:paper user:@jonny_bro",
 	"MOVE": "Your move",
-	"OPPONENT": "Challenge a member instead of playing against the bot",
+	"OPPONENT": "Challenge someone instead of the bot",
 	"MOVES": {
 		"rock": "Rock",
 		"paper": "Paper",
@@ -14,7 +14,7 @@
 	"BOT_LOSE": "{{bot}} beats {{move}}. I win!",
 	"BOT_DRAW": "We both picked {{move}}. It's a draw",
 
-	"CHALLENGE": "✊ {{user}} challenges {{opponent}} to rock, paper, scissors. {{opponent}}, make your move, the challenger's move is hidden",
+	"CHALLENGE": "✊ {{user}} challenges {{opponent}} to rock, paper, scissors. {{opponent}}, your move, the challenger's move is hidden",
 	"DECLINE": "Decline",
 	"NOT_YOURS": "This challenge isn't for you",
 	"EXPIRED": "✊ The challenge has expired",

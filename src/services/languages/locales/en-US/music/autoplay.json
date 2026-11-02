@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Toggles autoplay of similar tracks when the queue ends",
+	"DESCRIPTION": "Toggle autoplay of similar tracks when the queue ends",
 	"USAGE": "",
 	"EXAMPLES": "autoplay",
 	"ENABLED": "Autoplay **enabled**",

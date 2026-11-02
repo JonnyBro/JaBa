@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Виконує код",
+	"DESCRIPTION": "Виконати код",
 	"USAGE": "[code]",
 	"EXAMPLES": "eval code:interaction.channel.send({ content: \"Hello World!\" })",
 	"CODE": "Код для виконання"

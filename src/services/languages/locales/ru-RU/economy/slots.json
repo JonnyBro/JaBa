@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Крутить игровой автомат: 5 барабанов, 10 линий, вайлды и фриспины",
+	"DESCRIPTION": "Сыграть в слоты: 5 барабанов, 10 линий, вайлды и фриспины",
 	"USAGE": "[bet]",
 	"EXAMPLES": "slots bet:100",
 	"BET": "Общая ставка за вращение, делится на 10 линий",
@@ -10,10 +10,10 @@
 	"NOT_ENOUGH": "У тебя нет {{credits}} при себе",
 	"NOT_YOURS": "Этот автомат занят, запусти свой через /slots",
 
-	"LINE": "Линия {{line}} · {{symbol}} ×{{count}} · +{{win}}",
-	"SCATTER": "⭐ ×{{count}} · +{{win}}",
-	"BONUS": "{{spins}} фриспинов, выигрыши ×{{multiplier}}",
-	"BONUS_RESULT": "Фриспины: {{spins}} (×{{multiplier}}) · +{{win}}",
+	"LINE": "Линия {{line}} · {{symbol}} x{{count}} · +{{win}}",
+	"SCATTER": "⭐ x{{count}} · +{{win}}",
+	"BONUS": "{{spins}} фриспинов, выигрыши x{{multiplier}}",
+	"BONUS_RESULT": "Фриспины: {{spins}} (x{{multiplier}}) · +{{win}}",
 	"BEST_SPIN": "Лучший фриспин:",
 	"NO_WIN": "Без выигрыша",
 	"WIN": "+{{credits}}",

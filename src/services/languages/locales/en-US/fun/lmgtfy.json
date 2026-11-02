@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Creates a 'Let Me Google That For You' link",
+	"DESCRIPTION": "Make a \"Let Me Google That For You\" link",
 	"USAGE": "[query] [short]",
 	"QUERY": "Query",
 	"SHORT": "Shorten the link?",

@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Shows your items and lets you use, sell or gift them",
+	"DESCRIPTION": "Open your inventory. Allows you to use, gift and sell your items",
 	"USAGE": "",
 	"EXAMPLES": "inventory",
 
@@ -11,7 +11,7 @@
 	"USE": "Use",
 	"SELL": "Sell for {{credits}}",
 	"GIFT": "Gift",
-	"RECIPIENT": "Who gets it",
+	"RECIPIENT": "Who to gift it to",
 
 	"USED": "{{item}} used: {{effect}}, ends {{time}}",
 	"SOLD": "Sold {{item}} for {{credits}}",
@@ -21,5 +21,5 @@
 	"NOT_HELD": "You don't have this item anymore",
 	"NOT_USABLE": "This item can't be used",
 	"NOT_SELLABLE": "This item can't be sold",
-	"RECEIVER_LIMIT": "{{user}} already has as many as they can"
+	"RECEIVER_LIMIT": "{{user}} already has the max amount of these"
 }

@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Plays one of your playlists from the dashboard",
+	"DESCRIPTION": "Play one of your playlists from the dashboard",
 	"USAGE": "[name] (shuffle)",
 	"EXAMPLES": "playlist name:Chill\nplaylist name:Gym shuffle:True",
 	"NAME": "Playlist name",

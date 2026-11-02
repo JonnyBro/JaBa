@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Shows or changes server settings",
+	"DESCRIPTION": "List/change server settings",
 	"USAGE": "",
 	"EXAMPLES": "config",
 
@@ -7,6 +7,6 @@
 	"LANGUAGE_PLACEHOLDER": "Choose a language",
 	"BIRTHDAYS_PLACEHOLDER": "Choose a channel (leave empty to disable)",
 
-	"LANGUAGE": "Bot's language for this server",
-	"BIRTHDAYS": "Channel for birthday announcements"
+	"LANGUAGE": "Bot language on this server",
+	"BIRTHDAYS": "Birthday announcements channel"
 }

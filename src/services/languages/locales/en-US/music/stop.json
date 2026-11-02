@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Stops the music and clears the queue",
+	"DESCRIPTION": "Stop the music and clear the queue",
 	"USAGE": "",
 	"EXAMPLES": "stop",
 	"SUCCESS": "Music stopped"

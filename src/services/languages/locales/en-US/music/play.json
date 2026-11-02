@@ -1,12 +1,12 @@
 {
-	"DESCRIPTION": "Plays a track or adds it to the queue",
+	"DESCRIPTION": "Play a track or add it to the queue",
 	"USAGE": "[query] (source) (next)",
 	"EXAMPLES": "play query:Never Gonna Give You Up\nplay query:https://music.yandex.ru/album/1/track/2\nplay query:Rick Astley source:ym next:True",
 	"QUERY": "Title or link (YouTube, Yandex Music, Spotify, SoundCloud...)",
 	"SOURCE": "Where to search (YouTube Music by default)",
 	"NEXT": "Play right after the current track?",
 	"CONTEXT_NAME": "Add to Queue",
-	"CONTEXT_DESCRIPTION": "Adds the link from the message to the queue",
+	"CONTEXT_DESCRIPTION": "Add the link from this message to the queue",
 
 	"SOURCES": {
 		"ytm": "YouTube Music",

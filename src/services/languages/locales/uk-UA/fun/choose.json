@@ -1,9 +1,12 @@
 {
-	"DESCRIPTION": "Обрати за тебе один із варіантів",
-	"USAGE": "[options]",
-	"EXAMPLES": "choose options:піца, суші, бургери",
-	"OPTIONS": "Варіанти через кому або |",
+	"DESCRIPTION": "Обрати за тебе",
+	"USAGE": "",
+	"EXAMPLES": "choose",
 
-	"BAD_OPTIONS": "Дай від 2 до {{max}} різних варіантів через кому",
+	"MODAL_TITLE": "З чого обрати?",
+	"OPTIONS": "Варіанти, по одному на рядок",
+	"OPTIONS_PLACEHOLDER": "Піца\nСуші\nБургери",
+
+	"BAD_OPTIONS": "Дай від 2 до {{max}} різних варіантів, по одному на рядок, до {{length}} символів кожен",
 	"RESULT": "🤔 Я обираю **{{choice}}**"
 }

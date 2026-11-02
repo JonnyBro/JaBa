@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Jumps to a specific time in the current track",
+	"DESCRIPTION": "Jump to a time in the current track",
 	"USAGE": "[time]",
 	"EXAMPLES": "seek time:90\nseek time:1:30",
 	"TIME": "Time in seconds or as m:ss",

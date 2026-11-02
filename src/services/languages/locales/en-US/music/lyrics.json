@@ -1,8 +1,8 @@
 {
-	"DESCRIPTION": "Shows the lyrics of the current track or of any song",
+	"DESCRIPTION": "Show lyrics for the current track or any song",
 	"USAGE": "(query)",
 	"EXAMPLES": "lyrics\nlyrics query:Never Gonna Give You Up",
-	"QUERY": "Song to look up instead of the current track",
+	"QUERY": "Song to search for instead of the current one",
 
 	"NOT_FOUND": "No lyrics found for {{track}}",
 	"UNAVAILABLE": "Lyrics are unavailable right now, the music server doesn't support them",

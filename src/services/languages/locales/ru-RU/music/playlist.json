@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Включает один из твоих плейлистов с сайта",
+	"DESCRIPTION": "Включить один из твоих плейлистов с сайта",
 	"USAGE": "[name] (shuffle)",
 	"EXAMPLES": "playlist name:Чилл\nplaylist name:Зал shuffle:True",
 	"NAME": "Название плейлиста",

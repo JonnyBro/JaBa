@@ -1,13 +1,13 @@
 {
-	"DESCRIPTION": "Добавляет эмодзи на этот сервер по ссылке или с другого сервера",
+	"DESCRIPTION": "Скопировать эмодзи с другого сервера или по ссылке",
 	"USAGE": "(name) [string]",
 	"EXAMPLES": "addemoji name:google string:https://google.com",
 
 	"LINK_OR_EMOJI": "Ссылка на картинку или эмодзи с сервера",
 
-	"MISSING_NAME": "Укажи название эмодзи",
-	"INVALID_LINK": "Укажи нормальную ссылку на картинку",
+	"MISSING_NAME": "Дай эмодзи название",
+	"INVALID_LINK": "Это не ссылка на картинку",
 
-	"SUCCESS": "{{emoji}} добавлен",
+	"SUCCESS": "Добавил {{emoji}}",
 	"ERROR": "Не получилось добавить {{name}}\n```{{error}}```"
 }

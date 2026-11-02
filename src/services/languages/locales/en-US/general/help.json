@@ -1,10 +1,10 @@
 {
-	"DESCRIPTION": "Shows a list of commands or help for a specific command",
+	"DESCRIPTION": "Show all commands or help for one of them",
 	"USAGE": "(command)",
 	"EXAMPLES": "help\nhelp command:ping",
 
 	"NOT_FOUND": "Command `{{command}}` not found",
-	"COMMANDS_IN": "Available commands in category \"{{category}}\":",
+	"COMMANDS_IN": "Commands in \"{{category}}\":",
 
 	"FIELD_USAGE": "Usage",
 	"FIELD_DESCRIPTION": "Description",
@@ -12,9 +12,9 @@
 
 	"CMD_TITLE": "Help for {{cmd}}",
 	"DASHBOARD": "All commands in the dashboard",
-	"INFO": "● To get help for a specific command, use `/help [command]`",
-	"FIELD_PERMISSIONS": "Required Permissions",
-	"NO_REQUIRED_PERMISSION": "No special permissions required",
+	"INFO": "● Use `/help [command]` to see help for a command",
+	"FIELD_PERMISSIONS": "Required permissions",
+	"NO_REQUIRED_PERMISSION": "None",
 	"TITLE": "{{name}} | Commands",
 	"GUILD_ONLY": "Servers only",
 	"NOT_GUILD_ONLY": "Servers and DMs",

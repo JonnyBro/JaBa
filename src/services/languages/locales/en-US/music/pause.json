@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Pauses or resumes the music",
+	"DESCRIPTION": "Pause or resume the music",
 	"USAGE": "",
 	"EXAMPLES": "pause",
 	"PAUSED": "Paused",

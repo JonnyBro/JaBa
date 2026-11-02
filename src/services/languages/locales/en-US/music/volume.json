@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Sets the volume",
+	"DESCRIPTION": "Change the volume",
 	"USAGE": "[volume]",
 	"EXAMPLES": "volume volume:50",
 	"VOLUME": "Volume from 0 to 150",

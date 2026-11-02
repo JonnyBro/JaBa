@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Moves the player message to this channel",
+	"DESCRIPTION": "Move the player message to this channel",
 	"USAGE": "",
 	"EXAMPLES": "nowplaying",
 

@@ -6,7 +6,7 @@
 	"USER": "Delete only this member's messages",
 	"BOTS": "Delete only messages from bots",
 
-	"NOTHING": "There are no matching messages from the last 14 days. Older and pinned messages can't be purged",
+	"NOTHING": "No matching messages from the last 14 days. Older and pinned messages can't be deleted",
 	"SUCCESS": "Messages deleted: {{count}}",
-	"PARTIAL": "Deleted {{count}} of {{amount}} messages: there were no more matching ones from the last 14 days. Older and pinned messages are skipped"
+	"PARTIAL": "Deleted {{count}} of {{amount}}: no more matching messages from the last 14 days. Older and pinned ones are skipped"
 }

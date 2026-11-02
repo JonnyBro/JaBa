@@ -50,7 +50,7 @@
 		"text": "Page not found"
 	},
 	"home": {
-		"intro": "Music, economy, reminders and server tools. Manage the bot on your servers right from here.",
+		"intro": "Music, economy, reminders and server tools. Manage the bot on your servers from here.",
 		"invite": "Add to server",
 		"myServers": "My servers",
 		"title": "Bot stats",
@@ -68,7 +68,7 @@
 		"title": "Servers",
 		"subtitle": "Servers where you can manage the bot",
 		"empty": "No servers",
-		"emptyText": "You need the Manage Server permission on a server to see it here.",
+		"emptyText": "Servers show up here if you have the Manage Server permission on them.",
 		"manage": "Manage",
 		"invite": "Invite",
 		"music": "Music"
@@ -78,7 +78,7 @@
 		"members": "{n} members",
 		"settings": "Settings",
 		"language": "Bot language",
-		"birthdays": "Birthday announcements channel",
+		"birthdays": "Birthday channel",
 		"disabled": "Disabled",
 		"saved": "Settings saved",
 		"tabs": {
@@ -120,11 +120,11 @@
 		"noTransactions": "No transactions yet",
 		"resetMember": "Reset",
 		"resetMemberTitle": "Reset {name}?",
-		"resetMemberText": "Money, bank, experience, level and transactions of this member on the server will be deleted.",
+		"resetMemberText": "This deletes the member's money, bank, experience, level and transactions on this server.",
 		"memberReset": "Member data reset",
 		"resetEconomy": "Reset economy",
 		"resetEconomyTitle": "Reset the economy of the whole server?",
-		"resetEconomyText": "Money, bank, experience, levels and transactions of every member of {name} will be deleted. This can't be undone.",
+		"resetEconomyText": "This deletes money, bank, experience, levels and transactions of everyone on {name}. You can't undo this.",
 		"economyReset": "Reset {n} member | Reset {n} members",
 		"moderation": {
 			"title": "Moderation",
@@ -132,11 +132,11 @@
 			"removeTimeout": "Remove timeout",
 			"kick": "Kick",
 			"ban": "Ban",
-			"notAllowed": "You or the bot don't have the permission or the role is too low",
+			"notAllowed": "You or the bot can't do this: no permission or the role is too low",
 			"timeoutTitle": "Timeout {name}",
 			"kickTitle": "Kick {name}",
 			"banTitle": "Ban {name}",
-			"reasonHint": "The reason goes to the server audit log together with your name.",
+			"reasonHint": "The reason goes to the server audit log with your name.",
 			"reason": "Reason",
 			"duration": "Duration",
 			"deleteMessages": "Delete their messages",
@@ -162,7 +162,7 @@
 		},
 		"channel": "Channel",
 		"rewardsTitle": "Rewards",
-		"rewardsHint": "A member gets the reward once they reach the level. Each level can have a role, credits or both.",
+		"rewardsHint": "Members get a reward when they reach its level: a role, credits or both.",
 		"addReward": "Add reward",
 		"noRewards": "No rewards yet.",
 		"level": "Level",
@@ -170,13 +170,13 @@
 		"noRole": "No role",
 		"credits": "Credits",
 		"stack": "Keep the roles of lower levels",
-		"roleHint": "When it's off, a member only keeps the role of their highest reward. Only roles below the bot's highest role are listed.",
+		"roleHint": "If off, members only keep the role from their highest reward. You can only pick roles below the bot's top role.",
 		"saved": "Level settings saved",
 		"syncTitle": "Give out rewards",
-		"syncHint": "Gives every member the reward roles for the levels they already have. With the toggle above off, lower reward roles are taken away. Credits aren't paid again. Save your changes first.",
+		"syncHint": "Gives everyone the reward roles for the levels they already have. If the toggle above is off, lower reward roles are removed. Credits aren't paid again. Save your changes first.",
 		"sync": "Give out roles",
 		"syncConfirm": "Give out reward roles to everyone?",
-		"syncConfirmText": "On a big server this can take a few minutes, the bot works through members in the background.",
+		"syncConfirmText": "On big servers this takes a few minutes. The bot does it in the background.",
 		"syncStarted": "Started for {n} member | Started for {n} members"
 	},
 	"shop": {
@@ -184,7 +184,7 @@
 		"count": "{n} of {max} items.",
 		"add": "Add item",
 		"empty": "The shop is empty",
-		"emptyText": "Add roles, collectibles or boosts that members can buy with credits.",
+		"emptyText": "Add roles, collectibles or boosts for members to buy with credits.",
 		"search": "Search by name, description or role",
 		"notFound": "Nothing found",
 		"item": "Item",
@@ -201,7 +201,7 @@
 		"description": "Description",
 		"role": "Role",
 		"pickRole": "Pick a role",
-		"roleHint": "Only roles below the bot's highest role are listed.",
+		"roleHint": "You can only pick roles below the bot's top role.",
 		"effect": "Effect",
 		"duration": "Duration, hours",
 		"requiredLevel": "Required level",
@@ -212,7 +212,7 @@
 		"saved": "Item saved",
 		"deleted": "Item deleted",
 		"deleteTitle": "Delete {name}?",
-		"deleteText": "Members lose this item from their inventories. Roles that were already bought stay.",
+		"deleteText": "It disappears from members' inventories. Roles people already bought stay.",
 		"types": {
 			"role": "Role",
 			"temp_role": "Temporary role",
@@ -220,10 +220,10 @@
 			"consumable": "Consumable"
 		},
 		"typeHints": {
-			"role": "The member gets the role for good.",
-			"temp_role": "The role is taken away when the time runs out. Buying again adds more time.",
-			"item": "Goes to the inventory and shows up in /profile. Can be gifted.",
-			"consumable": "Goes to the inventory, using it turns on an effect for a while."
+			"role": "The member keeps the role forever.",
+			"temp_role": "The role is removed when time runs out. Buying again adds more time.",
+			"item": "Goes to the inventory and shows in /profile. Can be gifted.",
+			"consumable": "Goes to the inventory. Using it turns on an effect for a while."
 		},
 		"effects": {
 			"robShield": "Protection from /rob",
@@ -231,7 +231,7 @@
 		}
 	},
 	"tickets": {
-		"intro": "Sends a message with a button that opens a private ticket thread in the same channel. The bot needs to be able to create private threads there.",
+		"intro": "Sends a message with a button that opens a private ticket thread in that channel. The bot needs permission to create private threads there.",
 		"channel": "Channel",
 		"text": "Message text",
 		"textPlaceholder": "Need help? Open a ticket and we'll get back to you.",
@@ -263,7 +263,7 @@
 	},
 	"audit": {
 		"empty": "Nothing here yet",
-		"emptyText": "Changes made in the dashboard will show up here.",
+		"emptyText": "Changes made in the dashboard show up here.",
 		"reason": "Reason: {reason}",
 		"openMessage": "Open message",
 		"actions": {
@@ -302,7 +302,7 @@
 			"queue": "Repeat: queue"
 		},
 		"nothing": "Nothing is playing",
-		"nothingText": "Add a track below, the bot will join your voice channel.",
+		"nothingText": "Add a track below and the bot will join your voice channel.",
 		"joinToStart": "Join a voice channel on the server to start the music.",
 		"addPlaceholder": "Link or search query",
 		"sources": {
@@ -329,7 +329,7 @@
 		"noPlaylists": "You have no playlists yet.",
 		"managePlaylists": "Manage playlists",
 		"saveQueue": "Save to playlist",
-		"saveQueueText": "The current track and the whole queue are added to the end of the playlist.",
+		"saveQueueText": "The current track and the whole queue go to the end of the playlist.",
 		"newPlaylist": "New playlist",
 		"savedToPlaylist": "Saved {n} track to {title} | Saved {n} tracks to {title}",
 		"lyrics": {
@@ -339,7 +339,7 @@
 	},
 	"playlists": {
 		"title": "Playlists",
-		"subtitle": "Your own playlists, they work on every server with the bot",
+		"subtitle": "Your playlists, they work on any server with the bot",
 		"newPlaceholder": "New playlist name",
 		"create": "Create playlist",
 		"count": "{n} of {max} playlists",
@@ -348,18 +348,18 @@
 		"emptyText": "Create one on the left and add tracks to it.",
 		"noTracks": "No tracks yet. Add a link or search for something above.",
 		"saved": "Saved",
-		"skipped": "{n} track didn't fit, a playlist is limited | {n} tracks didn't fit, a playlist is limited",
+		"skipped": "{n} track didn't fit, the playlist is full | {n} tracks didn't fit, the playlist is full",
 		"howToPlay": "To play it, open the Music tab on a server or use {command} in Discord.",
 		"deleteTitle": "Delete {name}?",
 		"deleteText": "The playlist and all of its tracks will be gone.",
 		"storage": "Files: {used} of {max} MB",
 		"upload": "Upload file",
-		"uploadHint": "Uploaded files share {max} MB per account. Formats: {formats}. A file that isn't played for 2 weeks is deleted.",
-		"fileExpired": "Deleted after 2 weeks without plays, upload it again or remove it",
+		"uploadHint": "You have {max} MB for uploads. Formats: {formats}. Files not played for 2 weeks are deleted.",
+		"fileExpired": "Deleted after 2 weeks without plays. Upload it again or remove it",
 		"fileExpires": "Will be deleted {time} if not played",
-		"fileExpiresHint": "Every play resets the 2 week timer",
+		"fileExpiresHint": "Each play resets the 2 week timer",
 		"reupload": "Upload again",
-		"filesUnavailable": "{n} uploaded file was deleted after 2 weeks without plays, upload it again on the Playlists page | {n} uploaded files were deleted after 2 weeks without plays, upload them again on the Playlists page",
+		"filesUnavailable": "{n} uploaded file was deleted after 2 weeks without plays. Upload it again on the Playlists page | {n} uploaded files were deleted after 2 weeks without plays. Upload them again on the Playlists page",
 		"dropTo": "Drop to upload to {name}",
 		"dropBusy": "Wait for the current upload to finish",
 		"dropNoPlaylist": "Create a playlist first",
@@ -394,11 +394,11 @@
 		"bio": "Bio",
 		"bioPlaceholder": "A few words about yourself, shown in /profile",
 		"birthdate": "Birthday",
-		"birthdateHint": "The bot congratulates you on servers with birthday announcements on.",
+		"birthdateHint": "The bot congratulates you on servers that have birthday announcements on.",
 		"clear": "Clear",
 		"saved": "Saved",
 		"reminds": "Reminders",
-		"remindsHint": "The bot sends them to your DMs, same as /remindme",
+		"remindsHint": "The bot sends them to your DMs, like /remindme",
 		"remindMessage": "What to remind about",
 		"remindAt": "When",
 		"addRemind": "Add",
@@ -423,13 +423,13 @@
 		},
 		"maintenance": {
 			"title": "Maintenance",
-			"hint": "While it's on, commands answer with a maintenance notice for everyone but you.",
+			"hint": "While it's on, the bot tells everyone but you that it's under maintenance.",
 			"enabled": "Maintenance mode",
 			"message": "Message for users (optional)"
 		},
 		"status": {
 			"title": "Bot status",
-			"hint": "Replaces the rotating status. Leave empty to go back to the rotation.",
+			"hint": "Replaces the rotating status. Leave empty to bring the rotation back.",
 			"placeholder": "Custom status"
 		},
 		"tasks": {
@@ -459,7 +459,7 @@
 			"leaveText": "The bot leaves the server, its data stays in the database.",
 			"leaveDone": "Left {name}",
 			"blacklistTitle": "Blacklist {name}?",
-			"blacklistText": "The bot leaves the server and leaves again every time it is added there.",
+			"blacklistText": "The bot leaves the server and will leave again every time it's added.",
 			"blacklistDone": "{name} is blacklisted"
 		},
 		"lavalink": {
@@ -488,7 +488,7 @@
 			"perDay": "Commands per day",
 			"commands": "By command",
 			"empty": "No data yet",
-			"emptyText": "Command usage is counted since this version and saved once a minute."
+			"emptyText": "Commands are counted since this version and saved once a minute."
 		},
 		"blacklist": {
 			"user": "User",
@@ -497,7 +497,7 @@
 			"add": "Blacklist",
 			"added": "Added to the blacklist",
 			"empty": "The blacklist is empty",
-			"hint": "Blacklisted users and servers can't use any commands, the bot leaves blacklisted servers."
+			"hint": "Blacklisted users and servers can't use commands. The bot leaves blacklisted servers."
 		},
 		"logs": {
 			"search": "Filter",

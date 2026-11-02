@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Opens your bank: balance, deposits, withdrawals and transfers",
+	"DESCRIPTION": "Open your bank: balance, deposits, withdrawals and transfers",
 	"USAGE": "(@user)",
 	"EXAMPLES": "bank\nbank user:@jonny_bro",
 
@@ -16,15 +16,15 @@
 	"AMOUNT": "Amount",
 	"AMOUNT_PLACEHOLDER": "For example 1000, or all",
 	"RECIPIENT": "Recipient",
-	"NOT_YOURS": "This isn't your bank, open your own with /bank",
+	"NOT_YOURS": "This isn't your bank. Open yours with /bank",
 
 	"NOT_ENOUGH_CREDITS": "You don't have enough credits",
 	"NOT_ENOUGH_BANK": "You don't have enough credits in the bank",
-	"SUCCESS_DEP": "{{credits}} deposited into your bank account",
-	"SUCCESS_WD": "You have withdrawn {{credits}} from your bank account",
-	"SUCCESS_TRANSFER": "You have transferred {{credits}} to {{reciever}}",
+	"SUCCESS_DEP": "Deposited {{credits}}",
+	"SUCCESS_WD": "Withdrew {{credits}}",
+	"SUCCESS_TRANSFER": "Sent {{credits}} to {{reciever}}",
 	"NO_TRANSACTIONS": "You have no transactions",
-	"EMBED_TRANSACTIONS": "Your Transactions",
+	"EMBED_TRANSACTIONS": "Your transactions",
 	"BANK": "Bank",
 	"NUMBERS": "Guess the Number",
 	"TRANSFER_TO": "Transfer to {{user}}",

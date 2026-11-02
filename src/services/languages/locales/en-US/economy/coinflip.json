@@ -1,10 +1,10 @@
 {
-	"DESCRIPTION": "Flip a coin for credits, against the bot or another member",
+	"DESCRIPTION": "Flip a coin against the bot or a user. Bet with credits",
 	"USAGE": "[bet] [side] (@user)",
 	"EXAMPLES": "coinflip bet:500 side:heads\ncoinflip bet:1000 side:tails user:@jonny_bro",
 	"BET": "How much to bet",
 	"SIDE": "Heads or tails",
-	"OPPONENT": "Challenge a member instead of playing against the bot",
+	"OPPONENT": "Challenge someone instead of the bot",
 	"SIDES": {
 		"heads": "Heads",
 		"tails": "Tails"
@@ -17,7 +17,7 @@
 	"WON": "🪙 **{{side}}!** You won {{credits}}",
 	"LOST": "🪙 **{{side}}.** You lost {{credits}}",
 
-	"CHALLENGE": "🪙 {{user}} challenges {{opponent}} to a coinflip for {{credits}}\n{{user}} takes **{{side}}**, {{opponent}} gets **{{other}}**. The winner takes both bets",
+	"CHALLENGE": "🪙 {{user}} challenges {{opponent}} to a coinflip for {{credits}}\n{{user}} takes **{{side}}**, {{opponent}} gets **{{other}}**. The winner takes everything",
 	"ACCEPT": "Accept",
 	"DECLINE": "Decline",
 	"NOT_YOURS": "This challenge isn't for you",

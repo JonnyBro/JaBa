@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Встановлює дату народження",
+	"DESCRIPTION": "Вказати дату народження",
 	"USAGE": "[day] [month] [year]",
 	"EXAMPLES": "birthdate day:17 month:03 year:2000",
 
@@ -10,12 +10,12 @@
 	"MONTH": "Місяць",
 	"YEAR": "Рік",
 
-	"INVALID_DATE": "Неправильна дата",
+	"INVALID_DATE": "Такої дати немає",
 	"DATE_TOO_LOW": "Ти впевнений? :eyes:",
 	"DATE_TOO_HIGH": "Хм... Ти ще не народився",
 
-	"SUCCESS": "Твоя дата народження: **{{date}}**",
-	"SUCCESS_CLEAR": "Дату народження видалено",
+	"SUCCESS": "Твій день народження: **{{date}}**",
+	"SUCCESS_CLEAR": "День народження видалено",
 
 	"HAPPY_BIRTHDAY": "З днем народження",
 	"HAPPY_BIRTHDAY_MESSAGE": "З днем народження, {{user}}! Сьогодні тобі {{age}}!"

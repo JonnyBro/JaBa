@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Sets the repeat mode",
+	"DESCRIPTION": "Set the repeat mode",
 	"USAGE": "[mode]",
 	"EXAMPLES": "loop mode:Queue",
 	"MODE": "Repeat mode",

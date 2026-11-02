@@ -1,14 +1,14 @@
 {
-	"DESCRIPTION": "Створює нагадування",
+	"DESCRIPTION": "Створити нагадування",
 	"USAGE": "[time] [message]",
 
 	"EXAMPLES": "remindme time:12h message:Використати команду 'work'\nremindme time:5m message:Дістати курку з морозилки!",
 
-	"TIME": "Час (наприклад 10s, 5m, 2h, 1d, 3w)",
-	"ERROR_TIME": "Неправильний час!",
+	"TIME": "Коли, наприклад 10s, 5m, 2h, 1d або 3w",
+	"ERROR_TIME": "Неправильний час",
 
-	"EMBED_SAVED": "Нагадування збережено!",
-	"EMBED_TIME": "Прийде",
-	"EMBED_TITLE": "Нагадування!",
+	"EMBED_SAVED": "Нагадування збережено",
+	"EMBED_TIME": "Нагадаю",
+	"EMBED_TITLE": "Нагадування",
 	"EMBED_CREATED": "Створено"
 }

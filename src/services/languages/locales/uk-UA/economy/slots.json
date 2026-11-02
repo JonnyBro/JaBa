@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Крутити ігровий автомат: 5 барабанів, 10 ліній, вайлди та фриспіни",
+	"DESCRIPTION": "Зіграти в слоти: 5 барабанів, 10 ліній, вайлди та фриспіни",
 	"USAGE": "[bet]",
 	"EXAMPLES": "slots bet:100",
 	"BET": "Загальна ставка за оберт, ділиться на 10 ліній",
@@ -10,10 +10,10 @@
 	"NOT_ENOUGH": "У тебе немає {{credits}} при собі",
 	"NOT_YOURS": "Цей автомат зайнятий, запусти свій через /slots",
 
-	"LINE": "Лінія {{line}} · {{symbol}} ×{{count}} · +{{win}}",
-	"SCATTER": "⭐ ×{{count}} · +{{win}}",
-	"BONUS": "{{spins}} фриспінів, виграші ×{{multiplier}}",
-	"BONUS_RESULT": "Фриспіни: {{spins}} (×{{multiplier}}) · +{{win}}",
+	"LINE": "Лінія {{line}} · {{symbol}} x{{count}} · +{{win}}",
+	"SCATTER": "⭐ x{{count}} · +{{win}}",
+	"BONUS": "{{spins}} фриспінів, виграші x{{multiplier}}",
+	"BONUS_RESULT": "Фриспіни: {{spins}} (x{{multiplier}}) · +{{win}}",
 	"BEST_SPIN": "Найкращий фриспін:",
 	"NO_WIN": "Без виграшу",
 	"WIN": "+{{credits}}",

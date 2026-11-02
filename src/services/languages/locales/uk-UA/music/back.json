@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Вмикає попередній трек",
+	"DESCRIPTION": "Увімкнути попередній трек",
 	"USAGE": "",
 	"EXAMPLES": "back",
 	"NO_PREV_SONG": "Попереднього треку немає",

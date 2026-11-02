@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Shuffles the queue",
+	"DESCRIPTION": "Shuffle the queue",
 	"USAGE": "",
 	"EXAMPLES": "shuffle",
 	"SUCCESS": "Queue shuffled"

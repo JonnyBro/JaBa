@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Вмикає або вимикає повтор",
+	"DESCRIPTION": "Увімкнути або вимкнути повтор",
 	"USAGE": "[mode]",
 	"EXAMPLES": "loop mode:Queue",
 	"MODE": "Режим повтору",

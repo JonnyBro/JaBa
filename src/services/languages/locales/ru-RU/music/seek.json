@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Перематывает текущий трек",
+	"DESCRIPTION": "Перемотать текущий трек",
 	"USAGE": "[time]",
 	"EXAMPLES": "seek time:90\nseek time:1:30",
 	"TIME": "Время в секундах или в формате м:сс",

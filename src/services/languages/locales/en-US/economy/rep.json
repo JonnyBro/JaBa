@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Gives reputation to a user",
+	"DESCRIPTION": "Give a reputation point to a user",
 	"USAGE": "[@user]",
 	"EXAMPLES": "rep user:@jonny_bro",
 	"COOLDOWN": "You can give your next reputation point {{time}}",

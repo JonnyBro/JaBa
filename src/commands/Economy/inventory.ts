@@ -97,7 +97,7 @@ const renderInventory = async (interaction: Interaction, requestedPage = 0, stat
 
 	if (!held.length) container.addTextDisplayComponents(createText(await t(interaction, "economy/inventory:EMPTY")));
 	else {
-		const lines = held.map(({ item, quantity }) => `**${itemLabel(item)}** ×${quantity}`);
+		const lines = held.map(({ item, quantity }) => `**${itemLabel(item)}** x${quantity}`);
 
 		container.addTextDisplayComponents(createText(lines.join("\n"))).addActionRowComponents(
 			new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
@@ -106,7 +106,7 @@ const renderInventory = async (interaction: Interaction, requestedPage = 0, stat
 					.setPlaceholder(await t(interaction, "economy/inventory:SELECT"))
 					.addOptions(
 						held.map(({ item, quantity }) => ({
-							label: shortenString(`${item.name} ×${quantity}`, 100),
+							label: shortenString(`${item.name} x${quantity}`, 100),
 							value: item._id.toString(),
 							emoji: item.emoji || undefined,
 						})),
@@ -161,7 +161,7 @@ const renderEntry = async (interaction: Interaction, itemId: string, page: numbe
 
 	const container = createContainer()
 		.addTextDisplayComponents(
-			createText(`## ${itemLabel(item)} ×${quantity}${item.description ? `\n${item.description}` : ""}`),
+			createText(`## ${itemLabel(item)} x${quantity}${item.description ? `\n${item.description}` : ""}`),
 		)
 		.addSeparatorComponents(createSeparator())
 		.addTextDisplayComponents(createText(await describeType(interaction, item)))

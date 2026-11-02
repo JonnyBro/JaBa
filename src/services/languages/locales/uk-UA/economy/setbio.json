@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Встановлює опис профілю",
+	"DESCRIPTION": "Вказати опис профілю",
 	"USAGE": "[text]",
 	"EXAMPLES": "setbio text:Мене звати Джонні :shock:",
 
@@ -8,6 +8,6 @@
 
 	"TEXT": "Текст опису",
 
-	"SUCCESS": "Твій опис: {{text}}",
+	"SUCCESS": "Новий опис: {{text}}",
 	"SUCCESS_CLEAR": "Опис видалено"
 }

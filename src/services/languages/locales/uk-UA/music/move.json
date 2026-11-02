@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Переносить трек на інше місце в черзі",
+	"DESCRIPTION": "Переставити трек у черзі",
 	"USAGE": "[from] [to]",
 	"EXAMPLES": "move from:5 to:1",
 	"FROM": "Поточний номер треку",

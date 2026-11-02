@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Змінює гучність",
+	"DESCRIPTION": "Змінити гучність",
 	"USAGE": "[volume]",
 	"EXAMPLES": "volume volume:50",
 	"VOLUME": "Гучність від 0 до 150",

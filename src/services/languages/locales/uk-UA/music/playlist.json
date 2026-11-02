@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Вмикає один із твоїх плейлистів із сайту",
+	"DESCRIPTION": "Увімкнути один із твоїх плейлистів із сайту",
 	"USAGE": "[name] (shuffle)",
 	"EXAMPLES": "playlist name:Чіл\nplaylist name:Зал shuffle:True",
 	"NAME": "Назва плейлиста",

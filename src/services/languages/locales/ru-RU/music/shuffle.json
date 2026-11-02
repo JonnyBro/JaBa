@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Перемешивает очередь",
+	"DESCRIPTION": "Перемешать очередь",
 	"USAGE": "",
 	"EXAMPLES": "shuffle",
 	"SUCCESS": "Очередь перемешана"

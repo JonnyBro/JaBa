@@ -1,7 +1,7 @@
 {
-	"DESCRIPTION": "Shortens a URL",
+	"DESCRIPTION": "Shorten a link",
 	"USAGE": "[url]",
 	"EXAMPLES": "shorturl url:https://google.com",
-	"NO_API": "URL shortener not configured",
-	"NOT_A_LINK": "That's not a valid link"
+	"NO_API": "The link shortener isn't set up",
+	"NOT_A_LINK": "That's not a link"
 }

@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Устанавливает описание профиля",
+	"DESCRIPTION": "Указать описание профиля",
 	"USAGE": "[text]",
 	"EXAMPLES": "setbio text:Меня зовут Джонни :shock:",
 
@@ -8,6 +8,6 @@
 
 	"TEXT": "Текст описания",
 
-	"SUCCESS": "Твоё описание: {{text}}",
+	"SUCCESS": "Новое описание: {{text}}",
 	"SUCCESS_CLEAR": "Описание удалено"
 }

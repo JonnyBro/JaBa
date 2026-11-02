@@ -1,9 +1,9 @@
 {
-	"DESCRIPTION": "Shows a user's avatar",
+	"DESCRIPTION": "Show a user's avatar",
 	"USAGE": "(@user)",
 	"EXAMPLES": "avatar\navatar user:@jonny_bro",
 	"CONTEXT_NAME": "Get Avatar",
-	"CONTEXT_DESCRIPTION": "Shows the user's avatar",
+	"CONTEXT_DESCRIPTION": "Show the user's avatar",
 
 	"GLOBAL": "Main",
 	"SERVER": "Server"

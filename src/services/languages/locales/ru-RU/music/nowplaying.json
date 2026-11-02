@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Переносит сообщение плеера в этот канал",
+	"DESCRIPTION": "Перенести плеер в этот канал",
 	"USAGE": "",
 	"EXAMPLES": "nowplaying",
 

@@ -1,13 +1,13 @@
 {
-	"DESCRIPTION": "Adds an emoji to this server from a link or another server",
+	"DESCRIPTION": "Copy a custom emoji from a server or link",
 	"USAGE": "(name) [string]",
 	"EXAMPLES": "addemoji name:google string:https://google.com",
 
 	"LINK_OR_EMOJI": "Image link or emoji from a server",
 
-	"MISSING_NAME": "Please provide a name for the emoji",
-	"INVALID_LINK": "Please provide a valid image link",
+	"MISSING_NAME": "Give the emoji a name",
+	"INVALID_LINK": "That's not an image link",
 
-	"SUCCESS": "{{emoji}} has been added",
+	"SUCCESS": "Added {{emoji}}",
 	"ERROR": "Couldn't add {{name}}\n```{{error}}```"
 }

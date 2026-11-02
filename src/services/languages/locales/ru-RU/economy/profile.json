@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Показывает профиль пользователя",
+	"DESCRIPTION": "Показать профиль пользователя",
 	"USAGE": "(@user)",
 	"EXAMPLES": "profile\nprofile user:@jonny_bro",
 
@@ -12,7 +12,7 @@
 	"BIRTHDATE": "🎂 День рождения: {{birthdate}}",
 	"ITEMS": "🎒 Предметы: {{items}}",
 	"EFFECTS": "✨ Эффекты: {{effects}}",
-	"REGISTERED": "📅 Зарегистрирован в боте: {{date}}",
+	"REGISTERED": "📅 С JaBa с {{date}}",
 
 	"BTN_REP": "Дать репутацию"
 }

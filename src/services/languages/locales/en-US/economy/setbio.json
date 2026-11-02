@@ -1,7 +1,7 @@
 {
-	"DESCRIPTION": "Sets your bio",
+	"DESCRIPTION": "Set your bio",
 	"USAGE": "[text]",
-	"EXAMPLES": "setbio text:My name is Johnny :shock:",
+	"EXAMPLES": "setbio text:My name is Verity :shock:",
 
 	"CLEAR": "Clear your bio",
 	"SET": "Set your bio",

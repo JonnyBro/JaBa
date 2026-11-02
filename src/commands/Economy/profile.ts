@@ -81,7 +81,7 @@ const renderProfile = async (interaction: Interaction, user: User) => {
 	const collectibles = memberData.inventory
 		.map(entry => ({ item: shopById.get(entry.item.toString()), quantity: entry.quantity }))
 		.filter(entry => entry.item?.type === "item" && entry.quantity > 0)
-		.map(({ item, quantity }) => `${itemLabel(item!)}${quantity > 1 ? ` ×${quantity}` : ""}`);
+		.map(({ item, quantity }) => `${itemLabel(item!)}${quantity > 1 ? ` x${quantity}` : ""}`);
 	const effects = await Promise.all(
 		activeEffects(memberData).map(
 			async ({ effect, until }) =>

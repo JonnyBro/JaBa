@@ -1,9 +1,9 @@
 {
-	"DESCRIPTION": "Камінь, ножиці, папір проти бота або іншого учасника",
+	"DESCRIPTION": "Зіграти в камінь, ножиці, папір з ботом або з кимось",
 	"USAGE": "[move] (@user)",
 	"EXAMPLES": "rps move:rock\nrps move:paper user:@jonny_bro",
 	"MOVE": "Твій хід",
-	"OPPONENT": "Викликати учасника замість гри з ботом",
+	"OPPONENT": "Викликати когось замість бота",
 	"MOVES": {
 		"rock": "Камінь",
 		"paper": "Папір",

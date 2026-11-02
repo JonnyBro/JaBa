@@ -1,9 +1,12 @@
 {
-	"DESCRIPTION": "Выбрать за тебя один из вариантов",
-	"USAGE": "[options]",
-	"EXAMPLES": "choose options:пицца, суши, бургеры",
-	"OPTIONS": "Варианты через запятую или |",
+	"DESCRIPTION": "Выбрать за тебя",
+	"USAGE": "",
+	"EXAMPLES": "choose",
 
-	"BAD_OPTIONS": "Дай от 2 до {{max}} разных вариантов через запятую",
+	"MODAL_TITLE": "Из чего выбрать?",
+	"OPTIONS": "Варианты, по одному на строку",
+	"OPTIONS_PLACEHOLDER": "Пицца\nСуши\nБургеры",
+
+	"BAD_OPTIONS": "Дай от 2 до {{max}} разных вариантов, по одному на строку, до {{length}} символов каждый",
 	"RESULT": "🤔 Я выбираю **{{choice}}**"
 }

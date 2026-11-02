@@ -1,10 +1,10 @@
 {
-	"DESCRIPTION": "Показує список команд або довідку по команді",
+	"DESCRIPTION": "Показати всі команди або довідку по одній з них",
 	"USAGE": "(command)",
 	"EXAMPLES": "help\nhelp command:ping",
 
 	"NOT_FOUND": "Команду `{{command}}` не знайдено",
-	"COMMANDS_IN": "Команди в категорії \"{{category}}\":",
+	"COMMANDS_IN": "Команди в \"{{category}}\":",
 
 	"FIELD_USAGE": "Використання",
 	"FIELD_DESCRIPTION": "Опис",
@@ -12,9 +12,9 @@
 
 	"CMD_TITLE": "Довідка по {{cmd}}",
 	"DASHBOARD": "Усі команди в панелі",
-	"INFO": "● Щоб отримати довідку по команді, використовуй `/help [command]`",
+	"INFO": "● Довідка по команді: `/help [command]`",
 	"FIELD_PERMISSIONS": "Потрібні права",
-	"NO_REQUIRED_PERMISSION": "Особливих прав не потрібно",
+	"NO_REQUIRED_PERMISSION": "Не потрібні",
 	"TITLE": "{{name}} | Команди",
 	"GUILD_ONLY": "Лише на серверах",
 	"NOT_GUILD_ONLY": "На серверах і в ОП",

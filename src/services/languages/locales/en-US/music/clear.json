@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Clears the queue, the current track keeps playing",
+	"DESCRIPTION": "Clear the queue, the current track keeps playing",
 	"USAGE": "",
 	"EXAMPLES": "clear",
 

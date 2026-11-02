@@ -1,9 +1,12 @@
 {
-	"DESCRIPTION": "Pick one of the options for you",
-	"USAGE": "[options]",
-	"EXAMPLES": "choose options:pizza, sushi, burgers",
-	"OPTIONS": "Options separated by commas or |",
+	"DESCRIPTION": "Let me pick for you",
+	"USAGE": "",
+	"EXAMPLES": "choose",
 
-	"BAD_OPTIONS": "Give me 2 to {{max}} different options separated by commas",
+	"MODAL_TITLE": "What should I choose from?",
+	"OPTIONS": "Options, one per line",
+	"OPTIONS_PLACEHOLDER": "Pizza\nSushi\nBurgers",
+
+	"BAD_OPTIONS": "Give me 2 to {{max}} different options, one per line, up to {{length}} characters each",
 	"RESULT": "🤔 I choose **{{choice}}**"
 }

@@ -1,5 +1,5 @@
 {
-	"DESCRIPTION": "Скорочує посилання",
+	"DESCRIPTION": "Скоротити посилання",
 	"USAGE": "[url]",
 	"EXAMPLES": "shorturl url:https://google.com",
 	"NO_API": "Скорочувач посилань не налаштований",
