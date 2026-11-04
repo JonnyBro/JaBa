@@ -365,3 +365,37 @@ export type GreetingMessage = {
 export type GreetingSettings = Record<GreetingKind, GreetingMessage> & { autoroles: string[] };
 
 export type GuildGreetings = GreetingSettings & { roles: GuildRole[] };
+
+export type Giveaway = {
+	id: string;
+	prize: string;
+	channelId: string;
+	url: string | null;
+	hostId: string;
+	winners: number;
+	credits: number;
+	itemId: string | null;
+	requiredLevel: number;
+	requiredRoleId: string | null;
+	participants: number;
+	winnerIds: string[];
+	endsAt: number;
+	ended: boolean;
+};
+
+export type GiveawayInput = {
+	channelId: string;
+	prize: string;
+	minutes: number;
+	winners: number;
+	credits: number;
+	itemId: string | null;
+	requiredLevel: number;
+	requiredRoleId: string | null;
+};
+
+export type GuildGiveaways = {
+	giveaways: Giveaway[];
+	items: { id: string; name: string }[];
+	roles: GuildRole[];
+};

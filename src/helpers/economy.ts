@@ -2,18 +2,19 @@ import { getNoun, translateContext } from "@/helpers/functions.js";
 import MemberModel, { IMemberSchema, Transaction } from "@/models/MemberModel.js";
 import UserModel from "@/models/UserModel.js";
 import useClient from "@/utils/use-client.js";
-import { Interaction, Message } from "discord.js";
+import { Guild, Interaction, Message } from "discord.js";
 import { QueryFilter, Types, UpdateQuery } from "mongoose";
 
 type MemberRef = { _id: Types.ObjectId };
 type Cooldown = keyof IMemberSchema["cooldowns"];
 
-export const formatCredits = async (context: Interaction | Message, amount: number) => {
+export const formatCredits = async (context: Interaction | Message | Guild, amount: number) => {
 	const forms = await Promise.all(
 		["1", "2", "5"].map(form => translateContext(context, `misc:NOUNS:CREDIT:${form}`)),
 	);
 
-	const locale = ("guildLocale" in context ? context.guildLocale : context.guild?.preferredLocale) ?? "en-US";
+	const guild = context instanceof Guild ? context : context.guild;
+	const locale = ("guildLocale" in context ? context.guildLocale : guild?.preferredLocale) ?? "en-US";
 
 	return `**${amount.toLocaleString(locale)}** ${getNoun(amount, forms)}`;
 };

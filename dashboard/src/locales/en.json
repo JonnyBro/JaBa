@@ -87,6 +87,7 @@
 			"greetings": "Greetings",
 			"levels": "Levels",
 			"shop": "Shop",
+			"giveaways": "Giveaways",
 			"tickets": "Tickets",
 			"messages": "Messages",
 			"audit": "Audit log",
@@ -259,6 +260,45 @@
 			"workBoost": "Double pay for /work"
 		}
 	},
+	"giveaways": {
+		"intro": "Giveaways on this server. Members join with a button under the message.",
+		"add": "New giveaway",
+		"empty": "No giveaways yet",
+		"emptyText": "Start one here or with /giveaway in Discord.",
+		"active": "Running",
+		"ended": "Ended",
+		"endsAt": "ends {time}",
+		"endedAt": "ended {time}",
+		"participants": "{n} participant | {n} participants",
+		"winnersCount": "{n} winner | {n} winners",
+		"levelBadge": "Level {n}+",
+		"end": "End now",
+		"reroll": "Reroll",
+		"endedToast": "Giveaway ended, winners are announced in Discord",
+		"rerolled": "New winner: {name}",
+		"deleted": "Giveaway deleted",
+		"deleteTitle": "Delete {name}?",
+		"deleteText": "The message is deleted from Discord too. Prizes that were already given stay.",
+		"addTitle": "New giveaway",
+		"formHint": "Winners get the credits and the shop item automatically. Anything else from the prize text you hand out yourself.",
+		"prize": "Prize",
+		"channel": "Channel",
+		"duration": "Duration",
+		"units": {
+			"minutes": "minutes",
+			"hours": "hours",
+			"days": "days"
+		},
+		"winners": "Winners",
+		"credits": "Credits for each winner",
+		"item": "Shop item for each winner",
+		"noItem": "No item",
+		"requiredLevel": "Minimum level",
+		"requiredRole": "Who can join",
+		"anyone": "Anyone",
+		"start": "Start",
+		"created": "Giveaway started"
+	},
 	"tickets": {
 		"intro": "Sends a message with a button that opens a private ticket thread in that channel. The bot needs permission to create private threads there.",
 		"channel": "Channel",
@@ -310,7 +350,11 @@
 			"shop.delete": "deleted a shop item",
 			"levels.update": "changed the level settings",
 			"levels.sync": "gave out level reward roles",
-			"greetings.update": "changed the greetings"
+			"greetings.update": "changed the greetings",
+			"giveaway.create": "started a giveaway",
+			"giveaway.end": "ended a giveaway",
+			"giveaway.reroll": "rerolled a giveaway",
+			"giveaway.delete": "deleted a giveaway"
 		}
 	},
 	"music": {

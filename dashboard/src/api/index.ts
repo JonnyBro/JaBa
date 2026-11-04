@@ -8,10 +8,13 @@ import type {
 	CommandStats,
 	CronTaskInfo,
 	Economy,
+	Giveaway,
+	GiveawayInput,
 	GreetingKind,
 	GreetingMessage,
 	GreetingSettings,
 	GuildDetails,
+	GuildGiveaways,
 	GuildGreetings,
 	GuildLevels,
 	GuildInfo,
@@ -90,6 +93,17 @@ export const sendMessage = (
 	id: string,
 	body: { channelId: string; blocks: MessageBlock[]; color: string | null; mentions: boolean },
 ) => post<{ url: string }>(guildUrl(id, "/messages"), body);
+
+// Giveaways
+const giveawayUrl = (id: string, giveawayId: string, path = "") =>
+	guildUrl(id, `/giveaways/${encodeURIComponent(giveawayId)}${path}`);
+export const getGiveaways = (id: string) => get<GuildGiveaways>(guildUrl(id, "/giveaways"));
+export const createGiveaway = (id: string, body: GiveawayInput) => post<Giveaway>(guildUrl(id, "/giveaways"), body);
+export const endGiveaway = (id: string, giveawayId: string) => post<{ ok: true }>(giveawayUrl(id, giveawayId, "/end"));
+export const rerollGiveaway = (id: string, giveawayId: string) =>
+	post<{ winner: string }>(giveawayUrl(id, giveawayId, "/reroll"));
+export const deleteGiveaway = async (id: string, giveawayId: string) =>
+	(await api.delete<Response<{ ok: true }>>(giveawayUrl(id, giveawayId))).data.data;
 
 // Greetings
 export const getGreetings = (id: string) => get<GuildGreetings>(guildUrl(id, "/greetings"));

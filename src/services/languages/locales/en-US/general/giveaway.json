@@ -1,0 +1,50 @@
+{
+	"DESCRIPTION": "Start a giveaway",
+	"USAGE": "[prize] [duration] (winners) (credits) (item) (level) (role) (channel)",
+	"EXAMPLES": "giveaway prize:Nitro duration:1d\ngiveaway prize:Lucky day duration:2h winners:3 credits:5000\ngiveaway prize:VIP role duration:3d item:VIP level:10",
+	"PRIZE": "What's up for grabs",
+	"DURATION": "How long it runs, like 30m, 2h or 3d",
+	"WINNERS_OPTION": "How many winners (1 by default)",
+	"CREDITS_OPTION": "Credits each winner gets",
+	"ITEM_OPTION": "Shop item each winner gets",
+	"LEVEL_OPTION": "Minimum level to join",
+	"ROLE_OPTION": "Role needed to join",
+	"CHANNEL_OPTION": "Where to post it (this channel by default)",
+
+	"STARTED": "Giveaway started: {{url}}",
+	"HOST": "By {{user}}",
+	"ENDS": "Ends {{time}}",
+	"ENDED": "Ended",
+	"WINNERS": "Winners",
+	"CREDITS_EACH": "{{credits}} each",
+	"NEED_LEVEL": "Level {{level}}+ only",
+	"NEED_ROLE": "{{role}} only",
+	"NO_WINNERS": "Nobody won",
+	"JOIN": "Join",
+	"END": "End now",
+	"REROLL": "Reroll",
+	"TRANSACTION": "Giveaway: {{prize}}",
+
+	"JOINED": "You're in! Click again to leave",
+	"LEFT": "You left the giveaway",
+	"CONGRATS": "{{users}} won **{{prize}}**!",
+	"REROLLED": "New winner: {{users}} gets **{{prize}}**!",
+	"NOBODY": "Nobody joined **{{prize}}**, so there's no winner",
+
+	"NOT_FOUND": "This giveaway doesn't exist anymore",
+	"ALREADY_ENDED": "This giveaway has already ended",
+	"MANAGERS_ONLY": "Only people who can manage the server can do that",
+	"NO_ONE_LEFT": "Everyone who joined has already won",
+	"NEED_LEVEL_ERROR": "You need level {{level}} to join",
+	"NEED_ROLE_ERROR": "You need the {{role}} role to join",
+
+	"ERRORS": {
+		"BAD_PRIZE": "The prize must be up to 200 characters",
+		"BAD_DURATION": "The duration must be from 1 minute to 30 days, like 30m, 2h or 3d",
+		"BAD_WINNERS": "There can be 1 to 20 winners",
+		"BAD_CREDITS": "That's too many credits",
+		"NO_ITEM": "There's no such item in the shop",
+		"NO_ROLE": "That role doesn't exist",
+		"CHANNEL": "I can't post in that channel"
+	}
+}

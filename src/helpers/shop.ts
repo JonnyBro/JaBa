@@ -34,7 +34,6 @@ export const getShopItem = (guildId: string, itemId: string) =>
 export const heldQuantity = (memberData: Pick<IMemberSchema, "inventory">, itemId: Types.ObjectId | string) =>
 	memberData.inventory.find(entry => entry.item.toString() === itemId.toString())?.quantity ?? 0;
 
-/** Purchases and inventory changes of one member run one at a time, so limits can't be passed by clicking fast */
 const locks = new Set<string>();
 
 const withLock = async <T>(key: string, fn: () => Promise<T>): Promise<T | "BUSY"> => {
@@ -57,7 +56,6 @@ const addToInventory = async (member: MemberRef, itemId: Types.ObjectId, quantit
 		await updateMember({ _id: member._id }, { $push: { inventory: { item: itemId, quantity } } });
 };
 
-/** Returns false when the member doesn't hold that many */
 const takeFromInventory = async (member: MemberRef, itemId: Types.ObjectId, quantity: number) => {
 	const result = await updateMember(
 		{ _id: member._id, inventory: { $elemMatch: { item: itemId, quantity: { $gte: quantity } } } },
@@ -65,10 +63,10 @@ const takeFromInventory = async (member: MemberRef, itemId: Types.ObjectId, quan
 	);
 	if (!result.modifiedCount) return false;
 
-	// Validators would check the $pull condition as if it were a whole inventory entry and reject it
 	await updateMember(
 		{ _id: member._id },
 		{ $pull: { inventory: { quantity: { $lte: 0 } } } },
+		// Validators would check the $pull condition as if it were a whole inventory entry and reject it
 		{ runValidators: false },
 	);
 
@@ -85,7 +83,6 @@ const giveTempRole = async (member: GuildMember, item: ShopItem) => {
 		roleId: item.roleId,
 	}).lean();
 
-	// Buying again while the role is still on extends it instead of starting over
 	const from = Math.max(existing?.expiresAt.getTime() ?? 0, Date.now());
 	const expiresAt = new Date(from + item.duration!);
 
@@ -143,7 +140,6 @@ export const buyItem = async (member: GuildMember, itemId: string, label: string
 			if (item.type === "temp_role") return { ok: true, expiresAt: await giveTempRole(member, item) };
 			if (isInventoryItem(item)) await addToInventory(memberData, item._id, 1);
 		} catch {
-			// Mostly the role was moved above the bot's or removed after the check
 			await giveCredits(memberData, item.price);
 			await releaseStock(item);
 			return { ok: false, error: "ROLE_UNAVAILABLE" };
@@ -155,6 +151,16 @@ export const buyItem = async (member: GuildMember, itemId: string, label: string
 	return result === "BUSY" ? { ok: false, error: "BUSY" } : result;
 };
 
+export const grantItem = async (member: GuildMember, item: ShopItem) => {
+	if (item.type === "role") await member.roles.add(item.roleId!, `Won "${item.name}"`);
+	if (item.type === "temp_role") await giveTempRole(member, item);
+
+	if (isInventoryItem(item)) {
+		const memberData = await useClient().getMemberData(member.guild.id, member.id);
+		await addToInventory(memberData, item._id, 1);
+	}
+};
+
 export const useItem = async (member: GuildMember, itemId: string) => {
 	const result = await withLock(`${member.guild.id}:${member.id}`, async () => {
 		const item = await getShopItem(member.guild.id, itemId);
@@ -163,7 +169,6 @@ export const useItem = async (member: GuildMember, itemId: string) => {
 		const memberData = await useClient().getMemberData(member.guild.id, member.id);
 		if (!(await takeFromInventory(memberData, item._id, 1))) return "NOT_HELD" as const;
 
-		// Using another one while the effect is on adds to the time left
 		const until = Math.max(memberData.effects[item.effect], Date.now()) + item.duration;
 		await updateMember({ _id: memberData._id }, { $max: { [`effects.${item.effect}`]: until } });
 

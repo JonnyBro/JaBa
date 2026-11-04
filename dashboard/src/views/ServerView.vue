@@ -16,6 +16,7 @@ const MANAGE_TABS = [
 	{ name: "server-greetings", label: "server.tabs.greetings" },
 	{ name: "server-levels", label: "server.tabs.levels" },
 	{ name: "server-shop", label: "server.tabs.shop" },
+	{ name: "server-giveaways", label: "server.tabs.giveaways" },
 	{ name: "server-tickets", label: "server.tabs.tickets" },
 	{ name: "server-messages", label: "server.tabs.messages" },
 	{ name: "server-audit", label: "server.tabs.audit" },

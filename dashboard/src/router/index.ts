@@ -70,6 +70,11 @@ const router = createRouter({
 					component: () => import("@/views/server/MembersTab.vue"),
 				},
 				{
+					path: "giveaways",
+					name: "server-giveaways",
+					component: () => import("@/views/server/GiveawaysTab.vue"),
+				},
+				{
 					path: "greetings",
 					name: "server-greetings",
 					component: () => import("@/views/server/GreetingsTab.vue"),

@@ -3,6 +3,7 @@ import { PermissionsBitField } from "discord.js";
 import { FastifyInstance } from "fastify";
 import { fail, isOwner } from "../../utils.js";
 import auditRoutes from "./audit.js";
+import giveawaysRoutes from "./giveaways.js";
 import greetingsRoutes from "./greetings.js";
 import infoRoutes from "./info.js";
 import leaderboardRoutes from "./leaderboard.js";
@@ -14,7 +15,6 @@ import settingsRoutes from "./settings.js";
 import shopRoutes from "./shop.js";
 import ticketsRoutes from "./tickets.js";
 
-// Access is checked against the bot's own view of the guild, the OAuth guild list can be minutes old
 export default async function guildRoutes(fastify: FastifyInstance) {
 	fastify.decorateRequest("guild", null as never);
 	fastify.decorateRequest("canManage", false);
@@ -42,6 +42,7 @@ export default async function guildRoutes(fastify: FastifyInstance) {
 
 		await manage.register(settingsRoutes);
 		await manage.register(membersRoutes);
+		await manage.register(giveawaysRoutes);
 		await manage.register(greetingsRoutes);
 		await manage.register(levelsRoutes);
 		await manage.register(shopRoutes);

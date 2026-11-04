@@ -1,0 +1,50 @@
+{
+	"DESCRIPTION": "Запустить розыгрыш",
+	"USAGE": "[prize] [duration] (winners) (credits) (item) (level) (role) (channel)",
+	"EXAMPLES": "giveaway prize:Nitro duration:1d\ngiveaway prize:Счастливый день duration:2h winners:3 credits:5000\ngiveaway prize:VIP-роль duration:3d item:VIP level:10",
+	"PRIZE": "Что разыгрываем",
+	"DURATION": "Сколько идёт розыгрыш, например 30m, 2h или 3d",
+	"WINNERS_OPTION": "Сколько победителей (по умолчанию 1)",
+	"CREDITS_OPTION": "Кредиты каждому победителю",
+	"ITEM_OPTION": "Товар из магазина каждому победителю",
+	"LEVEL_OPTION": "Минимальный уровень для участия",
+	"ROLE_OPTION": "Роль, нужная для участия",
+	"CHANNEL_OPTION": "Где разместить (по умолчанию этот канал)",
+
+	"STARTED": "Розыгрыш запущен: {{url}}",
+	"HOST": "Проводит {{user}}",
+	"ENDS": "Закончится {{time}}",
+	"ENDED": "Закончился",
+	"WINNERS": "Победителей",
+	"CREDITS_EACH": "{{credits}} каждому",
+	"NEED_LEVEL": "Только с {{level}} уровня",
+	"NEED_ROLE": "Только для {{role}}",
+	"NO_WINNERS": "Победителей нет",
+	"JOIN": "Участвовать",
+	"END": "Завершить",
+	"REROLL": "Перевыбрать",
+	"TRANSACTION": "Розыгрыш: {{prize}}",
+
+	"JOINED": "Ты участвуешь! Нажми ещё раз, чтобы выйти",
+	"LEFT": "Ты больше не участвуешь",
+	"CONGRATS": "{{users}} выигрывает **{{prize}}**!",
+	"REROLLED": "Новый победитель: {{users}} получает **{{prize}}**!",
+	"NOBODY": "В розыгрыше **{{prize}}** никто не участвовал, победителя нет",
+
+	"NOT_FOUND": "Этого розыгрыша больше нет",
+	"ALREADY_ENDED": "Этот розыгрыш уже закончился",
+	"MANAGERS_ONLY": "Это могут только те, кто управляет сервером",
+	"NO_ONE_LEFT": "Все участники уже выиграли",
+	"NEED_LEVEL_ERROR": "Для участия нужен {{level}} уровень",
+	"NEED_ROLE_ERROR": "Для участия нужна роль {{role}}",
+
+	"ERRORS": {
+		"BAD_PRIZE": "Приз должен быть не длиннее 200 символов",
+		"BAD_DURATION": "Длительность от 1 минуты до 30 дней, например 30m, 2h или 3d",
+		"BAD_WINNERS": "Победителей может быть от 1 до 20",
+		"BAD_CREDITS": "Слишком много кредитов",
+		"NO_ITEM": "Такого товара в магазине нет",
+		"NO_ROLE": "Такой роли нет",
+		"CHANNEL": "Не могу писать в этот канал"
+	}
+}
