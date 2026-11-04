@@ -1,0 +1,30 @@
+{
+	"DESCRIPTION": "Warn members and see their warns",
+	"USAGE": "[add/remove/list] [@user] (reason/warn)",
+	"EXAMPLES": "warn add user:@jonny_bro reason:Spam\nwarn list user:@jonny_bro\nwarn remove user:@jonny_bro warn:#a1b2c3",
+	"ADD": "Warn a member",
+	"REMOVE": "Remove a warn",
+	"LIST": "Show a member's warns",
+	"REASON": "Why",
+	"WARN_OPTION": "Which warn",
+
+	"NO_REASON": "No reason given",
+	"CANT_WARN": "You can't warn this member: bots, yourself, the owner and people with the same or a higher role can't be warned",
+	"ADDED": "{{user}} got a warn. Active warns: **{{count}}**",
+	"REMOVED": "Removed warn #{{id}} from {{user}}",
+	"NOT_FOUND": "No such active warn",
+	"ACTIVE": "Active: {{active}} · total: {{total}}",
+
+	"DM": "You got a warn on **{{server}}**. Active warns: **{{count}}**",
+	"DM_PUNISHMENT": "Because of it: {{punishment}}",
+	"LOG_ADDED": "{{moderator}} warned {{user}}. Active warns: **{{count}}**",
+	"LOG_REMOVED": "{{moderator}} removed warn #{{id}} from {{user}}",
+	"LOG_PUNISHED": "Punishment: {{punishment}}",
+	"LOG_PUNISH_FAILED": "Couldn't apply {{punishment}}, the bot is missing a permission or its role is too low",
+
+	"ACTIONS": {
+		"timeout": "timeout for {{minutes}} min",
+		"kick": "kick",
+		"ban": "ban"
+	}
+}

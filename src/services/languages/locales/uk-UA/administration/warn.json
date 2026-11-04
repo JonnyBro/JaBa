@@ -1,0 +1,30 @@
+{
+	"DESCRIPTION": "Видати попередження або переглянути чужі",
+	"USAGE": "[add/remove/list] [@user] (reason/warn)",
+	"EXAMPLES": "warn add user:@jonny_bro reason:Спам\nwarn list user:@jonny_bro\nwarn remove user:@jonny_bro warn:#a1b2c3",
+	"ADD": "Видати попередження",
+	"REMOVE": "Зняти попередження",
+	"LIST": "Показати попередження учасника",
+	"REASON": "За що",
+	"WARN_OPTION": "Яке попередження",
+
+	"NO_REASON": "Без причини",
+	"CANT_WARN": "Цього учасника попередити не можна: ботів, себе, власника й тих, у кого роль не нижча за твою",
+	"ADDED": "{{user}} отримує попередження. Активних: **{{count}}**",
+	"REMOVED": "Зняв попередження #{{id}} з {{user}}",
+	"NOT_FOUND": "Такого активного попередження немає",
+	"ACTIVE": "Активних: {{active}} · всього: {{total}}",
+
+	"DM": "Тобі видали попередження на **{{server}}**. Активних: **{{count}}**",
+	"DM_PUNISHMENT": "Через це: {{punishment}}",
+	"LOG_ADDED": "{{moderator}} попередив {{user}}. Активних: **{{count}}**",
+	"LOG_REMOVED": "{{moderator}} зняв попередження #{{id}} з {{user}}",
+	"LOG_PUNISHED": "Покарання: {{punishment}}",
+	"LOG_PUNISH_FAILED": "Не вийшло: {{punishment}}. Боту бракує прав або його роль занизько",
+
+	"ACTIONS": {
+		"timeout": "тайм-аут на {{minutes}} хв.",
+		"kick": "кік",
+		"ban": "бан"
+	}
+}

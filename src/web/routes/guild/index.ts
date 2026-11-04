@@ -14,6 +14,7 @@ import musicRoutes from "./music.js";
 import settingsRoutes from "./settings.js";
 import shopRoutes from "./shop.js";
 import ticketsRoutes from "./tickets.js";
+import warnsRoutes from "./warns.js";
 
 export default async function guildRoutes(fastify: FastifyInstance) {
 	fastify.decorateRequest("guild", null as never);
@@ -47,6 +48,7 @@ export default async function guildRoutes(fastify: FastifyInstance) {
 		await manage.register(levelsRoutes);
 		await manage.register(shopRoutes);
 		await manage.register(ticketsRoutes);
+		await manage.register(warnsRoutes);
 		await manage.register(messagesRoutes);
 		await manage.register(auditRoutes);
 	});

@@ -23,6 +23,7 @@ import type {
 	GuildMember,
 	GuildMemberDetails,
 	GuildSettings,
+	GuildWarns,
 	GuildShop,
 	GuildStanding,
 	LavalinkInfo,
@@ -43,6 +44,8 @@ import type {
 	Remind,
 	RepStanding,
 	SearchSource,
+	Warn,
+	WarnSettings,
 	ShopItem,
 	ShopItemInput,
 } from "./types";
@@ -85,6 +88,20 @@ export const moderateMember = (
 	action: ModerationAction,
 	body: { reason?: string; minutes?: number | null; deleteMessageDays?: number },
 ) => post<{ ok: true }>(guildUrl(id, `/members/${encodeURIComponent(userId)}/${action}`), body);
+
+// Warns
+export const getWarns = (id: string) => get<GuildWarns>(guildUrl(id, "/warns"));
+export const updateWarnSettings = async (id: string, body: WarnSettings) =>
+	(await api.put<Response<WarnSettings>>(guildUrl(id, "/warns/settings"), body)).data.data;
+export const getMemberWarns = (id: string, userId: string) =>
+	get<Warn[]>(guildUrl(id, `/members/${encodeURIComponent(userId)}/warns`));
+export const warnMember = (id: string, userId: string, reason: string) =>
+	post<{ count: number; punishment: string | null; punished: boolean }>(
+		guildUrl(id, `/members/${encodeURIComponent(userId)}/warns`),
+		{ reason },
+	);
+export const removeWarn = async (id: string, warnId: string) =>
+	(await api.delete<Response<{ ok: true }>>(guildUrl(id, `/warns/${encodeURIComponent(warnId)}`))).data.data;
 
 // Messages
 export const sendTicketPanel = (id: string, body: { channelId: string; text: string; label: string; emoji?: string }) =>

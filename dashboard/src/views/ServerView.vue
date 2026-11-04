@@ -13,6 +13,7 @@ import { useRoute, useRouter } from "vue-router";
 const MANAGE_TABS = [
 	{ name: "server", label: "server.tabs.settings" },
 	{ name: "server-members", label: "server.tabs.members" },
+	{ name: "server-warns", label: "server.tabs.warns" },
 	{ name: "server-greetings", label: "server.tabs.greetings" },
 	{ name: "server-levels", label: "server.tabs.levels" },
 	{ name: "server-shop", label: "server.tabs.shop" },

@@ -102,7 +102,7 @@ export type GuildMemberDetails = GuildMember & {
 	rep: number;
 	roles: { id: string; name: string; color: string }[];
 	transactions: Transaction[];
-	moderation: Record<ModerationAction, boolean>;
+	moderation: Record<ModerationAction, boolean> & { warn: boolean };
 };
 
 export type MessageBlock =
@@ -399,3 +399,25 @@ export type GuildGiveaways = {
 	items: { id: string; name: string }[];
 	roles: GuildRole[];
 };
+
+export type WarnAction = "timeout" | "kick" | "ban";
+
+export type WarnRule = { count: number; action: WarnAction; minutes: number | null };
+
+export type WarnSettings = { expireDays: number; logChannel: string | null; dm: boolean; rules: WarnRule[] };
+
+export type Warn = {
+	id: string;
+	shortId: string;
+	userId: string;
+	userName: string | null;
+	userAvatar: string | null;
+	moderatorId: string;
+	moderatorName: string | null;
+	reason: string | null;
+	createdAt: number;
+	removed: boolean;
+	active: boolean;
+};
+
+export type GuildWarns = { settings: WarnSettings; recent: Warn[] };

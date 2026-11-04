@@ -1,4 +1,5 @@
 import { getUsername } from "@/helpers/functions.js";
+import { canWarn } from "@/helpers/warns.js";
 import MemberModel from "@/models/MemberModel.js";
 import UserModel from "@/models/UserModel.js";
 import useClient from "@/utils/use-client.js";
@@ -59,6 +60,7 @@ const getModeration = (actor: GuildMember | null, target: GuildMember) => {
 		kick: allowed(PermissionsBitField.Flags.KickMembers, target.kickable),
 		ban: allowed(PermissionsBitField.Flags.BanMembers, target.bannable),
 		timeout: allowed(PermissionsBitField.Flags.ModerateMembers, target.moderatable),
+		warn: !!actor && actor.permissions.has(PermissionsBitField.Flags.ModerateMembers) && canWarn(actor, target),
 	};
 };
 

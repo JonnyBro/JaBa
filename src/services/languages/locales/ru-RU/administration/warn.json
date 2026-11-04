@@ -1,0 +1,30 @@
+{
+	"DESCRIPTION": "Выдать предупреждение или посмотреть чужие",
+	"USAGE": "[add/remove/list] [@user] (reason/warn)",
+	"EXAMPLES": "warn add user:@jonny_bro reason:Спам\nwarn list user:@jonny_bro\nwarn remove user:@jonny_bro warn:#a1b2c3",
+	"ADD": "Выдать предупреждение",
+	"REMOVE": "Снять предупреждение",
+	"LIST": "Показать предупреждения участника",
+	"REASON": "За что",
+	"WARN_OPTION": "Какое предупреждение",
+
+	"NO_REASON": "Без причины",
+	"CANT_WARN": "Этого участника предупредить нельзя: ботов, себя, владельца и тех, у кого роль не ниже твоей",
+	"ADDED": "{{user}} получает предупреждение. Активных: **{{count}}**",
+	"REMOVED": "Снял предупреждение #{{id}} с {{user}}",
+	"NOT_FOUND": "Такого активного предупреждения нет",
+	"ACTIVE": "Активных: {{active}} · всего: {{total}}",
+
+	"DM": "Тебе выдали предупреждение на **{{server}}**. Активных: **{{count}}**",
+	"DM_PUNISHMENT": "Из-за этого: {{punishment}}",
+	"LOG_ADDED": "{{moderator}} предупредил {{user}}. Активных: **{{count}}**",
+	"LOG_REMOVED": "{{moderator}} снял предупреждение #{{id}} с {{user}}",
+	"LOG_PUNISHED": "Наказание: {{punishment}}",
+	"LOG_PUNISH_FAILED": "Не получилось: {{punishment}}. Боту не хватает прав или его роль слишком низко",
+
+	"ACTIONS": {
+		"timeout": "тайм-аут на {{minutes}} мин.",
+		"kick": "кик",
+		"ban": "бан"
+	}
+}

@@ -39,10 +39,30 @@ export interface GreetingSettings {
 	autoroles: string[];
 }
 
+export const WARN_ACTIONS = ["timeout", "kick", "ban"] as const;
+export type WarnAction = (typeof WARN_ACTIONS)[number];
+
+export interface WarnRule {
+	/** Fires when the member reaches exactly this many active warns */
+	count: number;
+	action: WarnAction;
+	/** Timeout length, only for "timeout" */
+	minutes: number | null;
+}
+
+export interface WarnSettings {
+	/** Warns older than this stop counting, 0 keeps them forever */
+	expireDays: number;
+	logChannel: string | null;
+	dm: boolean;
+	rules: WarnRule[];
+}
+
 export interface GuildPlugins {
 	birthdays: string | null;
 	levels: LevelSettings;
 	greetings: GreetingSettings;
+	warns: WarnSettings;
 }
 
 export interface IGuildSchema {
@@ -91,11 +111,31 @@ const greetingsSchema = new Schema<GreetingSettings>(
 	{ _id: false },
 );
 
+const warnRuleSchema = new Schema<WarnRule>(
+	{
+		count: { type: Number, required: true, min: 1 },
+		action: { type: String, enum: WARN_ACTIONS, required: true },
+		minutes: { type: Number, default: null },
+	},
+	{ _id: false },
+);
+
+const warnsSchema = new Schema<WarnSettings>(
+	{
+		expireDays: { type: Number, default: 0, min: 0 },
+		logChannel: { type: String, default: null },
+		dm: { type: Boolean, default: true },
+		rules: { type: [warnRuleSchema], default: [] },
+	},
+	{ _id: false },
+);
+
 const pluginsSchema = new Schema(
 	{
 		birthdays: { type: String, default: null },
 		levels: { type: levelsSchema, default: () => ({}) },
 		greetings: { type: greetingsSchema, default: () => ({}) },
+		warns: { type: warnsSchema, default: () => ({}) },
 	},
 	{ _id: false },
 );

@@ -84,6 +84,7 @@
 		"tabs": {
 			"settings": "Settings",
 			"members": "Members",
+			"warns": "Warns",
 			"greetings": "Greetings",
 			"levels": "Levels",
 			"shop": "Shop",
@@ -153,6 +154,42 @@
 				"timeoutRemoved": "Timeout of {name} removed"
 			}
 		}
+	},
+	"warns": {
+		"title": "Warns",
+		"activeCount": "{active} active of {total}",
+		"warn": "Warn",
+		"reason": "Reason (optional)",
+		"cantWarn": "You can't warn this member: no Moderate Members permission or their role isn't below yours",
+		"none": "No warns",
+		"noReason": "No reason given",
+		"removedBadge": "removed",
+		"expired": "expired",
+		"remove": "Remove warn",
+		"removed": "Warn removed",
+		"warned": "Warn given, active warns: {count}",
+		"punished": "Punishment: {punishment}",
+		"punishFailed": "Couldn't apply {punishment}, the bot is missing a permission",
+		"settingsTitle": "Settings",
+		"expireDays": "Warns expire after, days",
+		"expireHint": "0 keeps them forever. Expired warns stay in the history but don't count toward punishments.",
+		"logChannel": "Log channel",
+		"dm": "DM the member when they get a warn",
+		"rulesTitle": "Punishments",
+		"rulesHint": "A rule fires when a member reaches exactly that many active warns.",
+		"addRule": "Add rule",
+		"noRules": "No punishments, warns just pile up.",
+		"count": "Warns",
+		"action": "Punishment",
+		"minutes": "Minutes",
+		"actions": {
+			"timeout": "Timeout",
+			"kick": "Kick",
+			"ban": "Ban"
+		},
+		"saved": "Warn settings saved",
+		"recentTitle": "Recent warns",
+		"recentEmpty": "Nobody has been warned yet"
 	},
 	"greetings": {
 		"kinds": {
@@ -354,7 +391,10 @@
 			"giveaway.create": "started a giveaway",
 			"giveaway.end": "ended a giveaway",
 			"giveaway.reroll": "rerolled a giveaway",
-			"giveaway.delete": "deleted a giveaway"
+			"giveaway.delete": "deleted a giveaway",
+			"warns.settings": "changed the warn settings",
+			"member.warn": "warned",
+			"member.unwarn": "removed a warn from"
 		}
 	},
 	"music": {
