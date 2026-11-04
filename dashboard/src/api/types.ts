@@ -351,3 +351,17 @@ export type LevelReward = { level: number; roleId: string | null; credits: numbe
 export type LevelSettings = { mode: LevelUpMode; channel: string | null; stack: boolean; rewards: LevelReward[] };
 
 export type GuildLevels = LevelSettings & { roles: GuildRole[] };
+
+export type GreetingKind = "welcome" | "goodbye" | "dm";
+
+export type GreetingMessage = {
+	enabled: boolean;
+	channel: string | null;
+	blocks: MessageBlock[];
+	color: string | null;
+	avatar: boolean;
+};
+
+export type GreetingSettings = Record<GreetingKind, GreetingMessage> & { autoroles: string[] };
+
+export type GuildGreetings = GreetingSettings & { roles: GuildRole[] };

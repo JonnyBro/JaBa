@@ -8,7 +8,11 @@ import type {
 	CommandStats,
 	CronTaskInfo,
 	Economy,
+	GreetingKind,
+	GreetingMessage,
+	GreetingSettings,
 	GuildDetails,
+	GuildGreetings,
 	GuildLevels,
 	GuildInfo,
 	GuildLeaderboardType,
@@ -86,6 +90,13 @@ export const sendMessage = (
 	id: string,
 	body: { channelId: string; blocks: MessageBlock[]; color: string | null; mentions: boolean },
 ) => post<{ url: string }>(guildUrl(id, "/messages"), body);
+
+// Greetings
+export const getGreetings = (id: string) => get<GuildGreetings>(guildUrl(id, "/greetings"));
+export const updateGreetings = async (id: string, body: GreetingSettings) =>
+	(await api.put<Response<GreetingSettings>>(guildUrl(id, "/greetings"), body)).data.data;
+export const testGreeting = (id: string, kind: GreetingKind, message: GreetingMessage) =>
+	post<{ ok: true }>(guildUrl(id, "/greetings/test"), { kind, message });
 
 // Levels
 export const getLevels = (id: string) => get<GuildLevels>(guildUrl(id, "/levels"));

@@ -84,6 +84,7 @@
 		"tabs": {
 			"settings": "Settings",
 			"members": "Members",
+			"greetings": "Greetings",
 			"levels": "Levels",
 			"shop": "Shop",
 			"tickets": "Tickets",
@@ -151,6 +152,34 @@
 				"timeoutRemoved": "Timeout of {name} removed"
 			}
 		}
+	},
+	"greetings": {
+		"kinds": {
+			"welcome": "Welcome",
+			"goodbye": "Goodbye",
+			"dm": "DM to newcomers"
+		},
+		"hints": {
+			"welcome": "Posted to the channel when someone joins. The newcomer gets pinged.",
+			"goodbye": "Posted to the channel when someone leaves. Nobody gets pinged.",
+			"dm": "Sent privately to everyone who joins. Some people have DMs closed, they won't get it."
+		},
+		"enabled": "On",
+		"channel": "Channel",
+		"avatar": "Member's avatar next to the text",
+		"placeholders": "You can use {user} (mention), {username}, {server} and {count} (member count) in the text.",
+		"starter": {
+			"welcome": "Welcome to **{server}**, {user}! You're member number {count}",
+			"goodbye": "**{username}** left the server",
+			"dm": "Hi! Welcome to **{server}**, glad to have you here"
+		},
+		"test": "Send a test",
+		"testSent": "Test sent to the channel",
+		"testSentDm": "Test sent to your DMs",
+		"autorolesTitle": "Autoroles",
+		"autorolesHint": "Given to everyone who joins, up to {max} roles. Bots don't get them. On servers with rules screening, roles come after the rules are accepted.",
+		"noRoles": "The bot can't give any role. Move its role higher in the server settings.",
+		"saved": "Greetings saved"
 	},
 	"levels": {
 		"messageTitle": "Level up message",
@@ -280,7 +309,8 @@
 			"shop.update": "changed a shop item",
 			"shop.delete": "deleted a shop item",
 			"levels.update": "changed the level settings",
-			"levels.sync": "gave out level reward roles"
+			"levels.sync": "gave out level reward roles",
+			"greetings.update": "changed the greetings"
 		}
 	},
 	"music": {

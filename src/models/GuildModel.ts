@@ -1,3 +1,4 @@
+import type { Block } from "@/helpers/message-blocks.js";
 import useClient from "@/utils/use-client.js";
 import { model, Schema } from "mongoose";
 
@@ -21,9 +22,27 @@ export interface LevelSettings {
 	rewards: LevelReward[];
 }
 
+export interface GreetingMessage {
+	enabled: boolean;
+	/** Unused for the DM greeting */
+	channel: string | null;
+	blocks: Block[];
+	color: string | null;
+	/** Shows the member's avatar next to the first text block */
+	avatar: boolean;
+}
+
+export interface GreetingSettings {
+	welcome: GreetingMessage;
+	goodbye: GreetingMessage;
+	dm: GreetingMessage;
+	autoroles: string[];
+}
+
 export interface GuildPlugins {
 	birthdays: string | null;
 	levels: LevelSettings;
+	greetings: GreetingSettings;
 }
 
 export interface IGuildSchema {
@@ -51,10 +70,32 @@ const levelsSchema = new Schema<LevelSettings>(
 	{ _id: false },
 );
 
+const greetingMessageSchema = new Schema<GreetingMessage>(
+	{
+		enabled: { type: Boolean, default: false },
+		channel: { type: String, default: null },
+		blocks: { type: Schema.Types.Mixed, default: () => [] },
+		color: { type: String, default: null },
+		avatar: { type: Boolean, default: true },
+	},
+	{ _id: false, minimize: false },
+);
+
+const greetingsSchema = new Schema<GreetingSettings>(
+	{
+		welcome: { type: greetingMessageSchema, default: () => ({}) },
+		goodbye: { type: greetingMessageSchema, default: () => ({}) },
+		dm: { type: greetingMessageSchema, default: () => ({}) },
+		autoroles: { type: [String], default: [] },
+	},
+	{ _id: false },
+);
+
 const pluginsSchema = new Schema(
 	{
 		birthdays: { type: String, default: null },
 		levels: { type: levelsSchema, default: () => ({}) },
+		greetings: { type: greetingsSchema, default: () => ({}) },
 	},
 	{ _id: false },
 );

@@ -3,6 +3,7 @@ import { PermissionsBitField } from "discord.js";
 import { FastifyInstance } from "fastify";
 import { fail, isOwner } from "../../utils.js";
 import auditRoutes from "./audit.js";
+import greetingsRoutes from "./greetings.js";
 import infoRoutes from "./info.js";
 import leaderboardRoutes from "./leaderboard.js";
 import levelsRoutes from "./levels.js";
@@ -41,6 +42,7 @@ export default async function guildRoutes(fastify: FastifyInstance) {
 
 		await manage.register(settingsRoutes);
 		await manage.register(membersRoutes);
+		await manage.register(greetingsRoutes);
 		await manage.register(levelsRoutes);
 		await manage.register(shopRoutes);
 		await manage.register(ticketsRoutes);

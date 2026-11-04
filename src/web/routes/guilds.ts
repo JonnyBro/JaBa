@@ -1,5 +1,6 @@
+import { BOT_PERMISSIONS } from "@/constants/index.js";
 import useClient from "@/utils/use-client.js";
-import { OAuth2Scopes, PermissionsBitField } from "discord.js";
+import { OAuth2Scopes } from "discord.js";
 import { FastifyInstance, FastifyRequest } from "fastify";
 import { fetchGuilds } from "../discord-oauth.js";
 import { OAuthGuild } from "../types.js";
@@ -13,7 +14,7 @@ const iconUrl = (id: string, icon: string | null) =>
 const inviteUrl = (guildId: string) =>
 	useClient().generateInvite({
 		scopes: [OAuth2Scopes.Bot, OAuth2Scopes.ApplicationsCommands],
-		permissions: [PermissionsBitField.Flags.Administrator],
+		permissions: BOT_PERMISSIONS,
 		guild: guildId,
 		disableGuildSelect: true,
 	});

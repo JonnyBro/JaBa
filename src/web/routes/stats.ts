@@ -1,6 +1,7 @@
+import { BOT_PERMISSIONS } from "@/constants/index.js";
 import packageJson from "@/../package.json" with { type: "json" };
 import useClient from "@/utils/use-client.js";
-import { OAuth2Scopes, PermissionsBitField } from "discord.js";
+import { OAuth2Scopes } from "discord.js";
 import { FastifyInstance } from "fastify";
 import { send } from "../utils.js";
 
@@ -13,7 +14,7 @@ export default async function statsRoutes(fastify: FastifyInstance) {
 			version: packageJson.version,
 			invite: client.generateInvite({
 				scopes: [OAuth2Scopes.Bot, OAuth2Scopes.ApplicationsCommands],
-				permissions: [PermissionsBitField.Flags.Administrator],
+				permissions: BOT_PERMISSIONS,
 			}),
 			guilds: client.guilds.cache.size,
 			users: client.guilds.cache.reduce((sum, guild) => sum + guild.memberCount, 0),

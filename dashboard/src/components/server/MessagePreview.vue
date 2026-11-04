@@ -2,7 +2,12 @@
 import type { MessageBlock } from "@/api/types";
 import { renderDiscordMarkdown } from "@/lib/markdown";
 
-defineProps<{ blocks: MessageBlock[]; color: string | null }>();
+import { computed } from "vue";
+
+const props = defineProps<{ blocks: MessageBlock[]; color: string | null; thumbnail?: string | null }>();
+
+// The bot puts the thumbnail next to the first text block, the same as a Discord section
+const thumbnailIndex = computed(() => (props.thumbnail ? props.blocks.findIndex(b => b.type === "text") : -1));
 </script>
 
 <template>
@@ -13,12 +18,19 @@ defineProps<{ blocks: MessageBlock[]; color: string | null }>();
 			:style="{ borderLeftColor: color ?? 'transparent' }"
 		>
 			<template v-for="(block, i) in blocks" :key="i">
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div
-					v-if="block.type === 'text'"
-					class="space-y-0.5 wrap-break-word"
-					v-html="renderDiscordMarkdown(block.content)"
-				/>
+				<div v-if="block.type === 'text'" class="flex gap-3">
+					<!-- eslint-disable-next-line vue/no-v-html -->
+					<div
+						class="min-w-0 flex-1 space-y-0.5 wrap-break-word"
+						v-html="renderDiscordMarkdown(block.content)"
+					/>
+					<img
+						v-if="i === thumbnailIndex"
+						:src="thumbnail!"
+						alt=""
+						class="size-16 shrink-0 rounded-md object-cover"
+					/>
+				</div>
 				<hr
 					v-else-if="block.type === 'separator'"
 					:class="[block.divider ? 'border-white/15' : 'border-transparent', block.large ? 'my-4' : 'my-1']"
