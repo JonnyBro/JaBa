@@ -1,5 +1,5 @@
 import { ExtendedClient } from "@/structures/client.js";
-import { GatewayIntentBits, MessageMentionOptions, Partials } from "discord.js";
+import { GatewayIntentBits, MessageMentionOptions, Partials, PermissionsBitField } from "discord.js";
 import { AsyncLocalStorage } from "node:async_hooks";
 import path from "node:path";
 
@@ -9,21 +9,33 @@ export const PROJECT_ROOT = path.join(import.meta.dirname, "..");
 export const CLIENT_INTENTS = [
 	GatewayIntentBits.Guilds,
 	GatewayIntentBits.GuildMembers,
-	GatewayIntentBits.GuildModeration,
-	GatewayIntentBits.GuildExpressions,
-	GatewayIntentBits.GuildIntegrations,
-	GatewayIntentBits.GuildInvites,
 	GatewayIntentBits.GuildVoiceStates,
-	GatewayIntentBits.GuildPresences,
 	GatewayIntentBits.GuildMessages,
-	GatewayIntentBits.GuildMessageReactions,
-	GatewayIntentBits.GuildMessageTyping,
 	GatewayIntentBits.MessageContent,
-	GatewayIntentBits.DirectMessageTyping,
-	GatewayIntentBits.DirectMessages,
-	GatewayIntentBits.DirectMessageReactions,
 ];
-export const CLIENT_PARTIALS: Array<Partials> = [Partials.Channel];
+export const CLIENT_PARTIALS: Array<Partials> = [Partials.GuildMember];
+
+export const BOT_PERMISSIONS = [
+	PermissionsBitField.Flags.ViewChannel,
+	PermissionsBitField.Flags.SendMessages,
+	PermissionsBitField.Flags.SendMessagesInThreads,
+	PermissionsBitField.Flags.EmbedLinks,
+	PermissionsBitField.Flags.AttachFiles,
+	PermissionsBitField.Flags.ReadMessageHistory,
+	PermissionsBitField.Flags.AddReactions,
+	PermissionsBitField.Flags.UseExternalEmojis,
+	PermissionsBitField.Flags.MentionEveryone,
+	PermissionsBitField.Flags.ManageMessages,
+	PermissionsBitField.Flags.CreatePrivateThreads,
+	PermissionsBitField.Flags.ManageThreads,
+	PermissionsBitField.Flags.ManageRoles,
+	PermissionsBitField.Flags.CreateGuildExpressions,
+	PermissionsBitField.Flags.Connect,
+	PermissionsBitField.Flags.Speak,
+	PermissionsBitField.Flags.KickMembers,
+	PermissionsBitField.Flags.BanMembers,
+	PermissionsBitField.Flags.ModerateMembers,
+];
 export const CLIENT_ALLOWED_MENTIONS: MessageMentionOptions = {
 	parse: ["everyone", "roles", "users"],
 };
