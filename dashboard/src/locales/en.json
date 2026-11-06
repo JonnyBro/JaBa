@@ -86,6 +86,7 @@
 			"members": "Members",
 			"warns": "Warns",
 			"modlog": "Mod log",
+			"honeypot": "Honeypot",
 			"greetings": "Greetings",
 			"levels": "Levels",
 			"shop": "Shop",
@@ -225,11 +226,48 @@
 			"unban": "Unbans",
 			"kick": "Kicks",
 			"timeout": "Timeouts",
-			"warns": "Warns"
+			"warns": "Warns",
+			"honeypot": "Honeypot"
 		},
 		"ignoredTitle": "Ignored channels",
 		"ignoredHint": "Deleted and edited messages from these channels won't be logged.",
 		"saved": "Moderation log saved"
+	},
+	"honeypot": {
+		"title": "Honeypot",
+		"hint": "Spam bots and hacked accounts post in every channel in a row, real people won't write in a channel that says not to. Whoever writes in a trap channel gets punished automatically. Server staff are never touched.",
+		"channels": "Trap channels",
+		"channelsHint": "Up to {max} channels. Text chats inside voice channels work too. Bots that post to random channels get caught more often with a few traps.",
+		"noManageMessages": "The bot doesn't have the Manage Messages permission, it won't be able to delete messages.",
+		"noPermission": {
+			"softban": "The bot doesn't have the Ban Members permission, a soft ban won't work.",
+			"ban": "The bot doesn't have the Ban Members permission, it won't be able to ban.",
+			"timeout": "The bot doesn't have the Timeout Members permission, it won't be able to give timeouts."
+		},
+		"punishTitle": "Punishment",
+		"action": "What to do",
+		"actions": {
+			"softban": "Soft ban",
+			"ban": "Ban",
+			"timeout": "Timeout"
+		},
+		"actionHints": {
+			"softban": "Bans and right away unbans the member: their messages get deleted and they're kicked, but they can come back with an invite. Good for hacked accounts of your own members.",
+			"ban": "The member is banned and can't come back until someone unbans them.",
+			"timeout": "The member stays on the server, but can't write or speak until the timeout ends."
+		},
+		"timeoutMinutes": "Timeout length, minutes",
+		"deleteHours": "Delete their messages from the last, hours",
+		"deleteHoursHint": "From 0 to 168 (a week). With 0 only the message in the trap is deleted.",
+		"dm": "Message the member about it",
+		"dmHint": "Says where they wrote and what to do if their account was hacked.",
+		"logHint": "The message from the trap is forwarded to the moderation log with an undo button, in case someone got punished by mistake. Set up the log channel here:",
+		"warningTitle": "Warning",
+		"warningHint": "The bot posts a warning in every trap channel so people don't write there by accident.",
+		"warning": "Show the warning",
+		"warningText": "Your own text",
+		"warningTextHint": "Leave empty for the default text. If bots learn to skip the default one, change it to something of your own. Discord formatting works.",
+		"saved": "Honeypot saved"
 	},
 	"greetings": {
 		"kinds": {
@@ -443,6 +481,7 @@
 			"member.warn": "warned",
 			"member.unwarn": "removed a warn from",
 			"modlog.settings": "changed the moderation log",
+			"honeypot.settings": "changed the honeypot",
 			"tickets.settings": "changed the ticket settings"
 		}
 	},

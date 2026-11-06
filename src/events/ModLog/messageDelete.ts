@@ -1,3 +1,4 @@
+import { isHoneypotChannel } from "@/helpers/honeypot.js";
 import { COLORS, formatUser, postModLog, quote } from "@/helpers/modlog.js";
 import { Message, PartialMessage } from "discord.js";
 
@@ -9,6 +10,8 @@ export const data = {
 export async function run(message: Message | PartialMessage) {
 	const guild = message.guild;
 	if (!guild || message.author?.bot || message.system) return;
+	// The honeypot logs these itself, with the forwarded message
+	if (await isHoneypotChannel(guild.id, message.channelId)) return;
 
 	const parentId = message.channel.isThread() ? message.channel.parentId : null;
 

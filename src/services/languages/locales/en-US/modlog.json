@@ -24,5 +24,15 @@
 	"NO_NICKNAME": "*none*",
 	"ROLES_CHANGED": "{{user}}'s roles changed",
 	"BY": "By: {{user}}",
-	"REASON": "Reason: {{reason}}"
+	"REASON": "Reason: {{reason}}",
+
+	"HONEYPOT": "{{user}} wrote in the trap channel {{channel}}",
+	"HONEYPOT_SOFTBAN": "Kicked with a soft ban, they can come back with an invite",
+	"HONEYPOT_BAN": "Banned",
+	"HONEYPOT_TIMEOUT": "Got a timeout, it ends {{date}}",
+	"HONEYPOT_FAILED": "The bot couldn't punish them: its role is too low or it lacks permissions",
+	"HONEYPOT_DELETED": "Their messages from the last {{hours}} h were deleted",
+	"HONEYPOT_UNDO": "Undo",
+	"HONEYPOT_UNDONE": "{{user}} undid the punishment",
+	"HONEYPOT_MISTAKE": "{{user}} marked this as a mistake"
 }

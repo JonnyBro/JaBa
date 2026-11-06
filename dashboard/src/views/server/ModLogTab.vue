@@ -16,7 +16,7 @@ import { toast } from "vue-sonner";
 const GROUPS: { name: string; events: ModLogEvent[] }[] = [
 	{ name: "messages", events: ["messageDelete", "messageEdit"] },
 	{ name: "members", events: ["memberJoin", "memberLeave", "nickname", "roles"] },
-	{ name: "moderation", events: ["ban", "unban", "kick", "timeout", "warns"] },
+	{ name: "moderation", events: ["ban", "unban", "kick", "timeout", "warns", "honeypot"] },
 ];
 const MAX_IGNORED = 25;
 

@@ -69,6 +69,7 @@ export const MODLOG_EVENTS = [
 	"nickname",
 	"roles",
 	"warns",
+	"honeypot",
 ] as const;
 export type ModLogEvent = (typeof MODLOG_EVENTS)[number];
 
@@ -94,6 +95,27 @@ export interface MusicSettings {
 	stay: boolean;
 }
 
+export const HONEYPOT_ACTIONS = ["softban", "ban", "timeout"] as const;
+export type HoneypotAction = (typeof HONEYPOT_ACTIONS)[number];
+
+export interface HoneypotChannel {
+	id: string;
+	/** The bot's warning in the channel, null while it's hidden */
+	messageId: string | null;
+}
+
+export interface HoneypotSettings {
+	channels: HoneypotChannel[];
+	action: HoneypotAction;
+	/** How far back the member's messages get deleted */
+	deleteHours: number;
+	timeoutMinutes: number;
+	dm: boolean;
+	warning: boolean;
+	/** Null uses the default text in the server's language */
+	warningText: string | null;
+}
+
 export interface GuildPlugins {
 	birthdays: string | null;
 	levels: LevelSettings;
@@ -102,6 +124,7 @@ export interface GuildPlugins {
 	modlog: ModLogSettings;
 	tickets: TicketSettings;
 	music: MusicSettings;
+	honeypot: HoneypotSettings;
 }
 
 export interface IGuildSchema {
@@ -200,6 +223,27 @@ const musicSchema = new Schema<MusicSettings>(
 	{ _id: false },
 );
 
+const honeypotChannelSchema = new Schema<HoneypotChannel>(
+	{
+		id: { type: String, required: true },
+		messageId: { type: String, default: null },
+	},
+	{ _id: false },
+);
+
+const honeypotSchema = new Schema<HoneypotSettings>(
+	{
+		channels: { type: [honeypotChannelSchema], default: [] },
+		action: { type: String, enum: HONEYPOT_ACTIONS, default: "softban" },
+		deleteHours: { type: Number, default: 1, min: 0, max: 168 },
+		timeoutMinutes: { type: Number, default: 1440, min: 1, max: 40320 },
+		dm: { type: Boolean, default: true },
+		warning: { type: Boolean, default: true },
+		warningText: { type: String, default: null },
+	},
+	{ _id: false },
+);
+
 const pluginsSchema = new Schema(
 	{
 		birthdays: { type: String, default: null },
@@ -209,6 +253,7 @@ const pluginsSchema = new Schema(
 		modlog: { type: modlogSchema, default: () => ({}) },
 		tickets: { type: ticketsSchema, default: () => ({}) },
 		music: { type: musicSchema, default: () => ({}) },
+		honeypot: { type: honeypotSchema, default: () => ({}) },
 	},
 	{ _id: false },
 );

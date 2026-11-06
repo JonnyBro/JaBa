@@ -22,6 +22,7 @@ import type {
 	GuildListItem,
 	GuildMember,
 	GuildMemberDetails,
+	GuildHoneypot,
 	GuildModLog,
 	GuildSettings,
 	GuildWarns,
@@ -35,6 +36,7 @@ import type {
 	MessageBlock,
 	MigrationInfo,
 	ModerationAction,
+	HoneypotSettings,
 	ModLogSettings,
 	MusicFilter,
 	MusicLyrics,
@@ -98,6 +100,11 @@ export const moderateMember = (
 export const getModLog = (id: string) => get<GuildModLog>(guildUrl(id, "/modlog"));
 export const updateModLog = async (id: string, body: ModLogSettings) =>
 	(await api.put<Response<ModLogSettings>>(guildUrl(id, "/modlog"), body)).data.data;
+
+// Honeypot
+export const getHoneypot = (id: string) => get<GuildHoneypot>(guildUrl(id, "/honeypot"));
+export const updateHoneypot = async (id: string, body: HoneypotSettings) =>
+	(await api.put<Response<HoneypotSettings>>(guildUrl(id, "/honeypot"), body)).data.data;
 
 // Warns
 export const getWarns = (id: string) => get<GuildWarns>(guildUrl(id, "/warns"));

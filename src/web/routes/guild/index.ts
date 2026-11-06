@@ -5,6 +5,7 @@ import { fail, isOwner } from "../../utils.js";
 import auditRoutes from "./audit.js";
 import giveawaysRoutes from "./giveaways.js";
 import greetingsRoutes from "./greetings.js";
+import honeypotRoutes from "./honeypot.js";
 import infoRoutes from "./info.js";
 import leaderboardRoutes from "./leaderboard.js";
 import levelsRoutes from "./levels.js";
@@ -51,6 +52,7 @@ export default async function guildRoutes(fastify: FastifyInstance) {
 		await manage.register(ticketsRoutes);
 		await manage.register(warnsRoutes);
 		await manage.register(modlogRoutes);
+		await manage.register(honeypotRoutes);
 		await manage.register(messagesRoutes);
 		await manage.register(auditRoutes);
 	});

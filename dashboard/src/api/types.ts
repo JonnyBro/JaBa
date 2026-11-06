@@ -457,6 +457,7 @@ export const MODLOG_EVENTS = [
 	"kick",
 	"timeout",
 	"warns",
+	"honeypot",
 ] as const;
 
 export type ModLogEvent = (typeof MODLOG_EVENTS)[number];
@@ -468,3 +469,26 @@ export type ModLogSettings = {
 };
 
 export type GuildModLog = { settings: ModLogSettings; canViewAuditLog: boolean };
+
+export const HONEYPOT_ACTIONS = ["softban", "ban", "timeout"] as const;
+
+export type HoneypotAction = (typeof HONEYPOT_ACTIONS)[number];
+
+export type HoneypotSettings = {
+	channels: string[];
+	action: HoneypotAction;
+	deleteHours: number;
+	timeoutMinutes: number;
+	dm: boolean;
+	warning: boolean;
+	warningText: string | null;
+};
+
+export type GuildHoneypot = {
+	settings: HoneypotSettings;
+	canBan: boolean;
+	canTimeout: boolean;
+	canManageMessages: boolean;
+	/** The bot's default warning for each action, in the server's language */
+	defaultWarnings: Record<HoneypotAction, string>;
+};

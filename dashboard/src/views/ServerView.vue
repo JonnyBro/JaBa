@@ -14,6 +14,7 @@ import {
 	MessageSquare,
 	Music,
 	ScrollText,
+	ShieldAlert,
 	Settings,
 	ShoppingBag,
 	Ticket,
@@ -42,6 +43,7 @@ const MANAGE_GROUPS: TabGroup[] = [
 		tabs: [
 			{ name: "server-warns", label: "server.tabs.warns", icon: TriangleAlert },
 			{ name: "server-modlog", label: "server.tabs.modlog", icon: ScrollText },
+			{ name: "server-honeypot", label: "server.tabs.honeypot", icon: ShieldAlert },
 			{ name: "server-tickets", label: "server.tabs.tickets", icon: Ticket },
 		],
 	},

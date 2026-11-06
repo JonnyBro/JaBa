@@ -24,5 +24,15 @@
 	"NO_NICKNAME": "*немає*",
 	"ROLES_CHANGED": "У {{user}} змінилися ролі",
 	"BY": "Хто: {{user}}",
-	"REASON": "Причина: {{reason}}"
+	"REASON": "Причина: {{reason}}",
+
+	"HONEYPOT": "{{user}} написав у канал-пастку {{channel}}",
+	"HONEYPOT_SOFTBAN": "Вигнаний софтбаном, може повернутися за запрошенням",
+	"HONEYPOT_BAN": "Забанений",
+	"HONEYPOT_TIMEOUT": "Отримав таймаут, закінчиться {{date}}",
+	"HONEYPOT_FAILED": "Бот не зміг покарати: його роль нижча або бракує прав",
+	"HONEYPOT_DELETED": "Його повідомлення за останні {{hours}} год видалено",
+	"HONEYPOT_UNDO": "Скасувати",
+	"HONEYPOT_UNDONE": "{{user}} скасував покарання",
+	"HONEYPOT_MISTAKE": "{{user}} позначив це як помилку"
 }

@@ -180,18 +180,6 @@ export const printDate = (date: Date | number, locale: Intl.LocalesArgument = "e
 
 export const randomNum = (min: number = 0, max: number = 100) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-export const shuffle = <T>(array: readonly T[]): T[] => {
-	const shuffled = [...array];
-
-	// Fisher-Yates shuffle algorithm
-	for (let i = shuffled.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-	}
-
-	return shuffled;
-};
-
 export const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
 
 export const convertTime = (duration: number) => {

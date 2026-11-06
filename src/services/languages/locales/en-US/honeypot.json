@@ -1,0 +1,12 @@
+{
+	"WARNING_SOFTBAN": "## ⚠️ Don't write here\nThis channel is a trap for spam bots. Anyone who posts here gets kicked from the server automatically and their recent messages get deleted.",
+	"WARNING_BAN": "## ⚠️ Don't write here\nThis channel is a trap for spam bots. Anyone who posts here gets banned automatically.",
+	"WARNING_TIMEOUT": "## ⚠️ Don't write here\nThis channel is a trap for spam bots. Anyone who posts here gets a timeout automatically.",
+	"DM_SOFTBAN": "You were kicked from **{{guild}}**: your account wrote in a channel that is a trap for spam bots.\nIf it wasn't you, your account was probably hacked. Change your password and turn on two-factor authentication, then you can join the server again.",
+	"DM_BAN": "You were banned on **{{guild}}**: your account wrote in a channel that is a trap for spam bots.\nIf it wasn't you, your account was probably hacked. Change your password and turn on two-factor authentication, then contact the server's moderators.",
+	"DM_TIMEOUT": "You got a timeout on **{{guild}}** until {{date}}: your account wrote in a channel that is a trap for spam bots.\nIf it wasn't you, your account was probably hacked. Change your password and turn on two-factor authentication.",
+	"REASON": "Wrote in the trap channel #{{channel}}",
+	"UNDO_REASON": "Honeypot punishment undone by {{user}}",
+	"UNDO_NO_PERMISSION": "You don't have the permission to undo this",
+	"UNDO_FAILED": "Couldn't undo the punishment, maybe it was already removed"
+}

@@ -3,7 +3,17 @@ import logger from "@/helpers/logger.js";
 import { ModLogEvent } from "@/models/GuildModel.js";
 import { containerMessage, createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
-import { AuditLogEvent, ColorResolvable, Guild, GuildMember, PartialUser, PermissionsBitField, User } from "discord.js";
+import {
+	ActionRowBuilder,
+	AuditLogEvent,
+	ButtonBuilder,
+	ColorResolvable,
+	Guild,
+	GuildMember,
+	PartialUser,
+	PermissionsBitField,
+	User,
+} from "discord.js";
 import { setTimeout as sleep } from "node:timers/promises";
 
 const TEXT_LIMIT = 4000;
@@ -25,7 +35,25 @@ interface LogOptions {
 	color: ColorResolvable;
 	/** Where the logged message was, ignored channels and the log channel itself are skipped */
 	source?: { channelId: string; parentId?: string | null };
+	buttons?: ActionRowBuilder<ButtonBuilder>;
 }
+
+export const getModLogChannel = async (guild: Guild, event: ModLogEvent, source?: LogOptions["source"]) => {
+	const settings = (await useClient().getGuildData(guild.id)).plugins.modlog;
+	if (!settings.channel || !settings.events[event]) return null;
+
+	if (
+		source &&
+		[source.channelId, source.parentId].some(
+			id => id && (id === settings.channel || settings.ignoredChannels.includes(id)),
+		)
+	)
+		return null;
+
+	const channel = await guild.channels.fetch(settings.channel).catch(() => null);
+
+	return channel?.isSendable() ? channel : null;
+};
 
 export const postModLog = async (
 	guild: Guild,
@@ -34,30 +62,19 @@ export const postModLog = async (
 	build: (t: Translate) => Promise<Line[]>,
 ) => {
 	try {
-		const settings = (await useClient().getGuildData(guild.id)).plugins.modlog;
-		if (!settings.channel || !settings.events[event]) return;
-
-		const { source } = options;
-		if (
-			source &&
-			[source.channelId, source.parentId].some(
-				id => id && (id === settings.channel || settings.ignoredChannels.includes(id)),
-			)
-		)
-			return;
-
-		const channel = await guild.channels.fetch(settings.channel).catch(() => null);
-		if (!channel?.isSendable()) return;
+		const channel = await getModLogChannel(guild, event, options.source);
+		if (!channel) return;
 
 		const t: Translate = (key, args) => translateContext(guild, `modlog:${key}`, args);
 		const content = (await build(t)).filter(Boolean).join("\n");
 		if (!content) return;
 
-		await channel.send(
-			containerMessage(
-				createContainer(options.color).addTextDisplayComponents(createText(shortenString(content, TEXT_LIMIT))),
-			),
+		const container = createContainer(options.color).addTextDisplayComponents(
+			createText(shortenString(content, TEXT_LIMIT)),
 		);
+		if (options.buttons) container.addActionRowComponents(options.buttons);
+
+		await channel.send(containerMessage(container));
 	} catch (error) {
 		logger.warn(`[ModLog] Can't log ${event} in ${guild.id}:`, error);
 	}
