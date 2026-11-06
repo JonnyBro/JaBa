@@ -20,7 +20,7 @@ interface Options extends InteractionReplyOptions {
 	mention?: boolean;
 }
 
-// NOTE: According to https://discord.com/developers/docs/reference#locales
+// According to https://discord.com/developers/docs/reference#locales
 const localeExcludes = ["en", "es", "pt", "sv", "zh"];
 
 const getAppEmojis = () => {
@@ -167,7 +167,7 @@ export const getNoun = (number: number, wordForms: string[]) => {
 };
 
 export const getUsername = (arg: User | GuildMember): string => {
-	// NOTE: Bots still have discriminators
+	// Bots still have discriminators
 	if (arg instanceof GuildMember) return arg.user.discriminator !== "0" ? arg.user.tag : arg.user.username;
 
 	return arg.discriminator !== "0" ? arg.tag : arg.username;
