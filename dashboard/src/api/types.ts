@@ -470,6 +470,73 @@ export type ModLogSettings = {
 
 export type GuildModLog = { settings: ModLogSettings; canViewAuditLog: boolean };
 
+export const GAME_SERVER_FIELDS = [
+	"name",
+	"map",
+	"players",
+	"playerList",
+	"bots",
+	"password",
+	"version",
+	"ping",
+	"address",
+] as const;
+
+export type GameServerField = (typeof GAME_SERVER_FIELDS)[number];
+
+export const RAW_FIELD_PREFIX = "raw.";
+
+export const GAME_SERVER_INTERVAL = { min: 1, max: 30 } as const;
+export const GAME_SERVER_MAX_DESCRIPTION = 1000;
+
+/** Inline fields next to each other share one line */
+export type GameServerFieldEntry = { key: string; label: string | null; inline: boolean };
+
+export type GameServerState = {
+	name: string;
+	map: string;
+	numplayers: number;
+	maxplayers: number;
+	players: string[];
+	bots: number;
+	password: boolean;
+	version: string;
+	ping: number;
+	connect: string;
+	raw: { key: string; value: string }[];
+};
+
+export type GameServerInput = {
+	game: string;
+	host: string;
+	port: number;
+	channelId: string;
+	title: string | null;
+	description: string | null;
+	fields: GameServerFieldEntry[];
+	connectButton: boolean;
+	/** Minutes between checks */
+	interval: number;
+};
+
+export type GameServer = GameServerInput & {
+	id: string;
+	gameName: string;
+	state: GameServerState | null;
+	online: boolean;
+	lastOnline: number | null;
+	messageUrl: string | null;
+};
+
+/** `steam` games get a "Connect" button that opens Steam */
+export type GameInfo = { id: string; name: string; port: number | null; steam: boolean };
+
+export type GuildGameServers = { servers: GameServer[]; max: number; games: GameInfo[] };
+
+export type GameServerTest = { ok: true; state: GameServerState } | { ok: false; reason: string };
+
+export type GameServerPreview = { text: string; color: string; button: { label: string; url: string } | null };
+
 export const HONEYPOT_ACTIONS = ["softban", "ban", "timeout"] as const;
 
 export type HoneypotAction = (typeof HONEYPOT_ACTIONS)[number];

@@ -1,0 +1,5 @@
+{
+	"DESCRIPTION": "Разово перевірити будь-який ігровий сервер",
+	"USAGE": "[game] [address]",
+	"EXAMPLES": "gamestatus game:Garry's Mod address:1.2.3.4:27015\ngamestatus game:Minecraft address:play.example.com"
+}

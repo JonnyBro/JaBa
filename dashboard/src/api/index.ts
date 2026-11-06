@@ -8,6 +8,10 @@ import type {
 	CommandStats,
 	CronTaskInfo,
 	Economy,
+	GameServer,
+	GameServerInput,
+	GameServerPreview,
+	GameServerTest,
 	Giveaway,
 	GiveawayInput,
 	GreetingKind,
@@ -22,6 +26,7 @@ import type {
 	GuildListItem,
 	GuildMember,
 	GuildMemberDetails,
+	GuildGameServers,
 	GuildHoneypot,
 	GuildModLog,
 	GuildSettings,
@@ -105,6 +110,23 @@ export const updateModLog = async (id: string, body: ModLogSettings) =>
 export const getHoneypot = (id: string) => get<GuildHoneypot>(guildUrl(id, "/honeypot"));
 export const updateHoneypot = async (id: string, body: HoneypotSettings) =>
 	(await api.put<Response<HoneypotSettings>>(guildUrl(id, "/honeypot"), body)).data.data;
+
+// Game servers
+const gameServerUrl = (id: string, serverId: string) => guildUrl(id, `/gameservers/${encodeURIComponent(serverId)}`);
+type GameServerTarget = Pick<GameServerInput, "game" | "host" | "port">;
+export const getGameServers = (id: string) => get<GuildGameServers>(guildUrl(id, "/gameservers"));
+export const testGameServer = (id: string, body: GameServerTarget) =>
+	post<GameServerTest>(guildUrl(id, "/gameservers/test"), body);
+export const previewGameServer = (
+	id: string,
+	body: Omit<GameServerInput, "channelId"> & Pick<GameServer, "state" | "lastOnline">,
+) => post<GameServerPreview>(guildUrl(id, "/gameservers/preview"), body);
+export const createGameServer = (id: string, body: GameServerInput) =>
+	post<GameServer>(guildUrl(id, "/gameservers"), body);
+export const updateGameServer = async (id: string, serverId: string, body: GameServerInput) =>
+	(await api.put<Response<GameServer>>(gameServerUrl(id, serverId), body)).data.data;
+export const deleteGameServer = async (id: string, serverId: string) =>
+	(await api.delete<Response<{ ok: true }>>(gameServerUrl(id, serverId))).data.data;
 
 // Warns
 export const getWarns = (id: string) => get<GuildWarns>(guildUrl(id, "/warns"));

@@ -1,0 +1,35 @@
+{
+	"GAME_OPTION": "Which game the server runs",
+	"ADDRESS_OPTION": "Server address, like play.example.com or 1.2.3.4:27015",
+	"FIELDS": {
+		"name": "Name",
+		"map": "Map",
+		"players": "Players",
+		"playerList": "Online",
+		"bots": "Bots",
+		"password": "Password",
+		"version": "Version",
+		"ping": "Ping",
+		"address": "Address"
+	},
+	"YES": "yes",
+	"NO": "no",
+	"PING_VALUE": "{{ping}} ms",
+	"MORE_PLAYERS": "and {{count}} more",
+	"UPDATES": "Updates every minute",
+	"UPDATES_EVERY": "Updates every {{count}} min.",
+	"OFFLINE_SINCE": "The server isn't responding. Last seen online {{date}}",
+	"NEVER_ONLINE": "Can't reach the server yet, the bot keeps trying",
+	"CONNECT": "Connect",
+	"ERRORS": {
+		"UNKNOWN_GAME": "Unknown game, pick one from the list",
+		"ADDRESS": "That doesn't look like a server address. Write it like play.example.com or 1.2.3.4:27015",
+		"PORT": "This game has no default port, add it to the address after a colon",
+		"CHANNEL": "The bot can't post in that channel",
+		"NOT_FOUND": "Couldn't find that address, check it for typos",
+		"PRIVATE": "That's a local or private address, the bot doesn't check those",
+		"NO_RESPONSE": "The server didn't respond. Check the address, the port and the game, maybe it's just down right now",
+		"LIMIT": "A server can monitor up to {{max}} game servers",
+		"EXISTS": "This game server is already monitored here"
+	}
+}

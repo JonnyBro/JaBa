@@ -1,6 +1,12 @@
 const escapeHtml = (text: string) =>
 	text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
+// Escaped characters become HTML entities so the markdown rules below don't see them
+const unescapeMarkdown = (text: string) =>
+	text
+		.replace(/\\(&(?:amp|lt|gt|quot);)/g, "$1")
+		.replace(/\\([\\`*_~|#\-[\]()<>.:])/g, (_, char: string) => `&#${char.charCodeAt(0)};`);
+
 const inline = (text: string) =>
 	text
 		.replace(/`([^`]+)`/g, '<code class="bg-muted px-1 font-mono text-[0.9em]">$1</code>')
@@ -26,7 +32,7 @@ const LINE_RULES: [RegExp, string][] = [
  * A rough preview of Discord markdown. The text is escaped first, so only the tags added here end up in the HTML
  */
 export const renderDiscordMarkdown = (text: string) =>
-	escapeHtml(text)
+	unescapeMarkdown(escapeHtml(text))
 		.split("\n")
 		.map(line => {
 			const content = inline(line);

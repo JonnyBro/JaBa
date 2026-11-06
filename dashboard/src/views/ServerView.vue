@@ -8,6 +8,7 @@ import { formatNumber } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import {
 	ArrowLeft,
+	Gamepad2,
 	Gift,
 	Hand,
 	History,
@@ -31,7 +32,7 @@ type TabGroup = { label: string; tabs: Tab[] };
 
 const MANAGE_GROUPS: TabGroup[] = [
 	{
-		label: "server.groups.general",
+		label: "server.groups.server",
 		tabs: [
 			{ name: "server", label: "server.tabs.settings", icon: Settings },
 			{ name: "server-members", label: "server.tabs.members", icon: Users },
@@ -55,12 +56,13 @@ const MANAGE_GROUPS: TabGroup[] = [
 			{ name: "server-shop", label: "server.tabs.shop", icon: ShoppingBag },
 			{ name: "server-giveaways", label: "server.tabs.giveaways", icon: Gift },
 			{ name: "server-messages", label: "server.tabs.messages", icon: MessageSquare },
+			{ name: "server-gameservers", label: "server.tabs.gameservers", icon: Gamepad2 },
 		],
 	},
 ];
 const MUSIC_TAB: Tab = { name: "server-music", label: "server.tabs.music", icon: Music };
 const MEMBER_GROUP: TabGroup = {
-	label: "server.groups.everyone",
+	label: "server.groups.general",
 	tabs: [MUSIC_TAB, { name: "server-leaderboard", label: "server.tabs.leaderboard", icon: Trophy }],
 };
 
@@ -69,7 +71,7 @@ const router = useRouter();
 const guild = useGuild();
 
 const canManage = computed(() => Boolean(guild.data.value?.canManage));
-const groups = computed(() => (canManage.value ? [...MANAGE_GROUPS, MEMBER_GROUP] : [MEMBER_GROUP]));
+const groups = computed(() => (canManage.value ? [MEMBER_GROUP, ...MANAGE_GROUPS] : [MEMBER_GROUP]));
 const tabs = computed(() => groups.value.flatMap(group => group.tabs));
 const isMemberTab = computed(() => MEMBER_GROUP.tabs.some(tab => tab.name === route.name));
 

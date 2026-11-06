@@ -1,0 +1,17 @@
+{
+	"DESCRIPTION": "Мониторинг игровых серверов, сообщение со статусом обновляется само",
+	"USAGE": "add [game] [address] (channel) (title) (interval) | remove [server] | list",
+	"EXAMPLES": "gameserver add game:Garry's Mod address:1.2.3.4:27015\ngameserver add game:Minecraft address:play.example.com channel:#servers title:Выживание\ngameserver remove server:Выживание\ngameserver list",
+	"ADD": "Начать следить за игровым сервером",
+	"REMOVE": "Перестать следить за игровым сервером",
+	"LIST": "Показать игровые серверы, за которыми следит бот",
+	"CHANNEL": "Куда публиковать статус (по умолчанию в этот канал)",
+	"TITLE": "Название, которое показать вместо названия сервера",
+	"INTERVAL": "Как часто проверять сервер, в минутах (по умолчанию 1)",
+	"SERVER": "Какой сервер",
+	"ADDED": "Слежу за {{server}}, статус в {{channel}}. Что в нём показывать, можно выбрать в панели",
+	"REMOVED": "Больше не слежу за {{server}}",
+	"NOT_FOUND": "Не нашёл такой сервер",
+	"EMPTY": "Здесь пока нет игровых серверов",
+	"LIST_TITLE": "Игровые серверы"
+}

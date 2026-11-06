@@ -9,14 +9,31 @@ import UserModel from "@/models/UserModel.js";
 import useClient from "@/utils/use-client.js";
 import { ApplicationCommandType, InteractionContextType } from "discord.js";
 import { FastifyInstance } from "fastify";
-import { send } from "../utils.js";
+import { fail, send } from "../utils.js";
 
 const LEADERBOARD_LIMIT = 50;
 const LEADERBOARD_CACHE_MS = 60_000;
 
 let repCache: { at: number; items: unknown[] } | null = null;
 
+const STEAM_ADDRESS = /^[a-z0-9.-]+:\d{1,5}$/i;
+
 export default async function publicRoutes(fastify: FastifyInstance) {
+	// Discord link buttons only take http(s), so the "Connect" button of game servers goes through here
+	fastify.get("/api/connect/:address", async (req, reply) => {
+		const { address } = req.params as { address: string };
+		if (!STEAM_ADDRESS.test(address)) return fail(reply, 400, "Invalid address");
+
+		const url = `steam://connect/${address}`;
+
+		return reply
+			.type("text/html")
+			.send(
+				`<!DOCTYPE html><meta charset=utf-8><meta http-equiv=refresh content="0;url=${url}">` +
+					`<title>${address}</title><p>Opening Steam... <a href="${url}">Connect to ${address}</a></p>`,
+			);
+	});
+
 	fastify.get("/api/commands", async (req, reply) => {
 		const client = useClient();
 		const requested = (req.query as { lang?: string }).lang;

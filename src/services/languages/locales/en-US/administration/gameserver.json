@@ -1,0 +1,17 @@
+{
+	"DESCRIPTION": "Monitor game servers, a message with their status updates on its own",
+	"USAGE": "add [game] [address] (channel) (title) (interval) | remove [server] | list",
+	"EXAMPLES": "gameserver add game:Garry's Mod address:1.2.3.4:27015\ngameserver add game:Minecraft address:play.example.com channel:#servers title:Survival\ngameserver remove server:Survival\ngameserver list",
+	"ADD": "Start monitoring a game server",
+	"REMOVE": "Stop monitoring a game server",
+	"LIST": "Show the monitored game servers",
+	"CHANNEL": "Where to post the status (this channel by default)",
+	"TITLE": "Name to show instead of the server's own",
+	"INTERVAL": "How often to check the server, in minutes (1 by default)",
+	"SERVER": "Which server",
+	"ADDED": "Monitoring {{server}}, the status is in {{channel}}. Pick what it shows in the dashboard",
+	"REMOVED": "Stopped monitoring {{server}}",
+	"NOT_FOUND": "Couldn't find that server",
+	"EMPTY": "No game servers are monitored here yet",
+	"LIST_TITLE": "Game servers"
+}

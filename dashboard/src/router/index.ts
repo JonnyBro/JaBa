@@ -114,6 +114,11 @@ const router = createRouter({
 					name: "server-messages",
 					component: () => import("@/views/server/MessagesTab.vue"),
 				},
+				{
+					path: "gameservers",
+					name: "server-gameservers",
+					component: () => import("@/views/server/GameServersTab.vue"),
+				},
 				{ path: "audit", name: "server-audit", component: () => import("@/views/server/AuditTab.vue") },
 				{ path: "music", name: "server-music", component: () => import("@/views/server/MusicTab.vue") },
 				{

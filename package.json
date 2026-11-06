@@ -27,6 +27,7 @@
         "discord.js": "^14.28.1",
         "dotenv": "^18.0.9",
         "fastify": "^5.12.7",
+        "gamedig": "5.3.3",
         "i18next": "^26.5.11",
         "i18next-fs-backend": "^2.6.9",
         "lavalink-client": "2.11.0",
@@ -38,6 +39,7 @@
     "devDependencies": {
         "@eslint/js": "^10.0.1",
         "@stylistic/eslint-plugin": "^5.10.0",
+        "@types/gamedig": "5.0.3",
         "@types/md5": "^2.3.6",
         "@types/ms": "^2.1.0",
         "@types/node": "^22.20.5",
