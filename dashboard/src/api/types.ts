@@ -342,6 +342,10 @@ export type ShopItem = ShopItemInput & { id: string };
 
 export type GuildRole = { id: string; name: string; color: string };
 
+export type TicketSettings = { supportRoles: string[]; logChannel: string | null; transcriptDm: boolean };
+
+export type GuildTickets = { settings: TicketSettings; roles: GuildRole[] };
+
 export type GuildShop = { items: ShopItem[]; roles: GuildRole[]; effects: ShopEffect[]; max: number };
 
 export type LevelUpMode = "reply" | "channel" | "off";

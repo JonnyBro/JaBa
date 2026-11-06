@@ -79,12 +79,21 @@ export interface ModLogSettings {
 	ignoredChannels: string[];
 }
 
+export interface TicketSettings {
+	/** Pinged when a ticket opens and count as ticket staff */
+	supportRoles: string[];
+	/** Gets open/close notes and transcripts */
+	logChannel: string | null;
+	transcriptDm: boolean;
+}
+
 export interface GuildPlugins {
 	birthdays: string | null;
 	levels: LevelSettings;
 	greetings: GreetingSettings;
 	warns: WarnSettings;
 	modlog: ModLogSettings;
+	tickets: TicketSettings;
 }
 
 export interface IGuildSchema {
@@ -166,6 +175,15 @@ const modlogSchema = new Schema<ModLogSettings>(
 	{ _id: false },
 );
 
+const ticketsSchema = new Schema<TicketSettings>(
+	{
+		supportRoles: { type: [String], default: [] },
+		logChannel: { type: String, default: null },
+		transcriptDm: { type: Boolean, default: false },
+	},
+	{ _id: false },
+);
+
 const pluginsSchema = new Schema(
 	{
 		birthdays: { type: String, default: null },
@@ -173,6 +191,7 @@ const pluginsSchema = new Schema(
 		greetings: { type: greetingsSchema, default: () => ({}) },
 		warns: { type: warnsSchema, default: () => ({}) },
 		modlog: { type: modlogSchema, default: () => ({}) },
+		tickets: { type: ticketsSchema, default: () => ({}) },
 	},
 	{ _id: false },
 );

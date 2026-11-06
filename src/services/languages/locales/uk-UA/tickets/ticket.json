@@ -23,5 +23,17 @@
 
 	"CLOSED": "🔒 {{user}} закрив тікет",
 	"CLOSED_REASON": "🔒 {{user}} закрив тікет: {{reason}}",
-	"REOPENED": "🔓 {{user}} перевідкрив тікет"
+	"REOPENED": "🔓 {{user}} перевідкрив тікет",
+
+	"LOG_OPENED": "{{user}} відкрив тікет {{thread}}",
+	"LOG_CLOSED": "{{user}} закрив тікет {{thread}}",
+	"LOG_REOPENED": "{{user}} перевідкрив тікет {{thread}}",
+	"LOG_AUTHOR": "Автор: {{user}}",
+
+	"TRANSCRIPT_DM": "Твій тікет **{{subject}}** на сервері **{{server}}** закрито. Уся переписка у файлі.",
+	"TRANSCRIPT_AUTHOR": "Автор",
+	"TRANSCRIPT_OPENED": "Відкрито",
+	"TRANSCRIPT_CLOSED": "Закрив",
+	"TRANSCRIPT_REASON": "Причина",
+	"TRANSCRIPT_MESSAGES": "Повідомлень"
 }

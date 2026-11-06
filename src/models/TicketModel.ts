@@ -7,6 +7,7 @@ export interface ITicketSchema {
 	subject: string;
 	closedAt: Date | null;
 	closedBy: string | null;
+	createdAt: Date;
 }
 
 const ticketSchema = new Schema<ITicketSchema>(

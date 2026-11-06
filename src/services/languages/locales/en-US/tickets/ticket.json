@@ -23,5 +23,17 @@
 
 	"CLOSED": "🔒 {{user}} closed the ticket",
 	"CLOSED_REASON": "🔒 {{user}} closed the ticket: {{reason}}",
-	"REOPENED": "🔓 {{user}} reopened the ticket"
+	"REOPENED": "🔓 {{user}} reopened the ticket",
+
+	"LOG_OPENED": "{{user}} opened a ticket {{thread}}",
+	"LOG_CLOSED": "{{user}} closed the ticket {{thread}}",
+	"LOG_REOPENED": "{{user}} reopened the ticket {{thread}}",
+	"LOG_AUTHOR": "Opened by {{user}}",
+
+	"TRANSCRIPT_DM": "Your ticket **{{subject}}** on **{{server}}** was closed. The whole conversation is in the file.",
+	"TRANSCRIPT_AUTHOR": "Opened by",
+	"TRANSCRIPT_OPENED": "Opened",
+	"TRANSCRIPT_CLOSED": "Closed by",
+	"TRANSCRIPT_REASON": "Reason",
+	"TRANSCRIPT_MESSAGES": "Messages"
 }

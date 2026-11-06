@@ -379,7 +379,14 @@
 		"labelPlaceholder": "Open a ticket",
 		"emoji": "Emoji",
 		"send": "Send panel",
-		"sent": "Ticket panel sent"
+		"sent": "Ticket panel sent",
+		"settingsTitle": "Settings",
+		"supportRoles": "Support roles",
+		"supportRolesHint": "Pinged when a ticket opens, which adds them to it. They can also close and reopen tickets. Up to {max}.",
+		"logChannel": "Log channel",
+		"logChannelHint": "Gets a note when a ticket opens or closes, plus a transcript of the conversation.",
+		"transcriptDm": "Send the transcript to the ticket author in DM",
+		"saved": "Ticket settings saved"
 	},
 	"messages": {
 		"channel": "Channel",
@@ -429,7 +436,8 @@
 			"warns.settings": "changed the warn settings",
 			"member.warn": "warned",
 			"member.unwarn": "removed a warn from",
-			"modlog.settings": "changed the moderation log"
+			"modlog.settings": "changed the moderation log",
+			"tickets.settings": "changed the ticket settings"
 		}
 	},
 	"music": {

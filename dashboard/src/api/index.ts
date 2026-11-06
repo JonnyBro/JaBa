@@ -26,6 +26,7 @@ import type {
 	GuildSettings,
 	GuildWarns,
 	GuildShop,
+	GuildTickets,
 	GuildStanding,
 	LavalinkInfo,
 	LevelSettings,
@@ -50,6 +51,7 @@ import type {
 	WarnSettings,
 	ShopItem,
 	ShopItemInput,
+	TicketSettings,
 } from "./types";
 
 const get = async <T>(url: string, params?: object) => (await api.get<Response<T>>(url, { params })).data.data;
@@ -111,6 +113,9 @@ export const removeWarn = async (id: string, warnId: string) =>
 	(await api.delete<Response<{ ok: true }>>(guildUrl(id, `/warns/${encodeURIComponent(warnId)}`))).data.data;
 
 // Messages
+export const getTickets = (id: string) => get<GuildTickets>(guildUrl(id, "/tickets"));
+export const updateTicketSettings = async (id: string, body: TicketSettings) =>
+	(await api.put<Response<TicketSettings>>(guildUrl(id, "/tickets/settings"), body)).data.data;
 export const sendTicketPanel = (id: string, body: { channelId: string; text: string; label: string; emoji?: string }) =>
 	post<{ url: string }>(guildUrl(id, "/tickets/panel"), body);
 export const sendMessage = (

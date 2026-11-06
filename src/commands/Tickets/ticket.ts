@@ -72,7 +72,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	switch (interaction.options.getSubcommand()) {
 		case "close": {
-			if (!canCloseTicket(member, ticket)) return editReplyError(interaction, "tickets/ticket:NO_PERMISSION");
+			if (!(await canCloseTicket(member, ticket)))
+				return editReplyError(interaction, "tickets/ticket:NO_PERMISSION");
 			if (thread.locked) return editReplyError(interaction, "tickets/ticket:ALREADY_CLOSED");
 
 			// The reply has to go out before the thread is archived, it can't be edited afterwards
@@ -83,7 +84,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		}
 
 		case "reopen": {
-			if (!isTicketStaff(member)) return editReplyError(interaction, "tickets/ticket:STAFF_ONLY");
+			if (!(await isTicketStaff(member))) return editReplyError(interaction, "tickets/ticket:STAFF_ONLY");
 			if (!thread.locked && !thread.archived) return editReplyError(interaction, "tickets/ticket:NOT_CLOSED");
 
 			await reopenTicket(thread, interaction.user);
@@ -92,7 +93,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		}
 
 		case "add": {
-			if (!isTicketStaff(member) && member.id !== ticket.authorId)
+			if (member.id !== ticket.authorId && !(await isTicketStaff(member)))
 				return editReplyError(interaction, "tickets/ticket:NO_PERMISSION");
 
 			const user = interaction.options.getUser("user", true);
@@ -106,7 +107,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		}
 
 		case "remove": {
-			if (!isTicketStaff(member)) return editReplyError(interaction, "tickets/ticket:STAFF_ONLY");
+			if (!(await isTicketStaff(member))) return editReplyError(interaction, "tickets/ticket:STAFF_ONLY");
 
 			const user = interaction.options.getUser("user", true);
 			if (user.id === ticket.authorId || user.id === client.user.id)

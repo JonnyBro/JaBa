@@ -1,6 +1,13 @@
 import { getUsername, shortenString, translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
-import { canCloseTicket, closeTicket, getTicket, isTicketStaff } from "@/helpers/tickets.js";
+import {
+	canCloseTicket,
+	closeTicket,
+	getTicket,
+	getTicketSettings,
+	isTicketStaff,
+	postTicketLog,
+} from "@/helpers/tickets.js";
 import TicketModel from "@/models/TicketModel.js";
 import { createContainer, createSeparator, createText } from "@/utils/create-container.js";
 import {
@@ -140,7 +147,15 @@ export async function run(interaction: BaseInteraction) {
 				const container = createContainer()
 					.addTextDisplayComponents(createText(`## ${subject}\n-# ${author}`))
 					.addSeparatorComponents(createSeparator())
-					.addTextDisplayComponents(createText(`>>> ${desc}`))
+					.addTextDisplayComponents(createText(`>>> ${desc}`));
+
+				// Pinging a role in a private thread is what adds its members to it
+				const { supportRoles } = await getTicketSettings(interaction.guild.id);
+				const roles = supportRoles.filter(id => interaction.guild?.roles.cache.has(id));
+				if (roles.length)
+					container.addTextDisplayComponents(createText(`-# ${roles.map(id => `<@&${id}>`).join(" ")}`));
+
+				container
 					.addSeparatorComponents(createSeparator(false))
 					.addActionRowComponents(new ActionRowBuilder<ButtonBuilder>().addComponents(ticketEmbedsButtons));
 
@@ -148,8 +163,14 @@ export async function run(interaction: BaseInteraction) {
 				await thread.send({
 					flags: MessageFlags.IsComponentsV2,
 					components: [container],
-					allowedMentions: { parse: [] },
+					allowedMentions: { parse: [], roles },
 				});
+
+				const opened = await translateContext(interaction.guild, "tickets/ticket:LOG_OPENED", {
+					user: interaction.user.toString(),
+					thread: thread.toString(),
+				});
+				await postTicketLog(interaction.guild, `🎫 ${opened}\n> ${shortenString(subject, 200)}`);
 			} catch (e) {
 				logger.error(e);
 			}
@@ -162,7 +183,7 @@ export async function run(interaction: BaseInteraction) {
 			const member = interaction.member as GuildMember;
 			if (!ticket) return;
 
-			if (!isTicketStaff(member) && member.id !== ticket.authorId) {
+			if (member.id !== ticket.authorId && !(await isTicketStaff(member))) {
 				await interaction.reply({
 					content: await translateContext(interaction, "tickets/ticket:NO_PERMISSION"),
 					flags: MessageFlags.Ephemeral,
@@ -187,7 +208,7 @@ export async function run(interaction: BaseInteraction) {
 			const ticket = await getTicket(interaction.channel);
 			if (!ticket) return;
 
-			if (!canCloseTicket(interaction.member as GuildMember, ticket)) {
+			if (!(await canCloseTicket(interaction.member as GuildMember, ticket))) {
 				await interaction.reply({
 					content: await translateContext(interaction, "tickets/ticket:NO_PERMISSION"),
 					flags: MessageFlags.Ephemeral,
