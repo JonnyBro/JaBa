@@ -3,11 +3,15 @@ import { notifyMusicChange } from "@/helpers/music-events.js";
 import {
 	addToQueue,
 	checkVoice,
+	FILTERS,
+	FilterName,
+	isDj,
 	MAX_VOLUME,
 	PlayerAction,
 	runPlayerAction,
 	SEARCH_SOURCES,
 	SearchSource,
+	toggleFilter,
 	TRACK_CHANGING_ACTIONS,
 	updateNowPlaying,
 } from "@/helpers/music.js";
@@ -55,6 +59,9 @@ const getControllablePlayer = async (req: FastifyRequest, reply: FastifyReply) =
 	if (channelId !== player.voiceChannelId)
 		return void (await failWith(req, reply, 403, "music/play:NOT_SAME_CHANNEL"));
 
+	const member = await req.guild.members.fetch(req.session.user!.id).catch(() => null);
+	if (!member || !(await isDj(member, player))) return void (await failWith(req, reply, 403, "music/play:DJ_ONLY"));
+
 	return player;
 };
 
@@ -83,7 +90,7 @@ const done = async (reply: FastifyReply, player: Player, refreshMessage = true) 
 };
 
 export default async function musicRoutes(fastify: FastifyInstance) {
-	fastify.get("/music", async (req, reply) => send(reply, getMusicState(req.guild, req.session.user!.id)));
+	fastify.get("/music", async (req, reply) => send(reply, await getMusicState(req.guild, req.session.user!.id)));
 
 	fastify.get("/music/lyrics", async (req, reply) => {
 		const player = useClient().lavalink.getPlayer(req.guild.id);
@@ -123,6 +130,18 @@ export default async function musicRoutes(fastify: FastifyInstance) {
 		if (notice && notice !== "music/shuffle:SUCCESS") return failWith(req, reply, 400, notice);
 
 		return done(reply, player, !TRACK_CHANGING_ACTIONS.includes(action));
+	});
+
+	fastify.post("/music/filter", async (req, reply) => {
+		const name = (req.body as { name?: unknown } | undefined)?.name;
+		if (name !== "reset" && !FILTERS.includes(name as FilterName)) return fail(reply, 400, "Unknown filter");
+
+		const player = await getControllablePlayer(req, reply);
+		if (!player) return;
+
+		await toggleFilter(player, name as FilterName | "reset");
+
+		return done(reply, player);
 	});
 
 	fastify.post("/music/volume", async (req, reply) => {

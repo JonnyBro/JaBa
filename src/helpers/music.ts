@@ -19,6 +19,7 @@ import {
 	Message,
 	MessageCreateOptions,
 	MessageFlags,
+	PermissionsBitField,
 	User,
 } from "discord.js";
 import {
@@ -59,13 +60,27 @@ export const checkVoice = (member: GuildMember, player?: Player) => {
 	return null;
 };
 
-export const getControllablePlayer = (interaction: Interaction) => {
+export const getMusicSettings = async (guildId: string) => (await useClient().getGuildData(guildId)).plugins.music;
+
+export const isDj = async (member: GuildMember, player: Player) => {
+	const { djRole } = await getMusicSettings(member.guild.id);
+	if (!djRole || !member.guild.roles.cache.has(djRole)) return true;
+	if (member.roles.cache.has(djRole) || member.permissions.has(PermissionsBitField.Flags.ManageGuild)) return true;
+
+	// Ignore DJ role if user is alone
+	const channel = player.voiceChannelId ? member.guild.channels.cache.get(player.voiceChannelId) : null;
+
+	return !!channel?.isVoiceBased() && channel.members.filter(m => !m.user.bot).size <= 1;
+};
+
+export const getControllablePlayer = async (interaction: Interaction) => {
 	const client = useClient();
 	const player = interaction.guildId ? client.lavalink.getPlayer(interaction.guildId) : undefined;
 
 	if (!player || !player.queue.current) return { player: null, error: "music/play:NOT_PLAYING" };
 
-	const error = checkVoice(interaction.member as GuildMember, player);
+	const member = interaction.member as GuildMember;
+	const error = checkVoice(member, player) ?? (!(await isDj(member, player)) ? "music/play:DJ_ONLY" : null);
 
 	return { player: error ? null : player, error };
 };
@@ -244,6 +259,76 @@ export const runPlayerAction = async (player: Player, action: PlayerAction): Pro
 	}
 };
 
+// Filters
+export const FILTERS = [
+	"bassboost",
+	"nightcore",
+	"vaporwave",
+	"8d",
+	"karaoke",
+	"tremolo",
+	"vibrato",
+	"lowpass",
+] as const;
+export type FilterName = (typeof FILTERS)[number];
+
+// clearEQ() doesn't empty equalizerBands, it fills all 15 bands with gain 0
+const hasEQ = (player: Player) => player.filterManager.equalizerBands.some(band => band.gain !== 0);
+
+export const getActiveFilters = (player: Player) => {
+	const { filters } = player.filterManager;
+	const active: Record<FilterName, boolean> = {
+		bassboost: hasEQ(player),
+		nightcore: filters.nightcore,
+		vaporwave: filters.vaporwave,
+		"8d": filters.rotation,
+		karaoke: filters.karaoke,
+		tremolo: filters.tremolo,
+		vibrato: filters.vibrato,
+		lowpass: filters.lowPass,
+	};
+
+	return FILTERS.filter(name => active[name]);
+};
+
+export const toggleFilter = async (player: Player, name: FilterName | "reset") => {
+	const manager = player.filterManager;
+
+	switch (name) {
+		case "reset":
+			await manager.resetFilters();
+			if (hasEQ(player)) await manager.clearEQ();
+			break;
+		case "bassboost":
+			if (hasEQ(player)) await manager.clearEQ();
+			else await manager.setEQPreset("BassboostMedium");
+			break;
+		case "nightcore":
+			await manager.toggleNightcore();
+			break;
+		case "vaporwave":
+			await manager.toggleVaporwave();
+			break;
+		case "8d":
+			await manager.toggleRotation(0.2);
+			break;
+		case "karaoke":
+			await manager.toggleKaraoke();
+			break;
+		case "tremolo":
+			await manager.toggleTremolo();
+			break;
+		case "vibrato":
+			await manager.toggleVibrato();
+			break;
+		case "lowpass":
+			await manager.toggleLowPass();
+			break;
+	}
+
+	notifyMusicChange(player.guildId);
+};
+
 // Autoplay
 export const isAutoplayEnabled = (player: Player) => !!player.getData<boolean>(AUTOPLAY_KEY);
 
@@ -302,14 +387,14 @@ export const isChannelEmpty = (guild: Guild, channelId: string) => {
 	return !channel.members.some(member => !member.user.bot);
 };
 
-export const checkEmptyChannel = (player: Player) => {
+export const checkEmptyChannel = async (player: Player) => {
 	const client = useClient();
 	const guild = client.guilds.cache.get(player.guildId);
 	if (!guild || !player.voiceChannelId) return;
 
 	const timer = emptyChannelTimers.get(player.guildId);
 
-	if (!isChannelEmpty(guild, player.voiceChannelId)) {
+	if (!isChannelEmpty(guild, player.voiceChannelId) || (await getMusicSettings(guild.id)).stay) {
 		if (timer) clearTimeout(timer);
 		emptyChannelTimers.delete(player.guildId);
 
@@ -359,12 +444,22 @@ export const deleteNowPlaying = async (player: Player) => {
 	if (message?.deletable) await message.delete().catch(() => {});
 };
 
-export const formatPlayerSettings = async (player: Player, t: Translate) =>
-	t("music/queue:SETTINGS_VALUE", {
+export const formatFilters = async (player: Player, t: Translate) => {
+	const names = await Promise.all(getActiveFilters(player).map(name => t(`music/filter:FILTERS:${name}`)));
+
+	return names.join(", ");
+};
+
+export const formatPlayerSettings = async (player: Player, t: Translate) => {
+	const settings = await t("music/queue:SETTINGS_VALUE", {
 		volume: player.volume,
 		loop: await t(`music/loop:MODE_${player.repeatMode.toUpperCase()}`),
 		autoplay: await t(isAutoplayEnabled(player) ? "common:ENABLED" : "common:DISABLED"),
 	});
+	const filters = await formatFilters(player, t);
+
+	return filters ? `${settings}\n${await t("music/filter:ACTIVE", { filters })}` : settings;
+};
 
 const buildNowPlaying = async (player: Player, track: Track) => {
 	const client = useClient();

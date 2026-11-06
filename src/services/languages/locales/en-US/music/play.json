@@ -24,6 +24,8 @@
 	"NODE_UNAVAILABLE": "Music server is unavailable right now, try again later",
 	"NOT_PLAYING": "Nothing is playing right now",
 	"QUEUE_ENDED": "The queue has ended",
+	"QUEUE_ENDED_STAY": "The queue has ended. I'll stay in the channel, add something with /play",
+	"DJ_ONLY": "Only DJs can control the music right now: people with the DJ role, server managers, or someone listening alone",
 	"ADDED_TRACK": "Added [{{name}}](<{{url}}>) to the queue",
 	"ADDED_PLAYLIST": "Added {{count}} tracks from [{{name}}](<{{url}}>) to the queue",
 	"NEXT_TRACK": "[{{name}}](<{{url}}>) will play next",

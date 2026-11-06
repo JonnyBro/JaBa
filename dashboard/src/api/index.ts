@@ -36,6 +36,7 @@ import type {
 	MigrationInfo,
 	ModerationAction,
 	ModLogSettings,
+	MusicFilter,
 	MusicLyrics,
 	MusicState,
 	OwnerGuild,
@@ -166,6 +167,8 @@ export const getMusic = (id: string) => get<MusicState>(guildUrl(id, "/music"));
 export const getMusicLyrics = (id: string) => get<MusicLyrics>(guildUrl(id, "/music/lyrics"));
 export const musicAction = (id: string, action: PlayerAction) =>
 	post<{ ok: true }>(guildUrl(id, "/music/action"), { action });
+export const musicFilter = (id: string, name: MusicFilter | "reset") =>
+	post<{ ok: true }>(guildUrl(id, "/music/filter"), { name });
 export const musicVolume = (id: string, value: number) => post<{ ok: true }>(guildUrl(id, "/music/volume"), { value });
 export const musicSeek = (id: string, position: number) =>
 	post<{ ok: true }>(guildUrl(id, "/music/seek"), { position });

@@ -1,0 +1,21 @@
+{
+	"DESCRIPTION": "Turn an audio filter on or off",
+	"USAGE": "[name]",
+	"EXAMPLES": "filter name:bassboost",
+	"NAME": "Which filter",
+
+	"ACTIVE": "Filters: **{{filters}}**",
+	"NONE": "All filters are off",
+
+	"FILTERS": {
+		"bassboost": "Bass boost",
+		"nightcore": "Nightcore",
+		"vaporwave": "Vaporwave",
+		"8d": "8D",
+		"karaoke": "Karaoke",
+		"tremolo": "Tremolo",
+		"vibrato": "Vibrato",
+		"lowpass": "Low pass",
+		"reset": "Turn all off"
+	}
+}

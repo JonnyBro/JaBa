@@ -34,6 +34,8 @@ export type GuildListItem = {
 export type GuildSettings = {
 	language: string;
 	birthdays: string | null;
+	djRole: string | null;
+	musicStay: boolean;
 };
 
 export type GuildChannel = {
@@ -60,6 +62,7 @@ export type GuildInfo = {
 export type GuildDetails = GuildInfo & {
 	settings: GuildSettings;
 	channels: GuildChannel[];
+	roles: GuildRole[];
 	languages: GuildLanguage[];
 };
 
@@ -147,6 +150,8 @@ export type MusicState =
 	| (MusicStateBase & {
 			active: true;
 			canControl: boolean;
+			/** In the bot's channel, but the DJ role keeps them from controlling */
+			djOnly: boolean;
 			voiceChannel: { id: string; name: string } | null;
 			current: MusicTrack;
 			position: number;
@@ -154,6 +159,7 @@ export type MusicState =
 			volume: number;
 			repeatMode: RepeatMode;
 			autoplay: boolean;
+			filters: MusicFilter[];
 			hasPrevious: boolean;
 			queue: MusicTrack[];
 			queueTotal: number;
@@ -167,6 +173,19 @@ export type MusicLyrics = {
 	lines: { time: number; text: string }[];
 	text: string | null;
 } | null;
+
+export const MUSIC_FILTERS = [
+	"bassboost",
+	"nightcore",
+	"vaporwave",
+	"8d",
+	"karaoke",
+	"tremolo",
+	"vibrato",
+	"lowpass",
+] as const;
+
+export type MusicFilter = (typeof MUSIC_FILTERS)[number];
 
 export type PlayerAction = "pause" | "back" | "skip" | "stop" | "loop" | "shuffle" | "autoplay";
 

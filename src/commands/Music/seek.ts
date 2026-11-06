@@ -29,7 +29,7 @@ const parseTime = (input: string) => {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
-	const { player, error } = getControllablePlayer(interaction);
+	const { player, error } = await getControllablePlayer(interaction);
 	if (!player) return editReplyError(interaction, error!);
 
 	const track = player.queue.current!;

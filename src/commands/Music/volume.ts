@@ -26,7 +26,7 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 
-	const { player, error } = getControllablePlayer(interaction);
+	const { player, error } = await getControllablePlayer(interaction);
 	if (!player) return editReplyError(interaction, error!);
 
 	const volume = interaction.options.getInteger("volume", true);

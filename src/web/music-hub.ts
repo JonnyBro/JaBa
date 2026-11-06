@@ -26,11 +26,13 @@ const PLAYER_EVENTS: (keyof LavalinkManagerEvents)[] = [
 const subscribers = new Map<string, Set<Subscriber>>();
 const pending = new Map<string, ReturnType<typeof setTimeout>>();
 
-const sendState = (guildId: string, subscriber: Subscriber) => {
+const sendState = async (guildId: string, subscriber: Subscriber) => {
 	const guild = useClient().guilds.cache.get(guildId);
 	if (!guild || subscriber.socket.readyState !== subscriber.socket.OPEN) return;
 
-	subscriber.socket.send(JSON.stringify({ type: "state", data: getMusicState(guild, subscriber.userId) }));
+	const state = await getMusicState(guild, subscriber.userId);
+	if (subscriber.socket.readyState === subscriber.socket.OPEN)
+		subscriber.socket.send(JSON.stringify({ type: "state", data: state }));
 };
 
 export const scheduleBroadcast = (guildId: string) => {
@@ -40,7 +42,7 @@ export const scheduleBroadcast = (guildId: string) => {
 		guildId,
 		setTimeout(() => {
 			pending.delete(guildId);
-			subscribers.get(guildId)?.forEach(subscriber => sendState(guildId, subscriber));
+			subscribers.get(guildId)?.forEach(subscriber => void sendState(guildId, subscriber));
 		}, BROADCAST_DELAY),
 	);
 };
@@ -57,7 +59,7 @@ export const subscribe = (guildId: string, subscriber: Subscriber) => {
 		if (!subscribers.get(guildId)?.size) subscribers.delete(guildId);
 	});
 
-	sendState(guildId, subscriber);
+	void sendState(guildId, subscriber);
 };
 
 export const initMusicHub = () => {

@@ -1,4 +1,4 @@
-import { formatSource, isAutoplayEnabled, MAX_VOLUME } from "@/helpers/music.js";
+import { formatSource, getActiveFilters, isAutoplayEnabled, isDj, MAX_VOLUME } from "@/helpers/music.js";
 import useClient from "@/utils/use-client.js";
 import { Guild, User } from "discord.js";
 import { Track, UnresolvedTrack } from "lavalink-client";
@@ -26,7 +26,7 @@ const serializeTrack = (track: Track | UnresolvedTrack) => {
 	};
 };
 
-export const getMusicState = (guild: Guild, userId: string) => {
+export const getMusicState = async (guild: Guild, userId: string) => {
 	const player = useClient().lavalink.getPlayer(guild.id);
 	const userChannelId = guild.voiceStates.cache.get(userId)?.channelId ?? null;
 	const userChannel = userChannelId ? guild.channels.cache.get(userChannelId) : null;
@@ -40,11 +40,16 @@ export const getMusicState = (guild: Guild, userId: string) => {
 
 	const voiceChannel = player.voiceChannelId ? guild.channels.cache.get(player.voiceChannelId) : null;
 	const tracks = player.queue.tracks;
+	const member = guild.members.cache.get(userId);
+	const inChannel = !!userChannelId && userChannelId === player.voiceChannelId;
+	const dj = !!member && (await isDj(member, player));
 
 	return {
 		...base,
 		active: true as const,
-		canControl: !!userChannelId && userChannelId === player.voiceChannelId,
+		canControl: inChannel && dj,
+		/** In the channel, but the DJ role keeps them from controlling */
+		djOnly: inChannel && !dj,
 		voiceChannel: voiceChannel ? { id: voiceChannel.id, name: voiceChannel.name } : null,
 		current: serializeTrack(player.queue.current),
 		position: player.position,
@@ -52,6 +57,7 @@ export const getMusicState = (guild: Guild, userId: string) => {
 		volume: player.volume,
 		repeatMode: player.repeatMode,
 		autoplay: isAutoplayEnabled(player),
+		filters: getActiveFilters(player),
 		hasPrevious: player.queue.previous.length > 0,
 		queue: tracks.slice(0, MAX_QUEUE_ITEMS).map(serializeTrack),
 		queueTotal: tracks.length,

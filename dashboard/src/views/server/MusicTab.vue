@@ -3,6 +3,7 @@ import {
 	getPlaylists,
 	musicAction,
 	musicClear,
+	musicFilter,
 	musicMove,
 	musicPlay,
 	musicPlayPlaylist,
@@ -11,7 +12,7 @@ import {
 	musicSeek,
 	musicVolume,
 } from "@/api";
-import type { GuildInfo, PlayerAction } from "@/api/types";
+import { MUSIC_FILTERS, type GuildInfo, type MusicFilter, type PlayerAction } from "@/api/types";
 import EmptyState from "@/components/common/EmptyState.vue";
 import Hint from "@/components/common/Hint.vue";
 import UserAvatar from "@/components/common/UserAvatar.vue";
@@ -49,6 +50,7 @@ import {
 	Shuffle,
 	SkipBack,
 	SkipForward,
+	SlidersHorizontal,
 	Square,
 	Trash2,
 	Volume2,
@@ -71,8 +73,9 @@ const { state, connected, position } = useMusic(guildId);
 const active = computed(() => (state.value?.active ? state.value : null));
 const canControl = computed(() => Boolean(active.value?.canControl));
 const canStart = computed(() => state.value?.active === false && state.value.canStart);
+// Adding tracks stays open to everyone in the channel, the DJ role only limits the controls
 const canAdd = computed(() =>
-	Boolean(state.value && (state.value.active ? state.value.canControl : state.value.canStart)),
+	Boolean(state.value && (state.value.active ? state.value.canControl || state.value.djOnly : state.value.canStart)),
 );
 
 const run = useMutation({
@@ -81,6 +84,7 @@ const run = useMutation({
 });
 
 const act = (action: PlayerAction) => run.mutate(() => musicAction(guildId.value, action));
+const toggleFilter = (name: MusicFilter | "reset") => run.mutate(() => musicFilter(guildId.value, name));
 
 const volume = ref(100);
 watch(
@@ -199,11 +203,11 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 
 		<template v-else>
 			<p v-if="active && !canControl" class="border border-dashed px-3 py-2 text-sm text-muted-foreground">
-				{{
-					active.voiceChannel
-						? $t("music.joinToControl", { channel: active.voiceChannel.name })
-						: $t("music.cantControl")
-				}}
+				<template v-if="active.djOnly">{{ $t("music.djOnly") }}</template>
+				<template v-else-if="active.voiceChannel">
+					{{ $t("music.joinToControl", { channel: active.voiceChannel.name }) }}
+				</template>
+				<template v-else>{{ $t("music.cantControl") }}</template>
 			</p>
 
 			<section v-if="active" class="hud-panel hud-edge grid gap-4 p-4 sm:grid-cols-[10rem_1fr]">
@@ -361,6 +365,30 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 							/>
 							<span class="w-8 text-right">{{ volume }}</span>
 						</label>
+					</div>
+
+					<div class="flex flex-wrap items-center gap-1.5">
+						<SlidersHorizontal class="mr-1 size-4 text-muted-foreground" />
+						<Button
+							v-for="name in MUSIC_FILTERS"
+							:key="name"
+							size="sm"
+							:variant="active.filters.includes(name) ? 'default' : 'outline'"
+							:aria-pressed="active.filters.includes(name)"
+							:disabled="!canControl"
+							@click="toggleFilter(name)"
+						>
+							{{ $t(`music.filters.${name}`) }}
+						</Button>
+						<Button
+							v-if="active.filters.length"
+							size="sm"
+							variant="ghost"
+							:disabled="!canControl"
+							@click="toggleFilter('reset')"
+						>
+							{{ $t("music.filters.reset") }}
+						</Button>
 					</div>
 				</div>
 			</section>

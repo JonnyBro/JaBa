@@ -87,6 +87,13 @@ export interface TicketSettings {
 	transcriptDm: boolean;
 }
 
+export interface MusicSettings {
+	/** When set, only DJs, server managers and a lone listener can control the player */
+	djRole: string | null;
+	/** 24/7: stay in the voice channel after the queue ends or everyone leaves */
+	stay: boolean;
+}
+
 export interface GuildPlugins {
 	birthdays: string | null;
 	levels: LevelSettings;
@@ -94,6 +101,7 @@ export interface GuildPlugins {
 	warns: WarnSettings;
 	modlog: ModLogSettings;
 	tickets: TicketSettings;
+	music: MusicSettings;
 }
 
 export interface IGuildSchema {
@@ -184,6 +192,14 @@ const ticketsSchema = new Schema<TicketSettings>(
 	{ _id: false },
 );
 
+const musicSchema = new Schema<MusicSettings>(
+	{
+		djRole: { type: String, default: null },
+		stay: { type: Boolean, default: false },
+	},
+	{ _id: false },
+);
+
 const pluginsSchema = new Schema(
 	{
 		birthdays: { type: String, default: null },
@@ -192,6 +208,7 @@ const pluginsSchema = new Schema(
 		warns: { type: warnsSchema, default: () => ({}) },
 		modlog: { type: modlogSchema, default: () => ({}) },
 		tickets: { type: ticketsSchema, default: () => ({}) },
+		music: { type: musicSchema, default: () => ({}) },
 	},
 	{ _id: false },
 );

@@ -28,6 +28,10 @@ export default async function infoRoutes(fastify: FastifyInstance) {
 			...info,
 			settings: await getSettings(guild.id),
 			channels,
+			roles: guild.roles.cache
+				.filter(role => role.id !== guild.id && !role.managed)
+				.sort((a, b) => b.position - a.position)
+				.map(role => ({ id: role.id, name: role.name, color: role.hexColor })),
 			languages: useClient().i18n.SupportedLanguages.map(locale => {
 				const meta = languageMeta.find(l => l.locale === locale);
 

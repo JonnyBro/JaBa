@@ -36,7 +36,7 @@ export async function run(player: Player, track: Track | null) {
 componentRouter.register(MUSIC_CONTROL_ID, async interaction => {
 	if (!interaction.isButton()) return;
 
-	const { player, error } = getControllablePlayer(interaction);
+	const { player, error } = await getControllablePlayer(interaction);
 
 	if (!player) {
 		await interaction.reply({

@@ -102,7 +102,13 @@
 			"community": "Community",
 			"everyone": "For everyone"
 		},
-		"pickChannel": "Pick a channel"
+		"pickChannel": "Pick a channel",
+		"musicTitle": "Music",
+		"djRole": "DJ role",
+		"djRoleNone": "No DJ role is set, anyone in the channel can control the player",
+		"djRoleHint": "When set, only members with the DJ role and admins can skip, stop and change the player. Anyone can still add tracks. Doesn't apply if you're listening alone.",
+		"musicStay": "24/7 mode",
+		"musicStayHint": "The bot stays in the voice channel after the queue ends or everyone leaves. It only leaves when someone stops the music."
 	},
 	"members": {
 		"search": "Search by name or ID",
@@ -492,6 +498,18 @@
 		"lyrics": {
 			"title": "Lyrics",
 			"notFound": "No lyrics found for this track"
+		},
+		"djOnly": "Only DJs can control the player on this server. You can still add tracks.",
+		"filters": {
+			"bassboost": "Bass boost",
+			"nightcore": "Nightcore",
+			"vaporwave": "Vaporwave",
+			"8d": "8D",
+			"karaoke": "Karaoke",
+			"tremolo": "Tremolo",
+			"vibrato": "Vibrato",
+			"lowpass": "Low pass",
+			"reset": "Turn all off"
 		}
 	},
 	"playlists": {

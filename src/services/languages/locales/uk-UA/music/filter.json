@@ -1,0 +1,21 @@
+{
+	"DESCRIPTION": "Увімкнути або вимкнути звуковий фільтр",
+	"USAGE": "[name]",
+	"EXAMPLES": "filter name:bassboost",
+	"NAME": "Який фільтр",
+
+	"ACTIVE": "Фільтри: **{{filters}}**",
+	"NONE": "Усі фільтри вимкнено",
+
+	"FILTERS": {
+		"bassboost": "Підсилення басу",
+		"nightcore": "Nightcore",
+		"vaporwave": "Vaporwave",
+		"8d": "8D",
+		"karaoke": "Караоке",
+		"tremolo": "Тремоло",
+		"vibrato": "Вібрато",
+		"lowpass": "Приглушення верхів",
+		"reset": "Вимкнути всі"
+	}
+}
