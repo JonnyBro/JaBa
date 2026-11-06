@@ -38,11 +38,12 @@ export const data: CommandData = {
 export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-	const conditions = ["s", "m", "h", "d", "w", "y"];
 	const time = interaction.options.getString("time", true);
 	const message = interaction.options.getString("message", true);
+	const duration = ms(time as StringValue);
 
-	if (!conditions.some(s => time.includes(s))) return editReplyError(interaction, "general/remindme:ERROR_TIME");
+	// Cron jobs run every minute, so we can't do seconds here
+	if (!duration || duration < 60_000) return editReplyError(interaction, "general/remindme:ERROR_TIME");
 
 	const userData = await client.getUserData(interaction.user.id);
 	const dateNow = Date.now();
@@ -50,7 +51,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const reminder = {
 		message: message,
 		createdAt: Math.floor(dateNow / 1000),
-		sendAt: Math.floor((dateNow + ms(time as StringValue)) / 1000),
+		sendAt: Math.floor((dateNow + duration) / 1000),
 	};
 
 	await userData.updateOne({
@@ -82,14 +83,6 @@ export const autocompleteRun = async ({ interaction }: AutocompleteProps) => {
 	query = Number(query);
 
 	const results = [
-		{
-			name: `${query} ${getNoun(query, [
-				await translateContext(interaction, "misc:NOUNS:SECONDS:1"),
-				await translateContext(interaction, "misc:NOUNS:SECONDS:2"),
-				await translateContext(interaction, "misc:NOUNS:SECONDS:5"),
-			])}`,
-			value: `${query}s`,
-		},
 		{
 			name: `${query} ${getNoun(query, [
 				await translateContext(interaction, "misc:NOUNS:MINUTES:1"),

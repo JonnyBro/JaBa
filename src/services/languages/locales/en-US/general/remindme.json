@@ -4,8 +4,8 @@
 
 	"EXAMPLES": "remindme time:12h message:Use the command 'work'\nremindme time:5m message:Get the chicken from the freezer!",
 
-	"TIME": "When, like 10s, 5m, 2h, 1d or 3w",
-	"ERROR_TIME": "Invalid time",
+	"TIME": "When, like 5m, 2h, 1d or 3w",
+	"ERROR_TIME": "Invalid time. The minimum is 1 minute",
 
 	"EMBED_SAVED": "Reminder saved",
 	"EMBED_TIME": "I'll remind you",
