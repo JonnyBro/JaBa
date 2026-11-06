@@ -95,6 +95,11 @@ const router = createRouter({
 					component: () => import("@/views/server/WarnsTab.vue"),
 				},
 				{
+					path: "modlog",
+					name: "server-modlog",
+					component: () => import("@/views/server/ModLogTab.vue"),
+				},
+				{
 					path: "tickets",
 					name: "server-tickets",
 					component: () => import("@/views/server/TicketsTab.vue"),

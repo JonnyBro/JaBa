@@ -4,7 +4,6 @@ import type { GuildDetails, Warn, WarnAction, WarnSettings } from "@/api/types";
 import EmptyState from "@/components/common/EmptyState.vue";
 import ErrorState from "@/components/common/ErrorState.vue";
 import UserAvatar from "@/components/common/UserAvatar.vue";
-import ChannelSelect from "@/components/server/ChannelSelect.vue";
 import MemberSheet from "@/components/server/MemberSheet.vue";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,16 +35,15 @@ const warns = useQuery({
 // Vue turns number inputs into numbers, but an emptied one gives back ""
 type RuleRow = { key: number; count: number | ""; action: WarnAction; minutes: number | "" };
 
-const form = reactive<{ expireDays: number | ""; logChannel: string | null; dm: boolean }>({
+const form = reactive<{ expireDays: number | ""; dm: boolean }>({
 	expireDays: 0,
-	logChannel: null,
 	dm: true,
 });
 const rules = ref<RuleRow[]>([]);
 let nextKey = 0;
 
 const reset = (settings: WarnSettings) => {
-	Object.assign(form, { expireDays: settings.expireDays, logChannel: settings.logChannel, dm: settings.dm });
+	Object.assign(form, { expireDays: settings.expireDays, dm: settings.dm });
 	rules.value = settings.rules.map(r => ({ key: nextKey++, ...r, minutes: r.minutes ?? 60 }));
 };
 
@@ -57,7 +55,6 @@ watch(
 
 const payload = computed<WarnSettings>(() => ({
 	expireDays: Number(form.expireDays) || 0,
-	logChannel: form.logChannel,
 	dm: form.dm,
 	rules: rules.value
 		.map(r => ({
@@ -116,10 +113,15 @@ const selectedUser = ref<string | null>(null);
 					<Input id="warns-expire" v-model="form.expireDays" type="number" min="0" max="365" />
 					<p class="text-xs text-muted-foreground">{{ $t("warns.expireHint") }}</p>
 				</div>
-				<div class="space-y-2">
-					<Label for="warns-log">{{ $t("warns.logChannel") }}</Label>
-					<ChannelSelect id="warns-log" v-model="form.logChannel" :channels="guild.channels" nullable />
-				</div>
+				<p class="text-sm text-muted-foreground sm:self-center">
+					{{ $t("warns.logHint") }}
+					<RouterLink
+						:to="{ name: 'server-modlog', params: { id: guild.id } }"
+						class="text-hl hover:underline"
+					>
+						{{ $t("server.tabs.modlog") }}
+					</RouterLink>
+				</p>
 
 				<Label class="flex items-center gap-2 font-normal sm:col-span-2">
 					<input v-model="form.dm" type="checkbox" class="accent-hl" />

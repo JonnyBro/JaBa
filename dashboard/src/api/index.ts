@@ -22,6 +22,7 @@ import type {
 	GuildListItem,
 	GuildMember,
 	GuildMemberDetails,
+	GuildModLog,
 	GuildSettings,
 	GuildWarns,
 	GuildShop,
@@ -33,6 +34,7 @@ import type {
 	MessageBlock,
 	MigrationInfo,
 	ModerationAction,
+	ModLogSettings,
 	MusicLyrics,
 	MusicState,
 	OwnerGuild,
@@ -88,6 +90,11 @@ export const moderateMember = (
 	action: ModerationAction,
 	body: { reason?: string; minutes?: number | null; deleteMessageDays?: number },
 ) => post<{ ok: true }>(guildUrl(id, `/members/${encodeURIComponent(userId)}/${action}`), body);
+
+// Moderation log
+export const getModLog = (id: string) => get<GuildModLog>(guildUrl(id, "/modlog"));
+export const updateModLog = async (id: string, body: ModLogSettings) =>
+	(await api.put<Response<ModLogSettings>>(guildUrl(id, "/modlog"), body)).data.data;
 
 // Warns
 export const getWarns = (id: string) => get<GuildWarns>(guildUrl(id, "/warns"));

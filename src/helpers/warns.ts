@@ -1,10 +1,11 @@
 import { translateContext } from "@/helpers/functions.js";
 import logger from "@/helpers/logger.js";
+import { COLORS, postModLog } from "@/helpers/modlog.js";
 import { WarnRule, WarnSettings } from "@/models/GuildModel.js";
 import WarnModel, { IWarnSchema } from "@/models/WarnModel.js";
 import { createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
-import { Guild, GuildMember, MessageCreateOptions, MessageFlags } from "discord.js";
+import { ColorResolvable, Guild, GuildMember, MessageCreateOptions, MessageFlags } from "discord.js";
 import { QueryFilter, Types } from "mongoose";
 
 export const MAX_REASON = 500;
@@ -45,15 +46,8 @@ const message = (content: string): MessageCreateOptions => ({
 const describeRule = async (guild: Guild, rule: WarnRule) =>
 	translateContext(guild, `administration/warn:ACTIONS:${rule.action}`, { minutes: rule.minutes ?? 0 });
 
-const postLog = async (guild: Guild, settings: WarnSettings, content: string) => {
-	if (!settings.logChannel) return;
-
-	const channel = await guild.channels.fetch(settings.logChannel).catch(() => null);
-	if (channel?.isSendable())
-		await channel
-			.send(message(content))
-			.catch(error => logger.warn(`[Warns] Can't log in ${guild.id}:`, error.message));
-};
+const postLog = (guild: Guild, color: ColorResolvable, content: string) =>
+	postModLog(guild, "warns", { color }, async () => [content]);
 
 const punish = async (target: GuildMember, rule: WarnRule, reason: string) => {
 	try {
@@ -110,7 +104,7 @@ export const addWarn = async (target: GuildMember, moderatorId: string, reason: 
 
 	await postLog(
 		guild,
-		settings,
+		COLORS.orange,
 		[`⚠️ ${added}`, `> ${reasonText}`, outcome && `-# ${outcome}`, `-# #${shortId(warn)}`]
 			.filter(Boolean)
 			.join("\n"),
@@ -129,10 +123,9 @@ export const removeWarn = async (guild: Guild, warnId: string, removedBy: string
 	).lean();
 	if (!warn) return null;
 
-	const settings = await getWarnSettings(guild.id);
 	await postLog(
 		guild,
-		settings,
+		COLORS.green,
 		`✅ ${await translateContext(guild, "administration/warn:LOG_REMOVED", {
 			id: shortId(warn),
 			user: `<@${warn.userId}>`,

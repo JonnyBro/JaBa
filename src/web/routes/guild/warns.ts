@@ -16,7 +16,6 @@ import useClient from "@/utils/use-client.js";
 import { Guild, PermissionsBitField } from "discord.js";
 import { FastifyInstance } from "fastify";
 import { logAction } from "../../audit.js";
-import { getSendableChannel } from "../../channels.js";
 import { fail, send } from "../../utils.js";
 
 const RECENT_LIMIT = 50;
@@ -26,7 +25,6 @@ const MAX_TIMEOUT_MINUTES = 28 * 24 * 60;
 
 const serializeSettings = (settings: WarnSettings) => ({
 	expireDays: settings.expireDays,
-	logChannel: settings.logChannel,
 	dm: settings.dm,
 	rules: [...settings.rules]
 		.sort((a, b) => a.count - b.count)
@@ -75,14 +73,6 @@ export default async function warnsRoutes(fastify: FastifyInstance) {
 		if (!isInt(body.expireDays, 0, MAX_EXPIRE_DAYS))
 			return fail(reply, 400, `Expiry must be from 0 to ${MAX_EXPIRE_DAYS} days`);
 
-		let logChannel: string | null = null;
-		if (body.logChannel) {
-			const channel = getSendableChannel(guild, body.logChannel);
-			if (!channel) return fail(reply, 400, "The bot can't send messages in the log channel");
-
-			logChannel = channel.id;
-		}
-
 		const input = Array.isArray(body.rules) ? (body.rules as Record<string, unknown>[]) : [];
 		if (input.length > MAX_RULES) return fail(reply, 400, `There can be up to ${MAX_RULES} rules`);
 
@@ -105,7 +95,7 @@ export default async function warnsRoutes(fastify: FastifyInstance) {
 		const guildData = await useClient().getGuildData(guild.id);
 		const before = serializeSettings(guildData.plugins.warns);
 
-		guildData.set("plugins.warns", { expireDays: body.expireDays, logChannel, dm: body.dm !== false, rules });
+		guildData.set("plugins.warns", { expireDays: body.expireDays, dm: body.dm !== false, rules });
 		await guildData.save();
 
 		const after = serializeSettings(guildData.plugins.warns);

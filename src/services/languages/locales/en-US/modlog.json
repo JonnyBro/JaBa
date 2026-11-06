@@ -1,0 +1,28 @@
+{
+	"MESSAGE_DELETED": "Message deleted in {{channel}}",
+	"MESSAGES_PURGED": "{{count}} messages deleted in {{channel}}",
+	"MESSAGE_EDITED": "Message edited in {{channel}} · [go to message]({{url}})",
+	"AUTHOR": "Author: {{user}}",
+	"BEFORE": "Before:",
+	"AFTER": "After:",
+	"NOT_CACHED": "The bot didn't see this message, so its text is unknown",
+	"ATTACHMENTS": "Attachments: {{list}}",
+
+	"MEMBER_JOINED": "{{user}} joined",
+	"MEMBER_LEFT": "{{user}} left",
+	"ACCOUNT_CREATED": "Account created {{date}}",
+	"JOINED_AT": "Joined {{date}}",
+	"ROLES": "Roles: {{roles}}",
+	"MEMBER_COUNT": "Members: {{count}}",
+
+	"BANNED": "{{user}} was banned",
+	"UNBANNED": "{{user}} was unbanned",
+	"KICKED": "{{user}} was kicked",
+	"TIMED_OUT": "{{user}} got a timeout, it ends {{date}}",
+	"TIMEOUT_REMOVED": "{{user}}'s timeout was removed",
+	"NICKNAME": "{{user}} changed nickname",
+	"NO_NICKNAME": "*none*",
+	"ROLES_CHANGED": "{{user}}'s roles changed",
+	"BY": "By: {{user}}",
+	"REASON": "Reason: {{reason}}"
+}

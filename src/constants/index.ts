@@ -9,11 +9,12 @@ export const PROJECT_ROOT = path.join(import.meta.dirname, "..");
 export const CLIENT_INTENTS = [
 	GatewayIntentBits.Guilds,
 	GatewayIntentBits.GuildMembers,
+	GatewayIntentBits.GuildModeration,
 	GatewayIntentBits.GuildVoiceStates,
 	GatewayIntentBits.GuildMessages,
 	GatewayIntentBits.MessageContent,
 ];
-export const CLIENT_PARTIALS: Array<Partials> = [Partials.GuildMember];
+export const CLIENT_PARTIALS: Array<Partials> = [Partials.GuildMember, Partials.Message];
 
 export const BOT_PERMISSIONS = [
 	PermissionsBitField.Flags.ViewChannel,
@@ -35,6 +36,7 @@ export const BOT_PERMISSIONS = [
 	PermissionsBitField.Flags.KickMembers,
 	PermissionsBitField.Flags.BanMembers,
 	PermissionsBitField.Flags.ModerateMembers,
+	PermissionsBitField.Flags.ViewAuditLog,
 ];
 export const CLIENT_ALLOWED_MENTIONS: MessageMentionOptions = {
 	parse: ["everyone", "roles", "users"],

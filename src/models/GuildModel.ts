@@ -53,9 +53,30 @@ export interface WarnRule {
 export interface WarnSettings {
 	/** Warns older than this stop counting, 0 keeps them forever */
 	expireDays: number;
-	logChannel: string | null;
 	dm: boolean;
 	rules: WarnRule[];
+}
+
+export const MODLOG_EVENTS = [
+	"messageDelete",
+	"messageEdit",
+	"memberJoin",
+	"memberLeave",
+	"ban",
+	"unban",
+	"kick",
+	"timeout",
+	"nickname",
+	"roles",
+	"warns",
+] as const;
+export type ModLogEvent = (typeof MODLOG_EVENTS)[number];
+
+export interface ModLogSettings {
+	channel: string | null;
+	events: Record<ModLogEvent, boolean>;
+	/** Message logs skip these channels and threads inside them */
+	ignoredChannels: string[];
 }
 
 export interface GuildPlugins {
@@ -63,6 +84,7 @@ export interface GuildPlugins {
 	levels: LevelSettings;
 	greetings: GreetingSettings;
 	warns: WarnSettings;
+	modlog: ModLogSettings;
 }
 
 export interface IGuildSchema {
@@ -123,9 +145,23 @@ const warnRuleSchema = new Schema<WarnRule>(
 const warnsSchema = new Schema<WarnSettings>(
 	{
 		expireDays: { type: Number, default: 0, min: 0 },
-		logChannel: { type: String, default: null },
 		dm: { type: Boolean, default: true },
 		rules: { type: [warnRuleSchema], default: [] },
+	},
+	{ _id: false },
+);
+
+const modlogSchema = new Schema<ModLogSettings>(
+	{
+		channel: { type: String, default: null },
+		events: {
+			type: new Schema(
+				Object.fromEntries(MODLOG_EVENTS.map(event => [event, { type: Boolean, default: true }])),
+				{ _id: false },
+			),
+			default: () => ({}),
+		},
+		ignoredChannels: { type: [String], default: [] },
 	},
 	{ _id: false },
 );
@@ -136,6 +172,7 @@ const pluginsSchema = new Schema(
 		levels: { type: levelsSchema, default: () => ({}) },
 		greetings: { type: greetingsSchema, default: () => ({}) },
 		warns: { type: warnsSchema, default: () => ({}) },
+		modlog: { type: modlogSchema, default: () => ({}) },
 	},
 	{ _id: false },
 );

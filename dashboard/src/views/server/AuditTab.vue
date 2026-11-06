@@ -24,17 +24,35 @@ const audit = useQuery({
 	placeholderData: keepPreviousData,
 });
 
-const diff = (entry: AuditEntry) => {
-	const { before, after } = entry.details as { before?: Record<string, unknown>; after?: Record<string, unknown> };
-	if (!before || !after) return [];
+type Details = Record<string, unknown>;
 
-	return Object.keys(after)
-		.filter(key => before[key] !== after[key])
-		.map(key => ({ key, from: before[key] ?? "—", to: after[key] ?? "—" }));
+const isObject = (value: unknown): value is Details =>
+	typeof value === "object" && value !== null && !Array.isArray(value);
+
+// Nested settings like the mod log events become "events.ban" so only the changed ones show up
+const flatten = (details: Details, prefix = ""): Details =>
+	Object.fromEntries(
+		Object.entries(details).flatMap(([key, value]) =>
+			isObject(value) ? Object.entries(flatten(value, `${prefix}${key}.`)) : [[`${prefix}${key}`, value]],
+		),
+	);
+
+const show = (value: unknown) => (Array.isArray(value) ? value.join(", ") || "—" : (value ?? "—"));
+
+const diff = (entry: AuditEntry) => {
+	const { before, after } = entry.details ?? {};
+	if (!isObject(before) || !isObject(after)) return [];
+
+	const from = flatten(before);
+	const to = flatten(after);
+
+	return Object.keys(to)
+		.filter(key => JSON.stringify(from[key]) !== JSON.stringify(to[key]))
+		.map(key => ({ key, from: show(from[key]), to: show(to[key]) }));
 };
 
-const messageUrl = (entry: AuditEntry) => entry.details.messageUrl as string | undefined;
-const reason = (entry: AuditEntry) => entry.details.reason as string | null | undefined;
+const messageUrl = (entry: AuditEntry) => entry.details?.messageUrl as string | undefined;
+const reason = (entry: AuditEntry) => entry.details?.reason as string | null | undefined;
 </script>
 
 <template>
@@ -56,7 +74,7 @@ const reason = (entry: AuditEntry) => entry.details.reason as string | null | un
 						<p>
 							<span class="font-medium">{{ entry.actorName }}</span>
 							{{ " " }}
-							<span class="text-muted-foreground">{{ $t(`audit.actions.${entry.action}`) }}</span>
+							<span class="text-muted-foreground">{{ $t(`audit.actions["${entry.action}"]`) }}</span>
 							<template v-if="entry.targetName">
 								{{ " " }}
 								<span class="font-medium">{{ entry.targetName }}</span>

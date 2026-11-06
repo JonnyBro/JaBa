@@ -10,6 +10,7 @@ import leaderboardRoutes from "./leaderboard.js";
 import levelsRoutes from "./levels.js";
 import membersRoutes from "./members.js";
 import messagesRoutes from "./messages.js";
+import modlogRoutes from "./modlog.js";
 import musicRoutes from "./music.js";
 import settingsRoutes from "./settings.js";
 import shopRoutes from "./shop.js";
@@ -49,6 +50,7 @@ export default async function guildRoutes(fastify: FastifyInstance) {
 		await manage.register(shopRoutes);
 		await manage.register(ticketsRoutes);
 		await manage.register(warnsRoutes);
+		await manage.register(modlogRoutes);
 		await manage.register(messagesRoutes);
 		await manage.register(auditRoutes);
 	});

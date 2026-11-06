@@ -8,6 +8,7 @@ import dedupeAndUniqueIndexes from "./005-dedupe-and-unique-indexes.js";
 import removeLegacyData from "./006-remove-legacy-data.js";
 import normalizeDocuments from "./007-normalize-documents.js";
 import removeInvalidIds from "./008-remove-invalid-ids.js";
+import warnLogToModlog from "./009-warn-log-to-modlog.js";
 import { Migration } from "./types.js";
 
 // Append only, never reorder or edit migrations that have already been applied
@@ -20,6 +21,7 @@ const migrations: Migration[] = [
 	removeLegacyData,
 	normalizeDocuments,
 	removeInvalidIds,
+	warnLogToModlog,
 ];
 
 export const runMigrations = async () => {

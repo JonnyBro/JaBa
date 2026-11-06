@@ -1,0 +1,28 @@
+{
+	"MESSAGE_DELETED": "Удалено сообщение в {{channel}}",
+	"MESSAGES_PURGED": "Удалено сообщений в {{channel}}: {{count}}",
+	"MESSAGE_EDITED": "Изменено сообщение в {{channel}} · [перейти]({{url}})",
+	"AUTHOR": "Автор: {{user}}",
+	"BEFORE": "Было:",
+	"AFTER": "Стало:",
+	"NOT_CACHED": "Бот не видел это сообщение, поэтому текст неизвестен",
+	"ATTACHMENTS": "Вложения: {{list}}",
+
+	"MEMBER_JOINED": "{{user}} зашёл на сервер",
+	"MEMBER_LEFT": "{{user}} вышел с сервера",
+	"ACCOUNT_CREATED": "Аккаунт создан {{date}}",
+	"JOINED_AT": "Был на сервере с {{date}}",
+	"ROLES": "Роли: {{roles}}",
+	"MEMBER_COUNT": "Участников: {{count}}",
+
+	"BANNED": "{{user}} забанен",
+	"UNBANNED": "{{user}} разбанен",
+	"KICKED": "{{user}} кикнут",
+	"TIMED_OUT": "{{user}} получил таймаут, закончится {{date}}",
+	"TIMEOUT_REMOVED": "С {{user}} снят таймаут",
+	"NICKNAME": "{{user}} сменил ник",
+	"NO_NICKNAME": "*нет*",
+	"ROLES_CHANGED": "У {{user}} изменились роли",
+	"BY": "Кто: {{user}}",
+	"REASON": "Причина: {{reason}}"
+}

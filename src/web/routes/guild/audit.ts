@@ -24,6 +24,8 @@ export default async function auditRoutes(fastify: FastifyInstance) {
 			items: items.map(({ _id, ...entry }) => ({
 				id: String(_id),
 				...entry,
+				// Mongoose drops empty objects on save, so entries without details have no field at all
+				details: entry.details ?? {},
 				createdAt: entry.createdAt.getTime(),
 			})),
 			total,

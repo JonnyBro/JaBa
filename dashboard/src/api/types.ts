@@ -404,7 +404,7 @@ export type WarnAction = "timeout" | "kick" | "ban";
 
 export type WarnRule = { count: number; action: WarnAction; minutes: number | null };
 
-export type WarnSettings = { expireDays: number; logChannel: string | null; dm: boolean; rules: WarnRule[] };
+export type WarnSettings = { expireDays: number; dm: boolean; rules: WarnRule[] };
 
 export type Warn = {
 	id: string;
@@ -421,3 +421,27 @@ export type Warn = {
 };
 
 export type GuildWarns = { settings: WarnSettings; recent: Warn[] };
+
+export const MODLOG_EVENTS = [
+	"messageDelete",
+	"messageEdit",
+	"memberJoin",
+	"memberLeave",
+	"nickname",
+	"roles",
+	"ban",
+	"unban",
+	"kick",
+	"timeout",
+	"warns",
+] as const;
+
+export type ModLogEvent = (typeof MODLOG_EVENTS)[number];
+
+export type ModLogSettings = {
+	channel: string | null;
+	events: Record<ModLogEvent, boolean>;
+	ignoredChannels: string[];
+};
+
+export type GuildModLog = { settings: ModLogSettings; canViewAuditLog: boolean };
