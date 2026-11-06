@@ -37,7 +37,7 @@ const flatten = (details: Details, prefix = ""): Details =>
 		),
 	);
 
-const show = (value: unknown) => (Array.isArray(value) ? value.join(", ") || "—" : (value ?? "—"));
+const show = (value: unknown) => (Array.isArray(value) ? value.join(", ") || "-" : (value ?? "-"));
 
 const diff = (entry: AuditEntry) => {
 	const { before, after } = entry.details ?? {};
@@ -82,7 +82,7 @@ const reason = (entry: AuditEntry) => entry.details?.reason as string | null | u
 						</p>
 						<ul v-if="diff(entry).length" class="font-hud text-sm text-muted-foreground">
 							<li v-for="change in diff(entry)" :key="change.key">
-								{{ change.key }}: {{ change.from }} →
+								{{ change.key }}: {{ change.from }} ->
 								<span class="text-foreground">{{ change.to }}</span>
 							</li>
 						</ul>

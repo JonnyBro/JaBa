@@ -20,6 +20,6 @@
 	"NOT_GUILD_ONLY": "На серверах і в ОП",
 
 	"CONTEXT_MENU": "Контекстне меню",
-	"CONTEXT_USAGE_USER": "ПКМ по користувачу → Застосунки → **{{name}}**",
-	"CONTEXT_USAGE_MESSAGE": "ПКМ по повідомленню → Застосунки → **{{name}}**"
+	"CONTEXT_USAGE_USER": "ПКМ по користувачу -> Застосунки -> **{{name}}**",
+	"CONTEXT_USAGE_MESSAGE": "ПКМ по повідомленню -> Застосунки -> **{{name}}**"
 }

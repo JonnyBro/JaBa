@@ -20,6 +20,6 @@
 	"NOT_GUILD_ONLY": "На серверах и в ЛС",
 
 	"CONTEXT_MENU": "Контекстное меню",
-	"CONTEXT_USAGE_USER": "ПКМ по пользователю → Приложения → **{{name}}**",
-	"CONTEXT_USAGE_MESSAGE": "ПКМ по сообщению → Приложения → **{{name}}**"
+	"CONTEXT_USAGE_USER": "ПКМ по пользователю -> Приложения -> **{{name}}**",
+	"CONTEXT_USAGE_MESSAGE": "ПКМ по сообщению -> Приложения -> **{{name}}**"
 }

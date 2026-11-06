@@ -50,7 +50,7 @@ const dayLabel = (day: string) => formatDate(new Date(`${day}T12:00:00Z`).getTim
 				<StatTile :label="$t('owner.stats.average')" :value="formatNumber(average)" />
 				<StatTile
 					:label="$t('owner.stats.top')"
-					:value="stats.data.value.commands[0] ? `/${stats.data.value.commands[0].command}` : '—'"
+					:value="stats.data.value.commands[0] ? `/${stats.data.value.commands[0].command}` : '-'"
 				/>
 			</div>
 

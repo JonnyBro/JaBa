@@ -53,12 +53,12 @@ const destroy = useMutation({
 				<StatTile :label="$t('home.stats.uptime')" :value="formatDuration(node.uptime)" />
 				<StatTile
 					:label="$t('owner.lavalink.cpu')"
-					:value="node.cpu ? percent(node.cpu.lavalink) : '—'"
+					:value="node.cpu ? percent(node.cpu.lavalink) : '-'"
 					:hint="node.cpu ? $t('owner.lavalink.system', { value: percent(node.cpu.system) }) : undefined"
 				/>
 				<StatTile
 					:label="$t('owner.lavalink.memory')"
-					:value="node.memory ? megabytes(node.memory.used) : '—'"
+					:value="node.memory ? megabytes(node.memory.used) : '-'"
 					:hint="
 						node.memory
 							? $t('owner.lavalink.allocated', { value: megabytes(node.memory.allocated) })
@@ -93,7 +93,7 @@ const destroy = useMutation({
 							<TableCell class="max-w-72">
 								<span class="flex items-center gap-1.5 truncate">
 									<Pause v-if="player.paused" class="size-3.5 shrink-0 text-muted-foreground" />
-									{{ player.current ?? "—" }}
+									{{ player.current ?? "-" }}
 								</span>
 							</TableCell>
 							<TableCell class="text-right font-hud">{{ player.listeners }}</TableCell>

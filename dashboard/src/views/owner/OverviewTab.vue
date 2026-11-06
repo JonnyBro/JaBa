@@ -63,7 +63,7 @@ const tiles = computed(() => [
 	{ label: t("home.stats.servers"), value: formatCompact(stats.value?.guilds) },
 	{ label: t("home.stats.users"), value: formatCompact(stats.value?.users) },
 	{ label: t("home.stats.uptime"), value: formatDuration(stats.value?.uptime) },
-	{ label: t("home.stats.ping"), value: stats.value ? `${stats.value.ping}ms` : "—" },
+	{ label: t("home.stats.ping"), value: stats.value ? `${stats.value.ping}ms` : "-" },
 ]);
 </script>
 
@@ -145,7 +145,7 @@ const tiles = computed(() => [
 										{{ formatRelative(task.lastRun) }}
 										<span class="text-xs">({{ task.lastDuration }} ms)</span>
 									</template>
-									<template v-else>—</template>
+									<template v-else>-</template>
 								</TableCell>
 								<TableCell class="text-muted-foreground">
 									<Hint :text="formatDateTime(task.nextRun)">

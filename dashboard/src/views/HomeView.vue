@@ -24,7 +24,7 @@ const tiles = computed(() => [
 	{ label: t("home.stats.users"), value: formatCompact(stats.value?.users) },
 	{ label: t("home.stats.commands"), value: formatCompact(stats.value?.commands) },
 	{ label: t("home.stats.uptime"), value: formatDuration(stats.value?.uptime) },
-	{ label: t("home.stats.ping"), value: stats.value ? `${stats.value.ping}ms` : "—" },
+	{ label: t("home.stats.ping"), value: stats.value ? `${stats.value.ping}ms` : "-" },
 	{
 		label: t("home.stats.music"),
 		value: formatCompact(stats.value?.music.playing),

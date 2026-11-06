@@ -27,7 +27,7 @@ export async function run(oldMember: GuildMember | PartialGuildMember, member: G
 
 				return [
 					`**🏷️ ${await t("NICKNAME", { user })}**`,
-					`${oldMember.nickname ?? none} → ${member.nickname ?? none}`,
+					`${oldMember.nickname ?? none} -> ${member.nickname ?? none}`,
 					await executorLine(t, member, AuditLogEvent.MemberUpdate),
 					`-# ID: ${member.id}`,
 				];

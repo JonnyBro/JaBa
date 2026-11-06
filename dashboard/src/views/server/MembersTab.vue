@@ -121,13 +121,13 @@ const reset = useMutation({
 								</div>
 							</TableCell>
 							<TableCell class="text-right font-hud text-base">{{
-								member.economy ? formatCompact(member.economy.money) : "—"
+								member.economy ? formatCompact(member.economy.money) : "-"
 							}}</TableCell>
 							<TableCell class="text-right font-hud text-base">{{
-								member.economy ? formatCompact(member.economy.bank) : "—"
+								member.economy ? formatCompact(member.economy.bank) : "-"
 							}}</TableCell>
 							<TableCell class="text-right font-hud text-base">{{
-								member.economy?.level ?? "—"
+								member.economy?.level ?? "-"
 							}}</TableCell>
 							<TableCell class="hidden text-right text-muted-foreground sm:table-cell">
 								{{ formatDate(member.joinedAt) }}

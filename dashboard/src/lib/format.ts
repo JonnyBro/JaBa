@@ -38,14 +38,14 @@ const dateTimeFormat = () =>
 const relativeFormat = () => cached("relative", l => new Intl.RelativeTimeFormat(l, { numeric: "auto" }));
 
 export const formatNumber = (n: number | null | undefined) =>
-	n === null || n === undefined ? "—" : numberFormat().format(n);
+	n === null || n === undefined ? "-" : numberFormat().format(n);
 export const formatCompact = (n: number | null | undefined) =>
-	n === null || n === undefined ? "—" : n < 10000 ? numberFormat().format(n) : compactFormat().format(n);
+	n === null || n === undefined ? "-" : n < 10000 ? numberFormat().format(n) : compactFormat().format(n);
 
-export const formatDate = (timestamp: number | null | undefined) => (timestamp ? dateFormat().format(timestamp) : "—");
+export const formatDate = (timestamp: number | null | undefined) => (timestamp ? dateFormat().format(timestamp) : "-");
 
 export const formatDateTime = (timestamp: number | null | undefined) =>
-	timestamp ? dateTimeFormat().format(timestamp) : "—";
+	timestamp ? dateTimeFormat().format(timestamp) : "-";
 
 const units: Array<[Intl.RelativeTimeFormatUnit, number]> = [
 	["year", 365 * 24 * 3600],
@@ -65,7 +65,7 @@ export const formatTrackTime = (ms: number) => {
 };
 
 export const formatDuration = (ms: number | null | undefined) => {
-	if (!ms) return "—";
+	if (!ms) return "-";
 
 	const minutes = Math.floor(ms / 60_000);
 	const parts = [
@@ -83,7 +83,7 @@ export const formatDuration = (ms: number | null | undefined) => {
 };
 
 export const formatRelative = (timestamp: number | null | undefined) => {
-	if (!timestamp) return "—";
+	if (!timestamp) return "-";
 
 	const seconds = (timestamp - Date.now()) / 1000;
 	for (const [unit, size] of units) {

@@ -20,6 +20,6 @@
 	"NOT_GUILD_ONLY": "Servers and DMs",
 
 	"CONTEXT_MENU": "Context menu",
-	"CONTEXT_USAGE_USER": "Right-click a user → Apps → **{{name}}**",
-	"CONTEXT_USAGE_MESSAGE": "Right-click a message → Apps → **{{name}}**"
+	"CONTEXT_USAGE_USER": "Right-click a user -> Apps -> **{{name}}**",
+	"CONTEXT_USAGE_MESSAGE": "Right-click a message -> Apps -> **{{name}}**"
 }

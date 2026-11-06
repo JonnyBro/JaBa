@@ -227,7 +227,7 @@ const voters = async (interaction: ButtonInteraction, poll: Poll) => {
 		const shown = ids.slice(0, VOTERS_PER_OPTION).join(", ");
 		const more = ids.length > VOTERS_PER_OPTION ? ` +${ids.length - VOTERS_PER_OPTION}` : "";
 
-		return `**${i + 1}. ${option}**\n${shown ? shown + more : "—"}`;
+		return `**${i + 1}. ${option}**\n${shown ? shown + more : "-"}`;
 	});
 
 	await reply(interaction, shortenString(lines.join("\n\n"), 2000));
