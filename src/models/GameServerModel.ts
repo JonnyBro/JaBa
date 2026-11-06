@@ -52,6 +52,7 @@ export interface IGameServer {
 	messageId: string | null;
 	fields: GameServerFieldEntry[];
 	connectButton: boolean;
+	copyButton: boolean;
 	/** Minutes between queries */
 	interval: number;
 	lastCheck: Date | null;
@@ -85,6 +86,7 @@ const gameServerSchema = new Schema<IGameServer>({
 	messageId: { type: String, default: null },
 	fields: { type: [fieldSchema], default: [] },
 	connectButton: { type: Boolean, default: true },
+	copyButton: { type: Boolean, default: true },
 	interval: { type: Number, default: 1, min: 1, max: 30 },
 	lastCheck: { type: Date, default: null },
 	state: { type: Schema.Types.Mixed, default: null },

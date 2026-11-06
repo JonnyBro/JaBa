@@ -21,6 +21,7 @@
 	"OFFLINE_SINCE": "The server isn't responding. Last seen online {{date}}",
 	"NEVER_ONLINE": "Can't reach the server yet, the bot keeps trying",
 	"CONNECT": "Connect",
+	"COPY_ADDRESS": "Copy address",
 	"ERRORS": {
 		"UNKNOWN_GAME": "Unknown game, pick one from the list",
 		"ADDRESS": "That doesn't look like a server address. Write it like play.example.com or 1.2.3.4:27015",

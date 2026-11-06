@@ -52,6 +52,7 @@ const serialize = (guild: Guild, server: StoredServer) => ({
 	channelId: server.channelId,
 	fields: server.fields.map(({ key, label, inline }) => ({ key, label, inline: !!inline })),
 	connectButton: server.connectButton,
+	copyButton: server.copyButton ?? true,
 	interval: server.interval ?? MIN_INTERVAL,
 	state: server.state,
 	online: server.online,
@@ -144,6 +145,7 @@ const parseInput = (guild: Guild, body: Record<string, unknown>): { error: strin
 			description: parseDescription(body.description),
 			fields,
 			connectButton: body.connectButton === true,
+			copyButton: body.copyButton === true,
 			interval: body.interval,
 		},
 	};
@@ -199,6 +201,7 @@ export default async function gameServersRoutes(fastify: FastifyInstance) {
 				description: parseDescription(body.description),
 				fields,
 				connectButton: body.connectButton === true,
+				copyButton: body.copyButton === true,
 				interval: isValidInterval(body.interval) ? body.interval : MIN_INTERVAL,
 				state,
 				online: !!state,

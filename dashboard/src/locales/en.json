@@ -317,6 +317,7 @@
 			"address": "Address"
 		},
 		"connectButton": "\"Connect\" button that opens the game in Steam",
+		"copyButton": "“Copy address” button: the bot sends the address in a message only the clicker sees, easy to copy",
 		"previewHint": "Enter the address to see the preview",
 		"previewOffline": "The preview shows the server as offline until you press \"Check\".",
 		"saved": "Game server saved",

@@ -51,6 +51,7 @@ const form = reactive({
 	title: props.server?.title ?? "",
 	description: props.server?.description ?? "",
 	connectButton: props.server?.connectButton ?? true,
+	copyButton: props.server?.copyButton ?? true,
 	interval: props.server?.interval ?? GAME_SERVER_INTERVAL.min,
 });
 
@@ -151,6 +152,7 @@ const previewBody = computed(() => ({
 	description: form.description.trim() || null,
 	fields: payloadFields.value,
 	connectButton: form.connectButton,
+	copyButton: form.copyButton,
 	interval: intervalValid.value ? form.interval : GAME_SERVER_INTERVAL.min,
 	state: state.value,
 	lastOnline: props.server?.lastOnline ?? null,
@@ -182,6 +184,7 @@ const payload = computed<GameServerInput>(() => ({
 	description: form.description.trim() || null,
 	fields: payloadFields.value,
 	connectButton: form.connectButton,
+	copyButton: form.copyButton,
 	interval: form.interval,
 }));
 
@@ -396,13 +399,23 @@ const save = useMutation({
 				<input v-model="form.connectButton" type="checkbox" class="accent-hl" />
 				{{ $t("gameservers.connectButton") }}
 			</Label>
+			<Label class="flex items-center gap-2 font-normal">
+				<input v-model="form.copyButton" type="checkbox" class="accent-hl" />
+				{{ $t("gameservers.copyButton") }}
+			</Label>
 		</div>
 
 		<div class="space-y-4">
 			<MessagePreview v-if="preview" :blocks="[{ type: 'text', content: preview.text }]" :color="preview.color">
-				<span v-if="preview.button" class="inline-block rounded bg-[rgb(78_80_88)] px-3 py-1.5 text-white">
-					{{ preview.button.label }} ↗
-				</span>
+				<div v-if="preview.buttons.length" class="flex flex-wrap gap-2">
+					<span
+						v-for="button in preview.buttons"
+						:key="button.label"
+						class="inline-block rounded bg-[rgb(78_80_88)] px-3 py-1.5 text-white"
+					>
+						{{ button.label }}{{ button.url ? " ↗" : "" }}
+					</span>
+				</div>
 			</MessagePreview>
 			<p v-else class="text-sm text-muted-foreground">{{ $t("gameservers.previewHint") }}</p>
 			<p v-if="!state" class="text-xs text-muted-foreground">{{ $t("gameservers.previewOffline") }}</p>

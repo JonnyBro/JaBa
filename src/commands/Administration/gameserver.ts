@@ -131,6 +131,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			description: null,
 			fields: DEFAULT_FIELDS,
 			connectButton: true,
+			copyButton: true,
 			interval: interaction.options.getInteger("interval") ?? MIN_INTERVAL,
 		});
 		if ("error" in result)

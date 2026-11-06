@@ -515,7 +515,7 @@ export type GameServerInput = {
 	description: string | null;
 	fields: GameServerFieldEntry[];
 	connectButton: boolean;
-	/** Minutes between checks */
+	copyButton: boolean;
 	interval: number;
 };
 
@@ -535,7 +535,8 @@ export type GuildGameServers = { servers: GameServer[]; max: number; games: Game
 
 export type GameServerTest = { ok: true; state: GameServerState } | { ok: false; reason: string };
 
-export type GameServerPreview = { text: string; color: string; button: { label: string; url: string } | null };
+/** Buttons with a url are links, the rest are regular buttons */
+export type GameServerPreview = { text: string; color: string; buttons: { label: string; url?: string }[] };
 
 export const HONEYPOT_ACTIONS = ["softban", "ban", "timeout"] as const;
 

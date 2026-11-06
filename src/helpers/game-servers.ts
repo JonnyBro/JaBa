@@ -8,6 +8,7 @@ import GameServerModel, {
 	IGameServer,
 	RAW_FIELD_PREFIX,
 } from "@/models/GameServerModel.js";
+import { componentRouter } from "@/utils/component-router.js";
 import { containerMessage, createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
 import {
@@ -18,6 +19,7 @@ import {
 	escapeMarkdown,
 	Guild,
 	GuildTextBasedChannel,
+	MessageFlags,
 	RESTJSONErrorCodes,
 } from "discord.js";
 import { GameDig, games, QueryResult } from "gamedig";
@@ -40,6 +42,8 @@ const MAX_RAW_FIELDS = 60;
 const MAX_RAW_VALUE = 200;
 const MAX_RAW_DEPTH = 3;
 
+const COPY_ID = "gameserver_copy";
+
 const COLORS = { online: "#57F287", offline: "#ED4245" } as const;
 
 export const DEFAULT_FIELDS: GameServerFieldEntry[] = ["name", "map", "players", "playerList", "address"].map(key => ({
@@ -57,7 +61,7 @@ const getInterval = (server: { interval?: number }) => server.interval ?? MIN_IN
 export type ServerTarget = Pick<IGameServer, "game" | "host" | "port">;
 export type ServerView = ServerTarget &
 	Pick<IGameServer, "title" | "fields" | "connectButton" | "state" | "online" | "lastOnline"> &
-	Partial<Pick<IGameServer, "interval" | "description">>;
+	Partial<Pick<IGameServer, "interval" | "description" | "copyButton">> & { _id?: unknown };
 type PublishedServer = ServerView & Pick<IGameServer, "channelId" | "messageId" | "renderHash">;
 
 // Games
@@ -273,6 +277,14 @@ const connectUrl = (server: ServerView) => {
 	return `${base.replace(/\/$/, "")}/api/connect/${encodeURIComponent(server.state.connect)}`;
 };
 
+/** What players type in the game, the port is left out when it's the game's default */
+const playerAddress = (server: ServerTarget & { state: GameServerState | null }) => {
+	const address = server.state?.connect || `${server.host}:${server.port}`;
+	const port = getDefaultPort(server.game);
+
+	return port && address.endsWith(`:${port}`) ? address.slice(0, -`:${port}`.length) : address;
+};
+
 /** `live` is for the message the bot keeps updating, a one-off check doesn't promise updates */
 export const renderStatus = async (guild: Guild, server: ServerView, live = true) => {
 	const t: Translate = (key, args) => translateContext(guild, `gameservers:${key}`, args);
@@ -312,25 +324,40 @@ export const renderStatus = async (guild: Guild, server: ServerView, live = true
 		lines.push(`-# ${await (interval === 1 ? t("UPDATES") : t("UPDATES_EVERY", { count: interval }))}`);
 	}
 
+	const buttons: StatusButton[] = [];
+
 	const url = connectUrl(server);
+	if (url) buttons.push({ label: await t("CONNECT"), url });
+
+	// The preview has no id yet, its button is never clicked anyway
+	if (live && server.copyButton !== false)
+		buttons.push({
+			label: await t("COPY_ADDRESS"),
+			id: `${COPY_ID}:${server._id ? String(server._id) : "preview"}`,
+		});
 
 	return {
 		text: lines.join("\n"),
 		color: server.online ? COLORS.online : COLORS.offline,
-		button: url ? { label: await t("CONNECT"), url } : null,
+		buttons,
 	};
 };
+
+type StatusButton = { label: string; url?: string; id?: string };
 
 export const toStatusMessage = (rendered: Awaited<ReturnType<typeof renderStatus>>) => {
 	const container = createContainer(rendered.color).addTextDisplayComponents(createText(rendered.text));
 
-	if (rendered.button)
+	if (rendered.buttons.length)
 		container.addActionRowComponents(
 			new ActionRowBuilder<ButtonBuilder>().addComponents(
-				new ButtonBuilder()
-					.setStyle(ButtonStyle.Link)
-					.setLabel(rendered.button.label)
-					.setURL(rendered.button.url),
+				rendered.buttons.map(button => {
+					const builder = new ButtonBuilder().setLabel(button.label);
+
+					return button.url
+						? builder.setStyle(ButtonStyle.Link).setURL(button.url)
+						: builder.setStyle(ButtonStyle.Secondary).setCustomId(button.id!);
+				}),
 			),
 		);
 
@@ -423,7 +450,7 @@ export const checkAllServers = async () => {
 
 // Managing
 export type ServerInput = ServerTarget &
-	Pick<IGameServer, "channelId" | "title" | "description" | "fields" | "connectButton" | "interval">;
+	Pick<IGameServer, "channelId" | "title" | "description" | "fields" | "connectButton" | "copyButton" | "interval">;
 
 type AddResult =
 	{ error: "LIMIT" | "EXISTS" | "NOT_FOUND" | "PRIVATE" } | { server: IGameServer & { _id: Types.ObjectId } };
@@ -442,3 +469,21 @@ export const addServer = async (guild: Guild, input: ServerInput): Promise<AddRe
 
 	return { server: (await GameServerModel.findById(created._id).lean<IGameServer & { _id: Types.ObjectId }>())! };
 };
+
+// The address goes alone in its own message, so a long press on mobile copies just the address
+componentRouter.register(COPY_ID, async interaction => {
+	if (!interaction.isButton() || !interaction.inCachedGuild()) return;
+
+	const id = interaction.customId.split(":")[1];
+	const server = Types.ObjectId.isValid(id)
+		? await GameServerModel.findOne({ _id: id, guildId: interaction.guildId }).lean()
+		: null;
+
+	await interaction.reply({
+		content: server
+			? playerAddress(server)
+			: await translateContext(interaction, "administration/gameserver:NOT_FOUND"),
+		flags: MessageFlags.Ephemeral,
+		allowedMentions: { parse: [] },
+	});
+});
