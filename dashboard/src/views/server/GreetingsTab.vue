@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 import { getErrorMessage } from "@/plugins/axios";
 import { FlaskConical, LoaderCircle, Save } from "@lucide/vue";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
-import { computed, reactive, ref, watch } from "vue";
+import { computed, reactive, ref, toRaw, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
@@ -45,7 +45,8 @@ const starterBlocks = (kind: GreetingKind): MessageBlock[] => [
 
 const toForm = (kind: GreetingKind, message: GreetingMessage) => ({
 	...message,
-	blocks: message.blocks.length ? structuredClone(message.blocks) : starterBlocks(kind),
+	// Query data comes as a Vue proxy, which structuredClone can't copy
+	blocks: message.blocks.length ? structuredClone(toRaw(message.blocks)) : starterBlocks(kind),
 	color: message.color ?? defaultColor,
 	useColor: message.color !== null,
 });
