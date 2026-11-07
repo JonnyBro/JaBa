@@ -5,6 +5,7 @@ import ConfirmDialog from "@/components/common/ConfirmDialog.vue";
 import ErrorState from "@/components/common/ErrorState.vue";
 import Hint from "@/components/common/Hint.vue";
 import UserAvatar from "@/components/common/UserAvatar.vue";
+import MemberInventory from "@/components/server/MemberInventory.vue";
 import MemberWarns from "@/components/server/MemberWarns.vue";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -284,6 +285,13 @@ const timeoutLabel = (value: number) =>
 							</Hint>
 						</div>
 					</section>
+
+					<MemberInventory
+						v-if="member.data.value.economy"
+						:guild-id="guildId"
+						:user-id="member.data.value.id"
+						:inventory="member.data.value.inventory"
+					/>
 
 					<MemberWarns
 						v-if="!member.data.value.bot"

@@ -1,4 +1,6 @@
+import { updateMember } from "@/helpers/economy.js";
 import { getUsername } from "@/helpers/functions.js";
+import { getShopItems, isInventoryItem } from "@/helpers/shop.js";
 import { canWarn } from "@/helpers/warns.js";
 import MemberModel from "@/models/MemberModel.js";
 import UserModel from "@/models/UserModel.js";
@@ -12,6 +14,7 @@ import { fail, send } from "../../utils.js";
 const MAX_PAGE_SIZE = 100;
 const MAX_AMOUNT = 1e12;
 const MAX_TIMEOUT_MINUTES = 28 * 24 * 60;
+const MAX_QUANTITY = 1e6;
 const ECONOMY_FIELDS = ["money", "bank", "exp", "level"] as const;
 const SORTS = ["name", "money", "bank", "level", "joined"] as const;
 const MODERATION_ACTIONS = ["kick", "ban", "timeout"] as const;
@@ -114,11 +117,15 @@ export default async function membersRoutes(fastify: FastifyInstance) {
 		const target = await getTarget(req, reply);
 		if (!target) return;
 
-		const [memberData, userData, actor] = await Promise.all([
+		const [memberData, userData, actor, shopItems] = await Promise.all([
 			MemberModel.findOne({ guildID: req.guild.id, id: target.id }).lean(),
 			UserModel.findOne({ id: target.id }).lean(),
 			getActor(req),
+			getShopItems(req.guild.id),
 		]);
+
+		// Items deleted from the shop are left out, nobody could do anything with them anyway
+		const holdable = new Set(shopItems.filter(isInventoryItem).map(item => item._id.toString()));
 
 		return send(reply, {
 			...serializeMember(target, memberData),
@@ -129,6 +136,9 @@ export default async function membersRoutes(fastify: FastifyInstance) {
 				.sort((a, b) => b.position - a.position)
 				.map(r => ({ id: r.id, name: r.name, color: r.hexColor })),
 			transactions: [...(memberData?.transactions ?? [])].sort((a, b) => b.date - a.date).slice(0, 20),
+			inventory: (memberData?.inventory ?? [])
+				.filter(entry => entry.quantity > 0 && holdable.has(entry.item.toString()))
+				.map(entry => ({ item: entry.item.toString(), quantity: entry.quantity })),
 			moderation: getModeration(actor, target),
 		});
 	});
@@ -167,6 +177,54 @@ export default async function membersRoutes(fastify: FastifyInstance) {
 		});
 
 		return send(reply, pickEconomy(memberData));
+	});
+
+	fastify.put("/members/:userId/inventory", async (req, reply) => {
+		const target = await getTarget(req, reply);
+		if (!target) return;
+
+		if (target.user.bot) return fail(reply, 400, "Bots don't take part in the economy");
+
+		const body = (req.body ?? {}) as { items?: unknown };
+		if (!Array.isArray(body.items)) return fail(reply, 400, "items must be a list");
+
+		const shopItems = new Map(
+			(await getShopItems(req.guild.id)).filter(isInventoryItem).map(item => [item._id.toString(), item]),
+		);
+
+		const quantities = new Map<string, number>();
+		for (const entry of body.items as { item?: unknown; quantity?: unknown }[]) {
+			const id = typeof entry?.item === "string" ? entry.item : "";
+			const quantity = entry?.quantity;
+
+			if (!shopItems.has(id)) return fail(reply, 400, "One of the items isn't in the shop anymore");
+			if (typeof quantity !== "number" || !Number.isInteger(quantity) || quantity < 0 || quantity > MAX_QUANTITY)
+				return fail(reply, 400, `The quantity must be a whole number from 0 to ${MAX_QUANTITY}`);
+
+			if (quantity) quantities.set(id, quantity);
+		}
+
+		const memberData = await useClient().getMemberData(req.guild.id, target.id);
+		const describe = (entries: { item: string; quantity: number }[]) =>
+			entries
+				.filter(entry => shopItems.has(entry.item))
+				.map(entry => `${shopItems.get(entry.item)!.name} x${entry.quantity}`);
+
+		const before = describe(memberData.inventory.map(e => ({ item: e.item.toString(), quantity: e.quantity })));
+		const inventory = [...quantities].map(([item, quantity]) => ({ item, quantity }));
+
+		// Items that left the shop stay as they are, the dashboard doesn't show them
+		const hidden = memberData.inventory.filter(entry => !shopItems.has(entry.item.toString()));
+
+		await updateMember({ _id: memberData._id }, { $set: { inventory: [...hidden, ...inventory] } });
+
+		await logAction(req, req.guild.id, {
+			action: "member.inventory",
+			target: { id: target.id, name: getUsername(target) },
+			details: { before: { items: before }, after: { items: describe(inventory) } },
+		});
+
+		return send(reply, inventory);
 	});
 
 	fastify.post("/members/:userId/reset", async (req, reply) => {

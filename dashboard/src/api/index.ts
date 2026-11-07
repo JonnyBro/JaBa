@@ -26,6 +26,7 @@ import type {
 	GuildInfo,
 	GuildLeaderboardType,
 	GuildProfile,
+	InventoryEntry,
 	GuildListItem,
 	GuildMember,
 	GuildMemberDetails,
@@ -94,6 +95,12 @@ export const getMember = (id: string, userId: string) =>
 export const updateMemberEconomy = async (id: string, userId: string, body: Partial<Economy>) =>
 	(await api.patch<Response<Economy>>(guildUrl(id, `/members/${encodeURIComponent(userId)}/economy`), body)).data
 		.data;
+export const updateMemberInventory = async (id: string, userId: string, items: InventoryEntry[]) =>
+	(
+		await api.put<Response<InventoryEntry[]>>(guildUrl(id, `/members/${encodeURIComponent(userId)}/inventory`), {
+			items,
+		})
+	).data.data;
 export const resetMember = (id: string, userId: string) =>
 	post<Economy>(guildUrl(id, `/members/${encodeURIComponent(userId)}/reset`));
 export const resetEconomy = (id: string) => post<{ members: number }>(guildUrl(id, "/economy/reset"));

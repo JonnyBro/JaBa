@@ -105,8 +105,12 @@ export type GuildMemberDetails = GuildMember & {
 	rep: number;
 	roles: { id: string; name: string; color: string }[];
 	transactions: Transaction[];
+	inventory: InventoryEntry[];
 	moderation: Record<ModerationAction, boolean> & { warn: boolean };
 };
+
+/** `item` is a shop item id */
+export type InventoryEntry = { item: string; quantity: number };
 
 export type MessageBlock =
 	| { type: "text"; content: string }
