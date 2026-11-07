@@ -4,6 +4,8 @@ export type UserReminds = {
 	message: string;
 	createdAt: number;
 	sendAt: number;
+	/** Link to the message the reminder was made from */
+	url?: string | null;
 };
 
 export interface IUserSchema {
@@ -25,6 +27,7 @@ const remindsSchema = new Schema(
 		message: { type: String, required: true },
 		createdAt: { type: Number, required: true },
 		sendAt: { type: Number, required: true },
+		url: { type: String, default: null },
 	},
 	{ _id: false },
 );

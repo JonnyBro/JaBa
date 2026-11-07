@@ -1,14 +1,22 @@
 {
 	"DESCRIPTION": "Створити нагадування",
+	"CONTEXT_NAME": "Нагадати про це",
 	"USAGE": "[time] [message]",
 
 	"EXAMPLES": "remindme time:12h message:Використати команду 'work'\nremindme time:5m message:Дістати курку з морозилки!",
 
-	"TIME": "Коли, наприклад 5m, 2h, 1d або 3w",
+	"TIME": "Коли, наприклад 30m, 2h30m, 1d або 2год 30хв",
 	"ERROR_TIME": "Неправильний час. Мінімум 1 хвилина",
+	"TOO_MANY": "У тебе вже {{max}} нагадувань, це максимум",
 
 	"EMBED_SAVED": "Нагадування збережено",
 	"EMBED_TIME": "Нагадаю",
 	"EMBED_TITLE": "Нагадування",
-	"EMBED_CREATED": "Створено"
+	"EMBED_CREATED": "Створено",
+	"GO_TO_MESSAGE": "До повідомлення",
+	"MODAL_WHEN": "Коли нагадати",
+	"MODAL_CUSTOM": "Або свій час",
+	"MODAL_CUSTOM_HINT": "Наприклад 45m, 2h30m або 2год 30хв. Якщо заповнити, список вище не враховується",
+	"MODAL_NOTE": "Нотатка",
+	"NO_TEXT": "повідомлення без тексту"
 }

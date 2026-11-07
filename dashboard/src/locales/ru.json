@@ -692,6 +692,7 @@
 		"remindsHint": "Бот пришлёт их в ЛС, как и /remindme",
 		"remindMessage": "О чём напомнить",
 		"remindAt": "Когда",
+		"remindMessageLink": "К сообщению",
 		"addRemind": "Добавить",
 		"remindCreated": "Напоминание добавлено",
 		"noReminds": "Напоминаний нет",

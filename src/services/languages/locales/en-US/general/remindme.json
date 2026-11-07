@@ -1,14 +1,22 @@
 {
 	"DESCRIPTION": "Create a reminder",
+	"CONTEXT_NAME": "Remind me about this",
 	"USAGE": "[time] [message]",
 
 	"EXAMPLES": "remindme time:12h message:Use the command 'work'\nremindme time:5m message:Get the chicken from the freezer!",
 
-	"TIME": "When, like 5m, 2h, 1d or 3w",
+	"TIME": "When, for example 30m, 2h30m or 1d",
 	"ERROR_TIME": "Invalid time. The minimum is 1 minute",
+	"TOO_MANY": "You already have {{max}} reminders, that's the limit",
 
 	"EMBED_SAVED": "Reminder saved",
 	"EMBED_TIME": "I'll remind you",
 	"EMBED_TITLE": "Reminder",
-	"EMBED_CREATED": "Created"
+	"EMBED_CREATED": "Created",
+	"GO_TO_MESSAGE": "Go to message",
+	"MODAL_WHEN": "When to remind you",
+	"MODAL_CUSTOM": "Or your own time",
+	"MODAL_CUSTOM_HINT": "For example 45m or 2h30m. If filled in, the list above is ignored",
+	"MODAL_NOTE": "Note",
+	"NO_TEXT": "message without text"
 }

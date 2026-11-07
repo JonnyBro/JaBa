@@ -218,6 +218,8 @@ export type Remind = {
 	message: string;
 	createdAt: number;
 	sendAt: number;
+	/** Link to the message it was made from with "Remind me about this" */
+	url?: string | null;
 };
 
 export type Profile = {

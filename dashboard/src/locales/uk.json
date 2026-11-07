@@ -692,6 +692,7 @@
 		"remindsHint": "Бот надішле їх в ОП, як і /remindme",
 		"remindMessage": "Про що нагадати",
 		"remindAt": "Коли",
+		"remindMessageLink": "До повідомлення",
 		"addRemind": "Додати",
 		"remindCreated": "Нагадування додано",
 		"noReminds": "Нагадувань немає",

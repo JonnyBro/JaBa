@@ -1,3 +1,4 @@
+import { MAX_REMIND_AHEAD_MS, MAX_REMIND_MESSAGE, MAX_REMINDS } from "@/helpers/reminds.js";
 import MemberModel from "@/models/MemberModel.js";
 import UserModel from "@/models/UserModel.js";
 import useClient from "@/utils/use-client.js";
@@ -5,9 +6,6 @@ import { FastifyInstance } from "fastify";
 import { fail, requireUser, send } from "../utils.js";
 
 const MAX_BIO = 500;
-const MAX_REMIND_MESSAGE = 1000;
-const MAX_REMINDS = 25;
-const MAX_REMIND_AHEAD_MS = 5 * 365 * 24 * 60 * 60 * 1000;
 // Same limit as the /birthdate command, about 80 years
 const MAX_AGE_MS = 2.523e12;
 

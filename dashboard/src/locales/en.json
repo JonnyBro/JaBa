@@ -692,6 +692,7 @@
 		"remindsHint": "The bot sends them to your DMs, like /remindme",
 		"remindMessage": "What to remind about",
 		"remindAt": "When",
+		"remindMessageLink": "Go to message",
 		"addRemind": "Add",
 		"remindCreated": "Reminder added",
 		"noReminds": "No reminders",

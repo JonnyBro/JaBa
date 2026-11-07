@@ -3,17 +3,29 @@ import UserModel, { UserReminds } from "@/models/UserModel.js";
 import { CronTaskData } from "@/types.js";
 import { containerMessage, createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 
 const client = useClient();
 
-const buildRemind = (remind: UserReminds) =>
-	containerMessage(
-		createContainer().addTextDisplayComponents(
-			createText(`## ⏰ ${client.i18n.translate("general/remindme:EMBED_TITLE")}`),
-			createText(remind.message),
-			createText(`-# ${client.i18n.translate("general/remindme:EMBED_CREATED")} <t:${remind.createdAt}:f>`),
-		),
+const buildRemind = (remind: UserReminds) => {
+	const container = createContainer().addTextDisplayComponents(
+		createText(`## ⏰ ${client.i18n.translate("general/remindme:EMBED_TITLE")}`),
+		createText(remind.message),
+		createText(`-# ${client.i18n.translate("general/remindme:EMBED_CREATED")} <t:${remind.createdAt}:f>`),
 	);
+
+	if (remind.url)
+		container.addActionRowComponents(
+			new ActionRowBuilder<ButtonBuilder>().addComponents(
+				new ButtonBuilder()
+					.setStyle(ButtonStyle.Link)
+					.setLabel(client.i18n.translate("general/remindme:GO_TO_MESSAGE"))
+					.setURL(remind.url),
+			),
+		);
+
+	return containerMessage(container);
+};
 
 export const data: CronTaskData = {
 	name: "checkReminds",

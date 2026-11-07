@@ -1,14 +1,22 @@
 {
 	"DESCRIPTION": "Создать напоминание",
+	"CONTEXT_NAME": "Напомнить об этом",
 	"USAGE": "[time] [message]",
 
 	"EXAMPLES": "remindme time:12h message:Использовать команду 'work'\nremindme time:5m message:Достать курицу из морозилки!",
 
-	"TIME": "Когда, например 5m, 2h, 1d или 3w",
+	"TIME": "Когда, например 30m, 2h30m, 1d или 2ч 30мин",
 	"ERROR_TIME": "Неправильное время. Минимум 1 минута",
+	"TOO_MANY": "У тебя уже {{max}} напоминаний, это максимум",
 
 	"EMBED_SAVED": "Напоминание сохранено",
 	"EMBED_TIME": "Напомню",
 	"EMBED_TITLE": "Напоминание",
-	"EMBED_CREATED": "Создано"
+	"EMBED_CREATED": "Создано",
+	"GO_TO_MESSAGE": "К сообщению",
+	"MODAL_WHEN": "Когда напомнить",
+	"MODAL_CUSTOM": "Или своё время",
+	"MODAL_CUSTOM_HINT": "Например 45m, 2h30m или 2ч 30мин. Если заполнить, список выше не учитывается",
+	"MODAL_NOTE": "Заметка",
+	"NO_TEXT": "сообщение без текста"
 }

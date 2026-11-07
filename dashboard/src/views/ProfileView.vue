@@ -14,7 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/composables/useAuth";
 import { formatDate, formatDateTime, formatNumber, formatRelative } from "@/lib/format";
 import { getErrorMessage } from "@/plugins/axios";
-import { BellPlus, ChevronRight, LoaderCircle, Trash2 } from "@lucide/vue";
+import { BellPlus, ChevronRight, ExternalLink, LoaderCircle, Trash2 } from "@lucide/vue";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
@@ -115,8 +115,21 @@ const removeRemind = useMutation({
 					>
 						<div class="min-w-0 flex-1">
 							<p class="wrap-break-word">{{ remind.message }}</p>
-							<p class="text-sm text-muted-foreground">
-								{{ formatDateTime(remind.sendAt * 1000) }} · {{ formatRelative(remind.sendAt * 1000) }}
+							<p class="flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground">
+								<span>
+									{{ formatDateTime(remind.sendAt * 1000) }} ·
+									{{ formatRelative(remind.sendAt * 1000) }}
+								</span>
+								<a
+									v-if="remind.url"
+									:href="remind.url"
+									target="_blank"
+									rel="noopener"
+									class="inline-flex items-center gap-1 text-hl hover:underline"
+								>
+									{{ $t("profile.remindMessageLink") }}
+									<ExternalLink class="size-3.5" />
+								</a>
 							</p>
 						</div>
 						<Button

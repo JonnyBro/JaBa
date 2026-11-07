@@ -1,4 +1,5 @@
 import { editReplyError, getLocalizedDesc, getNoun, translateContext } from "@/helpers/functions.js";
+import { isValidRemindDelay, parseDuration } from "@/helpers/reminds.js";
 import { AutocompleteProps, CommandData, SlashCommandProps } from "@/types.js";
 import { containerMessage, createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";
@@ -8,7 +9,6 @@ import {
 	InteractionContextType,
 	MessageFlags,
 } from "discord.js";
-import ms, { StringValue } from "ms";
 
 const client = useClient();
 
@@ -40,10 +40,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	const time = interaction.options.getString("time", true);
 	const message = interaction.options.getString("message", true);
-	const duration = ms(time as StringValue);
+	const duration = parseDuration(time);
 
 	// Cron jobs run every minute, so we can't do seconds here
-	if (!duration || duration < 60_000) return editReplyError(interaction, "general/remindme:ERROR_TIME");
+	if (!duration || !isValidRemindDelay(duration)) return editReplyError(interaction, "general/remindme:ERROR_TIME");
 
 	const userData = await client.getUserData(interaction.user.id);
 	const dateNow = Date.now();
