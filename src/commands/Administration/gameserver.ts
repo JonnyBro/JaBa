@@ -1,4 +1,5 @@
 import { editReplyError, editReplySuccess, getLocalizedDesc, translateContext } from "@/helpers/functions.js";
+import { deleteHistory } from "@/helpers/game-server-history.js";
 import {
 	addServer,
 	DEFAULT_FIELDS,
@@ -132,6 +133,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			fields: DEFAULT_FIELDS,
 			connectButton: true,
 			copyButton: true,
+			graph: true,
 			interval: interaction.options.getInteger("interval") ?? MIN_INTERVAL,
 		});
 		if ("error" in result)
@@ -151,6 +153,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		if (!server) return editReplyError(interaction, "administration/gameserver:NOT_FOUND");
 
 		await deleteStatus(guild, server);
+		await deleteHistory(server._id);
 
 		return editReplySuccess(interaction, "administration/gameserver:REMOVED", { server: serverLabel(server) });
 	}

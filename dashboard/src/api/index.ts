@@ -9,8 +9,10 @@ import type {
 	CronTaskInfo,
 	Economy,
 	GameServer,
+	GameServerHistory,
 	GameServerInput,
 	GameServerPreview,
+	GameServerRange,
 	GameServerTest,
 	Giveaway,
 	GiveawayInput,
@@ -119,8 +121,10 @@ export const testGameServer = (id: string, body: GameServerTarget) =>
 	post<GameServerTest>(guildUrl(id, "/gameservers/test"), body);
 export const previewGameServer = (
 	id: string,
-	body: Omit<GameServerInput, "channelId"> & Pick<GameServer, "state" | "lastOnline">,
+	body: Omit<GameServerInput, "channelId"> & Pick<GameServer, "state" | "lastOnline"> & { serverId: string | null },
 ) => post<GameServerPreview>(guildUrl(id, "/gameservers/preview"), body);
+export const getGameServerHistory = (id: string, serverId: string, range: GameServerRange) =>
+	get<GameServerHistory>(guildUrl(id, `/gameservers/${encodeURIComponent(serverId)}/history`), { range });
 export const createGameServer = (id: string, body: GameServerInput) =>
 	post<GameServer>(guildUrl(id, "/gameservers"), body);
 export const updateGameServer = async (id: string, serverId: string, body: GameServerInput) =>

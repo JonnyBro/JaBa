@@ -318,6 +318,7 @@
 		},
 		"connectButton": "\"Connect\" button that opens the game in Steam",
 		"copyButton": "“Copy address” button: the bot sends the address in a message only the clicker sees, easy to copy",
+		"graph": "Online graph for the last day in the status message",
 		"previewHint": "Enter the address to see the preview",
 		"previewOffline": "The preview shows the server as offline until you press \"Check\".",
 		"saved": "Game server saved",
@@ -329,7 +330,16 @@
 		"neverOnline": "Can't reach the server yet",
 		"openMessage": "Status message",
 		"deleteTitle": "Remove {name}?",
-		"deleteText": "The bot will stop checking this server and delete its status message."
+		"deleteText": "The bot will stop checking this server and delete its status message.",
+		"chart": {
+			"day": "Day",
+			"week": "Week",
+			"peak": "Peak: {count}",
+			"players": "{count} players",
+			"offline": "offline",
+			"noData": "no data",
+			"empty": "No data yet, the graph shows up after a few checks."
+		}
 	},
 	"greetings": {
 		"kinds": {

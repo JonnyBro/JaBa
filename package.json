@@ -21,6 +21,7 @@
         "@fastify/session": "^11.1.6",
         "@fastify/static": "^10.1.8",
         "@fastify/websocket": "^11.3.4",
+        "@napi-rs/canvas": "1.0.13",
         "chalk": "^6.0.1",
         "cpx": "^1.5.0",
         "cron": "^4.4.0",

@@ -516,6 +516,8 @@ export type GameServerInput = {
 	fields: GameServerFieldEntry[];
 	connectButton: boolean;
 	copyButton: boolean;
+	/** Online graph for the last day in the status message */
+	graph: boolean;
 	interval: number;
 };
 
@@ -536,7 +538,20 @@ export type GuildGameServers = { servers: GameServer[]; max: number; games: Game
 export type GameServerTest = { ok: true; state: GameServerState } | { ok: false; reason: string };
 
 /** Buttons with a url are links, the rest are regular buttons */
-export type GameServerPreview = { text: string; color: string; buttons: { label: string; url?: string }[] };
+export type GameServerPreview = {
+	text: string;
+	color: string;
+	buttons: { label: string; url?: string }[];
+	/** `image` is a data URL */
+	graph: { image: string; caption: string } | null;
+};
+
+export const GAME_SERVER_RANGES = ["day", "week"] as const;
+
+export type GameServerRange = (typeof GAME_SERVER_RANGES)[number];
+
+/** Peak players per bucket, null when the server was offline. Buckets without checks are missing */
+export type GameServerHistory = { range: GameServerRange; points: { t: number; players: number | null }[] };
 
 export const HONEYPOT_ACTIONS = ["softban", "ban", "timeout"] as const;
 

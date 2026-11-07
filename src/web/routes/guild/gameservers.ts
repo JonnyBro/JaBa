@@ -1,3 +1,4 @@
+import { deleteHistory, drawHistory, getHistory, isHistoryRange } from "@/helpers/game-server-history.js";
 import {
 	addServer,
 	checkHost,
@@ -53,6 +54,7 @@ const serialize = (guild: Guild, server: StoredServer) => ({
 	fields: server.fields.map(({ key, label, inline }) => ({ key, label, inline: !!inline })),
 	connectButton: server.connectButton,
 	copyButton: server.copyButton ?? true,
+	graph: server.graph ?? true,
 	interval: server.interval ?? MIN_INTERVAL,
 	state: server.state,
 	online: server.online,
@@ -146,6 +148,7 @@ const parseInput = (guild: Guild, body: Record<string, unknown>): { error: strin
 			fields,
 			connectButton: body.connectButton === true,
 			copyButton: body.copyButton === true,
+			graph: body.graph === true,
 			interval: body.interval,
 		},
 	};
@@ -192,22 +195,31 @@ export default async function gameServersRoutes(fastify: FastifyInstance) {
 
 		const state = parseState(body.state);
 		const title = typeof body.title === "string" ? body.title.trim().slice(0, MAX_TITLE) : "";
+		// An existing server shows its real graph, a new one has no history yet
+		const existing = typeof body.serverId === "string" ? await findServer(req.guild.id, body.serverId) : null;
 
-		return send(
-			reply,
-			await renderStatus(req.guild, {
-				...parsed.target!,
-				title: title || null,
-				description: parseDescription(body.description),
-				fields,
-				connectButton: body.connectButton === true,
-				copyButton: body.copyButton === true,
-				interval: isValidInterval(body.interval) ? body.interval : MIN_INTERVAL,
-				state,
-				online: !!state,
-				lastOnline: typeof body.lastOnline === "number" ? new Date(body.lastOnline) : null,
-			}),
-		);
+		const rendered = await renderStatus(req.guild, {
+			...parsed.target!,
+			_id: existing?._id,
+			title: title || null,
+			description: parseDescription(body.description),
+			fields,
+			connectButton: body.connectButton === true,
+			copyButton: body.copyButton === true,
+			graph: body.graph === true,
+			interval: isValidInterval(body.interval) ? body.interval : MIN_INTERVAL,
+			state,
+			online: !!state,
+			lastOnline: typeof body.lastOnline === "number" ? new Date(body.lastOnline) : null,
+		});
+
+		return send(reply, {
+			...rendered,
+			graph: rendered.graph && {
+				image: `data:image/png;base64,${drawHistory(rendered.graph.points).toString("base64")}`,
+				caption: rendered.graph.caption,
+			},
+		});
 	});
 
 	fastify.post("/gameservers", async (req, reply) => {
@@ -230,6 +242,16 @@ export default async function gameServersRoutes(fastify: FastifyInstance) {
 		});
 
 		return send(reply, serialize(req.guild, server), 201);
+	});
+
+	fastify.get("/gameservers/:serverId/history", async (req, reply) => {
+		const server = await findServer(req.guild.id, (req.params as { serverId: string }).serverId);
+		if (!server) return fail(reply, 404, "Game server not found");
+
+		const { range } = req.query as { range?: unknown };
+		if (!isHistoryRange(range)) return fail(reply, 400, "Unknown range");
+
+		return send(reply, { range, points: await getHistory(server._id, range) });
 	});
 
 	fastify.put("/gameservers/:serverId", async (req, reply) => {
@@ -257,6 +279,7 @@ export default async function gameServersRoutes(fastify: FastifyInstance) {
 		}
 
 		if (input.channelId !== server.channelId) await deleteStatus(guild, server);
+		if (targetChanged) await deleteHistory(server._id);
 
 		const update: Partial<IGameServer> = {
 			...input,
@@ -295,6 +318,7 @@ export default async function gameServersRoutes(fastify: FastifyInstance) {
 
 		await GameServerModel.deleteOne({ _id: server._id });
 		await deleteStatus(req.guild, server);
+		await deleteHistory(server._id);
 
 		await logAction(req, req.guild.id, {
 			action: "gameservers.remove",

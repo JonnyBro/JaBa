@@ -13,6 +13,7 @@ import {
 	type GameServerState,
 	type GameServerTest,
 	type GuildDetails,
+	type MessageBlock,
 } from "@/api/types";
 import ChannelSelect from "@/components/server/ChannelSelect.vue";
 import MessagePreview from "@/components/server/MessagePreview.vue";
@@ -52,6 +53,7 @@ const form = reactive({
 	description: props.server?.description ?? "",
 	connectButton: props.server?.connectButton ?? true,
 	copyButton: props.server?.copyButton ?? true,
+	graph: props.server?.graph ?? true,
 	interval: props.server?.interval ?? GAME_SERVER_INTERVAL.min,
 });
 
@@ -153,9 +155,11 @@ const previewBody = computed(() => ({
 	fields: payloadFields.value,
 	connectButton: form.connectButton,
 	copyButton: form.copyButton,
+	graph: form.graph,
 	interval: intervalValid.value ? form.interval : GAME_SERVER_INTERVAL.min,
 	state: state.value,
 	lastOnline: props.server?.lastOnline ?? null,
+	serverId: props.server?.id ?? null,
 }));
 
 const preview = ref<GameServerPreview | null>(null);
@@ -176,6 +180,19 @@ watch(
 
 onBeforeUnmount(() => clearTimeout(previewTimer));
 
+const previewBlocks = computed<MessageBlock[]>(() => {
+	if (!preview.value) return [];
+
+	const { text, graph } = preview.value;
+	if (!graph) return [{ type: "text", content: text }];
+
+	return [
+		{ type: "text", content: text },
+		{ type: "gallery", urls: [graph.image] },
+		{ type: "text", content: `-# ${graph.caption}` },
+	];
+});
+
 // Save
 const payload = computed<GameServerInput>(() => ({
 	...target.value,
@@ -185,6 +202,7 @@ const payload = computed<GameServerInput>(() => ({
 	fields: payloadFields.value,
 	connectButton: form.connectButton,
 	copyButton: form.copyButton,
+	graph: form.graph,
 	interval: form.interval,
 }));
 
@@ -403,10 +421,14 @@ const save = useMutation({
 				<input v-model="form.copyButton" type="checkbox" class="accent-hl" />
 				{{ $t("gameservers.copyButton") }}
 			</Label>
+			<Label class="flex items-center gap-2 font-normal">
+				<input v-model="form.graph" type="checkbox" class="accent-hl" />
+				{{ $t("gameservers.graph") }}
+			</Label>
 		</div>
 
 		<div class="space-y-4">
-			<MessagePreview v-if="preview" :blocks="[{ type: 'text', content: preview.text }]" :color="preview.color">
+			<MessagePreview v-if="preview" :blocks="previewBlocks" :color="preview.color">
 				<div v-if="preview.buttons.length" class="flex flex-wrap gap-2">
 					<span
 						v-for="button in preview.buttons"

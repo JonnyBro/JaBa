@@ -1,4 +1,12 @@
 import { translateContext } from "@/helpers/functions.js";
+import {
+	drawHistory,
+	getHistory,
+	hasHistory,
+	historyPeak,
+	HistoryPoint,
+	recordSample,
+} from "@/helpers/game-server-history.js";
 import logger from "@/helpers/logger.js";
 import GameServerModel, {
 	GAME_SERVER_FIELDS,
@@ -13,12 +21,15 @@ import { containerMessage, createContainer, createText } from "@/utils/create-co
 import useClient from "@/utils/use-client.js";
 import {
 	ActionRowBuilder,
+	AttachmentBuilder,
 	ButtonBuilder,
 	ButtonStyle,
 	DiscordAPIError,
 	escapeMarkdown,
 	Guild,
 	GuildTextBasedChannel,
+	MediaGalleryBuilder,
+	MediaGalleryItemBuilder,
 	MessageFlags,
 	RESTJSONErrorCodes,
 } from "discord.js";
@@ -43,6 +54,7 @@ const MAX_RAW_VALUE = 200;
 const MAX_RAW_DEPTH = 3;
 
 const COPY_ID = "gameserver_copy";
+const GRAPH_FILE = "online.png";
 
 const COLORS = { online: "#57F287", offline: "#ED4245" } as const;
 
@@ -61,7 +73,7 @@ const getInterval = (server: { interval?: number }) => server.interval ?? MIN_IN
 export type ServerTarget = Pick<IGameServer, "game" | "host" | "port">;
 export type ServerView = ServerTarget &
 	Pick<IGameServer, "title" | "fields" | "connectButton" | "state" | "online" | "lastOnline"> &
-	Partial<Pick<IGameServer, "interval" | "description" | "copyButton">> & { _id?: unknown };
+	Partial<Pick<IGameServer, "interval" | "description" | "copyButton" | "graph">> & { _id?: unknown };
 type PublishedServer = ServerView & Pick<IGameServer, "channelId" | "messageId" | "renderHash">;
 
 // Games
@@ -336,10 +348,17 @@ export const renderStatus = async (guild: Guild, server: ServerView, live = true
 			id: `${COPY_ID}:${server._id ? String(server._id) : "preview"}`,
 		});
 
+	let graph: { points: HistoryPoint[]; caption: string } | null = null;
+	if (live && server.graph !== false && server._id) {
+		const points = await getHistory(String(server._id), "day");
+		if (hasHistory(points)) graph = { points, caption: await t("GRAPH_CAPTION", { peak: historyPeak(points) }) };
+	}
+
 	return {
 		text: lines.join("\n"),
 		color: server.online ? COLORS.online : COLORS.offline,
 		buttons,
+		graph,
 	};
 };
 
@@ -347,6 +366,16 @@ type StatusButton = { label: string; url?: string; id?: string };
 
 export const toStatusMessage = (rendered: Awaited<ReturnType<typeof renderStatus>>) => {
 	const container = createContainer(rendered.color).addTextDisplayComponents(createText(rendered.text));
+	const files: AttachmentBuilder[] = [];
+
+	if (rendered.graph) {
+		files.push(new AttachmentBuilder(drawHistory(rendered.graph.points), { name: GRAPH_FILE }));
+		container
+			.addMediaGalleryComponents(
+				new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(`attachment://${GRAPH_FILE}`)),
+			)
+			.addTextDisplayComponents(createText(`-# ${rendered.graph.caption}`));
+	}
 
 	if (rendered.buttons.length)
 		container.addActionRowComponents(
@@ -361,7 +390,8 @@ export const toStatusMessage = (rendered: Awaited<ReturnType<typeof renderStatus
 			),
 		);
 
-	return containerMessage(container);
+	// An empty list drops the old graph on edits, the new one comes in files
+	return { ...containerMessage(container), files, attachments: [] };
 };
 
 // Only a message that's really gone gets posted again, a network hiccup shouldn't make a duplicate
@@ -421,6 +451,9 @@ export const checkServer = async (server: StoredServer, checkedAt = new Date()) 
 		? { state, online: true, failures, lastOnline: new Date(), lastCheck: checkedAt }
 		: { failures, online: server.online && failures < offlineAfter, lastCheck: checkedAt };
 
+	// A single missed answer isn't downtime yet, so it isn't recorded either
+	if (state || !update.online) await recordSample(String(server._id), checkedAt, state?.numplayers ?? null);
+
 	const published = await publishStatus(guild, { ...server, ...update });
 
 	await GameServerModel.updateOne({ _id: server._id }, { $set: { ...update, ...published } });
@@ -450,7 +483,10 @@ export const checkAllServers = async () => {
 
 // Managing
 export type ServerInput = ServerTarget &
-	Pick<IGameServer, "channelId" | "title" | "description" | "fields" | "connectButton" | "copyButton" | "interval">;
+	Pick<
+		IGameServer,
+		"channelId" | "title" | "description" | "fields" | "connectButton" | "copyButton" | "graph" | "interval"
+	>;
 
 type AddResult =
 	{ error: "LIMIT" | "EXISTS" | "NOT_FOUND" | "PRIVATE" } | { server: IGameServer & { _id: Types.ObjectId } };

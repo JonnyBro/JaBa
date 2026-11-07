@@ -4,6 +4,7 @@ import type { GameServer, GuildDetails } from "@/api/types";
 import ConfirmDialog from "@/components/common/ConfirmDialog.vue";
 import EmptyState from "@/components/common/EmptyState.vue";
 import ErrorState from "@/components/common/ErrorState.vue";
+import GameServerChart from "@/components/server/GameServerChart.vue";
 import GameServerEditor from "@/components/server/GameServerEditor.vue";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -151,6 +152,8 @@ const remove = useMutation({
 					</template>
 					<template v-else>{{ $t("gameservers.neverOnline") }}</template>
 				</p>
+
+				<GameServerChart :guild-id="guild.id" :server-id="server.id" />
 
 				<p class="flex flex-wrap items-center gap-x-3 text-sm text-muted-foreground">
 					<span>#{{ channelName(server.channelId) }}</span>
