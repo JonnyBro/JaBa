@@ -6,6 +6,8 @@
 	"CREDITS": "💵 Credits on hand: {{credits}}",
 	"BANK": "💳 Bank balance: {{credits}}",
 	"GLOBAL": "🌍 Credits across all servers: {{credits}}",
+	"RANK": "🏅 Server rank: #{{credits}} by credits and #{{level}} by level out of {{total}}",
+	"STREAK": "🔥 /daily streak: {{streak}} days in a row",
 	"REPUTATION": "🎩 Reputation: {{rep}}",
 	"LEVEL": "📊 Level: {{level}}",
 	"XP": "🔮 XP: {{xp}}/{{totalXp}}",

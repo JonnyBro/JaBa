@@ -6,6 +6,8 @@
 	"CREDITS": "💵 Кредити на руках: {{credits}}",
 	"BANK": "💳 У банку: {{credits}}",
 	"GLOBAL": "🌍 Кредити на всіх серверах: {{credits}}",
+	"RANK": "🏅 Місце на сервері: #{{credits}} за кредитами і #{{level}} за рівнем із {{total}}",
+	"STREAK": "🔥 Стрік /daily: {{streak}} дн. поспіль",
 	"REPUTATION": "🎩 Репутація: {{rep}}",
 	"LEVEL": "📊 Рівень: {{level}}",
 	"XP": "🔮 Досвід: {{xp}}/{{totalXp}}",

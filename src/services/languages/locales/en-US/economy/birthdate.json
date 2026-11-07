@@ -5,10 +5,12 @@
 
 	"CLEAR": "Clear your birthdate",
 	"SET": "Set your birthdate",
+	"HIDE_YEAR": "Hide or show your birth year",
 
 	"DAY": "Day",
 	"MONTH": "Month",
 	"YEAR": "Year",
+	"HIDE_OPTION": "Hide the birth year and don't show your age in the birthday greeting",
 
 	"INVALID_DATE": "That date doesn't exist",
 	"DATE_TOO_LOW": "Are you sure? :eyes:",
@@ -16,7 +18,10 @@
 
 	"SUCCESS": "Your birthday is set to **{{date}}**",
 	"SUCCESS_CLEAR": "Birthday removed",
+	"YEAR_HIDDEN": "Your birth year is hidden and the birthday greeting won't mention your age",
+	"YEAR_SHOWN": "Your birth year is visible again",
 
 	"HAPPY_BIRTHDAY": "Happy birthday",
-	"HAPPY_BIRTHDAY_MESSAGE": "Happy birthday, {{user}}! You turn {{age}} today!"
+	"HAPPY_BIRTHDAY_MESSAGE": "Happy birthday, {{user}}! You turn {{age}} today!",
+	"HAPPY_BIRTHDAY_MESSAGE_NO_AGE": "Happy birthday, {{user}}!"
 }

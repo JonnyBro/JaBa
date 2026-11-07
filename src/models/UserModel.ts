@@ -11,6 +11,8 @@ export interface IUserSchema {
 	rep: number;
 	bio: string | null;
 	birthdate: number | null;
+	/** Hides the birth year in the profile and the age in the birthday greeting */
+	hideAge: boolean;
 	registeredAt: number;
 	cooldowns: {
 		rep: number;
@@ -32,6 +34,7 @@ const userSchema = new Schema<IUserSchema>({
 	rep: { type: Number, default: 0 },
 	bio: { type: String, default: null },
 	birthdate: { type: Number, default: null },
+	hideAge: { type: Boolean, default: false },
 	registeredAt: { type: Number, default: () => Date.now() },
 	cooldowns: {
 		rep: { type: Number, default: 0 },

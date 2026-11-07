@@ -17,7 +17,7 @@ export const data: CronTaskData = {
 		const today = new Date();
 		const users = (await UserModel.find({ birthdate: { $ne: null } }))
 			.filter(u => !isNaN(u.birthdate!))
-			.map(u => ({ id: u.id, date: new Date(u.birthdate!) }))
+			.map(u => ({ id: u.id, date: new Date(u.birthdate!), hideAge: u.hideAge }))
 			.filter(u => u.date.getDate() === today.getDate() && u.date.getMonth() === today.getMonth());
 
 		if (!users.length) return;
@@ -40,18 +40,16 @@ export const data: CronTaskData = {
 					members.forEach(m => memberIds.add(m.id));
 				}
 
-				for (const { id, date } of users.filter(u => memberIds.has(u.id))) {
+				for (const { id, date, hideAge } of users.filter(u => memberIds.has(u.id))) {
 					const lng = guildData.language;
 					const title = client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY", { lng });
+					const text = client.i18n.translate(
+						`economy/birthdate:${hideAge ? "HAPPY_BIRTHDAY_MESSAGE_NO_AGE" : "HAPPY_BIRTHDAY_MESSAGE"}`,
+						{ user: `<@${id}>`, age: String(today.getFullYear() - date.getFullYear()), lng },
+					);
 					const container = createContainer().addTextDisplayComponents(
 						createText(`## 🎂 ${title}`),
-						createText(
-							client.i18n.translate("economy/birthdate:HAPPY_BIRTHDAY_MESSAGE", {
-								user: `<@${id}>`,
-								age: String(today.getFullYear() - date.getFullYear()),
-								lng,
-							}),
-						),
+						createText(text),
 					);
 
 					await channel

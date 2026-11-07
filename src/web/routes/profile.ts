@@ -55,6 +55,7 @@ export default async function profileRoutes(fastify: FastifyInstance) {
 			rep: userData.rep,
 			bio: userData.bio,
 			birthdate: userData.birthdate,
+			hideAge: userData.hideAge,
 			registeredAt: userData.registeredAt,
 			reminds: [...userData.reminds].sort((a, b) => a.sendAt - b.sendAt),
 			servers,
@@ -62,7 +63,7 @@ export default async function profileRoutes(fastify: FastifyInstance) {
 	});
 
 	fastify.patch("/api/users/me/profile", async (req, reply) => {
-		const body = (req.body ?? {}) as { bio?: unknown; birthdate?: unknown };
+		const body = (req.body ?? {}) as { bio?: unknown; birthdate?: unknown; hideAge?: unknown };
 		const userData = await useClient().getUserData(req.session.user!.id);
 
 		if (body.bio !== undefined) {
@@ -79,9 +80,11 @@ export default async function profileRoutes(fastify: FastifyInstance) {
 			userData.set("birthdate", birthdate);
 		}
 
+		if (body.hideAge !== undefined) userData.set("hideAge", body.hideAge === true);
+
 		await userData.save();
 
-		return send(reply, { bio: userData.bio, birthdate: userData.birthdate });
+		return send(reply, { bio: userData.bio, birthdate: userData.birthdate, hideAge: userData.hideAge });
 	});
 
 	fastify.post("/api/users/me/reminds", async (req, reply) => {

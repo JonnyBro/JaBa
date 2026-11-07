@@ -6,7 +6,7 @@ import useClient from "@/utils/use-client.js";
 import { FastifyInstance } from "fastify";
 import { logAction } from "../../audit.js";
 import { getSendableChannel } from "../../channels.js";
-import { ensureMembers } from "../../members-cache.js";
+import { ensureMembers } from "@/helpers/members-cache.js";
 import { getAssignableRoles } from "../../roles.js";
 import { fail, send } from "../../utils.js";
 

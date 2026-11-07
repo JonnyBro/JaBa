@@ -1,4 +1,5 @@
 import { getNoun, translateContext } from "@/helpers/functions.js";
+import { ensureMembers } from "@/helpers/members-cache.js";
 import MemberModel, { IMemberSchema, Transaction } from "@/models/MemberModel.js";
 import UserModel from "@/models/UserModel.js";
 import useClient from "@/utils/use-client.js";
@@ -72,6 +73,35 @@ export const getGlobalCredits = async (userId: string) => {
 	const guilds = useClient().guilds.cache;
 
 	return members.filter(m => guilds.has(m.guildID)).reduce((sum, m) => sum + m.money + m.bank, 0);
+};
+
+/** How the server leaderboards sort, level ties are broken by experience */
+export const LEADERBOARD_SCORES = {
+	credits: { $add: [{ $ifNull: ["$money", 0] }, { $ifNull: ["$bank", 0] }] },
+	level: { $add: [{ $multiply: [{ $ifNull: ["$level", 0] }, 1e9] }, { $ifNull: ["$exp", 0] }] },
+};
+
+/** Places in the server leaderboards, counted the same way: bots and members who left don't take places */
+export const getRanks = async (guild: Guild, userId: string) => {
+	await ensureMembers(guild);
+
+	const docs = await MemberModel.aggregate<{ id: string; credits: number; level: number }>([
+		{ $match: { guildID: guild.id } },
+		{ $project: { id: 1, credits: LEADERBOARD_SCORES.credits, level: LEADERBOARD_SCORES.level } },
+	]);
+	const present = docs.filter(doc => {
+		const member = guild.members.cache.get(doc.id);
+		return member && !member.user.bot;
+	});
+
+	const own = present.find(doc => doc.id === userId);
+	if (!own) return null;
+
+	return {
+		credits: present.filter(doc => doc.credits > own.credits).length + 1,
+		level: present.filter(doc => doc.level > own.level).length + 1,
+		total: present.length,
+	};
 };
 
 export const REP_COOLDOWN = 12 * 60 * 60 * 1000;

@@ -10,6 +10,7 @@ import honeypotRoutes from "./honeypot.js";
 import infoRoutes from "./info.js";
 import leaderboardRoutes from "./leaderboard.js";
 import levelsRoutes from "./levels.js";
+import meRoutes from "./me.js";
 import membersRoutes from "./members.js";
 import messagesRoutes from "./messages.js";
 import modlogRoutes from "./modlog.js";
@@ -38,6 +39,7 @@ export default async function guildRoutes(fastify: FastifyInstance) {
 	await fastify.register(infoRoutes);
 	await fastify.register(musicRoutes);
 	await fastify.register(leaderboardRoutes);
+	await fastify.register(meRoutes);
 
 	await fastify.register(async manage => {
 		manage.addHook("preHandler", async (req, reply) => {

@@ -1,6 +1,12 @@
 import { renderBankPanel } from "@/commands/Economy/bank.js";
-import { cooldownTime, formatCredits, getGlobalCredits, giveRep } from "@/helpers/economy.js";
-import { editReplyError, getLocalizedDesc, getXpForNextLevel, translateContext } from "@/helpers/functions.js";
+import { cooldownTime, formatCredits, getGlobalCredits, getRanks, giveRep } from "@/helpers/economy.js";
+import {
+	editReplyError,
+	getLocale,
+	getLocalizedDesc,
+	getXpForNextLevel,
+	translateContext,
+} from "@/helpers/functions.js";
 import { activeEffects, EFFECT_EMOJI, getShopItems, itemLabel } from "@/helpers/shop.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { componentRouter } from "@/utils/component-router.js";
@@ -52,11 +58,12 @@ const bar = (share: number) => {
 const renderProfile = async (interaction: Interaction, user: User) => {
 	const t = (key: string, args?: Record<string, unknown>) => translateContext(interaction, key, args);
 
-	const [memberData, userData, globalCredits, shopItems] = await Promise.all([
+	const [memberData, userData, globalCredits, shopItems, ranks] = await Promise.all([
 		client.getMemberData(interaction.guildId!, user.id),
 		client.getUserData(user.id),
 		getGlobalCredits(user.id),
 		getShopItems(interaction.guildId!),
+		getRanks(interaction.guild!, user.id),
 	]);
 
 	const member = await interaction.guild!.members.fetch(user.id).catch(() => null);
@@ -69,7 +76,9 @@ const renderProfile = async (interaction: Interaction, user: User) => {
 		await t("economy/profile:CREDITS", { credits: await formatCredits(interaction, memberData.money) }),
 		await t("economy/profile:BANK", { credits: await formatCredits(interaction, memberData.bank) }),
 		await t("economy/profile:GLOBAL", { credits: await formatCredits(interaction, globalCredits) }),
-	];
+		ranks && (await t("economy/profile:RANK", { credits: ranks.credits, level: ranks.level, total: ranks.total })),
+		memberData.dailyStreak > 1 && (await t("economy/profile:STREAK", { streak: memberData.dailyStreak })),
+	].filter(Boolean);
 
 	const progress = [
 		await t("economy/profile:LEVEL", { level: memberData.level }),
@@ -97,7 +106,7 @@ const renderProfile = async (interaction: Interaction, user: User) => {
 	const notDefined = await t("common:NOT_DEFINED");
 	const dates = [
 		await t("economy/profile:BIRTHDATE", {
-			birthdate: userData.birthdate ? `<t:${Math.floor(userData.birthdate / 1000)}:D>` : notDefined,
+			birthdate: userData.birthdate ? await formatBirthdate(interaction.guildId!, userData) : notDefined,
 		}),
 		await t("economy/profile:REGISTERED", { date: `<t:${Math.floor(memberData.registeredAt / 1000)}:D>` }),
 	];
@@ -126,6 +135,15 @@ const renderProfile = async (interaction: Interaction, user: User) => {
 	container.addActionRowComponents(new ActionRowBuilder<ButtonBuilder>().addComponents(button));
 
 	return containerMessage(container);
+};
+
+// A timestamp tag always shows the year, so a hidden one gets plain day and month in the server's language
+const formatBirthdate = async (guildId: string, userData: { birthdate: number | null; hideAge?: boolean }) => {
+	if (!userData.hideAge) return `<t:${Math.floor(userData.birthdate! / 1000)}:D>`;
+
+	return new Intl.DateTimeFormat(await getLocale(guildId), { day: "numeric", month: "long" }).format(
+		userData.birthdate!,
+	);
 };
 
 export const run = async ({ interaction }: SlashCommandProps) => {

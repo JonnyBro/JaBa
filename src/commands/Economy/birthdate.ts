@@ -67,6 +67,29 @@ export const data: CommandData = {
 					required: true,
 				},
 				{
+					name: "hide_year",
+					...getLocalizedDesc("economy/birthdate:HIDE_OPTION"),
+					type: ApplicationCommandOptionType.Boolean,
+				},
+				{
+					name: "ephemeral",
+					type: ApplicationCommandOptionType.Boolean,
+					...getLocalizedDesc("misc:EPHEMERAL_RESPONSE"),
+				},
+			],
+		},
+		{
+			name: "hideyear",
+			...getLocalizedDesc("economy/birthdate:HIDE_YEAR"),
+			type: ApplicationCommandOptionType.Subcommand,
+			options: [
+				{
+					name: "hide",
+					...getLocalizedDesc("economy/birthdate:HIDE_OPTION"),
+					type: ApplicationCommandOptionType.Boolean,
+					required: true,
+				},
+				{
 					name: "ephemeral",
 					type: ApplicationCommandOptionType.Boolean,
 					...getLocalizedDesc("misc:EPHEMERAL_RESPONSE"),
@@ -93,6 +116,17 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 			editReplySuccess(interaction, "economy/birthdate:SUCCESS_CLEAR");
 
 			break;
+		case "hideyear": {
+			const hide = interaction.options.getBoolean("hide", true);
+
+			userData.set("hideAge", hide);
+			await userData.save();
+
+			return editReplySuccess(
+				interaction,
+				hide ? "economy/birthdate:YEAR_HIDDEN" : "economy/birthdate:YEAR_SHOWN",
+			);
+		}
 		case "set": {
 			try {
 				const day = interaction.options.getInteger("day", true);
@@ -113,6 +147,9 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 				const time = date.getTime();
 
 				userData.set("birthdate", time);
+
+				const hide = interaction.options.getBoolean("hide_year");
+				if (hide !== null) userData.set("hideAge", hide);
 
 				await userData.save();
 

@@ -122,6 +122,11 @@ const router = createRouter({
 				{ path: "audit", name: "server-audit", component: () => import("@/views/server/AuditTab.vue") },
 				{ path: "music", name: "server-music", component: () => import("@/views/server/MusicTab.vue") },
 				{
+					path: "profile",
+					name: "server-profile",
+					component: () => import("@/views/server/ProfileTab.vue"),
+				},
+				{
 					path: "leaderboard",
 					name: "server-leaderboard",
 					component: () => import("@/views/server/LeaderboardTab.vue"),

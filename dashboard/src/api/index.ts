@@ -25,6 +25,7 @@ import type {
 	GuildLevels,
 	GuildInfo,
 	GuildLeaderboardType,
+	GuildProfile,
 	GuildListItem,
 	GuildMember,
 	GuildMemberDetails,
@@ -261,7 +262,10 @@ export const getProfile = () => get<Profile>("/api/users/me/profile");
 export const updateProfile = async (body: {
 	bio?: string | null;
 	birthdate?: { day: number; month: number; year: number } | null;
-}) => (await api.patch<Response<Pick<Profile, "bio" | "birthdate">>>("/api/users/me/profile", body)).data.data;
+	hideAge?: boolean;
+}) =>
+	(await api.patch<Response<Pick<Profile, "bio" | "birthdate" | "hideAge">>>("/api/users/me/profile", body)).data
+		.data;
 export const createRemind = (body: { message: string; sendAt: number }) => post<Remind>("/api/users/me/reminds", body);
 export const deleteRemind = async (remind: Remind) =>
 	(
@@ -273,6 +277,7 @@ export const deleteRemind = async (remind: Remind) =>
 // Public
 export const getCommands = (lang: string) => get<BotCommand[]>("/api/commands", { lang });
 export const getRepLeaderboard = () => get<RepStanding[]>("/api/leaderboard/rep");
+export const getGuildProfile = (id: string) => get<GuildProfile>(guildUrl(id, "/me"));
 export const getGuildLeaderboard = (id: string, type: GuildLeaderboardType) =>
 	get<{ type: GuildLeaderboardType; items: GuildStanding[] }>(guildUrl(id, "/leaderboard"), { type });
 

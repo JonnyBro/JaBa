@@ -6,6 +6,7 @@ import SectionTitle from "@/components/common/SectionTitle.vue";
 import UserAvatar from "@/components/common/UserAvatar.vue";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import { Music, Plus, Settings } from "@lucide/vue";
 import { useQuery } from "@tanstack/vue-query";
 
@@ -33,10 +34,20 @@ const guilds = useQuery({ queryKey: ["guilds"], queryFn: getGuilds });
 				v-for="guild in guilds.data.value"
 				:key="guild.id"
 				class="hud-panel flex items-center gap-3 p-3"
-				:class="guild.botPresent ? 'hud-edge' : 'opacity-70'"
+				:class="guild.botPresent && 'hud-edge'"
 			>
-				<UserAvatar :name="guild.name" :src="guild.icon" class="size-12" />
-				<span class="min-w-0 flex-1 truncate font-hud text-lg">{{ guild.name }}</span>
+				<UserAvatar
+					:name="guild.name"
+					:src="guild.icon"
+					:class="cn('size-12', !guild.botPresent && 'opacity-60')"
+				/>
+				<span
+					:class="
+						cn('min-w-0 flex-1 truncate font-hud text-lg', !guild.botPresent && 'text-muted-foreground')
+					"
+				>
+					{{ guild.name }}
+				</span>
 
 				<Button v-if="guild.botPresent && guild.manageable" as-child size="sm">
 					<RouterLink :to="{ name: 'server', params: { id: guild.id } }">

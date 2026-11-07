@@ -1,15 +1,11 @@
+import { LEADERBOARD_SCORES } from "@/helpers/economy.js";
 import { getXpForNextLevel } from "@/helpers/functions.js";
 import MemberModel from "@/models/MemberModel.js";
 import { FastifyInstance } from "fastify";
-import { ensureMembers } from "../../members-cache.js";
+import { ensureMembers } from "@/helpers/members-cache.js";
 import { send } from "../../utils.js";
 
 const LIMIT = 50;
-
-const SORTS = {
-	credits: { $add: [{ $ifNull: ["$money", 0] }, { $ifNull: ["$bank", 0] }] },
-	level: { $add: [{ $multiply: [{ $ifNull: ["$level", 0] }, 1e9] }, { $ifNull: ["$exp", 0] }] },
-};
 
 export default async function leaderboardRoutes(fastify: FastifyInstance) {
 	fastify.get("/leaderboard", async (req, reply) => {
@@ -27,7 +23,7 @@ export default async function leaderboardRoutes(fastify: FastifyInstance) {
 			exp: number;
 		}>([
 			{ $match: { guildID: guild.id } },
-			{ $addFields: { score: SORTS[type] } },
+			{ $addFields: { score: LEADERBOARD_SCORES[type] } },
 			{ $sort: { score: -1 } },
 			{ $limit: LIMIT * 2 },
 		]);

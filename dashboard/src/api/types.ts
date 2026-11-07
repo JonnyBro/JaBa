@@ -224,6 +224,8 @@ export type Profile = {
 	rep: number;
 	bio: string | null;
 	birthdate: number | null;
+	/** Hides the birth year in the profile and the age in the birthday greeting */
+	hideAge: boolean;
 	registeredAt: number;
 	reminds: Remind[];
 	servers: {
@@ -257,6 +259,37 @@ export type RepStanding = {
 };
 
 export type GuildLeaderboardType = "credits" | "level";
+
+/** The signed-in member's own data on one server */
+export type GuildProfile = {
+	displayName: string;
+	avatar: string;
+	joinedAt: number | null;
+	money: number;
+	bank: number;
+	level: number;
+	exp: number;
+	nextLevelExp: number;
+	/** Null when the member isn't counted, for example a bot */
+	ranks: { credits: number; level: number; total: number } | null;
+	dailyStreak: number;
+	/** When each command can be used again */
+	cooldowns: { daily: number; work: number; rob: number };
+	inventory: {
+		id: string;
+		name: string;
+		emoji: string | null;
+		description: string | null;
+		type: ShopItemType;
+		quantity: number;
+	}[];
+	effects: { effect: ShopEffect; until: number }[];
+	/** `got` adds credits, `send` takes them */
+	transactions: { user: string; amount: number; date: number; type: string }[];
+	warns: { id: string; reason: string | null; createdAt: number }[];
+	registeredAt: number;
+	rep: number;
+};
 
 export type GuildStanding = {
 	position: number;

@@ -21,6 +21,7 @@ import {
 	Ticket,
 	TrendingUp,
 	Trophy,
+	UserRound,
 	TriangleAlert,
 	Users,
 } from "@lucide/vue";
@@ -63,7 +64,11 @@ const MANAGE_GROUPS: TabGroup[] = [
 const MUSIC_TAB: Tab = { name: "server-music", label: "server.tabs.music", icon: Music };
 const MEMBER_GROUP: TabGroup = {
 	label: "server.groups.general",
-	tabs: [MUSIC_TAB, { name: "server-leaderboard", label: "server.tabs.leaderboard", icon: Trophy }],
+	tabs: [
+		{ name: "server-profile", label: "server.tabs.profile", icon: UserRound },
+		MUSIC_TAB,
+		{ name: "server-leaderboard", label: "server.tabs.leaderboard", icon: Trophy },
+	],
 };
 
 const route = useRoute();
@@ -79,7 +84,7 @@ watch(
 	() => guild.data.value,
 	data => {
 		if (data && !data.canManage && !isMemberTab.value)
-			void router.replace({ name: MUSIC_TAB.name, params: { id: data.id } });
+			void router.replace({ name: "server-profile", params: { id: data.id } });
 	},
 	{ immediate: true },
 );

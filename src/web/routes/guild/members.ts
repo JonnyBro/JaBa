@@ -6,7 +6,7 @@ import useClient from "@/utils/use-client.js";
 import { GuildMember, PermissionsBitField } from "discord.js";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { logAction } from "../../audit.js";
-import { ensureMembers } from "../../members-cache.js";
+import { ensureMembers } from "@/helpers/members-cache.js";
 import { fail, send } from "../../utils.js";
 
 const MAX_PAGE_SIZE = 100;
