@@ -1,5 +1,6 @@
 import { getLocalizations, getNoun, replyError, shortenString, translateContext } from "@/helpers/functions.js";
-import { isValidRemindDelay, MAX_REMINDS, parseDuration } from "@/helpers/reminds.js";
+import { parseDuration } from "@/helpers/duration.js";
+import { isValidRemindDelay, MAX_REMINDS } from "@/helpers/reminds.js";
 import UserModel from "@/models/UserModel.js";
 import { MessageContextCommandProps } from "@/types.js";
 import { containerMessage, createContainer, createText } from "@/utils/create-container.js";

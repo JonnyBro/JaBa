@@ -3,7 +3,7 @@
 	"USAGE": "[prize] [duration] (winners) (credits) (item) (level) (role) (channel)",
 	"EXAMPLES": "giveaway prize:Nitro duration:1d\ngiveaway prize:Счастливый день duration:2h winners:3 credits:5000\ngiveaway prize:VIP-роль duration:3d item:VIP level:10",
 	"PRIZE": "Что разыгрываем",
-	"DURATION": "Сколько идёт розыгрыш, например 30m, 2h или 3d",
+	"DURATION": "Сколько идёт розыгрыш, например 30m, 2h, 3d или 2ч 30мин",
 	"WINNERS_OPTION": "Сколько победителей (по умолчанию 1)",
 	"CREDITS_OPTION": "Кредиты каждому победителю",
 	"ITEM_OPTION": "Товар из магазина каждому победителю",

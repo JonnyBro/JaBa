@@ -1,3 +1,4 @@
+import { parseDuration } from "@/helpers/duration.js";
 import { getLocalizedDesc, translateContext } from "@/helpers/functions.js";
 import { renderPoll } from "@/helpers/polls.js";
 import PollModel from "@/models/PollModel.js";
@@ -12,7 +13,6 @@ import {
 	TextInputBuilder,
 	TextInputStyle,
 } from "discord.js";
-import ms, { StringValue } from "ms";
 
 const MODAL_ID = "POLL_CREATE";
 const MAX_QUESTION = 300;
@@ -59,9 +59,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		void (await interaction.reply({ content: await t(key, args), flags: MessageFlags.Ephemeral }));
 
 	const durationText = interaction.options.getString("duration") ?? DEFAULT_DURATION;
-	const duration = ms(durationText as StringValue);
-	if (!Number.isFinite(duration) || duration < MIN_DURATION || duration > MAX_DURATION)
-		return fail("general/poll:BAD_DURATION");
+	const duration = parseDuration(durationText);
+	if (!duration || duration < MIN_DURATION || duration > MAX_DURATION) return fail("general/poll:BAD_DURATION");
 
 	// Each run gets its own modal id, so a second /poll can't pick up this one's submit
 	const modalId = `${MODAL_ID}:${interaction.id}`;

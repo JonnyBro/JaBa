@@ -1,3 +1,4 @@
+import { parseDuration } from "@/helpers/duration.js";
 import { editReplyError, editReplySuccess, getLocalizedDesc, shortenString } from "@/helpers/functions.js";
 import { createGiveaway, MAX_PRIZE, MAX_WINNERS, validateGiveaway } from "@/helpers/giveaways.js";
 import { getShopItems, itemLabel } from "@/helpers/shop.js";
@@ -10,7 +11,6 @@ import {
 	MessageFlags,
 	PermissionsBitField,
 } from "discord.js";
-import ms, { StringValue } from "ms";
 
 export const data: CommandData = {
 	name: "giveaway",
@@ -89,7 +89,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	const input = {
 		prize: interaction.options.getString("prize", true),
-		duration: ms(interaction.options.getString("duration", true) as StringValue),
+		duration: parseDuration(interaction.options.getString("duration", true)) ?? NaN,
 		winners: interaction.options.getInteger("winners") ?? 1,
 		credits: interaction.options.getInteger("credits") ?? 0,
 		itemId: interaction.options.getString("item"),

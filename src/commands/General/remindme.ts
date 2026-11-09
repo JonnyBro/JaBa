@@ -1,5 +1,6 @@
 import { editReplyError, getLocalizedDesc, getNoun, translateContext } from "@/helpers/functions.js";
-import { isValidRemindDelay, parseDuration } from "@/helpers/reminds.js";
+import { parseDuration } from "@/helpers/duration.js";
+import { isValidRemindDelay } from "@/helpers/reminds.js";
 import { AutocompleteProps, CommandData, SlashCommandProps } from "@/types.js";
 import { containerMessage, createContainer, createText } from "@/utils/create-container.js";
 import useClient from "@/utils/use-client.js";

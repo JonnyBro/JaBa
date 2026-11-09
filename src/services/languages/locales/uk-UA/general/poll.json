@@ -2,7 +2,7 @@
 	"DESCRIPTION": "Створити опитування з кнопками",
 	"USAGE": "(duration) (anonymous) (multiple) (hidden)",
 	"EXAMPLES": "poll\npoll duration:2h anonymous:True\npoll duration:3d multiple:True hidden:True",
-	"DURATION": "Скільки триває опитування, наприклад 30m, 2h або 3d (за замовчуванням доба)",
+	"DURATION": "Скільки триває опитування, наприклад 30m, 2h, 3d або 2год 30хв (за замовчуванням доба)",
 	"ANONYMOUS_OPTION": "Приховати, хто за що голосував",
 	"MULTIPLE_OPTION": "Дозволити обрати кілька відповідей",
 	"HIDDEN_OPTION": "Показати результати лише після завершення",
