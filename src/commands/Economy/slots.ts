@@ -3,12 +3,15 @@ import { editReplyError, getLocalizedDesc, translateContext } from "@/helpers/fu
 import {
 	evaluate,
 	FREE_SPIN_MULTIPLIER,
+	FREE_SPINS,
 	FreeSpinsResult,
 	Grid,
 	PAYLINES,
+	PAYTABLE,
 	playFreeSpins,
 	REELS,
 	ROWS,
+	SCATTER_PAYS,
 	spinGrid,
 	SpinResult,
 	STRIPS,
@@ -34,6 +37,8 @@ import {
 const client = useClient();
 
 const SLOTS_ID = "ECO_SLOTS";
+// Not "ECO_SLOTS..." on purpose, the router matches ids by substring and would send it to the spin handler
+const PAYTABLE_ID = "SLOTS_PAYTABLE";
 const MIN_BET = 10;
 const MAX_BET = 100_000;
 const FRAME_DELAY = 650;
@@ -93,6 +98,7 @@ const lineSummary = async (spin: SpinResult, bet: number, { t, num }: Context) =
 			spin.lines.map(async line =>
 				t("economy/slots:LINE", {
 					line: line.line,
+					name: await t(`economy/slots:LINE_NAMES:${line.line}`),
 					symbol: SYMBOLS[line.symbol],
 					count: line.count,
 					win: num(toCredits(line.win, bet)),
@@ -129,13 +135,18 @@ const buildMessage = async ({ grid, bet, userId, body, result, footer, buttons }
 
 		container.addActionRowComponents(
 			new ActionRowBuilder<ButtonBuilder>().addComponents(
-				bets.map(target =>
+				...bets.map(target =>
 					new ButtonBuilder()
 						.setCustomId(`${SLOTS_ID}:${userId}:${target}`)
 						.setEmoji("🎰")
 						.setLabel(num(target))
 						.setStyle(target === bet ? ButtonStyle.Primary : ButtonStyle.Secondary),
 				),
+				new ButtonBuilder()
+					.setCustomId(`${PAYTABLE_ID}:${bet}`)
+					.setEmoji("📜")
+					.setLabel(await t("economy/slots:PAYTABLE"))
+					.setStyle(ButtonStyle.Secondary),
 			),
 		);
 	}
@@ -250,6 +261,70 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	await interaction.deferReply();
 	await play(interaction, interaction.options.getInteger("bet", true));
 };
+
+const lineDiagram = (rows: number[]) =>
+	Array.from({ length: ROWS }, (_, row) => rows.map(lineRow => (lineRow === row ? "🟩" : "⬛")).join(""));
+
+/** All lines as small 3x5 maps, two side by side, and what each symbol pays at this bet */
+const buildPaytable = async (bet: number, { t, num }: Context) => {
+	const lines: string[] = [];
+
+	for (let i = 0; i < PAYLINES.length; i += 2) {
+		const pair = PAYLINES.slice(i, i + 2);
+		const names = await Promise.all(
+			pair.map(async (_, j) => `**${i + j + 1}** ${await t(`economy/slots:LINE_NAMES:${i + j + 1}`)}`),
+		);
+		const diagrams = pair.map(lineDiagram);
+
+		lines.push(
+			names.join(" · "),
+			...diagrams[0].map((row, r) => [row, diagrams[1]?.[r]].filter(Boolean).join("　")),
+		);
+	}
+
+	const pays = (Object.entries(PAYTABLE) as [keyof typeof PAYTABLE, number[]][]).map(
+		([symbol, multipliers]) =>
+			`${SYMBOLS[symbol]} ${multipliers.map(multiplier => num(toCredits(multiplier, bet))).join(" · ")}`,
+	);
+
+	const scatter = await t("economy/slots:PAYTABLE_SCATTER", {
+		three: num(bet * SCATTER_PAYS[0]),
+		four: num(bet * SCATTER_PAYS[1]),
+		five: num(bet * SCATTER_PAYS[2]),
+		spins: FREE_SPINS,
+		multiplier: FREE_SPIN_MULTIPLIER,
+	});
+
+	const container = createContainer()
+		.addTextDisplayComponents(
+			createText(`## 📜 ${await t("economy/slots:PAYTABLE_TITLE")}`),
+			createText(`-# ${await t("economy/slots:PAYTABLE_RULE")}`),
+		)
+		.addSeparatorComponents(createSeparator())
+		.addTextDisplayComponents(createText(lines.join("\n")))
+		.addSeparatorComponents(createSeparator())
+		.addTextDisplayComponents(
+			createText(`**${await t("economy/slots:PAYTABLE_SYMBOLS", { bet: num(bet) })}**\n${pays.join("\n")}`),
+			createText(scatter),
+		);
+
+	return {
+		flags: (MessageFlags.IsComponentsV2 | MessageFlags.Ephemeral) as MessageFlags.IsComponentsV2,
+		components: [container],
+		allowedMentions: { parse: [] },
+	};
+};
+
+componentRouter.register(PAYTABLE_ID, async interaction => {
+	if (!interaction.isButton()) return;
+
+	const ctx: Context = {
+		t: (key, args) => translateContext(interaction, key, args),
+		num: n => n.toLocaleString(interaction.guildLocale ?? "en-US"),
+	};
+
+	await interaction.reply(await buildPaytable(clampBet(Number(interaction.customId.split(":")[1])), ctx));
+});
 
 componentRouter.register(SLOTS_ID, async interaction => {
 	if (!interaction.isButton()) return;

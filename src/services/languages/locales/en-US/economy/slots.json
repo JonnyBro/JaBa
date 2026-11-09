@@ -10,12 +10,30 @@
 	"NOT_ENOUGH": "You don't have {{credits}} on hand",
 	"NOT_YOURS": "This machine is taken, start your own with /slots",
 
-	"LINE": "Line {{line}} · {{symbol}} x{{count}} · +{{win}}",
+	"LINE": "Line {{line}} ({{name}}) · {{symbol}} x{{count}} · +{{win}}",
 	"SCATTER": "⭐ x{{count}} · +{{win}}",
 	"BONUS": "{{spins}} free spins, wins x{{multiplier}}",
 	"BONUS_RESULT": "Free spins: {{spins}} (x{{multiplier}}) · +{{win}}",
 	"BEST_SPIN": "Best free spin:",
 	"NO_WIN": "No win",
 	"WIN": "+{{credits}}",
-	"BALANCE": "Cash on hand: {{credits}}"
+	"BALANCE": "Cash on hand: {{credits}}",
+
+	"PAYTABLE": "Payouts",
+	"PAYTABLE_TITLE": "Lines and payouts",
+	"PAYTABLE_RULE": "Wins count left to right from the first reel, 🃏 stands in for anything except ⭐",
+	"PAYTABLE_SYMBOLS": "For 3 · 4 · 5 in a row on a line at a {{bet}} bet",
+	"PAYTABLE_SCATTER": "⭐ anywhere: 3 → {{three}}, 4 → {{four}}, 5 → {{five}} and {{spins}} free spins with wins x{{multiplier}}",
+	"LINE_NAMES": {
+		"1": "middle row",
+		"2": "top row",
+		"3": "bottom row",
+		"4": "V shape",
+		"5": "upside-down V",
+		"6": "steps down",
+		"7": "steps up",
+		"8": "bump up",
+		"9": "dip down",
+		"10": "sag in the middle"
+	}
 }
