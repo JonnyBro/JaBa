@@ -1,4 +1,5 @@
 import { translateContext } from "@/helpers/functions.js";
+import { findLyrics, Lyrics, LyricsUnavailableError } from "@/helpers/lyrics.js";
 import { notifyMusicChange } from "@/helpers/music-events.js";
 import {
 	addToQueue,
@@ -19,7 +20,7 @@ import { appendTracks, createPlaylist, findPlaylist, playPlaylist } from "@/help
 import { MAX_PLAYLIST_TRACKS } from "@/models/PlaylistModel.js";
 import useClient from "@/utils/use-client.js";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { LyricsResult, Player } from "lavalink-client";
+import { Player } from "lavalink-client";
 import { subscribe } from "../../music-hub.js";
 import { getMusicState } from "../../music-state.js";
 import { fail, send } from "../../utils.js";
@@ -29,23 +30,8 @@ const MAX_QUERY = 500;
 const LYRICS_CACHE_SIZE = 200;
 const LYRICS_CACHE_TTL = 30 * 60 * 1000;
 
-type Lyrics = { source: string; synced: boolean; lines: { time: number; text: string }[]; text: string | null };
-
-// Every open dashboard asks on each track change, the cache keeps that to one Lavalink request per track
+// Every open dashboard asks on each track change, the cache keeps that to one lookup per track
 const lyricsCache = new Map<string, { lyrics: Lyrics | null; expiresAt: number }>();
-
-const toLyrics = (result: LyricsResult | null): Lyrics | null => {
-	if (!result) return null;
-
-	const lines = result.lines.map(line => ({ time: line.timestamp, text: line.line }));
-	// Plain lyrics from some sources still come as lines, all at 0
-	const synced = lines.some(line => line.time > 0);
-	const text = result.text?.trim() || (synced ? null : lines.map(line => line.text).join("\n")) || null;
-
-	if (!synced && !text) return null;
-
-	return { source: result.provider || result.sourceName, synced, lines: synced ? lines : [], text };
-};
 
 const failWith = async (req: FastifyRequest, reply: FastifyReply, code: number, key: string) =>
 	fail(reply, code, await translateContext(req.guild, key));
@@ -103,9 +89,10 @@ export default async function musicRoutes(fastify: FastifyInstance) {
 
 		let lyrics: Lyrics | null;
 		try {
-			lyrics = toLyrics(await player.getCurrentLyrics());
-		} catch {
-			// lavalink-client throws when the node has no LavaLyrics plugin
+			lyrics = await findLyrics(track.info, () => player.getCurrentLyrics());
+		} catch (error) {
+			if (!(error instanceof LyricsUnavailableError)) throw error;
+
 			return failWith(req, reply, 503, "music/lyrics:UNAVAILABLE");
 		}
 

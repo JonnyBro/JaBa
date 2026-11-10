@@ -1,5 +1,5 @@
 import { editReplyError, getLocalizedDesc, translateContext } from "@/helpers/functions.js";
-import logger from "@/helpers/logger.js";
+import { findLyrics, lyricsText, LyricsUnavailableError } from "@/helpers/lyrics.js";
 import { formatTrack, searchTracks } from "@/helpers/music.js";
 import { CommandData, SlashCommandProps } from "@/types.js";
 import { componentRouter } from "@/utils/component-router.js";
@@ -15,7 +15,7 @@ import {
 	InteractionContextType,
 	MessageFlags,
 } from "discord.js";
-import { LyricsResult, Track } from "lavalink-client";
+import { Track } from "lavalink-client";
 
 const client = useClient();
 
@@ -43,8 +43,6 @@ export const data: CommandData = {
 		},
 	],
 };
-
-const lyricsText = (lyrics: LyricsResult) => (lyrics.text ?? lyrics.lines.map(line => line.line).join("\n")).trim();
 
 const paginate = (text: string) => {
 	const pages: string[] = [];
@@ -105,7 +103,7 @@ const fetchLyrics = async (guildId: string, query: string | null) => {
 		const track = player?.queue.current as Track | undefined;
 		if (!player || !track) return { error: "music/play:NOT_PLAYING" };
 
-		return { track, lyrics: await player.getCurrentLyrics() };
+		return { track, lyrics: await findLyrics(track.info, () => player.getCurrentLyrics()) };
 	}
 
 	const { res, error } = await searchTracks(query, client.user);
@@ -114,7 +112,7 @@ const fetchLyrics = async (guildId: string, query: string | null) => {
 
 	const node = client.lavalink.nodeManager.leastUsedNodes("playingPlayers")[0];
 
-	return { track, lyrics: await node.lyrics.get(track) };
+	return { track, lyrics: await findLyrics(track.info, () => node.lyrics.get(track), query) };
 };
 
 export const run = async ({ interaction }: SlashCommandProps) => {
@@ -126,8 +124,8 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	try {
 		result = await fetchLyrics(interaction.guildId!, query);
 	} catch (error) {
-		// lavalink-client throws when the node has no LavaLyrics plugin
-		logger.warn("[Lyrics] Lavalink couldn't get lyrics, is the LavaLyrics plugin installed?", error);
+		if (!(error instanceof LyricsUnavailableError)) throw error;
+
 		return editReplyError(interaction, "music/lyrics:UNAVAILABLE");
 	}
 
@@ -138,7 +136,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	const data: LyricsPages = {
 		title: formatTrack(result.track, 80),
-		source: result.lyrics!.provider || result.lyrics!.sourceName,
+		source: result.lyrics!.source,
 		pages: paginate(text),
 	};
 
