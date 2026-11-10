@@ -1,6 +1,7 @@
 {
 	"DESCRIPTION": "Create a reminder",
 	"CONTEXT_NAME": "Remind me about this",
+	"CONTEXT_DESCRIPTION": "Get a DM about this message after the time you pick",
 	"USAGE": "[time] [message]",
 
 	"EXAMPLES": "remindme time:12h message:Use the command 'work'\nremindme time:5m message:Get the chicken from the freezer!",

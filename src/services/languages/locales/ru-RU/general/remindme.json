@@ -1,6 +1,7 @@
 {
 	"DESCRIPTION": "Создать напоминание",
 	"CONTEXT_NAME": "Напомнить об этом",
+	"CONTEXT_DESCRIPTION": "Напомнить в ЛС об этом сообщении через выбранное время",
 	"USAGE": "[time] [message]",
 
 	"EXAMPLES": "remindme time:12h message:Использовать команду 'work'\nremindme time:5m message:Достать курицу из морозилки!",

@@ -1,6 +1,7 @@
 {
 	"DESCRIPTION": "Створити нагадування",
 	"CONTEXT_NAME": "Нагадати про це",
+	"CONTEXT_DESCRIPTION": "Нагадати в ПП про це повідомлення через обраний час",
 	"USAGE": "[time] [message]",
 
 	"EXAMPLES": "remindme time:12h message:Використати команду 'work'\nremindme time:5m message:Дістати курку з морозилки!",
