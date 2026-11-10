@@ -23,7 +23,7 @@
 	"PAYTABLE_TITLE": "Lines and payouts",
 	"PAYTABLE_RULE": "Wins count left to right from the first reel, 🃏 stands in for anything except ⭐",
 	"PAYTABLE_SYMBOLS": "For 3 · 4 · 5 in a row on a line at a {{bet}} bet",
-	"PAYTABLE_SCATTER": "⭐ anywhere: 3 → {{three}}, 4 → {{four}}, 5 → {{five}} and {{spins}} free spins with wins x{{multiplier}}",
+	"PAYTABLE_SCATTER": "⭐ anywhere: 3 -> {{three}}, 4 -> {{four}}, 5 -> {{five}} and {{spins}} free spins with wins x{{multiplier}}",
 	"LINE_NAMES": {
 		"1": "middle row",
 		"2": "top row",
