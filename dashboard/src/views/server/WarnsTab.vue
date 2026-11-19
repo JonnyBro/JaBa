@@ -218,14 +218,14 @@ const selectedUser = ref<string | null>(null);
 						<p class="truncate">
 							<span class="font-medium">{{ warn.userName ?? warn.userId }}</span>
 							<span :class="cn('text-muted-foreground', warn.removed && 'line-through')">
-								· {{ warn.reason ?? $t("warns.noReason") }}
+								| {{ warn.reason ?? $t("warns.noReason") }}
 							</span>
 						</p>
 						<p class="text-xs text-muted-foreground">
-							#{{ warn.shortId }} · {{ formatRelative(warn.createdAt) }} ·
+							#{{ warn.shortId }} | {{ formatRelative(warn.createdAt) }} |
 							{{ warn.moderatorName ?? warn.moderatorId }}
-							<template v-if="warn.removed"> · {{ $t("warns.removedBadge") }}</template>
-							<template v-else-if="!warn.active"> · {{ $t("warns.expired") }}</template>
+							<template v-if="warn.removed"> | {{ $t("warns.removedBadge") }}</template>
+							<template v-else-if="!warn.active"> | {{ $t("warns.expired") }}</template>
 						</p>
 					</button>
 					<Button

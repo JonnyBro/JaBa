@@ -277,14 +277,14 @@ const buildPaytable = async (bet: number, { t, num }: Context) => {
 		const diagrams = pair.map(lineDiagram);
 
 		lines.push(
-			names.join(" · "),
-			...diagrams[0].map((row, r) => [row, diagrams[1]?.[r]].filter(Boolean).join("　")),
+			names.join(" | "),
+			...diagrams[0].map((row, r) => [row, diagrams[1]?.[r]].filter(Boolean).join("  ")),
 		);
 	}
 
 	const pays = (Object.entries(PAYTABLE) as [keyof typeof PAYTABLE, number[]][]).map(
 		([symbol, multipliers]) =>
-			`${SYMBOLS[symbol]} ${multipliers.map(multiplier => num(toCredits(multiplier, bet))).join(" · ")}`,
+			`${SYMBOLS[symbol]} ${multipliers.map(multiplier => num(toCredits(multiplier, bet))).join(" | ")}`,
 	);
 
 	const scatter = await t("economy/slots:PAYTABLE_SCATTER", {

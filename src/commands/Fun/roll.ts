@@ -59,7 +59,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 	const rolls = Array.from({ length: dice.count }, () => randomNum(1, dice.sides));
 	const total = rolls.reduce((sum, roll) => sum + roll, 0) + dice.modifier;
 
-	const shown = rolls.slice(0, MAX_SHOWN_ROLLS).join(", ") + (rolls.length > MAX_SHOWN_ROLLS ? ", …" : "");
+	const shown = rolls.slice(0, MAX_SHOWN_ROLLS).join(", ") + (rolls.length > MAX_SHOWN_ROLLS ? ", ..." : "");
 	const sign = dice.modifier > 0 ? "+" : "-";
 	const modifier = dice.modifier ? ` ${sign} ${Math.abs(dice.modifier)}` : "";
 	const notation = `${dice.count}d${dice.sides}${dice.modifier ? sign + Math.abs(dice.modifier) : ""}`;

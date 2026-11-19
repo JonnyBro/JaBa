@@ -123,7 +123,7 @@ const renderProfile = async (interaction: Interaction, user: User) => {
 			.addTextDisplayComponents(createText(extras.join("\n")))
 			.addSeparatorComponents(createSeparator(false));
 
-	container.addTextDisplayComponents(createText(`-# ${dates.join(" • ")}`));
+	container.addTextDisplayComponents(createText(`-# ${dates.join(" | ")}`));
 
 	const own = user.id === interaction.user.id;
 	const button = new ButtonBuilder()

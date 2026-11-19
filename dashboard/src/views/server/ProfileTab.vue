@@ -147,7 +147,7 @@ const isReady = (until: number) => until <= Date.now();
 								cn('shrink-0 font-hud', entry.type === 'got' ? 'text-emerald-500' : 'text-destructive')
 							"
 						>
-							{{ entry.type === "got" ? "+" : "−" }}{{ formatNumber(entry.amount) }}
+							{{ entry.type === "got" ? "+" : "-" }}{{ formatNumber(entry.amount) }}
 						</span>
 					</li>
 				</ul>
@@ -160,7 +160,7 @@ const isReady = (until: number) => until <= Date.now();
 					<li v-for="warn in data.warns" :key="warn.id" class="space-y-0.5 px-3 py-2 text-sm">
 						<p>{{ warn.reason || $t("myProfile.noReason") }}</p>
 						<p class="text-xs text-muted-foreground">
-							#{{ warn.id }} · {{ formatDateTime(warn.createdAt) }}
+							#{{ warn.id }} | {{ formatDateTime(warn.createdAt) }}
 						</p>
 					</li>
 				</ul>

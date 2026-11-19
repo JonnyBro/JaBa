@@ -435,7 +435,7 @@ const save = useMutation({
 						:key="button.label"
 						class="inline-block rounded bg-[rgb(78_80_88)] px-3 py-1.5 text-white"
 					>
-						{{ button.label }}{{ button.url ? " ↗" : "" }}
+						{{ button.label }}{{ button.url ? " ->" : "" }}
 					</span>
 				</div>
 			</MessagePreview>

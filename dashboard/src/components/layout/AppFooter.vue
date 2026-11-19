@@ -11,7 +11,7 @@ const version = __DASHBOARD_VERSION__;
 			<p>
 				© {{ year }}
 				<a href="https://github.com/JonnyBro" target="_blank" rel="noopener" class="hover:text-hl">Jonny_Bro</a>
-				· {{ $t("footer.tagline") }}
+				| {{ $t("footer.tagline") }}
 			</p>
 			<p class="flex items-center gap-3">
 				<span>v{{ version }}</span>

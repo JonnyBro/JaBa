@@ -10,6 +10,6 @@ export async function run(member: GuildMember) {
 	await postModLog(member.guild, "memberJoin", { color: COLORS.green }, async t => [
 		`**📥 ${await t("MEMBER_JOINED", { user: formatUser(member) })}**`,
 		await t("ACCOUNT_CREATED", { date: timestamp(member.user.createdTimestamp, "R") }),
-		`-# ${await t("MEMBER_COUNT", { count: member.guild.memberCount })} · ID: ${member.id}`,
+		`-# ${await t("MEMBER_COUNT", { count: member.guild.memberCount })} | ID: ${member.id}`,
 	]);
 }

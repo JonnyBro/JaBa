@@ -140,7 +140,7 @@ a { color: #00a8fc; }
 <body>
 <main>
 <h1>${escape(info.subject ?? thread.name)}</h1>
-<div class="server">${escape(thread.guild.name)} · #${escape(thread.parent?.name ?? "")}</div>
+<div class="server">${escape(thread.guild.name)} | #${escape(thread.parent?.name ?? "")}</div>
 <table>${meta.map(([key, value]) => `<tr><td>${escape(key)}</td><td>${value}</td></tr>`).join("")}</table>
 ${messages.map(message => renderMessage(thread, message, locale)).join("\n")}
 </main>

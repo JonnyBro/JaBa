@@ -1,7 +1,7 @@
 {
 	"MESSAGE_DELETED": "Message deleted in {{channel}}",
 	"MESSAGES_PURGED": "{{count}} messages deleted in {{channel}}",
-	"MESSAGE_EDITED": "Message edited in {{channel}} · [go to message]({{url}})",
+	"MESSAGE_EDITED": "Message edited in {{channel}} | [go to message]({{url}})",
 	"AUTHOR": "Author: {{user}}",
 	"BEFORE": "Before:",
 	"AFTER": "After:",

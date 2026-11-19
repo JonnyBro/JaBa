@@ -46,7 +46,7 @@ export const renderGiveaway = async (giveaway: Giveaway, guild: Guild) => {
 	const state = giveaway.ended
 		? await t(g, "general/giveaway:ENDED")
 		: await t(g, "general/giveaway:ENDS", { time: `<t:${endsAt}:R>` });
-	const header = [`## 🎉 ${giveaway.prize}`, `-# ${host} • ${state}`];
+	const header = [`## 🎉 ${giveaway.prize}`, `-# ${host} | ${state}`];
 	const credits = await formatCredits(guild, giveaway.credits);
 
 	const details = [

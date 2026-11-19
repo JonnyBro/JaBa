@@ -435,7 +435,7 @@ const renameTrack = useMutation({
 						<template v-if="upload.isPending.value">
 							{{ uploadProgress }}%
 							<template v-if="filesLeft > 1"
-								>· {{ $t("playlists.filesLeft", { n: filesLeft }) }}</template
+								>| {{ $t("playlists.filesLeft", { n: filesLeft }) }}</template
 							>
 						</template>
 						<template v-else>{{ $t("playlists.upload") }}</template>
@@ -527,7 +527,7 @@ const renameTrack = useMutation({
 							<p v-else class="truncate">{{ track.title }}</p>
 							<p class="truncate text-sm text-muted-foreground">
 								{{ track.author }}
-								<template v-if="track.source"> · {{ track.source }}</template>
+								<template v-if="track.source"> | {{ track.source }}</template>
 							</p>
 							<p
 								v-if="track.file?.expired"

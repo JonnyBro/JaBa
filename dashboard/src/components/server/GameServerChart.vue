@@ -93,7 +93,7 @@ const hoveredPoint = computed(() =>
 	<div class="space-y-1.5">
 		<div class="flex items-center justify-between gap-2 text-xs text-muted-foreground">
 			<span v-if="hovered !== null">
-				{{ formatDateTime(hovered) }} ·
+				{{ formatDateTime(hovered) }} |
 				<template v-if="!hoveredPoint">{{ $t("gameservers.chart.noData") }}</template>
 				<template v-else-if="hoveredPoint.players === null">{{ $t("gameservers.chart.offline") }}</template>
 				<template v-else>{{ $t("gameservers.chart.players", { count: hoveredPoint.players }) }}</template>

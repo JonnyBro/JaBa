@@ -7,5 +7,5 @@
 	"NOT_FOUND": "No lyrics found for {{track}}",
 	"UNAVAILABLE": "Lyrics are unavailable right now, the music server doesn't support them",
 	"EXPIRED": "These lyrics are no longer available, run /lyrics again",
-	"FOOTER": "Lyrics: {{source}} • Page {{page}}/{{pages}}"
+	"FOOTER": "Lyrics: {{source}} | Page {{page}}/{{pages}}"
 }

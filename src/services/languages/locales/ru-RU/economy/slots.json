@@ -5,15 +5,15 @@
 	"BET": "Общая ставка за вращение, делится на 10 линий",
 
 	"TITLE": "Слоты",
-	"BET_INFO": "Ставка {{bet}} • {{lines}} линий • 🃏 заменяет всё, кроме ⭐ • 3+ ⭐ где угодно дают фриспины",
+	"BET_INFO": "Ставка {{bet}} | {{lines}} линий | 🃏 заменяет всё, кроме ⭐ | 3+ ⭐ где угодно дают фриспины",
 	"SPINNING": "Крутим...",
 	"NOT_ENOUGH": "У тебя нет {{credits}} при себе",
 	"NOT_YOURS": "Этот автомат занят, запусти свой через /slots",
 
-	"LINE": "Линия {{line}} ({{name}}) · {{symbol}} x{{count}} · +{{win}}",
-	"SCATTER": "⭐ x{{count}} · +{{win}}",
+	"LINE": "Линия {{line}} ({{name}}) | {{symbol}} x{{count}} | +{{win}}",
+	"SCATTER": "⭐ x{{count}} | +{{win}}",
 	"BONUS": "{{spins}} фриспинов, выигрыши x{{multiplier}}",
-	"BONUS_RESULT": "Фриспины: {{spins}} (x{{multiplier}}) · +{{win}}",
+	"BONUS_RESULT": "Фриспины: {{spins}} (x{{multiplier}}) | +{{win}}",
 	"BEST_SPIN": "Лучший фриспин:",
 	"NO_WIN": "Без выигрыша",
 	"WIN": "+{{credits}}",
@@ -22,7 +22,7 @@
 	"PAYTABLE": "Выплаты",
 	"PAYTABLE_TITLE": "Линии и выплаты",
 	"PAYTABLE_RULE": "Выигрыш считается слева направо с первого барабана, 🃏 заменяет любой символ, кроме ⭐",
-	"PAYTABLE_SYMBOLS": "За 3 • 4 • 5 подряд на линии при ставке {{bet}}",
+	"PAYTABLE_SYMBOLS": "За 3 | 4 | 5 подряд на линии при ставке {{bet}}",
 	"PAYTABLE_SCATTER": "⭐ в любом месте: 3 -> {{three}}, 4 -> {{four}}, 5 -> {{five}} и {{spins}} фриспинов с выигрышем x{{multiplier}}",
 	"LINE_NAMES": {
 		"1": "средний ряд",

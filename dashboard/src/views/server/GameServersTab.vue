@@ -113,7 +113,7 @@ const remove = useMutation({
 							<span class="truncate">{{ displayName(server) }}</span>
 						</p>
 						<p class="truncate text-sm text-muted-foreground">
-							{{ server.gameName }} · {{ server.host }}:{{ server.port }}
+							{{ server.gameName }} | {{ server.host }}:{{ server.port }}
 						</p>
 					</div>
 					<div class="flex shrink-0 gap-1">
@@ -145,7 +145,7 @@ const remove = useMutation({
 								max: server.state.maxplayers,
 							})
 						}}
-						<span v-if="server.state.map" class="text-muted-foreground">· {{ server.state.map }}</span>
+						<span v-if="server.state.map" class="text-muted-foreground">| {{ server.state.map }}</span>
 					</template>
 					<template v-else-if="server.lastOnline">
 						{{ $t("gameservers.offlineSince", { date: formatRelative(server.lastOnline) }) }}

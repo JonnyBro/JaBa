@@ -51,7 +51,7 @@ const thumbnailIndex = computed(() => (props.thumbnail ? props.blocks.findIndex(
 						:key="j"
 						class="rounded bg-[rgb(78_80_88)] px-3 py-1.5 text-white"
 					>
-						{{ button.label || "…" }} ↗
+						{{ button.label || "..." }} ->
 					</span>
 				</div>
 			</template>

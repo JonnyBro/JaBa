@@ -177,7 +177,7 @@ router.beforeEach(async to => {
 
 const updateTitle = () => {
 	const title = router.currentRoute.value.meta.title;
-	document.title = title ? `${i18n.global.t(title)} · JaBa` : "JaBa";
+	document.title = title ? `${i18n.global.t(title)} | JaBa` : "JaBa";
 };
 
 router.afterEach(updateTitle);

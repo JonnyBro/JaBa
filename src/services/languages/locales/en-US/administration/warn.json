@@ -13,7 +13,7 @@
 	"ADDED": "{{user}} got a warn. Active warns: **{{count}}**",
 	"REMOVED": "Removed warn #{{id}} from {{user}}",
 	"NOT_FOUND": "No such active warn",
-	"ACTIVE": "Active: {{active}} · total: {{total}}",
+	"ACTIVE": "Active: {{active}} | total: {{total}}",
 
 	"DM": "You got a warn on **{{server}}**. Active warns: **{{count}}**",
 	"DM_PUNISHMENT": "Because of it: {{punishment}}",

@@ -64,7 +64,7 @@ const handleLinkQuote = async (message: Message) => {
 		const sentAt = Math.floor(msg.createdTimestamp / 1000);
 		const title = await translateContext(message, "misc:QUOTE_TITLE", { user: getUsername(msg.author) });
 		const sent = await translateContext(message, "misc:QUOTE_FOOTER");
-		const header = `### ${title}\n-# ${sent} <t:${sentAt}:f> · ${msg.channel}`;
+		const header = `### ${title}\n-# ${sent} <t:${sentAt}:f> | ${msg.channel}`;
 
 		const container = addTextWithThumbnail(createContainer(), header, msg.author.displayAvatarURL());
 

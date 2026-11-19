@@ -13,7 +13,7 @@
 	"MODAL_SUBJECT_TITLE": "Тема тикета",
 	"MODAL_INPUT_TITLE": "Твоё сообщение",
 
-	"TICKET_AUTHOR": "Создал {{user}} • <t:{{time}}:f>",
+	"TICKET_AUTHOR": "Создал {{user}} | <t:{{time}}:f>",
 
 	"ADD_USER": "Добавить участника в тикет",
 	"ADD_USER_RES": "Выбери, кого добавить",

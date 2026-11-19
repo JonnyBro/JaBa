@@ -77,7 +77,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		);
 
 	const choice = await t("fun/choose:RESULT", { choice: options[randomNum(0, options.length - 1)] });
-	const from = shortenString(options.join(" · "), 1500);
+	const from = shortenString(options.join(" | "), 1500);
 
 	await submitted.reply({
 		content: `${choice}\n-# ${from}`,

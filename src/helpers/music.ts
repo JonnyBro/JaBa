@@ -487,7 +487,7 @@ const buildNowPlaying = async (player: Player, track: Track) => {
 				`\`${formatDuration(track)}\``,
 				formatSource(track.info.sourceName),
 				`${await t("music/queue:ADDED")}: ${requesterMention}`,
-			].join(" • "),
+			].join(" | "),
 		].join("\n"),
 		track.info.artworkUrl,
 	);

@@ -39,16 +39,16 @@ export const lyricsText = (lyrics: Lyrics) => (lyrics.text ?? lyrics.lines.map(l
 const NOISE_WORDS =
 	"official|lyrics?|audio|video|music|clip|mv|hd|hq|4k|visuali[sz]er|remaster(?:ed)?|live|explicit|" +
 	"премьера|клип|текст|караоке";
-const NOISE_BRACKETS = new RegExp(`[([【][^)\\]】]*(?:${NOISE_WORDS})[^)\\]】]*[)\\]】]`, "gi");
+const NOISE_BRACKETS = new RegExp(`[([\\u3010][^)\\]\\u3011]*(?:${NOISE_WORDS})[^)\\]\\u3011]*[)\\]\\u3011]`, "gi");
 const FEATURING = /\s*[([]?\b(?:feat\.?|ft\.?|featuring|при уч\.?)\s[^)\]]*[)\]]?/gi;
 const AUTHOR_NOISE = /\s*(?:-\s*topic|vevo|official|music)\s*$/gi;
-const SEPARATOR = /\s+[-–—|]\s+/;
+const SEPARATOR = /\s+[-\u2013\u2014|]\s+/;
 
 const tidy = (text: string) =>
 	text
 		.replace(NOISE_BRACKETS, "")
 		.replace(FEATURING, "")
-		.replace(/["«»“”]/g, "")
+		.replace(/["\u00ab\u00bb\u201c\u201d]/g, "")
 		.replace(/\s{2,}/g, " ")
 		.trim();
 

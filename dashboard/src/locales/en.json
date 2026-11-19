@@ -194,7 +194,7 @@
 		"punishFailed": "Couldn't apply {punishment}, the bot is missing a permission",
 		"settingsTitle": "Settings",
 		"expireDays": "Warns expire after, days",
-		"expireHint": "0 keeps them forever. Expired warns stay in the history but don't count toward punishments.",
+		"expireHint": "With 0 they never expire. Expired warns stay in the history but don't count toward punishments.",
 		"logHint": "Warns are logged to the channel set in",
 		"dm": "DM the member when they get a warn",
 		"rulesTitle": "Punishments",
@@ -279,7 +279,7 @@
 	},
 	"gameservers": {
 		"pageTitle": "Game servers",
-		"hint": "The bot posts a message with the server's status and updates it every minute. Up to {max} servers.",
+		"hint": "The bot posts a message with the server's status and keeps it updated. Up to {max} servers.",
 		"add": "Add server",
 		"addTitle": "New game server",
 		"editTitle": "Edit game server",
@@ -324,7 +324,7 @@
 			"address": "Address"
 		},
 		"connectButton": "\"Connect\" button that opens the game in Steam",
-		"copyButton": "“Copy address” button: the bot sends the address in a message only the clicker sees, easy to copy",
+		"copyButton": "\"Copy address\" button: the bot sends the address in a message only the clicker sees, easy to copy",
 		"graph": "Online graph for the last day in the status message",
 		"previewHint": "Enter the address to see the preview",
 		"previewOffline": "The preview shows the server as offline until you press \"Check\".",
@@ -569,7 +569,7 @@
 		}
 	},
 	"music": {
-		"reconnecting": "Connection lost, reconnecting…",
+		"reconnecting": "Connection lost, reconnecting...",
 		"joinToControl": "Join the voice channel {channel} to control the music",
 		"cantControl": "Join the bot's voice channel to control the music",
 		"paused": "Paused",
@@ -706,7 +706,7 @@
 		"economy": "Economy",
 		"economyHint": "Balance and level on servers with the bot, click a server to open your profile there",
 		"noEconomy": "You don't have any economy data yet",
-		"economyLine": "{credits} credits · level {level}"
+		"economyLine": "{credits} credits | level {level}"
 	},
 	"myProfile": {
 		"rep": "Reputation: {n}",

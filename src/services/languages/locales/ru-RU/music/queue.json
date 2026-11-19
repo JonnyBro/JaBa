@@ -10,7 +10,7 @@
 	"TOTAL": "Треков: {{count}}, общее время: {{time}}",
 
 	"SETTINGS": "Настройки",
-	"SETTINGS_VALUE": "Громкость: **{{volume}}** • Повтор: **{{loop}}** • Автоплей: **{{autoplay}}**",
+	"SETTINGS_VALUE": "Громкость: **{{volume}}** | Повтор: **{{loop}}** | Автоплей: **{{autoplay}}**",
 
 	"DURATION": "Длительность",
 	"SOURCE": "Источник",

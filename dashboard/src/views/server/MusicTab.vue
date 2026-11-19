@@ -225,7 +225,7 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 					<div class="min-w-0">
 						<p class="font-hud text-sm text-muted-foreground">
 							{{ active.paused ? $t("music.paused") : $t("music.playing") }}
-							<template v-if="active.voiceChannel"> · 🔊 {{ active.voiceChannel.name }}</template>
+							<template v-if="active.voiceChannel"> | 🔊 {{ active.voiceChannel.name }}</template>
 						</p>
 						<a
 							v-if="active.current.uri"
@@ -239,7 +239,7 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 						<p v-else class="truncate font-hud text-2xl">{{ active.current.title }}</p>
 						<p class="truncate text-muted-foreground">
 							{{ active.current.author }}
-							<template v-if="active.current.source"> · {{ active.current.source }}</template>
+							<template v-if="active.current.source"> | {{ active.current.source }}</template>
 						</p>
 						<p
 							v-if="active.current.requester"
@@ -446,7 +446,7 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 					</SelectTrigger>
 					<SelectContent>
 						<SelectItem v-for="p in playlists.data.value.items" :key="p.id" :value="p.id">
-							{{ p.name }} · {{ $t("playlists.tracks", { n: p.trackCount }) }}
+							{{ p.name }} | {{ $t("playlists.tracks", { n: p.trackCount }) }}
 						</SelectItem>
 					</SelectContent>
 				</Select>
@@ -520,8 +520,8 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 							<p class="truncate">{{ track.title }}</p>
 							<p class="truncate text-sm text-muted-foreground">
 								{{ track.author }}
-								<template v-if="track.source"> · {{ track.source }}</template>
-								<template v-if="track.requester"> · {{ track.requester.name }}</template>
+								<template v-if="track.source"> | {{ track.source }}</template>
+								<template v-if="track.requester"> | {{ track.requester.name }}</template>
 							</p>
 						</div>
 						<span class="font-hud text-sm text-muted-foreground">
@@ -577,7 +577,7 @@ const repeatLabel = computed(() => t(`music.repeat.${active.value?.repeatMode ??
 								{{ $t("music.newPlaylist") }}
 							</SelectItem>
 							<SelectItem v-for="p in playlists.data.value?.items" :key="p.id" :value="p.id">
-								{{ p.name }} · {{ $t("playlists.tracks", { n: p.trackCount }) }}
+								{{ p.name }} | {{ $t("playlists.tracks", { n: p.trackCount }) }}
 							</SelectItem>
 						</SelectContent>
 					</Select>

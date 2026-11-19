@@ -166,7 +166,7 @@ const timeoutLabel = (value: number) =>
 								member.data.value.displayName
 							}}</SheetTitle>
 							<SheetDescription class="truncate">
-								{{ member.data.value.username }} · {{ member.data.value.id }}
+								{{ member.data.value.username }} | {{ member.data.value.id }}
 							</SheetDescription>
 						</div>
 					</div>
@@ -313,7 +313,7 @@ const timeoutLabel = (value: number) =>
 							>
 								<span class="min-w-0 truncate">
 									<span class="font-hud">{{ tx.type }}</span>
-									<span v-if="tx.user" class="text-muted-foreground"> · {{ tx.user }}</span>
+									<span v-if="tx.user" class="text-muted-foreground"> | {{ tx.user }}</span>
 								</span>
 								<span class="shrink-0 text-right">
 									<span class="font-hud">{{ formatNumber(tx.amount) }}</span>

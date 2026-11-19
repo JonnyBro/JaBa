@@ -163,10 +163,10 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 
 	const lines = servers.map(server => {
 		const link = server.messageId
-			? ` · https://discord.com/channels/${guild.id}/${server.channelId}/${server.messageId}`
+			? ` | https://discord.com/channels/${guild.id}/${server.channelId}/${server.messageId}`
 			: "";
 
-		return `${server.online ? "🟢" : "🔴"} **${serverLabel(server)}** · <#${server.channelId}>${link}`;
+		return `${server.online ? "🟢" : "🔴"} **${serverLabel(server)}** | <#${server.channelId}>${link}`;
 	});
 
 	await interaction.editReply(

@@ -13,6 +13,6 @@ export async function run(member: GuildMember | PartialGuildMember) {
 		`**📤 ${await t("MEMBER_LEFT", { user: formatUser(member.user) })}**`,
 		!!member.joinedTimestamp && (await t("JOINED_AT", { date: timestamp(member.joinedTimestamp, "R") })),
 		roles.length > 0 && (await t("ROLES", { roles: roles.join(" ") })),
-		`-# ${await t("MEMBER_COUNT", { count: member.guild.memberCount })} · ID: ${member.id}`,
+		`-# ${await t("MEMBER_COUNT", { count: member.guild.memberCount })} | ID: ${member.id}`,
 	]);
 }

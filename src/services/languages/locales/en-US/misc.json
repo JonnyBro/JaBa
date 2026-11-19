@@ -6,7 +6,7 @@
 	"CANT_YOU": "You can't use that",
 	"CANT_YOURSELF": "You can't use this command on yourself",
 	"EPHEMERAL_RESPONSE": "Show the reply only to you?",
-	"LEVEL_UP": "You have reached the next level! Your level now is: **{{level}}**",
+	"LEVEL_UP": "New level! You're now level **{{level}}**",
 	"LEVEL_UP_USER": "{{user}} reached level **{{level}}**!",
 	"LEVEL_REWARD": "Reward: {{rewards}}",
 	"LEVEL_REWARD_TRANSACTION": "Level {{level}} reward",

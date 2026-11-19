@@ -12,7 +12,7 @@
 
 	"CMD_TITLE": "Help for {{cmd}}",
 	"DASHBOARD": "All commands in the dashboard",
-	"INFO": "● Use `/help [command]` to see help for a command",
+	"INFO": "- Use `/help [command]` to see help for a command",
 	"FIELD_PERMISSIONS": "Required permissions",
 	"NO_REQUIRED_PERMISSION": "None",
 	"TITLE": "{{name}} | Commands",

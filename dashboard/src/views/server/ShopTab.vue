@@ -169,9 +169,9 @@ const typeDetails = (item: ShopItem) => {
 	const role = item.roleId ? `@${roleById.value.get(item.roleId)?.name ?? t("common.unknown")}` : "";
 
 	if (item.type === "role") return role;
-	if (item.type === "temp_role") return `${role} · ${t("shop.hours", item.durationHours ?? 0)}`;
+	if (item.type === "temp_role") return `${role} | ${t("shop.hours", item.durationHours ?? 0)}`;
 	if (item.type === "consumable")
-		return `${t(`shop.effects.${item.effect}`)} · ${t("shop.hours", item.durationHours ?? 0)}`;
+		return `${t(`shop.effects.${item.effect}`)} | ${t("shop.hours", item.durationHours ?? 0)}`;
 
 	return "";
 };

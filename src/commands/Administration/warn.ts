@@ -122,7 +122,7 @@ export const run = async ({ interaction }: SlashCommandProps) => {
 		warns.slice(0, LIST_SIZE).map(async warn => {
 			const reason = warn.reason ?? (await t("administration/warn:NO_REASON"));
 			const time = `<t:${Math.floor(warn.createdAt.getTime() / 1000)}:R>`;
-			const line = `\`#${shortId(warn)}\` ${time} · ${shortenString(reason, 100)} · <@${warn.moderatorId}>`;
+			const line = `\`#${shortId(warn)}\` ${time} | ${shortenString(reason, 100)} | <@${warn.moderatorId}>`;
 
 			return isActive(warn, settings) ? line : `~~${line}~~`;
 		}),
@@ -154,7 +154,7 @@ export const autocompleteRun = async ({ interaction }: AutocompleteProps) => {
 		warns
 			.filter(warn => !warn.removedAt && isActive(warn, settings))
 			.map(warn => ({
-				name: shortenString(`#${shortId(warn)} · ${warn.reason ?? noReason}`, 100),
+				name: shortenString(`#${shortId(warn)} | ${warn.reason ?? noReason}`, 100),
 				value: warn._id.toString(),
 			}))
 			.filter(choice => choice.name.toLowerCase().includes(query))

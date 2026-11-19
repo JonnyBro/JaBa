@@ -74,7 +74,7 @@ export const renderBankPanel = async (interaction: Interaction, user: User, stat
 
 	const container = createContainer()
 		.addTextDisplayComponents(
-			createText(`## 🏦 ${await t(interaction, "economy/bank:BANK")} · ${getUsername(user)}`),
+			createText(`## 🏦 ${await t(interaction, "economy/bank:BANK")} | ${getUsername(user)}`),
 		)
 		.addSeparatorComponents(createSeparator())
 		.addTextDisplayComponents(createText(lines.join("\n")));
@@ -121,10 +121,10 @@ const renderHistory = async (interaction: ButtonInteraction) => {
 
 	const lines = await Promise.all(
 		transactions.map(async tr => {
-			const sign = tr.type === "got" ? "🟢 +" : "🔴 −";
+			const sign = tr.type === "got" ? "🟢 +" : "🔴 -";
 			const amount = await formatCredits(interaction, tr.amount);
 
-			return `${sign}${amount} · ${tr.user} · <t:${Math.floor(tr.date / 1000)}:R>`;
+			return `${sign}${amount} | ${tr.user} | <t:${Math.floor(tr.date / 1000)}:R>`;
 		}),
 	);
 

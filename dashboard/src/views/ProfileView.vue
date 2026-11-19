@@ -117,7 +117,7 @@ const removeRemind = useMutation({
 							<p class="wrap-break-word">{{ remind.message }}</p>
 							<p class="flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground">
 								<span>
-									{{ formatDateTime(remind.sendAt * 1000) }} ·
+									{{ formatDateTime(remind.sendAt * 1000) }} |
 									{{ formatRelative(remind.sendAt * 1000) }}
 								</span>
 								<a

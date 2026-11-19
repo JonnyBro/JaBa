@@ -313,7 +313,7 @@ export const renderStatus = async (guild: Guild, server: ServerView, live = true
 			if (!value) continue;
 
 			const line = `**${escapeMarkdown(await fieldLabel(entry, t))}:** ${value}`;
-			if (entry.inline && inlineRow) lines[lines.length - 1] += ` · ${line}`;
+			if (entry.inline && inlineRow) lines[lines.length - 1] += ` | ${line}`;
 			else lines.push(line);
 
 			inlineRow = !!entry.inline;

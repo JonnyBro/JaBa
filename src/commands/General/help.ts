@@ -222,7 +222,7 @@ async function buildCommandHelp(interaction: Interaction, cmd: Command) {
 			createText(
 				[
 					`## ${displayName}`,
-					`-# ${capitalizeString(category)} • ${context}`,
+					`-# ${capitalizeString(category)} | ${context}`,
 					await getDescription(interaction, cmd),
 				].join("\n"),
 			),

@@ -3,5 +3,5 @@
 	"USAGE": "[@user]",
 	"EXAMPLES": "rep user:@jonny_bro",
 	"COOLDOWN": "You can give your next reputation point {{time}}",
-	"SUCCESS": "You have given a reputation point to {{user}}"
+	"SUCCESS": "You gave a reputation point to {{user}}"
 }

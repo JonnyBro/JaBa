@@ -103,10 +103,10 @@ const formatEntries = async (interaction: Interaction, type: LeaderboardType, en
 			if (type === LeaderboardType.Credits) value = await formatCredits(interaction, entry.value);
 			else if (type === LeaderboardType.Level) {
 				const xp = `${entry.exp}/${getXpForNextLevel(entry.value)} ${getNoun(entry.exp!, xpNouns)}`;
-				value = `**${entry.value}** ${getNoun(entry.value, levelNouns)} · ${xp}`;
+				value = `**${entry.value}** ${getNoun(entry.value, levelNouns)} | ${xp}`;
 			} else value = `**${entry.value}** ${getNoun(entry.value, pointNouns)}`;
 
-			return `${rank} <@${entry.id}> · ${value}`;
+			return `${rank} <@${entry.id}> | ${value}`;
 		}),
 	);
 

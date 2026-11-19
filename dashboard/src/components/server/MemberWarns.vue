@@ -91,10 +91,10 @@ const remove = useMutation({
 						{{ item.reason ?? $t("warns.noReason") }}
 					</p>
 					<p class="text-xs text-muted-foreground">
-						#{{ item.shortId }} · {{ formatDateTime(item.createdAt) }} ·
+						#{{ item.shortId }} | {{ formatDateTime(item.createdAt) }} |
 						{{ item.moderatorName ?? item.moderatorId }}
-						<template v-if="item.removed"> · {{ $t("warns.removedBadge") }}</template>
-						<template v-else-if="!item.active"> · {{ $t("warns.expired") }}</template>
+						<template v-if="item.removed"> | {{ $t("warns.removedBadge") }}</template>
+						<template v-else-if="!item.active"> | {{ $t("warns.expired") }}</template>
 					</p>
 				</div>
 				<Button

@@ -12,7 +12,7 @@
 
 	"CMD_TITLE": "Помощь по {{cmd}}",
 	"DASHBOARD": "Все команды в панели",
-	"INFO": "● Помощь по команде: `/help [command]`",
+	"INFO": "- Помощь по команде: `/help [command]`",
 	"FIELD_PERMISSIONS": "Нужные права",
 	"NO_REQUIRED_PERMISSION": "Не нужны",
 	"TITLE": "{{name}} | Команды",

@@ -10,7 +10,7 @@
 	"TOTAL": "Tracks: {{count}}, total time: {{time}}",
 
 	"SETTINGS": "Settings",
-	"SETTINGS_VALUE": "Volume: **{{volume}}** • Repeat: **{{loop}}** • Autoplay: **{{autoplay}}**",
+	"SETTINGS_VALUE": "Volume: **{{volume}}** | Repeat: **{{loop}}** | Autoplay: **{{autoplay}}**",
 
 	"DURATION": "Duration",
 	"SOURCE": "Source",

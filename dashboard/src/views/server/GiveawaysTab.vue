@@ -159,15 +159,15 @@ const channelName = (id: string) => props.guild.channels.find(channel => channel
 						</Badge>
 					</p>
 					<p class="text-xs text-muted-foreground">
-						#{{ channelName(giveaway.channelId) }} ·
+						#{{ channelName(giveaway.channelId) }} |
 						{{
 							giveaway.ended
 								? $t("giveaways.endedAt", { time: formatRelative(giveaway.endsAt) })
 								: $t("giveaways.endsAt", { time: formatRelative(giveaway.endsAt) })
 						}}
-						· {{ $t("giveaways.participants", giveaway.participants) }}
+						| {{ $t("giveaways.participants", giveaway.participants) }}
 						<template v-if="giveaway.ended">
-							· {{ $t("giveaways.winnersCount", giveaway.winnerIds.length) }}
+							| {{ $t("giveaways.winnersCount", giveaway.winnerIds.length) }}
 						</template>
 					</p>
 					<p class="flex flex-wrap gap-1 text-xs">

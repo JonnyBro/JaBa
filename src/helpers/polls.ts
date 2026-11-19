@@ -76,7 +76,7 @@ export const renderPoll = async (poll: Poll) => {
 			// Shares are of the voters, so with multiple answers they can add up to more than 100%
 			const share = voters ? counts[i] / voters : 0;
 
-			const stats = `${Math.round(share * 100)}% · ${counts[i]} ${await votesWord(poll, counts[i])}`;
+			const stats = `${Math.round(share * 100)}% | ${counts[i]} ${await votesWord(poll, counts[i])}`;
 
 			return `**${i + 1}.** ${option}\n${bar(share)} ${stats}`;
 		}),
@@ -86,7 +86,7 @@ export const renderPoll = async (poll: Poll) => {
 		.addTextDisplayComponents(
 			createText(`## 📊 ${poll.question}`),
 			createText(
-				`-# ${await t(poll, "general/poll:AUTHOR", { user: `<@${poll.authorId}>` })} • ${flags.join(" • ")}`,
+				`-# ${await t(poll, "general/poll:AUTHOR", { user: `<@${poll.authorId}>` })} | ${flags.join(" | ")}`,
 			),
 		)
 		.addSeparatorComponents(createSeparator())

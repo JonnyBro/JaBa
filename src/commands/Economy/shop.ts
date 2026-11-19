@@ -74,7 +74,7 @@ const renderList = async (interaction: Interaction, requestedPage = 0) => {
 
 	const container = createContainer().addTextDisplayComponents(
 		createText(
-			`## 🛒 ${await t(interaction, "economy/shop:TITLE")} · ${interaction.guild!.name}\n-# ${await t(
+			`## 🛒 ${await t(interaction, "economy/shop:TITLE")} | ${interaction.guild!.name}\n-# ${await t(
 				interaction,
 				"economy/shop:CASH",
 				{ credits: await formatCredits(interaction, memberData.money) },
@@ -91,14 +91,14 @@ const renderList = async (interaction: Interaction, requestedPage = 0) => {
 
 	const lines = await Promise.all(
 		items.map(async item => {
-			const soldOut = item.stock === 0 ? ` · ${await t(interaction, "economy/shop:SOLD_OUT")}` : "";
-			const description = item.description ? ` · ${shortenString(item.description, 80)}` : "";
+			const soldOut = item.stock === 0 ? ` | ${await t(interaction, "economy/shop:SOLD_OUT")}` : "";
+			const description = item.description ? ` | ${shortenString(item.description, 80)}` : "";
 
 			const price = await formatCredits(interaction, item.price);
 
 			const type = await describeType(interaction, item);
 
-			return `**${itemLabel(item)}** · ${price}${soldOut}\n-# ${type}${description}`;
+			return `**${itemLabel(item)}** | ${price}${soldOut}\n-# ${type}${description}`;
 		}),
 	);
 

@@ -5,15 +5,15 @@
 	"BET": "Total bet per spin, split between 10 lines",
 
 	"TITLE": "Slots",
-	"BET_INFO": "Bet {{bet}} • {{lines}} lines • 🃏 replaces anything but ⭐ • 3+ ⭐ anywhere start free spins",
+	"BET_INFO": "Bet {{bet}} | {{lines}} lines | 🃏 replaces anything but ⭐ | 3+ ⭐ anywhere start free spins",
 	"SPINNING": "Spinning...",
 	"NOT_ENOUGH": "You don't have {{credits}} on hand",
 	"NOT_YOURS": "This machine is taken, start your own with /slots",
 
-	"LINE": "Line {{line}} ({{name}}) · {{symbol}} x{{count}} · +{{win}}",
-	"SCATTER": "⭐ x{{count}} · +{{win}}",
+	"LINE": "Line {{line}} ({{name}}) | {{symbol}} x{{count}} | +{{win}}",
+	"SCATTER": "⭐ x{{count}} | +{{win}}",
 	"BONUS": "{{spins}} free spins, wins x{{multiplier}}",
-	"BONUS_RESULT": "Free spins: {{spins}} (x{{multiplier}}) · +{{win}}",
+	"BONUS_RESULT": "Free spins: {{spins}} (x{{multiplier}}) | +{{win}}",
 	"BEST_SPIN": "Best free spin:",
 	"NO_WIN": "No win",
 	"WIN": "+{{credits}}",
@@ -22,7 +22,7 @@
 	"PAYTABLE": "Payouts",
 	"PAYTABLE_TITLE": "Lines and payouts",
 	"PAYTABLE_RULE": "Wins count left to right from the first reel, 🃏 stands in for anything except ⭐",
-	"PAYTABLE_SYMBOLS": "For 3 · 4 · 5 in a row on a line at a {{bet}} bet",
+	"PAYTABLE_SYMBOLS": "For 3 | 4 | 5 in a row on a line at a {{bet}} bet",
 	"PAYTABLE_SCATTER": "⭐ anywhere: 3 -> {{three}}, 4 -> {{four}}, 5 -> {{five}} and {{spins}} free spins with wins x{{multiplier}}",
 	"LINE_NAMES": {
 		"1": "middle row",

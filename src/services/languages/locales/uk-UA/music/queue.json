@@ -10,7 +10,7 @@
 	"TOTAL": "Треків: {{count}}, загальний час: {{time}}",
 
 	"SETTINGS": "Налаштування",
-	"SETTINGS_VALUE": "Гучність: **{{volume}}** • Повтор: **{{loop}}** • Автоплей: **{{autoplay}}**",
+	"SETTINGS_VALUE": "Гучність: **{{volume}}** | Повтор: **{{loop}}** | Автоплей: **{{autoplay}}**",
 
 	"DURATION": "Тривалість",
 	"SOURCE": "Джерело",

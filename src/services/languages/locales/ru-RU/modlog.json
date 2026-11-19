@@ -1,7 +1,7 @@
 {
 	"MESSAGE_DELETED": "Удалено сообщение в {{channel}}",
 	"MESSAGES_PURGED": "Удалено сообщений в {{channel}}: {{count}}",
-	"MESSAGE_EDITED": "Изменено сообщение в {{channel}} · [перейти]({{url}})",
+	"MESSAGE_EDITED": "Изменено сообщение в {{channel}} | [перейти]({{url}})",
 	"AUTHOR": "Автор: {{user}}",
 	"BEFORE": "Было:",
 	"AFTER": "Стало:",

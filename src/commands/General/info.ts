@@ -83,7 +83,7 @@ async function getUserInfo(interaction: ChatInputCommandInteraction, member: Gui
 
 	addTextWithThumbnail(
 		container,
-		`## ${member.displayName}\n-# ${getUsername(member)} • ${member.id}`,
+		`## ${member.displayName}\n-# ${getUsername(member)} | ${member.id}`,
 		member.displayAvatarURL({ size: 256 }),
 	);
 
@@ -162,7 +162,7 @@ async function getServerInfo(interaction: ChatInputCommandInteraction) {
 					await line(
 						"common:MEMBERS",
 						"users",
-						`${await count(humans, "misc:NOUNS:MEMBERS")} • ${await count(bots, "misc:NOUNS:BOTS")}`,
+						`${await count(humans, "misc:NOUNS:MEMBERS")} | ${await count(bots, "misc:NOUNS:BOTS")}`,
 					),
 					await line(
 						"common:CHANNELS",
@@ -171,7 +171,7 @@ async function getServerInfo(interaction: ChatInputCommandInteraction) {
 							await count(channelsOfType(ChannelType.GuildText), "misc:NOUNS:TEXT"),
 							await count(channelsOfType(ChannelType.GuildVoice), "misc:NOUNS:VOICE"),
 							await count(channelsOfType(ChannelType.GuildCategory), "misc:NOUNS:CATEGORY"),
-						].join(" • "),
+						].join(" | "),
 					),
 				].join("\n"),
 			),

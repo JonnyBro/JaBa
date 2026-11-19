@@ -126,7 +126,7 @@ async function buildQueuePage(interaction: Interaction, player: Player, page: nu
 		)
 		.addTextDisplayComponents(
 			createFooter(
-				`${await t("common:PAGE")} ${page + 1}/${pages} • ${await t("music/queue:TOTAL", {
+				`${await t("common:PAGE")} ${page + 1}/${pages} | ${await t("music/queue:TOTAL", {
 					count: tracks.length,
 					time: convertTime(totalDuration),
 				})}`,
